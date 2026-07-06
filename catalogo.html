@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Automatización - Catálogo de Cursos</title>
+    <link rel="icon" href="img/AA (38).webp" type="image/webp">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1877f2',
+                        secondary: '#2db8ce',
+                        dark: '#0f172a',
+                        accent: '#91a1af',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --azul-gris: #91a1af;
+            --azul-oscuro: #0f172a;
+            --celeste: #2db8ce;
+            --fb-blue: #1877f2;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #1e293b;
+            scroll-behavior: smooth;
+            overflow-x: clip;
+        }
+        .animate-on-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .animate-on-hover:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            filter: brightness(1.05);
+        }
+        .course-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        .course-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+        /* Bordes y resplandores por nivel - MEJORADOS */
+        .course-card-level-basico {
+            border: 2px solid rgba(6, 182, 212, 0.6);           /* más opaco */
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);        /* resplandor base */
+            transition: all 0.3s ease;
+        }
+        .course-card-level-basico:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
+            transform: translateY(-8px) scale(1.02);
+        }
+        .course-card-level-intermedio {
+            border: 2px solid rgba(168, 85, 247, 0.6);          /* púrpura */
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+            transition: all 0.3s ease;
+        }
+        .course-card-level-intermedio:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+            transform: translateY(-8px) scale(1.02);
+        }
+        .course-card-level-avanzado {
+            border: 2px solid rgba(245, 158, 11, 0.6);          /* ámbar */
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+            transition: all 0.3s ease;
+        }
+        .course-card-level-avanzado:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+            transform: translateY(-8px) scale(1.02);
+        }
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        #notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            transform: translateX(120%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 100000;
+        }
+        #notification.show { transform: translateX(0); }
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 32px;
+            width: 90%;
+            max-width: 420px;
+            padding: 0px;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2db8ce; border-radius: 10px; }
+        .loading-pulse { animation: pulse 1.5s ease-in-out infinite; }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100001;
+            background: #0f172a;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sync-indicator.visible { opacity: 1; pointer-events: auto; }
+        .sync-indicator.success { background: #059669; }
+        .sync-indicator.error { background: #dc2626; }
+
+        #catalog-loading p {
+            color: #94a3b8;
+        }
+
+        /* Estilos metálicos */
+        .btn-metal-green {
+            background: linear-gradient(180deg, #4caf50 0%, #2c7744 100%);
+            border: 1px solid #1d4d2a;
+            color: white;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            border-radius: 0.75rem;
+        }
+        .btn-metal-green:hover {
+            background: linear-gradient(180deg, #66bb6a 0%, #3b8c4a 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
+            transform: translateY(-1px);
+        }
+        .btn-metal-green:active, .btn-metal-blue:active, .btn-metal-slate:active, .btn-metal-teal:active {
+            transform: translateY(0) scale(0.98);
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .btn-metal-blue {
+            background: linear-gradient(180deg, #42a5f5 0%, #1565c0 100%);
+            border: 1px solid #0d47a1;
+            color: white;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            border-radius: 0.75rem;
+        }
+        .btn-metal-blue:hover {
+            background: linear-gradient(180deg, #64b5f6 0%, #1976d2 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
+            transform: translateY(-1px);
+        }
+        .btn-metal-slate {
+            background: linear-gradient(180deg, #64748b 0%, #334155 100%);
+            border: 1px solid #1e293b;
+            color: white;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            border-radius: 0.75rem;
+        }
+        .btn-metal-slate:hover {
+            background: linear-gradient(180deg, #94a3b8 0%, #475569 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 4px 8px rgba(0,0,0,0.3);
+            transform: translateY(-1px);
+        }
+        .btn-metal-teal {
+            background: linear-gradient(180deg, #5eead4 0%, #0d9488 100%);
+            border: 1px solid #0f766e;
+            color: white;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            border-radius: 0.75rem;
+        }
+        .btn-metal-teal:hover {
+            background: linear-gradient(180deg, #99f6e4 0%, #14b8a6 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
+            transform: translateY(-1px);
+        }
+        .btn-metal-gray {
+            background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
+            border: 1px solid #64748b;
+            color: #475569;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+            border-radius: 0.75rem;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="custom-scrollbar">
+
+    <!-- Indicador de sincronización -->
+    <div id="syncIndicator" class="sync-indicator">
+        <i class="fas fa-sync-alt fa-spin text-[#2db8ce]"></i>
+        <span id="syncText">Sincronizando datos...</span>
+    </div>
+
+    <div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20">
+        <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
+        <div>
+            <p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p>
+            <p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p>
+        </div>
+    </div>
+
+    <!-- MODAL PERFIL DE USUARIO -->
+    <div id="userProfileModal" class="modal-overlay">
+        <div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl">
+            <div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative">
+                <button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div>
+                <h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3>
+                <p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p>
+                <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                        <i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i>
+                        <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                        <i class="fas fa-phone text-[#2db8ce] text-[10px]"></i>
+                        <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span>
+                    </div>
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                        <img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera">
+                        <i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i>
+                        <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span>
+                    </div>
+                </div>
+                <div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i>
+                    <span class="text-white text-[10px] font-black uppercase tracking-widest" id="profileProfession">Sin Perfil</span>
+                </div>
+            </div>
+            <div class="p-6 bg-white text-left">
+                <button id="profileAdminBtn" onclick="openAdminPanel(); closeModal('userProfileModal')" class="hidden mb-3 w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl border border-slate-800 hover:bg-[#2db8ce] transition-all shadow-sm items-center justify-center gap-3">
+                    <i class="fas fa-shield-alt text-[#2db8ce]"></i> Panel de Administración
+                </button>
+                <button onclick="logoutUser()" class="w-full py-4 bg-red-50 text-red-600 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm flex items-center justify-center gap-3">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL AUTENTICACIÓN -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-content !p-8 relative">
+            <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button>
+            <div class="text-center mb-6">
+                <img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3">
+                <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3>
+                <p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p>
+            </div>
+            <div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm text-left">
+                <i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i>
+                <span id="authErrorText" class="leading-tight">Mensaje de error</span>
+            </div>
+            <div class="flex bg-slate-100 rounded-xl p-1 mb-6">
+                <button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button>
+                <button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button>
+            </div>
+            <form id="authForm" class="space-y-4 text-left">
+                <div id="nameField" class="space-y-1 hidden">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label>
+                    <div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+                </div>
+                <div class="space-y-1">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label>
+                    <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+                </div>
+                <div class="space-y-1" id="passwordFieldContainer">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label>
+                    <div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+                </div>
+            <div id="countryField" class="space-y-1 hidden">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">País</label>
+                <div class="relative">
+                    <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <select id="authCountry" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none">
+                        <option value="" disabled selected>Selecciona tu país...</option>
+                        <option value="Venezuela">Venezuela</option><option value="Colombia">Colombia</option><option value="México">México</option><option value="Argentina">Argentina</option><option value="Perú">Perú</option><option value="Chile">Chile</option><option value="Ecuador">Ecuador</option><option value="España">España</option><option value="Estados Unidos">Estados Unidos</option><option value="Otro">Otro</option>
+                    </select>
+                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
+                </div>
+            </div>
+            <div id="phoneField" class="space-y-1 hidden">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Teléfono</label>
+                <div class="relative"><i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="tel" id="authPhone" placeholder="+58 412..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+            </div>
+                <button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2">
+                    <i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL DE ADMINISTRACIÓN -->
+    <div id="adminModal" class="modal-overlay">
+        <div class="modal-content !max-w-[800px] !w-[95%] h-[85vh] flex flex-col relative overflow-hidden bg-slate-50 border-none">
+            <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5 flex justify-between items-center z-10 shadow-lg">
+                <h3 class="font-black uppercase tracking-wide flex items-center gap-3 text-lg"><i class="fas fa-shield-alt text-[#2db8ce] text-2xl"></i> Panel de Administración</h3>
+                <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button>
+            </div>
+            <div class="flex flex-col md:flex-row flex-grow overflow-hidden">
+                <div class="w-full md:w-1/3 bg-white border-r border-slate-200 overflow-y-auto custom-scrollbar flex flex-col p-3 gap-2 shadow-inner" id="adminTabsContainer"></div>
+                <div class="w-full md:w-2/3 p-6 md:p-8 overflow-y-auto custom-scrollbar bg-slate-50">
+                    <div id="adminFormContainer" class="hidden">
+                        <div class="mb-6 border-b border-slate-200 pb-4">
+                            <h4 class="text-xl font-black text-slate-800 leading-tight" id="adminSelectedCourseTitle">Selecciona un curso</h4>
+                            <p class="text-xs text-slate-500 mt-2 font-medium">Ingresa los datos del estudiante para registrarlo <span class="text-[#2db8ce] font-bold">manualmente</span> en la pestaña de este curso en Excel.</p>
+                        </div>
+                        <div id="adminErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm text-left">
+                            <i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i>
+                            <span id="adminErrorText" class="leading-tight">Ese usuario ya existe en este curso.</span>
+                        </div>
+                        <form id="adminManualForm" class="space-y-4 text-left">
+                            <input type="hidden" id="adminCourseId">
+                            <input type="hidden" id="adminCourseName">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo *</label>
+                                <div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminName" required placeholder="Nombre del estudiante" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo Electrónico *</label>
+                                <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="adminEmail" required placeholder="correo@estudiante.com" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Cédula / ID (Opcional)</label>
+                                    <div class="relative"><i class="fas fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminCedula" placeholder="Ej: V-12345678" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                                </div>
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Teléfono (Opcional)</label>
+                                    <div class="relative"><i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminPhone" placeholder="+58..." class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="space-y-1">
+                                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">País (Opcional)</label>
+                                    <div class="relative">
+                                        <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                        <select id="adminCountry" onchange="toggleAdminState()" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none shadow-sm focus:border-[#2db8ce]">
+                                            <option value="" disabled selected>Selecciona país...</option>
+                                            <option value="Venezuela">Venezuela</option><option value="Colombia">Colombia</option><option value="México">México</option><option value="Argentina">Argentina</option><option value="Perú">Perú</option><option value="Chile">Chile</option><option value="Ecuador">Ecuador</option><option value="España">España</option><option value="Otro">Otro</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
+                                    </div>
+                                </div>
+                                <div id="adminStateContainer" class="space-y-1 hidden">
+                                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Estado (Venezuela)</label>
+                                    <div class="relative">
+                                        <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                        <select id="adminState" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none shadow-sm focus:border-[#2db8ce]">
+                                            <option value="" disabled selected>Selecciona estado...</option>
+                                            <option value="Amazonas">Amazonas</option><option value="Anzoátegui">Anzoátegui</option><option value="Apure">Apure</option><option value="Aragua">Aragua</option><option value="Barinas">Barinas</option><option value="Bolívar">Bolívar</option><option value="Carabobo">Carabobo</option><option value="Cojedes">Cojedes</option><option value="Delta Amacuro">Delta Amacuro</option><option value="Distrito Capital">Distrito Capital</option><option value="Falcón">Falcón</option><option value="Guárico">Guárico</option><option value="Lara">Lara</option><option value="La Guaira">La Guaira</option><option value="Mérida">Mérida</option><option value="Miranda">Miranda</option><option value="Monagas">Monagas</option><option value="Nueva Esparta">Nueva Esparta</option><option value="Portuguesa">Portuguesa</option><option value="Sucre">Sucre</option><option value="Táchira">Táchira</option><option value="Trujillo">Trujillo</option><option value="Yaracuy">Yaracuy</option><option value="Zulia">Zulia</option>
+                                        </select>
+                                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" id="adminSubmitBtn" class="w-full bg-teal-600 hover:bg-teal-500 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-6 transition-all shadow-lg flex items-center justify-center gap-2">
+                                <i class="fas fa-save text-lg"></i> Registrar Estudiante Manualmente
+                            </button>
+                        </form>
+                    </div>
+                    <div id="adminNoSelection" class="h-full flex flex-col items-center justify-center text-slate-400 pb-10">
+                        <i class="fas fa-hand-pointer text-5xl mb-4 opacity-30"></i>
+                        <p class="text-sm font-bold uppercase tracking-widest text-center">Selecciona un curso<br>en el menú lateral</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="page-cursos" class="min-h-screen">
+        <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
+            <div class="absolute inset-0 z-0">
+                <img src="img/AA (5).gif" alt="Fondo decorativo" class="w-full h-full object-cover opacity-30 mix-blend-soft-light" loading="lazy">
+            </div>
+            <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
+                <i class="fas fa-th-large"></i>
+            </div>
+            <div class="absolute right-4 top-4 text-white/5 text-8xl pointer-events-none z-0 md:hidden">
+                <i class="fas fa-th-large"></i>
+            </div>
+            <div class="absolute right-0 top-0 text-white/5 text-8xl"><i data-lucide="grid"></i></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
+                <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
+                    <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Automatización</span>
+                    <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Contactores</span>
+                    <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Arranques</span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter">CURSOS Y MATERIAS <span class="text-secondary">OFERTADAS</span></h1>
+                <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">
+                    Explora nuestra oferta académica y descubre el contenido técnico diseñado para impulsar tu futuro profesional en la automatización.
+                </p>
+            </div>
+        </header>
+    <main class="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
+        <!-- RUTA DE APRENDIZAJE -->
+        <section id="learning-path" class="mb-16 text-center">
+            <h2 class="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tighter text-white">Elige tu <span class="text-secondary">Ruta de Aprendizaje</span></h2>
+            <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
+            
+            <div class="relative flex justify-center items-center">
+                <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700/50 -translate-y-1/2 hidden md:block"></div>
+                
+                <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+                    <!-- Paso 1: Básico -->
+                    <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105 hover:bg-slate-700">
+                        <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-cyan-500 group-hover:text-white">
+                            <i class="fas fa-seedling text-2xl text-cyan-400 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
+                        <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
+                    </div>
+                    
+                    <!-- Paso 2: Intermedio (ahora morado) -->
+                    <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-purple-500 hover:scale-105 hover:bg-slate-700">
+                        <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
+                            <i class="fas fa-cogs text-2xl text-purple-400 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
+                        <p class="text-xs text-slate-400">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
+                    </div>
+
+                    <!-- Paso 3: Avanzado -->
+                    <div onclick="filterByLevel('Avanzado', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-amber-500 hover:scale-105 hover:bg-slate-700">
+                        <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-white">
+                            <i class="fas fa-rocket text-2xl text-amber-400 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-white uppercase mb-1">Especialización</h3>
+                        <p class="text-xs text-slate-400">Para profesionales que buscan dominar temas complejos y diplomados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <main class="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="catalog-grid">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <div id="catalog-loading" class="col-span-full text-center py-10 hidden">
+                <i class="fas fa-spinner fa-spin text-3xl text-[#2db8ce] mb-3"></i>
+                <p class="text-slate-500 font-bold text-sm uppercase tracking-widest">Cargando datos desde el servidor...</p>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJCV8j5yLAGgouP43lvkXGunU6yKroegJ9JFJvAWpqHeHQzWRnXXP4IPnaBLjU7MTi/exec';
+
+        let currentUser = JSON.parse(localStorage.getItem('user')) || null;
+        let dbUsers = {},
+            globalStats = {},
+            userCountry = "Desconocido";
+        let dbUserCourses = {},
+            dbUserDetails = {},
+            dbUserProgress = {};
+        let studentCountsPerCourse = {};
+        let courseRatings = {};
+        let dataLoaded = false;
+        let dataLoadAttempts = 0;
+        const MAX_DATA_ATTEMPTS = 3;
+
+        const COURSES_DATA = [
+            { id: 1, name: "Arranque de motores con contactores", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "arranque-contactores-info.html", aulaLink: "arranque-contactores.html" },
+            { id: 2, name: "Arranque de motores con PLC LOGO", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "arranque-plc-logo-info.html", aulaLink: "arranque-plc-logo.html" },
+            { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 15.00, link: "compuertas-factory-plc-info.html" },
+            { id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "auto-contactores-on-info.html", buyLink: "https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4" },
+            { id: 5, name: "Automatización con PLC LOGO!", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "auto-plc-logo-on-info.html" },
+            { id: 6, name: "Automatización con PLC – Método Grafcet", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 20.00, link: "auto-plc-grafcet-on-info.html" },
+            { id: 7, name: "10 ejercicios de aplicaciones con Contactores", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "#" },
+            { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO!", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "#" },
+            { id: 9, name: "Automatización Industrial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (9).WEBP", category: "Automatización", level: "Básico", cost: 100.00, link: "auto-industrial-pre-info.html" },
+            { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "auto-contactores-pre-info.html" },
+            { id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "auto-plc-logo-pre-info.html" },
+            { id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "auto-plc-grafcet-pre-info.html" },
+            { id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "#" },
+            { id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "#" },
+            { id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "#" },
+            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "#" },
+            { id: 17, name: "Taller de Tecnología Eléctrica III", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii" },
+            { id: 18, name: "Proyecto V", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html" }
+        ];
+
+        const countryToISO = { "venezuela": "ve", "colombia": "co", "méxico": "mx", "mexico": "mx", "españa": "es", "spain": "es", "argentina": "ar", "perú": "pe", "peru": "pe", "chile": "cl", "ecuador": "ec", "bolivia": "bo", "paraguay": "py", "uruguay": "uy", "costa rica": "cr", "panamá": "pa", "panama": "pa", "república dominicana": "do", "republica dominicana": "do", "guatemala": "gt", "honduras": "hn", "el salvador": "sv", "nicaragua": "ni", "cuba": "cu", "puerto rico": "pr", "puertorico": "pr", "estados unidos": "us", "united states": "us", "usa": "us", "francia": "fr", "france": "fr", "brasil": "br", "brazil": "br", "italy": "it", "italia": "it", "alemania": "de", "germany": "de", "canadá": "ca", "canada": "ca", "reino unido": "gb", "united kingdom": "gb", "portugal": "pt", "haití": "ht", "haiti": "ht", "japon": "jp", "japón": "jp", "china": "cn", "rusia": "ru", "russia": "ru", "bélgica": "be", "belgium": "be", "suiza": "ch", "switzerland": "ch", "jamaica": "jm", "trinidad y tobago": "tt", "guyana": "gy", "surinam": "sr", "belice": "bz", "bahamas": "bs", "barbados": "bb", "santa lucía": "lc", "granada": "gd", "san vicente y las granadinas": "vc", "antigua y barbuda": "ag", "dominica": "dm", "san cristóbal y nieves": "kn" };
+        const countryToSpanish = { "venezuela": "Venezuela", "colombia": "Colombia", "mexico": "México", "méxico": "México", "spain": "España", "españa": "España", "argentina": "Argentina", "peru": "Perú", "perú": "Perú", "chile": "Chile", "ecuador": "Ecuador", "bolivia": "Bolivia", "paraguay": "Paraguay", "uruguay": "Uruguay", "costa rica": "Costa Rica", "panama": "Panamá", "panamá": "Panamá", "dominican republic": "República Dominicana", "república dominicana": "República Dominicana", "guatemala": "Guatemala", "honduras": "Honduras", "el salvador": "El Salvador", "nicaragua": "Nicaragua", "cuba": "Cuba", "puerto rico": "Puerto Rico", "puertorico": "Puerto Rico", "united states": "Estados Unidos", "usa": "Estados Unidos", "estados unidos": "Estados Unidos", "france": "Francia", "francia": "Francia", "brazil": "Brasil", "brasil": "Brasil", "italy": "Italia", "italia": "Italia", "germany": "Alemania", "alemania": "Alemania", "canada": "Canadá", "canadá": "Canadá", "united kingdom": "Reino Unido", "reino unido": "Reino Unido", "portugal": "Portugal", "haiti": "Haití", "haití": "Haití", "japan": "Japón", "japón": "Japón", "china": "China", "russia": "Rusia", "rusia": "Rusia", "belgium": "Bélgica", "bélgica": "Bélgica", "switzerland": "Suiza", "suiza": "Suiza", "jamaica": "Jamaica", "trinidad and tobago": "Trinidad y Tobago", "guyana": "Guyana", "suriname": "Surinam", "belize": "Belice", "bahamas": "Bahamas", "barbados": "Barbados", "saint lucia": "Santa Lucía", "grenada": "Granada", "saint vincent and the grenadines": "San Vicente y las Granadinas", "antigua and barbuda": "Antigua y Barbuda", "dominica": "Dominica", "saint kitts and nevis": "San Cristóbal y Nieves" };
+
+        function normalizeName(str) { return (str || '').trim().toLowerCase().replace(/\s+/g, ' '); }
+        function splitCourseNames(raw) {
+            if (!raw) return [];
+            if (Array.isArray(raw)) return raw.map(n => n.trim()).filter(Boolean);
+            if (typeof raw === 'string') {
+                try { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) return parsed.map(n => n.trim()).filter(Boolean); } catch (e) {}
+                return raw.split(',').map(n => n.trim()).filter(Boolean);
+            }
+            return [];
+        }
+        function showNotif(title, msg, type = 'success') {
+            const n = document.getElementById('notification');
+            const icon = document.getElementById('notifIcon');
+            document.getElementById('notifTitle').innerText = title;
+            document.getElementById('notifMsg').innerText = msg;
+            n.classList.remove('bg-teal-600', 'bg-blue-600', 'bg-red-600');
+            if (type === 'error') { n.classList.add('bg-red-600'); icon.className = 'fas fa-exclamation-circle text-2xl'; }
+            else if (type === 'info') { n.classList.add('bg-blue-600'); icon.className = 'fas fa-info-circle text-2xl'; }
+            else { n.classList.add('bg-teal-600'); icon.className = 'fas fa-check-circle text-2xl'; }
+            n.classList.add('show');
+            setTimeout(() => n.classList.remove('show'), 4000);
+        }
+        function showSyncIndicator(text, type = 'loading') {
+            const el = document.getElementById('syncIndicator');
+            const txt = document.getElementById('syncText');
+            const icon = el.querySelector('i');
+            el.classList.remove('success', 'error', 'visible');
+            txt.innerText = text;
+            if (type === 'success') { el.classList.add('success', 'visible'); icon.className = 'fas fa-check-circle text-green-300'; }
+            else if (type === 'error') { el.classList.add('error', 'visible'); icon.className = 'fas fa-exclamation-circle text-red-300'; }
+            else { el.classList.add('visible'); icon.className = 'fas fa-sync-alt fa-spin text-[#2db8ce]'; }
+            if (type !== 'loading') { setTimeout(() => el.classList.remove('visible', 'success', 'error'), 3000); }
+        }
+        function hideSyncIndicator() { document.getElementById('syncIndicator').classList.remove('visible', 'success', 'error'); }
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+        function ping(action, key) {
+            try {
+                if (navigator.sendBeacon) {
+                    navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key}));
+                } else {
+                    fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` });
+                }
+            } catch (e) { console.error('Ping error:', e); }
+        }
+        async function fetchWithRetry(url, maxRetries = 3) {
+            let delay = 1000;
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000);
+                    const response = await fetch(url, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    if (response.ok) return response;
+                    throw new Error(`Error HTTP: ${response.status}`);
+                } catch (err) {
+                    if (i === maxRetries - 1) throw err;
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
+            }
+        }
+        async function loadData(showIndicator = true) {
+            if (showIndicator) showSyncIndicator('Conectando con la base de datos...', 'loading');
+            dataLoadAttempts++;
+            try {
+                const res = await fetchWithRetry(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`, MAX_DATA_ATTEMPTS);
+                const data = await res.json();
+                if (data.status === 'success') {
+                    dbUsers = data.users || {};
+                    globalStats = data.stats || {};
+                    dbUserCourses = data.userCourses || {};
+                    dbUserDetails = data.userDetails || {};
+                    dbUserProgress = data.userProgress || {};
+                    calculateCourseRatings();
+                    updateStudentCounts();
+                    dataLoaded = true;
+                    dataLoadAttempts = 0;
+                    if (showIndicator) showSyncIndicator('Datos sincronizados correctamente', 'success');
+                    if (currentUser && currentUser.email) syncCurrentUserFromCloud();
+                    applyFilters();
+                    updateAllUI();
+                } else throw new Error('Respuesta del servidor sin estado success');
+            } catch (e) {
+                console.error('Error al cargar datos:', e.message);
+                if (showIndicator) showSyncIndicator('Usando datos locales (sin conexión)', 'error');
+                if (dataLoadAttempts < MAX_DATA_ATTEMPTS * 2) setTimeout(() => loadData(false), 5000);
+            }
+        }
+        function syncCurrentUserFromCloud() {
+            if (!currentUser || !currentUser.email) return;
+            const email = currentUser.email.toLowerCase();
+            let myCourseNamesRaw = dbUserCourses[email] || [];
+            let myCourseNames = splitCourseNames(myCourseNamesRaw);
+            let myCourseIds = [];
+            myCourseNames.forEach(cName => {
+                let nn = normalizeName(cName);
+                let found = COURSES_DATA.find(x => normalizeName(x.name) === nn);
+                if (!found) found = COURSES_DATA.find(x => normalizeName(x.name).includes(nn) || nn.includes(normalizeName(x.name)));
+                if (found) myCourseIds.push(found.id);
+            });
+            let globalUser = dbUsers[email] || {};
+            if (typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch (e) { globalUser = {}; } }
+            let details = dbUserDetails[email] || {};
+            const existingIds = Array.isArray(globalUser.accessedCursos) ? globalUser.accessedCursos : (currentUser.accessedCursos || []);
+            currentUser.accessedCursos = [...new Set([...existingIds, ...myCourseIds])];
+            if (details.name && details.name !== "No provisto" && details.name !== "N/A") currentUser.name = details.name;
+            currentUser.cedula = details.cedula || currentUser.cedula || "N/A";
+            currentUser.telefono = details.telefono || currentUser.telefono || "N/A";
+            currentUser.pais = details.pais || currentUser.pais || "N/A";
+            currentUser.estado = details.estado || currentUser.estado || "N/A";
+            currentUser.downloadedFiles = globalUser.downloadedFiles || currentUser.downloadedFiles || [];
+            currentUser.ratings = globalUser.ratings || currentUser.ratings || {};
+            currentUser.profession = globalUser.profession || currentUser.profession || "";
+            currentUser.likedCourses = globalUser.likedCourses || currentUser.likedCourses || [];
+            localStorage.setItem('user', JSON.stringify(currentUser));
+        }
+        function calculateCourseRatings() {
+            courseRatings = {};
+            COURSES_DATA.forEach(c => courseRatings[c.id] = { sum: 0, count: 0, avg: "5.0" });
+            for (const email in dbUsers) {
+                let u = dbUsers[email];
+                if (typeof u === 'string') { try { u = JSON.parse(u); } catch (e) { u = {}; } }
+                if (u && u.ratings) {
+                    for (const cid in u.ratings) {
+                        if (courseRatings[cid]) {
+                            courseRatings[cid].sum += Number(u.ratings[cid]) || 0;
+                            courseRatings[cid].count += 1;
+                        }
+                    }
+                }
+            }
+            for (const cid in courseRatings) {
+                if (courseRatings[cid].count > 0) courseRatings[cid].avg = (courseRatings[cid].sum / courseRatings[cid].count).toFixed(1);
+            }
+        }
+        function updateStudentCounts() {
+            COURSES_DATA.forEach(c => studentCountsPerCourse[c.id] = 0);
+            for (const email in dbUserCourses) {
+                const courses = splitCourseNames(dbUserCourses[email]);
+                courses.forEach(courseName => {
+                    let found = COURSES_DATA.find(c => normalizeName(c.name) === normalizeName(courseName));
+                    if (found) studentCountsPerCourse[found.id] += 1;
+                });
+            }
+        }
+
+        let currentCategory = 'Todos';
+        let currentLevel = 'Todos';
+
+        function generateCourseCard(course) {
+            const isAcademic = ["Diplomado", "Maestría", "Pregrado"].includes(course.level);
+            const priceTag = (isAcademic || course.level === 'Postgrado') ? "" : (course.cost === 0 ? '<span class="text-[#2db8ce] font-extrabold italic text-lg">GRATIS</span>' : `<span class="text-lg font-black text-slate-800">$${course.cost.toFixed(2)}</span>`);
+            const likes = globalStats[`curso-${course.id}_likes`] || 0;
+            const vistas = globalStats[`curso-${course.id}_vistas`] || 0;
+            const isLikedClass = (currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(`curso-${course.id}`)) ? 'liked' : '';
+            const viewsClass = vistas > 0 ? 'text-green-500' : 'text-slate-400';
+            const actionClick = (course.link && course.link !== "#" && course.link !== "") ? `registerViewAndGo('${course.link}', ${course.id}, '_self')` : `showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')`;
+            const isLogged = currentUser !== null;
+            const hasAccess = isLogged && currentUser.accessedCursos && currentUser.accessedCursos.includes(course.id);
+            const imageOpacityClass = hasAccess ? 'opacity-100' : 'opacity-30';
+
+            let btn1HTML = '';
+            if (course.link && course.link !== "#" && course.link !== "") {
+                btn1HTML = `<button onclick="event.stopPropagation(); registerViewAndGo('${course.link}', ${course.id}, '_self')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del Curso</button>`;
+            } else {
+                btn1HTML = `<button onclick="event.stopPropagation(); showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')" class="w-full bg-slate-300 text-slate-500 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest cursor-not-allowed text-center shadow-sm">PRÓXIMAMENTE</button>`;
+            }
+
+            const buttonsHTML = `<div class="flex flex-col gap-2 w-full">${btn1HTML}</div>`;
+            const avgRating = courseRatings[course.id] ? courseRatings[course.id].avg : "5.0";
+            const displayCount = studentCountsPerCourse[course.id] !== undefined ? studentCountsPerCourse[course.id] : '...';
+
+            let buyActionHTML = '';
+            if (!hasAccess) {
+                buyActionHTML = `<button onclick="event.stopPropagation(); showNotif('Inscripción', 'Para inscribirte, por favor contactar con el profesor Pablo Cedeño.', 'info')" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-cyan-500/30 transition-all active:scale-95 flex items-center gap-2"><i class="fas fa-plus-circle text-[11px]"></i> Inscribirse</button>`;
+            } else {
+                buyActionHTML = `<span class="text-teal-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 bg-teal-50 px-3 py-1.5 rounded-lg border border-teal-100"><i class="fas fa-check-circle text-sm"></i> Inscrito</span>`;
+            }
+
+            let userRating = 0;
+            if (currentUser && currentUser.ratings && currentUser.ratings[course.id]) userRating = currentUser.ratings[course.id];
+            let ratingStarsHTML = '';
+            if (isLogged) {
+                ratingStarsHTML = `<div class="flex items-center gap-2 mt-4"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tu valoración:</span><div class="flex gap-0.5">${[1,2,3,4,5].map(star => `<i class="fas fa-star cursor-pointer text-sm ${userRating >= star ? 'text-yellow-400' : 'text-slate-300'}" onclick="event.stopPropagation(); rateCourse(${course.id}, ${star})" title="${star} estrella${star>1?'s':''}"></i>`).join('')}</div></div>`;
+            } else {
+                ratingStarsHTML = `<div class="mt-4"><button onclick="event.stopPropagation(); openModal('authModal')" class="text-[10px] font-bold text-slate-500 hover:text-[#2db8ce] transition-colors flex items-center gap-1"><i class="fas fa-star text-yellow-400"></i> Inicia sesión para valorar</button></div>`;
+            }
+
+            const normalizedLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            let levelBorderClass = 'course-card-level-default';
+            let levelBadgeStyle = '';
+            let levelIconBg = 'bg-slate-500/10 border-slate-500/30';
+            let levelIconColor = 'text-slate-400';
+            if (normalizedLevel === 'basico') {
+                levelBorderClass = 'course-card-level-basico';
+                levelBadgeStyle = 'background-color: rgba(6,182,212,0.1); color: rgb(8,145,178); border: 1px solid rgba(6,182,212,0.3);';
+                levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
+                levelIconColor = 'text-cyan-400';
+            } else if (normalizedLevel === 'intermedio') {
+                levelBorderClass = 'course-card-level-intermedio'; // clase con borde morado
+                levelBadgeStyle = 'background-color: rgba(168,85,247,0.1); color: rgb(126,34,206); border: 1px solid rgba(168,85,247,0.3);';
+                levelIconBg = 'bg-purple-500/10 border-purple-500/30';
+                levelIconColor = 'text-purple-400';
+            } else if (normalizedLevel === 'avanzado') {
+                levelBorderClass = 'course-card-level-avanzado';
+                levelBadgeStyle = 'background-color: rgba(245,158,11,0.1); color: rgb(180,83,9); border: 1px solid rgba(245,158,11,0.3);';
+                levelIconBg = 'bg-amber-500/10 border-amber-500/30';
+                levelIconColor = 'text-amber-400';
+            }
+
+            return `
+            <div class="course-card bg-white rounded-[24px] overflow-hidden flex flex-col group fade-in text-left cursor-pointer ${levelBorderClass}" onclick="${actionClick}">
+                <div class="aspect-video w-full overflow-hidden bg-[#0f172a] border-b border-slate-100 relative text-left">
+                    <img src="${course.image}" alt="${course.name}" class="w-full h-full object-cover ${imageOpacityClass} group-hover:scale-105 transition-all duration-500" loading="lazy">
+                    <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.type}</span>
+                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-sm bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.category}</span>
+                    </div>
+                    <div class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-secondary text-[10px] font-black px-2 py-1 rounded-md border border-white/20 shadow-lg flex items-center gap-1">
+                        <i class="fas fa-star text-yellow-400"></i> ${avgRating}
+                    </div>
+                    <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}">
+                        <i class="fas ${normalizedLevel === 'basico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket'} text-lg ${levelIconColor}"></i>
+                    </div>
+                </div>
+                <div class="p-5 md:p-6 flex-grow flex flex-col text-left">
+                    <h2 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${course.name}</h2>
+                    <div class="flex items-center justify-between mb-4 text-xs font-bold text-slate-500">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-1 rounded-md flex items-center gap-1" style="${levelBadgeStyle}" title="Nivel del curso"><i data-lucide="book-open" class="w-3 h-3"></i> ${course.level}</span>
+                            <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md flex items-center gap-1" title="Alumnos en el curso"><i data-lucide="users" class="w-3 h-3"></i><span id="count-${course.id}">${displayCount}</span></span>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${course.id}" onclick="event.stopPropagation(); toggleLike(this)">
+                                <i class="fas fa-heart"></i><span class="like-count">${likes}</span>
+                            </button>
+                            <span class="flex items-center gap-1 ${viewsClass} transition-colors duration-300">
+                                <i class="fas fa-eye"></i><span class="view-count" data-id="curso-${course.id}">${vistas}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <p class="text-slate-600 text-[13px] line-clamp-2 leading-relaxed flex-grow">${course.desc}</p>
+                    ${ratingStarsHTML}
+                    <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
+                        ${priceTag}
+                        ${buyActionHTML}
+                    </div>
+                </div>
+                <div class="px-5 md:px-6 py-4 bg-slate-50 border-t border-slate-100 text-left mt-auto">
+                    ${buttonsHTML}
+                </div>
+            </div>`;
+        }
+
+        function renderCatalog(filter = 'Todos') {
+            currentCategory = filter;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.dataset.cat === filter) {
+                    btn.classList.replace('bg-white', 'bg-slate-900');
+                    btn.classList.replace('text-slate-800', 'text-white');
+                } else {
+                    btn.classList.replace('bg-slate-900', 'bg-white');
+                    btn.classList.replace('text-white', 'text-slate-800');
+                }
+            });
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput ? searchInput.value.toLowerCase() : '';
+            const modalityFilter = document.getElementById('modalityFilter');
+            const modality = modalityFilter ? modalityFilter.value : 'Todos';
+            const grid = document.getElementById('catalog-grid');
+            if (!grid) return;
+
+            const filtered = COURSES_DATA.filter(c => {
+                if (currentCategory !== 'Todos' && c.category !== currentCategory) return false;
+                if (!c.name.toLowerCase().includes(query) && !c.desc.toLowerCase().includes(query)) return false;
+                if (modality !== 'Todos' && c.type !== modality) return false;
+                if (currentLevel !== 'Todos') {
+                    if (c.level.toLowerCase() !== currentLevel.toLowerCase()) return false;
+                }
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400 font-bold uppercase tracking-widest text-[10px]">No se encontraron cursos que coincidan con tu búsqueda.</div>';
+                return;
+            }
+            grid.innerHTML = filtered.map(c => generateCourseCard(c)).join('');
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function filterByLevel(level, element) {
+            currentLevel = level;
+            document.querySelectorAll('.learning-step').forEach(step => {
+                step.classList.remove('border-cyan-500', 'border-purple-500', 'border-amber-500');
+                step.classList.add('border-slate-700');
+            });
+            if (level === 'Básico') element.classList.add('border-cyan-500');
+            else if (level === 'Intermedio') element.classList.add('border-purple-500');
+            else if (level === 'Avanzado') element.classList.add('border-amber-500');
+            applyFilters();
+        }
+
+        function registerViewAndGo(url, courseId, target = '_self') {
+            const idKey = `curso-${courseId}`;
+            ping('update_stat', `${idKey}_vistas`);
+            if (globalStats) {
+                globalStats[`${idKey}_vistas`] = (parseInt(globalStats[`${idKey}_vistas`]) || 0) + 1;
+                document.querySelectorAll(`.view-count[data-id="${idKey}"]`).forEach(span => {
+                    span.innerText = globalStats[`${idKey}_vistas`];
+                });
+            }
+            window.open(url, target);
+        }
+
+        function rateCourse(courseId, rating) {
+            if (!currentUser) { openModal('authModal'); return; }
+            if (!currentUser.ratings) currentUser.ratings = {};
+            currentUser.ratings[courseId] = rating;
+            const email = currentUser.email.toLowerCase();
+            if (dbUsers[email]) {
+                let userObj = dbUsers[email];
+                if (typeof userObj === 'string') userObj = JSON.parse(userObj);
+                userObj.ratings = currentUser.ratings;
+                dbUsers[email] = JSON.stringify(userObj);
+            }
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            calculateCourseRatings();
+            applyFilters();
+            syncUserProgressToExcel();
+            showNotif('Valoración guardada', `Has puntuado con ${rating} estrellas.`);
+        }
+
+        function toggleLike(btn) {
+            if (!currentUser) { openModal('authModal'); return; }
+            const id = btn.dataset.id;
+            if (!currentUser.likedCourses) currentUser.likedCourses = [];
+            const span = btn.querySelector('.like-count');
+            let currentLikes = parseInt(span.innerText) || 0;
+            if (currentUser.likedCourses.includes(id)) {
+                currentUser.likedCourses = currentUser.likedCourses.filter(c => c !== id);
+                ping('decrement_stat', `${id}_likes`);
+                btn.classList.remove('liked');
+                span.innerText = Math.max(0, currentLikes - 1);
+                if (globalStats) globalStats[`${id}_likes`] = Math.max(0, currentLikes - 1);
+            } else {
+                currentUser.likedCourses.push(id);
+                ping('update_stat', `${id}_likes`);
+                btn.classList.add('liked');
+                span.innerText = currentLikes + 1;
+                if (globalStats) globalStats[`${id}_likes`] = currentLikes + 1;
+            }
+            if (currentUser.email) { dbUsers[currentUser.email.toLowerCase()] = JSON.stringify(currentUser); }
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            syncUserProgressToExcel();
+            document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn => {
+                if (otherBtn !== btn) {
+                    if (currentUser.likedCourses.includes(id)) {
+                        otherBtn.classList.add('liked');
+                    } else {
+                        otherBtn.classList.remove('liked');
+                    }
+                    const otherSpan = otherBtn.querySelector('.like-count');
+                    if (otherSpan) otherSpan.innerText = span.innerText;
+                }
+            });
+        }
+
+        async function syncUserProgressToExcel() {
+            if (!currentUser || !currentUser.email) return;
+            const email = currentUser.email.toLowerCase();
+            const userData = JSON.stringify(currentUser);
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `action=update_user&email=${encodeURIComponent(email)}&userData=${encodeURIComponent(userData)}`
+                });
+            } catch (e) { console.error('Sync error:', e); }
+        }
+
+        function updateAllUI() {
+            const adminBtnContainer = document.getElementById('adminButtonContainer');
+            const profileAdminBtn = document.getElementById('profileAdminBtn');
+            if (!currentUser) {
+                if (adminBtnContainer) { adminBtnContainer.classList.add('hidden'); adminBtnContainer.classList.remove('flex'); }
+                if (profileAdminBtn) { profileAdminBtn.classList.add('hidden'); profileAdminBtn.classList.remove('flex'); }
+                return;
+            }
+            const displayName = currentUser.name || "Usuario";
+            document.querySelectorAll('#authBtnText').forEach(el => { el.innerText = displayName; });
+            const initialsEl = document.getElementById('profileInitials');
+            if (currentUser.name || currentUser.email) {
+                const str = currentUser.name || currentUser.email;
+                const parts = str.trim().split(' ');
+                const inits = parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0][0].toUpperCase();
+                if (initialsEl) initialsEl.innerText = inits;
+            }
+            document.getElementById('profileFullName').innerText = currentUser.name || "Estudiante";
+            document.getElementById('profileEmail').innerText = currentUser.email;
+            document.getElementById('profileProfession').innerText = currentUser.profession ? capitalize(currentUser.profession) : "Sin Perfil";
+            document.getElementById('profileCedula').innerText = currentUser.cedula && currentUser.cedula !== "N/A" ? currentUser.cedula : "Sin Cédula";
+            document.getElementById('profilePhone').innerText = currentUser.telefono && currentUser.telefono !== "N/A" ? currentUser.telefono : "Sin Teléfono";
+            let locText = currentUser.pais && currentUser.pais !== "N/A" ? currentUser.pais : "País Desconocido";
+            if (currentUser.pais === "Venezuela" && currentUser.estado && currentUser.estado !== "N/A") locText += ` (${currentUser.estado})`;
+            document.getElementById('profileLocation').innerText = locText;
+            const flagImg = document.getElementById('profileFlag');
+            const globeIcon = document.getElementById('profileGlobeIcon');
+            let isoCode = null;
+            if (currentUser.pais && currentUser.pais !== "N/A") {
+                const cleanPais = currentUser.pais.trim().toLowerCase();
+                isoCode = countryToISO[cleanPais] || countryToISO[cleanPais.replace(/\s/g, '')];
+            }
+            if (isoCode) { flagImg.src = `https://flagcdn.com/w20/${isoCode}.png`; flagImg.classList.remove('hidden'); globeIcon.classList.add('hidden'); }
+            else { flagImg.classList.add('hidden'); globeIcon.classList.remove('hidden'); }
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                if (currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(btn.dataset.id)) {
+                    btn.classList.add('text-red-500'); btn.classList.remove('text-slate-400');
+                } else {
+                    btn.classList.remove('text-red-500'); btn.classList.add('text-slate-400');
+                }
+            });
+            const adminEmails = ['pablocdno@gmail.com'];
+            const isAdmin = currentUser.email && adminEmails.includes(currentUser.email.trim().toLowerCase());
+            if (isAdmin) {
+                if (adminBtnContainer) { adminBtnContainer.classList.remove('hidden'); adminBtnContainer.classList.add('flex'); }
+                if (profileAdminBtn) { profileAdminBtn.classList.remove('hidden'); profileAdminBtn.classList.add('flex'); }
+            } else {
+                if (adminBtnContainer) { adminBtnContainer.classList.add('hidden'); adminBtnContainer.classList.remove('flex'); }
+                if (profileAdminBtn) { profileAdminBtn.classList.add('hidden'); profileAdminBtn.classList.remove('flex'); }
+            }
+        }
+
+        function toggleAdminState() {
+            const countrySelect = document.getElementById('adminCountry');
+            const stateContainer = document.getElementById('adminStateContainer');
+            if (countrySelect.value === 'Venezuela') { stateContainer.classList.remove('hidden'); }
+            else { stateContainer.classList.add('hidden'); document.getElementById('adminState').value = ''; }
+        }
+
+        function selectAdminCourse(course, activeBtn) {
+            document.querySelectorAll('#adminTabsContainer button').forEach(btn => {
+                btn.className = 'w-full text-left p-4 rounded-xl border transition-all duration-200 flex flex-col gap-1 bg-slate-50 border-transparent hover:bg-slate-100 border-l-4 hover:border-slate-300 text-slate-600';
+            });
+            activeBtn.className = 'w-full text-left p-4 rounded-xl border transition-all duration-200 flex flex-col gap-1 bg-white border-y-[#2db8ce]/20 border-r-[#2db8ce]/20 shadow-md border-l-4 border-l-[#2db8ce] text-slate-900';
+            document.getElementById('adminNoSelection').classList.add('hidden');
+            document.getElementById('adminFormContainer').classList.remove('hidden');
+            document.getElementById('adminErrorMessage').classList.add('hidden');
+            document.getElementById('adminSelectedCourseTitle').innerText = course.name;
+            document.getElementById('adminCourseId').value = course.id;
+            document.getElementById('adminCourseName').value = course.name;
+            document.getElementById('adminManualForm').reset();
+            document.getElementById('adminStateContainer').classList.add('hidden');
+        }
+
+        function openAdminPanel() {
+            const adminEmails = ['pablocdno@gmail.com'];
+            if (!currentUser || !adminEmails.includes(currentUser.email.trim().toLowerCase())) {
+                showNotif('Acceso Denegado', 'Solo el administrador puede ver esto.', 'error');
+                return;
+            }
+            const tabsContainer = document.getElementById('adminTabsContainer');
+            tabsContainer.innerHTML = '';
+            COURSES_DATA.forEach((course, index) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full text-left p-4 rounded-xl border transition-all duration-200 flex flex-col gap-1 ${index === 0 ? 'bg-white border-[#2db8ce] shadow-md border-l-4' : 'bg-slate-50 border-transparent hover:bg-slate-100 border-l-4 hover:border-slate-300'}`;
+                btn.innerHTML = `<span class="font-bold text-slate-800 text-sm leading-tight">${course.name}</span><span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">${course.type}</span>`;
+                btn.onclick = () => selectAdminCourse(course, btn);
+                tabsContainer.appendChild(btn);
+                if (index === 0) selectAdminCourse(course, btn);
+            });
+            openModal('adminModal');
+        }
+
+        function switchAuthTab(tab) {
+            document.getElementById('authErrorMessage').classList.add('hidden');
+            const loginTab = document.getElementById('tabLogin');
+            const regTab = document.getElementById('tabRegister');
+            const nameField = document.getElementById('nameField');
+            const countryField = document.getElementById('countryField');
+            const title = document.getElementById('authModalTitle');
+            const sub = document.getElementById('authSubText');
+            const btnIcon = document.getElementById('authBtnIcon');
+            const btnLabel = document.getElementById('authBtnLabel');
+            if (tab === 'login') {
+                loginTab.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
+                regTab.className = "flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
+                nameField.classList.add('hidden');
+                countryField.classList.add('hidden');
+                title.innerText = "Iniciar Sesión";
+                sub.innerText = "Ingresa tus datos para acceder a tus cursos.";
+                btnIcon.className = "fas fa-sign-in-alt";
+                btnLabel.innerText = "Entrar";
+            } else {
+                regTab.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
+                loginTab.className = "flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
+                nameField.classList.remove('hidden');
+                countryField.classList.remove('hidden');
+                title.innerText = "Crear Cuenta";
+                sub.innerText = "Regístrate para adquirir cursos.";
+                btnIcon.className = "fas fa-user-plus";
+                btnLabel.innerText = "Registrarse";
+            }
+        }
+
+        document.getElementById('authForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('authSubmitBtn');
+            const label = document.getElementById('authBtnLabel');
+            const icon = document.getElementById('authBtnIcon');
+            const errBox = document.getElementById('authErrorMessage');
+            const errText = document.getElementById('authErrorText');
+            const originalText = label.innerText;
+            errBox.classList.add('hidden');
+            btn.disabled = true;
+            icon.className = "fas fa-spinner fa-spin";
+            label.innerText = "PROCESANDO...";
+            const email = document.getElementById('authEmail').value.trim().toLowerCase();
+            let inputName = document.getElementById('authName').value.trim();
+            const inputPassword = document.getElementById('authPassword').value;
+            const inputCountry = document.getElementById('authCountry').value;
+            const isRegistration = !document.getElementById('nameField').classList.contains('hidden');
+            try {
+                if (isRegistration) {
+                    if (!inputPassword) {
+                        errText.innerText = "ACCESO DENEGADO: Debes crear una contraseña.";
+                        errBox.classList.remove('hidden');
+                        showNotif('Falta contraseña', 'Crea una contraseña.', 'error');
+                        btn.disabled = false; icon.className = "fas fa-user-plus"; label.innerText = originalText;
+                        return;
+                    }
+                    if (!inputCountry) {
+                        errText.innerText = "Por favor selecciona tu país.";
+                        errBox.classList.remove('hidden');
+                        showNotif('Falta país', 'Selecciona tu país.', 'error');
+                        btn.disabled = false; icon.className = "fas fa-user-plus"; label.innerText = originalText;
+                        return;
+                    }
+                    currentUser = { name: inputName, email: email, password: inputPassword, pais: inputCountry, cedula: "", telefono: "", profession: "", likedCourses: [], accessedCursos: [], downloadedFiles: [], ratings: {} };
+                    await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=register&name=${encodeURIComponent(currentUser.name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(inputPassword)}&pais=${encodeURIComponent(inputCountry)}` });
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    closeModal('authModal');
+                    showNotif('¡Bienvenido!', `Hola ${inputName}, registro exitoso.`);
+                    setTimeout(() => window.location.reload(), 700);
+                } else {
+                    if (!inputPassword) {
+                        errText.innerText = "ACCESO DENEGADO: Debes ingresar tu contraseña.";
+                        errBox.classList.remove('hidden');
+                        showNotif('Falta contraseña', 'Ingresa tu contraseña.', 'error');
+                        btn.disabled = false; icon.className = "fas fa-sign-in-alt"; label.innerText = originalText;
+                        return;
+                    }
+                    let globalUser = dbUsers[email];
+                    if (typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch (e) { globalUser = null; } }
+                    globalUser = globalUser || {};
+                    let details = dbUserDetails[email] || {};
+                    const hasGlobal = Object.keys(globalUser).length > 0;
+                    const hasDetails = details.name && details.name !== "No provisto" && details.name !== "N/A";
+                    if (!hasGlobal && !hasDetails) {
+                        errText.innerText = "ACCESO DENEGADO: El correo ingresado no se encuentra registrado.";
+                        errBox.classList.remove('hidden');
+                        showNotif('Acceso Denegado', 'Correo no encontrado.', 'error');
+                        btn.disabled = false; icon.className = "fas fa-sign-in-alt"; label.innerText = originalText;
+                        return;
+                    }
+                    if (hasGlobal && globalUser.password && globalUser.password !== inputPassword) {
+                        errText.innerText = "ACCESO DENEGADO: Contraseña incorrecta.";
+                        errBox.classList.remove('hidden');
+                        showNotif('Error', 'Contraseña incorrecta.', 'error');
+                        btn.disabled = false; icon.className = "fas fa-sign-in-alt"; label.innerText = originalText;
+                        return;
+                    }
+                    currentUser = {
+                        name: details.name && details.name !== "No provisto" && details.name !== "N/A" ? details.name : (globalUser.name || email.split('@')[0]),
+                        email: email, password: inputPassword, profession: globalUser.profession || "",
+                        likedCourses: globalUser.likedCourses || [], accessedCursos: globalUser.accessedCursos || [],
+                        downloadedFiles: globalUser.downloadedFiles || [], ratings: globalUser.ratings || {},
+                        cedula: details.cedula || "N/A", telefono: details.telefono || "N/A",
+                        pais: details.pais || "N/A", estado: details.estado || "N/A"
+                    };
+                    let myCourseNames = dbUserCourses[email] || [];
+                    myCourseNames.forEach(cName => {
+                        let found = COURSES_DATA.find(x => normalizeName(x.name) === normalizeName(cName));
+                        if (found && !currentUser.accessedCursos.includes(found.id)) currentUser.accessedCursos.push(found.id);
+                    });
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    closeModal('authModal');
+                    showNotif('¡Bienvenido de nuevo!', `Hola ${currentUser.name}.`);
+                    setTimeout(() => window.location.reload(), 700);
+                }
+            } catch (e) {
+                errText.innerText = "Error de conexión. Intenta de nuevo.";
+                errBox.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                icon.className = isRegistration ? "fas fa-user-plus" : "fas fa-sign-in-alt";
+                label.innerText = originalText;
+            }
+        };
+
+        document.getElementById('adminManualForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const courseName = document.getElementById('adminCourseName')?.value || '';
+            const studentEmail = (document.getElementById('adminEmail')?.value || '').toLowerCase().trim();
+            const errBox = document.getElementById('adminErrorMessage');
+            const errText = document.getElementById('adminErrorText');
+            errBox.classList.add('hidden');
+            if (!dbUsers[studentEmail]) {
+                errText.innerText = "El estudiante no tiene un usuario creado en la plataforma.";
+                errBox.classList.remove('hidden');
+                showNotif('Usuario no encontrado', 'El estudiante no tiene un usuario creado en la plataforma.', 'error');
+                return;
+            }
+            let isDuplicate = false;
+            if (dbUserCourses[studentEmail]) {
+                isDuplicate = dbUserCourses[studentEmail].some(c => normalizeName(c) === normalizeName(courseName));
+            }
+            if (isDuplicate) {
+                errText.innerText = "ACCESO DENEGADO: Este usuario ya se encuentra registrado en el curso de " + courseName + ".";
+                errBox.classList.remove('hidden');
+                showNotif('Usuario Existente', 'Este usuario ya está en el curso.', 'error');
+                return;
+            }
+            const btn = document.getElementById('adminSubmitBtn');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin text-lg"></i> Registrando...`;
+            const studentName = document.getElementById('adminName')?.value || '';
+            const studentCedula = document.getElementById('adminCedula')?.value || '';
+            const studentPhone = document.getElementById('adminPhone')?.value || '';
+            const studentCountry = document.getElementById('adminCountry')?.value || '';
+            const studentState = document.getElementById('adminState')?.value || '';
+            try {
+                const params = new URLSearchParams();
+                params.append('action', 'register_course_access');
+                params.append('courseName', courseName);
+                params.append('name', studentName);
+                params.append('email', studentEmail);
+                params.append('cedula', studentCedula);
+                params.append('telefono', studentPhone);
+                params.append('pais', studentCountry);
+                params.append('estado', studentState);
+                await fetch(SCRIPT_URL, { method: 'POST', body: params, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+                if (!dbUserCourses[studentEmail]) dbUserCourses[studentEmail] = [];
+                dbUserCourses[studentEmail].push(courseName);
+                if (currentUser && studentEmail === currentUser.email.toLowerCase()) {
+                    currentUser.name = studentName;
+                    const foundCourse = COURSES_DATA.find(c => normalizeName(c.name) === normalizeName(courseName));
+                    if (foundCourse && !currentUser.accessedCursos.includes(foundCourse.id)) currentUser.accessedCursos.push(foundCourse.id);
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    updateAllUI();
+                }
+                showNotif('Registro Exitoso', `${studentName} añadido a ${courseName}`);
+                document.getElementById('adminManualForm').reset();
+                document.getElementById('adminStateContainer').classList.add('hidden');
+                loadData(false);
+            } catch (error) {
+                showNotif('Error', 'No se pudo registrar al estudiante', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            calculateCourseRatings();
+            updateStudentCounts();
+            applyFilters();
+            updateAllUI();
+            if (window.lucide) lucide.createIcons();
+            setTimeout(() => { initVisitorInfo(); loadData(true); }, 300);
+            setInterval(() => {
+                if (!dataLoaded && dataLoadAttempts > 0 && dataLoadAttempts < MAX_DATA_ATTEMPTS * 3) loadData(false);
+            }, 15000);
+        });
+
+        async function initVisitorInfo() {
+            const services = ['https://get.geojs.io/v1/ip/geo.json', 'https://api.country.is', 'https://ipapi.co/json/'];
+            for (const service of services) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 4000);
+                    const res = await fetch(service, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    if (!res.ok) continue;
+                    const data = await res.json();
+                    let rawCountryName = data.country || data.countryName || data.country_name || "";
+                    let countryCode = data.country_code || data.countryCode || data.country || "";
+                    let region = data.region || data.regionName || data.stateProv || data.city || "";
+                    if (rawCountryName && rawCountryName !== "Desconocido") {
+                        let baseName = countryToSpanish[rawCountryName.toLowerCase()] || rawCountryName;
+                        if (baseName === "Venezuela" || (countryCode && countryCode.toLowerCase() === "ve")) {
+                            userCountry = region ? `Venezuela (${region})` : "Venezuela";
+                        } else { userCountry = baseName; }
+                        ping('update_stat', 'visitas_totales');
+                        ping('update_stat', 'visita_pais_' + baseName);
+                        return;
+                    }
+                } catch (e) { console.warn(`Fallo geoip ${service}:`, e.message); }
+            }
+        }
+    </script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/footer.js"></script>
+</body>
+</html>

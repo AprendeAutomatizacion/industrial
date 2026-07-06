@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compuertas Lógicas con LOGO! y Factory IO - Aprende Automatización</title>
+    <link rel="icon" href="img/AA (38).png" type="image/png">
+    
+    <!-- LIBRERÍAS Y FUENTES -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/info-page.css">
+
+    <style>
+        :root {
+            --azul-gris: #91a1af;
+            --azul-oscuro: #0f172a;
+            --celeste: #2db8ce;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .glass-dark-blue {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 184, 206, 0.25);
+            color: white;
+        }
+
+        .glass-gray-blue {
+            background: rgba(145, 161, 175, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #0f172a;
+        }
+        
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .module-card {
+            transition: all 0.3s ease;
+        }
+        .module-card:hover {
+            border-left: 4px solid var(--celeste);
+            background: #ffffff;
+        }
+
+        .btn-pulse:active {
+            transform: scale(0.97);
+            transition: transform 0.1s ease;
+        }
+
+        /* Estilos para Comentarios (Agregados) */
+        .comment-item { animation: fadeIn 0.5s ease-out forwards; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .star-rating i { cursor: pointer; transition: all 0.2s ease; color: #475569; }
+        .star-rating i.active { color: #fbbf24; transform: scale(1.1); }
+        #emoji-picker {
+            display: none; position: absolute; bottom: 100%; right: 0; z-index: 50;
+            background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 8px;
+            grid-template-columns: repeat(5, 1fr); gap: 4px;
+        }
+        #emoji-picker.show { display: grid; }
+        .emoji-btn { padding: 6px; border-radius: 6px; cursor: pointer; text-align: center; }
+        .emoji-btn:hover { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+<!-- HERO DEL CURSO -->
+<header class="relative bg-[#0f172a] text-white py-24 px-6 overflow-hidden">
+    <div class="absolute inset-0 z-0 bg-[#0f172a]">
+        <img src="img/AA (29).webp" class="w-full h-full object-cover opacity-40 mix-blend-luminosity">
+    </div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="flex flex-col lg:flex-row gap-12">
+            <!-- Info Principal -->
+            <div class="lg:w-2/3">
+                <nav class="flex gap-2 mb-6 text-[10px] font-bold uppercase tracking-widest text-[#2db8ce]">
+                    <span class="bg-blue-500/20 px-3 py-1 rounded-full">PLC</span>
+                    <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400">Nivel Básico</span>
+                    <span class="bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30">Modalidad Online</span>
+                </nav>
+                <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter font-display force-white-text">
+                    Compuertas Lógicas con <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2db8ce] to-blue-400">PLC LOGO! 8 y Factory IO</span>
+                </h1>
+                <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed">
+                    Aprende la lógica digital fundamental aplicada a controladores industriales utilizando simulaciones 3D hiperrealistas. Domina desde cero las funciones AND, OR, NOT y su implementación en TIA Portal.
+                </p>
+                <div class="flex flex-wrap gap-6 text-sm font-bold text-slate-300">
+                    <div class="flex items-center gap-2"><i class="fas fa-video text-[#2db8ce]"></i> 12 Módulos en Vídeo</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-clock text-[#2db8ce]"></i> 8 Horas de contenido</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-certificate text-[#2db8ce]"></i> Certificado Digital</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- CONTENIDO PRINCIPAL -->
+<main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="flex flex-col lg:flex-row gap-12">
+        
+        <!-- COLUMNA IZQUIERDA: DETALLES -->
+        <div class="lg:w-2/3 space-y-12">
+            
+            <!-- VIDEO PREVIEW -->
+            <section>
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 border-[#2db8ce] pl-4">Vídeo de Introducción</h2>
+                <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-slate-200 border border-slate-200">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/H6OIpcTmTz4" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </section>
+
+            <!-- RESUMEN DEL CURSO (NUEVO) -->
+            <section class="glass-light p-8 rounded-3xl border shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-4 border-l-4 border-slate-800 pl-4">Resumen del Curso</h2>
+                <div class="text-slate-600 text-sm leading-relaxed space-y-4">
+                    <p>Este curso 100% online está diseñado para introducirte al mundo de la lógica digital y la programación de Controladores Lógicos Programables (PLC) de una forma práctica, intuitiva y sumamente visual. Utilizando el entorno de LOGO! Soft Comfort y el simulador de plantas industriales en 3D Factory IO, aprenderás cómo las operaciones lógicas más esenciales gobiernan procesos industriales reales, todo esto sin necesidad de adquirir costosos equipos físicos.</p>
+                </div>
+            </section>
+
+            <!-- OBJETIVOS DEL CURSO (NUEVO) -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 border-[#2db8ce] pl-4">Objetivos del Curso</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#2db8ce]/10 flex items-center justify-center text-[#2db8ce] shrink-0"><i class="fas fa-bullseye text-sm"></i></div>
+                        <div><h4 class="font-bold text-sm text-slate-800 mb-1">Dominar la Lógica</h4><p class="text-xs text-slate-500">Comprender a fondo el funcionamiento de las compuertas lógicas básicas (AND, OR, NOT).</p></div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#2db8ce]/10 flex items-center justify-center text-[#2db8ce] shrink-0"><i class="fas fa-project-diagram text-sm"></i></div>
+                        <div><h4 class="font-bold text-sm text-slate-800 mb-1">Programación PLC</h4><p class="text-xs text-slate-500">Diseñar e implementar diagramas de control estructurados utilizando LOGO! Soft Comfort.</p></div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#2db8ce]/10 flex items-center justify-center text-[#2db8ce] shrink-0"><i class="fas fa-link text-sm"></i></div>
+                        <div><h4 class="font-bold text-sm text-slate-800 mb-1">Integración de Software</h4><p class="text-xs text-slate-500">Lograr la comunicación exitosa entre el PLC virtual y las maquetas 3D de Factory IO.</p></div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#2db8ce]/10 flex items-center justify-center text-[#2db8ce] shrink-0"><i class="fas fa-cogs text-sm"></i></div>
+                        <div><h4 class="font-bold text-sm text-slate-800 mb-1">Resolución de Problemas</h4><p class="text-xs text-slate-500">Analizar y dar solución a secuencias de automatización industrial desde cero.</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PERFIL DE INGRESO -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Perfil del Participante</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600 font-medium">
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <i class="fas fa-user-graduate text-[#2db8ce] mt-1"></i>
+                        <span>Estudiantes y profesionales de ingeniería, TSU y áreas técnicas.</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <i class="fas fa-tools text-[#2db8ce] mt-1"></i>
+                        <span>Técnicos de mantenimiento que deseen actualizarse a lógica programada.</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <i class="fas fa-bolt text-[#2db8ce] mt-1"></i>
+                        <span>Electricistas con experiencia en lógica cableada.</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <i class="fas fa-lightbulb text-[#2db8ce] mt-1"></i>
+                        <span>Entusiastas de la tecnología con ganas de aprender sobre PLCs.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- QUÉ APRENDERÁS -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 border-[#2db8ce] pl-4">¿Qué aprenderás en este curso?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="flex items-start gap-3 text-sm">
+                        <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                        <p>Configuración básica del hardware Siemens LOGO!</p>
+                    </div>
+                    <div class="flex items-start gap-3 text-sm">
+                        <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                        <p>Programación de funciones lógicas fundamentales.</p>
+                    </div>
+                    <div class="flex items-start gap-3 text-sm">
+                        <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                        <p>Enlace de datos entre LOGO! Soft Comfort y Factory IO.</p>
+                    </div>
+                    <div class="flex items-start gap-3 text-sm">
+                        <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                        <p>Simulación de procesos industriales en entornos 3D.</p>
+                    </div>
+                    <div class="flex items-start gap-3 text-sm">
+                        <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                        <p>Resolución de problemas de lógica cableada en Ladder.</p>
+                    </div>
+                    <div class="flex items-start gap-3 text-sm">
+                        <i class="fas fa-check-circle text-emerald-500 mt-1"></i>
+                        <p>Prácticas con sensores y actuadores virtuales.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TEMARIO / MÓDULOS -->
+            <section class="space-y-6">
+                <div class="flex justify-between items-end mb-6">
+                    <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 border-[#2db8ce] pl-4 font-display">Contenido del curso</h2>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">12 Clases • Acceso de por vida</span>
+                </div>
+                
+                <!-- Módulo 1 -->
+                <div class="glass-dark-blue p-8 rounded-[2rem] border resource-card overflow-hidden relative">
+                    <div class="absolute top-0 right-0 p-6 opacity-10">
+                        <i class="fas fa-microchip text-6xl"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="bg-cyan-500 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">Módulo 01</span>
+                        <h3 class="text-xl font-black uppercase font-display text-white">Introducción y Lógica Básica</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm font-medium text-slate-200">
+                        <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 text-cyan-400"></i><span>Introducción al Entorno de Trabajo de LOGO!.</span></li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 text-cyan-400"></i><span>Compuertas Básicas: Funciones AND, OR y NOT.</span></li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 text-cyan-400"></i><span>Configuración básica del hardware Siemens LOGO!.</span></li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 text-cyan-400"></i><span>Resolución de problemas de lógica cableada.</span></li>
+                        <li class="flex items-start gap-3 p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20"><i class="fas fa-play mt-1 text-cyan-400"></i><span class="font-bold">Práctica 1: Implementación de compuertas lógicas.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Módulo 2 -->
+                <div class="glass-gray-blue p-8 rounded-[2rem] border resource-card overflow-hidden relative">
+                    <div class="absolute top-0 right-0 p-6 opacity-10">
+                        <i class="fas fa-industry text-6xl"></i>
+                    </div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="bg-[#0f172a] text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">Módulo 02</span>
+                        <h3 class="text-xl font-black uppercase font-display text-[#0f172a]">Simulaciones y Proyectos 3D</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm font-medium text-[#0f172a]">
+                        <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 opacity-80"></i><span>Configuración y entorno de Factory IO.</span></li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 opacity-80"></i><span>Enlace de datos entre LOGO! Soft Comfort y Factory IO.</span></li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 opacity-80"></i><span>Simulación de procesos industriales en entornos 3D.</span></li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 opacity-80"></i><span>Prácticas con sensores y actuadores virtuales.</span></li>
+                        <li class="flex items-start gap-3 p-3 rounded-xl bg-[#0f172a] text-white"><i class="fas fa-star mt-1 text-yellow-400"></i><span class="font-bold">Proyecto Final: Control de Cinta Transportadora.</span></li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- PERFIL DE EGRESO -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <div class="mb-6">
+                    <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 border-[#2db8ce] pl-4">Perfil de Egreso</h2>
+                    <p class="text-sm text-slate-500 font-medium">Al finalizar el curso, adquirirás las siguientes competencias:</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#2db8ce] text-white mb-4 shadow-lg shadow-cyan-500/20"><i class="fas fa-brain"></i></div>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-cyan-700 font-display tracking-tight">Lógica Digital Programada</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Capacidad para implementar compuertas lógicas (AND, OR, NOT) en un PLC para resolver problemas de control.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#1877f2] text-white mb-4 shadow-lg shadow-blue-500/20"><i class="fas fa-link"></i></div>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-blue-700 font-display tracking-tight">Integración de Sistemas</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Habilidad para comunicar el PLC virtual con el simulador 3D Factory IO, enlazando la lógica con la acción.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-emerald-500 text-white mb-4 shadow-lg shadow-emerald-500/20"><i class="fas fa-cube"></i></div>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-emerald-700 font-display tracking-tight">Simulación 3D</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Competencia para probar y validar algoritmos de control en maquetas industriales virtuales hiperrealistas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certificación UPTA Unificada -->
+            <div class="mt-8">
+                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-award text-8xl text-cyan-400"></i>
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2">
+                        <img src="img/AA(41).ico" alt="Certificado UPTA" class="w-full h-full object-contain">
+                    </div>
+                    <div class="relative z-10 text-center sm:text-left">
+                        <h4 class="font-black text-base text-white mb-1 uppercase tracking-tight font-display">Certificación UPTA</h4>
+                        <p class="text-xs text-slate-300 font-medium leading-relaxed">
+                            Avalado por el Departamento de postgrado de la Universidad Politécnica Territorial del Estado Aragua.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REQUISITOS (Actualizados con Tarjeta Blanca) -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Requisitos</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-laptop text-2xl text-emerald-500 mb-2"></i>
+                        <h5 class="text-[10px] font-bold uppercase text-slate-700 mb-1">Equipos</h5>
+                        <p class="text-[10px] text-slate-500 font-medium leading-tight uppercase">PC con Windows (Gama Media para Factory IO)</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-book-open text-2xl text-blue-500 mb-2"></i>
+                        <h5 class="text-[10px] font-bold uppercase text-slate-700 mb-1">Conocimientos</h5>
+                        <p class="text-[10px] text-slate-500 font-medium leading-tight uppercase">Electricidad industrial básica (Recomendado)</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-lightbulb text-2xl text-yellow-500 mb-2"></i>
+                        <h5 class="text-[10px] font-bold uppercase text-slate-700 mb-1">Actitud</h5>
+                        <p class="text-[10px] text-slate-500 font-medium leading-tight uppercase">Ganas de aprender y resolver problemas</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RECURSOS (ACTUALIZADO) -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Recursos Incluidos</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-laptop-code text-2xl text-blue-500 mb-2"></i>
+                        <p class="text-[10px] font-bold uppercase text-slate-700">CADe SIMU & PC_SIMU</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-industry text-2xl text-green-500 mb-2"></i>
+                        <p class="text-[10px] font-bold uppercase text-slate-700">Factory IO</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-file-pdf text-2xl text-red-500 mb-2"></i>
+                        <p class="text-[10px] font-bold uppercase text-slate-700">Guía de Simbología</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DATOS GENERALES DEL CURSO -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Datos Generales del Curso</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm font-medium">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Modalidad</p>
+                        <p class="font-bold text-slate-800 leading-snug">100% Online, a tu propio ritmo.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Acceso</p>
+                        <p class="font-bold text-slate-800 leading-snug">De por vida a todo el contenido y futuras actualizaciones.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Certificación</p>
+                        <p class="font-bold text-slate-800 leading-snug">Certificado digital avalado por la UPTA al completar.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Soporte</p>
+                        <p class="font-bold text-slate-800 leading-snug">Acceso a comunidad de estudiantes y soporte del instructor.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- COLUMNA DERECHA: TARJETA DE ACCESO -->
+        <div class="lg:w-1/3 lg:sticky lg:top-0 lg:h-screen lg:flex lg:items-center">
+            <div class="w-full space-y-8">
+                <div class="bg-white rounded-[40px] shadow-2xl border border-slate-200 p-8">
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <span class="text-4xl font-black text-slate-900">$19.99</span>
+                        <span class="text-slate-400 line-through text-lg">$40.00</span>
+                    </div>
+                    <div class="space-y-3">
+                        <a href="javascript:alert('Para inscribirte, por favor contactar con el profesor Pablo Cedeño.')" class="btn-pulse w-full bg-[#2db8ce] text-white py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 shadow-xl hover:bg-[#2db8ce]/90 transition-all">
+                            <i class="fas fa-cart-plus"></i> Comprar Ahora
+                        </a>
+                        <a href="https://www.profesorpablocedeno.online/mis-cursos/arranque-de-motores-con-contactores/contactores2" class="btn-pulse w-full border-2 border-[#2db8ce] text-[#2db8ce] py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 hover:bg-[#2db8ce]/5 transition-all">
+                            <i class="fas fa-sign-in-alt"></i> Materiales del Curso
+                        </a>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-slate-200 space-y-3">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-3 text-white flex items-center gap-3 shadow-lg border border-blue-400/50">
+                            <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner shrink-0"><i class="fas fa-laptop text-sm"></i></div>
+                            <div><h4 class="font-bold text-[9px] text-blue-100 uppercase tracking-widest mb-0.5">Modalidad</h4><p class="font-black text-xs uppercase tracking-tighter text-white leading-none">100% Online</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script>
+    // --- CONFIGURACIÓN DEL CURSO ---
+    // El valor de CURSO_ID_DESCRIPTIVO será el nombre de la pestaña en tu Excel.
+    const CURSO_ID_DESCRIPTIVO = 'Compuertas Logicas LOGO';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwCjFpx11GrxAgOP9P2GUaSF_aMRTmoIZrZqQZ99pObbLiKvtXASdtVAMpOvR6hpz2U/exec';
+
+    const form = document.getElementById('comment-form');
+    const commentsContainer = document.getElementById('comments-container');
+    const stars = document.querySelectorAll('#star-container i');
+    const estrellasInput = document.getElementById('estrellas-input');
+
+    function formatDisplayDate(dateVal) {
+        if (!dateVal) return '';
+        const date = new Date(dateVal);
+        return isNaN(date.getTime()) ? dateVal : date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const val = star.getAttribute('data-value');
+            estrellasInput.value = val;
+            stars.forEach(s => s.classList.toggle('active', s.getAttribute('data-value') <= val));
+        });
+    });
+    stars[4].click(); // Iniciar con 5 estrellas
+
+    function toggleEmojiPicker() { document.getElementById('emoji-picker').classList.toggle('show'); }
+    function insertEmoji(emoji) {
+        const textarea = document.getElementById('comentario');
+        textarea.value += emoji; textarea.focus();
+        document.getElementById('emoji-picker').classList.remove('show');
+    }
+
+    async function loadComments() {
+        commentsContainer.innerHTML = createSkeletonHTML('comment', 2);
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=read&id_curso=${encodeURIComponent(CURSO_ID_DESCRIPTIVO)}&t=${Date.now()}`);
+            const data = await response.json();
+            commentsContainer.innerHTML = '';
+            if (Array.isArray(data) && data.length > 0) {
+                data.reverse().forEach(c => {
+                    const starsHtml = Array.from({length: 5}, (_, i) => `<i class="fas fa-star text-[10px] ${i < c.estrellas ? 'text-yellow-400' : 'text-slate-200'}"></i>`).join('');
+                    const div = document.createElement('div');
+                    div.className = 'comment-item bg-white p-5 rounded-2xl border border-slate-100 shadow-sm mb-4';
+                    div.innerHTML = `
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">${c.nombre ? c.nombre.charAt(0).toUpperCase() : '?'}</div>
+                                <div><span class="font-bold text-slate-800 text-[11px] block">${c.nombre}</span><div class="flex gap-0.5">${starsHtml}</div></div>
+                            </div>
+                            <span class="text-slate-400 text-[9px] font-bold uppercase">${formatDisplayDate(c.fecha)}</span>
+                        </div>
+                        <p class="text-slate-600 text-xs leading-relaxed italic pl-11">"${c.comentario}"</p>`;
+                    commentsContainer.appendChild(div);
+                });
+            } else {
+                commentsContainer.innerHTML = '<p class="text-slate-400 text-center py-4 text-[10px] uppercase font-bold">Sé el primero en comentar.</p>';
+            }
+        } catch (e) { console.error(e); }
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        const msgStatus = document.getElementById('msg-status');
+        btn.disabled = true;
+        msgStatus.innerText = "Publicando...";
+        msgStatus.classList.remove('hidden');
+        
+        const params = new URLSearchParams(new FormData(form));
+        params.append('estrellas', estrellasInput.value);
+        params.append('id_curso', CURSO_ID_DESCRIPTIVO);
+
+        try {
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: params });
+            msgStatus.innerText = "¡Comentario enviado!";
+            msgStatus.style.color = "#10b981";
+            form.reset();
+            stars[4].click();
+            setTimeout(() => { loadComments(); msgStatus.classList.add('hidden'); }, 2000);
+        } catch (err) {
+            msgStatus.innerText = "Error al enviar.";
+            msgStatus.style.color = "#ef4444";
+        } finally { btn.disabled = false; }
+    });
+
+    document.addEventListener('DOMContentLoaded', loadComments);
+</script>
+<script src="js/navbar.js"></script>
+</body>
+</html>

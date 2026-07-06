@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Automatización - Mis Cursos + Progreso integrado</title>
+    <link rel="icon" href="img/AA (38).webp" type="image/webp">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1877f2',
+                        secondary: '#2db8ce',
+                        dark: '#0f172a',
+                        accent: '#91a1af',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root { --azul-gris: #617287; --azul-oscuro: #0f172a; --celeste: #2db8ce; --fb-blue: #1877f2; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; color: #1e293b; scroll-behavior: smooth; overflow-x: clip; }
+        .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .animate-on-hover:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); filter: brightness(1.05); }
+        .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translate(0,0,0) scale(1); }
+        .reveal-up { transform: translateY(40px); }
+        .btn-glow { position: relative; overflow: hidden; transition: all 0.3s ease; }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .btn-glow::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s; }
+        .btn-glow:hover::after { left: 100%; }
+        .course-card { 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            cursor: pointer; 
+        }
+        .course-card:hover { transform: translateY(-8px) scale(1.02); }
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        .slide-up { animation: slideUp 0.3s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2db8ce; border-radius: 10px; }
+        #notification { position: fixed; top: 20px; right: 20px; transform: translateX(120%); transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 100000; }
+        #notification.show { transform: translateX(0); }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 99999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content { background: white; border-radius: 32px; width: 90%; max-width: 420px; padding: 0px; transform: translateY(30px) scale(0.95); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
+        #page-cursos, #page-home, #page-rendimiento { display: none; }
+        #page-mis-cursos { display: block; min-height: 100vh; }
+        #page-curso-detalle { display: none; min-height: 100vh; }
+        #page-progreso { display: none; min-height: 100vh; }
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .image-zoom-container { overflow: hidden; border-radius: 24px; }
+        .image-zoom-container img { transition: transform 0.7s ease; }
+        .image-zoom-container:hover img { transform: scale(1.1); }
+        #floatingBackBtn { position: fixed; top: 88px; left: 16px; z-index: 200; display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50px; color: white; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); opacity: 0; transform: translateX(-20px); pointer-events: none; white-space: nowrap; }
+        #floatingBackBtn.visible { opacity: 1; transform: translateX(0); pointer-events: auto; }
+        #floatingBackBtn:hover { background: rgba(45, 184, 206, 0.9); border-color: rgba(255, 255, 255, 0.3); transform: translateX(0) scale(1.05); box-shadow: 0 12px 40px rgba(45, 184, 206, 0.4); }
+        #floatingBackBtn:active { transform: translateX(0) scale(0.95); transition: all 0.1s ease; }
+        #floatingBackBtn i { font-size: 14px; transition: transform 0.3s ease; }
+        #floatingBackBtn:hover i { transform: translateX(-3px); }
+        @media (max-width: 640px) { #floatingBackBtn { top: 80px; left: 10px; padding: 8px 14px; font-size: 11px; gap: 6px; border-radius: 40px; } #floatingBackBtn i { font-size: 12px; } }
+        
+        /* ===== BORDES Y RESPLANDORES POR NIVEL ===== */
+        .course-card-level-basico { border: 2px solid rgba(6, 182, 212, 0.35); }
+        .course-card-level-basico:hover { border-color: #06b6d4; box-shadow: 0 0 20px rgba(6, 182, 212, 0.35); }
+        .course-card-level-intermedio { border: 2px solid rgba(168, 85, 247, 0.35); }
+        .course-card-level-intermedio:hover { border-color: #a855f7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.35); }
+        .course-card-level-avanzado { border: 2px solid rgba(245, 158, 11, 0.35); }
+        .course-card-level-avanzado:hover { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.35); }
+    </style>
+</head>
+<body id="mis-cursos-page" class="custom-scrollbar">
+    <button id="floatingBackBtn" onclick="handleFloatingBack()" title="Volver"><i class="fas fa-arrow-left"></i><span id="floatingBackText">Volver</span></button>
+
+    <div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20"><i id="notifIcon" class="fas fa-info-circle text-2xl"></i><div><p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p><p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p></div></div><div id="userProfileModal" class="modal-overlay"><div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl"><div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative"><button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button><div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div><h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3><p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p><div class="mt-4 flex flex-wrap items-center justify-center gap-2"><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-phone text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera"><i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span></div></div><div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="profileProfession">Sin Perfil</span></div></div><div class="p-6 bg-white text-left"><button onclick="logoutUser()" class="w-full py-4 bg-red-50 text-red-600 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm flex items-center justify-center gap-3"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button></div></div></div><div id="authModal" class="modal-overlay"><div class="modal-content !p-8 relative"><button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button><div class="text-center mb-6"><img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3"><h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3><p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p></div><div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left"><i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i><span id="authErrorText" class="leading-tight">Mensaje de error</span></div><div class="flex bg-slate-100 rounded-xl p-1 mb-6"><button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button><button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button></div><form id="authForm" class="space-y-4 text-left"><div id="nameField" class="space-y-1 hidden"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label><div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label><div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1" id="passwordFieldContainer"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label><div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2"><i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span></button></form></div></div>
+
+    <!-- Página Mis Cursos -->
+    <div id="page-mis-cursos" class="page-content">
+        <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
+            <div class="absolute inset-0 z-0 opacity-20">
+                <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
+            </div>
+            <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="absolute right-4 top-4 text-white/5 text-8xl pointer-events-none z-0 md:hidden">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="absolute right-0 top-0 text-white/5 text-8xl"><i data-lucide="graduation-cap"></i></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
+                <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
+                    <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">PLC</span>
+                    <span class="bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30 backdrop-blur-md">Electricidad</span>
+                    <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Aprendizaje</span>
+                    <span id="page-view-counter" class="hidden items-center gap-1.5 bg-slate-500/20 px-3 py-1 rounded-full text-slate-300 border border-slate-500/30 backdrop-blur-md"><i class="fas fa-eye"></i> <span>0</span></span>
+                </div>
+                <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">MIS CURSOS <span class="text-secondary">ADQUIRIDOS</span></h1>
+                <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">Accede a toda la información, ejercicios, manuales y contenido de los cursos que has adquirido.</p>
+            </div>
+        </header>
+        <main class="relative z-10 flex-grow max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
+            <div class="mb-10">
+                <div id="misCursosUserInfo" class="flex flex-col lg:flex-row gap-6 w-full hidden">
+                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-5 w-full p-6 sm:p-8 rounded-3xl border border-white/20 shadow-2xl bg-white/10 backdrop-blur-md overflow-hidden">
+                        <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div><div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 bg-[#2db8ce] rounded-full flex items-center justify-center text-white text-2xl sm:text-3xl font-black shadow-xl border-4 border-white/10 flex-shrink-0" id="mcProfileInitials">U</div><div class="relative z-10 text-center md:text-left overflow-hidden flex-grow w-full">
+                            <span class="text-slate-400 text-xs md:text-sm font-black uppercase tracking-[0.2em] block mb-1">Estudiante</span>
+                            <h3 class="text-white font-black text-2xl md:text-3xl leading-tight truncate uppercase tracking-tight mb-1" id="mcProfileName">Usuario</h3>
+                            <p class="text-[#2db8ce] text-xs sm:text-sm font-bold uppercase tracking-widest truncate mb-4" id="mcProfileEmail">correo@ejemplo.com</p>
+                            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3">
+                                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfileCedula">...</span></div>
+                                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-phone text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfilePhone">...</span></div>
+                                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-globe text-[#2db8ce] text-[10px]" id="mcProfileGlobeIcon"></i><img id="mcProfileFlag" src="" class="w-4 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera"><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfileLocation">...</span></div>
+                                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfileProfession">Sin Perfil</span></div>
+                            </div>
+                            <div class="mt-6 pt-5 border-t border-white/10">
+                                <div class="grid grid-cols-3 gap-2 sm:gap-4 w-full">
+                                    <div class="text-center md:text-left">
+                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Cursos Online</span>
+                                        <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
+                                            <i class="fas fa-laptop text-teal-400 text-sm"></i> <span id="mcStatOnline">0</span>
+                                        </span>
+                                    </div>
+                                    <div class="text-center md:text-left border-l border-white/10 pl-2 sm:pl-4">
+                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Presenciales</span>
+                                        <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
+                                            <i class="fas fa-users text-purple-400 text-sm"></i> <span id="mcStatPresencial">0</span>
+                                        </span>
+                                    </div>
+                                    <div class="text-center md:text-left border-l border-white/10 pl-2 sm:pl-4">
+                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Materias</span>
+                                        <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
+                                            <i class="fas fa-book text-amber-400 text-sm"></i> <span id="mcStatMaterias">0</span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="mt-2 text-center md:text-left text-slate-300 text-xs font-medium">
+                                    <span id="mcStatResumen">0 cursos en 0 materias</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="coursesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"></div>
+            <div id="noResultsMisCursos" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200 shadow-sm max-w-2xl mx-auto"></div>
+        </main>
+    </div>
+
+    <!-- Página Detalle de Curso -->
+    <div id="page-curso-detalle" class="page-content"><div id="detalle-container" class="pb-24 relative z-10"></div></div>
+
+    <!-- Página Progreso -->
+    <div id="page-progreso" class="page-content relative">
+        <div class="absolute inset-0 z-0 bg-[#0f172a]">
+            <img src="img/AA (7).gif" alt="Fons de progrés" class="w-full h-full object-cover opacity-40 mix-blend-luminosity">
+        </div>
+        <div class="relative z-10 pt-[90px] px-4 pb-12 max-w-5xl mx-auto">
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl mb-8 relative">
+                <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
+                <div class="relative z-10 flex flex-col md:flex-row justify-between gap-6">
+                    <div><h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2><p class="text-white text-xl font-bold" id="dash-student-name">-</p></div>
+                    <div class="flex gap-4"><div><p class="text-slate-400 text-xs uppercase font-black tracking-widest">Cédula</p><p class="text-white font-bold" id="dash-student-id">-</p></div><div><p class="text-slate-400 text-xs uppercase font-black tracking-widest">Correo</p><p class="text-white font-bold" id="dash-student-email">-</p></div></div>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white/5 p-6 rounded-2xl text-center"><h2 class="text-slate-400 text-xs uppercase mb-4 font-black tracking-widest">Progreso General</h2><div class="w-32 h-32 mx-auto mb-4"><canvas id="progressChart"></canvas></div><div class="text-4xl font-bold text-white" id="dash-percentage">0%</div></div>
+                <div id="seguimiento-card" class="bg-primary/20 p-6 rounded-2xl">
+                    <h2 class="font-bold text-xl text-white uppercase tracking-tight">Seguimiento automático</h2>
+                    <div class="mt-3 space-y-2">
+                        <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-check text-green-400"></i><span>Inscripción: ---</span></p>
+                        <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400"></i><span>Culminación: ---</span></p>
+                        <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-percentage text-yellow-400"></i><span>Promedio final: ---</span></p>
+                    </div>
+                    <p class="text-slate-200 text-[10px] uppercase font-bold mt-3 opacity-60">El progreso se sincroniza con las evaluaciones.</p>
+                </div>
+            </div>
+            <div id="certificate-btn-container" class="hidden mb-6 flex justify-center">
+                <button onclick="generateCertificate()" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-3"><i class="fas fa-certificate text-xl"></i> Ver Certificado</button>
+            </div>
+            <div class="bg-black/40 backdrop-blur-md p-6 rounded-2xl relative shadow-xl border border-white/5">
+                <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-4">
+                    <h3 class="text-white font-black uppercase tracking-widest text-xs">Módulos del curso</h3>
+                    <button onclick="manualRefreshProgress()" class="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white rounded-full px-3 sm:px-4 py-1.5 shadow-md transition-all active:scale-95 font-black text-[10px] uppercase tracking-wider"><i id="refresh-progress-icon" class="fas fa-sync-alt"></i> Actualizar</button>
+                </div>
+                <div id="dash-lessons-list" class="space-y-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+    <script>
+        const SCRIPT_URL = window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxk8EW1EvIi0WjIOJ6iQYX6nF735XMvDUKgcgsvaKcgKZYiHnyeYTPTO-NSl3BXewm8/exec';
+        
+        let currentUser = JSON.parse(localStorage.getItem('user')) || null;
+        let dbUsers = {}, globalStats = {};
+        let dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {}; 
+        let studentCountsPerCourse = {}; 
+        let courseRatings = {};
+        let userProgress = {};
+        let currentViewedCourseId = null;
+        let currentProgressCourseId = 1;
+        
+        let latestEnrollmentDates = {};
+        let latestCompletionDates = {};
+
+        const COURSES_DATA = [
+            { id: 1, name: "Arranque de motores con contactores", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "arranque-contactores-info.html", aulaLink: "aula-arranque-contactores.html", totalLessons: 5, resumen: "Este curso está diseñado para brindarte los conocimientos teóricos y prácticos sobre el arranque y control de motores asíncronos trifásicos utilizando contactores.", manuales: [ {name: "Manual: Arranque Directo (PDF)", link: "https://drive.google.com/file/d/1ffP5ete5u4Sio_zgnudmXrYrg800Cerk/view?usp=drive_link"}, {name: "Manual: Selección de Giro (PDF)", link: "https://drive.google.com/file/d/1nE_PVCGs-A6zFvBN1BXdl1bhJVAehavv/view?usp=drive_link"}, {name: "Manual: Arranque Estrella Delta (PDF)", link: "https://drive.google.com/file/d/1NkOuj0TdfqaN1Dxsh8Bg9XHkZyfZ1sgP/view?usp=drive_link"}, {name: "Manual: Arranque Rotórico (PDF)", link: "https://drive.google.com/file/d/1jOr6szSf-HzX0urZkdgDoe5hAW1rxmzS/view?usp=drive_link"} ], ejercicios: [ {name: "Práctica: Arranque Directo", link: "https://drive.google.com/file/d/1AXMe7TN17-d2_JORuMVSNLRn-7xWYYZH/view?usp=drive_link"}, {name: "Práctica: Selección de Giro", link: "https://drive.google.com/file/d/1wkB6CO8sLQJFr2xMJQXFUfHsvkVfUG2T/view?usp=drive_link"}, {name: "Práctica: Arranque Estrella Delta", link: "https://drive.google.com/file/d/1_q7jTpvQovCuF21HUBH5aFI7yZE8KmMw/view?usp=drive_link"}, {name: "Práctica: Arranque Rotórico", link: "https://drive.google.com/file/d/1CoNpKpgzv8XJmKkaIsRqnl0uIenHBUKw/view?usp=drive_link"} ], moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
+            { id: 2, name: "Arranque de motores con PLC LOGO", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "arranque-plc-logo-info.html", aulaLink: "aula-arranque-plc-logo.html", totalLessons: 5, resumen: "Descubre cómo dar el salto de la lógica cableada tradicional a la lógica programada.", manuales: [{name: "Introducción a LOGO! Soft Comfort", link: "#"}], ejercicios: [{name: "Arranque directo con PLC LOGO!", link: "#"}], moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
+            { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 15.00, link: "https://www.profesorpablocedeno.online/cursos/gf-con-logo-y-factory-io", totalLessons: 4, resumen: "Una inmersión profunda en las funciones lógicas y bloques especiales de LOGO! usando un entorno 3D realista.", manuales: [{name: "Guía de conexión Factory I/O - LOGO!", link: "#"}], ejercicios: [{name: "Escenario 1: Llenado de Tanque", link: "#"}] },
+            { id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "https://www.profesorpablocedeno.online/cursos/contactores", totalLessons: 6, resumen: "En este curso general de automatización, nos enfocaremos 100% en el control electromagnético.", manuales: [{name: "Normativa de Simbología DIN/IEC", link: "#"}], ejercicios: [{name: "Arranque directo", link: "#"}] },
+            { id: 5, name: "Automatización con PLC LOGO!", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/arranque-de-motores-con-plc-logo", totalLessons: 5, resumen: "Conviértete en un experto programando LOGO!. Abordaremos temporizadores, contadores, marcas, y funciones analógicas.", manuales: [{name: "Manual de Programación FUP y KOP", link: "#"}], ejercicios: [{name: "Práctica: Control de Bomba Alternada", link: "#"}] },
+            { id: 6, name: "Automatización con PLC – Método Grafcet", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", totalLessons: 6, resumen: "Supera la complejidad de la lógica de programación mediante el GRAFCET.", manuales: [{name: "Reglas de Evolución del GRAFCET", link: "#"}], ejercicios: [{name: "Automatización de Semáforo", link: "#"}] },
+            { id: 7, name: "10 ejercicios de aplicaciones con Contactores", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "#", totalLessons: 10, resumen: "Un compendio de resolución de problemas reales. No es teoría, es 100% práctica.", manuales: [{name: "Planos resueltos (CadeSIMU)", link: "#"}], ejercicios: [{name: "Descargar Cuadernillo de 10 Ejercicios (PDF)", link: "#"}] },
+            { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO!", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "#", totalLessons: 10, resumen: "Aplica toda tu lógica programada. Te entregamos 10 escenarios industriales.", manuales: [{name: "Pistas y Soluciones de Programación", link: "#"}], ejercicios: [{name: "Tres cilindros (Archivo ZIP)", link: "#"}] },
+            { id: 9, name: "Automatización Industrial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (9).WEBP", category: "Automatización", level: "Básico", cost: 100.00, link: "https://www.profesorpablocedeno.online/cursos/industrial", totalLessons: 3, resumen: "Curso presencial donde palparás los equipos físicos.", manuales: [{name: "Guía de Seguridad en el Taller", link: "#"}], ejercicios: [{name: "Hoja de Montaje en Panel", link: "#"}] },
+            { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/mis-cursos/contactores", totalLessons: 5, resumen: "Talleres en laboratorio físico. Realizaremos montajes en gabinetes didácticos.", manuales: [{name: "Guía de Uso del Multímetro", link: "#"}], ejercicios: [{name: "Laboratorio: Mando a Distancia", link: "#"}] },
+            { id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-logo", totalLessons: 4, resumen: "Aprende a conectar las entradas y salidas de un PLC físico.", manuales: [{name: "Diagrama de Conexión NPN y PNP", link: "#"}], ejercicios: [{name: "Laboratorio: Control de Llenado con Sensores", link: "#"}] },
+            { id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", totalLessons: 6, resumen: "Controlaremos estaciones didácticas neumáticas implementando programación basada en Grafcet.", manuales: [{name: "Esquemas Neumáticos del Laboratorio", link: "#"}], ejercicios: [{name: "Laboratorio: Secuencia Neumática A+ B+ A- B-", link: "#"}] },
+            { id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 150.00, link: "#", totalLessons: 1, resumen: "Diplomado intensivo en automatización con contactores.", manuales: [], ejercicios: [], moduleNames: ["Diplomado en Contactores"] },
+            { id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "#", totalLessons: 1, resumen: "Diplomado avanzado en PLCs.", manuales: [], ejercicios: [], moduleNames: ["Diplomado en PLC"] },
+            { id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 1, resumen: "Maestría en automatización y control avanzado.", manuales: [], ejercicios: [], moduleNames: ["Módulo Maestría Avanzada"] },
+            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 1, resumen: "Maestría en automatización y control aplicado.", manuales: [], ejercicios: [], moduleNames: ["Módulo Maestría Aplicada"] },
+            { id: 17, name: "Taller de Tecnología Eléctrica III", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii", totalLessons: 1, resumen: "Seguimiento de notas del taller de Tecnología Eléctrica III. Consulta tus evaluaciones y avances.", manuales: [], ejercicios: [], moduleNames: ["Notas del Taller"] },
+            { id: 18, name: "Proyecto V", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html", totalLessons: 1, resumen: "Notas del Proyecto V.", manuales: [], ejercicios: [], moduleNames: ["Avances del Proyecto"] }
+        ];
+
+        const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
+        const normalizeName = s => (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^\w\s]/g,'').replace(/\s+/g,' ');
+        const splitCourseNames = raw => { if(!raw) return []; if(!Array.isArray(raw)) raw = [raw]; let r = []; raw.forEach(v => { if(typeof v==='string') r.push(...v.split(/[,;\n]+/).map(s=>s.trim()).filter(s=>s!=="")); else if(v) r.push(v); }); return r; };
+
+        function showNotif(title, msg, type='success'){ const n=document.getElementById('notification'), i=document.getElementById('notifIcon'); document.getElementById('notifTitle').innerText=title; document.getElementById('notifMsg').innerText=msg; n.classList.remove('bg-teal-600','bg-blue-600','bg-red-600'); if(title.toLowerCase().includes('error')||type==='error'){ n.classList.add('bg-red-600'); i.className='fas fa-exclamation-circle text-2xl'; } else if(type==='info'){ n.classList.add('bg-blue-600'); i.className='fas fa-info-circle text-2xl'; } else { n.classList.add('bg-teal-600'); i.className='fas fa-check-circle text-2xl'; } n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),4000); }
+        function openModal(id){ document.getElementById(id).classList.add('active'); }
+        function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+        function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+        function ping(action, key) { try { if (navigator.sendBeacon) { navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key})); } else { fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` }).catch(err => console.error('Ping fallback failed:', err)); } } catch (e) { console.error('Error al intentar enviar ping:', e); } }
+        function showToastDownload(itemName){ const c=document.getElementById('toastContainer'); const t=document.createElement('div'); t.className='bg-dark text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 slide-up min-w-[300px] border border-slate-700 pointer-events-auto z-[9999]'; t.innerHTML=`<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center animate-pulse"><i data-lucide="arrow-down" class="w-4 h-4 text-white"></i></div><div class="text-left"><h4 class="text-sm font-bold">Descargando</h4><p class="text-xs text-slate-300">${itemName}</p></div>`; c.appendChild(t); if(window.lucide) lucide.createIcons(); setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300); },4000); }
+
+        function parseProgressString(raw,totalLessons){
+            if(!raw||raw.trim()==="") return {completed:0,total:totalLessons,percent:0,scores:[],avgScore:0};
+            let safe=String(raw).trim().replace(/'/g,'"');
+            let scores=new Array(totalLessons).fill(null);
+            let completed=0;
+            try{
+                const p=JSON.parse(safe);
+                if(p&&typeof p==='object'){
+                    if(p.progress&&Array.isArray(p.progress)) completed=p.progress.length;
+                    else if(typeof p.completed==='number') completed=p.completed;
+                    const src=p.scores||p;
+                    if(Array.isArray(src)){ for(let i=0;i<src.length&&i<totalLessons;i++) scores[i]=Number(src[i]); }
+                    else if(typeof src==='object'){ for(let k in src){ let idx=parseInt(k); if(!isNaN(idx)&&idx>=0&&idx<totalLessons) scores[idx]=Number(src[k]); } }
+                }
+            }catch(e){
+                if(safe.includes(',')){ let parts=safe.split(','); parts.forEach((p,i)=>{ if(i<totalLessons) scores[i]=Number(p.trim()); }); }
+                else { let n=parseFloat(safe); if(!isNaN(n)){ if(safe.includes('%')||n<=100) completed=Math.round((n/100)*totalLessons); else completed=n; scores[0]=n; } }
+            }
+            let valid=scores.filter(n=>n!==null&&!isNaN(n));
+            if(completed===0&&valid.length>0) completed=valid.length;
+            completed=Math.min(Math.max(0,completed),totalLessons);
+            const avg=valid.length>0?Math.round(valid.reduce((a,b)=>a+b,0)/valid.length):0;
+            let percent=totalLessons>0?Math.round((completed/totalLessons)*100):0;
+            return {completed,total:totalLessons,percent,scores,avgScore:avg};
+        }
+
+        function normalizeDateString(raw) { if (!raw || raw === "") return ""; let str = String(raw).trim(); if (str.includes("T")) str = str.split("T")[0]; else str = str.split(" ")[0]; if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str; const parts = str.split(/[/\-.]/); if (parts.length === 3) { let day = parseInt(parts[0], 10); let month = parseInt(parts[1], 10); let year = parseInt(parts[2], 10); if (parts[0].length === 4) { year = parseInt(parts[0], 10); day = parseInt(parts[2], 10); } if (!isNaN(day) && !isNaN(month) && !isNaN(year)) { const y = year < 100 ? 2000 + year : year; return `${y}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`; } } const num = Number(str); if (!isNaN(num) && num > 0) { const d = new Date(num > 1e12 ? num : num * 1000); if (!isNaN(d.getTime())) return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2); } const d = new Date(raw); if (!isNaN(d.getTime())) return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2); return raw; }
+        function extractDateOnly(rawStr) { if (!rawStr || String(rawStr).trim() === "") return null; let str = String(rawStr).trim(); if (str.includes('T')) return str.split('T')[0]; return str.split(' ')[0]; }
+        function formatCertDate(dateStr) { if (!dateStr) return "[En proceso de registro en sistema]"; if (dateStr.includes("T")) dateStr = dateStr.split("T")[0]; let parts = dateStr.split(/[/\-]/); if (parts.length === 3) { let d = parseInt(parts[0], 10); let m = parseInt(parts[1], 10); let y = parseInt(parts[2], 10); if (parts[0].length === 4) { y = parseInt(parts[0], 10); d = parseInt(parts[2], 10); } if (y < 100) y += 2000; const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]; let mIndex = m - 1; if(mIndex >= 0 && mIndex < 12 && !isNaN(d) && !isNaN(y)) return `${d} de ${monthNames[mIndex]} de ${y}`; } return dateStr; }
+        function findDateInObject(normalizedObj, courseName) { if (!normalizedObj || !courseName) return null; const normCourse = normalizeName(courseName); for (let key in normalizedObj) if (normalizeName(key) === normCourse) return normalizedObj[key]; return null; }
+
+        async function loadData(){
+            if (typeof showSyncIndicator === 'function') showSyncIndicator('Conectando con la base de datos...', 'loading');
+            try{
+                const res=await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
+                const data=await res.json();
+                if(data.status==='success'){
+                    dbUsers=data.users||{}; globalStats=data.stats||{}; dbUserCourses=data.userCourses||{}; dbUserDetails=data.userDetails||{}; dbUserProgress=data.userProgress||{};
+                    let enrollmentDatesBackend = data.userCourseEnrollmentDates || {};
+                    let completionDatesBackend = data.userCourseCompletionDates || {};
+                    calculateCourseRatings(); updateStudentCounts();
+                    if(currentUser&&currentUser.email){
+                        const email=currentUser.email.toLowerCase();
+                        let myCourseNamesRaw=dbUserCourses[email]||[];
+                        let myCourseNames=splitCourseNames(myCourseNamesRaw);
+                        let myCourseIds=[];
+                        myCourseNames.forEach(cName=>{
+                            let nn=normalizeName(cName);
+                            let found=COURSES_DATA.find(x=>normalizeName(x.name)===nn);
+                            if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
+                            if(found) myCourseIds.push(found.id);
+                        });
+                        let globalUser=dbUsers[email]||{};
+                        if(typeof globalUser==='string'){ try{ globalUser=JSON.parse(globalUser); }catch(e){ globalUser={}; } }
+                        let details=dbUserDetails[email]||{};
+                        let existingIds=Array.isArray(globalUser.accessedCursos)?globalUser.accessedCursos:(currentUser.accessedCursos||[]);
+                        currentUser.accessedCursos=[...new Set([...existingIds,...myCourseIds])];
+                        if(details.name&&details.name!="No provisto"&&details.name!="N/A") currentUser.name=details.name;
+                        currentUser.cedula=details.cedula||currentUser.cedula||"N/A";
+                        currentUser.telefono=details.telefono||currentUser.telefono||"N/A";
+                        currentUser.pais=details.pais||currentUser.pais||"N/A";
+                        currentUser.estado=details.estado||currentUser.estado||"N/A";
+                        currentUser.downloadedFiles=globalUser.downloadedFiles||currentUser.downloadedFiles||[];
+                        currentUser.ratings=globalUser.ratings||currentUser.ratings||{};
+                        currentUser.profession=globalUser.profession||currentUser.profession||"";
+                        currentUser.likedCourses=globalUser.likedCourses||currentUser.likedCourses||[];
+                        currentUser.registrationDate = globalUser.registrationDate || currentUser.registrationDate || '';
+                        const backendDatesForEmail = enrollmentDatesBackend[email] || {};
+                        const backendCompDatesForEmail = completionDatesBackend[email] || {};
+                        latestEnrollmentDates = backendDatesForEmail;
+                        latestCompletionDates = backendCompDatesForEmail; 
+                        localStorage.setItem('user',JSON.stringify(currentUser));
+                        updateAllUI(); fetchProgressForAllCourses(); renderMisCourses();
+                    } else { renderMisCourses(); }
+                    if (typeof showSyncIndicator === 'function') showSyncIndicator('Datos sincronizados', 'success');
+                }
+            } catch(e){ 
+                console.error("Error al cargar la data global:",e); 
+                if (typeof showSyncIndicator === 'function') showSyncIndicator('Error de conexión', 'error');
+            }
+        }
+
+        async function silentRefreshData(){
+            if(!currentUser) return;
+            try{
+                const res=await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
+                const data=await res.json();
+                if(data.status==='success'){
+                    dbUserProgress=data.userProgress||{};
+                    globalStats=data.stats||{};
+                    let enrollmentDatesBackend = data.userCourseEnrollmentDates || {};
+                    let completionDatesBackend = data.userCourseCompletionDates || {};
+                    if (currentUser.email) {
+                        const emailKey = currentUser.email.toLowerCase();
+                        const backendDatesForEmail = enrollmentDatesBackend[emailKey] || {};
+                        const backendCompDatesForEmail = completionDatesBackend[emailKey] || {};
+                        latestEnrollmentDates = backendDatesForEmail;
+                        latestCompletionDates = backendCompDatesForEmail;
+                    }
+                    fetchProgressForAllCourses();
+                    if(document.getElementById('page-curso-detalle').style.display==='block'&&currentViewedCourseId) viewCourseDetail(currentViewedCourseId);
+                    if(document.getElementById('page-progreso').style.display==='block') updateProgressDashboard();
+                }
+            } catch(e){ console.error("Error al actualizar progreso en segundo plano:",e); }
+        }
+
+        async function manualRefreshProgress(){
+            const icon=document.getElementById('refresh-progress-icon');
+            if(icon) icon.classList.add('fa-spin');
+            await silentRefreshData();
+            if(icon) icon.classList.remove('fa-spin');
+            showNotif('Actualizado','Tu progreso ha sido sincronizado con la base de datos.','success');
+        }
+
+        function calculateCourseRatings(){
+            courseRatings={};
+            COURSES_DATA.forEach(c=>courseRatings[c.id]={sum:0,count:0,avg:"5.0"});
+            for(const email in dbUsers){
+                let u=dbUsers[email]; if(typeof u==='string'){ try{ u=JSON.parse(u); }catch(e){ u={}; } }
+                if(u&&u.ratings){ for(const cid in u.ratings){ if(courseRatings[cid]){ courseRatings[cid].sum+=u.ratings[cid]; courseRatings[cid].count+=1; } } }
+            }
+            for(const cid in courseRatings){ if(courseRatings[cid].count>0) courseRatings[cid].avg=(courseRatings[cid].sum/courseRatings[cid].count).toFixed(1); }
+        }
+
+        function updateStudentCounts(){
+            COURSES_DATA.forEach(c=>studentCountsPerCourse[c.id]=0);
+            for(const email in dbUserCourses){
+                let names=splitCourseNames(dbUserCourses[email]);
+                names.forEach(courseName=>{
+                    let nn=normalizeName(courseName);
+                    let found=COURSES_DATA.find(x=>normalizeName(x.name)===nn);
+                    if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
+                    if(found) studentCountsPerCourse[found.id]+=1;
+                });
+            }
+        }
+
+        async function syncUserProgressToExcel(){ 
+            if(!currentUser) return;
+            const email=currentUser.email.toLowerCase();
+            const userData=JSON.stringify(currentUser);
+            try {
+                await fetch(SCRIPT_URL,{method:'POST',body:`action=update_user&email=${encodeURIComponent(email)}&userData=${encodeURIComponent(userData)}`,headers:{'Content-Type':'application/x-www-form-urlencoded'}});
+            } catch (e) { console.error('Fallo en la red al sincronizar progreso de usuario:', e); }
+        }
+
+        function fetchProgressForAllCourses(){
+            if(!currentUser||!currentUser.accessedCursos) return;
+            const email=currentUser.email.toLowerCase();
+            if(!userProgress[email]) userProgress[email]={};
+            const progresos=dbUserProgress[email]||{};
+            const accessed=Array.isArray(currentUser.accessedCursos)?currentUser.accessedCursos:[];
+            accessed.forEach(courseId=>{
+                const course=COURSES_DATA.find(c=>c.id===courseId);
+                if(!course) return;
+                let progStr="";
+                for(let key in progresos){ let nk=normalizeName(key), nc=normalizeName(course.name); if(nk===nc||nk.includes(nc)||nc.includes(nk)){ progStr=progresos[key]; break; } }
+                const total=course.totalLessons||5;
+                userProgress[email][String(courseId)]=parseProgressString(progStr,total);
+            });
+            renderMisCourses();
+        }
+
+        function updateAllUI(){
+            if(!currentUser){ document.getElementById('misCursosUserInfo').classList.add('hidden'); return; }
+            document.getElementById('misCursosUserInfo').classList.remove('hidden');
+            const setTxt=(id,txt)=>{ const el=document.getElementById(id); if(el) el.innerText=txt; };
+            const initialsEl=document.getElementById('profileInitials'); const mcInitialsEl=document.getElementById('mcProfileInitials');
+            if(currentUser.name||currentUser.email){ const str=currentUser.name||currentUser.email; const parts=str.trim().split(' '); const inits=parts.length>1?(parts[0][0]+parts[parts.length-1][0]).toUpperCase():parts[0][0].toUpperCase(); if(initialsEl) initialsEl.innerText=inits; if(mcInitialsEl) mcInitialsEl.innerText=inits; }
+            setTxt('profileFullName',currentUser.name||"Estudiante"); setTxt('mcProfileName',currentUser.name||"Estudiante");
+            setTxt('profileEmail',currentUser.email); setTxt('mcProfileEmail',currentUser.email);
+            setTxt('profileProfession',currentUser.profession?capitalize(currentUser.profession):"Sin Perfil");
+            setTxt('profileCedula',currentUser.cedula&&currentUser.cedula!=="N/A"?currentUser.cedula:"Sin Cédula");
+            setTxt('profilePhone',currentUser.telefono&&currentUser.telefono!=="N/A"?currentUser.telefono:"Sin Teléfono");
+            let locText=currentUser.pais&&currentUser.pais!=="N/A"?currentUser.pais:"País Desconocido";
+            if(currentUser.pais==="Venezuela"&&currentUser.estado&&currentUser.estado!=="N/A") locText+=` (${currentUser.estado})`;
+            setTxt('profileLocation',locText); setTxt('mcProfileLocation',locText);
+            const flagImg=document.getElementById('profileFlag'); const globeIcon=document.getElementById('profileGlobeIcon');
+            let isoCode=null; if(currentUser.pais&&currentUser.pais!=="N/A"){ const cleanPais=currentUser.pais.trim().toLowerCase(); isoCode=countryToISO[cleanPais]||countryToISO[cleanPais.replace(/\s/g,'')]; }
+            if(isoCode){ if(flagImg){ flagImg.src=`https://flagcdn.com/w20/${isoCode}.png`; flagImg.classList.remove('hidden'); } if(globeIcon) globeIcon.classList.add('hidden'); }
+            else { if(flagImg) flagImg.classList.add('hidden'); if(globeIcon) globeIcon.classList.remove('hidden'); }
+            setTxt('mcProfileCedula',currentUser.cedula&&currentUser.cedula!=="N/A"?currentUser.cedula:"Sin Cédula");
+            setTxt('mcProfilePhone',currentUser.telefono&&currentUser.telefono!=="N/A"?currentUser.telefono:"Sin Teléfono");
+            setTxt('mcProfileProfession',currentUser.profession?capitalize(currentUser.profession):"Sin Perfil");
+            const mcFlag=document.getElementById('mcProfileFlag'); const mcGlobe=document.getElementById('mcProfileGlobeIcon');
+            if(mcFlag&&mcGlobe){ if(isoCode){ mcFlag.src=`https://flagcdn.com/w20/${isoCode}.png`; mcFlag.classList.remove('hidden'); mcGlobe.classList.add('hidden'); } else { mcFlag.classList.add('hidden'); mcGlobe.classList.remove('hidden'); } }
+
+            const accessed=Array.isArray(currentUser.accessedCursos)?currentUser.accessedCursos:[];
+            let countOnline=0, countPresencial=0;
+            const subjectsSet = new Set();
+            accessed.forEach(cId=>{
+                const course=COURSES_DATA.find(c=>c.id===cId);
+                if(course){
+                    if(course.type==='Online') countOnline++;
+                    else if(course.type==='Presencial') countPresencial++;
+                    let program = null;
+                    if (course.level === 'Diplomado') { program = 'Diplomado'; } 
+                    else if (course.category === 'Maestría') { program = 'Maestría'; } 
+                    else if (course.category === 'TSU') { program = 'TSU'; } 
+                    else if (course.category === 'Ingeniería') { program = 'Ingeniería'; }
+                    if (program) subjectsSet.add(program);
+                }
+            });
+            const totalCursos = countOnline + countPresencial;
+            const numMaterias = subjectsSet.size;
+            setTxt('mcStatOnline', countOnline);
+            setTxt('mcStatPresencial', countPresencial);
+            setTxt('mcStatMaterias', numMaterias);
+            const materiasArray = Array.from(subjectsSet).sort();
+            const materiasList = materiasArray.length > 0 ? materiasArray.join(', ') : 'ninguna';
+            setTxt('mcStatResumen', `${totalCursos} curso${totalCursos!==1?'s':''} en ${numMaterias} materia${numMaterias!==1?'s':''} (${materiasList})`);
+        }
+
+        function renderMisCourses(){
+            const grid=document.getElementById('coursesGrid'), noResults=document.getElementById('noResultsMisCursos');
+            grid.innerHTML='';
+            if(!currentUser){
+                grid.classList.add('hidden'); noResults.classList.remove('hidden');
+                noResults.innerHTML=`<i data-lucide="lock" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-slate-700">Acceso Restringido</h3><p class="text-slate-500 text-sm mt-2 mb-6">Debes iniciar sesión para ver tus cursos adquiridos.</p><button onclick="openModal('authModal')" class="bg-[#0f172a] hover:bg-[#2db8ce] text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button>`;
+                if(window.lucide) lucide.createIcons(); return;
+            }
+            const accessedCourses=COURSES_DATA.filter(c=>currentUser.accessedCursos&&currentUser.accessedCursos.includes(c.id));
+            if(accessedCourses.length===0){
+                grid.classList.add('hidden'); noResults.classList.remove('hidden');
+                noResults.innerHTML=`<i data-lucide="library" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-slate-700">Aún no tienes cursos</h3><p class="text-slate-500 text-sm mt-2 mb-6">Explora nuestro catálogo y adquiere tu primer curso.</p><button onclick="window.open('https://wa.me/584121414196?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20cursos', '_blank')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-th"></i> Ver Catálogo</button>`;
+                if(window.lucide) lucide.createIcons(); return;
+            }
+            grid.classList.remove('hidden'); noResults.classList.add('hidden');
+            const emailKey=currentUser.email.toLowerCase(); const myProgress=userProgress[emailKey]||{};
+            grid.innerHTML=accessedCourses.map((course,index)=>{
+                const likes=globalStats[`curso-${course.id}_likes`]||0;
+                const vistas=globalStats[`curso-${course.id}_vistas`]||0;
+                const avgRating=courseRatings[course.id]?courseRatings[course.id].avg:"5.0";
+                const isLikedClass=(currentUser&&currentUser.likedCourses&&currentUser.likedCourses.includes(`curso-${course.id}`))?'text-red-500':'text-slate-400';
+                const viewsClass=vistas>0?'text-green-500':'text-slate-400';
+                const displayCount=studentCountsPerCourse[course.id]!==undefined?studentCountsPerCourse[course.id]:'...';
+                const progressData=myProgress[String(course.id)]||{completed:0,total:course.totalLessons||5,percent:0,avgScore:0};
+                const completed=progressData.completed; const total=progressData.total; const percent=progressData.percent;
+                const userRating=(currentUser&&currentUser.ratings&&currentUser.ratings[course.id])||0;
+                let starsHTML='';
+                for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.id},${i},false)"></i>`; }
+                const progressBarHTML=`
+                <div class="mt-4 mb-3 bg-[#0f172a]/80 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-inner">
+                    <div class="flex justify-between items-center mb-2"><span class="text-[10px] font-bold uppercase tracking-widest text-white">Progreso</span><span class="text-xs font-black text-green-400">${percent}%</span></div>
+                    <div class="w-full bg-white/10 rounded-full h-1.5 mb-2 overflow-hidden"><div class="bg-green-400 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div></div>
+                    <p class="text-[10px] font-bold text-white/80">${completed} de ${total} lecciones completadas</p>
+                </div>`;
+                
+                // Determinar nivel para aplicar borde y colores
+                const normalizedLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                let levelBorderClass = '';
+                let levelIconBg = 'bg-slate-500/10 border-slate-500/30';
+                let levelIconColor = 'text-slate-400';
+                if (normalizedLevel === 'basico') {
+                    levelBorderClass = 'course-card-level-basico';
+                    levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
+                    levelIconColor = 'text-cyan-400';
+                } else if (normalizedLevel === 'intermedio') {
+                    levelBorderClass = 'course-card-level-intermedio';
+                    levelIconBg = 'bg-purple-500/10 border-purple-500/30';
+                    levelIconColor = 'text-purple-400';
+                } else if (normalizedLevel === 'avanzado') {
+                    levelBorderClass = 'course-card-level-avanzado';
+                    levelIconBg = 'bg-amber-500/10 border-amber-500/30';
+                    levelIconColor = 'text-amber-400';
+                }
+
+                return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col fade-in group ${levelBorderClass}" style="animation-delay: ${index*0.05}s;" onclick="grantAccess(${course.id})">
+                    <div class="relative aspect-video w-full overflow-hidden bg-[#0f172a]">
+                        <img src="${course.image}" class="w-full h-full object-cover opacity-70 transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
+                            <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.type}</span>
+                            <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.category}</span>
+                        </div>
+                        <div class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-secondary text-[10px] font-black px-2 py-1 rounded-md border border-white/20 shadow-lg flex items-center gap-1">
+                            <i class="fas fa-star text-yellow-400"></i> ${avgRating}
+                        </div>
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}">
+                            <i class="fas ${normalizedLevel === 'basico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket'} text-lg ${levelIconColor}"></i>
+                        </div>
+                    </div>
+                    <div class="p-5 md:p-6 flex-grow flex flex-col">
+                        <h3 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${course.name}</h3>
+                        <div class="flex items-center justify-between mb-4 text-xs font-bold text-slate-500">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md flex items-center gap-1 border border-slate-200"><i data-lucide="book-open" class="w-3 h-3"></i> ${course.level}</span>
+                                <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> ${displayCount}</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${course.id}" onclick="event.stopPropagation(); toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">${likes}</span></button>
+                                <span class="flex items-center gap-1 ${viewsClass}"><i class="fas fa-eye"></i><span>${vistas}</span></span>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-[13px] line-clamp-2 leading-relaxed flex-grow">${course.desc}</p>
+                        <div class="flex items-center gap-1.5 mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Valoración:</span><div class="flex gap-0.5">${starsHTML}</div></div>
+                        ${progressBarHTML}
+                        <div class="mt-auto pt-4 border-t border-slate-100 space-y-2" onclick="event.stopPropagation();">
+                            <button type="button" onclick="grantAccess(${course.id}); event.stopPropagation();" class="w-full btn-metal btn-green !py-3 !text-[10px]"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
+                            ${course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal btn-blue py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+            if(window.lucide) lucide.createIcons();
+        }
+
+        function showFloatingBackBtn(text,targetPage){ const btn=document.getElementById('floatingBackBtn'), span=document.getElementById('floatingBackText'); if(btn&&span){ span.innerText=text; btn.setAttribute('data-target',targetPage); btn.classList.add('visible'); } }
+        function hideFloatingBackBtn(){ const btn=document.getElementById('floatingBackBtn'); if(btn){ btn.classList.remove('visible'); btn.removeAttribute('data-target'); } }
+        function handleFloatingBack(){ const btn=document.getElementById('floatingBackBtn'), target=btn.getAttribute('data-target'); if(target==='page-mis-cursos'){ document.getElementById('page-curso-detalle').style.display='none'; document.getElementById('page-mis-cursos').style.display='block'; hideFloatingBackBtn(); window.scrollTo({top:0,behavior:'smooth'}); } else if(target==='page-curso-detalle'){ backToCourseDetail(); } }
+
+        function grantAccess(courseId) {
+            try {
+                currentViewedCourseId = courseId;
+                ping('update_stat', `curso-${courseId}_vistas`);
+                if (globalStats) globalStats[`curso-${courseId}_vistas`] = (parseInt(globalStats[`curso-${courseId}_vistas`]) || 0) + 1;
+                
+                viewCourseDetail(courseId);
+                document.getElementById('page-mis-cursos').style.display = 'none';
+                document.getElementById('page-curso-detalle').style.display = 'block';
+                showFloatingBackBtn('Mis Cursos', 'page-mis-cursos');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch(e) {
+                console.error("Error intentando acceder al curso:", e);
+                showNotif("Error al cargar", "No se pudo preparar el curso, intente nuevamente.", "error");
+            }
+        }
+
+        function renderProgressCard(courseId){
+            if(!currentUser) return `<div class="bg-amber-50 border border-amber-200 rounded-2xl p-5"><i class="fas fa-sign-in-alt text-amber-600 text-2xl"></i> Inicia sesión para ver tu progreso.</div>`;
+            const email=currentUser.email.toLowerCase();
+            const pd=(userProgress[email]&&userProgress[email][String(courseId)])?userProgress[email][String(courseId)]:{completed:0,total:5,percent:0};
+            const completed=pd.completed, total=pd.total, percent=pd.percent;
+            const course=COURSES_DATA.find(c=>c.id===courseId);
+            let extraButton='';
+            if(course){
+                extraButton=`<div class="mt-3 flex flex-col sm:flex-row gap-2">
+                    <button type="button" onclick="showProgressPanel(${courseId})" class="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 transition shadow-sm"><i class="fas fa-chart-line"></i> Panel Detallado</button>
+                </div>`;
+            }
+            return `<div class="bg-[#0f172a]/80 backdrop-blur-md rounded-xl p-5 border border-white/10 shadow-inner h-full">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                    <div><h4 class="font-black text-white uppercase tracking-widest text-xs"><i class="fas fa-chart-simple mr-1"></i> Mi progreso</h4><p class="text-sm text-slate-300 mt-1">${completed} de ${total} lecciones</p></div>
+                    <div class="flex items-center gap-4"><div class="w-24 text-right"><span class="text-2xl font-black text-green-400">${percent}%</span></div><div class="w-32 bg-white/10 rounded-full h-2 overflow-hidden"><div class="bg-green-400 h-2 rounded-full" style="width:${percent}%"></div></div></div>
+                </div>${extraButton}</div>`;
+        }
+
+        function viewCourseDetail(courseId){
+            try {
+                currentViewedCourseId=courseId;
+                const course=COURSES_DATA.find(c=>c.id===courseId);
+                if(!course) return;
+                const container=document.getElementById('detalle-container');
+                const studentsCount=studentCountsPerCourse[courseId]||'...';
+                const likesCount=globalStats[`curso-${courseId}_likes`]||0;
+                const viewsCount=globalStats[`curso-${courseId}_vistas`]||0;
+                const avgRating=courseRatings[courseId]?courseRatings[courseId].avg:"5.0";
+                const ratersCount=courseRatings[courseId]?courseRatings[courseId].count:0;
+                const isLikedClass=(currentUser&&currentUser.likedCourses&&currentUser.likedCourses.includes(`curso-${courseId}`))?'text-red-500':'text-slate-400';
+                const userRating=(currentUser&&currentUser.ratings&&currentUser.ratings[courseId])||0;
+                let starsHTML='';
+                for(let i=1;i<=5;i++){ const isFilled=i<=userRating; const starClass=isFilled?'text-yellow-400 fas fa-star drop-shadow-sm scale-110':'text-slate-300 far fa-star hover:text-yellow-400 hover:scale-110'; starsHTML+=`<i class="${starClass} text-xl cursor-pointer transition-all duration-200" onclick="rateCourse(${courseId},${i})"></i>`; }
+                
+                const downloadedFiles = Array.isArray(currentUser && currentUser.downloadedFiles) ? currentUser.downloadedFiles : [];
+                
+                let manualesHTML=(course.manuales||[]).map(m=>{
+                    if(!m || !m.name) return '';
+                    const isDownloaded=downloadedFiles.includes(m.name);
+                    const cardBg='bg-white border-slate-200 hover:bg-slate-50 hover:border-slate-300';
+                    const iconBg=isDownloaded?'bg-green-500/20 text-slate-600':'bg-slate-100 text-slate-600 group-hover:bg-slate-200 group-hover:text-slate-800';
+                    const checkIcon=isDownloaded?'<i class="fas fa-check-circle text-green-500 text-lg"></i>':'<i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-slate-700 transition-colors"></i>';
+                    const fileStatId=`descarga_curso_${course.id}_${m.name.replace(/[^a-zA-Z0-9]/g,'_')}`;
+                    const fileDownloads=globalStats[fileStatId]||0;
+                    return `<button type="button" onclick="downloadCourseMaterial('${m.name}','${m.link}',this,${course.id})" class="w-full text-left flex items-center justify-between p-4 sm:p-5 ${cardBg} rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all group"><div class="flex items-center gap-4"><div class="w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center transition-colors"><i data-lucide="book" class="w-5 h-5"></i></div><div><span class="font-bold text-slate-700 text-sm block leading-tight">${m.name}</span><div class="flex items-center gap-2 mt-1"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Documento PDF</span><span class="flex items-center gap-1 text-[10px] font-bold ${fileDownloads>0?'text-slate-600':'text-slate-400'}"><i class="fas fa-download"></i> <span class="file-download-count" data-file-id="${fileStatId}">${fileDownloads}</span></span></div></div></div>${checkIcon}</button>`;
+                }).join('');
+                
+                let ejerciciosHTML=(course.ejercicios||[]).map(e=>{
+                    if(!e || !e.name) return '';
+                    const isDownloaded=downloadedFiles.includes(e.name);
+                    const cardBg='bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-slate-600';
+                    const iconBg=isDownloaded?'bg-green-500/20 text-slate-400':'bg-white/10 text-slate-300 group-hover:bg-white/20 group-hover:text-white';
+                    const checkIcon=isDownloaded?'<i class="fas fa-check-circle text-green-500 text-lg"></i>':'<i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>';
+                    const titleColor=isDownloaded?'text-slate-400':'text-white';
+                    const subtitleColor=isDownloaded?'text-slate-500':'text-slate-400';
+                    const fileStatId=`descarga_curso_${course.id}_${e.name.replace(/[^a-zA-Z0-9]/g,'_')}`;
+                    const fileDownloads=globalStats[fileStatId]||0;
+                    const dlColor=isDownloaded?'text-slate-600':(fileDownloads>0?'text-teal-500':subtitleColor);
+                    return `<button type="button" onclick="downloadCourseMaterial('${e.name}','${e.link}',this,${course.id})" class="w-full text-left flex items-center justify-between p-4 sm:p-5 ${cardBg} rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all group"><div class="flex items-center gap-4"><div class="w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center transition-colors"><i data-lucide="file-code" class="w-5 h-5"></i></div><div><span class="font-bold ${titleColor} text-sm block leading-tight">${e.name}</span><div class="flex items-center gap-2 mt-1"><span class="text-[10px] uppercase font-bold ${subtitleColor} tracking-widest">Archivo de Práctica</span><span class="flex items-center gap-1 text-[10px] font-bold ${dlColor}"><i class="fas fa-download"></i> <span class="file-download-count" data-file-id="${fileStatId}">${fileDownloads}</span></span></div></div></div>${checkIcon}</button>`;
+                }).join('');
+                
+                const progressCardHTML=renderProgressCard(courseId);
+                const descSegura = course.resumen || course.desc || 'Sin descripción disponible.';
+                const objSeguro = course.objetivoGeneral || 'Capacitar al estudiante mediante fundamentos teóricos y aplicaciones prácticas en automatización industrial.';
+
+                container.innerHTML=`<div class="max-w-[1300px] mx-auto px-4 sm:px-6 relative">
+                    <div class="flex flex-col items-start gap-8 lg:gap-10 mt-6 lg:mt-0">
+                        <div class="w-full bg-white rounded-[32px] shadow-xl border border-slate-200 text-left">
+                            <div class="h-64 sm:h-96 relative rounded-t-[32px] overflow-hidden">
+                                <img src="${course.image}" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                                <div class="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 right-6 sm:right-10">
+                                    <span class="px-3 py-1.5 bg-[#2db8ce] text-white text-[10px] font-black uppercase tracking-widest rounded-md mb-4 inline-block shadow-md">${course.category}</span>
+                                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tighter mb-4">${course.name}</h1>
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <p class="text-slate-300 font-medium text-sm sm:text-base flex items-center gap-2 mr-2"><i data-lucide="clock" class="w-4 h-4"></i> Modalidad: <strong class="text-white">${course.type}</strong></p>
+                                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-sm"><i data-lucide="users" class="w-4 h-4 text-green-400"></i> ${studentsCount}</div>
+                                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-sm"><i class="fas fa-heart text-red-400"></i> ${likesCount}</div>
+                                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-sm"><i class="fas fa-eye text-teal-400"></i> ${viewsCount}</div>
+                                        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-sm"><i class="fas fa-star text-yellow-400"></i> ${avgRating} <span class="font-normal text-slate-300 text-[10px] uppercase tracking-widest ml-1">(${ratersCount})</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-8">
+                                <div class="h-full">${progressCardHTML}</div>
+                                <div class="flex flex-col sm:flex-row items-center justify-between gap-6 bg-slate-50 p-6 sm:p-8 rounded-[24px] border border-slate-200 shadow-sm h-full">
+                                    <button class="like-btn flex items-center gap-4 px-6 py-3 rounded-2xl bg-white border border-slate-200 hover:border-red-300 hover:shadow-md transition-all group ${isLikedClass}" data-id="curso-${course.id}" onclick="event.stopPropagation(); toggleLike(this)"><i class="fas fa-heart text-3xl group-hover:scale-110 transition-transform"></i><div class="text-left"><span class="block text-[10px] uppercase font-black tracking-widest text-slate-400">¿Te gustó el curso?</span><span class="font-bold text-slate-700 text-sm">Dale Me Gusta (<span class="like-count">${likesCount}</span>)</span></div></button>
+                                    <div class="flex flex-col items-center sm:items-end text-center sm:text-right"><span class="block text-[10px] uppercase font-black tracking-widest text-slate-400 mb-2">Tu calificación personal</span><div class="flex gap-1 drop-shadow-sm">${starsHTML}</div></div>
+                                </div>
+                            </div>
+                            <div class="p-6 sm:p-10 lg:p-14 space-y-14">
+                                <div class="rounded-[24px] overflow-hidden shadow-xl flex flex-col border border-slate-200/50">
+                                    <div class="bg-[#91a1af] p-6 sm:p-8 text-left relative shadow-inner"><h4 class="text-slate-900 text-sm font-black uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-slate-900/10 pb-3"><i data-lucide="target" class="text-slate-800 w-5 h-5"></i> Objetivo General</h4><p class="text-slate-800 text-sm sm:text-base leading-relaxed font-medium">${objSeguro}</p></div>
+                                    <div class="bg-[#0f172a] p-6 sm:p-8 text-left relative"><h4 class="text-white text-sm font-black uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-white/10 pb-3"><i data-lucide="check-circle-2" class="text-teal-400 w-5 h-5"></i> Específicos</h4><ul class="text-slate-300 text-sm sm:text-base leading-relaxed space-y-3"><li class="flex items-start gap-3"><i class="fas fa-angle-right text-[#2db8ce] mt-1.5"></i> <span>Comprender y analizar la lógica de control electromecánica y programada.</span></li><li class="flex items-start gap-3"><i class="fas fa-angle-right text-[#2db8ce] mt-1.5"></i> <span>Diseñar circuitos eficientes bajo normativas internacionales.</span></li><li class="flex items-start gap-3"><i class="fas fa-angle-right text-[#2db8ce] mt-1.5"></i> <span>Implementar simulaciones para validar funcionamientos antes del montaje.</span></li></ul></div>
+                                </div>
+                                <section class="bg-slate-50 p-6 sm:p-8 rounded-[24px] border border-slate-100"><h2 class="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-3"><span class="w-8 h-8 rounded-lg bg-[#2db8ce]/10 text-[#2db8ce] flex items-center justify-center"><i data-lucide="info" class="w-4 h-4"></i></span> Resumen del Curso</h2><p class="text-slate-600 leading-relaxed font-medium text-sm sm:text-base">${descSegura}</p></section>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div id="mcManualsCard" class="bg-slate-100 p-6 sm:p-8 rounded-[32px] border border-slate-200 shadow-sm flex flex-col h-full"><h3 class="text-sm font-black text-slate-900 uppercase tracking-widest border-l-4 border-blue-500 pl-3 mb-6">Manuales del Curso</h3><div class="space-y-4 flex-grow">${manualesHTML||'<p class="text-sm text-slate-500 italic">No hay manuales disponibles.</p>'}</div></div>
+                                    <div id="mcExercisesCard" class="bg-[#0f172a] p-6 sm:p-8 rounded-[32px] border border-slate-800 shadow-xl flex flex-col h-full"><h3 class="text-sm font-black text-white uppercase tracking-widest border-l-4 border-teal-500 pl-3 mb-6">Ejercicios Prácticos</h3><div class="space-y-4 flex-grow">${ejerciciosHTML||'<p class="text-sm text-slate-400 italic">No hay ejercicios disponibles.</p>'}</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                if(window.lucide) lucide.createIcons();
+                showFloatingBackBtn('Mis Cursos','page-mis-cursos');
+            } catch (error) {
+                console.error("Error al renderizar los detalles del curso:", error);
+                showNotif('Error en el Curso', 'Ha ocurrido un problema preparando la vista del curso.', 'error');
+            }
+        }
+
+        async function downloadCourseMaterial(fileName,url,btnElement,courseId){
+            if(!currentUser){ showNotif('Acceso Restringido','Debes iniciar sesión para descargar.'); openModal('authModal'); return; }
+            if(!url||url.trim()=="#"||url.trim()==""){ showNotif('No Disponible','Este archivo se habilitará próximamente.','info'); return; }
+            if(!Array.isArray(currentUser.downloadedFiles)) currentUser.downloadedFiles=[];
+            if(!currentUser.downloadedFiles.includes(fileName)){
+                currentUser.downloadedFiles.push(fileName);
+                localStorage.setItem('user',JSON.stringify(currentUser));
+                syncUserProgressToExcel();
+                updateAllUI();
+                if(btnElement){
+                    const isExercise = btnElement.closest('#mcExercisesCard');
+                    const titleSpan=btnElement.querySelector('span.font-bold.text-sm');
+                    if(titleSpan && isExercise){ titleSpan.classList.remove('text-white'); titleSpan.classList.add('text-slate-400'); }
+                    const subSpan=btnElement.querySelector('span.uppercase.font-bold');
+                    if(subSpan){ subSpan.classList.remove('text-slate-400'); subSpan.classList.add('text-slate-500'); }
+                    const countParent=btnElement.querySelector('.file-download-count')?.parentElement;
+                    if(countParent){ countParent.classList.remove('text-white','text-teal-500','text-slate-400'); countParent.classList.add('text-slate-600'); }
+                    const iconBox=btnElement.querySelector('.rounded-xl');
+                    if(iconBox) iconBox.className=`w-12 h-12 rounded-xl bg-green-500/20 ${isExercise?'text-slate-400':'text-slate-600'} flex items-center justify-center transition-colors`;
+                    const rightIcon=btnElement.lastElementChild;
+                    if(rightIcon&&(rightIcon.tagName==='I'||rightIcon.tagName==='svg')){ const check=document.createElement('i'); check.className='fas fa-check-circle text-green-500 text-lg'; btnElement.replaceChild(check,rightIcon); }
+                }
+            }
+            window.open(url,'_blank'); showToastDownload(fileName);
+            if(courseId){ const fileStatId=`descarga_curso_${courseId}_${fileName.replace(/[^a-zA-Z0-9]/g,'_')}`; ping('update_stat',fileStatId); if(globalStats) globalStats[fileStatId]=(parseInt(globalStats[fileStatId])||0)+1; document.querySelectorAll(`.file-download-count[data-file-id="${fileStatId}"]`).forEach(span=>{ if(span) span.innerText=globalStats[fileStatId]; }); }
+        }
+
+        function rateCourse(courseId,rating,navigate=true){
+            if(!currentUser){ openModal('authModal'); return; }
+            if(!currentUser.ratings) currentUser.ratings={};
+            currentUser.ratings[courseId]=rating;
+            localStorage.setItem('user',JSON.stringify(currentUser));
+            syncUserProgressToExcel();
+            if(currentUser.email) dbUsers[currentUser.email.toLowerCase()]=JSON.stringify(currentUser);
+            calculateCourseRatings();
+            renderMisCourses();
+            const detailVisible=document.getElementById('page-curso-detalle').style.display==='block';
+            if(detailVisible&&currentViewedCourseId===courseId) viewCourseDetail(courseId);
+            else if(navigate) viewCourseDetail(courseId);
+            showNotif('¡Valoración guardada!',`Has calificado este curso con ${rating} estrellas.`);
+        }
+
+        function toggleLike(btn){
+            if(!currentUser){ openModal('authModal'); return; }
+            const id=btn.dataset.id;
+            if(!Array.isArray(currentUser.likedCourses)) currentUser.likedCourses=[];
+            const span=btn.querySelector('.like-count');
+            let currentLikes=parseInt(span.innerText)||0;
+            if(currentUser.likedCourses.includes(id)){
+                currentUser.likedCourses=currentUser.likedCourses.filter(c=>c!==id);
+                ping('decrement_stat',`${id}_likes`);
+                btn.classList.remove('text-red-500'); btn.classList.add('text-slate-400');
+                span.innerText=currentLikes-1;
+                if(globalStats) globalStats[`${id}_likes`]=currentLikes-1;
+            } else {
+                currentUser.likedCourses.push(id);
+                ping('update_stat',`${id}_likes`);
+                btn.classList.add('text-red-500'); btn.classList.remove('text-slate-400');
+                span.innerText=currentLikes+1;
+                if(globalStats) globalStats[`${id}_likes`]=currentLikes+1;
+            }
+            if(currentUser.email) dbUsers[currentUser.email.toLowerCase()]=JSON.stringify(currentUser);
+            localStorage.setItem('user',JSON.stringify(currentUser));
+            updateAllUI(); syncUserProgressToExcel();
+            document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn=>{
+                if(otherBtn!==btn){
+                    if(currentUser.likedCourses.includes(id)){ otherBtn.classList.add('text-red-500'); otherBtn.classList.remove('text-slate-400'); }
+                    else { otherBtn.classList.remove('text-red-500'); otherBtn.classList.add('text-slate-400'); }
+                    const otherSpan=otherBtn.querySelector('.like-count');
+                    if(otherSpan) otherSpan.innerText=span.innerText;
+                }
+            });
+        }
+
+        function switchAuthTab(tab){
+            document.getElementById('authErrorMessage').classList.add('hidden');
+            const loginTab=document.getElementById('tabLogin'), regTab=document.getElementById('tabRegister'), nameField=document.getElementById('nameField'), countryField=document.getElementById('countryField');
+            const title=document.getElementById('authModalTitle'), sub=document.getElementById('authSubText');
+            const btn=document.getElementById('authSubmitBtn'), btnIcon=document.getElementById('authBtnIcon'), btnLabel=document.getElementById('authBtnLabel');
+            if(tab==='login'){
+                loginTab.className="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
+                regTab.className="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
+                nameField.classList.add('hidden'); title.innerText="Iniciar Sesión"; sub.innerText="Ingresa tus datos para acceder a tus cursos."; btnIcon.className="fas fa-sign-in-alt"; btnLabel.innerText="Entrar";
+                if(countryField) countryField.classList.add('hidden');
+            } else {
+                regTab.className="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
+                loginTab.className="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
+                nameField.classList.remove('hidden'); title.innerText="Crear Cuenta"; sub.innerText="Regístrate para adquirir cursos."; btnIcon.className="fas fa-user-plus"; btnLabel.innerText="Registrarse";
+                if(countryField) countryField.classList.remove('hidden');
+            }
+        }
+
+        window.handleNavbarAuthClick = function(e) {
+            if(e) { e.preventDefault(); e.stopPropagation(); }
+            if(currentUser) {
+                logoutUser();
+            } else {
+                document.getElementById('authErrorMessage').classList.add('hidden');
+                openModal('authModal'); 
+                switchAuthTab('login');
+            }
+        };
+
+        let progressChart=null;
+        function updateProgressDashboard(){
+            const course=COURSES_DATA.find(c=>c.id===currentProgressCourseId);
+            if(!course) return;
+            const total=course.totalLessons||5;
+            const emailKey=currentUser?currentUser.email.toLowerCase():"";
+            const courseProg=(userProgress[emailKey]&&userProgress[emailKey][String(currentProgressCourseId)])?userProgress[emailKey][String(currentProgressCourseId)]:{completed:0,percent:0,scores:[],avgScore:0};
+            const done=courseProg.completed||0;
+            const scores=courseProg.scores||[];
+            const percent=total>0?Math.round((done/total)*100):0;
+            const avgScore=courseProg.avgScore||0;
+            
+            document.getElementById('dash-percentage').innerText=percent+'%';
+            
+            if(progressChart) progressChart.destroy();
+            const ctx=document.getElementById('progressChart').getContext('2d');
+            progressChart=new Chart(ctx,{
+                type:'doughnut',
+                data:{labels:['Completado','Pendiente'],datasets:[{data:[done,total-done],backgroundColor:['#2db8ce','rgba(255,255,255,0.1)'],borderWidth:0}]},
+                options:{cutout:'75%',plugins:{legend:{display:false}}}
+            });
+
+            if(currentUser) {
+                let enrollmentDate = findDateInObject(latestEnrollmentDates, course.name) || '';
+                enrollmentDate = normalizeDateString(enrollmentDate);
+                const segCard = document.getElementById('seguimiento-card');
+                if(segCard) {
+                    let rawCompletion = findDateInObject(latestCompletionDates, course.name);
+                    let compDisplay = '---';
+                    if (rawCompletion) {
+                        let normalized = normalizeDateString(rawCompletion);
+                        if (normalized) compDisplay = formatCertDate(normalized);
+                    }
+                    let enrollmentDisplay = '---';
+                    if (enrollmentDate) enrollmentDisplay = formatCertDate(enrollmentDate);
+                    segCard.innerHTML = `
+                        <h2 class="font-bold text-xl text-white">Seguimiento automático</h2>
+                        <div class="mt-3 space-y-2">
+                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-check text-green-400"></i><span>Inscripción: ${enrollmentDisplay}</span></p>
+                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400"></i><span>Culminación: ${compDisplay}</span></p>
+                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-percentage text-yellow-400"></i><span>Promedio final: ${avgScore}%</span></p>
+                        </div>
+                        <p class="text-slate-200 text-sm mt-3">El progreso se actualiza al aprobar las evaluaciones de cada módulo.</p>
+                    `;
+                }
+            }
+
+            const listDiv=document.getElementById('dash-lessons-list');
+            const moduleNames=course.moduleNames||[];
+            const MODULES_DATA=[];
+            for(let i=0;i<total;i++) MODULES_DATA.push({title:moduleNames[i]||`Módulo ${i+1}`});
+            
+            listDiv.innerHTML=MODULES_DATA.map((m,i)=>{
+                let stateClass="", stateText="", score=scores[i];
+                if(score!==undefined&&score!==null&&!isNaN(score)){
+                    if(score>=70){ stateClass="border-blue-400/50 bg-blue-500/20 backdrop-blur-md"; stateText = `✅ Completado (${score}%)`; }
+                    else { stateClass="border-red-500/60 bg-red-600/20 backdrop-blur-md"; stateText=`❌ No aprobado ${score}%`; }
+                } else {
+                    if(i<done){ stateClass="border-blue-400/50 bg-blue-500/20 backdrop-blur-md"; stateText = `✅ Completado`; }
+                    else { stateClass="border-yellow-400/50 bg-yellow-500/20 backdrop-blur-md"; stateText=`⏳ Falta por evaluar`; }
+                }
+                return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01]"><span class="font-bold tracking-wide drop-shadow-md text-sm sm:text-base">${m.title}</span><span class="text-xs sm:text-sm font-bold drop-shadow-md bg-black/20 px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+            }).join('');
+
+            if(currentUser){
+                document.getElementById('dash-student-name').innerText=currentUser.name||'-';
+                document.getElementById('dash-student-id').innerText=currentUser.cedula||'-';
+                document.getElementById('dash-student-email').innerText=currentUser.email||'-';
+            }
+        }
+
+        function generateCertificate() {
+            try {
+                if (!currentUser) { showNotif('Error', 'Debes iniciar sesión.', 'error'); return; }
+                const course = COURSES_DATA.find(c => c.id === currentProgressCourseId);
+                if (!course) return;
+                const nombreEstudiante = currentUser.name && currentUser.name !== "No provisto" ? currentUser.name : "Estudiante";
+                const cedulaEstudiante = currentUser.cedula && currentUser.cedula !== "N/A" ? currentUser.cedula : "00000000";
+                const nombreCurso = course.name;
+                const numModulos = course.totalLessons || 5;
+                const moduleNames = course.moduleNames || [];
+                let temarioHTML = "";
+                if (moduleNames.length > 0) { temarioHTML = moduleNames.map(mod => `• ${mod}<br>`).join(''); }
+                else { for(let i = 1; i <= numModulos; i++) { temarioHTML += `• Módulo ${i}: Contenido del curso...<br>`; } }
+                
+                let rawCompletion = findDateInObject(latestCompletionDates, course.name);
+                let fechaHoy = "[En proceso de registro en sistema]";
+                if (rawCompletion) {
+                    let dateOnly = extractDateOnly(rawCompletion);
+                    if (dateOnly) fechaHoy = formatCertDate(dateOnly);
+                    else fechaHoy = rawCompletion;
+                }
+                
+                const palabras = nombreCurso.split(' ').filter(p => p.length > 0 && !['con', 'de', 'y', 'el', 'la', 'en'].includes(p.toLowerCase()));
+                let siglas = ""; palabras.forEach(p => { siglas += p.charAt(0).toUpperCase(); });
+                if (!siglas) siglas = "CURSO";
+                const ciNum = parseInt(String(cedulaEstudiante).replace(/\D/g, '')) || 0;
+                const idCalculado = 13018822 + ciNum;
+                const textoFecha = `Con una estructura de ${numModulos} módulos, culminado el día ${fechaHoy}.`;
+                const certHTML = `
+                <div id="cert-content-to-download" style="width: 980px; height: 740px; padding: 30px 45px 35px 45px; position: relative; background: white; border: 6px solid #475569; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0 auto;">
+                    <img src="https://i.postimg.cc/T1jyL15x/ct.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.15; object-fit: cover; z-index: 0;" crossorigin="anonymous">
+                    <div style="text-align: center; position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 10px; left: -1cm;">
+                        <img src="img/AA (38).webp" style="height: 140px;" crossorigin="anonymous">
+                        <h1 style="font-size: 32px; font-weight: 800; color: #334155; text-transform: uppercase; margin:0;">Aprende Automatización</h1>
+                    </div>
+                    <div style="text-align: center; position: relative; z-index: 10; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; margin-top: -20px;">
+                        <p style="font-size: 20px; font-weight: 800; color: #000; margin:0 0 2px 0;">Otorga el presente:</p>
+                        <h2 style="font-size: 38px; font-weight: 900; color: #3b5998; margin:0 0 5px 0;">Certificado a:</h2>
+                        <div style="display: inline-block; text-align: center;">
+                            <h3 style="font-size: 46px; font-weight: 900; color: #111827; border-bottom: 3px solid #475569; padding-bottom: 4px; text-transform: uppercase; margin:0; display: inline-block;">${nombreEstudiante}</h3>
+                        </div>
+                        <p style="font-size: 17px; font-weight: 800; color: #000; margin: 5px 0 10px 0; font-style: italic;">Cédula de Identidad: ${cedulaEstudiante}</p>
+                        <p style="font-size: 19px; color: #000; margin:0 0 5px 0;">Por haber <strong style="font-weight: 900;">APROBADO</strong> el curso:</p>
+                        <h4 style="font-size: 36px; font-weight: 900; color: #000; margin: 0 0 15px 0; max-width: 850px; line-height: 1.2;">"${nombreCurso}"</h4>
+                        <div style="display: inline-block; text-align: center; max-width: 90%;">
+                            <p style="font-size: 14px; color: #1f2937; margin: 0 0 10px 0; font-weight: 600; white-space: nowrap;">${textoFecha}</p>
+                            <div style="margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 6px; background-color: rgba(248, 250, 252, 0.9); padding: 12px 16px; text-align: left; width: 100%; box-sizing: border-box;">
+                                <div style="column-count: 2; column-gap: 30px; font-size: 12px; color: #1f2937; font-weight: 600; line-height: 1.5;">${temarioHTML}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; padding: 0 20px;">
+                        <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">MSc. Ing. Pablo Cedeño</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Instructor</p></div>
+                        <div style="text-align: center; color: #9ca3af; font-size: 10px;">ID de Certificado: <strong style="color:#6b7280; font-weight: 900;">${siglas}</strong>-<span style="color:#6b7280; font-weight: 900;">${idCalculado}</span></div>
+                        <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">Aprende Automatización</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Dirección Académica</p></div>
+                    </div>
+                </div>`;
+                const pdfHTML = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Certificado - ${nombreCurso}</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Plus Jakarta Sans',sans-serif;background-color:#0f172a;color:#1e293b;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}.bg-pattern{position:fixed;inset:0;z-index:0;background-color:#0f172a;}.bg-pattern img{width:100%;height:100%;object-fit:cover;opacity:0.4;mix-blend-mode:luminosity;}.toolbar{position:relative;z-index:10;background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);padding:16px 24px;border-radius:16px;margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;}.btn{padding:12px 24px;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.3s;font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:8px;}.btn-print{background:#2db8ce;color:white;}.btn-print:hover{background:#3cc8de;}.certificate-container{position:relative;z-index:10;max-width:100%;overflow-x:auto;display:flex;justify-content:center;}.certificate-wrapper{box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);background:white;}@media print{@page{size:letter landscape;margin:0.5cm;}body{background:white;padding:0;margin:0;}.bg-pattern,.toolbar{display:none!important;}.certificate-container{padding:0;margin:0;width:100%;}.certificate-wrapper{box-shadow:none!important;}}</style></head><body><div class="bg-pattern"><img src="img/AA (7).gif" alt="Fondo"></div><div class="toolbar"><button class="btn btn-print" onclick="window.print()">🖨️ Imprimir Certificado</button><span>Optimizado para Hoja Carta</span></div><div class="certificate-container"><div class="certificate-wrapper">${certHTML}</div></div></body></html>`;
+                const nuevaVentana = window.open('', '_blank');
+                nuevaVentana.document.write(pdfHTML);
+                nuevaVentana.document.close();
+            } catch (error) { console.error("Error al generar el certificado:", error); showNotif('Error', 'No se pudo generar el certificado.', 'error'); }
+        }
+
+        document.getElementById('authForm').onsubmit=async(e)=>{
+            e.preventDefault();
+            const btn=document.getElementById('authSubmitBtn'), label=document.getElementById('authBtnLabel'), icon=document.getElementById('authBtnIcon');
+            const errBox=document.getElementById('authErrorMessage'), errText=document.getElementById('authErrorText');
+            const originalText=label.innerText; errBox.classList.add('hidden');
+            btn.disabled=true; icon.className="fas fa-spinner fa-spin"; label.innerText="PROCESANDO...";
+            const email=document.getElementById('authEmail').value.trim().toLowerCase();
+            let inputName=document.getElementById('authName').value.trim();
+            const inputPassword=document.getElementById('authPassword').value;
+            const inputCountry = document.getElementById('authCountry')?.value;
+            const isRegistration=!document.getElementById('nameField').classList.contains('hidden');
+            try{
+                if(isRegistration){
+                    if(!inputPassword){ errText.innerText="Debes crear una contraseña."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-user-plus"; label.innerText=originalText; return; }
+                    if(!inputCountry){ errText.innerText="Debes seleccionar tu país."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-user-plus"; label.innerText=originalText; return; }
+                    if(!inputName) inputName=email.split('@')[0];
+                    currentUser={name:inputName,email:email,password:inputPassword,profession:"",likedCourses:[],accessedCursos:[],downloadedFiles:[],ratings:{},cedula:"",telefono:"",pais:inputCountry,estado:""};
+                    
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'register');
+                    formData.append('name', inputName);
+                    formData.append('email', email);
+                    formData.append('password', inputPassword);
+                    formData.append('pais', inputCountry);
+                    await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+
+                    localStorage.setItem('user',JSON.stringify(currentUser));
+                    updateAllUI(); closeModal('authModal'); showNotif('¡Bienvenido!',`Hola ${inputName}, registro exitoso.`);
+                    renderMisCourses();
+                } else {
+                    if(!inputPassword){ errText.innerText="Debes ingresar tu contraseña."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
+                    let globalUser=dbUsers[email]; if(typeof globalUser==='string'){ try{ globalUser=JSON.parse(globalUser); }catch(e){ globalUser=null; } }
+                    globalUser=globalUser||{};
+                    let details=dbUserDetails[email]||{};
+                    const hasGlobal=Object.keys(globalUser).length>0;
+                    const hasDetails=details.name&&details.name!=="No provisto"&&details.name!=="N/A";
+                    if(!hasGlobal&&!hasDetails){ errText.innerText="El correo ingresado no se encuentra registrado."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
+                    if(hasGlobal&&globalUser.password&&globalUser.password!==inputPassword){ errText.innerText="Contraseña incorrecta."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
+                    currentUser={
+                        name:details.name&&details.name!=="No provisto"&&details.name!=="N/A"?details.name:(globalUser.name||email.split('@')[0]),
+                        email:email, password:inputPassword,
+                        profession:globalUser.profession||"",
+                        likedCourses:Array.isArray(globalUser.likedCourses)?globalUser.likedCourses:[],
+                        accessedCursos:Array.isArray(globalUser.accessedCursos)?globalUser.accessedCursos:[],
+                        downloadedFiles:Array.isArray(globalUser.downloadedFiles)?globalUser.downloadedFiles:[],
+                        ratings:globalUser.ratings||{},
+                        cedula:details.cedula||"N/A", telefono:details.telefono||"N/A", pais:details.pais||"N/A", estado:details.estado||"N/A"
+                    };
+                    let myCourseNamesRaw=dbUserCourses[email]||[];
+                    let myCourseNames=splitCourseNames(myCourseNamesRaw);
+                    myCourseNames.forEach(cName=>{
+                        let nn=normalizeName(cName);
+                        let found=COURSES_DATA.find(x=>normalizeName(x.name)===nn);
+                        if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
+                        if(found&&!currentUser.accessedCursos.includes(found.id)) currentUser.accessedCursos.push(found.id);
+                    });
+                    localStorage.setItem('user',JSON.stringify(currentUser));
+                    fetchProgressForAllCourses(); updateAllUI(); closeModal('authModal'); showNotif('¡Bienvenido de nuevo!',`Hola ${currentUser.name}.`);
+                    syncUserProgressToExcel();
+                }
+            } catch(e){
+                console.error("Error en el login:",e); errText.innerText="Error interno: "+e.message; errBox.classList.remove('hidden');
+            } finally { btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; }
+        };
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if(currentUser) {
+                updateAllUI();
+                fetchProgressForAllCourses();
+            }
+            setTimeout(async () => {
+                await loadData();
+                ping('update_stat', 'visitas_mis_cursos');
+                if (currentUser) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const courseIdParam = urlParams.get('courseId');
+                    if (courseIdParam) {
+                        const id = parseInt(courseIdParam);
+                        if (currentUser.accessedCursos && currentUser.accessedCursos.includes(id)) {
+                            grantAccess(id);
+                        }
+                    }
+                }
+            }, 200);
+            if(window.lucide) lucide.createIcons();
+            hideFloatingBackBtn();
+        });
+    </script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+</body>
+</html>

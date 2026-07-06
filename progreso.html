@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progreso Detallado – Todos mis cursos</title>
+    <link rel="icon" href="img/AA(38).webp" type="image/webp">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1877f2',
+                        secondary: '#2db8ce',
+                        dark: '#0f172a',
+                        accent: '#91a1af',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; color: #1e293b; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2db8ce; border-radius: 10px; }
+    </style>
+    <style>
+        /* Sobrescribir la imagen de fondo global solo para esta página */
+        body#progreso-page-body::before {
+            background-image: url('img/AA (3).gif');
+        }
+    </style>
+</head>
+<body id="progreso-page-body" class="custom-scrollbar">
+
+<div id="progreso-page" class="min-h-screen">
+    <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
+        <!-- Imagen de fondo transparente -->
+        <div class="absolute inset-0 z-0 opacity-20">
+            <img src="img/AA (3).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        
+        <!-- Icono de progreso/métricas grande a la derecha -->
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="absolute right-4 top-4 text-white/5 text-8xl pointer-events-none z-0 md:hidden">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="absolute right-0 top-0 text-white/5 text-8xl"><i data-lucide="bar-chart-3"></i></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
+            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
+                <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Seguimiento</span>
+                <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Rendimiento</span>
+                <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Certificados</span>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">MI PROGRESO <span class="text-secondary">ACADÉMICO</span></h1>
+            <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">Visualiza el avance detallado de todos tus cursos, tus logros y certificados.</p>
+        </div>
+    </header>
+    <main class="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
+
+        <!-- Cabecera en 2 columnas (sin cambios) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Tarjeta del estudiante -->
+            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
+                <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
+                <div class="relative z-10 flex flex-col gap-3 h-full">
+                    <div>
+                        <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2>
+                        <p class="text-white text-xl font-bold" id="dash-student-name">-</p>
+                    </div>
+                    <p class="text-slate-300 text-sm font-medium" id="dash-student-email">-</p>
+
+                    <div class="grid grid-cols-2 gap-3 mt-2">
+                        <div>
+                            <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                <i class="fas fa-id-card text-slate-400 text-xs"></i> Cédula
+                            </p>
+                            <p class="text-white font-bold" id="dash-student-id">-</p>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                <i class="fas fa-phone text-slate-400 text-xs"></i> Teléfono
+                            </p>
+                            <p class="text-white font-bold" id="dash-student-phone">-</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 mt-2">
+                        <div>
+                            <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                <i class="fas fa-globe text-slate-400 text-xs"></i> País
+                            </p>
+                            <div class="flex items-center gap-1 mt-0.5">
+                                <img id="dash-student-flag" src="" class="w-4 h-auto hidden rounded-sm" alt="Bandera">
+                                <span class="text-white font-bold text-sm" id="dash-student-location">-</span>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                <i class="fas fa-briefcase text-slate-400 text-xs"></i> Profesión
+                            </p>
+                            <p class="text-white font-bold text-sm mt-0.5" id="dash-student-profession">-</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <div class="text-center">
+                            <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
+                                <i class="fas fa-laptop text-teal-400 text-xs"></i> Online
+                            </span>
+                            <span class="text-white font-black text-xl" id="dash-student-online">0</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
+                                <i class="fas fa-users text-purple-400 text-xs"></i> Presencial
+                            </span>
+                            <span class="text-white font-black text-xl" id="dash-student-presencial">0</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
+                                <i class="fas fa-download text-blue-400 text-xs"></i> Descargas
+                            </span>
+                            <span class="text-white font-black text-xl" id="dash-student-downloads">0</span>
+                        </div>
+                        <div class="text-center">
+                            <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
+                                <i class="fas fa-heart text-red-400 text-xs"></i> Likes
+                            </span>
+                            <span class="text-white font-black text-xl" id="dash-student-likes">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: LOGROS -->
+            <div class="bg-[#0f172a]/60 backdrop-blur-md border border-white/10 p-6 rounded-2xl relative flex flex-col">
+                <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-trophy"></i></div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest mb-4 flex items-center gap-2">
+                        <i class="fas fa-medal text-yellow-400"></i> Logros
+                    </h2>
+                    <div id="achievements-container" class="flex-grow space-y-2 overflow-y-auto custom-scrollbar max-h-[200px]">
+                    </div>
+                    <div id="no-achievements" class="text-slate-400 text-xs italic mt-2">
+                        Aún no has culminado ningún curso.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progreso detallado por curso -->
+        <div class="bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 mt-8">
+            <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                <h3 class="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-laptop-code text-secondary"></i> Progreso en Cursos (Online/Presencial)</h3>
+                <button onclick="manualRefreshProgress()" class="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white rounded-full px-4 py-1.5 shadow-md transition-all active:scale-95 font-black text-[10px] uppercase tracking-wider">
+                    <i id="refresh-progress-icon" class="fas fa-sync-alt"></i> Actualizar
+                </button>
+            </div>
+            <div id="individualCourseProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Cursos se renderizan aquí -->
+            </div>
+        </div>
+
+        <!-- Progreso detallado por MATERIAS -->
+        <div class="bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 mt-8">
+            <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                <h3 class="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Progreso en Materias (Diplomados/Maestrías)</h3>
+            </div>
+            <div id="individualSubjectProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Materias se renderizan aquí -->
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // ===================== CONFIGURACIÓN =====================
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJCV8j5yLAGgouP43lvkXGunU6yKroegJ9JFJvAWpqHeHQzWRnXXP4IPnaBLjU7MTi/exec';
+
+    // Lista completa de todos los cursos (18)
+    const COURSES_DATA = [
+        { id: 1, name: "Arranque de motores con contactores", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
+        { id: 2, name: "Arranque de motores con PLC LOGO", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
+        { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO", type: "Online", totalLessons: 4, level: "Básico" },
+        { id: 4, name: "Automatización con Contactores Online", type: "Online", totalLessons: 6, level: "Intermedio" },
+        { id: 5, name: "Automatización con PLC LOGO!", type: "Online", totalLessons: 5, level: "Intermedio" },
+        { id: 6, name: "Automatización con PLC – Método Grafcet", type: "Online", totalLessons: 6, level: "Avanzado" },
+        { id: 7, name: "10 ejercicios de aplicaciones con Contactores", type: "Online", totalLessons: 10, level: "Intermedio" },
+        { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO!", type: "Online", totalLessons: 10, level: "Intermedio" },
+        { id: 9, name: "Automatización Industrial", type: "Presencial", totalLessons: 3, level: "Básico" },
+        { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", totalLessons: 5, level: "Intermedio" },
+        { id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", totalLessons: 4, level: "Intermedio" },
+        { id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", totalLessons: 6, level: "Avanzado" },
+        { id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", totalLessons: 1, level: "Intermedio", moduleNames: ["Diplomado en Contactores"] },
+        { id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", totalLessons: 1, level: "Intermedio", moduleNames: ["Diplomado en PLC"] },
+        { id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Módulo Maestría Avanzada"] },
+        { id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Módulo Maestría Aplicada"] },
+        { id: 17, name: "Taller de Tecnología Eléctrica III", type: "Materia", totalLessons: 1, level: "Básico", moduleNames: ["Notas del Taller"] },
+        { id: 18, name: "Proyecto V", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Avances del Proyecto"] }
+    ];
+
+    const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
+
+    let currentUser = JSON.parse(localStorage.getItem('user')) || null;
+    let dbUserCourses = {}, dbUserProgress = {};
+    let userProgress = {};
+    let latestEnrollmentDates = {};
+    let latestCompletionDates = {};
+
+    const capitalize = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : "";
+    const normalizeName = s => (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^\w\s]/g,'').replace(/\s+/g,' ');
+    const splitCourseNames = raw => { if(!raw) return []; if(!Array.isArray(raw)) raw = [raw]; let r = []; raw.forEach(v => { if(typeof v==='string') r.push(...v.split(/[,;\n]+/).map(s=>s.trim()).filter(s=>s!=="")); else if(v) r.push(v); }); return r; };
+
+    // Funciones de fechas
+    function normalizeDateString(raw) {
+        if (!raw || raw === "") return "";
+        let str = String(raw).trim();
+        if (str.includes("T")) str = str.split("T")[0];
+        else str = str.split(" ")[0];
+        if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str;
+        const parts = str.split(/[/\-.]/);
+        if (parts.length === 3) {
+            let day = parseInt(parts[0], 10);
+            let month = parseInt(parts[1], 10);
+            let year = parseInt(parts[2], 10);
+            if (parts[0].length === 4) { year = parseInt(parts[0], 10); day = parseInt(parts[2], 10); }
+            if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+                const y = year < 100 ? 2000 + year : year;
+                return `${y}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            }
+        }
+        const d = new Date(raw);
+        if (!isNaN(d.getTime())) {
+            return d.getFullYear() + '-' + ('0'+(d.getMonth()+1)).slice(-2) + '-' + ('0'+d.getDate()).slice(-2);
+        }
+        return raw;
+    }
+
+    function formatCertDate(dateStr) {
+        if (!dateStr) return null;
+        if (dateStr.includes("T")) dateStr = dateStr.split("T")[0];
+        let parts = dateStr.split(/[/\-]/);
+        if (parts.length === 3) {
+            let d = parseInt(parts[0], 10);
+            let m = parseInt(parts[1], 10);
+            let y = parseInt(parts[2], 10);
+            if (parts[0].length === 4) { y = parseInt(parts[0], 10); d = parseInt(parts[2], 10); }
+            if (y < 100) y += 2000;
+            const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+            let mIndex = m - 1;
+            if(mIndex >= 0 && mIndex < 12 && !isNaN(d) && !isNaN(y)) return `${d} de ${monthNames[mIndex]} de ${y}`;
+        }
+        return dateStr;
+    }
+
+    function findDateInObject(normalizedObj, courseName) {
+        if (!normalizedObj || !courseName) return null;
+        const normCourse = normalizeName(courseName);
+        for (let key in normalizedObj) if (normalizeName(key) === normCourse) return normalizedObj[key];
+        return null;
+    }
+
+    function parseProgressString(raw, totalLessons) {
+        if(!raw || raw.trim()==="") return {completed:0, total:totalLessons, percent:0, scores:[], avgScore:0, progress:[]};
+        let safe = String(raw).trim().replace(/'/g,'"');
+        let scores = new Array(totalLessons).fill(null);
+        let completed = 0;
+        let progressIndices = [];
+        try {
+            const p = JSON.parse(safe);
+            if(p && typeof p === 'object') {
+                if(p.progress && Array.isArray(p.progress)) {
+                    progressIndices = p.progress.map(v=>parseInt(v)).filter(v=>!isNaN(v));
+                    completed = progressIndices.length;
+                } else if(typeof p.completed === 'number') {
+                    completed = p.completed;
+                    for(let i=0; i<completed; i++) progressIndices.push(i);
+                }
+                const src = p.scores || p;
+                if(Array.isArray(src)) { for(let i=0; i<src.length && i<totalLessons; i++) scores[i]=Number(src[i]); }
+                else if(typeof src === 'object') { for(let k in src) { let idx=parseInt(k); if(!isNaN(idx)&&idx>=0&&idx<totalLessons) scores[idx]=Number(src[k]); } }
+            }
+        } catch(e) {
+            if(safe.includes(',')) { let parts=safe.split(','); parts.forEach((p,i)=>{ if(i<totalLessons) scores[i]=Number(p.trim()); }); }
+            else { let n=parseFloat(safe); if(!isNaN(n)){ if(safe.includes('%')||n<=100) completed=Math.round((n/100)*totalLessons); else completed=n; scores[0]=n; } }
+        }
+        let valid = scores.filter(n=>n!==null&&!isNaN(n));
+        if(completed===0 && valid.length>0) completed = valid.length;
+        completed = Math.min(Math.max(0, completed), totalLessons);
+        const avg = valid.length>0 ? Math.round(valid.reduce((a,b)=>a+b,0)/valid.length) : 0;
+        let percent = totalLessons>0 ? Math.round((completed/totalLessons)*100) : 0;
+        return {completed, total: totalLessons, percent, scores, avgScore: avg, progress: progressIndices};
+    }
+
+    async function loadData() {
+        if(!currentUser) return;
+        if (typeof showSyncIndicator === 'function') showSyncIndicator('Conectando con la base de datos...', 'loading');
+        try {
+            const res = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
+            const data = await res.json();
+            if(data.status === 'success') {
+                dbUserCourses = data.userCourses || {};
+                dbUserProgress = data.userProgress || {};
+
+                const enrollmentDatesBackend = data.userCourseEnrollmentDates || {};
+                const completionDatesBackend = data.userCourseCompletionDates || {};
+                const emailKey = currentUser.email.toLowerCase();
+                latestEnrollmentDates = enrollmentDatesBackend[emailKey] || {};
+                latestCompletionDates = completionDatesBackend[emailKey] || {};
+
+                const email = currentUser.email.toLowerCase();
+                let myCourseNamesRaw = dbUserCourses[email] || [];
+                let myCourseNames = splitCourseNames(myCourseNamesRaw);
+                let myCourseIds = [];
+                myCourseNames.forEach(cName => {
+                    let nn = normalizeName(cName);
+                    let found = COURSES_DATA.find(x => normalizeName(x.name) === nn);
+                    if(!found) found = COURSES_DATA.find(x => normalizeName(x.name).includes(nn) || nn.includes(normalizeName(x.name)));
+                    if(found) myCourseIds.push(found.id);
+                });
+                currentUser.accessedCursos = [...new Set([...(currentUser.accessedCursos || []), ...myCourseIds])];
+                localStorage.setItem('user', JSON.stringify(currentUser));
+
+                fetchProgressForAllCourses();
+                updateDashboard();
+                if (typeof showSyncIndicator === 'function') showSyncIndicator('Datos sincronizados', 'success');
+            }
+        } catch(e) {
+            console.error("Error al cargar datos:", e);
+            if (typeof showSyncIndicator === 'function') showSyncIndicator('Error de conexión. Revisa la consola.', 'error');
+        }
+    }
+
+    function fetchProgressForAllCourses() {
+        if(!currentUser || !currentUser.accessedCursos) return;
+        const email = currentUser.email.toLowerCase();
+        if(!userProgress[email]) userProgress[email] = {};
+        const progresos = dbUserProgress[email] || {};
+        const accessed = currentUser.accessedCursos;
+        accessed.forEach(courseId => {
+            const course = COURSES_DATA.find(c => c.id === courseId);
+            if(!course) return;
+            let progStr = "";
+            for(let key in progresos) {
+                let nk = normalizeName(key), nc = normalizeName(course.name);
+                if(nk === nc || nk.includes(nc) || nc.includes(nk)) {
+                    progStr = progresos[key];
+                    break;
+                }
+            }
+            const total = course.totalLessons || 5;
+            userProgress[email][String(courseId)] = parseProgressString(progStr, total);
+        });
+        renderUserProgress();
+        renderAchievements();
+    }
+
+    function renderAchievements() {
+        const container = document.getElementById('achievements-container');
+        const noAchievements = document.getElementById('no-achievements');
+        if (!container) return;
+
+        const user = currentUser;
+        const accessedIds = user?.accessedCursos || [];
+        const email = user?.email?.toLowerCase();
+
+        const completedCourses = [];
+        accessedIds.forEach(courseId => {
+            const course = COURSES_DATA.find(c => c.id === courseId);
+            if (!course) return;
+            const progData = userProgress[email]?.[String(courseId)];
+            if (progData && progData.percent === 100) {
+                completedCourses.push({
+                    course: course,
+                    avgScore: progData.avgScore || 0
+                });
+            }
+        });
+
+        if (completedCourses.length === 0) {
+            container.innerHTML = '';
+            noAchievements.classList.remove('hidden');
+            return;
+        }
+
+        noAchievements.classList.add('hidden');
+        container.innerHTML = completedCourses.map(item => `
+            <div class="flex items-center gap-3 border-blue-400/50 bg-blue-500/20 backdrop-blur-md shadow-[inset_0_0_10px_rgba(59,130,246,0.1)] text-white rounded-xl p-3 border">
+                <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-medal text-yellow-400 text-xl"></i>
+                </div>
+                <div class="min-w-0 flex-1 flex items-baseline justify-between gap-2">
+                    <p class="text-white text-sm font-bold truncate">${item.course.name}</p>
+                    <span class="text-green-400 text-lg font-black whitespace-nowrap">${item.avgScore}%</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderUserProgress() {
+        const coursesContainer = document.getElementById('individualCourseProgressCards');
+        const subjectsContainer = document.getElementById('individualSubjectProgressCards');
+        if (!coursesContainer || !subjectsContainer) return;
+
+        const user = currentUser;
+        const accessedIds = user?.accessedCursos || [];
+        const email = user?.email?.toLowerCase();
+
+        if (!email || accessedIds.length === 0) {
+            coursesContainer.innerHTML = '<div class="col-span-full text-slate-400 italic text-center py-4 bg-white/5 rounded-xl border border-white/10">No tienes cursos (Online/Presencial) para mostrar.</div>';
+            subjectsContainer.innerHTML = '<div class="col-span-full text-slate-400 italic text-center py-4 bg-white/5 rounded-xl border border-white/10">No tienes materias (Diplomados/Maestrías) para mostrar.</div>';
+            return;
+        }
+
+        let coursesHtml = '';
+        let subjectsHtml = '';
+
+        accessedIds.forEach(courseId => {
+            const course = COURSES_DATA.find(c => c.id === courseId);
+            if (!course) return;
+
+            const progData = userProgress[email]?.[String(courseId)] || { completed: 0, total: course.totalLessons || 5, percent: 0, scores: [], progress: []};
+            const progressIndices = progData.progress || [];
+            const done = progData.completed;
+            const scores = progData.scores || [];
+            const coursePercentage = progData.percent;
+
+            let enrollmentDate = findDateInObject(latestEnrollmentDates, course.name) || '';
+            let completionDate = findDateInObject(latestCompletionDates, course.name) || '';
+            let enrollmentDisplay = enrollmentDate ? formatCertDate(normalizeDateString(enrollmentDate)) : '---';
+            let completionDisplay = completionDate ? formatCertDate(normalizeDateString(completionDate)) : '---';
+
+            let certificateButton = '';
+            if (coursePercentage === 100) {
+                certificateButton = `
+                <div class="mt-4 pt-3 border-t border-slate-200">
+                    <button onclick="reproducirAplausoYCertificado(${course.id})" class="w-full btn-metal btn-green py-2.5 rounded-xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm">
+                        <i class="fas fa-certificate"></i> Ver Certificado
+                    </button>
+                </div>`;
+            }
+
+            let progressSummaryCardHtml = `
+                <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-inner mb-6">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 text-slate-800">
+                        <div>
+                            <h4 class="font-black uppercase tracking-widest text-xs"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4>
+                            <p class="text-sm text-slate-600 mt-1">${done} de ${progData.total} lecciones completadas</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-24 text-right">
+                                <span class="text-2xl font-black ${coursePercentage === 100 ? 'text-amber-500' : 'text-green-500'}">${coursePercentage}%</span>
+                            </div>
+                            <div class="w-32 bg-slate-200 rounded-full h-2 overflow-hidden">
+                                <div class="${coursePercentage === 100 ? 'bg-amber-500' : 'bg-green-500'} h-2 rounded-full transition-all duration-700" style="width:${coursePercentage}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-200 grid grid-cols-2 gap-3 text-xs">
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-calendar-check text-green-400 text-sm"></i>
+                            <div>
+                                <p class="text-slate-500 uppercase tracking-wider text-[10px]">Inscripción</p>
+                                <p class="text-slate-800 font-bold">${enrollmentDisplay}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fas fa-calendar-alt text-purple-400 text-sm"></i>
+                            <div>
+                                <p class="text-slate-500 uppercase tracking-wider text-[10px]">Culminación</p>
+                                <p class="text-slate-800 font-bold">${completionDisplay}</p>
+                            </div>
+                        </div>
+                    </div>
+                    ${certificateButton}
+                </div>`;
+
+            let modulesHtml = '';
+            const moduleNames = course.moduleNames || Array.from({length: progData.total}, (_, i) => `Módulo ${i + 1}`);
+
+            moduleNames.forEach((moduleName, i) => {
+                let stateClass = "", stateText = "", score = scores[i];
+                if (score !== undefined && score !== null && !isNaN(score)) {
+                    if (score >= 70) {
+                        stateClass = "border-blue-500/50 bg-blue-900/30 text-white";
+                        stateText = `✅ Completado (${score}%)`;
+                    } else {
+                        stateClass = "border-red-500/50 bg-red-900/30 text-white";
+                        stateText = `❌ No aprobado ${score}%`;
+                    }
+                } else {
+                    if (progressIndices.includes(i) || (done > 0 && i < done)) {
+                        stateClass = "border-blue-500/50 bg-blue-900/30 text-white";
+                        stateText = `✅ Completado`;
+                    } else {
+                        stateClass = "border-slate-500/50 bg-slate-700/30 text-slate-300";
+                        stateText = `⏳ Falta por evaluar`;
+                    }
+                }
+                modulesHtml += `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01]"><span class="tracking-wide text-xs sm:text-sm">${moduleName}</span><span class="text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+            });
+
+            const cardHtml = `
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl relative border border-white/20">
+                    <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                        <h3 class="text-white font-black uppercase tracking-tighter text-sm flex items-center gap-3">
+                            <i class="fas fa-book text-blue-200"></i> ${course.name}
+                        </h3>
+                        ${coursePercentage === 100 ? '<i class="fas fa-medal text-amber-400 text-xl" title="Curso culminado"></i>' : ''}
+                    </div>
+                    ${progressSummaryCardHtml}
+                    <h4 class="text-slate-200 font-black uppercase tracking-widest text-[10px] mb-4">Desglose de Módulos</h4>
+                    <div class="space-y-3">
+                        ${modulesHtml}
+                    </div>
+                </div>`;
+            
+            if (course.type === 'Materia') {
+                subjectsHtml += cardHtml;
+            } else {
+                coursesHtml += cardHtml;
+            }
+        });
+
+        coursesContainer.innerHTML = coursesHtml || '<div class="col-span-full text-slate-400 italic text-center py-4 bg-white/5 rounded-xl border border-white/10">No tienes cursos (Online/Presencial) para mostrar.</div>';
+        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full text-slate-400 italic text-center py-4 bg-white/5 rounded-xl border border-white/10">No tienes materias (Diplomados/Maestrías) para mostrar.</div>';
+    }
+
+    function updateDashboard() {
+        if (!currentUser) return;
+
+        document.getElementById('dash-student-name').innerText = currentUser.name || '-';
+        document.getElementById('dash-student-email').innerText = currentUser.email || '-';
+        document.getElementById('dash-student-id').innerText = (currentUser.cedula && currentUser.cedula !== "N/A") ? currentUser.cedula : "---";
+        document.getElementById('dash-student-phone').innerText = (currentUser.telefono && currentUser.telefono !== "N/A") ? currentUser.telefono : "---";
+
+        const pais = currentUser.pais && currentUser.pais !== "N/A" ? currentUser.pais : "";
+        const estado = currentUser.estado && currentUser.estado !== "N/A" ? currentUser.estado : "";
+        let locationText = pais;
+        if (estado) locationText += ` (${estado})`;
+        if (!locationText) locationText = "País Desconocido";
+        document.getElementById('dash-student-location').innerText = locationText;
+
+        const flagImg = document.getElementById('dash-student-flag');
+        let isoCode = null;
+        if (pais) {
+            const cleanPais = pais.trim().toLowerCase();
+            isoCode = countryToISO[cleanPais] || countryToISO[cleanPais.replace(/\s/g,'')];
+        }
+        if (isoCode) {
+            if (flagImg) {
+                flagImg.src = `https://flagcdn.com/w20/${isoCode}.png`;
+                flagImg.classList.remove('hidden');
+            }
+        } else {
+            if (flagImg) flagImg.classList.add('hidden');
+        }
+
+        document.getElementById('dash-student-profession').innerText = (currentUser.profession && currentUser.profession.trim() !== "") ? capitalize(currentUser.profession) : "Sin Perfil";
+
+        const accessed = currentUser.accessedCursos || [];
+        let onlineCount = 0, presencialCount = 0;
+        accessed.forEach(cId => {
+            const course = COURSES_DATA.find(c => c.id === cId);
+            if (course) {
+                if (course.type === 'Online') onlineCount++;
+                else if (course.type === 'Presencial') presencialCount++;
+            }
+        });
+        document.getElementById('dash-student-online').innerText = onlineCount;
+        document.getElementById('dash-student-presencial').innerText = presencialCount;
+        
+        let totalDownloads = 0;
+        if (currentUser.downloadedFiles && typeof currentUser.downloadedFiles === 'object' && !Array.isArray(currentUser.downloadedFiles)) {
+            totalDownloads = Object.values(currentUser.downloadedFiles).reduce((sum, count) => sum + (Number(count) || 0), 0);
+        } else if (Array.isArray(currentUser.downloadedFiles)) {
+            totalDownloads = currentUser.downloadedFiles.length;
+        }
+        document.getElementById('dash-student-downloads').innerText = totalDownloads;
+        document.getElementById('dash-student-likes').innerText = (currentUser.likedCourses || []).length;
+
+        renderUserProgress();
+        renderAchievements();
+    }
+
+    async function manualRefreshProgress() {
+        const icon = document.getElementById('refresh-progress-icon');
+        if (icon) icon.classList.add('fa-spin');
+        await loadData();
+        if (icon) icon.classList.remove('fa-spin');
+    }
+
+    function reproducirAplausoYCertificado(courseId) {
+        const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-small-crowd-applause-443.mp3');
+        audio.volume = 0.5;
+        audio.play().catch(e => console.log("No se pudo reproducir el audio automáticamente."));
+        generateCertificate(courseId);
+    }
+
+    function generateCertificate(courseId) {
+        if (!currentUser) {
+            alert("Debes iniciar sesión para generar el certificado.");
+            return;
+        }
+        const course = COURSES_DATA.find(c => c.id === courseId);
+        if (!course) return;
+
+        const nombreEstudiante = currentUser.name || "Estudiante";
+        const cedulaEstudiante = currentUser.cedula && currentUser.cedula !== "N/A" ? currentUser.cedula : "00000000";
+        const nombreCurso = course.name;
+        const numModulos = course.totalLessons || 5;
+        const moduleNames = course.moduleNames || [];
+        let temarioHTML = moduleNames.map(mod => `• ${mod}<br>`).join('');
+
+        let rawCompletion = findDateInObject(latestCompletionDates, course.name);
+        let fechaHoy = "[En proceso de registro en sistema]";
+        if (rawCompletion) {
+            let dateOnly = rawCompletion.includes("T") ? rawCompletion.split("T")[0] : rawCompletion;
+            fechaHoy = formatCertDate(dateOnly) || rawCompletion;
+        }
+        const ciNum = parseInt(String(cedulaEstudiante).replace(/\D/g, '')) || 0;
+        const idCalculado = 13018822 + ciNum;
+        const siglas = nombreCurso.split(' ').filter(p => p.length > 0).map(p => p[0].toUpperCase()).join('') || "CURSO";
+        const textoFecha = `Con una estructura de ${numModulos} módulos, culminado el día ${fechaHoy}.`;
+
+        const certHTML = `
+        <div id="cert-content-to-download" style="width: 980px; height: 740px; padding: 30px 45px 35px 45px; position: relative; background: white; border: 6px solid #475569; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Plus Jakarta Sans', sans-serif;">
+            <img src="https://i.postimg.cc/T1jyL15x/ct.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.15; object-fit: cover; z-index: 0;" crossorigin="anonymous">
+            <div style="text-align: center; position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 10px; left: -1cm;">
+                <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" style="height: 140px;" crossorigin="anonymous">
+                <h1 style="font-size: 32px; font-weight: 800; color: #334155; text-transform: uppercase; margin:0;">Aprende Automatización</h1>
+            </div>
+            <div style="text-align: center; position: relative; z-index: 10; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; margin-top: -20px;">
+                <p style="font-size: 20px; font-weight: 800; color: #000; margin:0 0 2px 0;">Otorga el presente:</p>
+                <h2 style="font-size: 38px; font-weight: 900; color: #3b5998; margin:0 0 5px 0;">Certificado a:</h2>
+                <div style="display: inline-block; text-align: center;">
+                    <h3 style="font-size: 46px; font-weight: 900; color: #111827; border-bottom: 3px solid #475569; padding-bottom: 4px; text-transform: uppercase; margin:0; display: inline-block;">${nombreEstudiante}</h3>
+                </div>
+                <p style="font-size: 17px; font-weight: 800; color: #000; margin: 5px 0 10px 0; font-style: italic;">Cédula de Identidad: ${cedulaEstudiante}</p>
+                <p style="font-size: 19px; color: #000; margin:0 0 5px 0;">Por haber <strong style="font-weight: 900;">APROBADO</strong> el curso:</p>
+                <h4 style="font-size: 36px; font-weight: 900; color: #000; margin: 0 0 15px 0; max-width: 850px; line-height: 1.2;">"${nombreCurso}"</h4>
+                <div style="display: inline-block; text-align: center; max-width: 90%;">
+                    <p style="font-size: 14px; color: #1f2937; margin: 0 0 10px 0; font-weight: 600; white-space: nowrap;">${textoFecha}</p>
+                    <div style="margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 6px; background-color: rgba(248, 250, 252, 0.9); padding: 12px 16px; text-align: left; width: 100%; box-sizing: border-box;">
+                        <div style="column-count: 2; column-gap: 30px; font-size: 12px; color: #1f2937; font-weight: 600; line-height: 1.5;">${temarioHTML}</div>
+                    </div>
+                </div>
+            </div>
+            <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; padding: 0 20px;">
+                <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">MSc. Ing. Pablo Cedeño</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Instructor</p></div>
+                <div style="text-align: center; color: #9ca3af; font-size: 10px;">ID de Certificado: <strong style="color:#6b7280; font-weight: 900;">${siglas}</strong>-<span style="color:#6b7280; font-weight: 900;">${idCalculado}</span></div>
+                <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">Aprende Automatización</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Dirección Académica</p></div>
+            </div>
+        </div>`;
+
+        const nuevaVentana = window.open('', '_blank');
+        nuevaVentana.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Certificado - ${nombreCurso}</title>
+                <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+                <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"><\/script>
+                <style>
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        font-family: 'Plus Jakarta Sans', sans-serif;
+                        background-color: #0f172a;
+                        min-height: 100vh;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        position: relative;
+                    }
+                    .bg-pattern {
+                        position: fixed;
+                        inset: 0;
+                        z-index: 0;
+                    }
+                    .bg-pattern img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                        opacity: 0.4;
+                        mix-blend-mode: luminosity;
+                    }
+                    .toolbar {
+                        position: relative;
+                        z-index: 10;
+                        background: rgba(255,255,255,0.1);
+                        backdrop-filter: blur(12px);
+                        border: 1px solid rgba(255,255,255,0.2);
+                        padding: 16px 24px;
+                        border-radius: 16px;
+                        margin-bottom: 20px;
+                        display: flex;
+                        gap: 12px;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                    }
+                    .btn {
+                        padding: 12px 24px;
+                        border: none;
+                        border-radius: 10px;
+                        font-weight: 700;
+                        font-size: 13px;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        font-family: 'Plus Jakarta Sans', sans-serif;
+                        text-transform: uppercase;
+                        letter-spacing: 0.1em;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                    }
+                    .btn-print {
+                        background: #2db8ce;
+                        color: white;
+                        box-shadow: 0 8px 32px rgba(45, 184, 206, 0.3);
+                    }
+                    .btn-print:hover {
+                        background: #3cc8de;
+                        transform: translateY(-2px);
+                        box-shadow: 0 12px 40px rgba(45, 184, 206, 0.5);
+                    }
+                    .certificate-container {
+                        position: relative;
+                        z-index: 10;
+                        max-width: 100%;
+                        overflow-x: auto;
+                        display: flex;
+                        justify-content: center;
+                    }
+                    .certificate-wrapper {
+                        box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+                        background: white;
+                    }
+                    @media print {
+                        @page { size: letter landscape; margin: 0.5cm; }
+                        body { background: white; padding: 0; margin: 0; }
+                        .bg-pattern { display: none !important; }
+                        .toolbar { display: none !important; }
+                        .certificate-container { display: block; }
+                        .certificate-wrapper { box-shadow: none !important; }
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="bg-pattern">
+                    <img src="https://i.postimg.cc/vBXrQbHB/web-3.gif" alt="Fondo" crossorigin="anonymous">
+                </div>
+                <div class="toolbar">
+                    <button class="btn btn-print" onclick="window.print()">🖨️ Imprimir Certificado</button>
+                    <span style="color: rgba(255,255,255,0.7); font-size: 12px; font-weight: 600;">Optimizado para Hoja Carta</span>
+                </div>
+                <div class="certificate-container">
+                    <div class="certificate-wrapper">
+                        ${certHTML}
+                    </div>
+                </div>
+                <script>
+                    window.addEventListener('load', function() {
+                        if (typeof confetti !== 'undefined') {
+                            const duration = 3 * 1000;
+                            const end = Date.now() + duration;
+                            const colors = [
+                                '#0f172a', '#1e293b', '#2db8ce', '#91a1af', 
+                                '#475569', '#1877f2', '#cbd5e1', '#94a3b8'
+                            ];
+                            (function frame() {
+                                confetti({
+                                    particleCount: 5,
+                                    angle: 60,
+                                    spread: 55,
+                                    origin: { x: 0, y: 0.6 },
+                                    colors: colors
+                                });
+                                confetti({
+                                    particleCount: 5,
+                                    angle: 120,
+                                    spread: 55,
+                                    origin: { x: 1, y: 0.6 },
+                                    colors: colors
+                                });
+                                if (Date.now() < end) {
+                                    requestAnimationFrame(frame);
+                                }
+                            }());
+                        }
+                    });
+                <\/script>
+            </body>
+            </html>
+        `);
+        nuevaVentana.document.close();
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        if (!currentUser) {
+            document.getElementById('progreso-page').innerHTML = '<div class="text-center text-white mt-20">Debes iniciar sesión en la plataforma principal para ver tu progreso.</div>';
+            return;
+        }
+        await loadData();
+    });
+</script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+</body>
+</html>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatización con Contactores - UPT Aragua</title>
+    <link rel="icon" href="img/AA (38).webp" type="image/webp">
+    
+    <!-- FUENTES Y LIBRERÍAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/info-page.css">
+
+    <style>
+        :root {
+            --azul-gris: #91a1af;
+            --azul-oscuro: #0f172a;
+            --celeste: #2db8ce;
+            --fb-blue: #1877f2;
+        }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc; 
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        .glass-light {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .glass-dark-blue {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 184, 206, 0.25);
+            color: white;
+        }
+
+        .glass-gray-blue {
+            background: rgba(145, 161, 175, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #0f172a;
+        }
+
+        .resource-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15);
+        }
+
+        .btn-pulse:active {
+            transform: scale(0.97);
+            transition: transform 0.1s ease;
+        }
+
+        .star-rating i {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #475569; 
+        }
+        .star-rating i.active {
+            color: #fbbf24; 
+            transform: scale(1.1);
+        }
+
+        #emoji-picker {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            z-index: 50;
+            background: white;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+        #emoji-picker.show { display: grid; }
+        .emoji-btn {
+            padding: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .emoji-btn:hover { background: #f1f5f9; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--celeste); }
+    </style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="relative bg-[#0f172a] text-white py-20 px-6 overflow-hidden">
+    <div class="absolute inset-0 opacity-20">
+        <img src="img/AA (36).webp" class="w-full h-full object-cover" alt="Fondo">
+    </div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="lg:w-2/3">
+            <nav class="flex gap-2 mb-6 text-[10px] font-black uppercase tracking-widest flex-wrap">
+                <span class="bg-blue-500/20 px-3 py-1 rounded-full" style="color: var(--celeste)">Electricidad Industrial</span>
+                <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400">Nivel Básico/Intermedio</span>
+                <span class="bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30">Modalidad Presencial</span>
+            </nav>
+            <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter font-display force-white-text">
+                AUTOMATIZACIÓN CON <br>
+                <span style="color: var(--celeste)">CONTACTORES</span>
+            </h1>
+            <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed font-medium">
+                Comprende, diseña e instala sistemas de automatización industrial utilizando contactores. Aprende normativas, simulación y cableado de circuitos de control.
+            </p>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="flex flex-col lg:flex-row gap-12">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="lg:w-2/3 space-y-12">
+            
+            <!-- VIDEO -->
+            <section>
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Vídeo Promocional</h2>
+                <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-slate-200 border-4 border-white">
+                    <iframe class="w-full h-full" src="https://www.youtube.com/embed/9X5EIDWnFvQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </section>
+
+            <!-- RESUMEN DEL CURSO -->
+            <section class="glass-light p-8 rounded-3xl border shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--azul-oscuro)">Resumen del Curso</h2>
+                <div class="text-slate-700 text-sm leading-relaxed space-y-4 font-medium">
+                    <p>
+                        Este programa está diseñado para proporcionar a los participantes los conocimientos y habilidades técnicos necesarios para comprender, diseñar e instalar sistemas de automatización industrial utilizando <strong>contactores</strong>. 
+                    </p>
+                    <p>
+                        Al finalizar el curso, serás capaz de aplicar los principios de funcionamiento electromecánico, diseñar esquemas de potencia y mando, y familiarizarte con las normas internacionales de seguridad eléctrica, desarrollando una capacidad crítica para la resolución de fallas en entornos industriales reales.
+                    </p>
+                </div>
+            </section>
+
+            <!-- OBJETIVOS DEL CURSO -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Objetivos del Curso</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#2db8ce]/10 flex items-center justify-center text-[#2db8ce] shrink-0">
+                            <i class="fas fa-bullseye text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800 mb-1">Diseño Técnico</h4>
+                            <p class="text-xs text-slate-500">Elaborar esquemas eléctricos normalizados de fuerza y control para motores.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#2db8ce]/10 flex items-center justify-center text-[#2db8ce] shrink-0">
+                            <i class="fas fa-tools text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800 mb-1">Montaje Práctico</h4>
+                            <p class="text-xs text-slate-500">Realizar el cableado físico de tableros de automatización siguiendo normas de seguridad.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#2db8ce]/10 flex items-center justify-center text-[#2db8ce] shrink-0">
+                            <i class="fas fa-laptop-code text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800 mb-1">Simulación Virtual</h4>
+                            <p class="text-xs text-slate-500">Validar el funcionamiento de circuitos mediante software especializado (CADeSIMU).</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-[#2db8ce]/10 flex items-center justify-center text-[#2db8ce] shrink-0">
+                            <i class="fas fa-shield-alt text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-sm text-slate-800 mb-1">Protección Industrial</h4>
+                            <p class="text-xs text-slate-500">Implementar sistemas de protección adecuados para motores y operadores.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PERFIL DEL PARTICIPANTE (INGRESO) -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Perfil del Participante (Ingreso)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600 font-medium">
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <i class="fas fa-user-graduate text-[#2db8ce] mt-1"></i>
+                        <span>Estudiantes de Ingeniería o TSU en Electricidad, Mecánica, Instrumentación y áreas afines.</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <i class="fas fa-briefcase text-[#2db8ce] mt-1"></i>
+                        <span>Técnicos de mantenimiento y operarios que trabajen en entornos industriales.</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <i class="fas fa-bolt text-[#2db8ce] mt-1"></i>
+                        <span>Electricistas residenciales que deseen escalar sus conocimientos al área industrial.</span>
+                    </div>
+                    <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <i class="fas fa-lightbulb text-[#2db8ce] mt-1"></i>
+                        <span>Emprendedores y curiosos con nociones básicas de electricidad y ganas de aprender control.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ¿QUÉ APRENDERÁS EN ESTE CURSO? -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">¿Qué aprenderás en este curso?</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
+                        <i class="fas fa-check-circle text-emerald-500"></i>
+                        <span>Interpretación de simbología bajo normas IEC y NEMA.</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
+                        <i class="fas fa-check-circle text-emerald-500"></i>
+                        <span>Funcionamiento y selección de contactores y relés.</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
+                        <i class="fas fa-check-circle text-emerald-500"></i>
+                        <span>Diseño de arranques directos e inversores de giro.</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
+                        <i class="fas fa-check-circle text-emerald-500"></i>
+                        <span>Lógica de protección para motores trifásicos.</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
+                        <i class="fas fa-check-circle text-emerald-500"></i>
+                        <span>Montaje práctico de tableros de control industrial.</span>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
+                        <i class="fas fa-check-circle text-emerald-500"></i>
+                        <span>Uso de software CADeSIMU para validación previa.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTENIDO DE LAS UNIDADES -->
+            <section class="space-y-6">
+                <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Contenido de las Unidades</h2>
+                
+                <!-- Sesión 1 -->
+                <div class="glass-dark-blue p-8 rounded-[2rem] border resource-card overflow-hidden relative">
+                    <div class="absolute top-0 right-0 p-6 opacity-10"><i class="fas fa-plug text-6xl"></i></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="bg-cyan-500 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">Sesión 01</span>
+                        <h3 class="text-xl font-black uppercase font-display text-white">Automatismos Eléctricos</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm font-medium text-slate-200">
+                        <li>Definición y diferencias entre automatismos cableados y programados.</li>
+                        <li>Dispositivos Básicos: Pulsadores, interruptores y sensores.</li>
+                        <li>Esquemas de Fuerza (potencia) y Control (mando).</li>
+                        <li class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 font-bold text-cyan-400">Práctica: Diseño y cableado de control de bomba manual-automático.</li>
+                    </ul>
+                </div>
+
+                <!-- Sesión 2 -->
+                <div class="glass-gray-blue p-8 rounded-[2rem] border resource-card overflow-hidden relative">
+                    <div class="absolute top-0 right-0 p-6 opacity-10"><i class="fas fa-cogs text-6xl"></i></div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="bg-[#0f172a] text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">Sesión 02</span>
+                        <h3 class="text-xl font-black uppercase font-display text-[#0f172a]">Resolución con Contactores</h3>
+                    </div>
+                    <ul class="space-y-3 text-sm font-medium text-[#0f172a]">
+                        <li>Diseño y simulación: Arranque estrella-delta y motor de anillos.</li>
+                        <li>Control de bandas transportadoras y portones eléctricos.</li>
+                        <li class="p-3 rounded-xl bg-[#0f172a] text-white font-bold">Práctica: Diseño y cableado para control de bombas alternantes.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- PERFIL DE EGRESO -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <div class="mb-6">
+                    <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 border-[#2db8ce] pl-4">Perfil de Egreso</h2>
+                    <p class="text-sm text-slate-500 font-medium">Al finalizar el curso, adquirirás las siguientes competencias:</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#2db8ce] text-white mb-4 shadow-lg shadow-cyan-500/20"><i class="fas fa-stethoscope"></i></div>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-cyan-700 font-display tracking-tight">Diagnóstico de Fallas</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Capacidad para identificar y solucionar problemas comunes en circuitos de control electromecánico en campo.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#1877f2] text-white mb-4 shadow-lg shadow-blue-500/20"><i class="fas fa-project-diagram"></i></div>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-blue-700 font-display tracking-tight">Diseño de Lógica Cableada</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Habilidad para crear esquemas de mando y potencia para arranques de motores, siguiendo normativas IEC/NEMA.</p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
+                        <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-emerald-500 text-white mb-4 shadow-lg shadow-emerald-500/20"><i class="fas fa-tools"></i></div>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-emerald-700 font-display tracking-tight">Mantenimiento Preventivo</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Competencia para realizar el mantenimiento y la correcta instalación de tableros de control industrial.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Certificación UPTA Unificada -->
+            <div class="mt-8">
+                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-award text-8xl text-cyan-400"></i>
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2">
+                        <img src="img/AA(41).ico" alt="Certificado UPTA" class="w-full h-full object-contain">
+                    </div>
+                    <div class="relative z-10 text-center sm:text-left">
+                        <h4 class="font-black text-base text-white mb-1 uppercase tracking-tight font-display">Certificación UPTA</h4>
+                        <p class="text-xs text-slate-300 font-medium leading-relaxed">
+                            Avalado por el Departamento de postgrado de la Universidad Politécnica Territorial del Estado Aragua.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- REQUISITOS -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Requisitos</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-book-open text-2xl text-blue-500 mb-2"></i>
+                        <h5 class="text-[10px] font-bold uppercase text-slate-700 mb-1">Conocimientos</h5>
+                        <p class="text-[10px] text-slate-500 font-medium leading-tight uppercase">Nociones básicas de electricidad de CA/CC</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-laptop text-2xl text-emerald-500 mb-2"></i>
+                        <h5 class="text-[10px] font-bold uppercase text-slate-700 mb-1">Equipos</h5>
+                        <p class="text-[10px] text-slate-500 font-medium leading-tight uppercase">Computadora portátil para simulaciones (Opcional)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RECURSOS INCLUIDOS -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Recursos Incluidos</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-file-pdf text-2xl text-red-500 mb-2"></i>
+                        <p class="text-[10px] font-bold uppercase text-slate-700">Guías Técnicas Digitales</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                        <i class="fas fa-desktop text-2xl text-blue-500 mb-2"></i>
+                        <p class="text-[10px] font-bold uppercase text-slate-700">Simuladores CADeSIMU / PC_SIMU</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DATOS GENERALES DEL CURSO -->
+            <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Datos Generales del Curso</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm font-medium">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Institución</p>
+                        <p class="font-bold text-slate-800 leading-snug">Universidad Politécnica Territorial del Estado Aragua “Federico Brito Figueroa”.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Programa</p>
+                        <p class="font-bold text-slate-800 leading-snug">Curso de ampliación y extensión profesional en automatización industrial.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Sede y Lugar</p>
+                        <p class="font-bold text-slate-800 leading-snug">Avenida universidad al lado del comando de las FAN peaje.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Modalidad / Certificado</p>
+                        <p class="font-bold text-slate-800 leading-snug">Presencial. Certificado en automatización industrial.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Duración y Horario</p>
+                        <p class="font-bold text-slate-800 leading-snug">(4) sábados, 32 horas académicas.</p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                        <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Dependencia / Cupos</p>
+                        <p class="font-bold text-slate-800 leading-snug">Departamento de instrumentación y control.</p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- BARRA LATERAL -->
+        <div class="lg:w-1/3 lg:sticky lg:top-0 lg:h-screen lg:flex lg:items-center">
+            <div class="w-full space-y-8">
+                <div class="bg-white rounded-[40px] shadow-2xl border border-slate-200 p-8">
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <span class="text-4xl font-black text-slate-900">$19.99</span>
+                        <span class="text-slate-400 line-through text-lg">$40.00</span>
+                    </div>
+                    <div class="space-y-3">
+                        <a href="javascript:alert('Para inscribirte, por favor contactar con el profesor Pablo Cedeño.')" class="btn-pulse w-full bg-[#2db8ce] text-white py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 shadow-xl hover:bg-[#2db8ce]/90 transition-all">
+                            <i class="fas fa-cart-plus"></i> Comprar Ahora
+                        </a>
+                        <a href="https://www.profesorpablocedeno.online/mis-cursos/arranque-de-motores-con-contactores/contactores2" class="btn-pulse w-full border-2 border-[#2db8ce] text-[#2db8ce] py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 hover:bg-[#2db8ce]/5 transition-all">
+                            <i class="fas fa-sign-in-alt"></i> Materiales del Curso
+                        </a>
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-slate-200 space-y-3">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-3 text-white flex items-center gap-3 shadow-lg border border-blue-400/50">
+                            <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner shrink-0"><i class="fas fa-laptop text-sm"></i></div>
+                            <div><h4 class="font-bold text-[9px] text-blue-100 uppercase tracking-widest mb-0.5">Modalidad</h4><p class="font-black text-xs uppercase tracking-tighter text-white leading-none">100% Online</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    const COURSE_ID = 'Automatizacion_Contactores'; 
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzV5ytOQNAqD3gEeLYOUkDlZBrkixrjXZisEF-KCnjCW0qnaJDI123kcVtK5-5mfvS9/exec';
+    function toggleEmojiPicker() {
+        const picker = document.getElementById('emoji-picker');
+        picker.classList.toggle('show');
+    }
+
+    // Función para insertar el emoji en el textarea
+    function insertEmoji(emoji) {
+        const textarea = document.getElementById('comentario');
+        textarea.value += emoji; // No need for skeleton here, it's already set above
+        document.getElementById('emoji-picker').classList.remove('show');
+    }
+
+    const stars = document.querySelectorAll('.star-rating i');
+    const estrellasInput = document.getElementById('estrellas-input');
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const val = star.getAttribute('data-value');
+            estrellasInput.value = val;
+            stars.forEach(s => { s.classList.toggle('active', s.getAttribute('data-value') <= val); });
+        });
+    });
+
+    const commentsList = document.getElementById('comments-list');
+    
+    function formatDisplayDate(dateVal) {
+        if (!dateVal) return 'Reciente';
+        const str = String(dateVal).trim();
+        if (str.includes(':') && !str.includes('T')) return str;
+        const date = new Date(dateVal);
+        if (isNaN(date.getTime())) return str;
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function renderComments(data) {
+        if (!data || data.length === 0) {
+            commentsList.innerHTML = '<p class="text-slate-400 text-xs text-center py-4 uppercase font-bold">Sé el primero en comentar.</p>';
+            return;
+        }
+        const validComments = [];
+        data.forEach(c => {
+            let nombre = String(c.Nombre || c.nombre || '').trim();
+            let comentario = String(c.Comentario || c.comentario || '').trim();
+            let estrellas = parseInt(c.estrellas || c.Estrellas || 5);
+            let fecha = formatDisplayDate(c.Fecha || c.fecha || '');
+            if (nombre.toLowerCase() !== 'nombre' && (nombre || comentario)) {
+                validComments.push({ nombre: nombre || 'Anónimo', comentario, estrellas, fecha });
+            }
+        });
+        commentsList.innerHTML = validComments.map(c => `
+            <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm mb-4">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-white bg-slate-900">${c.nombre.charAt(0).toUpperCase()}</div>
+                        <div>
+                            <span class="font-bold text-slate-800 text-sm block tracking-tight">${c.nombre}</span>
+                            <div class="flex gap-0.5 text-[#fbbf24] text-[10px]">
+                                ${'<i class="fas fa-star"></i>'.repeat(c.estrellas)}${'<i class="far fa-star"></i>'.repeat(5 - c.estrellas)}
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-slate-400 text-[9px] font-black uppercase tracking-widest">${c.fecha}</span>
+                </div>
+                <p class="text-slate-600 text-xs italic leading-relaxed pl-12 font-medium">"${c.comentario}"</p>
+            </div>
+        `).join('');
+    }
+
+    async function loadComments() {
+        try { // No need for skeleton here, it's already set above
+            const response = await fetch(`${SCRIPT_URL}?id_curso=${COURSE_ID}&t=${Date.now()}`);
+            const result = await response.json();
+            renderComments((result.data || result.records || result).reverse());
+        } catch (error) { renderComments([]); }
+    }
+
+    document.getElementById('comment-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submit-btn');
+        const msgStatus = document.getElementById('msg-status');
+        btn.disabled = true;
+        msgStatus.innerText = "Publicando...";
+        msgStatus.classList.remove('hidden');
+
+        const params = new URLSearchParams(new FormData(e.target));
+        params.append('id_curso', COURSE_ID); 
+        const ahora = new Date();
+        const f = `${ahora.getDate().toString().padStart(2,'0')}/${(ahora.getMonth()+1).toString().padStart(2,'0')}/${ahora.getFullYear()} ${ahora.getHours().toString().padStart(2,'0')}:${ahora.getMinutes().toString().padStart(2,'0')}`;
+        params.append('Nombre', document.getElementById('nombre').value);
+        params.append('Comentario', document.getElementById('comentario').value);
+        params.append('Fecha', f);
+
+        try {
+            await fetch(SCRIPT_URL, { method: 'POST', body: params, mode: 'no-cors' });
+            msgStatus.innerText = "¡Enviado!";
+            msgStatus.style.color = "#10b981";
+            e.target.reset();
+            setTimeout(() => { loadComments(); msgStatus.classList.add('hidden'); }, 2000);
+        } catch (error) { msgStatus.innerText = "Error al enviar."; msgStatus.style.color = "#ef4444"; }
+        finally { btn.disabled = false; }
+    });
+
+    loadComments();
+</script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+</body>
+</html>

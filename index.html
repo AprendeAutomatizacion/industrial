@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprende Automatización - Formación Profesional</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+    
+    <!-- LIBRERÍAS Y FUENTES -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- GOOGLE CHARTS (PARA LOS MAPAS GLOBALES) -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1877f2',
+                        secondary: '#2db8ce',
+                        dark: '#0f172a',
+                        accent: '#91a1af',
+                        light: '#f8fafc',
+                    }
+                }
+            }
+        }
+    </script>
+
+</head>
+<body class="custom-scrollbar">
+
+<div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20">
+    <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
+    <div>
+        <p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p>
+        <p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p>
+    </div>
+</div>
+
+<!-- MODAL PERFIL DE USUARIO UNIFICADO -->
+<div id="userProfileModal" class="modal-overlay">
+    <div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl">
+        <div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative">
+            <button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div>
+            <h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3>
+            <p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p>
+            
+            <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i>
+                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span>
+                </div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <i class="fas fa-phone text-[#2db8ce] text-[10px]"></i>
+                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span>
+                </div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera">
+                    <i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i>
+                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span>
+                </div>
+            </div>
+            
+            <div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i>
+                <span class="text-white text-[10px] font-black uppercase tracking-widest" id="profileProfession">Sin Perfil</span>
+            </div>
+        </div>
+        
+        <div class="p-6 bg-white text-left">
+            <button id="profileAdminBtn" onclick="openAdminPanel(); closeModal('userProfileModal')" class="hidden mb-3 w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl border border-slate-800 hover:bg-[#2db8ce] transition-all shadow-sm items-center justify-center gap-3">
+                <i class="fas fa-shield-alt text-[#2db8ce]"></i> Panel de Administración
+            </button>
+            <button onclick="logoutUser()" class="w-full py-4 bg-red-50 text-red-600 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm flex items-center justify-center gap-3">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL AUTENTICACIÓN UNIFICADO -->
+<div id="authModal" class="modal-overlay">
+    <div class="modal-content !p-8 relative">
+        <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button>
+        <div class="text-center mb-6">
+            <img src="https://i.postimg.cc/V64qYmsp/web-1.png" alt="Logo" class="h-10 mx-auto mb-3">
+            <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3>
+            <p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p>
+        </div>
+        
+        <div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left">
+            <i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i>
+            <span id="authErrorText" class="leading-tight">Mensaje de error</span>
+        </div>
+
+        <div class="flex bg-slate-100 rounded-xl p-1 mb-6">
+            <button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button>
+            <button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button>
+        </div>
+        
+        <form id="authForm" class="space-y-4 text-left">
+            <div id="nameField" class="space-y-1 hidden">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label>
+                <div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+            </div>
+            <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label>
+                <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+            </div>
+            <div class="space-y-1" id="passwordFieldContainer">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label>
+                <div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+            </div>
+            <button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2">
+                <i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL DE ADMINISTRACIÓN -->
+<div id="adminModal" class="modal-overlay">
+    <div class="modal-content !max-w-[800px] !w-[95%] h-[85vh] flex flex-col relative overflow-hidden bg-slate-50 border-none">
+        <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5 flex justify-between items-center z-10 shadow-lg">
+            <h3 class="font-black uppercase tracking-wide flex items-center gap-3 text-lg"><i class="fas fa-shield-alt text-[#2db8ce] text-2xl"></i> Panel de Administración</h3>
+            <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        
+        <div class="flex flex-col md:flex-row flex-grow overflow-hidden">
+            <div class="w-full md:w-1/3 bg-white border-r border-slate-200 overflow-y-auto custom-scrollbar flex flex-col p-3 gap-2 shadow-inner" id="adminTabsContainer">
+                <!-- Pestañas generadas por JS -->
+            </div>
+            
+            <div class="w-full md:w-2/3 p-6 md:p-8 overflow-y-auto custom-scrollbar bg-slate-50">
+                <div id="adminFormContainer" class="hidden">
+                    <div class="mb-6 border-b border-slate-200 pb-4">
+                        <h4 class="text-xl font-black text-slate-800 leading-tight" id="adminSelectedCourseTitle">Selecciona un curso</h4>
+                        <p class="text-xs text-slate-500 mt-2 font-medium">Ingresa los datos del estudiante para registrarlo <span class="text-[#2db8ce] font-bold">manualmente</span> en la pestaña de este curso en Excel.</p>
+                    </div>
+                    
+                    <div id="adminErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left">
+                        <i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i>
+                        <span id="adminErrorText" class="leading-tight">Ese usuario ya existe en este curso.</span>
+                    </div>
+                    
+                    <form id="adminManualForm" class="space-y-4 text-left">
+                        <input type="hidden" id="adminCourseId">
+                        <input type="hidden" id="adminCourseName">
+                        
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo *</label>
+                            <div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminName" required placeholder="Nombre del estudiante" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo Electrónico *</label>
+                            <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="adminEmail" required placeholder="correo@estudiante.com" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Cédula / ID (Opcional)</label>
+                                <div class="relative"><i class="fas fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminCedula" placeholder="Ej: V-12345678" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Teléfono (Opcional)</label>
+                                <div class="relative"><i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminPhone" placeholder="+58..." class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">País (Opcional)</label>
+                                <div class="relative">
+                                    <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <select id="adminCountry" onchange="toggleAdminState()" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none shadow-sm focus:border-[#2db8ce]">
+                                        <option value="" disabled selected>Selecciona país...</option>
+                                        <option value="Venezuela">Venezuela</option>
+                                        <option value="Colombia">Colombia</option>
+                                        <option value="México">México</option>
+                                        <option value="Argentina">Argentina</option>
+                                        <option value="Perú">Perú</option>
+                                        <option value="Chile">Chile</option>
+                                        <option value="Ecuador">Ecuador</option>
+                                        <option value="España">España</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                                </div>
+                            </div>
+
+                            <div id="adminStateContainer" class="space-y-1 hidden">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Estado (Venezuela)</label>
+                                <div class="relative">
+                                    <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <select id="adminState" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none shadow-sm focus:border-[#2db8ce]">
+                                        <option value="" disabled selected>Selecciona estado...</option>
+                                        <option value="Amazonas">Amazonas</option>
+                                        <option value="Anzoátegui">Anzoátegui</option>
+                                        <option value="Apure">Apure</option>
+                                        <option value="Aragua">Aragua</option>
+                                        <option value="Barinas">Barinas</option>
+                                        <option value="Bolívar">Bolívar</option>
+                                        <option value="Carabobo">Carabobo</option>
+                                        <option value="Cojedes">Cojedes</option>
+                                        <option value="Delta Amacuro">Delta Amacuro</option>
+                                        <option value="Distrito Capital">Distrito Capital</option>
+                                        <option value="Falcón">Falcón</option>
+                                        <option value="Guárico">Guárico</option>
+                                        <option value="Lara">Lara</option>
+                                        <option value="La Guaira">La Guaira</option>
+                                        <option value="Mérida">Mérida</option>
+                                        <option value="Miranda">Miranda</option>
+                                        <option value="Monagas">Monagas</option>
+                                        <option value="Nueva Esparta">Nueva Esparta</option>
+                                        <option value="Portuguesa">Portuguesa</option>
+                                        <option value="Sucre">Sucre</option>
+                                        <option value="Táchira">Táchira</option>
+                                        <option value="Trujillo">Trujillo</option>
+                                        <option value="Yaracuy">Yaracuy</option>
+                                        <option value="Zulia">Zulia</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="adminSubmitBtn" class="w-full bg-teal-600 hover:bg-teal-500 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-6 transition-all shadow-lg flex items-center justify-center gap-2">
+                            <i class="fas fa-save text-lg"></i> Registrar Estudiante Manualmente
+                        </button>
+                    </form>
+                </div>
+                
+                <div id="adminNoSelection" class="h-full flex flex-col items-center justify-center text-slate-400 pb-10">
+                    <i class="fas fa-hand-pointer text-5xl mb-4 opacity-30"></i>
+                    <p class="text-sm font-bold uppercase tracking-widest text-center">Selecciona un curso<br>en el menú lateral</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECCIÓN: HOME (ÚNICA PÁGINA) -->
+<div id="page-home" class="page-content active">
+    <div class="relative overflow-hidden bg-transparent">
+        <div class="header-background"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-slate-900/95 via-slate-900/40 to-slate-900/100 z-[1]"></div>
+
+        <header class="relative z-10 min-h-screen flex flex-col pt-12 pb-10">
+            <div class="max-w-7xl mx-auto px-6 w-full flex-grow flex flex-col">
+                
+                <!-- ÁREA SUPERIOR IZQUIERDA: BADGE DE VISTAS + BOTÓN DE ACCESO -->
+                <div class="flex flex-row flex-wrap items-center gap-4 mt-10 mb-12 relative z-50">
+                    
+                    <!-- Tarjeta de país y visitas -->
+                    <div id="visitor-info" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/40 border border-[#2db8ce]/30 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md opacity-0 transition-opacity duration-1000">
+                        <span class="flex items-center gap-1.5"><i class="fas fa-eye text-[#2db8ce]"></i><span id="visit-count">...</span></span>
+                        <span class="text-white/30">|</span>
+                        <span class="flex items-center gap-1.5"><img id="visitor-flag" src="" class="w-4 h-3 rounded-[2px] hidden"><span id="visitor-country">Ubicando...</span></span>
+                    </div>
+
+                </div>
+
+                <!-- CONTENIDO CENTRAL HERO -->
+                <div class="flex-grow flex flex-col justify-center text-left pointer-events-none">
+                    <div class="pointer-events-auto">
+                        <h1 class="text-4xl sm:text-7xl lg:text-8xl font-black leading-tight tracking-tighter text-white uppercase reveal reveal-up">APRENDE <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Automatización</span></h1>
+                        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 mt-12 reveal reveal-up delay-200">
+                            <p class="text-sm md:text-xl text-white font-medium max-w-lg">Proporcionamos a estudiantes y profesionales los conocimientos para dominar la automatización industrial real.</p>
+                            <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20cursos', '_blank')" class="btn-glow px-10 py-6 bg-teal-500 text-white font-black rounded-2xl shadow-2xl shadow-teal-500/30 border border-teal-400 hover:bg-teal-600 transition-all uppercase flex items-center gap-4 text-xl">Ver Catálogo de Cursos <i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="mision" class="relative z-10 py-20 px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="bg-white/5 rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 md:gap-16 reveal reveal-up backdrop-blur-md mission-card">
+                    <div class="flex-shrink-0">
+                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-[32px] overflow-hidden border border-white/10 shadow-lg group">
+                            <img src="https://i.postimg.cc/rFM1MX74/unnamed.png" alt="Instructor" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
+                        </div>
+                    </div>
+                    <div class="text-left flex-grow">
+                        <span class="text-[#2db8ce] text-[10px] font-black uppercase tracking-[0.4em] mb-3 block">Sobre nuestra academia</span>
+                        <h2 class="text-2xl md:text-4xl font-black uppercase tracking-tighter mb-6 leading-none text-[#ffffff]">Nuestra <span class="text-[#02d6fe]">Misión Académica</span></h2>
+                        <p class="text-slate-300 text-sm md:text-lg font-medium leading-relaxed opacity-75">
+                            Liderados por el Prof. Pablo Cedeño, somos un centro especializado en la formación técnica real y aplicada. Nuestra misión es transformar la complejidad de la lógica industrial en habilidades tangibles.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- CURSOS DESTACADOS (HOME) -->
+    <section id="cursos-destacados" class="section-themed relative py-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-5">
+            <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" class="w-full h-full object-cover mix-blend-luminosity">
+        </div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-10 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Mis Cursos <span class="text-[#02d6fe]">Destacados</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <!-- Curso 1 -->
+                <div class="course-card course-card-level-basico reveal reveal-up delay-100">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" alt="Curso Arranque de motores" class="course-card-image">
+                        <span class="course-card-badge badge-basic">Nivel Básico</span>
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
+                            <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Arranque de motores con PLC LOGO !</h3>
+                        <p class="course-card-description">Domina el control de motores mediante lógica programable.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">10$</div>
+                                <div class="course-card-stats">
+                                    <button class="like-btn" data-id="curso-2" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
+                                    <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-2">0</span></div>
+                                </div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="registerViewAndGo('arranque-plc-logo-info.html', 2, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Arranque%20de%20motores%20con%20PLC%20LOGO!', '_blank')" class="btn-metal btn-cyan"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Curso 2 -->
+                <div class="course-card course-card-level-basico reveal reveal-up delay-200">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/rmzs1xpQ/automatismo.gif" alt="Curso Automatización Industrial" class="course-card-image">
+                        <span class="course-card-badge badge-basic">Nivel Básico</span>
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
+                            <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Automatización Industrial</h3>
+                        <p class="course-card-description">Fundamentos de control, sensores y actuadores.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">100$</div>
+                                <div class="course-card-stats">
+                                    <button class="like-btn" data-id="curso-9" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
+                                    <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-9">0</span></div>
+                                </div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="registerViewAndGo('auto-industrial-pre-info.html', 9, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Automatización%20Industrial', '_blank')" class="btn-metal btn-cyan"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Curso 3 -->
+                <div class="course-card course-card-level-intermedio reveal reveal-up delay-300">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/WpST30hz/tablerogif.gif" alt="Curso Automatización con Contactores" class="course-card-image">
+                        <span class="course-card-badge badge-intermediate">Nivel Intermedio</span>
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center bg-purple-500/10 border-2 border-purple-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Intermedio">
+                            <i class="fas fa-cogs text-lg text-purple-400"></i>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Automatización con Contactores</h3>
+                        <p class="course-card-description">Diseño de lógica cableada y control electromecánico.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">10$</div>
+                                <div class="course-card-stats">
+                                    <button class="like-btn" data-id="curso-4" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
+                                    <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-4">0</span></div>
+                                </div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="registerViewAndGo('auto-contactores-on-info.html', 4, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <button onclick="window.open('https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4', '_blank')" class="btn-metal btn-cyan"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CURSO ESPECIAL (UPT ARAGUA) -->
+    <section id="curso-especial" class="relative py-24 px-6 bg-slate-800 overflow-hidden text-left">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-1 reveal reveal-down">
+                <span class="text-[#2db8ce] text-xs font-bold uppercase tracking-[0.4em] mb-3 block">ampliación y extensión profesional</span>
+                <h2 class="text-2xl md:text-5xl font-extrabold uppercase tracking-tighter text-white">Próximo <span class="text-[#2db8ce]">Curso Presencial</span></h2>
+            </div>
+            <div class="special-course-card course-card-level-intermedio rounded-[50px] overflow-hidden flex flex-col lg:flex-row lg:items-stretch reveal reveal-up">
+                <div class="w-full lg:w-2/5 relative flex-shrink-0 lg:aspect-square">
+                    <img src="https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif" class="lg:absolute lg:inset-0 w-full h-full object-cover opacity-70 mix-blend-overlay">
+                    <div class="absolute top-6 left-6 z-20 flex items-center justify-center bg-purple-500/10 border-2 border-purple-500/30 backdrop-blur-sm rounded-full w-12 h-12 shadow-lg" title="Nivel Intermedio">
+                        <i class="fas fa-cogs text-xl text-purple-400"></i>
+                    </div>
+                    <div class="absolute top-6 right-6 z-20">
+                        <span class="px-4 py-2 bg-teal-500/20 backdrop-blur-lg text-teal-400 text-[10px] font-black uppercase rounded-full border border-teal-500/30">Inscripciones Abiertas</span>
+                    </div>
+                    <div class="absolute bottom-6 left-6 right-6 z-20">
+                        <button onclick="registerViewAndGo('auto-contactores-pre-info.html', 10, '_self')" class="btn-metal btn-blue w-full mb-3 py-3 text-xs"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                        <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20inscribirme%20en%20el%20Curso%20de%20Automatización%20con%20Contactores!', '_blank')" class="btn-glow w-full px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-500 text-white font-black rounded-2xl shadow-2xl shadow-cyan-500/30 border border-cyan-400/50 hover:from-cyan-700 hover:to-blue-600 transition-all uppercase text-xs flex items-center justify-center gap-3">
+                            Solicitar Inscripción <i class="fab fa-whatsapp"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="lg:w-3/4 p-20 lg:p-4 flex flex-col justify-center">
+                    <div>
+                        <span class="text-cyan-400 text-[10px] font-black uppercase tracking-[0.4em] mb-4 block">Curso de ampliación y extensión profesional</span>
+                        <h2 class="text-3xl lg:text-5xl font-black text-white uppercase leading-tight mb-8">AUTOMATIZACIÓN CON <br><span class="text-[#02d6fe]">CONTACTORES</span></h2>
+                        
+                        <div class="bg-white/5 border border-white/10 rounded-[32px] p-8 space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-university text-[#2db8ce] text-sm"></i></div>
+                                    <div><span class="text-slate-500 text-[9px] font-black uppercase tracking-widest block mb-1">Institución</span><p class="text-white text-xs font-bold">Universidad Politécnica Territorial de Aragua (UPT Aragua)</p></div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-calendar-alt text-[#2db8ce] text-sm"></i></div>
+                                    <div><span class="text-slate-500 text-[9px] font-black uppercase tracking-widest block mb-1">Fechas</span><p class="text-white text-xs font-bold">Próximamente</p></div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-clock text-[#2db8ce] text-sm"></i></div>
+                                    <div><span class="text-slate-500 text-[9px] font-black uppercase tracking-widest block mb-1">Horario</span><p class="text-white text-xs font-bold">8:00 a.m. a 2:00 p.m.</p></div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-hourglass-half text-[#2db8ce] text-sm"></i></div>
+                                    <div><span class="text-slate-500 text-[9px] font-black uppercase tracking-widest block mb-1">Duración</span><p class="text-white text-xs font-bold">2 Viernes intensivos</p></div>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t border-white/10 flex items-start gap-3">
+                                <i class="fas fa-users text-[#2db8ce] text-sm mt-1"></i>
+                                <div>
+                                    <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest block">CANTIDAD DE PARTICIPANTES:</span>
+                                    <p class="text-white text-xs font-bold">12 participantes, 2 participantes por mesón de trabajo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PÚBLICO OBJETIVO / COMUNIDAD -->
+    <section id="comunidad" class="section-themed relative py-24 px-6 md:px-12 text-center">
+        <div class="absolute inset-0 z-0 opacity-20">
+            <img src="img/AA (33).webp" class="w-full h-full object-cover mix-blend-luminosity">
+        </div>
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div class="text-center lg:text-left reveal reveal-right">
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span class="text-[#02d6fe]">nuestros cursos?</span></h2>
+                <p class="text-base font-semibold mb-8 border-l-4 border-blue-700 pl-6 mx-auto lg:mx-0 max-w-sm">Dinos cuál es tu perfil para registrarte en nuestras estadísticas.</p>
+            </div>
+            <div class="space-y-4 w-full max-w-md mx-auto">
+                <button id="btn-ingeniero" onclick="regCom('ingeniero')" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6 animate-on-hover transition-all">
+                    <i class="fas fa-user-tie text-3xl text-blue-700"></i>
+                    <span class="text-base font-black uppercase">Ingeniero</span>
+                    <div class="prof-count-bg ml-auto px-3 py-1 rounded-full"><span id="cntIng" class="font-black text-blue-900">0</span></div>
+                </button>
+                <button id="btn-tsu" onclick="regCom('tsu')" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6 animate-on-hover transition-all">
+                    <i class="fas fa-cogs text-3xl text-cyan-700"></i>
+                    <span class="text-base font-black uppercase">TSU</span>
+                    <div class="prof-count-bg ml-auto px-3 py-1 rounded-full"><span id="cntTsu" class="font-black text-cyan-900">0</span></div>
+                </button>
+                <button id="btn-estudiante" onclick="regCom('estudiante')" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6 animate-on-hover transition-all">
+                    <i class="fas fa-user-graduate text-3xl text-teal-700"></i>
+                    <span class="text-base font-black uppercase">Estudiante</span>
+                    <div class="prof-count-bg ml-auto px-3 py-1 rounded-full"><span id="cntEst" class="font-black text-teal-900">0</span></div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- METODOLOGÍA -->
+    <section id="metodologia" class="relative py-24 px-6 bg-slate-800 text-center overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="mb-10 reveal reveal-down">
+                <span class="text-[#2db8ce] text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
+                <h2 class="text-2xl md:text-5xl font-extrabold uppercase tracking-tighter text-white">Nuestra <span class="text-[#2db8ce]">Metodología</span></h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card">
+                    <div class="image-zoom-container h-48 mb-6">
+                        <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" class="w-full h-full object-cover">
+                    </div>
+                    <div class="methodology-card-text-content">
+                        <h3 class="text-white text-xl font-black uppercase mb-3">Estudia</h3>
+                        <p class="text-slate-400 text-sm methodology-short-desc">Analiza casos reales de la industria.</p>
+                        <div class="methodology-expanded-content">
+                            <p>Sumérgete en escenarios industriales auténticos. Aprenderás a diagnosticar problemas, interpretar diagramas y entender el funcionamiento de sistemas de control complejos, preparando el terreno para soluciones efectivas.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-100 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6">
+                        <img src="https://i.postimg.cc/W4d0pxgD/GRAF.jpg" class="w-full h-full object-cover">
+                    </div>
+                    <div class="methodology-card-text-content">
+                        <h3 class="text-white text-xl font-black uppercase mb-3">Diseña</h3>
+                        <p class="text-slate-400 text-sm methodology-short-desc">Crea planos con estándares internacionales.</p>
+                        <div class="methodology-expanded-content">
+                            <p>Domina el lenguaje universal de la automatización. Te enseñamos a crear esquemas eléctricos de mando y potencia bajo normativas IEC y NEMA, asegurando que tus diseños sean claros, seguros y profesionales.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-200 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6">
+                        <img src="https://i.postimg.cc/WzmDFzqL/02177232930859881fbe8801b4cfc8e3454077f6383f7cfa9a032-0.jpg" class="w-full h-full object-cover">
+                    </div>
+                    <div class="methodology-card-text-content">
+                        <h3 class="text-white text-xl font-black uppercase mb-3">Simula</h3>
+                        <p class="text-slate-400 text-sm methodology-short-desc">Valida tus algoritmos virtualmente.</p>
+                        <div class="methodology-expanded-content">
+                            <p>Antes de tocar un solo cable, pon a prueba tu lógica. Utilizarás software de simulación como CADeSIMU y Factory I/O para verificar el comportamiento de tus circuitos, corregir errores y optimizar el rendimiento sin riesgos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-300 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6">
+                        <img src="https://i.postimg.cc/VkmqRQzm/1772328516782-5a6a505e-f8d2-4a45-a8bf-99e36bf7743d.jpg" class="w-full h-full object-cover">
+                    </div>
+                    <div class="methodology-card-text-content">
+                        <h3 class="text-white text-xl font-black uppercase mb-3">Implementa</h3>
+                        <p class="text-slate-400 text-sm methodology-short-desc">Realiza el montaje en equipos reales.</p>
+                        <div class="methodology-expanded-content">
+                            <p>Lleva tus diseños del plano a la realidad. Obtendrás experiencia práctica montando componentes en tableros de entrenamiento, realizando el cableado y poniendo en marcha los sistemas que has diseñado y simulado.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section id="testimonios" class="section-themed relative py-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-20">
+            <img src="img/AA (33).webp" class="w-full h-full object-cover mix-blend-luminosity">
+        </div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-10 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Experiencias Reales</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span class="text-[#02d6fe]">Nuestros Alumnos</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <!-- Testimonio 1 -->
+                <div class="testimonial-card rounded-[32px] p-6 sm:p-8 reveal reveal-up relative flex flex-col">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                    <div class="testimonial-image-container w-full h-40 rounded-2xl overflow-hidden mb-6 relative z-10 border border-slate-200/50 shadow-sm bg-[#dfe5e7] flex items-end justify-center">
+                        <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="testimonial-text-content flex flex-col flex-grow">
+                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm italic mb-8 relative z-10 flex-grow">"Excelente pedagogía del Profesor Pablo Cedeño. Los ejercicios con Factory IO y LOGO! me permitieron entender la lógica de automatización desde cero. Totalmente recomendado."</p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">EP</div>
+                            <div>
+                                <h4 class="font-bold text-sm">Eduardo Pérez</h4>
+                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest">Ingeniero de Proyectos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio 2 -->
+                <div class="testimonial-card rounded-[32px] p-6 sm:p-8 reveal reveal-up delay-100 relative flex flex-col">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                    <div class="testimonial-image-container w-full h-40 rounded-2xl overflow-hidden mb-6 relative z-10 border border-slate-200/50 shadow-sm bg-[#dfe5e7] flex items-end justify-center">
+                        <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="testimonial-text-content flex flex-col flex-grow">
+                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm italic mb-8 relative z-10 flex-grow">"Aplicamos lo aprendido directamente en los tableros de la planta. El curso de contactores presencial superó mis expectativas. Mucha práctica y resolución de fallas reales."</p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">CM</div>
+                            <div>
+                                <h4 class="font-bold text-sm">Carlos Mendoza</h4>
+                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest">Técnico Electromecánico</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio 3 -->
+                <div class="testimonial-card rounded-[32px] p-6 sm:p-8 reveal reveal-up delay-200 relative flex flex-col">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                    <div class="testimonial-image-container w-full h-40 rounded-2xl overflow-hidden mb-6 relative z-10 border border-slate-200/50 shadow-sm bg-[#dfe5e7] flex items-end justify-center">
+                        <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="testimonial-text-content flex flex-col flex-grow">
+                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm italic mb-8 relative z-10 flex-grow">"La metodología Grafcet explicada paso a paso me ayudó a resolver problemas de secuenciación que antes me costaban días. Material de altísima calidad."</p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">AR</div>
+                            <div>
+                                <h4 class="font-bold text-sm">Ana Rodríguez</h4>
+                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest">Estudiante de Ing.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MÉTRICAS -->
+    <section class="pt-6 pb-20 px-6 bg-[#0f172a] border-t border-white/5 relative z-10 shadow-2xl">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center text-white">
+            <div class="py-2 reveal reveal-up">
+                <div class="text-[#2db8ce] text-2xl mb-1"><i class="fas fa-users"></i></div>
+                <div id="metric-visitas" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Visitantes</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-100">
+                <div class="text-teal-400 text-2xl mb-1"><i class="fas fa-globe-americas"></i></div>
+                <div id="metric-paises" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Países</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-150">
+                <div class="text-cyan-400 text-2xl mb-1"><i class="fas fa-user-graduate"></i></div>
+                <div id="metric-estudiantes" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Estudiantes</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-200">
+                <div class="text-red-400 text-2xl mb-1"><i class="fas fa-heart"></i></div>
+                <div id="metric-likes" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Likes Totales</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-250">
+                <div class="text-cyan-400 text-2xl mb-1"><i class="fas fa-book"></i></div>
+                <div class="text-3xl font-black">12+</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Cursos</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-300">
+                <div class="text-blue-400 text-2xl mb-1"><i class="fas fa-cloud-download-alt"></i></div>
+                <div id="metric-descargas" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Descargas Totales</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAPA GLOBAL -->
+    <section id="comunidad-global" class="relative py-24 px-6 bg-gray-900 text-center border-t border-white/5 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://i.postimg.cc/vBXrQbHB/web-3.gif" class="w-full h-full object-cover opacity-20 mix-blend-luminosity">
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <h2 class="text-2xl md:text-5xl font-extrabold mb-16 uppercase text-white tracking-tighter">Comunidad <span class="text-[#2db8ce]">Global</span></h2>
+            <div class="flex flex-col lg:flex-row gap-8 items-stretch h-auto lg:h-[550px] text-left">
+                <div class="w-full lg:w-2/3 h-[400px] lg:h-full rounded-[2.5rem] shadow-2xl border-2 border-[#2db8ce]/60 bg-gray-900 overflow-hidden relative">
+                    <div id="visitorMapGlobal" class="w-full h-full relative z-10"></div>
+                </div>
+                <div class="w-full lg:w-1/3 bg-white/5 border border-white/10 rounded-[2.5rem] p-8 flex flex-col shadow-2xl backdrop-blur-md relative z-10">
+                    <h3 class="text-white font-black text-xs uppercase mb-6 flex items-center justify-start gap-2">
+                        <i data-lucide="award" class="text-cyan-500 w-4 h-4"></i> Ranking Visitantes
+                    </h3>
+                    <div id="countryRankListGlobal" class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-4">
+                        <p class="text-slate-500 text-sm">Cargando ranking...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+</body>
+</html>

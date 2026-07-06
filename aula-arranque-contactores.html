@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Aula Virtual - Arranque de motores con Contactores</title>
+    <link rel="icon" href="img/AA (38).png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#60a5fa',
+                        dark: '#0f172a',
+                        accent: '#91a1af',
+                        light: '#fff000',
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d1d31;
+        }
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
+        .bg-optimized {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover; background-position: center;
+            filter: brightness(0.4) blur(3px); transform: scale(1);
+            animation: slowZoom 30s infinite alternate; z-index: -2;
+        }
+        @keyframes slowZoom { 0% { transform: scale(1); } 100% { transform: scale(1.08); } }
+        .overlay-dark {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(13, 29, 49, 0.85); backdrop-filter: blur(4px); z-index: -1;
+        }
+        .quiz-option.correct { background-color: rgba(34,197,94,0.2); border-left: 4px solid #22c55e; }
+        .quiz-option.incorrect { background-color: rgba(239,68,68,0.2); border-left: 4px solid #ef4444; text-decoration: line-through; }
+        .toast {
+            position: fixed; bottom: 20px; right: 20px; background: #1e293b; color: white;
+            padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: opacity 0.3s;
+        }
+        .toast-success {
+            background: #065f46; border-left: 4px solid #34d399;
+        }
+
+        /* Sobrescrituras Modo Claro para Aula Virtual */
+        body.light-mode { color: #334155 !important; }
+        body.light-mode .overlay-dark { background: rgba(241, 245, 249, 0.9) !important; }
+        body.light-mode header {
+            background: rgba(227, 241, 248, 0.85) !important; /* e3f1f8 with opacity */
+            border-bottom: 1px solid #d3e1e8 !important;
+        }
+        body.light-mode .border-white\/10 {
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode header #header-student-name,
+        body.light-mode header button.text-slate-300 { 
+            color: #334155 !important; 
+        }
+        body.light-mode aside#sidebar { 
+            background: rgba(255, 255, 255, 0.95) !important; 
+            border-right: 1px solid rgba(0,0,0,0.1) !important; 
+        }
+        body.light-mode #sidebar h3, 
+        body.light-mode #sidebar button { color: #475569 !important; }
+        body.light-mode #sidebar button.bg-secondary\/40 { 
+            background: rgba(45, 184, 206, 0.15) !important; 
+            color: #2db8ce !important; 
+        }
+        body.light-mode #panel-content, 
+        body.light-mode #panel-quiz, 
+        body.light-mode #view-dashboard > div,
+        body.light-mode .bg-white\/5 { 
+            background: white !important; 
+            border-color: rgba(0,0,0,0.1) !important; 
+        }
+        body.light-mode .text-slate-200, 
+        body.light-mode .text-slate-300, 
+        body.light-mode .text-slate-400,
+        body.light-mode #lesson-title,
+        body.light-mode #view-dashboard h1,
+        body.light-mode #dash-student-name { 
+            color: #334155 !important; 
+        }
+        body.light-mode .bg-black\/40 { 
+            background: rgba(255, 255, 255, 0.8) !important; 
+            border-color: rgba(0,0,0,0.1) !important; 
+        }
+        body.light-mode .bg-green-900\/20 { background: rgba(34, 197, 94, 0.1) !important; }
+
+        /* Estilos para botones de header en modo claro - Plateado/LED */
+        body.light-mode header button,
+        body.light-mode header div[title="Usuario"] {
+            background: linear-gradient(to bottom, #f0f5f9, #d9e0e6) !important;
+            border: 1px solid #c1c9d1 !important;
+            box-shadow: inset 0 1px 0 #f5f9fa, 0 1px 3px rgba(0,0,0,0.15), 0 1px 1px rgba(0,0,0,0.1) !important;
+            color: #475569 !important;
+        }
+        body.light-mode header button:hover,
+        body.light-mode header div[title="Usuario"]:hover {
+            background: linear-gradient(to bottom, #f5f9fa, #e0e7ed) !important;
+        }
+        body.light-mode header button i,
+        body.light-mode header div[title="Usuario"] i {
+            color: #0891b2 !important;
+            text-shadow: 0 0 8px rgba(8, 145, 178, 0.7);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Estilos para botones de header en modo oscuro - Plateado/LED */
+        body:not(.light-mode) header button,
+        body:not(.light-mode) header div[title="Usuario"] {
+            background: linear-gradient(to bottom, #4a5568, #2d3748) !important; /* slate-600 to slate-800 */
+            border: 1px solid #1a202c !important; /* slate-900 */
+            box-shadow: inset 0 1px 1px #718096, 0 1px 3px rgba(0,0,0,0.5) !important;
+            color: #e2e8f0 !important; /* slate-200 */
+            text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+        }
+        body:not(.light-mode) header button:hover,
+        body:not(.light-mode) header div[title="Usuario"]:hover {
+            background: linear-gradient(to bottom, #5a6578, #3d4758) !important;
+        }
+        body:not(.light-mode) header button i,
+        body:not(.light-mode) header div[title="Usuario"] i {
+            color: #2db8ce !important;
+            text-shadow: 0 0 10px rgba(45, 184, 206, 0.8);
+        }
+
+        /* Estilos para el contenedor del dashboard en modo oscuro */
+        body:not(.light-mode) .dashboard-container {
+            background: rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.3) !important;
+        }
+
+        body.light-mode .header-main-title {
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* Estilos para Módulos del Curso en modo claro */
+        body.light-mode #view-dashboard .border-yellow-400\/50,
+        body.light-mode #view-dashboard .border-blue-400\/50,
+        body.light-mode #view-dashboard .border-red-500\/60 {
+            background-color: #f1f5f9 !important; /* slate-100 */
+            border-color: #e2e8f0 !important; /* slate-200 */
+        }
+        body.light-mode #view-dashboard .border-yellow-400\/50 span,
+        body.light-mode #view-dashboard .border-blue-400\/50 span,
+        body.light-mode #view-dashboard .border-red-500\/60 span {
+             color: #475569 !important; /* slate-600 */
+        }
+        body.light-mode #view-dashboard .bg-black\/20 { background-color: rgba(0,0,0,0.05) !important; }
+
+        /* Estilos para el colapso del temario (Modo Enfoque) */
+        #sidebar.collapsed { width: 0; padding: 0; overflow: hidden; border: none; opacity: 0; }
+
+        /* Estilo unificado de la pastilla de carga (Sync Indicator) */
+        .sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100001;
+            background: #0f172a;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .sync-indicator.visible { opacity: 1; pointer-events: auto; }
+        .sync-indicator.success { background: #065f46; }
+        .sync-indicator.error { background: #dc2626; }
+    </style>
+</head>
+<body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
+    <div class="bg-optimized"></div>
+    <div class="overlay-dark"></div>
+
+    <!-- LOGIN -->
+    <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity backdrop-blur-sm bg-slate-900/40">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-md w-full shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-secondary mb-2 drop-shadow-md">Accede a Aprende Automatización</h2>
+                <p class="text-slate-300 text-sm">Arranque de motores con Contactores</p>
+            </div>
+            <form id="login-form" onsubmit="app.verifyLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Nombre Completo</label>
+                    <input type="text" id="login-nombre" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Cédula de Identidad</label>
+                    <input type="text" id="login-cedula" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Correo Electrónico</label>
+                    <input type="email" id="login-correo" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition">
+                </div>
+                <div id="login-error" class="hidden bg-red-900/50 border border-red-500/50 text-red-200 p-3 rounded-lg text-sm text-center font-bold backdrop-blur-md"></div>
+                <button type="submit" id="login-btn" class="w-full bg-primary/80 hover:bg-primary backdrop-blur-md border border-white/10 text-white py-3 rounded-lg font-bold transition shadow-lg mt-4 flex justify-center items-center gap-2">
+                    <i class="fas fa-spinner fa-spin hidden"></i> <span>Verificar Inscripción</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div id="modal-feedback" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[110] flex items-center justify-center p-4">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-sm w-full text-center shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
+            <div id="modal-icon" class="text-5xl mb-4 drop-shadow-lg"></div>
+            <h3 id="modal-title" class="text-xl font-bold mb-2 text-white drop-shadow-md"></h3>
+            <p id="modal-msg" class="text-slate-300 mb-6"></p>
+            <button onclick="document.getElementById('modal-feedback').classList.add('hidden')" class="w-full bg-primary/80 hover:bg-primary backdrop-blur-md border border-white/20 text-white py-3 rounded-lg font-bold transition">Continuar</button>
+        </div>
+    </div>
+
+    <!-- CABECERA CON BOTONES REDONDOS -->
+    <header class="bg-slate-900/40 backdrop-blur-lg h-16 flex-none flex items-center justify-between px-4 md:px-6 shadow-md z-20 border-b border-white/10 relative">
+        <div class="flex items-center gap-3 md:gap-4 overflow-hidden">
+            <button onclick="app.toggleSidebar()" class="text-slate-300 text-xl hover:text-white transition focus:outline-none flex-none w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10">
+                <i class="fas fa-bars"></i>
+            </button>
+            <span class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm header-main-title">Arranque de motores con Contactores</span>
+        </div>
+        <div class="flex items-center gap-2 md:gap-3 flex-none pl-2">
+            <!-- TOGGLE TEMA - Redondo -->
+            <button onclick="app.toggleTheme()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Cambiar modo">
+                <i id="theme-icon" class="fas fa-sun"></i>
+            </button>
+            
+            <!-- BOTÓN PANTALLA COMPLETA - Redondo -->
+            <button onclick="app.toggleFullScreen()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Pantalla Completa">
+                <i id="fullscreen-icon" class="fas fa-expand"></i>
+            </button>
+            
+            <!-- USUARIO - Redondo -->
+            <div class="hidden sm:flex items-center justify-center bg-black/30 border border-white/10 h-10 w-10 rounded-full text-white backdrop-blur-sm cursor-pointer transition-all duration-300 hover:bg-black/50" title="Usuario">
+                <i class="fas fa-user-graduate text-secondary flex-none"></i>
+                <span id="header-student-name" class="text-sm font-semibold truncate hidden pl-2">-</span>
+            </div>
+            
+            <!-- PANEL - Redondo -->
+            <button onclick="app.showDashboard()" class="bg-primary/20 hover:bg-primary/40 backdrop-blur-md border border-primary/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg" title="Panel">
+                <i class="fas fa-chart-line"></i>
+            </button>
+            
+            <!-- SALIR - Redondo -->
+            <button onclick="app.logout()" class="bg-red-500/20 hover:bg-red-500/40 backdrop-blur-md border border-red-500/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg" title="Salir">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </header>
+
+    <div id="app-container" class="flex flex-1 overflow-hidden relative">
+        <div id="sidebar-overlay" onclick="app.toggleSidebar()" class="fixed inset-0 bg-black/60 z-30 hidden backdrop-blur-sm transition-opacity"></div>
+
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-800/60 backdrop-blur-xl border-r border-white/20 flex flex-col p-4 space-y-4 transform -translate-x-full transition-all duration-300 md:relative md:translate-x-0 md:flex flex-none shadow-2xl md:shadow-none h-full md:h-auto">
+            <div class="flex justify-between items-center md:hidden mb-2 px-2">
+                <h3 class="text-xs font-bold text-slate-300 uppercase tracking-widest">Menú de Clases</h3>
+                <button onclick="app.toggleSidebar()" class="text-slate-300 hover:text-white text-xl transition"><i class="fas fa-times"></i></button>
+            </div>
+            <h3 class="hidden md:block text-xs font-bold text-slate-300 uppercase tracking-widest px-2 drop-shadow-sm">Temario</h3>
+            <div id="sidebar-content" class="flex-1 overflow-y-auto custom-scroll space-y-1 pr-1"></div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 w-full custom-scroll relative">
+            <!-- DASHBOARD -->
+            <div id="view-dashboard" class="max-w-[1300px] mx-auto hidden relative mb-8"></div>
+
+            <!-- LECCIÓN -->
+            <div id="view-lesson" class="max-w-[1300px] mx-auto">
+                <div id="lesson-header" class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <h1 id="lesson-title" class="text-2xl md:text-3xl font-bold text-white drop-shadow-md"></h1>
+                </div>
+                <div class="flex gap-4 border-b border-white/20 mb-6 overflow-x-auto custom-scroll" id="lesson-tabs-container">
+                    <button onclick="app.switchTab('content')" id="tab-content" class="pb-2 font-bold border-b-2 border-secondary text-secondary transition whitespace-nowrap px-2 drop-shadow-sm">Contenido</button>
+                    <button onclick="app.switchTab('resources')" id="tab-resources" class="pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white transition whitespace-nowrap px-2">Descargas</button>
+                    <button onclick="app.switchTab('quiz')" id="tab-quiz" class="pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white transition whitespace-nowrap px-2">Evaluación</button>
+                </div>
+
+                <div id="panel-content" class="text-slate-200 mb-8 bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
+                    <div id="lesson-video-container" class="aspect-video w-full mb-6 hidden"></div>
+                    <div id="lesson-content-text" class="space-y-6"></div>
+                </div>
+
+                <div id="panel-resources" class="hidden mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-primary/20 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-primary/30">
+                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2 drop-shadow-md"><i class="fas fa-book text-secondary"></i> Manuales y Guías</h3>
+                        <ul id="list-manuals" class="space-y-3 text-slate-200"></ul>
+                    </div>
+                    <div class="bg-secondary/10 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-secondary/30">
+                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2 drop-shadow-md"><i class="fas fa-code text-secondary"></i> Proyectos de Software</h3>
+                        <ul id="list-exercises" class="space-y-3 text-slate-200"></ul>
+                    </div>
+                </div>
+
+                <div id="panel-quiz" class="hidden mb-8 bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
+                    <h3 class="text-2xl font-bold text-white mb-2 drop-shadow-md">Evaluación del Módulo</h3>
+                    <p class="text-sm text-slate-400 mb-4">Responde correctamente para avanzar. (70% mínimo necesario)</p>
+                    <div id="quiz-questions" class="space-y-6 mb-8"></div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="app.gradeQuiz()" id="grade-quiz-btn" class="bg-primary/80 hover:bg-primary text-white py-3 px-6 rounded-xl font-bold shadow-lg transition text-lg border border-white/20 backdrop-blur-md">Calificar Evaluación</button>
+                        <button onclick="app.resetQuiz()" class="bg-slate-600/80 hover:bg-slate-600 text-white py-3 px-6 rounded-xl font-bold shadow-lg transition">Reiniciar Quiz</button>
+                    </div>
+                    <div id="quiz-result" class="mt-4 text-center font-bold text-lg hidden"></div>
+                </div>
+
+                <div class="flex gap-4 mb-10">
+                    <button id="btn-complete" onclick="app.completeLesson()" class="w-full md:w-auto bg-primary/80 hover:bg-primary backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-lg font-bold transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg" disabled>
+                        Marcar como completado y continuar
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Indicador de sincronización -->
+    <div id="syncIndicator" class="sync-indicator">
+        <i class="fas fa-sync-alt fa-spin text-[#2db8ce]"></i>
+        <span id="syncText"></span>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script>
+        // ===================== INDICADOR DE CARGA =====================
+        function showSyncIndicator(text, type = 'loading') {
+            const el = document.getElementById('syncIndicator');
+            if (!el) return;
+            const txt = document.getElementById('syncText');
+            const icon = el.querySelector('i');
+            el.classList.remove('success', 'error', 'visible');
+            el.classList.add('visible');
+            txt.innerText = text;
+            if (type === 'success') { el.classList.add('success'); icon.className = 'fas fa-check-circle text-green-300'; }
+            else if (type === 'error') { el.classList.add('error'); icon.className = 'fas fa-exclamation-circle text-red-300'; }
+            else { icon.className = 'fas fa-sync-alt fa-spin text-[#2db8ce]'; }
+            if (type !== 'loading') { setTimeout(() => el.classList.remove('visible'), 3000); }
+        }
+
+        // ===================== DATOS DEL CURSO CONTACTORES =====================
+        const COURSE_DATA = [
+            { id: 0, title: "Contenido del Curso", video: "", resources: [], quiz: [], hasQuiz: false, 
+              content: `<div class="space-y-6"><div class="w-full rounded-xl overflow-hidden shadow-lg mb-6 border border-white/10"><img src="https://i.postimg.cc/52bB3dfy/ct2.png" class="w-full h-auto opacity-80" alt="Control de Motores"></div><h2 class="text-2xl font-bold text-secondary">Bienvenidos al Curso</h2><p class="text-slate-300">Este curso está diseñado para brindarte los conocimientos teóricos y prácticos sobre el arranque y control de motores asíncronos trifásicos utilizando contactores.</p><div class="bg-black/30 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3><p class="text-slate-300">Diseñar, simular e implementar circuitos de mando y potencia para motores eléctricos industriales bajo normativas técnicas.</p></div><div class="bg-white/5 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-white">Lo que aprenderás</h3><ul class="list-disc pl-5 space-y-2 text-slate-300"><li>Funcionamiento electromagnético del contactor.</li><li>Interpretación de esquemas eléctricos (IEC/NEMA).</li><li>Uso de protecciones: Relés térmicos y guardamotores.</li><li>Configuración de arranques directos, inversores y estrella-triángulo.</li><li>Simulación profesional mediante CADeSIMU.</li></ul></div></div>` },
+            { id: 1, title: "Práctica 1: Arranque Directo", video: "https://www.youtube.com/embed/9X5EIDWnFvQ", resources: [{type:'manual', name:'Manual: Arranque Directo (PDF)', url:'https://drive.google.com/file/d/1ffP5ete5u4Sio_zgnudmXrYrg800Cerk/view?usp=drive_link'},{type:'ejercicio', name:'Práctica: Arranque Directo', url:'https://drive.google.com/file/d/1AXMe7TN17-d2_JORuMVSNLRn-7xWYYZH/view?usp=drive_link'}], hasQuiz: true,
+              content: `<h2 class="text-2xl font-bold text-secondary">Práctica 1: Arranque Directo</h2><h3 class="text-lg font-bold text-white mt-4">Fundamentos</h3><p class="text-slate-300 mb-4">El arranque directo es el método más simple para poner en marcha un motor trifásico. Consiste en conectar el motor directamente a la red mediante un contactor.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-blue-900/20 p-5 border-l-4 border-blue-500/50"><h4 class="font-bold text-slate-300">Circuito de Potencia:</h4><ul class="list-disc pl-5 text-slate-400"><li>Protección magnetotérmica (Q1).</li><li>Contactos principales del contactor (KM1).</li><li>Relé térmico de protección (F1).</li><li>Motor trifásico.</li></ul></div><div class="bg-green-900/20 p-5 border-l-4 border-green-500/50"><h4 class="font-bold text-slate-300">Circuito de Mando:</h4><ul class="list-disc pl-5 text-slate-400"><li>Pulsador de parada (NC).</li><li>Pulsador de marcha (NO).</li><li>Contacto auxiliar NO de KM1 (13-14) para autorretención.</li><li>Bobina del contactor (A1-A2).</li></ul></div></div>`,
+              quiz: [
+                {q:"¿Cuál es la función principal de un contactor?", opts:["Transformar voltaje","Conmutar cargas de potencia de forma remota","Proteger contra cortocircuitos","Medir la corriente"], ans:1},
+                {q:"¿Qué componente protege al motor contra sobrecargas?", opts:["Magnetotérmico","Relé Térmico","Pulsador NC","Bobina"], ans:1},
+                {q:"En un esquema de mando, ¿dónde se ubica normalmente el pulsador de parada?", opts:["En paralelo con la bobina","En serie antes del pulsador de marcha","En paralelo con el relé térmico","No es necesario"], ans:1},
+                {q:"¿Qué es la autorretención o memoria en lógica cableada?", opts:["Un bloqueo mecánico","Uso de un contacto auxiliar NO en paralelo con el pulsador de marcha","Un tipo de fusible","La resistencia de la bobina"], ans:1},
+                {q:"¿Qué bornes identifican habitualmente a la bobina del contactor?", opts:["1-2","13-14","A1-A2","L1-L2"], ans:2},
+                {q:"Los contactos principales de potencia en un contactor de motor son:", opts:["Normalmente Cerrados","Normalmente Abiertos","Temporizados","Conmutados"], ans:1},
+                {q:"El contacto auxiliar 13-14 se utiliza generalmente para:", opts:["Alimentar el motor","Señalización de falla","Realizar el enclavamiento o retención","Cortar la fase L1"], ans:2},
+                {q:"¿Qué indica una luz piloto roja conectada al contacto 97-98 del relé térmico?", opts:["Motor en marcha","Reposo","Falla por sobrecarga","Falta de fase"], ans:2},
+                {q:"¿Qué nomenclatura reciben los bornes de entrada de potencia?", opts:["2-4-6","1-3-5","A1-A2","13-14"], ans:1},
+                {q:"¿Qué sucede si quitamos el puente de autorretención (13-14)?", opts:["El motor no arranca","El motor arranca pero se apaga al soltar el pulsador de marcha","El contactor explota","Se quema el relé térmico"], ans:1}
+              ]
+            },
+            { id: 2, title: "Práctica 2: Selección de Giro", video: "https://www.youtube.com/embed/-bdWZP2Jq74", resources:[{type:'manual', name:'Manual: Selección de Giro (PDF)', url:'https://drive.google.com/file/d/1nE_PVCGs-A6zFvBN1BXdl1bhJVAehavv/view?usp=drive_link'},{type:'ejercicio', name:'Práctica: Selección de Giro', url:'https://drive.google.com/file/d/1wkB6CO8sLQJFr2xMJQXFUfHsvkVfUG2T/view?usp=drive_link'}], hasQuiz: true,
+              content: `<h2 class="text-2xl font-bold text-secondary">Práctica 2: Selección de Giro</h2><p class="text-slate-300 mb-4">Para invertir el giro de un motor trifásico, es necesario intercambiar dos de las tres fases que lo alimentan.</p><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 mb-6"><strong>SEGURIDAD CRÍTICA:</strong> Se debe implementar un enclavamiento eléctrico y mecánico. Si ambos contactores cierran a la vez, se produce un cortocircuito entre fases.</div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Intercambio de Fases</h4><p>El primer contactor (KM1) alimenta el motor en orden L1-L2-L3. El segundo (KM2) lo hace en orden L3-L2-L1.</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Enclavamiento Eléctrico</h4><p>Se coloca un contacto NC de KM2 en serie con la bobina de KM1, y viceversa. Esto impide que una bobina se energice si la otra ya está activa.</p></div></div>`,
+              quiz: [
+                {q:"¿Cómo se invierte el giro de un motor asíncrono trifásico?", opts:["Aumentando el voltaje","Intercambiando dos fases de alimentación","Cambiando el sentido de la bobina de mando","Bajando la frecuencia"], ans:1},
+                {q:"¿Cuántos contactores se requieren para un inversor de giro básico?", opts:["Uno","Dos","Tres","Cuatro"], ans:1},
+                {q:"¿Qué ocurre si los dos contactores de inversión cierran simultáneamente?", opts:["El motor gira más rápido","El motor se quema por sobretensión","Cortocircuito entre fases","No sucede nada"], ans:2},
+                {q:"¿En qué consiste el enclavamiento eléctrico?", opts:["En usar un candado físico","En poner un contacto NC de KM2 en serie con KM1 y viceversa","En desconectar el térmico","En usar pulsadores dobles"], ans:1},
+                {q:"¿Qué es el enclavamiento mecánico?", opts:["Una pieza plástica que impide físicamente el movimiento simultáneo de dos contactores","Un tornillo de seguridad","El uso de cables más gruesos","Un relé de tiempo"], ans:0},
+                {q:"En un inversor con paso por cero, ¿qué debemos presionar antes de cambiar el sentido?", opts:["El otro pulsador de marcha directamente","El pulsador de parada","El botón de test del térmico","El interruptor general"], ans:1},
+                {q:"¿Qué nomenclatura tiene un contacto auxiliar NC?", opts:["13-14","21-22","A1-A2","1-2"], ans:1},
+                {q:"¿Por qué se usan contactores iguales en la inversión?", opts:["Por estética","Porque manejan la misma potencia en ambos sentidos","Por el precio","Para que encajen los bornes"], ans:1},
+                {q:"¿Qué bornes del contactor se usan para el enclavamiento eléctrico?", opts:["Principales (1-3-5)","Auxiliares NC (21-22 o similar)","La bobina (A1-A2)","El relé térmico"], ans:1},
+                {q:"¿Cuál es la función del pulsador de giro a la izquierda (NO)?", opts:["Energizar la bobina KM2","Desenergizar KM1","Cerrar el circuito de potencia principal","Resetear el térmico"], ans:0}
+              ]
+            },
+            { id: 3, title: "Práctica 3: Estrella Triángulo", video: "https://www.youtube.com/embed/G-dtQZIePAo", resources:[{type:'manual', name:'Manual: Arranque Estrella Delta (PDF)', url:'https://drive.google.com/file/d/1NkOuj0TdfqaN1Dxsh8Bg9XHkZyfZ1sgP/view?usp=drive_link'},{type:'ejercicio', name:'Práctica: Arranque Estrella Delta', url:'https://drive.google.com/file/d/1_q7jTpvQovCuF21HUBH5aFI7yZE8KmMw/view?usp=drive_link'}], hasQuiz: true,
+              content: `<h2 class="text-2xl font-bold text-secondary">Práctica 3: Estrella Triángulo</h2><p class="text-slate-300 mb-4">Este método se utiliza para reducir la corriente de arranque de motores potentes (aprox. 1/3 de la nominal).</p><div class="bg-white/5 p-5 rounded-xl mb-6"><h4 class="font-bold text-white mb-2">Funcionamiento:</h4><p class="text-slate-400">1. El motor arranca en <strong>Estrella</strong> (voltaje reducido por fase).<br>2. Transcurrido un tiempo, el temporizador cambia la conexión a <strong>Triángulo</strong> (voltaje pleno).</p></div><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80"><strong>Nota Técnica:</strong> Se requieren 3 contactores (Línea, Estrella y Triángulo) y un relé temporizador.</div>`,
+              quiz: [
+                {q:"¿Cuál es el objetivo principal del arranque Estrella-Triángulo?", opts:["Aumentar el torque","Reducir la corriente de arranque","Invertir el giro","Ahorrar cable"], ans:1},
+                {q:"¿Qué componente decide el momento exacto del cambio de conexión?", opts:["Pulsador de marcha","Relé Temporizador","Relé Térmico","Contactor de línea"], ans:1},
+                {q:"¿Cuántos contactores se utilizan en este esquema?", opts:["Uno","Dos","Tres (Línea, Estrella y Triángulo)","Cinco"], ans:2},
+                {q:"En la conexión Estrella, el voltaje que recibe cada bobina es:", opts:["El nominal (Ej. 220V)","Reducido (1/√3 del nominal)","Cero","El doble"], ans:1},
+                {q:"¿Qué par de contactores NUNCA deben cerrar a la vez?", opts:["Línea y Estrella","Línea y Triángulo","Estrella y Triángulo","Todos pueden cerrar"], ans:2},
+                {q:"¿Cuánto tiempo suele durar la fase de Estrella?", opts:["1 minuto","Depende de la carga, usualmente de 3 a 7 segundos","24 horas","Milisegundos"], ans:1},
+                {q:"¿Qué nomenclatura suele tener el contactor de Triángulo?", opts:["KM1","KM3","K1","T1"], ans:1},
+                {q:"¿Qué sucede si el cambio a Triángulo se hace demasiado rápido?", opts:["El motor consume menos","Se produce un pico de corriente elevado","El motor gira al revés","Se ahorra energía"], ans:1},
+                {q:"En el esquema de mando, el contacto del temporizador es de tipo:", opts:["Conmutado","Solo NA","Solo NC","Magnetotérmico"], ans:0},
+                {q:"¿Dónde se ubica usualmente el relé térmico en este arranque?", opts:["Antes del contactor de línea","En serie con las bobinas del motor (dentro del bucle) o antes de la línea","En el contactor de estrella","En la salida del neutro"], ans:1}
+              ]
+            },
+            { id: 4, title: "Práctica 4: Arranque Rotórico", video: "https://www.youtube.com/embed/xxcgNJ7omwg", resources:[{type:'manual', name:'Manual: Arranque Rotórico (PDF)', url:'https://drive.google.com/file/d/1jOr6szSf-HzX0urZkdgDoe5hAW1rxmzS/view?usp=drive_link'},{type:'ejercicio', name:'Práctica: Arranque Rotórico', url:'https://drive.google.com/file/d/1CoNpKpgzv8XJmKkaIsRqnl0uIenHBUKw/view?usp=drive_link'}], hasQuiz: true,
+              content: `<h2 class="text-2xl font-bold text-secondary">Práctica 4: Arranque Rotórico</h2><p class="text-slate-300 mb-4">Este tipo de arranque se aplica a motores de rotor bobinado. Se introducen resistencias en el circuito del rotor para limitar la corriente y aumentar el torque de arranque.</p><div class="bg-white/5 p-5 rounded-xl mb-6"><h4 class="font-bold text-white mb-2">Eliminación de Resistencias:</h4><p class="text-slate-400">A medida que el motor gana velocidad, los contactores auxiliares van puenteando (eliminando) las resistencias en pasos sucesivos hasta que el rotor queda en cortocircuito.</p></div>`,
+              quiz: [
+                {q:"¿En qué tipo de motores se utiliza el arranque rotórico?", opts:["Motores de jaula de ardilla","Motores de rotor bobinado (anillos rozantes)","Motores monofásicos","Motores de pasos"], ans:1},
+                {q:"¿Cuál es la ventaja de este arranque frente al Estrella-Triángulo?", opts:["Es más barato","Permite arrancar con carga pesada gracias a un mayor torque inicial","No usa contactores","Usa menos cables"], ans:1},
+                {q:"¿Qué función cumplen las resistencias externas?", opts:["Calentar el motor","Limitar la corriente estatórica y aumentar el torque de arranque","Medir la velocidad","Frenar el motor"], ans:1},
+                {q:"¿Cómo se van eliminando las resistencias durante el arranque?", opts:["Manualmente con una palanca","Mediante contactores temporizados que las cortocircuitan","Se queman solas","No se eliminan"], ans:1},
+                {q:"Al finalizar el arranque, el rotor debe quedar:", opts:["En circuito abierto","En cortocircuito (sin resistencias)","Conectado a tierra","Conectado a la fase L1"], ans:1},
+                {q:"¿Qué sucede con el torque si aumentamos la resistencia rotórica (hasta cierto límite)?", opts:["Disminuye","Aumenta","Se mantiene igual","Se vuelve cero"], ans:1},
+                {q:"¿Qué elemento mecánico permite conectar el rotor bobinado con las resistencias externas?", opts:["Engranajes","Anillos rozantes y escobillas","Cadenas","Soldadura"], ans:1},
+                {q:"¿Cuántos pasos de aceleración suele tener este arranque?", opts:["Uno solo","Dos o más, dependiendo de la potencia y la carga","Infinitos","Cero"], ans:1},
+                {q:"¿Qué contactor debe cerrar primero?", opts:["El que cortocircuita las resistencias","El contactor de estator (Línea)","El de la luz piloto","Cualquiera"], ans:1},
+                {q:"¿Cómo se protege este motor?", opts:["Solo con fusibles","Igual que otros motores, mediante magnetotérmicos y relés térmicos","No necesita protección","Con agua"], ans:1}
+              ]
+            }
+        ];
+
+        const app = {
+            scriptUrl: 'https://script.google.com/macros/s/AKfycbzJCV8j5yLAGgouP43lvkXGunU6yKroegJ9JFJvAWpqHeHQzWRnXXP4IPnaBLjU7MTi/exec',
+            progress: JSON.parse(localStorage.getItem('curso_progress')) || [],
+            quizScores: JSON.parse(localStorage.getItem('quiz_scores')) || {},
+            currentId: 0,
+            chart: null,
+
+            init: function() {
+                this.initTheme();
+                document.addEventListener('fullscreenchange', this.updateFullScreenIcon);
+
+                const globalUser = JSON.parse(localStorage.getItem('user'));
+                const classroomAuth = JSON.parse(localStorage.getItem('curso_auth'));
+
+                if (classroomAuth && globalUser && classroomAuth.correo !== globalUser.email) {
+                    this.clearLocalData();
+                }
+
+                if (localStorage.getItem('curso_auth')) { 
+                    this.proceedToAula();
+                    return;
+                }
+                if (globalUser && globalUser.email) {
+                    this.autoVerify(globalUser);
+                }
+            },
+            clearLocalData: function() {
+                localStorage.removeItem('curso_auth');
+                localStorage.removeItem('curso_progress');
+                localStorage.removeItem('quiz_scores');
+                this.progress = [];
+                this.quizScores = {};
+            },
+            initTheme: function() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.body.classList.toggle('light-mode', savedTheme === 'light');
+                const icon = document.getElementById('theme-icon');
+                if(icon) icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            },
+            toggleTheme: function() {
+                const isLight = document.body.classList.toggle('light-mode');
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                const icon = document.getElementById('theme-icon');
+                if(icon) icon.className = isLight ? 'fas fa-moon' : 'fas fa-sun';
+            },
+            toggleFullScreen: function() {
+                const elem = document.documentElement;
+                if (!document.fullscreenElement) {
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen().catch(err => console.error(`Error al intentar entrar en pantalla completa: ${err.message} (${err.name})`));
+                    } else if (elem.webkitRequestFullscreen) { /* Safari */
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) { /* IE11 */
+                        elem.msRequestFullscreen();
+                    }
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) { /* Safari */
+                        document.webkitExitFullscreen();
+                    } else if (document.msExitFullscreen) { /* IE11 */
+                        document.msExitFullscreen();
+                    }
+                }
+            },
+            updateFullScreenIcon: function() {
+                const icon = document.getElementById('fullscreen-icon');
+                if (!icon) return;
+                icon.className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand';
+            },
+            proceedToAula: function() {
+                document.getElementById('login-screen').classList.add('hidden');
+                this.updateHeaderName();
+                this.renderSidebar();
+                this.showDashboard();
+            },
+
+            showToast: function(msg, type = '') {
+                const t = document.getElementById('toast');
+                t.innerText = msg;
+                t.className = 'toast ' + (type === 'success' ? 'toast-success' : '');
+                t.classList.remove('hidden');
+                setTimeout(() => t.classList.add('hidden'), 3000);
+            },
+            
+            updateHeaderName: function() {
+                const a = JSON.parse(localStorage.getItem('curso_auth'));
+                if (a && a.nombre) document.getElementById('header-student-name').innerText = a.nombre;
+            },
+            verifyLogin: function(e) {
+                e.preventDefault();
+                const n = document.getElementById('login-nombre')?.value || "";
+                const c = document.getElementById('login-cedula')?.value || "N/A";
+                const em = document.getElementById('login-correo')?.value || "";
+                this.executeVerification(n, c, em, false);
+            },
+            autoVerify: function(user) {
+                if (typeof showSyncIndicator === 'function') showSyncIndicator('Verificando sesión...', 'loading');
+                if (!user) return;
+                const nombre = user.name || "";
+                const cedula = user.cedula || "N/A";
+                const correo = user.email || "";
+                if(document.getElementById('login-nombre')) document.getElementById('login-nombre').value = nombre;
+                if(document.getElementById('login-cedula')) document.getElementById('login-cedula').value = cedula;
+                if(document.getElementById('login-correo')) document.getElementById('login-correo').value = correo;
+                this.executeVerification(nombre, cedula, correo, true);
+            },
+            executeVerification: async function(n, c, em, isAuto) {
+                if (typeof showSyncIndicator === 'function') showSyncIndicator('Conectando con la base de datos...', 'loading');
+                const btn = document.getElementById('login-btn');
+                const spin = btn.querySelector('.fa-spinner');
+                const txt = btn.querySelector('span');
+                const err = document.getElementById('login-error');
+                if (!btn || !err) return;
+                btn.disabled = true; spin.classList.remove('hidden'); 
+                txt.innerText = ' Verificando...'; err.classList.add('hidden');
+                try {
+                    const url = `${this.scriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent("Arranque de motores con contactores")}&t=${Date.now()}`;
+                    const resp = await fetch(url);
+                    const data = await resp.json();
+
+                    if (data.success) {
+                        localStorage.setItem('curso_auth', JSON.stringify({ nombre: n, cedula: c, correo: em }));
+                        if (data.progressData) {
+                            try {
+                                const p = JSON.parse(data.progressData);
+                                if (p.progress) this.progress = p.progress;
+                                if (p.scores) this.quizScores = p.scores;
+                                localStorage.setItem('curso_progress', JSON.stringify(this.progress));
+                                localStorage.setItem('quiz_scores', JSON.stringify(this.quizScores));
+                            } catch (e) {}
+                        }
+                        if (typeof showSyncIndicator === 'function') showSyncIndicator('Acceso concedido', 'success');
+                        this.proceedToAula();
+                    } else {
+                        err.innerText = data.message || "No estás inscrito.";
+                        err.classList.remove('bg-blue-900/50', 'border-blue-500/50', 'text-blue-200');
+                        err.classList.add('bg-red-900/50', 'border-red-500/50', 'text-red-200');
+                        err.classList.remove('hidden');
+                        if (typeof showSyncIndicator === 'function') showSyncIndicator('Acceso denegado', 'error');
+                    }
+                } catch (error) {
+                    err.innerText = "Error de conexión.";
+                    err.classList.remove('bg-blue-900/50', 'border-blue-500/50', 'text-blue-200');
+                    err.classList.add('bg-red-900/50', 'border-red-500/50', 'text-red-200');
+                    err.classList.remove('hidden');
+                    if (typeof showSyncIndicator === 'function') showSyncIndicator('Error de conexión', 'error');
+                } finally {
+                    btn.disabled = false; spin.classList.add('hidden'); txt.innerText = ' Verificar Inscripción';
+                }
+            },
+            
+            showDashboard: function() {
+                this.closeSidebarOnMobile();
+                document.getElementById('view-lesson').classList.add('hidden');
+                const dash = document.getElementById('view-dashboard');
+                dash.classList.remove('hidden');
+
+                const auth = JSON.parse(localStorage.getItem('curso_auth'));
+                const email = auth?.correo?.toLowerCase();
+                const done = this.progress.length;
+                const total = COURSE_DATA.length;
+                const percent = Math.round((done / total) * 100);
+                const scoresArr = Object.values(this.quizScores);
+                const avgScore = scoresArr.length > 0 ? Math.round(scoresArr.reduce((a,b) => a+b, 0) / scoresArr.length) : 0;
+
+                let enrollmentDisp = '---', completionDisp = '---';
+                if (email) {
+                    const userEnrollDates = (window.enrollmentDates || {})[email] || {};
+                    const userCompDates = (window.completionDates || {})[email] || {};
+                    const findDate = (obj, name) => {
+                        const nc = name.toLowerCase().trim();
+                        for (let k in obj) if (k.toLowerCase().trim().includes(nc) || nc.includes(k.toLowerCase().trim())) return obj[k];
+                        return null;
+                    };
+                    enrollmentDisp = findDate(userEnrollDates, "Arranque de motores con contactores") || '---';
+                    completionDisp = findDate(userCompDates, "Arranque de motores con contactores") || '---';
+                }
+
+                let modulesHtml = COURSE_DATA.map((l, i) => {
+                    const isComp = this.progress.includes(l.id);
+                    const sc = this.quizScores[l.id];
+                    let stateClass = "border-yellow-400/50 bg-yellow-500/20 backdrop-blur-md text-white", stateText = "⏳ Falta por evaluar";
+                    if (sc !== undefined && !isNaN(sc)) {
+                        if (sc >= 70) { stateClass = "border-blue-400/50 bg-blue-500/20 backdrop-blur-md text-white"; stateText = `✅ Completado (${sc}%)`; }
+                        else { stateClass = "border-red-500/60 bg-red-600/20 backdrop-blur-md text-white"; stateText = `❌ No aprobado ${sc}%`; }
+                    } else if (isComp) {
+                        stateClass = "border-blue-400/50 bg-blue-500/20 backdrop-blur-md text-white"; stateText = `✅ Completado`;
+                    }
+                    return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01] cursor-pointer" onclick="app.loadLesson(${l.id})"><span class="font-bold tracking-wide drop-shadow-md text-sm sm:text-base">${l.title}</span><span class="text-xs sm:text-sm font-bold drop-shadow-md bg-black/20 px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+                }).join('');
+
+                dash.innerHTML = `
+                    <div class="w-full dashboard-container bg-white rounded-[32px] shadow-xl border border-slate-200 overflow-hidden text-left">
+                        <div class="p-6 sm:p-8 border-b border-white/10">
+                            <div class="grid grid-cols-1">
+                                <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
+                                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                                        <div>
+                                            <h4 class="font-black text-white uppercase tracking-widest text-xs"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4>
+                                            <p class="text-sm text-slate-300 mt-1">${done} de ${total} lecciones completadas</p>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-24 text-right"><span class="text-2xl font-black text-green-400">${percent}%</span></div>
+                                            <div class="w-32 bg-white/10 rounded-full h-2 overflow-hidden">
+                                                <div class="bg-green-400 h-2 rounded-full transition-all duration-700" style="width:${percent}%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 flex flex-col sm:flex-row gap-2">
+                                        <button onclick="app.continueCourse()" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm border border-white/5">
+                                            <i class="fas fa-play text-secondary"></i> Continuar Aprendizaje
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6 sm:p-10 lg:p-14">
+                            <div>
+                                <h4 class="text-slate-400 font-black uppercase tracking-widest text-[10px] mb-4">Módulos del Curso</h4>
+                                <div class="space-y-3">${modulesHtml}</div>
+                            </div>
+                        </div>
+                    </div>`;
+                if(window.lucide) lucide.createIcons();
+            },
+
+            continueCourse: function() {
+                const next = COURSE_DATA.find(l => !this.progress.includes(l.id));
+                if (next) this.loadLesson(next.id);
+                else this.loadLesson(COURSE_DATA[COURSE_DATA.length - 1].id);
+            },
+            
+            toggleSidebar: function() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                
+                if (window.innerWidth < 768) {
+                    sidebar.classList.toggle('-translate-x-full');
+                    overlay.classList.toggle('hidden');
+                } else {
+                    sidebar.classList.toggle('collapsed');
+                }
+            },
+            
+            closeSidebarOnMobile: function() {
+                if (window.innerWidth < 768) {
+                    const s = document.getElementById('sidebar');
+                    if (!s.classList.contains('-translate-x-full')) {
+                        s.classList.add('-translate-x-full');
+                        document.getElementById('sidebar-overlay').classList.add('hidden');
+                    }
+                }
+            },
+            
+            renderSidebar: function() {
+                const cont = document.getElementById('sidebar-content');
+                cont.innerHTML = COURSE_DATA.map(l => {
+                    const locked = (l.id > 0 && !this.progress.includes(l.id - 1));
+                    const isCurr = this.currentId === l.id;
+                    return `<button onclick="${locked?'':`app.loadLesson(${l.id})`}" class="w-full text-left p-3 rounded-lg text-sm font-medium transition ${isCurr?'bg-secondary/40 border-l-4 border-secondary text-white shadow-inner':'text-slate-200'} ${locked?'opacity-50 cursor-not-allowed':'hover:bg-white/10 hover:text-white'}"><i class="${this.progress.includes(l.id)?'fas fa-check-circle text-secondary':'far fa-circle text-slate-400'} mr-2"></i> ${l.title}</button>`;
+                }).join('');
+            },
+            
+            loadLesson: function(id) {
+                if (id > 0 && !this.progress.includes(id - 1)) {
+                    const first = COURSE_DATA.find(l => !this.progress.includes(l.id));
+                    if (first && first.id !== id) {
+                        this.showModal("Acceso denegado", "Completa la lección anterior.", "error");
+                        this.loadLesson(first.id);
+                    } else this.showModal("Lección bloqueada", "Completa la lección anterior.", "error");
+                    return;
+                }
+                this.closeSidebarOnMobile();
+                const lesson = COURSE_DATA.find(l => l.id === id);
+                if (!lesson) return;
+                this.currentId = id;
+                document.getElementById('view-dashboard').classList.add('hidden');
+                document.getElementById('view-lesson').classList.remove('hidden');
+                document.getElementById('lesson-title').innerText = lesson.title;
+                document.getElementById('lesson-content-text').innerHTML = lesson.content;
+                const vc = document.getElementById('lesson-video-container');
+                if (lesson.video) {
+                    const isYT = lesson.video.includes('youtube.com') || lesson.video.includes('youtu.be');
+                    vc.innerHTML = isYT 
+                        ? `<iframe class="w-full h-full rounded-xl shadow-lg border border-white/10" src="${lesson.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+                        : `<video class="w-full h-full rounded-xl shadow-lg border border-white/10" controls src="${lesson.video}" playsinline></video>`;
+                    vc.classList.remove('hidden');
+                } else { vc.innerHTML = ''; vc.classList.add('hidden'); }
+                document.getElementById('lesson-tabs-container').classList.toggle('hidden', id === 0);
+                this.renderResources(lesson.resources);
+                this.renderQuiz(lesson.quiz);
+                this.updateCompleteButton();
+                this.switchTab('content');
+                this.renderSidebar();
+                document.getElementById('quiz-result').classList.add('hidden');
+            },
+            
+            renderResources: function(res) {
+                const man = document.getElementById('list-manuals'), exe = document.getElementById('list-exercises');
+                man.innerHTML = ''; exe.innerHTML = '';
+                if (!res || res.length === 0) { man.innerHTML = '<li class="text-white/60">No hay manuales.</li>'; exe.innerHTML = '<li class="text-white/60">No hay proyectos.</li>'; return; }
+                res.forEach(r => {
+                    const html = `<li><a href="${r.url}" target="_blank" class="flex items-center gap-2 hover:text-white transition"><i class="fas fa-file-download text-secondary"></i> ${r.name}</a></li>`;
+                    if (r.type === 'manual') man.innerHTML += html; else exe.innerHTML += html;
+                });
+            },
+            
+            renderQuiz: function(quiz) {
+                const cont = document.getElementById('quiz-questions');
+                if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; }
+                cont.innerHTML = quiz.map((q, i) => 
+                    `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}"><p class="font-bold text-white mb-3">${q.q}</p><div class="space-y-2">${q.opts.map((opt,oi)=>`<label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option transition" data-opt-index="${oi}"><input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}</label>`).join('')}</div><div class="correct-feedback hidden text-green-400 text-sm mt-2"></div></div>`
+                ).join('');
+            },
+            
+            gradeQuiz: function() {
+                const lesson = COURSE_DATA.find(l => l.id === this.currentId);
+                if (!lesson.quiz || lesson.quiz.length === 0) return;
+                
+                let score = 0, all = true, answers = [];
+                lesson.quiz.forEach((q, i) => {
+                    const sel = document.querySelector(`input[name="q_${i}"]:checked`);
+                    if (sel) { answers[i] = parseInt(sel.value); if (answers[i] === q.ans) score += 10; }
+                    else { all = false; answers[i] = -1; }
+                });
+                
+                if (!all) { this.showModal("Faltan respuestas", "Responde todas las preguntas para continuar.", "error"); return; }
+                
+                lesson.quiz.forEach((q, i) => {
+                    const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
+                    const opts = qDiv.querySelectorAll('.quiz-option');
+                    const fb = qDiv.querySelector('.correct-feedback');
+                    opts.forEach(opt => {
+                        opt.classList.remove('correct', 'incorrect');
+                        const idx = parseInt(opt.dataset.optIndex);
+                        if (idx === q.ans) opt.classList.add('correct');
+                        else if (answers[i] === idx) opt.classList.add('incorrect');
+                    });
+                    fb.innerHTML = `✅ ${q.opts[q.ans]}`;
+                    fb.classList.remove('hidden');
+                });
+
+                const best = this.quizScores[this.currentId] || 0;
+                if (score > best) { 
+                    this.quizScores[this.currentId] = score; 
+                    localStorage.setItem('quiz_scores', JSON.stringify(this.quizScores)); 
+                }
+                
+                const resDiv = document.getElementById('quiz-result');
+                resDiv.classList.remove('hidden');
+                
+                if (score >= 70) {
+                    resDiv.innerHTML = `<span class="text-green-400 text-xl">🎉 ¡Aprobado con ${score}%!</span>`;
+                    
+                    if (!this.progress.includes(this.currentId)) {
+                        this.progress.push(this.currentId);
+                        this.progress.sort((a,b) => a - b);
+                        localStorage.setItem('curso_progress', JSON.stringify(this.progress));
+                        this.syncProgress();
+                        this.showToast(`✅ ¡Módulo ${this.currentId + 1} completado! (${score}%)`, 'success');
+                        
+                        if (this.progress.length === COURSE_DATA.length) {
+                            this.saveCompletionToSheet();
+                            if(typeof window.triggerConfetti === 'function') window.triggerConfetti();
+                            if(typeof window.playSuccessSound === 'function') window.playSuccessSound();
+                            setTimeout(() => {
+                                this.showModal("🏆 ¡Curso Finalizado!", "Has completado todos los módulos con éxito. Puedes descargar tu certificado.", "medal");
+                                this.showDashboard();
+                            }, 1000);
+                        } else {
+                            if(typeof window.playSuccessSound === 'function') window.playSuccessSound();
+                            setTimeout(() => {
+                                this.showModal("¡Muy bien!", `Módulo aprobado con ${score}%. Continúa con el siguiente tema.`, "success");
+                            }, 500);
+                        }
+                        
+                        this.renderSidebar();
+                        this.updateCompleteButton();
+                    } else {
+                        this.syncProgress();
+                        this.showToast(`📊 Puntuación actualizada: ${score}%`, 'success');
+                    }
+                } else {
+                    resDiv.innerHTML = `<span class="text-red-400 text-xl">❌ Reprobado con ${score}%. Necesitas 70%.</span>`;
+                    this.showModal("Ánimo", `Obtuviste ${score}%. Repasa el material y vuelve a intentarlo.`, "error");
+                    this.syncProgress();
+                }
+            },
+            
+            saveCompletionToSheet: function() {
+                const auth = JSON.parse(localStorage.getItem('curso_auth'));
+                if (!auth || !auth.correo) return;
+                fetch(`${this.scriptUrl}`, {
+                    method: 'POST', mode: 'no-cors',
+                    body: `action=save_course_completion&email=${encodeURIComponent(auth.correo)}&courseName=${encodeURIComponent("Arranque de motores con contactores")}&completionDate=${encodeURIComponent(new Date().toISOString())}`,
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                }).catch(e => console.error);
+            },
+            
+            resetQuiz: function() {
+                const c = document.getElementById('quiz-questions');
+                c.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+                c.querySelectorAll('.correct-feedback').forEach(f => f.classList.add('hidden'));
+                c.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('correct', 'incorrect'));
+                document.getElementById('quiz-result').classList.add('hidden');
+            },
+            
+            syncProgress: function() {
+                const auth = JSON.parse(localStorage.getItem('curso_auth'));
+                if (!auth) return;
+                const data = JSON.stringify({ progress: this.progress, scores: this.quizScores });
+                fetch(`${this.scriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=Arranque%20de%20motores%20con%20contactores&data=${encodeURIComponent(data)}`, {
+                    method: 'GET', mode: 'no-cors'
+                }).catch(e => console.error);
+            },
+            
+            updateCompleteButton: function() {
+                const lesson = COURSE_DATA.find(l => l.id === this.currentId);
+                const isComp = this.progress.includes(this.currentId);
+                const hasQ = lesson.quiz && lesson.quiz.length > 0;
+                document.getElementById('btn-complete').disabled = hasQ && !isComp;
+            },
+            
+            completeLesson: function() {
+                if (this.currentId === 0) {
+                    if (!this.progress.includes(0)) { this.progress.push(0); localStorage.setItem('curso_progress', JSON.stringify(this.progress)); this.syncProgress(); }
+                    this.loadLesson(1);
+                } else {
+                    const nid = this.currentId + 1;
+                    if (nid < COURSE_DATA.length) this.loadLesson(nid); else this.showDashboard();
+                }
+            },
+            
+            switchTab: function(tabId) {
+                ['content', 'resources', 'quiz'].forEach(t => {
+                    document.getElementById(`panel-${t}`).classList.toggle('hidden', t !== tabId);
+                    document.getElementById(`tab-${t}`).className = (t === tabId) ? "pb-2 font-bold border-b-2 border-secondary text-secondary px-2" : "pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2";
+                });
+            },
+            
+            showModal: function(title, msg, type) {
+                const m = document.getElementById('modal-feedback');
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-msg').innerText = msg;
+                let icon = '✅'; if (type === 'error') icon = '❌'; else if (type === 'medal') icon = '<i class="fas fa-trophy text-yellow-400 animate-bounce"></i>';
+                document.getElementById('modal-icon').innerHTML = icon;
+                m.classList.remove('hidden');
+            },
+            showAccessBlocked: function() {
+                const container = document.querySelector('#login-screen > div');
+                if (container) {
+                    container.innerHTML = `
+                        <div class="text-center">
+                            <div class="text-6xl text-red-500 mb-6"><i class="fas fa-lock"></i></div>
+                            <h2 class="text-2xl font-bold text-white mb-4">ACCESO RESTRINGIDO</h2>
+                            <p class="text-slate-300 text-sm mb-8 leading-relaxed">No estás inscrito en este curso de PLC. Para acceder a este aula virtual debes adquirir el curso primero en nuestro catálogo.</p>
+                            <div class="space-y-4">
+                                <button onclick="window.location.href='catalogo.html'" class="w-full bg-primary text-white py-3 rounded-lg font-bold shadow-lg hover:brightness-110 transition">Ver Catálogo de Cursos</button>
+                                <button onclick="localStorage.removeItem('user'); location.reload();" class="w-full bg-white/10 text-slate-300 py-2 rounded-lg text-xs font-bold hover:bg-white/20 transition">Ingresar con otra cuenta</button>
+                            </div>
+                        </div>`;
+                }
+            },
+            logout: function() {
+                if (confirm('¿Deseas cerrar sesión y salir del aula virtual?')) {
+                    this.clearLocalData();
+                    window.location.href = 'mis-cursos.html';
+                }
+            },
+        };
+        window.onload = () => app.init();
+    </script>
+
+</body>
+</html> 
