@@ -13,6 +13,52 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <style>
+        /* Estilos para el perfil de usuario en modo claro (Cian Glass) */
+        body.light-mode #userProfileModal .modal-content > div:first-child {
+            background: rgba(45, 184, 206, 0.2); /* Cyan Glass */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        body.light-mode #userProfileModal .modal-content > div:last-child {
+            background-color: rgba(45, 184, 206, 0.1);
+            border-top: 1px solid rgba(45, 184, 206, 0.3);
+        }
+        body.light-mode #userProfileModal .text-white {
+            color: #0f172a; /* slate-900 */
+        }
+        body.light-mode #userProfileModal #profileEmail {
+            color: #0891b2; /* cyan-600 */
+        }
+        body.light-mode #userProfileModal .text-white\/50 {
+            color: #0e7490; /* cyan-700 */
+        }
+        body.light-mode #userProfileModal .hover\:text-white:hover {
+            color: #0f172a; /* slate-900 */
+        }
+        body.light-mode #userProfileModal .bg-white\/5 {
+            background-color: rgba(8, 145, 178, 0.15); /* Deeper Cyan Glass for badges */
+            border-color: rgba(8, 145, 178, 0.25);
+        }
+        body.light-mode #userProfileModal #profileInitials {
+            color: white; /* Mantener iniciales en blanco */
+        }
+        body.light-mode #userProfileModal #profileAdminBtn {
+            background-color: rgba(8, 145, 178, 0.1);
+            color: #0e7490;
+            border-color: rgba(8, 145, 178, 0.2);
+        }
+        body.light-mode #userProfileModal #profileAdminBtn:hover {
+            background-color: #0891b2;
+            color: white;
+        }
+        body.light-mode #userProfileModal #profileAdminBtn i {
+            color: #0891b2;
+        }
+        body.light-mode #userProfileModal #profileAdminBtn:hover i {
+            color: white;
+        }
+    </style>
     <!-- GOOGLE CHARTS (PARA LOS MAPAS GLOBALES) -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
@@ -380,7 +426,7 @@
                 <!-- Curso 2 -->
                 <div class="course-card course-card-level-basico reveal reveal-up delay-200">
                     <div class="course-card-image-container">
-                        <img src="https://i.postimg.cc/rmzs1xpQ/automatismo.gif" alt="Curso Automatización Industrial" class="course-card-image">
+                        <img src="img/AA(7).gif" alt="Curso Automatización Industrial" class="course-card-image">
                         <span class="course-card-badge badge-basic">Nivel Básico</span>
                         <div class="absolute bottom-3 left-3 flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
                             <i class="fas fa-seedling text-lg text-cyan-400"></i>

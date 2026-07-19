@@ -30,32 +30,26 @@
         .student-card {
             position: relative;
         }
-        .student-card::after {
-            content: "";
+
+        #misCursosUserInfo .student-card {
+            overflow: hidden; /* Para contener el fondo */
+        }
+        #misCursosUserInfo .student-card::before {
+            content: '';
             position: absolute;
             inset: 0;
-            border-radius: inherit;
-            padding: 2px; /* Ancho del borde */
-            background: conic-gradient(from 180deg at 50% 50%, #2db8ce, #1877f2, #91a1af, #2db8ce);
-            -webkit-mask: 
-                linear-gradient(#fff 0 0) content-box, 
-                linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-                    mask-composite: exclude;
-            animation: rotate 4s linear infinite;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
+            background-image: url('img/AA(4).gif');
+            background-size: cover;
+            background-position: center;
+            z-index: 0;
+        opacity: 0.3; /* Aumentada la opacidad para mayor visibilidad */
         }
-        .student-card:hover::after { opacity: 1; }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
         /* Estilos para que la tarjeta de estudiante en 'Mis Cursos' sea blanca en modo claro */
         body.light-mode #misCursosUserInfo .student-card {
-            background-color: #ffffff; /* Fondo blanco sólido */
-            border-color: #e2e8f0; /* Borde gris claro (slate-200) */
-            backdrop-filter: none; /* Quitar el efecto blur */
-            -webkit-backdrop-filter: none;
+            background-color: transparent; /* Fondo transparente para ver el GIF */
+            border-color: #0f172a; /* Borde azul oscuro */
+            box-shadow: 0 0 25px rgba(45, 184, 206, 0.5); /* Resplandor cian */
         }
 
         /* Ajustar colores de texto para legibilidad en fondo claro */
@@ -64,13 +58,19 @@
         body.light-mode #misCursosUserInfo .student-card .text-slate-400 {
             color: #1e293b; /* slate-800 */
         }
-        body.light-mode #misCursosUserInfo .student-card .text-white\/5 { color: #94a3b8; }
+        body.light-mode #misCursosUserInfo .student-card .text-white\/5 { color: #e2e6ed; }
         body.light-mode #misCursosUserInfo .student-card .border-white\/10 { border-color: #e2e8f0; }
         body.light-mode #misCursosUserInfo .student-card .text-teal-400 { color: #14b8a6; }
         body.light-mode #misCursosUserInfo .student-card .text-purple-400 { color: #a855f7; }
         body.light-mode #misCursosUserInfo .student-card .text-amber-400 { color: #f59e0b; }
         body.light-mode #misCursosUserInfo .student-card .text-red-400 { color: #ef4444; }
     </script>
+    <style>
+        /* Forzar fondo blanco para la página de Mis Cursos */
+        body#mis-cursos-page.light-mode {
+            background-color: #d0e1ef !important;
+        }
+    </style>
     <style>
         :root { --azul-gris: #617287; --azul-oscuro: #0f172a; --celeste: #2db8ce; --fb-blue: #1877f2; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; color: #1e293b; scroll-behavior: smooth; overflow-x: clip; }
@@ -125,7 +125,7 @@
         .course-card-level-avanzado:hover { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.35); }
     </style>
 </head>
-<body id="mis-cursos-page" class="custom-scrollbar">
+<body id="mis-cursos-page" class="custom-scrollbar light-mode">
     <button id="floatingBackBtn" onclick="handleFloatingBack()" title="Volver"><i class="fas fa-arrow-left"></i><span id="floatingBackText">Volver</span></button><div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20"><i id="notifIcon" class="fas fa-info-circle text-2xl"></i><div><p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p><p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p></div></div><div id="userProfileModal" class="modal-overlay"><div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl"><div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative"><button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button><div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div><h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3><p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p><div class="mt-4 flex flex-wrap items-center justify-center gap-2"><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-phone text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera"><i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span></div></div><div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="profileProfession">Sin Perfil</span></div></div><div class="p-6 bg-[#1e293b] text-left"><button onclick="logoutUser()" class="w-full py-4 bg-red-500/10 text-red-400 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-500/20 hover:bg-red-500/20 hover:border-red-500/40 transition-all shadow-sm flex items-center justify-center gap-3"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button></div></div></div><div id="authModal" class="modal-overlay"><div class="modal-content !p-8 relative"><button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button><div class="text-center mb-6"><img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3"><h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3><p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p></div><div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left"><i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i><span id="authErrorText" class="leading-tight">Mensaje de error</span></div><div class="flex bg-slate-100 rounded-xl p-1 mb-6"><button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button><button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button></div><form id="authForm" class="space-y-4 text-left"><div id="nameField" class="space-y-1 hidden"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label><div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label><div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1" id="passwordFieldContainer"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label><div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2"><i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span></button></form></div></div>
 
     <!-- Página Mis Cursos -->
@@ -156,7 +156,7 @@
             <div class="mb-10">
                 <!-- Tarjeta del estudiante con fondo cian glass, borde más visible e icono blanco -->
                 <div id="misCursosUserInfo" class="w-full hidden">
-                    <div class="student-card bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
+                    <div class="student-card backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
                         <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
                         <div class="relative z-10 flex flex-col gap-3 h-full">
                             <div>
