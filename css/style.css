@@ -106,10 +106,6 @@ body {
     /* Se elimina border y box-shadow base para que lo controlen las clases de nivel */
 }
 
-.course-card:hover {
-    transform: translateY(-8px) scale(1.02);
-}
-
 .course-card .course-card-image-container {
     position: relative;
     height: 12rem;
@@ -250,7 +246,6 @@ body {
     box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
 }
 .mission-card:hover {
-    transform: translateY(-8px) scale(1.02);
     border-color: #06b6d4;
     box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
 }
@@ -263,6 +258,27 @@ body:not(.light-mode) .mission-card:hover {
     border-color: #06b6d4;
     box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
 }
+
+/* --- Estilo Tarjeta Misión (Modo Claro) --- */
+body.light-mode .mission-card {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+}
+body.light-mode .mission-card h3 {
+    color: #1e293b !important;
+}
+body.light-mode .mission-card ul {
+    color: #475569 !important;
+}
+
+/* --- Estilo Tarjeta Misión (Modo Oscuro) --- */
+body:not(.light-mode) .mission-card { 
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+body:not(.light-mode) .mission-card h3 { color: #ffffff; }
+body:not(.light-mode) .mission-card ul { color: #cbd5e1; } /* slate-300 */
 
 /* Dark mode overrides para las tarjetas */
 body:not(.light-mode) .course-card {
@@ -375,9 +391,9 @@ body:not(.light-mode) .prof-selected {
 #visitorMapGlobal { width: 100%; height: 100%; overflow: hidden; }
 
 .special-course-card {
-    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
-    /* border: 1px solid var(--border-light); */ /* Se comenta para que herede el borde de la clase de nivel */
-    backdrop-filter: blur(12px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition: all 0.3s ease-in-out;
 }
 
@@ -406,7 +422,6 @@ body:not(.light-mode) .prof-btn .prof-count-bg span { color: var(--text-light); 
     cursor: pointer;
 }
 body:not(.card-active) .testimonial-card:hover {
-    transform: translateY(-8px) scale(1.02);
     border-color: #06b6d4;
     box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
 }
@@ -425,7 +440,6 @@ body:not(.card-active) .testimonial-card:hover {
     cursor: pointer;
 }
 body:not(.card-active) .methodology-card:hover {
-    transform: translateY(-8px) scale(1.02);
     border-color: #06b6d4;
     box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
 }
@@ -578,4 +592,19 @@ body:not(.light-mode) #theme-toggle-btn .sun-icon {
 body:not(.light-mode) #theme-toggle-btn .moon-icon {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* --- Estilos para FAQ --- */
+#faq details > summary {
+    list-style: none;
+}
+#faq details > summary::-webkit-details-marker {
+    display: none;
+}
+#faq details[open] summary ~ * {
+    animation: fadeIn 0.4s ease-in-out;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
