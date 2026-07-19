@@ -1,5 +1,38 @@
 // navbar.js - Carga el menú de navegación en todas las páginas
 
+    window.buyManual = function(courseId, buyLink) {
+        let user = null;
+        try { user = JSON.parse(localStorage.getItem('user')); } catch(e) { user = null; }
+
+        if (!user) {
+            if (typeof showNotif === 'function') {
+                showNotif('Acceso Restringido', 'Debes iniciar sesión para adquirir un manual.', 'info');
+            }
+            if (typeof openModal === 'function') { openModal('authModal'); } 
+            else if (typeof AuthUI !== 'undefined' && AuthUI.openModal) { AuthUI.openModal('login'); }
+            return;
+        }
+
+        if (!user.accessedCursos) user.accessedCursos = [];
+
+        if (!user.accessedCursos.includes(courseId)) {
+            user.accessedCursos.push(courseId);
+            localStorage.setItem('user', JSON.stringify(user));
+            
+            const email = user.email.toLowerCase();
+            const userData = JSON.stringify(user);
+            const SCRIPT_URL = window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbzJCV8j5yLAGgouP43lvkXGunU6yKroegJ9JFJvAWpqHeHQzWRnXXP4IPnaBLjU7MTi/exec';
+            fetch(SCRIPT_URL, {
+                method: 'POST', mode: 'no-cors',
+                body: new URLSearchParams({action: 'update_user', email: email, userData: userData})
+            }).catch(e => console.error('Sync error:', e));
+
+            if (typeof showNotif === 'function') showNotif('¡Manual Adquirido!', 'El manual ahora aparecerá en tu sección de "Mis Cursos".', 'success');
+            if (typeof renderMisCourses === 'function') renderMisCourses();
+        }
+        window.open(buyLink, '_blank');
+    }
+
     // Inyectar librería de Confeti
     const confettiScript = document.createElement('script');
     confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
@@ -183,8 +216,13 @@
 
         /* Sobrescrituras Modo Claro */
         body.light-mode {
-            background-color: #7e96ab !important;
-            color: #334155 !important;
+            background-color: #b2c0cc !important;
+            color: #0f172a !important; /* Azul oscuro para el texto principal */
+        }
+
+        /* Eliminar gradiente del hero en modo claro */
+        body.light-mode .header-gradient-overlay {
+            background: rgba(30, 41, 59, 0.6) !important; /* Reemplaza el gradiente por un fondo sólido translúcido (slate-800/60) */
         }
 
         /* Fondos de sección para modo claro */
@@ -195,9 +233,239 @@
         body.light-mode .section-themed .section-title,
         body.light-mode .section-themed .section-subtitle,
         body.light-mode #comunidad p { /* Específico para el párrafo de la sección comunidad */
-            color: #ffffff !important;
+            color: #0f172a !important;
         }
-        body.light-mode .section-themed .section-title span { color: #02d6fe !important; }
+        /* Estilo unificado para secciones de página */
+        .page-section {
+            background-color: #2e3a50;
+            border-top: 1px solid #4a5568;
+            border-bottom: 1px solid #4a5568;
+            color: #ffffff; /* Default text color */
+        }
+        .page-section .section-subtitle { color: #2db8ce; }
+        .page-section p, .page-section .text-blue-50 { color: #cbd5e1; } /* Specific color for paragraphs */
+        .page-section .absolute.inset-0.z-0 { background-color: #2e3a50; }
+
+        body.light-mode .page-section {
+            background-color: #7e96ab !important;
+            border-top: 1px solid #94a3b8 !important;
+            border-bottom: 1px solid #94a3b8 !important;
+            color: #ffffff !important;
+            background-color: #b2c0cc !important;
+            border-top: 1px solid #c8d2dc !important;
+            border-bottom: 1px solid #c8d2dc !important;
+            color: #0f172a !important;
+        }
+        body.light-mode .page-section .section-subtitle { color: #0f172a !important; }
+        body.light-mode .page-section p, body.light-mode .page-section .text-blue-50 { color: #1e293b !important; } /* Specific color for paragraphs */
+        body.light-mode .page-section .absolute.inset-0.z-0 { background-color: #7e96ab !important; }
+        body.light-mode .page-section .absolute.inset-0.z-0 { background-color: #b2c0cc !important; }
+        body.light-mode .page-section img {
+            mix-blend-mode: luminosity !important;
+            opacity: 0.1 !important;
+        }
+
+        /* Restaurar color de banderas en ranking global en modo claro */
+        body.light-mode #countryRankListGlobal img {
+            mix-blend-mode: normal !important;
+            opacity: 1 !important;
+        }
+
+        /* Restaurar opacidad y blend de la imagen del profesor en modo claro */
+        body.light-mode #instructor img {
+            mix-blend-mode: normal !important;
+            opacity: 1 !important;
+        }
+        /* Restaurar opacidad de imágenes en tarjetas de curso en modo claro */
+        body.light-mode .page-section .course-card-image {
+            mix-blend-mode: normal !important;
+            opacity: 1 !important;
+        }
+
+        /* Estilos para la sección del instructor en modo claro */
+        body.light-mode #instructor {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #instructor .text-slate-300,
+        body.light-mode #instructor .text-slate-400,
+        body.light-mode #instructor .text-slate-500 {
+            color: #475569 !important; /* slate-600 */
+        }
+
+        /* Restaurar opacidad de imagen en tarjeta de Misión en modo claro */
+        body.light-mode #mision .mission-card img {
+            mix-blend-mode: normal !important;
+            opacity: 1 !important;
+        }
+
+        /* Restaurar opacidad de imagen en curso especial (presencial) en modo claro */
+        body.light-mode #curso-especial .special-course-image {
+            mix-blend-mode: normal !important;
+            opacity: 1 !important;
+        }
+
+        /* Restaurar opacidad de imágenes en tarjetas de Aulas Virtuales (cursos.html) */
+        body.light-mode #courses-grid .course-card img {
+            opacity: 1 !important;
+            mix-blend-mode: normal !important;
+        }
+
+        /* Estilos para la tarjeta de curso especial (presencial) en modo claro */
+        body.light-mode #curso-especial .special-course-card {
+            background-color: #ffffff !important;
+        }
+        body.light-mode #curso-especial .text-white {
+            color: #1e293b !important;
+        }
+        body.light-mode #curso-especial .section-subtitle,
+        body.light-mode #curso-especial .section-subtitle {
+            color: #0f172a !important;
+        }
+        body.light-mode #curso-especial .text-\\[\\#02d6fe\\],
+        body.light-mode #curso-especial .text-\\[\\#2db8ce\\] {
+            color: #0891b2 !important;
+        }
+        body.light-mode #curso-especial .bg-white\\/5 {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #curso-especial .text-slate-500 {
+            color: #64748b !important;
+        }
+        body.light-mode #curso-especial .border-white\\/10 {
+            border-color: #e2e8f0 !important;
+        }
+
+        /* Estilos para tarjetas de metodología en modo claro */
+        body.light-mode #metodologia .methodology-card {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #metodologia .methodology-card h3 {
+            color: #1e293b !important;
+        }
+        body.light-mode #metodologia .methodology-card p {
+            color: #475569 !important;
+        }
+        body.light-mode #metodologia .methodology-card img {
+            mix-blend-mode: normal !important;
+            opacity: 1 !important;
+        }
+
+        /* Estilos para tarjetas de comunidad (perfil) en modo claro */
+        body.light-mode #comunidad .prof-btn {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #comunidad .prof-btn span {
+            color: #1e293b !important;
+        }
+        body.light-mode #comunidad .prof-btn .prof-count-bg {
+            background-color: #f1f5f9 !important;
+        }
+        body.light-mode #comunidad .prof-btn .prof-count-bg span {
+            color: #334155 !important;
+        }
+
+        /* Estilo para el perfil seleccionado en modo claro (cian sólido) */
+        body.light-mode #comunidad .prof-selected {
+            background: #cffafe !important; /* cyan-100 */
+            border: 2px solid #0891b2 !important; /* cyan-600 */
+            box-shadow: 0 0 20px rgba(8, 145, 178, 0.25) !important;
+        }
+        body.light-mode #comunidad .prof-selected > span { /* Texto principal (ej. Ingeniero) */
+            color: #155e75 !important; /* cyan-800 */
+        }
+        body.light-mode #comunidad .prof-selected i { /* Icono */
+            color: #0891b2 !important; /* cyan-600 */
+        }
+        body.light-mode #comunidad .prof-selected .prof-count-bg { /* Fondo del contador */
+            background-color: #ffffff !important;
+            border: 1px solid #a5f3fc !important; /* cyan-200 */
+        }
+        body.light-mode #comunidad .prof-selected .prof-count-bg span { /* Número del contador */
+            color: #0891b2 !important; /* cyan-600 */
+        }
+
+        /* Estilos para tarjetas de testimonios en modo claro */
+        body.light-mode #testimonios .testimonial-card {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #testimonios .testimonial-card p,
+        body.light-mode #testimonios .testimonial-card h4,
+        body.light-mode #testimonios .testimonial-card .testimonial-role {
+            color: #475569 !important;
+        }
+        body.light-mode #testimonios .testimonial-card .fa-quote-right {
+            color: #94a3b8 !important;
+            opacity: 0.1 !important;
+        }
+        body.light-mode #testimonios .testimonial-card .w-12.h-12 {
+            background-color: #e0f2fe !important;
+            color: #0c4a6e !important;
+        }
+
+        /* Estilos para tarjetas de Modalidades en modo claro */
+        body.light-mode #modalidades .course-card ul {
+            color: #475569 !important;
+        }
+        body.light-mode #modalidades .course-card .text-purple-400 {
+            color: #9333ea !important; /* purple-600 */
+        }
+        body.light-mode #modalidades .course-card .text-cyan-400 {
+            color: #0891b2 !important; /* cyan-600 */
+        }
+
+        /* Estilos para el mapa global en modo claro */
+        body.light-mode #comunidad-global .bg-gray-900 {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #comunidad-global .bg-white\\/5 {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #comunidad-global .text-white {
+            color: #1e293b !important;
+        }
+        body.light-mode #comunidad-global .text-cyan-500 {
+            color: #0891b2 !important;
+        }
+        body.light-mode #visitorMapGlobal svg text { fill: #334155 !important; }
+
+        /* Estilos para la sección de Métricas en modo claro */
+        body.light-mode #metrics {
+            background-color: #f8fafc !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #metrics .font-black,
+        body.light-mode #metrics .text-slate-400 {
+            color: #0f172a !important;
+        }
+        body.light-mode #metrics .text-\\[\\#2db8ce\\] { color: #0891b2 !important; }
+        body.light-mode #metrics .text-teal-400 { color: #0d9488 !important; }
+        body.light-mode #metrics .text-cyan-400 { color: #0891b2 !important; }
+        body.light-mode #metrics .text-red-400 { color: #dc2626 !important; }
+        body.light-mode #metrics .text-blue-400 { color: #2563eb !important; }
+
+        /* Estilos para la sección de FAQ en modo claro */
+        body.light-mode #faq {
+            background-color: #b2c0cc !important; /* Unificar con el resto de las secciones */
+        }
+        body.light-mode #faq .bg-white\\/5 {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode #faq .text-white {
+            color: #0f172a !important;
+        }
+        body.light-mode #faq .text-slate-400 {
+            color: #475569 !important;
+        }
+        body.light-mode #faq .border-white\\/10 { border-color: #e2e8f0 !important; }
+        body.light-mode #faq .group:hover { border-color: #bfdbfe !important; }
 
         /* Estilos para tarjetas y encabezados en modo claro */
         body.light-mode .bg-white\\/10,
@@ -218,6 +486,9 @@
         body.light-mode .bg-white\\/10 .text-slate-400 {
              color: #64748b !important; /* slate-500, texto secundario gris */
         }
+        body.light-mode header .text-secondary {
+            color: #0891b2 !important;
+        }
         body.light-mode .bg-white\\/10 .text-\\[\\#2db8ce\\],
 
         /* Estilos para badges dentro de tarjetas/encabezados en modo claro */
@@ -232,6 +503,48 @@
         body.light-mode .border-emerald-500\\/30 { border-color: #a7f3d0 !important; }
         body.light-mode .bg-slate-500\\/20 { background-color: #f1f5f9 !important; border-color: #e2e8f0 !important; backdrop-filter: none !important; }
         body.light-mode .border-slate-500\\/30 { border-color: #cbd5e1 !important; }
+
+        /* --- Badges del Header en modo claro (colores sólidos) --- */
+        body.light-mode header .bg-blue-500\\/20 { background-color: #2563eb !important; border-color: #1d4ed8 !important; }
+        body.light-mode header .text-blue-400 { color: #ffffff !important; }
+        body.light-mode header .border-blue-500\\/30 { border-color: #1d4ed8 !important; }
+
+        body.light-mode header .bg-emerald-500\\/20 { background-color: #059669 !important; border-color: #047857 !important; }
+        body.light-mode header .text-emerald-400 { color: #ffffff !important; }
+        body.light-mode header .border-emerald-500\\/30 { border-color: #047857 !important; }
+
+        body.light-mode #visitor-info {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important; /* slate-200 */
+        }
+        body.light-mode #visitor-info,
+        body.light-mode #visitor-info span,
+        body.light-mode #visitor-info .text-white\\/30 {
+            color: #334155 !important; /* slate-700 */
+        }
+        /* Icono de ojo en verde para el modo claro */
+        body.light-mode #visitor-info .fa-eye {
+            color: #22c55e !important; /* green-500 */
+        }
+
+        /* Estilos para la tarjeta de perfil de 'Mis Cursos' en modo claro */
+        body.light-mode #misCursosUserInfo > div {
+            background-color: transparent !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+        }
+        body.light-mode #misCursosUserInfo .text-white,
+        body.light-mode #misCursosUserInfo .text-slate-400 {
+            color: #0f172a !important;
+        }
+        body.light-mode #misCursosUserInfo .text-\\[\\#2db8ce\\] { color: #0891b2 !important; }
+        body.light-mode #misCursosUserInfo .bg-white\\/5 { background-color: rgba(255, 255, 255, 0.6) !important; border-color: rgba(255, 255, 255, 0.9) !important; }
+        body.light-mode #misCursosUserInfo .border-white\\/10 { border-color: #c8d2dc !important; }
+        body.light-mode #misCursosUserInfo .text-teal-400 { color: #0d9488 !important; }
+        body.light-mode #misCursosUserInfo .text-purple-400 { color: #7e22ce !important; }
+        body.light-mode #misCursosUserInfo .text-amber-400 { color: #b45309 !important; }
+        body.light-mode #misCursosUserInfo .text-red-400 { color: #b91c1c !important; }
 
         /* Estilos para Desglose de Módulos (página Progreso) en modo claro */
         body.light-mode .bg-blue-900\\/30,
@@ -273,15 +586,15 @@
         }
 
         body.light-mode nav.global-navbar { 
-            background: #e3f1f8 !important; 
-            border-bottom: 1px solid #d3e1e8 !important; 
+            background: #b2c0cc !important; 
+            border-bottom: 1px solid #c8d2dc !important; 
         }
 
         /* Fondo de tarjetas en modo claro */
         body.light-mode .course-card,
         body.light-mode #programsGrid > div {
-            background-color: #e3f1f8 !important;
-            border-color: #d3e1e8 !important;
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
         }
         /* Corrección de texto para tarjetas en modo claro */
         body.light-mode .course-card h2, body.light-mode .course-card h3,
@@ -292,6 +605,16 @@
         body.light-mode .course-card p, body.light-mode #programsGrid p,
         body.light-mode #programsGrid .text-slate-300 {
             color: #475569 !important;
+        }
+
+        /* Estilo para imagen con blend en tarjetas de curso */
+        .special-blend-image {
+            opacity: 0.5;
+            mix-blend-mode: luminosity;
+        }
+        body.light-mode .special-blend-image {
+            opacity: 1 !important;
+            mix-blend-mode: normal !important;
         }
 
         /* Corrección de pastillas para programas.html en modo claro */
@@ -306,14 +629,24 @@
         body.light-mode #programsGrid .text-sky-300 { color: #0284c7 !important; }
         body.light-mode #programsGrid .border-sky-500\\/30 { border-color: #7dd3fc !important; }
 
-        body.light-mode #navbarAuthBtn, body.light-mode #authBtnText, body.light-mode #navbarAuthBtn i { color: #334155 !important; }
+        /* Estilos para textos y botones del navbar en modo claro */
+        body.light-mode .nav-item {
+            color: #0f172a !important; /* Azul oscuro para los items del menú */
+        }
+        body.light-mode #navbarAuthBtn, 
+        body.light-mode #authBtnText, 
+        body.light-mode #navbarAuthBtn i { 
+            color: #0f172a !important; /* Azul oscuro para el botón de usuario */
+        }
+        body.light-mode #hamburger-btn {
+            color: #0f172a !important; /* Azul oscuro para el icono de hamburguesa */
+        }
         
         /* Icono de cambio de tema en gris oscuro en modo claro */
-        body.light-mode #theme-icon, body.light-mode nav button[onclick="toggleTheme()"] { color: #334155 !important; }
+        body.light-mode #theme-icon, body.light-mode nav button[onclick="toggleTheme()"] { color: #0f172a !important; }
         
         /* Identidad Visual Global: Aprende (Variable) Automatización (Azul Claro #02d6fe) */
-        .logo-text { color: #ffffff !important; }
-        body.light-mode .logo-text { color: #334155 !important; }
+        .logo-text { color: #ffffff !important; } body.light-mode .logo-text { color: #0f172a !important; }
         .logo-text span, .logo-text span span, .logo-text span i { color: #02d6fe !important; }
         
         body.light-mode .force-white-text {
@@ -321,13 +654,38 @@
         }
         
         /* Títulos con el azul claro corporativo (#2db8ce) forzado */
-        #cursos-destacados h2 span, 
-        #testimonios h2 span,
-        #comunidad h2 span,
         #mision h2 span,
+        #instructor h2 span,
+        #cursos-destacados h2 span,
+        #manuales h2 span,
+        #modalidades h2 span,
+        #curso-especial h2 span,
+        #metodologia h2 span,
+        #comunidad h2 span,
+        #testimonios h2 span,
+        #comunidad-global h2 span,
+        #faq h2 span,
+        #contacto h2 span,
         .featured-title, 
         .testimonials-title {
-            color: #02d6fe !important;
+            color: #2db8ce !important;
+        }
+
+        body.light-mode #mision h2 span,
+        body.light-mode #instructor h2 span,
+        body.light-mode #cursos-destacados h2 span,
+        body.light-mode #manuales h2 span,
+        body.light-mode #modalidades h2 span,
+        body.light-mode #curso-especial h2 span,
+        body.light-mode #metodologia h2 span,
+        body.light-mode #comunidad h2 span,
+        body.light-mode #testimonios h2 span,
+        body.light-mode #comunidad-global h2 span,
+        body.light-mode #faq h2 span,
+        body.light-mode #contacto h2 span,
+        body.light-mode .featured-title, 
+        body.light-mode .testimonials-title {
+            color: #0891b2 !important;
         }
 
         /* ================================================= */

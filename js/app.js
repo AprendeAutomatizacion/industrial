@@ -135,6 +135,33 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     cardOverlay.addEventListener('click', closeActiveCard);
+
+    // --- INICIO: Lógica para efecto 3D inmersivo en tarjetas ---
+    const immersiveCards = document.querySelectorAll('.course-card, .mission-card, .methodology-card, .testimonial-card, .special-course-card, .prof-btn');
+    
+    immersiveCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            // No aplicar efecto si la tarjeta está expandida o en proceso
+            if (card.classList.contains('is-expanded') || card.classList.contains('is-expanding')) return;
+
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const { width, height } = rect;
+            
+            const rotateX = (y / height - 0.5) * -25; // Invertido para que se sienta natural
+            const rotateY = (x / width - 0.5) * 25;
+
+            card.style.transition = 'transform 0.1s ease-out';
+            card.style.transform = `perspective(2000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+            card.style.transform = `perspective(2000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)`;
+        });
+    });
+    // --- FIN: Lógica para efecto 3D inmersivo en tarjetas ---
 });
 
 function initScrollReveal() {
