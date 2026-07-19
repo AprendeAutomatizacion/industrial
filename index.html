@@ -76,11 +76,11 @@
             </div>
         </div>
         
-        <div class="p-6 bg-white text-left">
+        <div class="p-6 bg-[#1e293b] text-left">
             <button id="profileAdminBtn" onclick="openAdminPanel(); closeModal('userProfileModal')" class="hidden mb-3 w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl border border-slate-800 hover:bg-[#2db8ce] transition-all shadow-sm items-center justify-center gap-3">
                 <i class="fas fa-shield-alt text-[#2db8ce]"></i> Panel de Administración
             </button>
-            <button onclick="logoutUser()" class="w-full py-4 bg-red-50 text-red-600 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm flex items-center justify-center gap-3">
+            <button onclick="logoutUser()" class="w-full py-4 bg-red-500/10 text-red-400 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-500/20 hover:bg-red-500/20 hover:border-red-500/40 transition-all shadow-sm flex items-center justify-center gap-3">
                 <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
             </button>
         </div>
@@ -251,67 +251,103 @@
 
 <!-- SECCIÓN: HOME (ÚNICA PÁGINA) -->
 <div id="page-home" class="page-content active">
-    <div class="relative overflow-hidden bg-transparent">
-        <div class="header-background"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-slate-900/95 via-slate-900/40 to-slate-900/100 z-[1]"></div>
-
-        <header class="relative z-10 min-h-screen flex flex-col pt-12 pb-10">
-            <div class="max-w-7xl mx-auto px-6 w-full flex-grow flex flex-col">
-                
-                <!-- ÁREA SUPERIOR IZQUIERDA: BADGE DE VISTAS + BOTÓN DE ACCESO -->
-                <div class="flex flex-row flex-wrap items-center gap-4 mt-10 mb-12 relative z-50">
-                    
-                    <!-- Tarjeta de país y visitas -->
-                    <div id="visitor-info" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/40 border border-[#2db8ce]/30 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md opacity-0 transition-opacity duration-1000">
-                        <span class="flex items-center gap-1.5"><i class="fas fa-eye text-[#2db8ce]"></i><span id="visit-count">...</span></span>
-                        <span class="text-white/30">|</span>
-                        <span class="flex items-center gap-1.5"><img id="visitor-flag" src="" class="w-4 h-3 rounded-[2px] hidden"><span id="visitor-country">Ubicando...</span></span>
-                    </div>
-
+    <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
+        <!-- Imagen de fondo transparente -->
+        <div class="absolute inset-0 z-0 opacity-20">
+            <img src="img/AA (3).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <!-- Icono grande a la derecha -->
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="absolute right-4 top-4 text-white/5 text-8xl pointer-events-none z-0 md:hidden">
+            <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="absolute right-0 top-0 text-white/5 text-8xl"><i data-lucide="bar-chart-3"></i></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
+            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
+                <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Formación Profesional</span>
+                <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Cursos Online y Presenciales</span>
+                <div id="visitor-info" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/40 border border-[#2db8ce]/30 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md opacity-0 transition-opacity duration-1000">
+                    <span class="flex items-center gap-1.5"><i class="fas fa-eye text-[#2db8ce]"></i><span id="visit-count">...</span></span>
+                    <span class="text-white/30">|</span>
+                    <span class="flex items-center gap-1.5"><img id="visitor-flag" src="" class="w-4 h-3 rounded-[2px] hidden"><span id="visitor-country">Ubicando...</span></span>
                 </div>
+            </div>
+            <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
+            <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
+            <div class="mt-8"><button onclick="window.location.href='#cursos-destacados'" class="btn-glow px-8 py-4 bg-teal-500 text-white font-black rounded-2xl shadow-2xl shadow-teal-500/30 border border-teal-400 hover:bg-teal-600 transition-all uppercase flex items-center gap-3 text-base">Ver Cursos <i class="fas fa-chevron-down"></i></button></div>
+        </div>
+    </header>
 
-                <!-- CONTENIDO CENTRAL HERO -->
-                <div class="flex-grow flex flex-col justify-center text-left pointer-events-none">
-                    <div class="pointer-events-auto">
-                        <h1 class="text-4xl sm:text-7xl lg:text-8xl font-black leading-tight tracking-tighter text-white uppercase reveal reveal-up">APRENDE <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">Automatización</span></h1>
-                        <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-8 mt-12 reveal reveal-up delay-200">
-                            <p class="text-sm md:text-xl text-white font-medium max-w-lg">Proporcionamos a estudiantes y profesionales los conocimientos para dominar la automatización industrial real.</p>
-                            <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20cursos', '_blank')" class="btn-glow px-10 py-6 bg-teal-500 text-white font-black rounded-2xl shadow-2xl shadow-teal-500/30 border border-teal-400 hover:bg-teal-600 transition-all uppercase flex items-center gap-4 text-xl">Ver Catálogo de Cursos <i class="fas fa-chevron-right"></i></button>
+    <!-- INSTRUCTOR -->
+    <section id="instructor" class="page-section relative py-24 px-6">
+        <div class="max-w-5xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
+            <div class="reveal reveal-right">
+                <img src="img/AA (14).webp" alt="Profesor Pablo Cedeño" class="rounded-3xl aspect-square object-cover w-full max-w-[250px] mx-auto md:max-w-full shadow-2xl border-4 border-cyan-500/30">
+            </div>
+            <div class="md:col-span-2 text-center md:text-left reveal reveal-up">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Guía Experto</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Prof. Pablo <span>Cedeño</span></h2>
+                <p class="text-slate-300 mt-6 mb-8 max-w-xl mx-auto md:mx-0">Ingeniero con más de 15 años de experiencia en el diseño, implementación y mantenimiento de sistemas de automatización industrial. Apasionado por la enseñanza y por transformar la teoría compleja en habilidades prácticas y aplicables.</p>
+                <div class="flex flex-wrap justify-center md:justify-start items-center gap-6">
+                    <span class="text-slate-400 font-bold text-xs uppercase tracking-widest">Colaboraciones:</span>
+                    <i class="fas fa-university text-4xl text-slate-500" title="UPT Aragua"></i>
+                    <i class="fas fa-industry text-4xl text-slate-500" title="Empresas Polar"></i>
+                    <i class="fab fa-teamspeak text-4xl text-slate-500" title="Siemens (Partner)"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== Misión Académica Section Start ====== -->
+    <section id="mision" class="page-section pt-10 pb-20 lg:pt-14 lg:pb-28 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 text-center">
+            <div class="reveal reveal-up">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">
+                    LIDERADOS POR EL PROFESOR PABLO CEDEÑO
+                </span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">
+                    Nuestra Misión <span>Académica</span>
+                </h2>
+            </div>
+
+            <div class="mt-12 max-w-5xl mx-auto reveal reveal-up" style="transition-delay: 0.2s;">
+                <div class="mission-card p-8 md:p-12 rounded-3xl text-left">
+                    <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                        <div class="flex-shrink-0"> 
+                            <img src="img/AA (16).webp" alt="Logo de la Universidad" class="h-32 w-32 rounded-full object-cover drop-shadow-lg">
+                        </div>
+                        <div class="border-t-2 md:border-t-0 md:border-l-2 border-cyan-500/20 pt-6 md:pt-0 md:pl-8">
+                            <h3 class="text-xl lg:text-2xl font-bold mb-5">Empoderando a la Próxima Generación de Innovadores</h3>
+                            <ul class="space-y-4 text-sm md:text-base">
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1.5"></i>
+                                    <span><strong>Educación Práctica y Relevante:</strong> Ofrecer contenido actualizado que responda a las necesidades reales de la industria.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1.5"></i>
+                                    <span><strong>Acceso para Todos:</strong> Democratizar el conocimiento en automatización, haciéndolo accesible sin importar la ubicación o el nivel de experiencia.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1.5"></i>
+                                    <span><strong>Comunidad y Soporte:</strong> Fomentar un ecosistema de aprendizaje colaborativo donde estudiantes y profesionales puedan crecer juntos.</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-        </header>
-
-        <section id="mision" class="relative z-10 py-20 px-6">
-            <div class="max-w-7xl mx-auto">
-                <div class="bg-white/5 rounded-[40px] p-8 md:p-12 flex flex-col md:flex-row items-center gap-10 md:gap-16 reveal reveal-up backdrop-blur-md mission-card">
-                    <div class="flex-shrink-0">
-                        <div class="w-32 h-32 md:w-48 md:h-48 rounded-[32px] overflow-hidden border border-white/10 shadow-lg group">
-                            <img src="https://i.postimg.cc/rFM1MX74/unnamed.png" alt="Instructor" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105">
-                        </div>
-                    </div>
-                    <div class="text-left flex-grow">
-                        <span class="text-[#2db8ce] text-[10px] font-black uppercase tracking-[0.4em] mb-3 block">Sobre nuestra academia</span>
-                        <h2 class="text-2xl md:text-4xl font-black uppercase tracking-tighter mb-6 leading-none text-[#ffffff]">Nuestra <span class="text-[#02d6fe]">Misión Académica</span></h2>
-                        <p class="text-slate-300 text-sm md:text-lg font-medium leading-relaxed opacity-75">
-                            Liderados por el Prof. Pablo Cedeño, somos un centro especializado en la formación técnica real y aplicada. Nuestra misión es transformar la complejidad de la lógica industrial en habilidades tangibles.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
+    <!-- ====== Misión Académica Section End ====== -->
 
     <!-- CURSOS DESTACADOS (HOME) -->
-    <section id="cursos-destacados" class="section-themed relative py-24 px-6 overflow-hidden">
-        <div class="absolute inset-0 z-0 opacity-5">
-            <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" class="w-full h-full object-cover mix-blend-luminosity">
-        </div>
+    <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden">
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-10 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
-                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Mis Cursos <span class="text-[#02d6fe]">Destacados</span></h2>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Mis Cursos <span>Destacados</span></h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <!-- Curso 1 -->
@@ -399,16 +435,134 @@
         </div>
     </section>
 
+    <!-- MANUALES Y RECURSOS -->
+    <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden bg-slate-900/50">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-10 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Conocimiento Aplicado</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Manuales y <span>Recursos</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <!-- Manual 1 -->
+                <div class="course-card course-card-level-avanzado reveal reveal-up delay-100">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/WpST30hz/tablerogif.gif" alt="Manual de Arranque de motores con contactores" class="course-card-image">
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Manual de Arranque de motores con contactores</h3>
+                        <p class="course-card-description">Manual completo sobre el arranque y control de motores usando contactores, lógica cableada y protecciones.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">5$</div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="buyManual(19, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Arranque%20de%20motores%20con%20contactores')" class="btn-metal btn-cyan w-full"><i class="fas fa-download"></i> Comprar Manual</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Manual 2 -->
+                <div class="course-card course-card-level-avanzado reveal reveal-up delay-200">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" alt="Manual de Automatización con PLC Básico" class="course-card-image">
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Manual de Automatización con PLC Básico</h3>
+                        <p class="course-card-description">Introducción a la automatización industrial utilizando PLC de gama básica como LOGO! de Siemens.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">5$</div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="buyManual(20, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Automatización%20con%20PLC%20Básico')" class="btn-metal btn-cyan w-full"><i class="fas fa-download"></i> Comprar Manual</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Manual 3 -->
+                <div class="course-card course-card-level-avanzado reveal reveal-up delay-300">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif" alt="Manual de Automatización con Contactores" class="course-card-image">
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Manual de Automatización con Contactores</h3>
+                        <p class="course-card-description">Aprende a diseñar y montar circuitos de control con lógica cableada para diferentes arranques de motores.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">5$</div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="buyManual(21, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Automatización%20con%20Contactores')" class="btn-metal btn-cyan w-full"><i class="fas fa-download"></i> Comprar Manual</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODALIDADES DE APRENDIZAJE -->
+    <section id="modalidades" class="page-section relative py-24 px-6">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-12 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Flexibilidad Total</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Modalidades de <span>Aprendizaje</span></h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <!-- Modalidad Presencial -->
+                <div class="course-card course-card-level-intermedio reveal reveal-right">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/WpST30hz/tablerogif.gif" alt="Formación Presencial" class="course-card-image">
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Formación Presencial</h3>
+                        <p class="course-card-description !flex-grow-0">Vive la experiencia práctica en nuestros talleres equipados con tecnología industrial real.</p>
+                        <ul class="space-y-2 text-sm text-slate-300 my-4">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1"></i><span>Talleres 100% prácticos.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1"></i><span>Equipos y tableros reales.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1"></i><span>Networking con profesionales.</span></li>
+                        </ul>
+                        <div class="course-card-footer !p-0 !border-t-0 mt-auto">
+                            <div class="course-card-buttons">
+                                <a href="#curso-especial" class="btn-metal btn-blue w-full"><i class="fas fa-calendar-alt"></i> Ver Próximas Fechas</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modalidad Online -->
+                <div class="course-card course-card-level-basico reveal reveal-up">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/rmzs1xpQ/automatismo.gif" alt="Formación Online" class="course-card-image">
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Formación Online</h3>
+                        <p class="course-card-description !flex-grow-0">Aprende a tu ritmo, desde cualquier lugar del mundo, con acceso de por vida al material.</p>
+                        <ul class="space-y-2 text-sm text-slate-300 my-4">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1"></i><span>Flexibilidad de horarios.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1"></i><span>Clases grabadas para repasar.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1"></i><span>Soporte remoto por WhatsApp y correo.</span></li>
+                        </ul>
+                        <div class="course-card-footer !p-0 !border-t-0 mt-auto">
+                            <div class="course-card-buttons">
+                                <a href="catalogo.html" class="btn-metal btn-cyan w-full"><i class="fas fa-th-large"></i> Ver Cursos Online</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CURSO ESPECIAL (UPT ARAGUA) -->
-    <section id="curso-especial" class="relative py-24 px-6 bg-slate-800 overflow-hidden text-left">
+    <section id="curso-especial" class="page-section relative py-24 px-6 overflow-hidden text-left">
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-1 reveal reveal-down">
-                <span class="text-[#2db8ce] text-xs font-bold uppercase tracking-[0.4em] mb-3 block">ampliación y extensión profesional</span>
-                <h2 class="text-2xl md:text-5xl font-extrabold uppercase tracking-tighter text-white">Próximo <span class="text-[#2db8ce]">Curso Presencial</span></h2>
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">ampliación y extensión profesional</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Próximo <span>Curso Presencial</span></h2>
             </div>
-            <div class="special-course-card course-card-level-intermedio rounded-[50px] overflow-hidden flex flex-col lg:flex-row lg:items-stretch reveal reveal-up">
+            <div class="special-course-card course-card-level-intermedio rounded-3xl overflow-hidden flex flex-col lg:flex-row lg:items-stretch reveal reveal-up">
                 <div class="w-full lg:w-2/5 relative flex-shrink-0 lg:aspect-square">
-                    <img src="https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif" class="lg:absolute lg:inset-0 w-full h-full object-cover opacity-70 mix-blend-overlay">
+                    <img src="https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif" alt="Curso presencial de automatización con contactores" class="special-course-image lg:absolute lg:inset-0 w-full h-full object-cover">
                     <div class="absolute top-6 left-6 z-20 flex items-center justify-center bg-purple-500/10 border-2 border-purple-500/30 backdrop-blur-sm rounded-full w-12 h-12 shadow-lg" title="Nivel Intermedio">
                         <i class="fas fa-cogs text-xl text-purple-400"></i>
                     </div>
@@ -422,31 +576,31 @@
                         </button>
                     </div>
                 </div>
-                <div class="lg:w-3/4 p-20 lg:p-4 flex flex-col justify-center">
+                <div class="lg:w-3/4 p-8 lg:p-12 flex flex-col justify-center">
                     <div>
-                        <span class="text-cyan-400 text-[10px] font-black uppercase tracking-[0.4em] mb-4 block">Curso de ampliación y extensión profesional</span>
-                        <h2 class="text-3xl lg:text-5xl font-black text-white uppercase leading-tight mb-8">AUTOMATIZACIÓN CON <br><span class="text-[#02d6fe]">CONTACTORES</span></h2>
+                        <span class="section-subtitle text-[10px] font-black uppercase tracking-[0.4em] mb-4 block">Curso de ampliación y extensión profesional</span>
+                        <h2 class="text-3xl lg:text-5xl font-black uppercase leading-tight mb-8 text-white">AUTOMATIZACIÓN CON <br><span class="text-[#2db8ce]">CONTACTORES</span></h2>
                         
-                        <div class="bg-white/5 border border-white/10 rounded-[32px] p-8 space-y-6">
+                        <div class="space-y-6">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-university text-[#2db8ce] text-sm"></i></div>
-                                    <div><span class="text-slate-500 text-[9px] font-black uppercase tracking-widest block mb-1">Institución</span><p class="text-white text-xs font-bold">Universidad Politécnica Territorial de Aragua (UPT Aragua)</p></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Institución</span><p class="text-xs font-bold text-white">Universidad Politécnica Territorial de Aragua (UPT Aragua)</p></div>
                                 </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-calendar-alt text-[#2db8ce] text-sm"></i></div>
-                                    <div><span class="text-slate-500 text-[9px] font-black uppercase tracking-widest block mb-1">Fechas</span><p class="text-white text-xs font-bold">Próximamente</p></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Fechas</span><p class="text-xs font-bold text-white">Próximamente</p></div>
                                 </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-clock text-[#2db8ce] text-sm"></i></div>
-                                    <div><span class="text-slate-500 text-[9px] font-black uppercase tracking-widest block mb-1">Horario</span><p class="text-white text-xs font-bold">8:00 a.m. a 2:00 p.m.</p></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Horario</span><p class="text-xs font-bold text-white">8:00 a.m. a 2:00 p.m.</p></div>
                                 </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-hourglass-half text-[#2db8ce] text-sm"></i></div>
-                                    <div><span class="text-slate-500 text-[9px] font-black uppercase tracking-widest block mb-1">Duración</span><p class="text-white text-xs font-bold">2 Viernes intensivos</p></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Duración</span><p class="text-xs font-bold text-white">2 Viernes intensivos</p></div>
                                 </div>
                             </div>
-                            <div class="pt-6 border-t border-white/10 flex items-start gap-3">
+                            <div class="pt-6 border-t flex items-start gap-3 border-white/10">
                                 <i class="fas fa-users text-[#2db8ce] text-sm mt-1"></i>
                                 <div>
                                     <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest block">CANTIDAD DE PARTICIPANTES:</span>
@@ -460,14 +614,39 @@
         </div>
     </section>
 
-    <!-- PÚBLICO OBJETIVO / COMUNIDAD -->
-    <section id="comunidad" class="section-themed relative py-24 px-6 md:px-12 text-center">
-        <div class="absolute inset-0 z-0 opacity-20">
-            <img src="img/AA (33).webp" class="w-full h-full object-cover mix-blend-luminosity">
+    <!-- METODOLOGÍA -->
+    <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="mb-10 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Nuestra <span>Metodología</span></h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card">
+                    <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" class="w-full h-full object-cover"></div>
+                    <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Estudia</h3><p class="text-slate-400 text-sm methodology-short-desc">Analiza casos reales de la industria.</p><div class="methodology-expanded-content"><p>Sumérgete en escenarios industriales auténticos. Aprenderás a diagnosticar problemas, interpretar diagramas y entender el funcionamiento de sistemas de control complejos, preparando el terreno para soluciones efectivas.</p></div></div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-100 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/W4d0pxgD/GRAF.jpg" class="w-full h-full object-cover"></div>
+                    <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Diseña</h3><p class="text-slate-400 text-sm methodology-short-desc">Crea planos con estándares internacionales.</p><div class="methodology-expanded-content"><p>Domina el lenguaje universal de la automatización. Te enseñamos a crear esquemas eléctricos de mando y potencia bajo normativas IEC y NEMA, asegurando que tus diseños sean claros, seguros y profesionales.</p></div></div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-200 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/WzmDFzqL/02177232930859881fbe8801b4cfc8e3454077f6383f7cfa9a032-0.jpg" class="w-full h-full object-cover"></div>
+                    <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Simula</h3><p class="text-slate-400 text-sm methodology-short-desc">Valida tus algoritmos virtualmente.</p><div class="methodology-expanded-content"><p>Antes de tocar un solo cable, pon a prueba tu lógica. Utilizarás software de simulación como CADeSIMU y Factory I/O para verificar el comportamiento de tus circuitos, corregir errores y optimizar el rendimiento sin riesgos.</p></div></div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-300 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/VkmqRQzm/1772328516782-5a6a505e-f8d2-4a45-a8bf-99e36bf7743d.jpg" class="w-full h-full object-cover"></div>
+                    <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Implementa</h3><p class="text-slate-400 text-sm methodology-short-desc">Realiza el montaje en equipos reales.</p><div class="methodology-expanded-content"><p>Lleva tus diseños del plano a la realidad. Obtendrás experiencia práctica montando componentes en tableros de entrenamiento, realizando el cableado y poniendo en marcha los sistemas que has diseñado y simulado.</p></div></div>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- PÚBLICO OBJETIVO / COMUNIDAD -->
+    <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center">
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
             <div class="text-center lg:text-left reveal reveal-right">
-                <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span class="text-[#02d6fe]">nuestros cursos?</span></h2>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span>nuestros cursos?</span></h2>
                 <p class="text-base font-semibold mb-8 border-l-4 border-blue-700 pl-6 mx-auto lg:mx-0 max-w-sm">Dinos cuál es tu perfil para registrarte en nuestras estadísticas.</p>
             </div>
             <div class="space-y-4 w-full max-w-md mx-auto">
@@ -490,75 +669,15 @@
         </div>
     </section>
 
-    <!-- METODOLOGÍA -->
-    <section id="metodologia" class="relative py-24 px-6 bg-slate-800 text-center overflow-hidden">
-        <div class="max-w-7xl mx-auto relative z-10">
-            <div class="mb-10 reveal reveal-down">
-                <span class="text-[#2db8ce] text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
-                <h2 class="text-2xl md:text-5xl font-extrabold uppercase tracking-tighter text-white">Nuestra <span class="text-[#2db8ce]">Metodología</span></h2>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card">
-                    <div class="image-zoom-container h-48 mb-6">
-                        <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" class="w-full h-full object-cover">
-                    </div>
-                    <div class="methodology-card-text-content">
-                        <h3 class="text-white text-xl font-black uppercase mb-3">Estudia</h3>
-                        <p class="text-slate-400 text-sm methodology-short-desc">Analiza casos reales de la industria.</p>
-                        <div class="methodology-expanded-content">
-                            <p>Sumérgete en escenarios industriales auténticos. Aprenderás a diagnosticar problemas, interpretar diagramas y entender el funcionamiento de sistemas de control complejos, preparando el terreno para soluciones efectivas.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-100 methodology-card">
-                    <div class="image-zoom-container h-48 mb-6">
-                        <img src="https://i.postimg.cc/W4d0pxgD/GRAF.jpg" class="w-full h-full object-cover">
-                    </div>
-                    <div class="methodology-card-text-content">
-                        <h3 class="text-white text-xl font-black uppercase mb-3">Diseña</h3>
-                        <p class="text-slate-400 text-sm methodology-short-desc">Crea planos con estándares internacionales.</p>
-                        <div class="methodology-expanded-content">
-                            <p>Domina el lenguaje universal de la automatización. Te enseñamos a crear esquemas eléctricos de mando y potencia bajo normativas IEC y NEMA, asegurando que tus diseños sean claros, seguros y profesionales.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-200 methodology-card">
-                    <div class="image-zoom-container h-48 mb-6">
-                        <img src="https://i.postimg.cc/WzmDFzqL/02177232930859881fbe8801b4cfc8e3454077f6383f7cfa9a032-0.jpg" class="w-full h-full object-cover">
-                    </div>
-                    <div class="methodology-card-text-content">
-                        <h3 class="text-white text-xl font-black uppercase mb-3">Simula</h3>
-                        <p class="text-slate-400 text-sm methodology-short-desc">Valida tus algoritmos virtualmente.</p>
-                        <div class="methodology-expanded-content">
-                            <p>Antes de tocar un solo cable, pon a prueba tu lógica. Utilizarás software de simulación como CADeSIMU y Factory I/O para verificar el comportamiento de tus circuitos, corregir errores y optimizar el rendimiento sin riesgos.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-300 methodology-card">
-                    <div class="image-zoom-container h-48 mb-6">
-                        <img src="https://i.postimg.cc/VkmqRQzm/1772328516782-5a6a505e-f8d2-4a45-a8bf-99e36bf7743d.jpg" class="w-full h-full object-cover">
-                    </div>
-                    <div class="methodology-card-text-content">
-                        <h3 class="text-white text-xl font-black uppercase mb-3">Implementa</h3>
-                        <p class="text-slate-400 text-sm methodology-short-desc">Realiza el montaje en equipos reales.</p>
-                        <div class="methodology-expanded-content">
-                            <p>Lleva tus diseños del plano a la realidad. Obtendrás experiencia práctica montando componentes en tableros de entrenamiento, realizando el cableado y poniendo en marcha los sistemas que has diseñado y simulado.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- TESTIMONIOS -->
-    <section id="testimonios" class="section-themed relative py-24 px-6 overflow-hidden">
-        <div class="absolute inset-0 z-0 opacity-20">
-            <img src="img/AA (33).webp" class="w-full h-full object-cover mix-blend-luminosity">
+    <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="img/AA (33).webp" class="w-full h-full object-cover opacity-30 mix-blend-luminosity">
         </div>
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-10 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Experiencias Reales</span>
-                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span class="text-[#02d6fe]">Nuestros Alumnos</span></h2>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span>Nuestros Alumnos</span></h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                 <!-- Testimonio 1 -->
@@ -627,9 +746,79 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section id="faq" class="page-section relative py-24 px-6 bg-slate-900/50">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="text-center mb-12 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Resolvemos tus Dudas</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Preguntas <span>Frecuentes</span></h2>
+            </div>
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <details class="group bg-white/5 border border-white/10 rounded-xl p-5 cursor-pointer transition-all duration-300 hover:border-cyan-500/50 reveal reveal-up">
+                    <summary class="flex justify-between items-center font-bold text-white text-lg list-none">¿Necesito conocimientos previos?<i class="fas fa-chevron-down transition-transform duration-300 group-open:rotate-180"></i></summary>
+                    <div class="text-slate-400 mt-4 pt-4 border-t border-white/10"><p>Depende del curso. Cada uno indica su nivel (Básico, Intermedio, Avanzado). Los cursos de nivel Básico están diseñados para empezar desde cero, sin necesidad de experiencia previa. Para los niveles intermedios y avanzados, se recomienda tener las bases indicadas en los requisitos del curso.</p></div>
+                </details>
+                <!-- FAQ Item 2 -->
+                <details class="group bg-white/5 border border-white/10 rounded-xl p-5 cursor-pointer transition-all duration-300 hover:border-cyan-500/50 reveal reveal-up delay-100">
+                    <summary class="flex justify-between items-center font-bold text-white text-lg list-none">¿Qué incluye el curso?<i class="fas fa-chevron-down transition-transform duration-300 group-open:rotate-180"></i></summary>
+                    <div class="text-slate-400 mt-4 pt-4 border-t border-white/10"><p>Todos nuestros cursos incluyen acceso de por vida a las clases grabadas (en modalidad online), material de apoyo en PDF (manuales, guías), ejercicios prácticos, uso de software de simulación y soporte directo con el instructor para resolver dudas. Los cursos presenciales incluyen el uso de equipos y tableros reales en nuestros talleres.</p></div>
+                </details>
+                <!-- FAQ Item 3 -->
+                <details class="group bg-white/5 border border-white/10 rounded-xl p-5 cursor-pointer transition-all duration-300 hover:border-cyan-500/50 reveal reveal-up delay-200">
+                    <summary class="flex justify-between items-center font-bold text-white text-lg list-none">¿Cómo accedo a las clases online?<i class="fas fa-chevron-down transition-transform duration-300 group-open:rotate-180"></i></summary>
+                    <div class="text-slate-400 mt-4 pt-4 border-t border-white/10"><p>Una vez realizada la compra, recibirás un correo electrónico con las instrucciones y el enlace para acceder a nuestra plataforma de aulas virtuales. Podrás ver las clases a tu ritmo, cuantas veces quieras y desde cualquier dispositivo con conexión a internet.</p></div>
+                </details>
+                <!-- FAQ Item 4 -->
+                <details class="group bg-white/5 border border-white/10 rounded-xl p-5 cursor-pointer transition-all duration-300 hover:border-cyan-500/50 reveal reveal-up delay-300">
+                    <summary class="flex justify-between items-center font-bold text-white text-lg list-none">¿Se entrega certificado?<i class="fas fa-chevron-down transition-transform duration-300 group-open:rotate-180"></i></summary>
+                    <div class="text-slate-400 mt-4 pt-4 border-t border-white/10"><p>Sí, al completar el 100% de cualquier curso (online o presencial) y aprobar las evaluaciones correspondientes, se emite un certificado digital de aprobación que valida las habilidades adquiridas. Este certificado incluye un ID único para su verificación.</p></div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final + Contacto -->
+    <section id="contacto" class="page-section relative py-24 px-6">
+        <div class="max-w-5xl mx-auto relative z-10 text-center">
+            <div class="reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">¿Tienes Preguntas?</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Comienza a Aprender <span>Hoy</span></h2>
+                <p class="text-slate-300 mt-6 mb-10 max-w-2xl mx-auto">Si tienes alguna duda o necesitas asesoría personalizada para elegir el curso ideal para ti, no dudes en contactarnos. Estamos aquí para ayudarte.</p>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 reveal reveal-up">
+                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-glow px-10 py-6 bg-green-500 text-white font-black rounded-2xl shadow-2xl shadow-green-500/30 border border-green-400 hover:bg-green-600 transition-all uppercase flex items-center gap-4 text-xl"><i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAPA GLOBAL -->
+    <section id="comunidad-global" class="page-section relative py-24 px-6 text-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://i.postimg.cc/vBXrQbHB/web-3.gif" class="w-full h-full object-cover opacity-30 mix-blend-luminosity">
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-16 uppercase tracking-tighter">Comunidad <span>Global</span></h2>
+            <div class="flex flex-col lg:flex-row gap-8 items-stretch h-auto lg:h-[550px] text-left">
+                <div class="w-full lg:w-2/3 h-[400px] lg:h-full rounded-[2.5rem] shadow-2xl border-2 border-[#2db8ce]/60 bg-gray-900 overflow-hidden relative">
+                    <div id="visitorMapGlobal" class="w-full h-full relative z-10"></div>
+                </div>
+                <div class="w-full lg:w-1/3 bg-white/5 border border-white/10 rounded-[2.5rem] p-8 flex flex-col shadow-2xl backdrop-blur-md relative z-10">
+                    <h3 class="text-white font-black text-xs uppercase mb-6 flex items-center justify-start gap-2">
+                        <i data-lucide="award" class="text-cyan-500 w-4 h-4"></i> Ranking Visitantes
+                    </h3>
+                    <div id="countryRankListGlobal" class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-4">
+                        <p class="text-slate-500 text-sm">Cargando ranking...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- MÉTRICAS -->
-    <section class="pt-6 pb-20 px-6 bg-[#0f172a] border-t border-white/5 relative z-10 shadow-2xl">
-        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center text-white">
+    <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
             <div class="py-2 reveal reveal-up">
                 <div class="text-[#2db8ce] text-2xl mb-1"><i class="fas fa-users"></i></div>
                 <div id="metric-visitas" class="text-3xl font-black">0</div>
@@ -662,30 +851,6 @@
             </div>
         </div>
     </section>
-
-    <!-- MAPA GLOBAL -->
-    <section id="comunidad-global" class="relative py-24 px-6 bg-gray-900 text-center border-t border-white/5 overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://i.postimg.cc/vBXrQbHB/web-3.gif" class="w-full h-full object-cover opacity-20 mix-blend-luminosity">
-        </div>
-        
-        <div class="max-w-7xl mx-auto relative z-10">
-            <h2 class="text-2xl md:text-5xl font-extrabold mb-16 uppercase text-white tracking-tighter">Comunidad <span class="text-[#2db8ce]">Global</span></h2>
-            <div class="flex flex-col lg:flex-row gap-8 items-stretch h-auto lg:h-[550px] text-left">
-                <div class="w-full lg:w-2/3 h-[400px] lg:h-full rounded-[2.5rem] shadow-2xl border-2 border-[#2db8ce]/60 bg-gray-900 overflow-hidden relative">
-                    <div id="visitorMapGlobal" class="w-full h-full relative z-10"></div>
-                </div>
-                <div class="w-full lg:w-1/3 bg-white/5 border border-white/10 rounded-[2.5rem] p-8 flex flex-col shadow-2xl backdrop-blur-md relative z-10">
-                    <h3 class="text-white font-black text-xs uppercase mb-6 flex items-center justify-start gap-2">
-                        <i data-lucide="award" class="text-cyan-500 w-4 h-4"></i> Ranking Visitantes
-                    </h3>
-                    <div id="countryRankListGlobal" class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-4">
-                        <p class="text-slate-500 text-sm">Cargando ranking...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 </div>
 
 <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
@@ -694,5 +859,77 @@
 <script src="js/app.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
+
+<!-- FIX for Global Community Data -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const SCRIPT_URL_GLOBAL = 'https://script.google.com/macros/s/AKfycbzJCV8j5yLAGgouP43lvkXGunU6yKroegJ9JFJvAWpqHeHQzWRnXXP4IPnaBLjU7MTi/exec';
+    const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec", "united states": "us", "panama": "pa", "bolivia": "bo", "uruguay": "uy", "paraguay": "py", "costa rica": "cr", "guatemala": "gt", "honduras": "hn", "nicaragua": "ni", "el salvador": "sv", "dominican republic": "do", "cuba": "cu", "puerto rico": "pr", "brazil": "br", "canada": "ca", "portugal": "pt", "italy": "it", "france": "fr", "germany": "de", "united kingdom": "gb" };
+
+    function drawVisitorMap(countryData) {
+        if (!window.google || !google.visualization || !document.getElementById('visitorMapGlobal')) return;
+        
+        const dataArray = [['Country', 'Visitors']];
+        for (const country in countryData) {
+            dataArray.push([country, countryData[country]]);
+        }
+        const data = google.visualization.arrayToDataTable(dataArray);
+        const isLight = document.body.classList.contains('light-mode');
+        
+        const options = {
+            colorAxis: { colors: isLight ? ['#a7f3d0', '#059669'] : ['#2dd4bf', '#02d6fe'] },
+            backgroundColor: 'transparent',
+            datalessRegionColor: isLight ? '#e5e7eb' : '#4b5563',
+            defaultColor: '#f5f5f5',
+            legend: 'none',
+            tooltip: { textStyle: { color: isLight ? '#334155' : '#FFFFFF' }, showColorCode: true }
+        };
+        
+        const chart = new google.visualization.GeoChart(document.getElementById('visitorMapGlobal'));
+        chart.draw(data, options);
+    }
+
+    function updateCountryRank(countryData) {
+        const rankList = document.getElementById('countryRankListGlobal');
+        if (!rankList) return;
+
+        const sortedCountries = Object.entries(countryData).sort(([, a], [, b]) => b - a).slice(0, 10);
+        
+        if (sortedCountries.length === 0) {
+            rankList.innerHTML = '<p class="text-slate-500 text-sm">No hay datos de visitantes.</p>';
+            return;
+        }
+
+        rankList.innerHTML = sortedCountries.map(([country, count]) => {
+            const iso = countryToISO[country.toLowerCase()];
+            const flagImg = iso ? `<img src="https://flagcdn.com/w20/${iso}.png" class="w-5 h-auto rounded-sm shadow-sm" alt="${country}">` : `<i class="fas fa-globe text-slate-400 w-5 text-center"></i>`;
+            const countryName = country.charAt(0).toUpperCase() + country.slice(1);
+            return `
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-3"><span class="text-white text-sm font-bold">${countryName}</span></div>
+                    <span class="text-cyan-400 font-black text-lg">${count}</span>
+                </div>`;
+        }).join('');
+    }
+
+    async function loadGlobalData() {
+        try {
+            const response = await fetch(`${SCRIPT_URL_GLOBAL}?action=get_data&t=${Date.now()}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
+            if (data && data.status === 'success' && data.countryVisits) {
+                google.charts.load('current', { 'packages':['geochart'], 'language': 'es' });
+                google.charts.setOnLoadCallback(() => drawVisitorMap(data.countryVisits));
+                updateCountryRank(data.countryVisits);
+            } else { throw new Error("Failed to load community data or data is malformed."); }
+        } catch (error) {
+            console.error('Error fetching global community data:', error);
+            const rankList = document.getElementById('countryRankListGlobal');
+            if(rankList) rankList.innerHTML = '<p class="text-red-400 text-sm">Error de conexión con el servidor.</p>';
+        }
+    }
+    loadGlobalData();
+});
+</script>
 </body>
 </html>
