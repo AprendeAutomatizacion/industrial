@@ -792,7 +792,7 @@
                 const likes=globalStats[`curso-${course.id}_likes`]||0;
                 const vistas=globalStats[`curso-${course.id}_vistas`]||0;
                 const avgRating=courseRatings[course.id]?courseRatings[course.id].avg:"5.0";
-                const isLikedClass=(currentUser&&currentUser.likedCourses&&currentUser.likedCourses.includes(`curso-${course.id}`))?'text-red-500':'text-slate-400';
+                const isLikedClass=(currentUser&&currentUser.likedCourses&&currentUser.likedCourses.includes(`curso-${course.id}`))?'liked':'';
                 const viewsClass=vistas>0?'text-green-500':'text-slate-400';
                 const displayCount=studentCountsPerCourse[course.id]!==undefined?studentCountsPerCourse[course.id]:'...';
                 const progressData=myProgress[String(course.id)]||{completed:0,total:course.totalLessons||(isManual ? 1 : 5),percent:0,avgScore:0};
@@ -1070,13 +1070,13 @@
             if(currentUser.likedCourses.includes(id)){
                 currentUser.likedCourses=currentUser.likedCourses.filter(c=>c!==id);
                 ping('decrement_stat',`${id}_likes`);
-                btn.classList.remove('text-red-500'); btn.classList.add('text-slate-400');
-                span.innerText=currentLikes-1;
-                if(globalStats) globalStats[`${id}_likes`]=currentLikes-1;
+                btn.classList.remove('liked');
+                span.innerText=Math.max(0, currentLikes - 1);
+                if(globalStats) globalStats[`${id}_likes`]=Math.max(0, currentLikes - 1);
             } else {
                 currentUser.likedCourses.push(id);
                 ping('update_stat',`${id}_likes`);
-                btn.classList.add('text-red-500'); btn.classList.remove('text-slate-400');
+                btn.classList.add('liked');
                 span.innerText=currentLikes+1;
                 if(globalStats) globalStats[`${id}_likes`]=currentLikes+1;
             }
@@ -1085,8 +1085,8 @@
             updateAllUI(); syncUserProgressToExcel();
             document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn=>{
                 if(otherBtn!==btn){
-                    if(currentUser.likedCourses.includes(id)){ otherBtn.classList.add('text-red-500'); otherBtn.classList.remove('text-slate-400'); }
-                    else { otherBtn.classList.remove('text-red-500'); otherBtn.classList.add('text-slate-400'); }
+                    if(currentUser.likedCourses.includes(id)){ otherBtn.classList.add('liked'); }
+                    else { otherBtn.classList.remove('liked'); }
                     const otherSpan=otherBtn.querySelector('.like-count');
                     if(otherSpan) otherSpan.innerText=span.innerText;
                 }
