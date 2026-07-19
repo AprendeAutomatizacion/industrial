@@ -27,6 +27,51 @@
         }
     </script>
     <style>
+        .student-card {
+            position: relative;
+        }
+        .student-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 2px; /* Ancho del borde */
+            background: conic-gradient(from 180deg at 50% 50%, #2db8ce, #1877f2, #91a1af, #2db8ce);
+            -webkit-mask: 
+                linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+                    mask-composite: exclude;
+            animation: rotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .student-card:hover::after { opacity: 1; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Estilos para que la tarjeta de estudiante en 'Mis Cursos' sea blanca en modo claro */
+        body.light-mode #misCursosUserInfo .student-card {
+            background-color: #ffffff; /* Fondo blanco sólido */
+            border-color: #e2e8f0; /* Borde gris claro (slate-200) */
+            backdrop-filter: none; /* Quitar el efecto blur */
+            -webkit-backdrop-filter: none;
+        }
+
+        /* Ajustar colores de texto para legibilidad en fondo claro */
+        body.light-mode #misCursosUserInfo .student-card .text-white,
+        body.light-mode #misCursosUserInfo .student-card .text-slate-300,
+        body.light-mode #misCursosUserInfo .student-card .text-slate-400 {
+            color: #1e293b; /* slate-800 */
+        }
+        body.light-mode #misCursosUserInfo .student-card .text-white\/5 { color: #94a3b8; }
+        body.light-mode #misCursosUserInfo .student-card .border-white\/10 { border-color: #e2e8f0; }
+        body.light-mode #misCursosUserInfo .student-card .text-teal-400 { color: #14b8a6; }
+        body.light-mode #misCursosUserInfo .student-card .text-purple-400 { color: #a855f7; }
+        body.light-mode #misCursosUserInfo .student-card .text-amber-400 { color: #f59e0b; }
+        body.light-mode #misCursosUserInfo .student-card .text-red-400 { color: #ef4444; }
+    </script>
+    <style>
         :root { --azul-gris: #617287; --azul-oscuro: #0f172a; --celeste: #2db8ce; --fb-blue: #1877f2; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; color: #1e293b; scroll-behavior: smooth; overflow-x: clip; }
         .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }.animate-on-hover:hover { box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); filter: brightness(1.05); }
@@ -109,45 +154,55 @@
         </header>
         <main class="relative z-10 flex-grow max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
             <div class="mb-10">
-                <div id="misCursosUserInfo" class="flex flex-col lg:flex-row gap-6 w-full hidden">
-                    <div class="relative flex flex-col md:flex-row items-center md:items-start gap-5 w-full p-6 sm:p-8 rounded-3xl border border-white/20 shadow-2xl bg-white/10 backdrop-blur-md overflow-hidden">
-                        <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div><div class="relative z-10 w-16 h-16 sm:w-20 sm:h-20 bg-[#2db8ce] rounded-full flex items-center justify-center text-white text-2xl sm:text-3xl font-black shadow-xl border-4 border-white/10 flex-shrink-0" id="mcProfileInitials">U</div><div class="relative z-10 text-center md:text-left overflow-hidden flex-grow w-full">
-                            <span class="text-slate-400 text-xs md:text-sm font-black uppercase tracking-[0.2em] block mb-1">Estudiante</span>
-                            <h3 class="text-white font-black text-2xl md:text-3xl leading-tight truncate uppercase tracking-tight mb-1" id="mcProfileName">Usuario</h3>
-                            <p class="text-[#2db8ce] text-xs sm:text-sm font-bold uppercase tracking-widest truncate mb-4" id="mcProfileEmail">correo@ejemplo.com</p>
-                            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-3">
-                                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfileCedula">...</span></div>
-                                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-phone text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfilePhone">...</span></div>
-                                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-globe text-[#2db8ce] text-[10px]" id="mcProfileGlobeIcon"></i><img id="mcProfileFlag" src="" class="w-4 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera"><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfileLocation">...</span></div>
-                                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfileProfession">Sin Perfil</span></div>
+                <!-- Tarjeta del estudiante con fondo cian glass, borde más visible e icono blanco -->
+                <div id="misCursosUserInfo" class="w-full hidden">
+                    <div class="student-card bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
+                        <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
+                        <div class="relative z-10 flex flex-col gap-3 h-full">
+                            <div>
+                                <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2>
+                                <p class="text-white text-xl font-bold" id="mcProfileName">-</p>
                             </div>
-                            <div class="mt-6 pt-5 border-t border-white/10">
-                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 w-full">
-                                    <div class="text-center md:text-left">
-                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Online</span>
-                                        <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
-                                            <i class="fas fa-laptop text-teal-400 text-sm"></i> <span id="mcStatOnline">0</span>
-                                        </span>
-                                    </div>
-                                    <div class="text-center md:text-left border-l border-white/10 pl-2 sm:pl-4">
-                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Presencial</span>
-                                        <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
-                                            <i class="fas fa-users text-purple-400 text-sm"></i> <span id="mcStatPresencial">0</span>
-                                        </span>
-                                    </div>
-                                    <div class="text-center md:text-left border-l border-white/10 pl-2 sm:pl-4">
-                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Materias</span>
-                                        <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
-                                            <i class="fas fa-book text-amber-400 text-sm"></i> <span id="mcStatMaterias">0</span>
-                                        </span>
-                                    </div>
-                                    <div class="text-center md:text-left border-l border-white/10 pl-2 sm:pl-4">
-                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Manuales</span>
-                                        <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
-                                            <i class="fas fa-file-pdf text-red-400 text-sm"></i> <span id="mcStatManuales">0</span>
-                                        </span>
+                            <p class="text-slate-300 text-sm font-medium" id="mcProfileEmail">-</p>
+                
+                            <div class="grid grid-cols-2 gap-3 mt-2">
+                                <div>
+                                    <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                        <i class="fas fa-id-card text-slate-400 text-xs"></i> Cédula
+                                    </p>
+                                    <p class="text-white font-bold" id="mcProfileCedula">-</p>
+                                </div>
+                                <div>
+                                    <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                        <i class="fas fa-phone text-slate-400 text-xs"></i> Teléfono
+                                    </p>
+                                    <p class="text-white font-bold" id="mcProfilePhone">-</p>
+                                </div>
+                            </div>
+                
+                            <div class="grid grid-cols-2 gap-3 mt-2">
+                                <div>
+                                    <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                        <i class="fas fa-globe text-slate-400 text-xs" id="mcProfileGlobeIcon"></i> País
+                                    </p>
+                                    <div class="flex items-center gap-1 mt-0.5">
+                                        <img id="mcProfileFlag" src="" class="w-4 h-auto hidden rounded-sm" alt="Bandera">
+                                        <span class="text-white font-bold text-sm" id="mcProfileLocation">-</span>
                                     </div>
                                 </div>
+                                <div>
+                                    <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                        <i class="fas fa-briefcase text-slate-400 text-xs"></i> Profesión
+                                    </p>
+                                    <p class="text-white font-bold text-sm mt-0.5" id="mcProfileProfession">-</p>
+                                </div>
+                            </div>
+                
+                            <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                <div class="text-center"><span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1"><i class="fas fa-laptop text-teal-400 text-xs"></i> Online</span><span class="text-white font-black text-xl" id="mcStatOnline">0</span></div>
+                                <div class="text-center"><span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1"><i class="fas fa-users text-purple-400 text-xs"></i> Presencial</span><span class="text-white font-black text-xl" id="mcStatPresencial">0</span></div>
+                                <div class="text-center"><span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1"><i class="fas fa-book text-amber-400 text-xs"></i> Materias</span><span class="text-white font-black text-xl" id="mcStatMaterias">0</span></div>
+                                <div class="text-center"><span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1"><i class="fas fa-file-pdf text-red-400 text-xs"></i> Manuales</span><span class="text-white font-black text-xl" id="mcStatManuales">0</span></div>
                             </div>
                         </div>
                     </div>
@@ -225,7 +280,7 @@
             { id: 6, name: "Automatización con PLC – Método Grafcet", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", totalLessons: 6, resumen: "Supera la complejidad de la lógica de programación mediante el GRAFCET.", manuales: [{name: "Reglas de Evolución del GRAFCET", link: "#"}], ejercicios: [{name: "Automatización de Semáforo", link: "#"}] },
             { id: 7, name: "10 ejercicios de aplicaciones con Contactores", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "#", totalLessons: 10, resumen: "Un compendio de resolución de problemas reales. No es teoría, es 100% práctica.", manuales: [{name: "Planos resueltos (CadeSIMU)", link: "#"}], ejercicios: [{name: "Descargar Cuadernillo de 10 Ejercicios (PDF)", link: "#"}] },
             { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO!", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "#", totalLessons: 10, resumen: "Aplica toda tu lógica programada. Te entregamos 10 escenarios industriales.", manuales: [{name: "Pistas y Soluciones de Programación", link: "#"}], ejercicios: [{name: "Tres cilindros (Archivo ZIP)", link: "#"}] },
-            { id: 9, name: "Automatización Industrial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (9).WEBP", category: "Automatización", level: "Básico", cost: 100.00, link: "https://www.profesorpablocedeno.online/cursos/industrial", totalLessons: 3, resumen: "Curso presencial donde palparás los equipos físicos.", manuales: [{name: "Guía de Seguridad en el Taller", link: "#"}], ejercicios: [{name: "Hoja de Montaje en Panel", link: "#"}] },
+            { id: 9, name: "Automatización Industrial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "https://www.profesorpablocedeno.online/cursos/industrial", totalLessons: 3, resumen: "Curso presencial donde palparás los equipos físicos.", manuales: [{name: "Guía de Seguridad en el Taller", link: "#"}], ejercicios: [{name: "Hoja de Montaje en Panel", link: "#"}] },
             { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/mis-cursos/contactores", totalLessons: 5, resumen: "Talleres en laboratorio físico. Realizaremos montajes en gabinetes didácticos.", manuales: [{name: "Guía de Uso del Multímetro", link: "#"}], ejercicios: [{name: "Laboratorio: Mando a Distancia", link: "#"}] },
             { id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-logo", totalLessons: 4, resumen: "Aprende a conectar las entradas y salidas de un PLC físico.", manuales: [{name: "Diagrama de Conexión NPN y PNP", link: "#"}], ejercicios: [{name: "Laboratorio: Control de Llenado con Sensores", link: "#"}] },
             { id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", totalLessons: 6, resumen: "Controlaremos estaciones didácticas neumáticas implementando programación basada en Grafcet.", manuales: [{name: "Esquemas Neumáticos del Laboratorio", link: "#"}], ejercicios: [{name: "Laboratorio: Secuencia Neumática A+ B+ A- B-", link: "#"}] },
