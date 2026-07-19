@@ -42,29 +42,34 @@
             background-size: cover;
             background-position: center;
             z-index: 0;
-        opacity: 0.3; /* Aumentada la opacidad para mayor visibilidad */
+            opacity: 0.3; /* Aumentada la opacidad para mayor visibilidad */
         }
 
         /* Estilos para que la tarjeta de estudiante en 'Mis Cursos' sea blanca en modo claro */
         body.light-mode #misCursosUserInfo .student-card {
-            background-color: transparent; /* Fondo transparente para ver el GIF */
-            border-color: #0f172a; /* Borde azul oscuro */
-            box-shadow: 0 0 25px rgba(45, 184, 206, 0.5); /* Resplandor cian */
+            background-color: #ffffff !important; /* Fondo blanco sólido */
+            border-color: #e2e8f0 !important; /* Borde claro y suave */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important; /* Sombra sutil estándar */
+        }
+
+        /* Ocultar el GIF de fondo en la tarjeta para el modo claro */
+        body.light-mode #misCursosUserInfo .student-card::before {
+            display: none;
         }
 
         /* Ajustar colores de texto para legibilidad en fondo claro */
         body.light-mode #misCursosUserInfo .student-card .text-white,
         body.light-mode #misCursosUserInfo .student-card .text-slate-300,
         body.light-mode #misCursosUserInfo .student-card .text-slate-400 {
-            color: #1e293b; /* slate-800 */
+            color: #1e293b !important; /* slate-800 */
         }
-        body.light-mode #misCursosUserInfo .student-card .text-white\/5 { color: #e2e6ed; }
-        body.light-mode #misCursosUserInfo .student-card .border-white\/10 { border-color: #e2e8f0; }
-        body.light-mode #misCursosUserInfo .student-card .text-teal-400 { color: #14b8a6; }
-        body.light-mode #misCursosUserInfo .student-card .text-purple-400 { color: #a855f7; }
-        body.light-mode #misCursosUserInfo .student-card .text-amber-400 { color: #f59e0b; }
-        body.light-mode #misCursosUserInfo .student-card .text-red-400 { color: #ef4444; }
-    </script>
+        body.light-mode #misCursosUserInfo .student-card .text-white\/5 { color: #e2e6ed !important; }
+        body.light-mode #misCursosUserInfo .student-card .border-white\/10 { border-color: #e2e8f0 !important; }
+        body.light-mode #misCursosUserInfo .student-card .text-teal-400 { color: #14b8a6 !important; }
+        body.light-mode #misCursosUserInfo .student-card .text-purple-400 { color: #a855f7 !important; }
+        body.light-mode #misCursosUserInfo .student-card .text-amber-400 { color: #f59e0b !important; }
+        body.light-mode #misCursosUserInfo .student-card .text-red-400 { color: #ef4444 !important; }
+    </style>
     <style>
         /* Forzar fondo blanco para la página de Mis Cursos */
         body#mis-cursos-page.light-mode {
@@ -72,61 +77,330 @@
         }
     </style>
     <style>
-        :root { --azul-gris: #617287; --azul-oscuro: #0f172a; --celeste: #2db8ce; --fb-blue: #1877f2; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; color: #1e293b; scroll-behavior: smooth; overflow-x: clip; }
-        .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }.animate-on-hover:hover { box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); filter: brightness(1.05); }
-        .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translate(0,0,0) scale(1); }
-        .reveal-up { transform: translateY(40px); }
-        .btn-glow { position: relative; overflow: hidden; transition: all 0.3s ease; }
-        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .btn-glow::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s; }
-        .btn-glow:hover::after { left: 100%; }
-        .course-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            cursor: pointer; 
+        /* 1. Definición de Variables de Color para Temas */
+        :root {
+            /* Paleta Clara */
+            --bg-default: #f7f9fb;
+            --bg-secondary: #ffffff;
+            --bg-dark: #0f172a; /* Para secciones oscuras en modo claro */
+            --bg-dark-accent: #1e293b;
+
+            --text-default: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #f8fafc; /* Para texto sobre fondos oscuros */
+            --text-accent: #2db8ce;
+
+            --border-default: #e2e8f0;
+            --border-light: rgba(255, 255, 255, 0.1);
+
+            --shadow-color: rgba(0, 0, 0, 0.1);
+
+            /* Colores para componentes de tarjetas */
+            --badge-bg-intermediate: #0891b2; /* cyan-600 */
+            --badge-bg-basic: #0d9488; /* teal-600 */
+            --badge-text: #ffffff;
+            --btn-accent-bg: #0891b2; /* cyan-600 */
+            --btn-accent-text: #ffffff;
+            --btn-accent-shadow: rgba(8, 145, 178, 0.3);
+            --btn-accent-border: #0e7490; /* cyan-700 */
+            --btn-accent-bg-hover: #0e7490; /* cyan-700 */
         }
-        .course-card:hover { transform: translateY(-8px) scale(1.02); }
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        .slide-up { animation: slideUp 0.3s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2db8ce; border-radius: 10px; }
-        #notification { position: fixed; top: 20px; right: 20px; transform: translateX(120%); transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 100000; }
-        #notification.show { transform: translateX(0); }
-        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 99999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: white; border-radius: 32px; width: 90%; max-width: 420px; padding: 0px; transform: translateY(30px) scale(0.95); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); max-height: 90vh; overflow-y: auto; }
-        #page-cursos, #page-home, #page-rendimiento { display: none; }
-        #page-mis-cursos { display: block; min-height: 100vh; }
-        #page-curso-detalle { display: none; min-height: 100vh; }
-        #page-progreso { display: none; min-height: 100vh; }
-        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .image-zoom-container { overflow: hidden; border-radius: 24px; }
-        .image-zoom-container img { transition: transform 0.7s ease; }
-        .image-zoom-container:hover img { transform: scale(1.1); }
-        #floatingBackBtn { position: fixed; top: 88px; left: 16px; z-index: 200; display: flex; align-items: center; gap: 8px; padding: 10px 18px; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 50px; color: white; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); opacity: 0; transform: translateX(-20px); pointer-events: none; white-space: nowrap; }
-        #floatingBackBtn.visible { opacity: 1; transform: translateX(0); pointer-events: auto; }
-        #floatingBackBtn:hover { background: rgba(45, 184, 206, 0.9); border-color: rgba(255, 255, 255, 0.3); transform: translateX(0) scale(1.05); box-shadow: 0 12px 40px rgba(45, 184, 206, 0.4); }
-        #floatingBackBtn:active { transform: translateX(0) scale(0.95); transition: all 0.1s ease; }
-        #floatingBackBtn i { font-size: 14px; transition: transform 0.3s ease; }
-        #floatingBackBtn:hover i { transform: translateX(-3px); }
-        @media (max-width: 640px) { #floatingBackBtn { top: 80px; left: 10px; padding: 8px 14px; font-size: 11px; gap: 6px; border-radius: 40px; } #floatingBackBtn i { font-size: 12px; } }
-        
-        /* ===== BORDES Y RESPLANDORES POR NIVEL ===== */
-        .course-card-level-basico { border: 2px solid rgba(6, 182, 212, 0.35); }
-        .course-card-level-basico:hover { border-color: #06b6d4; box-shadow: 0 0 20px rgba(6, 182, 212, 0.35); }
-        .course-card-level-intermedio { border: 2px solid rgba(168, 85, 247, 0.35); }
-        .course-card-level-intermedio:hover { border-color: #a855f7; box-shadow: 0 0 20px rgba(168, 85, 247, 0.35); }
-        .course-card-level-avanzado { border: 2px solid rgba(245, 158, 11, 0.35); }
-        .course-card-level-avanzado:hover { border-color: #f59e0b; box-shadow: 0 0 20px rgba(245, 158, 11, 0.35); }
+
+        body:not(.light-mode) {
+            /* Paleta Oscura */
+            --bg-default: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e293b;
+
+            --text-default: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-light: #f8fafc;
+
+            --border-default: #334155;
+            --border-light: rgba(45, 184, 206, 0.3);
+
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* --- Estilos Generales --- */
+        .section-title {
+            color: var(--text-default);
+        }
+
+        /* --- Estilos movidos desde index.html y adaptados a variables --- */
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-default);
+            margin: 0;
+            padding: 0;
+            color: var(--text-default);
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .animate-on-hover:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 25px 50px -12px var(--shadow-color); filter: brightness(1.05); }
+
+        .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translate(0, 0, 0) scale(1); }
+        .reveal-up { transform: translateY(40px); }
+        .reveal-down { transform: translateY(-40px); }
+        .reveal-right { transform: translateX(-40px); }
+
+        .btn-glow { position: relative; overflow: hidden; transition: all 0.3s ease; }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .btn-glow::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s;
+        }
+        .btn-glow:hover::after { left: 100%; }
+
+        /* --- Secciones Tematizables --- */
+        .section-themed {
+            background-color: var(--bg-default);
+            border-top: 1px solid var(--border-default);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .section-themed .section-subtitle {
+            color: var(--text-accent);
+        }
+
+        .section-themed .section-title {
+            color: var(--text-default);
+        }
+
+        /* --- Estilo de Tarjetas de Curso (Estilo Catálogo Unificado) --- */
+        .course-card {
+            background-color: var(--bg-secondary);
+            border-radius: 1.5rem; /* 24px */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+            text-align: left;
+            /* Se elimina border y box-shadow base para que lo controlen las clases de nivel */
+        }
+
+        .course-card .course-card-image-container {
+            position: relative;
+            height: 12rem;
+            overflow: hidden;
+        }
+
+        .course-card .course-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .course-card:hover .course-card-image {
+            transform: scale(1.05);
+        }
+
+        .course-card .course-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card .course-card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+            padding: 0.25rem 0.75rem;
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 9999px;
+            color: var(--badge-text);
+        }
+
+        .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
+        .course-card .badge-basic { background-color: var(--badge-bg-basic); }
+
+        .course-card .course-card-title {
+            color: var(--text-default);
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-card .course-card-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .course-card .course-card-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-default);
+        }
+
+        .course-card .course-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .course-card .course-card-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-default);
+        }
+
+        .course-card .course-card-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .course-card .like-btn, .course-card .view-container {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+        }
+        .course-card .like-btn.liked { color: #ef4444 !important; }
+        .course-card .view-container.has-views { color: #22c55e; }
+
+        .course-card .course-card-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Adaptación para que el botón metálico funcione dentro de la tarjeta */
+        .course-card .course-card-buttons .btn-metal {
+            flex: 1;
+            font-size: 10px;
+        }
+
+        /* --- Resplandor de Tarjetas por Nivel (Estilo Catálogo) --- */
+        .course-card-level-basico {
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+        .course-card-level-basico:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
+        }
+
+        .course-card-level-intermedio {
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+        }
+        .course-card-level-intermedio:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+        }
+
+        .course-card-level-avanzado {
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+        }
+        .course-card-level-avanzado:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+        }
+
+        /* --- Estilo Tarjeta Misión --- */
+        .mission-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+        .mission-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
+        }
+
+        body:not(.light-mode) .mission-card {
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+        }
+        body:not(.light-mode) .mission-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+
+        /* --- Estilo Tarjeta Misión (Modo Claro) --- */
+        body.light-mode .mission-card {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode .mission-card h3 {
+            color: #1e293b !important;
+        }
+        body.light-mode .mission-card ul {
+            color: #475569 !important;
+        }
+
+        /* --- Estilo Tarjeta Misión (Modo Oscuro) --- */
+        body:not(.light-mode) .mission-card { 
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        body:not(.light-mode) .mission-card h3 { color: #ffffff; }
+        body:not(.light-mode) .mission-card ul { color: #cbd5e1; } /* slate-300 */
+
+        /* Dark mode overrides para las tarjetas */
+        body:not(.light-mode) .course-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* El borde y la sombra ahora son controlados por las clases de nivel */
+        }
+
+        /* --- Resplandor de Tarjetas por Nivel (MODO OSCURO) --- */
+        body:not(.light-mode) .course-card-level-basico {
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-basico:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+
+        body:not(.light-mode) .course-card-level-intermedio {
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-intermedio:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+        }
+
+        body:not(.light-mode) .course-card-level-avanzado {
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-avanzado:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+        }
+
+        body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
+        body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
     </style>
 </head>
 <body id="mis-cursos-page" class="custom-scrollbar light-mode">
-    <button id="floatingBackBtn" onclick="handleFloatingBack()" title="Volver"><i class="fas fa-arrow-left"></i><span id="floatingBackText">Volver</span></button><div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20"><i id="notifIcon" class="fas fa-info-circle text-2xl"></i><div><p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p><p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p></div></div><div id="userProfileModal" class="modal-overlay"><div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl"><div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative"><button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button><div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div><h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3><p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p><div class="mt-4 flex flex-wrap items-center justify-center gap-2"><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-phone text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera"><i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span></div></div><div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="profileProfession">Sin Perfil</span></div></div><div class="p-6 bg-[#1e293b] text-left"><button onclick="logoutUser()" class="w-full py-4 bg-red-500/10 text-red-400 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-500/20 hover:bg-red-500/20 hover:border-red-500/40 transition-all shadow-sm flex items-center justify-center gap-3"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button></div></div></div><div id="authModal" class="modal-overlay"><div class="modal-content !p-8 relative"><button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button><div class="text-center mb-6"><img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3"><h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3><p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p></div><div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left"><i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i><span id="authErrorText" class="leading-tight">Mensaje de error</span></div><div class="flex bg-slate-100 rounded-xl p-1 mb-6"><button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button><button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button></div><form id="authForm" class="space-y-4 text-left"><div id="nameField" class="space-y-1 hidden"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label><div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label><div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1" id="passwordFieldContainer"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label><div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2"><i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span></button></form></div></div>
+    <button id="floatingBackBtn" onclick="handleFloatingBack()" title="Volver"><i class="fas fa-arrow-left"></i><span id="floatingBackText">Volver</span></button>
 
     <!-- Página Mis Cursos -->
     <div id="page-mis-cursos" class="page-content">
@@ -164,7 +438,7 @@
                                 <p class="text-white text-xl font-bold" id="mcProfileName">-</p>
                             </div>
                             <p class="text-slate-300 text-sm font-medium" id="mcProfileEmail">-</p>
-                
+               
                             <div class="grid grid-cols-2 gap-3 mt-2">
                                 <div>
                                     <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
@@ -179,7 +453,7 @@
                                     <p class="text-white font-bold" id="mcProfilePhone">-</p>
                                 </div>
                             </div>
-                
+               
                             <div class="grid grid-cols-2 gap-3 mt-2">
                                 <div>
                                     <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
@@ -197,7 +471,7 @@
                                     <p class="text-white font-bold text-sm mt-0.5" id="mcProfileProfession">-</p>
                                 </div>
                             </div>
-                
+               
                             <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2">
                                 <div class="text-center"><span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1"><i class="fas fa-laptop text-teal-400 text-xs"></i> Online</span><span class="text-white font-black text-xl" id="mcStatOnline">0</span></div>
                                 <div class="text-center"><span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1"><i class="fas fa-users text-purple-400 text-xs"></i> Presencial</span><span class="text-white font-black text-xl" id="mcStatPresencial">0</span></div>
@@ -215,44 +489,6 @@
 
     <!-- Página Detalle de Curso -->
     <div id="page-curso-detalle" class="page-content"><div id="detalle-container" class="pb-24 relative z-10"></div></div>
-
-    <!-- Página Progreso -->
-    <div id="page-progreso" class="page-content relative">
-        <div class="absolute inset-0 z-0 bg-[#0f172a]">
-            <img src="img/AA (7).gif" alt="Fons de progrés" class="w-full h-full object-cover opacity-40 mix-blend-luminosity">
-        </div>
-        <div class="relative z-10 pt-[90px] px-4 pb-12 max-w-5xl mx-auto">
-            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl mb-8 relative">
-                <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
-                <div class="relative z-10 flex flex-col md:flex-row justify-between gap-6">
-                    <div><h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2><p class="text-white text-xl font-bold" id="dash-student-name">-</p></div>
-                    <div class="flex gap-4"><div><p class="text-slate-400 text-xs uppercase font-black tracking-widest">Cédula</p><p class="text-white font-bold" id="dash-student-id">-</p></div><div><p class="text-slate-400 text-xs uppercase font-black tracking-widest">Correo</p><p class="text-white font-bold" id="dash-student-email">-</p></div></div>
-                </div>
-            </div>
-            <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white/5 p-6 rounded-2xl text-center"><h2 class="text-slate-400 text-xs uppercase mb-4 font-black tracking-widest">Progreso General</h2><div class="w-32 h-32 mx-auto mb-4"><canvas id="progressChart"></canvas></div><div class="text-4xl font-bold text-white" id="dash-percentage">0%</div></div>
-                <div id="seguimiento-card" class="bg-primary/20 p-6 rounded-2xl">
-                    <h2 class="font-bold text-xl text-white uppercase tracking-tight">Seguimiento automático</h2>
-                    <div class="mt-3 space-y-2">
-                        <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-check text-green-400"></i><span>Inscripción: ---</span></p>
-                        <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400"></i><span>Culminación: ---</span></p>
-                        <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-percentage text-yellow-400"></i><span>Promedio final: ---</span></p>
-                    </div>
-                    <p class="text-slate-200 text-[10px] uppercase font-bold mt-3 opacity-60">El progreso se sincroniza con las evaluaciones.</p>
-                </div>
-            </div>
-            <div id="certificate-btn-container" class="hidden mb-6 flex justify-center">
-                <button onclick="generateCertificate()" class="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-sm shadow-xl hover:scale-105 transition-all flex items-center gap-3"><i class="fas fa-certificate text-xl"></i> Ver Certificado</button>
-            </div>
-            <div class="bg-black/40 backdrop-blur-md p-6 rounded-2xl relative shadow-xl border border-white/5">
-                <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-4">
-                    <h3 class="text-white font-black uppercase tracking-widest text-xs">Módulos del curso</h3>
-                    <button onclick="manualRefreshProgress()" class="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white rounded-full px-3 sm:px-4 py-1.5 shadow-md transition-all active:scale-95 font-black text-[10px] uppercase tracking-wider"><i id="refresh-progress-icon" class="fas fa-sync-alt"></i> Actualizar</button>
-                </div>
-                <div id="dash-lessons-list" class="space-y-3"></div>
-            </div>
-        </div>
-    </div>
 
     <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
@@ -314,9 +550,9 @@
         const normalizeName = s => (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^\w\s]/g,'').replace(/\s+/g,' ');
         const splitCourseNames = raw => { if(!raw) return []; if(!Array.isArray(raw)) raw = [raw]; let r = []; raw.forEach(v => { if(typeof v==='string') r.push(...v.split(/[,;\n]+/).map(s=>s.trim()).filter(s=>s!=="")); else if(v) r.push(v); }); return r; };
 
-        function showNotif(title, msg, type='success'){ const n=document.getElementById('notification'), i=document.getElementById('notifIcon'); document.getElementById('notifTitle').innerText=title; document.getElementById('notifMsg').innerText=msg; n.classList.remove('bg-teal-600','bg-blue-600','bg-red-600'); if(title.toLowerCase().includes('error')||type==='error'){ n.classList.add('bg-red-600'); i.className='fas fa-exclamation-circle text-2xl'; } else if(type==='info'){ n.classList.add('bg-blue-600'); i.className='fas fa-info-circle text-2xl'; } else { n.classList.add('bg-teal-600'); i.className='fas fa-check-circle text-2xl'; } n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),4000); }
-        function openModal(id){ document.getElementById(id).classList.add('active'); }
-        function closeModal(id){ document.getElementById(id).classList.remove('active'); }
+        function showNotif(title, msg, type='success'){ const n=document.getElementById('notification'), i=document.getElementById('notifIcon'); if(!n){ console.log(title + ': ' + msg); return; } document.getElementById('notifTitle').innerText=title; document.getElementById('notifMsg').innerText=msg; n.classList.remove('bg-teal-600','bg-blue-600','bg-red-600'); if(title.toLowerCase().includes('error')||type==='error'){ n.classList.add('bg-red-600'); i.className='fas fa-exclamation-circle text-2xl'; } else if(type==='info'){ n.classList.add('bg-blue-600'); i.className='fas fa-info-circle text-2xl'; } else { n.classList.add('bg-teal-600'); i.className='fas fa-check-circle text-2xl'; } n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),4000); }
+        function openModal(id){ document.getElementById(id)?.classList.add('active'); }
+        function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
         function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
         function ping(action, key) { try { if (navigator.sendBeacon) { navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key})); } else { fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` }).catch(err => console.error('Ping fallback failed:', err)); } } catch (e) { console.error('Error al intentar enviar ping:', e); } }
         function showToastDownload(itemName){ const c=document.getElementById('toastContainer'); const t=document.createElement('div'); t.className='bg-dark text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 slide-up min-w-[300px] border border-slate-700 pointer-events-auto z-[9999]'; t.innerHTML=`<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center animate-pulse"><i data-lucide="arrow-down" class="w-4 h-4 text-white"></i></div><div class="text-left"><h4 class="text-sm font-bold">Descargando</h4><p class="text-xs text-slate-300">${itemName}</p></div>`; c.appendChild(t); if(window.lucide) lucide.createIcons(); setTimeout(()=>{ t.style.opacity='0'; setTimeout(()=>t.remove(),300); },4000); }
@@ -488,23 +724,30 @@
             if(!currentUser){ document.getElementById('misCursosUserInfo').classList.add('hidden'); return; }
             document.getElementById('misCursosUserInfo').classList.remove('hidden');
             const setTxt=(id,txt)=>{ const el=document.getElementById(id); if(el) el.innerText=txt; };
+            
+            // Actualización de elementos de la UI principal si existieran, asegurando no fallar si fueron removidos (como los del userProfileModal)
             const initialsEl=document.getElementById('profileInitials'); const mcInitialsEl=document.getElementById('mcProfileInitials');
             if(currentUser.name||currentUser.email){ const str=currentUser.name||currentUser.email; const parts=str.trim().split(' '); const inits=parts.length>1?(parts[0][0]+parts[parts.length-1][0]).toUpperCase():parts[0][0].toUpperCase(); if(initialsEl) initialsEl.innerText=inits; if(mcInitialsEl) mcInitialsEl.innerText=inits; }
+            
             setTxt('profileFullName',currentUser.name||"Estudiante"); setTxt('mcProfileName',currentUser.name||"Estudiante");
             setTxt('profileEmail',currentUser.email); setTxt('mcProfileEmail',currentUser.email);
             setTxt('profileProfession',currentUser.profession?capitalize(currentUser.profession):"Sin Perfil");
             setTxt('profileCedula',currentUser.cedula&&currentUser.cedula!=="N/A"?currentUser.cedula:"Sin Cédula");
             setTxt('profilePhone',currentUser.telefono&&currentUser.telefono!=="N/A"?currentUser.telefono:"Sin Teléfono");
+            
             let locText=currentUser.pais&&currentUser.pais!=="N/A"?currentUser.pais:"País Desconocido";
             if(currentUser.pais==="Venezuela"&&currentUser.estado&&currentUser.estado!=="N/A") locText+=` (${currentUser.estado})`;
             setTxt('profileLocation',locText); setTxt('mcProfileLocation',locText);
+            
             const flagImg=document.getElementById('profileFlag'); const globeIcon=document.getElementById('profileGlobeIcon');
             let isoCode=null; if(currentUser.pais&&currentUser.pais!=="N/A"){ const cleanPais=currentUser.pais.trim().toLowerCase(); isoCode=countryToISO[cleanPais]||countryToISO[cleanPais.replace(/\s/g,'')]; }
             if(isoCode){ if(flagImg){ flagImg.src=`https://flagcdn.com/w20/${isoCode}.png`; flagImg.classList.remove('hidden'); } if(globeIcon) globeIcon.classList.add('hidden'); }
             else { if(flagImg) flagImg.classList.add('hidden'); if(globeIcon) globeIcon.classList.remove('hidden'); }
+            
             setTxt('mcProfileCedula',currentUser.cedula&&currentUser.cedula!=="N/A"?currentUser.cedula:"Sin Cédula");
             setTxt('mcProfilePhone',currentUser.telefono&&currentUser.telefono!=="N/A"?currentUser.telefono:"Sin Teléfono");
             setTxt('mcProfileProfession',currentUser.profession?capitalize(currentUser.profession):"Sin Perfil");
+            
             const mcFlag=document.getElementById('mcProfileFlag'); const mcGlobe=document.getElementById('mcProfileGlobeIcon');
             if(mcFlag&&mcGlobe){ if(isoCode){ mcFlag.src=`https://flagcdn.com/w20/${isoCode}.png`; mcFlag.classList.remove('hidden'); mcGlobe.classList.add('hidden'); } else { mcFlag.classList.add('hidden'); mcGlobe.classList.remove('hidden'); } }
 
@@ -659,18 +902,11 @@
             const email=currentUser.email.toLowerCase();
             const pd=(userProgress[email]&&userProgress[email][String(courseId)])?userProgress[email][String(courseId)]:{completed:0,total:5,percent:0};
             const completed=pd.completed, total=pd.total, percent=pd.percent;
-            const course=COURSES_DATA.find(c=>c.id===courseId);
-            let extraButton='';
-            if(course){
-                extraButton=`<div class="mt-3 flex flex-col sm:flex-row gap-2">
-                    <button type="button" onclick="showProgressPanel(${courseId})" class="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-xl text-xs font-bold uppercase flex items-center justify-center gap-2 transition shadow-sm"><i class="fas fa-chart-line"></i> Panel Detallado</button>
-                </div>`;
-            }
             return `<div class="bg-[#0f172a]/80 backdrop-blur-md rounded-xl p-5 border border-white/10 shadow-inner h-full">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
                     <div><h4 class="font-black text-white uppercase tracking-widest text-xs"><i class="fas fa-chart-simple mr-1"></i> Mi progreso</h4><p class="text-sm text-slate-300 mt-1">${completed} de ${total} lecciones</p></div>
                     <div class="flex items-center gap-4"><div class="w-24 text-right"><span class="text-2xl font-black text-green-400">${percent}%</span></div><div class="w-32 bg-white/10 rounded-full h-2 overflow-hidden"><div class="bg-green-400 h-2 rounded-full" style="width:${percent}%"></div></div></div>
-                </div>${extraButton}</div>`;
+                </div></div>`;
         }
 
         function viewCourseDetail(courseId){
@@ -858,8 +1094,11 @@
         }
 
         function switchAuthTab(tab){
-            document.getElementById('authErrorMessage').classList.add('hidden');
-            const loginTab=document.getElementById('tabLogin'), regTab=document.getElementById('tabRegister'), nameField=document.getElementById('nameField'), countryField=document.getElementById('countryField');
+            const errBox = document.getElementById('authErrorMessage');
+            if(errBox) errBox.classList.add('hidden');
+            const loginTab=document.getElementById('tabLogin');
+            if(!loginTab) return; // Protección si el modal no existe en esta página
+            const regTab=document.getElementById('tabRegister'), nameField=document.getElementById('nameField'), countryField=document.getElementById('countryField');
             const title=document.getElementById('authModalTitle'), sub=document.getElementById('authSubText');
             const btn=document.getElementById('authSubmitBtn'), btnIcon=document.getElementById('authBtnIcon'), btnLabel=document.getElementById('authBtnLabel');
             if(tab==='login'){
@@ -878,9 +1117,10 @@
         window.handleNavbarAuthClick = function(e) {
             if(e) { e.preventDefault(); e.stopPropagation(); }
             if(currentUser) {
-                logoutUser();
+                if (typeof logoutUser === 'function') {
+                    logoutUser();
+                }
             } else {
-                document.getElementById('authErrorMessage').classList.add('hidden');
                 openModal('authModal'); 
                 switchAuthTab('login');
             }
@@ -898,15 +1138,21 @@
             const percent=total>0?Math.round((done/total)*100):0;
             const avgScore=courseProg.avgScore||0;
             
-            document.getElementById('dash-percentage').innerText=percent+'%';
+            const pctEl = document.getElementById('dash-percentage');
+            if(!pctEl) return; // Evita errores si la página no existe
+            
+            pctEl.innerText=percent+'%';
             
             if(progressChart) progressChart.destroy();
-            const ctx=document.getElementById('progressChart').getContext('2d');
-            progressChart=new Chart(ctx,{
-                type:'doughnut',
-                data:{labels:['Completado','Pendiente'],datasets:[{data:[done,total-done],backgroundColor:['#2db8ce','rgba(255,255,255,0.1)'],borderWidth:0}]},
-                options:{cutout:'75%',plugins:{legend:{display:false}}}
-            });
+            const chartCanvas = document.getElementById('progressChart');
+            if (chartCanvas) {
+                const ctx=chartCanvas.getContext('2d');
+                progressChart=new Chart(ctx,{
+                    type:'doughnut',
+                    data:{labels:['Completado','Pendiente'],datasets:[{data:[done,total-done],backgroundColor:['#2db8ce','rgba(255,255,255,0.1)'],borderWidth:0}]},
+                    options:{cutout:'75%',plugins:{legend:{display:false}}}
+                });
+            }
 
             if(currentUser) {
                 let enrollmentDate = findDateInObject(latestEnrollmentDates, course.name) || '';
@@ -1021,70 +1267,73 @@
             } catch (error) { console.error("Error al generar el certificado:", error); showNotif('Error', 'No se pudo generar el certificado.', 'error'); }
         }
 
-        document.getElementById('authForm').onsubmit=async(e)=>{
-            e.preventDefault();
-            const btn=document.getElementById('authSubmitBtn'), label=document.getElementById('authBtnLabel'), icon=document.getElementById('authBtnIcon');
-            const errBox=document.getElementById('authErrorMessage'), errText=document.getElementById('authErrorText');
-            const originalText=label.innerText; errBox.classList.add('hidden');
-            btn.disabled=true; icon.className="fas fa-spinner fa-spin"; label.innerText="PROCESANDO...";
-            const email=document.getElementById('authEmail').value.trim().toLowerCase();
-            let inputName=document.getElementById('authName').value.trim();
-            const inputPassword=document.getElementById('authPassword').value;
-            const inputCountry = document.getElementById('authCountry')?.value;
-            const isRegistration=!document.getElementById('nameField').classList.contains('hidden');
-            try{
-                if(isRegistration){
-                    if(!inputPassword){ errText.innerText="Debes crear una contraseña."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-user-plus"; label.innerText=originalText; return; }
-                    if(!inputCountry){ errText.innerText="Debes seleccionar tu país."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-user-plus"; label.innerText=originalText; return; }
-                    if(!inputName) inputName=email.split('@')[0];
-                    currentUser={name:inputName,email:email,password:inputPassword,profession:"",likedCourses:[],accessedCursos:[],downloadedFiles:[],ratings:{},cedula:"",telefono:"",pais:inputCountry,estado:""};
-                    
-                    const formData = new URLSearchParams();
-                    formData.append('action', 'register');
-                    formData.append('name', inputName);
-                    formData.append('email', email);
-                    formData.append('password', inputPassword);
-                    formData.append('pais', inputCountry);
-                    await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+        const authFormEl = document.getElementById('authForm');
+        if (authFormEl) {
+            authFormEl.onsubmit=async(e)=>{
+                e.preventDefault();
+                const btn=document.getElementById('authSubmitBtn'), label=document.getElementById('authBtnLabel'), icon=document.getElementById('authBtnIcon');
+                const errBox=document.getElementById('authErrorMessage'), errText=document.getElementById('authErrorText');
+                const originalText=label.innerText; errBox.classList.add('hidden');
+                btn.disabled=true; icon.className="fas fa-spinner fa-spin"; label.innerText="PROCESANDO...";
+                const email=document.getElementById('authEmail').value.trim().toLowerCase();
+                let inputName=document.getElementById('authName').value.trim();
+                const inputPassword=document.getElementById('authPassword').value;
+                const inputCountry = document.getElementById('authCountry')?.value;
+                const isRegistration=!document.getElementById('nameField').classList.contains('hidden');
+                try{
+                    if(isRegistration){
+                        if(!inputPassword){ errText.innerText="Debes crear una contraseña."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-user-plus"; label.innerText=originalText; return; }
+                        if(!inputCountry){ errText.innerText="Debes seleccionar tu país."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-user-plus"; label.innerText=originalText; return; }
+                        if(!inputName) inputName=email.split('@')[0];
+                        currentUser={name:inputName,email:email,password:inputPassword,profession:"",likedCourses:[],accessedCursos:[],downloadedFiles:[],ratings:{},cedula:"",telefono:"",pais:inputCountry,estado:""};
+                        
+                        const formData = new URLSearchParams();
+                        formData.append('action', 'register');
+                        formData.append('name', inputName);
+                        formData.append('email', email);
+                        formData.append('password', inputPassword);
+                        formData.append('pais', inputCountry);
+                        await fetch(SCRIPT_URL, { method: 'POST', body: formData });
 
-                    localStorage.setItem('user',JSON.stringify(currentUser));
-                    updateAllUI(); closeModal('authModal'); showNotif('¡Bienvenido!',`Hola ${inputName}, registro exitoso.`);
-                    renderMisCourses();
-                } else {
-                    if(!inputPassword){ errText.innerText="Debes ingresar tu contraseña."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
-                    let globalUser=dbUsers[email]; if(typeof globalUser==='string'){ try{ globalUser=JSON.parse(globalUser); }catch(e){ globalUser=null; } }
-                    globalUser=globalUser||{};
-                    let details=dbUserDetails[email]||{};
-                    const hasGlobal=Object.keys(globalUser).length>0;
-                    const hasDetails=details.name&&details.name!=="No provisto"&&details.name!=="N/A";
-                    if(!hasGlobal&&!hasDetails){ errText.innerText="El correo ingresado no se encuentra registrado."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
-                    if(hasGlobal&&globalUser.password&&globalUser.password!==inputPassword){ errText.innerText="Contraseña incorrecta."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
-                    currentUser={
-                        name:details.name&&details.name!=="No provisto"&&details.name!=="N/A"?details.name:(globalUser.name||email.split('@')[0]),
-                        email:email, password:inputPassword,
-                        profession:globalUser.profession||"",
-                        likedCourses:Array.isArray(globalUser.likedCourses)?globalUser.likedCourses:[],
-                        accessedCursos:Array.isArray(globalUser.accessedCursos)?globalUser.accessedCursos:[],
-                        downloadedFiles:Array.isArray(globalUser.downloadedFiles)?globalUser.downloadedFiles:[],
-                        ratings:globalUser.ratings||{},
-                        cedula:details.cedula||"N/A", telefono:details.telefono||"N/A", pais:details.pais||"N/A", estado:details.estado||"N/A"
-                    };
-                    let myCourseNamesRaw=dbUserCourses[email]||[];
-                    let myCourseNames=splitCourseNames(myCourseNamesRaw);
-                    myCourseNames.forEach(cName=>{
-                        let nn=normalizeName(cName);
-                        let found=COURSES_DATA.find(x=>normalizeName(x.name)===nn);
-                        if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
-                        if(found&&!currentUser.accessedCursos.includes(found.id)) currentUser.accessedCursos.push(found.id);
-                    });
-                    localStorage.setItem('user',JSON.stringify(currentUser));
-                    fetchProgressForAllCourses(); updateAllUI(); closeModal('authModal'); showNotif('¡Bienvenido de nuevo!',`Hola ${currentUser.name}.`);
-                    syncUserProgressToExcel();
-                }
-            } catch(e){
-                console.error("Error en el login:",e); errText.innerText="Error interno: "+e.message; errBox.classList.remove('hidden');
-            } finally { btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; }
-        };
+                        localStorage.setItem('user',JSON.stringify(currentUser));
+                        updateAllUI(); closeModal('authModal'); showNotif('¡Bienvenido!',`Hola ${inputName}, registro exitoso.`);
+                        renderMisCourses();
+                    } else {
+                        if(!inputPassword){ errText.innerText="Debes ingresar tu contraseña."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
+                        let globalUser=dbUsers[email]; if(typeof globalUser==='string'){ try{ globalUser=JSON.parse(globalUser); }catch(e){ globalUser=null; } }
+                        globalUser=globalUser||{};
+                        let details=dbUserDetails[email]||{};
+                        const hasGlobal=Object.keys(globalUser).length>0;
+                        const hasDetails=details.name&&details.name!=="No provisto"&&details.name!=="N/A";
+                        if(!hasGlobal&&!hasDetails){ errText.innerText="El correo ingresado no se encuentra registrado."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
+                        if(hasGlobal&&globalUser.password&&globalUser.password!==inputPassword){ errText.innerText="Contraseña incorrecta."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; return; }
+                        currentUser={
+                            name:details.name&&details.name!=="No provisto"&&details.name!=="N/A"?details.name:(globalUser.name||email.split('@')[0]),
+                            email:email, password:inputPassword,
+                            profession:globalUser.profession||"",
+                            likedCourses:Array.isArray(globalUser.likedCourses)?globalUser.likedCourses:[],
+                            accessedCursos:Array.isArray(globalUser.accessedCursos)?globalUser.accessedCursos:[],
+                            downloadedFiles:Array.isArray(globalUser.downloadedFiles)?globalUser.downloadedFiles:[],
+                            ratings:globalUser.ratings||{},
+                            cedula:details.cedula||"N/A", telefono:details.telefono||"N/A", pais:details.pais||"N/A", estado:details.estado||"N/A"
+                        };
+                        let myCourseNamesRaw=dbUserCourses[email]||[];
+                        let myCourseNames=splitCourseNames(myCourseNamesRaw);
+                        myCourseNames.forEach(cName=>{
+                            let nn=normalizeName(cName);
+                            let found=COURSES_DATA.find(x=>normalizeName(x.name)===nn);
+                            if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
+                            if(found&&!currentUser.accessedCursos.includes(found.id)) currentUser.accessedCursos.push(found.id);
+                        });
+                        localStorage.setItem('user',JSON.stringify(currentUser));
+                        fetchProgressForAllCourses(); updateAllUI(); closeModal('authModal'); showNotif('¡Bienvenido de nuevo!',`Hola ${currentUser.name}.`);
+                        syncUserProgressToExcel();
+                    }
+                } catch(e){
+                    console.error("Error en el login:",e); errText.innerText="Error interno: "+e.message; errBox.classList.remove('hidden');
+                } finally { btn.disabled=false; icon.className="fas fa-sign-in-alt"; label.innerText=originalText; }
+            };
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             if(currentUser) {

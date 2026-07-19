@@ -30,52 +30,326 @@
     </script>
 
     <style>
+        /* 1. Definición de Variables de Color para Temas */
         :root {
-            --azul-gris: #91a1af;
-            --azul-oscuro: #0f172a;
-            --celeste: #2db8ce;
-            --fb-blue: #1877f2;
+            /* Paleta Clara */
+            --bg-default: #f7f9fb;
+            --bg-secondary: #ffffff;
+            --bg-dark: #0f172a; /* Para secciones oscuras en modo claro */
+            --bg-dark-accent: #1e293b;
+
+            --text-default: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #f8fafc; /* Para texto sobre fondos oscuros */
+            --text-accent: #2db8ce;
+
+            --border-default: #e2e8f0;
+            --border-light: rgba(255, 255, 255, 0.1);
+
+            --shadow-color: rgba(0, 0, 0, 0.1);
+
+            /* Colores para componentes de tarjetas */
+            --badge-bg-intermediate: #0891b2; /* cyan-600 */
+            --badge-bg-basic: #0d9488; /* teal-600 */
+            --badge-text: #ffffff;
+            --btn-accent-bg: #0891b2; /* cyan-600 */
+            --btn-accent-text: #ffffff;
+            --btn-accent-shadow: rgba(8, 145, 178, 0.3);
+            --btn-accent-border: #0e7490; /* cyan-700 */
+            --btn-accent-bg-hover: #0e7490; /* cyan-700 */
         }
+
+        body:not(.light-mode) {
+            /* Paleta Oscura */
+            --bg-default: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e293b;
+
+            --text-default: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-light: #f8fafc;
+
+            --border-default: #334155;
+            --border-light: rgba(45, 184, 206, 0.3);
+
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* --- Estilos Generales --- */
+        .section-title {
+            color: var(--text-default);
+        }
+
+        /* --- Estilos movidos desde index.html y adaptados a variables --- */
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-default);
             margin: 0;
             padding: 0;
-            color: #1e293b;
+            color: var(--text-default);
             scroll-behavior: smooth;
             overflow-x: clip;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        .slide-up { animation: slideUp 0.3s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+        .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .animate-on-hover:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 25px 50px -12px var(--shadow-color); filter: brightness(1.05); }
 
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translate(0, 0, 0) scale(1); }
+        .reveal-up { transform: translateY(40px); }
+        .reveal-down { transform: translateY(-40px); }
+        .reveal-right { transform: translateX(-40px); }
 
-        #notification {
-            position: fixed; top: 20px; right: 20px; transform: translateX(120%);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 100000;
+        .btn-glow { position: relative; overflow: hidden; transition: all 0.3s ease; }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .btn-glow::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s;
         }
-        #notification.show { transform: translateX(0); }
-        
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px);
-            z-index: 99999; display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        
-        .modal-content {
-            background: white; border-radius: 32px; width: 90%; max-width: 420px; padding: 0px;
-            transform: translateY(30px) scale(0.95); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); max-height: 90vh; overflow-y: auto;
+        .btn-glow:hover::after { left: 100%; }
+
+        /* --- Secciones Tematizables --- */
+        .section-themed {
+            background-color: var(--bg-default);
+            border-top: 1px solid var(--border-default);
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
-        .page-content { display: none; min-height: 100vh; }
-        .page-content.active { display: block; }
+        .section-themed .section-subtitle {
+            color: var(--text-accent);
+        }
 
-        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .section-themed .section-title {
+            color: var(--text-default);
+        }
+
+        /* --- Estilo de Tarjetas de Curso (Estilo Catálogo Unificado) --- */
+        .course-card {
+            background-color: var(--bg-secondary);
+            border-radius: 1.5rem; /* 24px */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+            text-align: left;
+            /* Se elimina border y box-shadow base para que lo controlen las clases de nivel */
+        }
+
+        .course-card .course-card-image-container {
+            position: relative;
+            height: 12rem;
+            overflow: hidden;
+        }
+
+        .course-card .course-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .course-card:hover .course-card-image {
+            transform: scale(1.05);
+        }
+
+        .course-card .course-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card .course-card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+            padding: 0.25rem 0.75rem;
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 9999px;
+            color: var(--badge-text);
+        }
+
+        .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
+        .course-card .badge-basic { background-color: var(--badge-bg-basic); }
+
+        .course-card .course-card-title {
+            color: var(--text-default);
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-card .course-card-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .course-card .course-card-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-default);
+        }
+
+        .course-card .course-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .course-card .course-card-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-default);
+        }
+
+        .course-card .course-card-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .course-card .like-btn, .course-card .view-container {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+        }
+        .course-card .like-btn.liked { color: #ef4444 !important; }
+        .course-card .view-container.has-views { color: #22c55e; }
+
+        .course-card .course-card-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Adaptación para que el botón metálico funcione dentro de la tarjeta */
+        .course-card .course-card-buttons .btn-metal {
+            flex: 1;
+            font-size: 10px;
+        }
+
+        /* --- Resplandor de Tarjetas por Nivel (Estilo Catálogo) --- */
+        .course-card-level-basico {
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+        .course-card-level-basico:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
+        }
+
+        .course-card-level-intermedio {
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+        }
+        .course-card-level-intermedio:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+        }
+
+        .course-card-level-avanzado {
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+        }
+        .course-card-level-avanzado:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+        }
+
+        /* --- Estilo Tarjeta Misión --- */
+        .mission-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+        .mission-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
+        }
+
+        body:not(.light-mode) .mission-card {
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+        }
+        body:not(.light-mode) .mission-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+
+        /* --- Estilo Tarjeta Misión (Modo Claro) --- */
+        body.light-mode .mission-card {
+            background-color: #ffffff !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode .mission-card h3 {
+            color: #1e293b !important;
+        }
+        body.light-mode .mission-card ul {
+            color: #475569 !important;
+        }
+
+        /* --- Estilo Tarjeta Misión (Modo Oscuro) --- */
+        body:not(.light-mode) .mission-card { 
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        body:not(.light-mode) .mission-card h3 { color: #ffffff; }
+        body:not(.light-mode) .mission-card ul { color: #cbd5e1; } /* slate-300 */
+
+        /* Dark mode overrides para las tarjetas */
+        body:not(.light-mode) .course-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* El borde y la sombra ahora son controlados por las clases de nivel */
+        }
+
+        /* --- Resplandor de Tarjetas por Nivel (MODO OSCURO) --- */
+        body:not(.light-mode) .course-card-level-basico {
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-basico:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+
+        body:not(.light-mode) .course-card-level-intermedio {
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-intermedio:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+        }
+
+        body:not(.light-mode) .course-card-level-avanzado {
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-avanzado:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+        }
+
+        body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
+        body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
     </style>
     <style>
         /* Sobrescribir la imagen de fondo global solo para esta página */
@@ -89,16 +363,12 @@
 </head>
 <body id="programas-page" class="custom-scrollbar">
 
-<!-- NOTIFICACIÓN -->
-<div id="notification" class="bg-emerald-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20">
-    <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
-    <div>
-        <p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p>
-        <p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p>
-    </div>
+<!-- Indicador de sincronización -->
+<div id="syncIndicator" class="sync-indicator">
+    <i class="fas fa-sync-alt fa-spin text-[#2db8ce]"></i>
+    <span id="syncText">Sincronizando datos...</span>
 </div>
 
-<!-- ========================================== -->
 <!-- SECCIÓN: PROGRAMAS (DESCARGAS)              -->
 <!-- ========================================== -->
 <div id="page-programas" class="page-content active flex flex-col">
@@ -141,7 +411,7 @@
     // ==========================================
     // VARIABLES GLOBALES Y CONEXIÓN A GOOGLE SHEETS
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJCV8j5yLAGgouP43lvkXGunU6yKroegJ9JFJvAWpqHeHQzWRnXXP4IPnaBLjU7MTi/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxk8EW1EvIi0WjIOJ6iQYX6nF735XMvDUKgcgsvaKcgKZYiHnyeYTPTO-NSl3BXewm8/exec';
     
     let currentUser = JSON.parse(localStorage.getItem('user')) || null;
     let dbUsers = {}, globalStats = {}, dbUserCourses = {}, dbUserDetails = {}; 
