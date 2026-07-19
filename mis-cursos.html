@@ -29,8 +29,7 @@
     <style>
         :root { --azul-gris: #617287; --azul-oscuro: #0f172a; --celeste: #2db8ce; --fb-blue: #1877f2; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; margin: 0; padding: 0; color: #1e293b; scroll-behavior: smooth; overflow-x: clip; }
-        .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .animate-on-hover:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); filter: brightness(1.05); }
+        .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }.animate-on-hover:hover { box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); filter: brightness(1.05); }
         .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translate(0,0,0) scale(1); }
         .reveal-up { transform: translateY(40px); }
@@ -38,7 +37,7 @@
         .btn-glow:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .btn-glow::after { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s; }
         .btn-glow:hover::after { left: 100%; }
-        .course-card { 
+        .course-card {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             cursor: pointer; 
         }
@@ -82,9 +81,7 @@
     </style>
 </head>
 <body id="mis-cursos-page" class="custom-scrollbar">
-    <button id="floatingBackBtn" onclick="handleFloatingBack()" title="Volver"><i class="fas fa-arrow-left"></i><span id="floatingBackText">Volver</span></button>
-
-    <div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20"><i id="notifIcon" class="fas fa-info-circle text-2xl"></i><div><p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p><p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p></div></div><div id="userProfileModal" class="modal-overlay"><div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl"><div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative"><button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button><div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div><h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3><p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p><div class="mt-4 flex flex-wrap items-center justify-center gap-2"><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-phone text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera"><i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span></div></div><div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="profileProfession">Sin Perfil</span></div></div><div class="p-6 bg-white text-left"><button onclick="logoutUser()" class="w-full py-4 bg-red-50 text-red-600 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-100 hover:bg-red-600 hover:text-white transition-all shadow-sm flex items-center justify-center gap-3"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button></div></div></div><div id="authModal" class="modal-overlay"><div class="modal-content !p-8 relative"><button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button><div class="text-center mb-6"><img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3"><h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3><p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p></div><div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left"><i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i><span id="authErrorText" class="leading-tight">Mensaje de error</span></div><div class="flex bg-slate-100 rounded-xl p-1 mb-6"><button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button><button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button></div><form id="authForm" class="space-y-4 text-left"><div id="nameField" class="space-y-1 hidden"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label><div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label><div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1" id="passwordFieldContainer"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label><div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2"><i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span></button></form></div></div>
+    <button id="floatingBackBtn" onclick="handleFloatingBack()" title="Volver"><i class="fas fa-arrow-left"></i><span id="floatingBackText">Volver</span></button><div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20"><i id="notifIcon" class="fas fa-info-circle text-2xl"></i><div><p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p><p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p></div></div><div id="userProfileModal" class="modal-overlay"><div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl"><div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative"><button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button><div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div><h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3><p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p><div class="mt-4 flex flex-wrap items-center justify-center gap-2"><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-phone text-[#2db8ce] text-[10px]"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span></div><div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera"><i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i><span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span></div></div><div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md"><i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="profileProfession">Sin Perfil</span></div></div><div class="p-6 bg-[#1e293b] text-left"><button onclick="logoutUser()" class="w-full py-4 bg-red-500/10 text-red-400 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-500/20 hover:bg-red-500/20 hover:border-red-500/40 transition-all shadow-sm flex items-center justify-center gap-3"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button></div></div></div><div id="authModal" class="modal-overlay"><div class="modal-content !p-8 relative"><button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button><div class="text-center mb-6"><img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3"><h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3><p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p></div><div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left"><i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i><span id="authErrorText" class="leading-tight">Mensaje de error</span></div><div class="flex bg-slate-100 rounded-xl p-1 mb-6"><button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button><button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button></div><form id="authForm" class="space-y-4 text-left"><div id="nameField" class="space-y-1 hidden"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label><div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label><div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><div class="space-y-1" id="passwordFieldContainer"><label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label><div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div></div><button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2"><i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span></button></form></div></div>
 
     <!-- Página Mis Cursos -->
     <div id="page-mis-cursos" class="page-content">
@@ -125,15 +122,15 @@
                                 <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 shadow-sm backdrop-blur-md"><i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i><span class="text-white text-[10px] font-black uppercase tracking-widest" id="mcProfileProfession">Sin Perfil</span></div>
                             </div>
                             <div class="mt-6 pt-5 border-t border-white/10">
-                                <div class="grid grid-cols-3 gap-2 sm:gap-4 w-full">
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 w-full">
                                     <div class="text-center md:text-left">
-                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Cursos Online</span>
+                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Online</span>
                                         <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
                                             <i class="fas fa-laptop text-teal-400 text-sm"></i> <span id="mcStatOnline">0</span>
                                         </span>
                                     </div>
                                     <div class="text-center md:text-left border-l border-white/10 pl-2 sm:pl-4">
-                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Presenciales</span>
+                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Presencial</span>
                                         <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
                                             <i class="fas fa-users text-purple-400 text-sm"></i> <span id="mcStatPresencial">0</span>
                                         </span>
@@ -144,9 +141,12 @@
                                             <i class="fas fa-book text-amber-400 text-sm"></i> <span id="mcStatMaterias">0</span>
                                         </span>
                                     </div>
-                                </div>
-                                <div class="mt-2 text-center md:text-left text-slate-300 text-xs font-medium">
-                                    <span id="mcStatResumen">0 cursos en 0 materias</span>
+                                    <div class="text-center md:text-left border-l border-white/10 pl-2 sm:pl-4">
+                                        <span class="text-slate-400 text-[9px] font-bold uppercase tracking-widest block mb-1">Manuales</span>
+                                        <span class="text-white font-black text-xl sm:text-2xl leading-none flex items-center justify-center md:justify-start gap-2">
+                                            <i class="fas fa-file-pdf text-red-400 text-sm"></i> <span id="mcStatManuales">0</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -234,7 +234,25 @@
             { id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 1, resumen: "Maestría en automatización y control avanzado.", manuales: [], ejercicios: [], moduleNames: ["Módulo Maestría Avanzada"] },
             { id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 1, resumen: "Maestría en automatización y control aplicado.", manuales: [], ejercicios: [], moduleNames: ["Módulo Maestría Aplicada"] },
             { id: 17, name: "Taller de Tecnología Eléctrica III", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii", totalLessons: 1, resumen: "Seguimiento de notas del taller de Tecnología Eléctrica III. Consulta tus evaluaciones y avances.", manuales: [], ejercicios: [], moduleNames: ["Notas del Taller"] },
-            { id: 18, name: "Proyecto V", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html", totalLessons: 1, resumen: "Notas del Proyecto V.", manuales: [], ejercicios: [], moduleNames: ["Avances del Proyecto"] }
+            { id: 18, name: "Proyecto V", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html", totalLessons: 1, resumen: "Notas del Proyecto V.", manuales: [], ejercicios: [], moduleNames: ["Avances del Proyecto"] },
+            { 
+                id: 19, name: "Manual de Arranque de motores con contactores", type: "Manual", desc: "Manual completo sobre el arranque y control de motores usando contactores.", image: "https://i.postimg.cc/WpST30hz/tablerogif.gif", category: "Electricidad", level: "Básico", cost: 5.00, link: "#", totalLessons: 1,
+                manuales: [{name: "Manual de Arranque de motores con contactores (PDF)", link: "https://drive.google.com/uc?export=download&id=1V4PGjDVVFRNIo8nJCupBgiimdz7820ql"}],
+                ejercicios: [
+                    {name: "18 Ejercicios Prácticos de Arranques (ZIP)", link: "https://drive.google.com/uc?export=download&id=1N4tiNxaTf9WiNti0Uiv2S06KZCioMxdX"},
+                    {name: "Software de Simulación (CadeSIMU)", link: "https://drive.google.com/uc?export=download&id=1_s-SLpfYqmeoSZOnzjvPJgkJqIsK3UY7"}
+                ],
+                video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b",
+                aulaLink: "aula-manual-arranque-contactores.html"
+            },
+            { 
+                id: 20, name: "Manual de Automatización con PLC Básico", type: "Manual", desc: "Introducción a la automatización industrial utilizando PLC de gama básica.", image: "https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif", category: "PLC", level: "Básico", cost: 5.00, link: "#", totalLessons: 1,
+                manuales: [{name: "Manual de Automatización con PLC Básico (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20PLC%20Básico"}]
+            },
+            { 
+                id: 21, name: "Manual de Automatización con Contactores", type: "Manual", desc: "Aprende a diseñar y montar circuitos de control con lógica cableada.", image: "https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif", category: "Automatización", level: "Básico", cost: 5.00, link: "#", totalLessons: 1,
+                manuales: [{name: "Manual de Automatización con Contactores (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20Contactores"}]
+            }
         ];
 
         const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
@@ -436,29 +454,23 @@
             if(mcFlag&&mcGlobe){ if(isoCode){ mcFlag.src=`https://flagcdn.com/w20/${isoCode}.png`; mcFlag.classList.remove('hidden'); mcGlobe.classList.add('hidden'); } else { mcFlag.classList.add('hidden'); mcGlobe.classList.remove('hidden'); } }
 
             const accessed=Array.isArray(currentUser.accessedCursos)?currentUser.accessedCursos:[];
-            let countOnline=0, countPresencial=0;
-            const subjectsSet = new Set();
+            let countOnline=0, countPresencial=0, countMaterias=0, countManuales=0;
+            
             accessed.forEach(cId=>{
                 const course=COURSES_DATA.find(c=>c.id===cId);
                 if(course){
-                    if(course.type==='Online') countOnline++;
-                    else if(course.type==='Presencial') countPresencial++;
-                    let program = null;
-                    if (course.level === 'Diplomado') { program = 'Diplomado'; } 
-                    else if (course.category === 'Maestría') { program = 'Maestría'; } 
-                    else if (course.category === 'TSU') { program = 'TSU'; } 
-                    else if (course.category === 'Ingeniería') { program = 'Ingeniería'; }
-                    if (program) subjectsSet.add(program);
+                    if(course.type === 'Online') countOnline++;
+                    else if(course.type === 'Presencial') countPresencial++;
+                    else if(course.type === 'Materia') countMaterias++;
+                    else if(course.type === 'Manual') countManuales++;
                 }
             });
-            const totalCursos = countOnline + countPresencial;
-            const numMaterias = subjectsSet.size;
+
             setTxt('mcStatOnline', countOnline);
             setTxt('mcStatPresencial', countPresencial);
-            setTxt('mcStatMaterias', numMaterias);
-            const materiasArray = Array.from(subjectsSet).sort();
-            const materiasList = materiasArray.length > 0 ? materiasArray.join(', ') : 'ninguna';
-            setTxt('mcStatResumen', `${totalCursos} curso${totalCursos!==1?'s':''} en ${numMaterias} materia${numMaterias!==1?'s':''} (${materiasList})`);
+            setTxt('mcStatMaterias', countMaterias);
+            setTxt('mcStatManuales', countManuales);
+
         }
 
         function renderMisCourses(){
@@ -478,18 +490,33 @@
             grid.classList.remove('hidden'); noResults.classList.add('hidden');
             const emailKey=currentUser.email.toLowerCase(); const myProgress=userProgress[emailKey]||{};
             grid.innerHTML=accessedCourses.map((course,index)=>{
+                const isManual = course.type === 'Manual';
                 const likes=globalStats[`curso-${course.id}_likes`]||0;
                 const vistas=globalStats[`curso-${course.id}_vistas`]||0;
                 const avgRating=courseRatings[course.id]?courseRatings[course.id].avg:"5.0";
                 const isLikedClass=(currentUser&&currentUser.likedCourses&&currentUser.likedCourses.includes(`curso-${course.id}`))?'text-red-500':'text-slate-400';
                 const viewsClass=vistas>0?'text-green-500':'text-slate-400';
                 const displayCount=studentCountsPerCourse[course.id]!==undefined?studentCountsPerCourse[course.id]:'...';
-                const progressData=myProgress[String(course.id)]||{completed:0,total:course.totalLessons||5,percent:0,avgScore:0};
-                const completed=progressData.completed; const total=progressData.total; const percent=progressData.percent;
+                const progressData=myProgress[String(course.id)]||{completed:0,total:course.totalLessons||(isManual ? 1 : 5),percent:0,avgScore:0};
+                const completed = isManual ? 1 : progressData.completed; 
+                const total = isManual ? 1 : progressData.total;
+                const percent = isManual ? 100 : progressData.percent;
                 const userRating=(currentUser&&currentUser.ratings&&currentUser.ratings[course.id])||0;
                 let starsHTML='';
                 for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.id},${i},false)"></i>`; }
-                const progressBarHTML=`
+                
+                let buttonsHTML = '';
+                if (isManual) {
+                    buttonsHTML = `<button type="button" onclick="grantAccess(${course.id}); event.stopPropagation();" class="w-full btn-metal btn-green !py-3 !text-[10px]"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
+                    if (course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#') {
+                        buttonsHTML += `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal btn-blue py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
+                    }
+                } else {
+                    buttonsHTML = `<button type="button" onclick="grantAccess(${course.id}); event.stopPropagation();" class="w-full btn-metal btn-green !py-3 !text-[10px]"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
+                    ${course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal btn-blue py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
+                }
+
+                const progressBarHTML =`
                 <div class="mt-4 mb-3 bg-[#0f172a]/80 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-inner">
                     <div class="flex justify-between items-center mb-2"><span class="text-[10px] font-bold uppercase tracking-widest text-white">Progreso</span><span class="text-xs font-black text-green-400">${percent}%</span></div>
                     <div class="w-full bg-white/10 rounded-full h-1.5 mb-2 overflow-hidden"><div class="bg-green-400 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div></div>
@@ -542,12 +569,9 @@
                             </div>
                         </div>
                         <p class="text-slate-600 text-[13px] line-clamp-2 leading-relaxed flex-grow">${course.desc}</p>
-                        <div class="flex items-center gap-1.5 mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Valoración:</span><div class="flex gap-0.5">${starsHTML}</div></div>
-                        ${progressBarHTML}
-                        <div class="mt-auto pt-4 border-t border-slate-100 space-y-2" onclick="event.stopPropagation();">
-                            <button type="button" onclick="grantAccess(${course.id}); event.stopPropagation();" class="w-full btn-metal btn-green !py-3 !text-[10px]"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
-                            ${course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal btn-blue py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}
-                        </div>
+                    <div class="flex items-center gap-1.5 mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Valoración:</span><div class="flex gap-0.5">${starsHTML}</div></div>
+                    ${!isManual ? progressBarHTML : ''}
+                    <div class="mt-auto pt-4 border-t border-slate-100 space-y-2" onclick="event.stopPropagation();">${buttonsHTML}</div>
                     </div>
                 </div>`;
             }).join('');
@@ -637,6 +661,21 @@
                     return `<button type="button" onclick="downloadCourseMaterial('${e.name}','${e.link}',this,${course.id})" class="w-full text-left flex items-center justify-between p-4 sm:p-5 ${cardBg} rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all group"><div class="flex items-center gap-4"><div class="w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center transition-colors"><i data-lucide="file-code" class="w-5 h-5"></i></div><div><span class="font-bold ${titleColor} text-sm block leading-tight">${e.name}</span><div class="flex items-center gap-2 mt-1"><span class="text-[10px] uppercase font-bold ${subtitleColor} tracking-widest">Archivo de Práctica</span><span class="flex items-center gap-1 text-[10px] font-bold ${dlColor}"><i class="fas fa-download"></i> <span class="file-download-count" data-file-id="${fileStatId}">${fileDownloads}</span></span></div></div></div>${checkIcon}</button>`;
                 }).join('');
                 
+                let videoHTML = '';
+                if (course.video) {
+                    videoHTML = `
+                    <div class="bg-slate-800/50 p-6 sm:p-8 rounded-[24px] border border-slate-700">
+                        <h2 class="text-lg sm:text-xl font-black text-white uppercase tracking-tight mb-4 flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-[#2db8ce]/10 text-[#2db8ce] flex items-center justify-center"><i data-lucide="video" class="w-4 h-4"></i></span>
+                            Video de Introducción
+                        </h2>
+                        <div class="aspect-video rounded-2xl overflow-hidden shadow-lg bg-slate-900 relative">
+                            <iframe src="${course.video}" loading="lazy" style="border: none; position: absolute; top: 0; height: 100%; width: 100%;" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>
+                        </div>
+                    </div>
+                    `;
+                }
+
                 const progressCardHTML=renderProgressCard(courseId);
                 const descSegura = course.resumen || course.desc || 'Sin descripción disponible.';
                 const objSeguro = course.objetivoGeneral || 'Capacitar al estudiante mediante fundamentos teóricos y aplicaciones prácticas en automatización industrial.';
@@ -667,6 +706,7 @@
                                 </div>
                             </div>
                             <div class="p-6 sm:p-10 lg:p-14 space-y-14">
+                                ${videoHTML}
                                 <div class="rounded-[24px] overflow-hidden shadow-xl flex flex-col border border-slate-200/50">
                                     <div class="bg-[#91a1af] p-6 sm:p-8 text-left relative shadow-inner"><h4 class="text-slate-900 text-sm font-black uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-slate-900/10 pb-3"><i data-lucide="target" class="text-slate-800 w-5 h-5"></i> Objetivo General</h4><p class="text-slate-800 text-sm sm:text-base leading-relaxed font-medium">${objSeguro}</p></div>
                                     <div class="bg-[#0f172a] p-6 sm:p-8 text-left relative"><h4 class="text-white text-sm font-black uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-white/10 pb-3"><i data-lucide="check-circle-2" class="text-teal-400 w-5 h-5"></i> Específicos</h4><ul class="text-slate-300 text-sm sm:text-base leading-relaxed space-y-3"><li class="flex items-start gap-3"><i class="fas fa-angle-right text-[#2db8ce] mt-1.5"></i> <span>Comprender y analizar la lógica de control electromecánica y programada.</span></li><li class="flex items-start gap-3"><i class="fas fa-angle-right text-[#2db8ce] mt-1.5"></i> <span>Diseñar circuitos eficientes bajo normativas internacionales.</span></li><li class="flex items-start gap-3"><i class="fas fa-angle-right text-[#2db8ce] mt-1.5"></i> <span>Implementar simulaciones para validar funcionamientos antes del montaje.</span></li></ul></div>
