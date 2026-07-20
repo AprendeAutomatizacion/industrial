@@ -419,6 +419,7 @@
             background-position: center;
             animation: slowZoom 40s infinite alternate;
             transition: opacity 0.5s ease-in-out, mix-blend-mode 0.5s ease-in-out;
+            will-change: transform; /* Optimización para el parallax */
         }
         body:not(.light-mode) .header-background {
             opacity: 0.25;
@@ -958,7 +959,7 @@
         <div id="timeline-progress"></div>
 
     <!-- INSTRUCTOR -->
-    <section id="instructor" class="page-section relative py-24 px-6">
+    <section id="instructor" class="page-section relative py-24 px-6 reveal">
         <div class="max-w-5xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
             <div class="reveal reveal-right">
                 <img src="img/AA (14).webp" alt="Profesor Pablo Cedeño" class="rounded-3xl aspect-square object-cover w-full max-w-[250px] mx-auto md:max-w-full shadow-2xl border-4 border-cyan-500/30">
@@ -978,7 +979,7 @@
     </section>
 
     <!-- ====== Misión Académica Section Start ====== -->
-    <section id="mision" class="page-section pt-10 pb-20 lg:pt-14 lg:pb-28 relative overflow-hidden">
+    <section id="mision" class="page-section pt-10 pb-20 lg:pt-14 lg:pb-28 relative overflow-hidden reveal">
         <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 text-center">
             <div class="reveal reveal-up">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">
@@ -1028,7 +1029,7 @@
     </div>
 
     <!-- CURSOS DESTACADOS (HOME) -->
-    <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden">
+    <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden reveal">
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-10 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
@@ -1121,7 +1122,7 @@
     </section>
 
     <!-- MANUALES Y RECURSOS -->
-    <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden">
+    <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden reveal">
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-10 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Conocimiento Aplicado</span>
@@ -1187,7 +1188,7 @@
     </section>
 
     <!-- MODALIDADES DE APRENDIZAJE -->
-    <section id="modalidades" class="page-section relative py-24 px-6">
+    <section id="modalidades" class="page-section relative py-24 px-6 reveal">
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-12 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Flexibilidad Total</span>
@@ -1239,7 +1240,7 @@
     </section>
 
     <!-- CURSO ESPECIAL (UPT ARAGUA) -->
-    <section id="curso-especial" class="page-section relative py-24 px-6 overflow-hidden text-left">
+    <section id="curso-especial" class="page-section relative py-24 px-6 overflow-hidden text-left reveal">
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-1 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">ampliación y extensión profesional</span>
@@ -1308,7 +1309,7 @@
     </div>
 
     <!-- METODOLOGÍA -->
-    <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden">
+    <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden reveal">
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="mb-10 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
@@ -1336,7 +1337,7 @@
     </section>
 
     <!-- PÚBLICO OBJETIVO / COMUNIDAD -->
-    <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center">
+    <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center reveal">
         <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
             <div class="text-center lg:text-left reveal reveal-right">
                 <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span>nuestros cursos?</span></h2>
@@ -1363,7 +1364,7 @@
     </section>
 
     <!-- TESTIMONIOS -->
-    <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden">
+    <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden reveal">
         <div class="absolute inset-0 z-0">
             <img src="img/AA (33).webp" class="w-full h-full object-cover opacity-30 mix-blend-luminosity">
         </div>
@@ -1448,7 +1449,7 @@
     </div>
 
     <!-- FAQ Section -->
-    <section id="faq" class="page-section relative py-24 px-6">
+    <section id="faq" class="page-section relative py-24 px-6 reveal">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="text-center mb-12 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Resolvemos tus Dudas</span>
@@ -1481,7 +1482,7 @@
     </main>
 
     <!-- CTA Final + Contacto -->
-    <section id="contacto" class="page-section relative py-24 px-6">
+    <section id="contacto" class="page-section relative py-24 px-6 reveal">
         <div class="max-w-5xl mx-auto relative z-10 text-center">
             <div class="reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">¿Tienes Preguntas?</span>
@@ -1495,7 +1496,7 @@
     </section>
 
     <!-- MAPA GLOBAL -->
-    <section id="comunidad-global" class="page-section relative py-24 px-6 text-center overflow-hidden">
+    <section id="comunidad-global" class="page-section relative py-24 px-6 text-center overflow-hidden reveal">
         <div class="absolute inset-0 z-0">
             <img src="https://i.postimg.cc/vBXrQbHB/web-3.gif" class="w-full h-full object-cover opacity-30 mix-blend-luminosity">
         </div>
@@ -1519,7 +1520,7 @@
     </section>
 
     <!-- MÉTRICAS -->
-    <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl">
+    <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl reveal">
         <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
             <div class="py-2 reveal reveal-up">
                 <div class="text-[#2db8ce] text-2xl mb-1"><i class="fas fa-users"></i></div>
