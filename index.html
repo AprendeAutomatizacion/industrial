@@ -378,6 +378,32 @@
         body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
         body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
 
+        /* --- Estilos para Divisor de Sección con Cables --- */
+        .section-divider {
+            width: 100%;
+            height: 60px; /* Altura del divisor */
+            margin: 0; /* Eliminado el margen para un look continuo */
+            position: relative;
+            overflow: hidden;
+        }
+        .section-divider svg path {
+            fill: none;
+            stroke-linecap: round;
+            stroke-width: 1.5;
+            stroke: var(--border-default);
+            opacity: 0.4;
+        }
+        .section-divider svg path:nth-child(2) {
+            stroke-width: 2.5;
+            stroke: var(--text-accent); /* Color cian característico */
+            opacity: 0.6;
+        }
+        .section-divider svg path:nth-child(3) {
+            stroke-width: 1;
+            stroke: var(--text-secondary);
+            opacity: 0.3;
+        }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
 
@@ -928,6 +954,9 @@
         </div>
     </header>
 
+    <main id="main-flow-content">
+        <div id="timeline-progress"></div>
+
     <!-- INSTRUCTOR -->
     <section id="instructor" class="page-section relative py-24 px-6">
         <div class="max-w-5xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
@@ -990,6 +1019,14 @@
     </section>
     <!-- ====== Misión Académica Section End ====== -->
 
+    <div class="section-divider reveal">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
+            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
+            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+        </svg>
+    </div>
+
     <!-- CURSOS DESTACADOS (HOME) -->
     <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden">
         <div class="max-w-7xl mx-auto relative z-10">
@@ -1028,7 +1065,7 @@
                 <!-- Curso 2 -->
                 <div class="course-card course-card-level-basico reveal reveal-up delay-200">
                     <div class="course-card-image-container">
-                        <img src="img/AA(7).gif" alt="Curso Automatización Industrial" class="course-card-image">
+                        <img src="img/AA (1).gif" alt="Curso Automatización Industrial" class="course-card-image">
                         <span class="course-card-badge badge-basic">Nivel Básico</span>
                         <div class="absolute bottom-3 left-3 flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
                             <i class="fas fa-seedling text-lg text-cyan-400"></i>
@@ -1084,7 +1121,7 @@
     </section>
 
     <!-- MANUALES Y RECURSOS -->
-    <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden bg-slate-900/50">
+    <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden">
         <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-10 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Conocimiento Aplicado</span>
@@ -1262,6 +1299,14 @@
         </div>
     </section>
 
+    <div class="section-divider reveal">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
+            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
+            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+        </svg>
+    </div>
+
     <!-- METODOLOGÍA -->
     <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden">
         <div class="max-w-7xl mx-auto relative z-10">
@@ -1394,8 +1439,16 @@
         </div>
     </section>
 
+    <div class="section-divider reveal">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
+            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
+            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+        </svg>
+    </div>
+
     <!-- FAQ Section -->
-    <section id="faq" class="page-section relative py-24 px-6 bg-slate-900/50">
+    <section id="faq" class="page-section relative py-24 px-6">
         <div class="max-w-4xl mx-auto relative z-10">
             <div class="text-center mb-12 reveal reveal-down">
                 <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Resolvemos tus Dudas</span>
@@ -1425,6 +1478,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <!-- CTA Final + Contacto -->
     <section id="contacto" class="page-section relative py-24 px-6">
