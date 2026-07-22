@@ -929,10 +929,10 @@
     <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
         <!-- Imagen de fondo transparente -->
         <div class="absolute inset-0 z-0 opacity-20">
-            <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
+            <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy" style="opacity: 1;">
         </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
-            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
+        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-20 pt-36">
+            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercaseel titulo tracking-widest">
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Formación Profesional</span>
                 <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Cursos Online y Presenciales</span>
                 <div id="visitor-info" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/40 border border-[#2db8ce]/30 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md opacity-0 transition-opacity duration-1000">
@@ -941,9 +941,16 @@
                     <span class="flex items-center gap-1.5"><img id="visitor-flag" src="" class="w-4 h-3 rounded-[2px] hidden"><span id="visitor-country">Ubicando...</span></span>
                 </div>
             </div>
-            <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
-            <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
-            <div class="mt-8"><button onclick="window.location.href='#cursos-destacados'" class="btn-glow px-8 py-4 bg-teal-500 text-white font-black rounded-2xl shadow-2xl shadow-teal-500/30 border border-teal-400 hover:bg-teal-600 transition-all uppercase flex items-center gap-3 text-base">Ver Cursos <i class="fas fa-chevron-down"></i></button></div>
+            <div class="grid md:grid-cols-3 gap-8 items-center">
+                <div class="md:col-span-2 text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
+                    <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium mx-auto md:mx-0">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
+                    <div class="mt-8"><button onclick="window.location.href='#cursos-destacados'" class="btn-glow px-8 py-4 bg-teal-500 text-white font-black rounded-2xl shadow-2xl shadow-teal-500/30 border border-teal-400 hover:bg-teal-600 transition-all uppercase flex items-center gap-3 text-base">Ver Cursos <i class="fas fa-chevron-down"></i></button></div>
+                </div>
+                <div class="flex justify-center items-center">
+                    <img id="parallax-header-image" src="img/AA(47).webp" alt="Icono" class="h-64 md:h-96 drop-shadow-lg transition-transform duration-100 ease-out">
+                </div>
+            </div>
         </div>
     </header>
 
