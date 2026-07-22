@@ -216,7 +216,7 @@
 
         /* Sobrescrituras Modo Claro */
         body.light-mode {
-            background-color: #f0f5f9 !important; /* Un color de fondo claro y unificado para todo el cuerpo */
+            background-color: #d0e1ef !important; /* Un color de fondo claro y unificado para todo el cuerpo */
             color: #0f172a !important; /* Azul oscuro para el texto principal */
         }
 
@@ -265,8 +265,8 @@
 
         /* Estilos para la sección del instructor en modo claro */
         body.light-mode #instructor {
-            background-color: #ffffff !important;
-            border-color: #e2e8f0 !important;
+            background-color: transparent !important;
+            border-color: transparent !important;
         }
         body.light-mode #instructor .text-slate-300,
         body.light-mode #instructor .text-slate-400,
@@ -451,8 +451,12 @@
         /* Estilos para tarjetas y encabezados en modo claro */
         body.light-mode .bg-white\\/10,
         body.light-mode .bg-\\[\\#0f172a\\]\\/60 {
-            background-color: rgba(241, 245, 249, 0.30) !important; /* slate-50 translúcido */
+            background-color: rgba(69, 88, 108, 0.3) !important; /* slate-50 translúcido */
             border-color: rgba(226, 232, 240, 0.9) !important; /* slate-200 casi sólido */
+            background-color: #c8d2dc !important; /* Un gris azulado claro, más sutil que el navbar */
+            border-color: #d4dae0 !important; /* Borde a juego */
+            background-color: #b2c0cc !important; /* Tono más oscuro, igual al navbar */
+            border-color: #c8d2dc !important; /* Borde a juego */
         }
         /* Ajustar imagen de fondo de encabezados en modo claro */
         body.light-mode .bg-white\\/10 > .absolute.inset-0.z-0 img {
