@@ -21,7 +21,7 @@
             
             const email = user.email.toLowerCase();
             const userData = JSON.stringify(user);
-            const SCRIPT_URL = window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbzJCV8j5yLAGgouP43lvkXGunU6yKroegJ9JFJvAWpqHeHQzWRnXXP4IPnaBLjU7MTi/exec';
+            const SCRIPT_URL = window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxk8EW1EvIi0WjIOJ6iQYX6nF735XMvDUKgcgsvaKcgKZYiHnyeYTPTO-NSl3BXewm8/exec';
             fetch(SCRIPT_URL, {
                 method: 'POST', mode: 'no-cors',
                 body: new URLSearchParams({action: 'update_user', email: email, userData: userData})
@@ -120,7 +120,7 @@
         
         /* Sobrescrituras Modo Oscuro (Predeterminado) */
         body:not(.light-mode) { 
-            background-color: #1c2839 !important; 
+            background-color: #0f172a !important; /* Unificado con --bg-default */
             color: #ffffff !important; /* Letras blancas en modo oscuro */
         }
 
@@ -216,50 +216,31 @@
 
         /* Sobrescrituras Modo Claro */
         body.light-mode {
-            background-color: #b2c0cc !important;
+            background-color: #f0f5f9 !important; /* Un color de fondo claro y unificado para todo el cuerpo */
             color: #0f172a !important; /* Azul oscuro para el texto principal */
         }
 
         /* Eliminar gradiente del hero en modo claro */
         body.light-mode .header-gradient-overlay {
-            background: rgba(30, 41, 59, 0.6) !important; /* Reemplaza el gradiente por un fondo sólido translúcido (slate-800/60) */
+            background: transparent !important; /* Sin superposición en modo claro para mantener la consistencia */
         }
 
-        /* Fondos de sección para modo claro */
-        body.light-mode .section-themed {
-            background-color: transparent !important;
-            border-color: transparent !important;
-        }
-        body.light-mode .section-themed .section-title,
-        body.light-mode .section-themed .section-subtitle,
-        body.light-mode #comunidad p { /* Específico para el párrafo de la sección comunidad */
-            color: #0f172a !important;
-        }
-        /* Estilo unificado para secciones de página */
-        .page-section {
-            background-color: #2e3a50;
-            border-top: 1px solid #4a5568;
-            border-bottom: 1px solid #4a5568;
+        /* Estilo unificado para secciones de página para un fondo continuo */
+        .page-section, .section-themed {
+            background-color: transparent !important; /* Hereda del body */
+            border: none !important; /* Elimina cualquier borde */
             color: #ffffff; /* Default text color */
         }
         .page-section .section-subtitle { color: #2db8ce; }
         .page-section p, .page-section .text-blue-50 { color: #cbd5e1; } /* Specific color for paragraphs */
-        .page-section .absolute.inset-0.z-0 { background-color: #2e3a50; }
+        .page-section .absolute.inset-0.z-0 { display: none; } /* Oculta fondos internos que puedan causar conflicto */
 
-        body.light-mode .page-section {
-            background-color: #7e96ab !important;
-            border-top: 1px solid #94a3b8 !important;
-            border-bottom: 1px solid #94a3b8 !important;
-            color: #ffffff !important;
-            background-color: #b2c0cc !important;
-            border-top: 1px solid #c8d2dc !important;
-            border-bottom: 1px solid #c8d2dc !important;
+        body.light-mode .page-section,
+        body.light-mode .section-themed {
             color: #0f172a !important;
         }
         body.light-mode .page-section .section-subtitle { color: #0f172a !important; }
         body.light-mode .page-section p, body.light-mode .page-section .text-blue-50 { color: #1e293b !important; } /* Specific color for paragraphs */
-        body.light-mode .page-section .absolute.inset-0.z-0 { background-color: #7e96ab !important; }
-        body.light-mode .page-section .absolute.inset-0.z-0 { background-color: #b2c0cc !important; }
         body.light-mode .page-section img {
             mix-blend-mode: luminosity !important;
             opacity: 0.1 !important;
@@ -960,6 +941,16 @@ document.addEventListener('DOMContentLoaded', function() {
             card.style.transform = 'translateY(0)';
         }, 100 * index);
     });
+
+    // Efecto Parallax para la imagen del header en index.html
+    const parallaxImage = document.getElementById('parallax-header-image');
+    if (parallaxImage) {
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            // El factor 0.3 hace que la imagen se mueva más lento que el scroll, creando el efecto.
+            parallaxImage.style.transform = `translateY(${scrollY * 0.3}px)`;
+        }, { passive: true }); // Mejora de rendimiento
+    }
 
     console.log("🚀 Interfaz de Usuario optimizada por Gemini.");
 });
