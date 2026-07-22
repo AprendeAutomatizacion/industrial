@@ -391,21 +391,152 @@
             stroke-linecap: round;
             stroke-width: 1.5;
             stroke: var(--border-default);
-            opacity: 0.4;
+            opacity: 0.5;
+            animation: oscilloscope 8s linear infinite;
         }
         .section-divider svg path:nth-child(2) {
             stroke-width: 2.5;
             stroke: var(--text-accent); /* Color cian característico */
             opacity: 0.6;
+            animation-delay: -2.5s;
+            animation-duration: 7s;
         }
         .section-divider svg path:nth-child(3) {
             stroke-width: 1;
             stroke: var(--text-secondary);
             opacity: 0.3;
+            animation-delay: -5s;
+            animation-duration: 9s;
         }
+
+        /* --- Estilos para Divisor de Sección Glitch --- */
+        .glitch-divider {
+            width: 100%;
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+            margin: -15px 0;
+        }
+        .glitch-divider svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .glitch-divider .glitch-line {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+        .glitch-divider .line-1 {
+            stroke: var(--text-accent);
+            animation: glitch1 2.5s infinite steps(1, end);
+        }
+        .glitch-divider .line-2 {
+            stroke: var(--text-secondary);
+            opacity: 0.5;
+            animation: glitch2 3s infinite steps(1, end);
+        }
+        .glitch-divider .line-3 {
+            stroke: var(--border-default);
+            opacity: 0.3;
+            animation: glitch3 2s infinite steps(1, end);
+        }
+
+        /* --- Estilos para Divisor de Rejilla Digital --- */
+        .grid-divider {
+            width: 100%;
+            height: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: -5px 0;
+        }
+        .grid-divider svg {
+            width: 100%;
+            max-width: 1000px;
+            height: 100%;
+        }
+        .grid-divider .grid-dot {
+            fill: var(--text-accent);
+            animation: pulse-grid 5s infinite ease-in-out;
+        }
+        body.light-mode .grid-divider .grid-dot { fill: var(--badge-bg-intermediate); opacity: 0.6; }
+
+        /* --- Estilos para Divisor de Sección de Circuito --- */
+        .circuit-divider {
+            width: 100%;
+            height: 80px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: -10px 0;
+        }
+        .circuit-divider svg {
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+        }
+        .circuit-divider .trace {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: var(--text-accent);
+            stroke-dasharray: 1500; /* Longitud aproximada del path */
+            stroke-dashoffset: 1500;
+            animation: draw-trace 20s linear infinite;
+        }
+        .circuit-divider .trace-bg {
+            fill: none;
+            stroke-width: 1.5;
+            stroke: var(--border-default);
+            opacity: 0.3;
+        }
+        .circuit-divider .dot {
+            fill: var(--text-accent);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        body.light-mode .circuit-divider .dot { fill: var(--badge-bg-intermediate); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes oscilloscope {
+            0%, 100% { d: path("M0,30 C240,50 480,10 720,30 S1200,50 1440,30"); }
+            20% { d: path("M0,35 C220,40 460,20 720,35 S1180,30 1440,25"); }
+            40% { d: path("M0,25 C260,60 500,5 720,25 S1220,60 1440,35"); }
+            60% { d: path("M0,32 C200,10 520,55 720,32 S1150,15 1440,30"); }
+            80% { d: path("M0,28 C300,65 420,-5 720,28 S1240,65 1440,28"); }
+        }
+        @keyframes glitch1 {
+            0%, 100% { transform: none; opacity: 1; }
+            5%, 15%, 25%, 35% { transform: translate(-5px, 2px) skewX(10deg); opacity: 0.7; }
+            10%, 20%, 30%, 40% { transform: translate(5px, -2px) skewX(-10deg); opacity: 0.7; }
+        }
+        @keyframes glitch2 {
+            0%, 100% { transform: none; opacity: 0.5; }
+            50%, 60%, 70% { transform: translate(8px, -3px) skewX(-15deg); opacity: 0.3; }
+            55%, 65%, 75% { transform: translate(-8px, 3px) skewX(15deg); opacity: 0.3; }
+        }
+        @keyframes glitch3 { 0%, 100% { opacity: 0.3; } 80%, 90% { opacity: 0.8; } 85%, 95% { opacity: 0.1; } }
+        @keyframes pulse-grid {
+            0%, 100% { opacity: 0.1; r: 1; }
+            50% { opacity: 0.8; r: 1.5; }
+        }
+        @keyframes draw-trace {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        @keyframes pulse-dot {
+            0%, 100% { r: 3; opacity: 0.6; }
+            50% { r: 4.5; opacity: 1; filter: drop-shadow(0 0 3px var(--text-accent)); }
+        }
 
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -928,7 +1059,7 @@
 <div id="page-home" class="page-content active">
     <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
         <!-- Imagen de fondo transparente -->
-        <div class="absolute inset-0 z-0 opacity-20">
+        <div class="absolute inset-0 z-0 opacity-40">
             <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy" style="opacity: 1;">
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-20 pt-36">
@@ -976,6 +1107,31 @@
             </div>
         </div>
     </section>
+
+    <div class="circuit-divider reveal">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="xMidYMid meet">
+            <path class="trace-bg" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <path class="trace" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <circle class="dot" cx="150" cy="40" r="4" style="animation-delay: 0s;"></circle>
+            <circle class="dot" cx="200" cy="10" r="4" style="animation-delay: -1.5s;"></circle>
+            <circle class="dot" cx="250" cy="40" r="4" style="animation-delay: -0.2s;"></circle>
+            <circle class="dot" cx="300" cy="70" r="4" style="animation-delay: -1.8s;"></circle>
+            <circle class="dot" cx="350" cy="40" r="4" style="animation-delay: -0.4s;"></circle>
+            <circle class="dot" cx="450" cy="40" r="4" style="animation-delay: -1.2s;"></circle>
+            <circle class="dot" cx="500" cy="70" r="4" style="animation-delay: -0.6s;"></circle>
+            <circle class="dot" cx="550" cy="40" r="4" style="animation-delay: -1.0s;"></circle>
+            <circle class="dot" cx="600" cy="10" r="4" style="animation-delay: -0.8s;"></circle>
+            <circle class="dot" cx="650" cy="40" r="4" style="animation-delay: -1.4s;"></circle>
+            <circle class="dot" cx="750" cy="40" r="4" style="animation-delay: -0.1s;"></circle>
+            <circle class="dot" cx="800" cy="70" r="4" style="animation-delay: -1.9s;"></circle>
+            <circle class="dot" cx="850" cy="40" r="4" style="animation-delay: -0.3s;"></circle>
+            <circle class="dot" cx="900" cy="10" r="4" style="animation-delay: -1.6s;"></circle>
+            <circle class="dot" cx="950" cy="40" r="4" style="animation-delay: -0.7s;"></circle>
+            <circle class="dot" cx="1050" cy="40" r="4" style="animation-delay: -1.1s;"></circle>
+            <circle class="dot" cx="1100" cy="10" r="4" style="animation-delay: -0.9s;"></circle>
+            <circle class="dot" cx="1150" cy="40" r="4" style="animation-delay: -1.3s;"></circle>
+        </svg>
+    </div>
 
     <!-- ====== Misión Académica Section Start ====== -->
     <section id="mision" class="page-section pt-10 pb-20 lg:pt-14 lg:pb-28 relative overflow-hidden reveal">
@@ -1120,6 +1276,14 @@
         </div>
     </section>
 
+    <div class="glitch-divider reveal">
+        <svg viewBox="0 0 1440 50" preserveAspectRatio="none">
+            <path class="glitch-line line-1" d="M0 25 H 1440" />
+            <path class="glitch-line line-2" d="M0 25 H 1440" />
+            <path class="glitch-line line-3" d="M0 25 H 1440" />
+        </svg>
+    </div>
+
     <!-- MANUALES Y RECURSOS -->
     <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden reveal">
         <div class="max-w-7xl mx-auto relative z-10">
@@ -1186,6 +1350,34 @@
         </div>
     </section>
 
+    <div class="grid-divider reveal">
+        <svg viewBox="0 0 1000 70" preserveAspectRatio="xMidYMid meet">
+            <g>
+                <!-- Row 1 -->
+                <circle class="grid-dot" cx="50" cy="15" r="1" style="animation-delay: -0.5s;"></circle>
+                <circle class="grid-dot" cx="150" cy="15" r="1" style="animation-delay: -1.2s;"></circle>
+                <circle class="grid-dot" cx="250" cy="15" r="1" style="animation-delay: -2.5s;"></circle>
+                <circle class="grid-dot" cx="350" cy="15" r="1" style="animation-delay: -0.8s;"></circle>
+                <circle class="grid-dot" cx="450" cy="15" r="1" style="animation-delay: -3.1s;"></circle>
+                <circle class="grid-dot" cx="550" cy="15" r="1" style="animation-delay: -1.5s;"></circle>
+                <circle class="grid-dot" cx="650" cy="15" r="1" style="animation-delay: -4.0s;"></circle>
+                <circle class="grid-dot" cx="750" cy="15" r="1" style="animation-delay: -2.1s;"></circle>
+                <circle class="grid-dot" cx="850" cy="15" r="1" style="animation-delay: -0.2s;"></circle>
+                <circle class="grid-dot" cx="950" cy="15" r="1" style="animation-delay: -3.5s;"></circle>
+                <!-- Row 2 -->
+                <circle class="grid-dot" cx="100" cy="35" r="1" style="animation-delay: -4.2s;"></circle>
+                <circle class="grid-dot" cx="200" cy="35" r="1" style="animation-delay: -1.8s;"></circle>
+                <circle class="grid-dot" cx="300" cy="35" r="1" style="animation-delay: -0.1s;"></circle>
+                <circle class="grid-dot" cx="400" cy="35" r="1" style="animation-delay: -2.9s;"></circle>
+                <circle class="grid-dot" cx="500" cy="35" r="1" style="animation-delay: -1.1s;"></circle>
+                <circle class="grid-dot" cx="600" cy="35" r="1" style="animation-delay: -3.8s;"></circle>
+                <circle class="grid-dot" cx="700" cy="35" r="1" style="animation-delay: -0.7s;"></circle>
+                <circle class="grid-dot" cx="800" cy="35" r="1" style="animation-delay: -2.2s;"></circle>
+                <circle class="grid-dot" cx="900" cy="35" r="1" style="animation-delay: -4.5s;"></circle>
+            </g>
+        </svg>
+    </div>
+
     <!-- MODALIDADES DE APRENDIZAJE -->
     <section id="modalidades" class="page-section relative py-24 px-6 reveal">
         <div class="max-w-7xl mx-auto relative z-10">
@@ -1237,6 +1429,31 @@
             </div>
         </div>
     </section>
+
+    <div class="circuit-divider reveal">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="xMidYMid meet">
+            <path class="trace-bg" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <path class="trace" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <circle class="dot" cx="150" cy="40" r="4" style="animation-delay: 0s;"></circle>
+            <circle class="dot" cx="200" cy="10" r="4" style="animation-delay: -1.5s;"></circle>
+            <circle class="dot" cx="250" cy="40" r="4" style="animation-delay: -0.2s;"></circle>
+            <circle class="dot" cx="300" cy="70" r="4" style="animation-delay: -1.8s;"></circle>
+            <circle class="dot" cx="350" cy="40" r="4" style="animation-delay: -0.4s;"></circle>
+            <circle class="dot" cx="450" cy="40" r="4" style="animation-delay: -1.2s;"></circle>
+            <circle class="dot" cx="500" cy="70" r="4" style="animation-delay: -0.6s;"></circle>
+            <circle class="dot" cx="550" cy="40" r="4" style="animation-delay: -1.0s;"></circle>
+            <circle class="dot" cx="600" cy="10" r="4" style="animation-delay: -0.8s;"></circle>
+            <circle class="dot" cx="650" cy="40" r="4" style="animation-delay: -1.4s;"></circle>
+            <circle class="dot" cx="750" cy="40" r="4" style="animation-delay: -0.1s;"></circle>
+            <circle class="dot" cx="800" cy="70" r="4" style="animation-delay: -1.9s;"></circle>
+            <circle class="dot" cx="850" cy="40" r="4" style="animation-delay: -0.3s;"></circle>
+            <circle class="dot" cx="900" cy="10" r="4" style="animation-delay: -1.6s;"></circle>
+            <circle class="dot" cx="950" cy="40" r="4" style="animation-delay: -0.7s;"></circle>
+            <circle class="dot" cx="1050" cy="40" r="4" style="animation-delay: -1.1s;"></circle>
+            <circle class="dot" cx="1100" cy="10" r="4" style="animation-delay: -0.9s;"></circle>
+            <circle class="dot" cx="1150" cy="40" r="4" style="animation-delay: -1.3s;"></circle>
+        </svg>
+    </div>
 
     <!-- CURSO ESPECIAL (UPT ARAGUA) -->
     <section id="curso-especial" class="page-section relative py-24 px-6 overflow-hidden text-left reveal">
@@ -1299,11 +1516,11 @@
         </div>
     </section>
 
-    <div class="section-divider reveal">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
-            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
-            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+    <div class="glitch-divider reveal">
+        <svg viewBox="0 0 1440 50" preserveAspectRatio="none">
+            <path class="glitch-line line-1" d="M0 25 H 1440" />
+            <path class="glitch-line line-2" d="M0 25 H 1440" />
+            <path class="glitch-line line-3" d="M0 25 H 1440" />
         </svg>
     </div>
 
@@ -1316,28 +1533,52 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card">
-                <div class="bg-white/5 rounded-[40px] p-6 text-center sm:text-left reveal reveal-up methodology-card">
                     <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" class="w-full h-full object-cover"></div>
                     <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Estudia</h3><p class="text-slate-400 text-sm methodology-short-desc">Analiza casos reales de la industria.</p><div class="methodology-expanded-content"><p>Sumérgete en escenarios industriales auténticos. Aprenderás a diagnosticar problemas, interpretar diagramas y entender el funcionamiento de sistemas de control complejos, preparando el terreno para soluciones efectivas.</p></div></div>
                 </div>
                 <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-100 methodology-card">
-                <div class="bg-white/5 rounded-[40px] p-6 text-center sm:text-left reveal reveal-up delay-100 methodology-card">
                     <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/W4d0pxgD/GRAF.jpg" class="w-full h-full object-cover"></div>
                     <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Diseña</h3><p class="text-slate-400 text-sm methodology-short-desc">Crea planos con estándares internacionales.</p><div class="methodology-expanded-content"><p>Domina el lenguaje universal de la automatización. Te enseñamos a crear esquemas eléctricos de mando y potencia bajo normativas IEC y NEMA, asegurando que tus diseños sean claros, seguros y profesionales.</p></div></div>
                 </div>
                 <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-200 methodology-card">
-                <div class="bg-white/5 rounded-[40px] p-6 text-center sm:text-left reveal reveal-up delay-200 methodology-card">
                     <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/WzmDFzqL/02177232930859881fbe8801b4cfc8e3454077f6383f7cfa9a032-0.jpg" class="w-full h-full object-cover"></div>
                     <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Simula</h3><p class="text-slate-400 text-sm methodology-short-desc">Valida tus algoritmos virtualmente.</p><div class="methodology-expanded-content"><p>Antes de tocar un solo cable, pon a prueba tu lógica. Utilizarás software de simulación como CADeSIMU y Factory I/O para verificar el comportamiento de tus circuitos, corregir errores y optimizar el rendimiento sin riesgos.</p></div></div>
                 </div>
                 <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-300 methodology-card">
-                <div class="bg-white/5 rounded-[40px] p-6 text-center sm:text-left reveal reveal-up delay-300 methodology-card">
                     <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/VkmqRQzm/1772328516782-5a6a505e-f8d2-4a45-a8bf-99e36bf7743d.jpg" class="w-full h-full object-cover"></div>
                     <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Implementa</h3><p class="text-slate-400 text-sm methodology-short-desc">Realiza el montaje en equipos reales.</p><div class="methodology-expanded-content"><p>Lleva tus diseños del plano a la realidad. Obtendrás experiencia práctica montando componentes en tableros de entrenamiento, realizando el cableado y poniendo en marcha los sistemas que has diseñado y simulado.</p></div></div>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="grid-divider reveal">
+        <svg viewBox="0 0 1000 70" preserveAspectRatio="xMidYMid meet">
+            <g>
+                <!-- Row 1 -->
+                <circle class="grid-dot" cx="50" cy="15" r="1" style="animation-delay: -0.5s;"></circle>
+                <circle class="grid-dot" cx="150" cy="15" r="1" style="animation-delay: -1.2s;"></circle>
+                <circle class="grid-dot" cx="250" cy="15" r="1" style="animation-delay: -2.5s;"></circle>
+                <circle class="grid-dot" cx="350" cy="15" r="1" style="animation-delay: -0.8s;"></circle>
+                <circle class="grid-dot" cx="450" cy="15" r="1" style="animation-delay: -3.1s;"></circle>
+                <circle class="grid-dot" cx="550" cy="15" r="1" style="animation-delay: -1.5s;"></circle>
+                <circle class="grid-dot" cx="650" cy="15" r="1" style="animation-delay: -4.0s;"></circle>
+                <circle class="grid-dot" cx="750" cy="15" r="1" style="animation-delay: -2.1s;"></circle>
+                <circle class="grid-dot" cx="850" cy="15" r="1" style="animation-delay: -0.2s;"></circle>
+                <circle class="grid-dot" cx="950" cy="15" r="1" style="animation-delay: -3.5s;"></circle>
+                <!-- Row 2 -->
+                <circle class="grid-dot" cx="100" cy="35" r="1" style="animation-delay: -4.2s;"></circle>
+                <circle class="grid-dot" cx="200" cy="35" r="1" style="animation-delay: -1.8s;"></circle>
+                <circle class="grid-dot" cx="300" cy="35" r="1" style="animation-delay: -0.1s;"></circle>
+                <circle class="grid-dot" cx="400" cy="35" r="1" style="animation-delay: -2.9s;"></circle>
+                <circle class="grid-dot" cx="500" cy="35" r="1" style="animation-delay: -1.1s;"></circle>
+                <circle class="grid-dot" cx="600" cy="35" r="1" style="animation-delay: -3.8s;"></circle>
+                <circle class="grid-dot" cx="700" cy="35" r="1" style="animation-delay: -0.7s;"></circle>
+                <circle class="grid-dot" cx="800" cy="35" r="1" style="animation-delay: -2.2s;"></circle>
+                <circle class="grid-dot" cx="900" cy="35" r="1" style="animation-delay: -4.5s;"></circle>
+            </g>
+        </svg>
+    </div>
 
     <!-- PÚBLICO OBJETIVO / COMUNIDAD -->
     <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center reveal">
@@ -1366,6 +1607,31 @@
         </div>
     </section>
 
+    <div class="circuit-divider reveal">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="xMidYMid meet">
+            <path class="trace-bg" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <path class="trace" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <circle class="dot" cx="150" cy="40" r="4" style="animation-delay: 0s;"></circle>
+            <circle class="dot" cx="200" cy="10" r="4" style="animation-delay: -1.5s;"></circle>
+            <circle class="dot" cx="250" cy="40" r="4" style="animation-delay: -0.2s;"></circle>
+            <circle class="dot" cx="300" cy="70" r="4" style="animation-delay: -1.8s;"></circle>
+            <circle class="dot" cx="350" cy="40" r="4" style="animation-delay: -0.4s;"></circle>
+            <circle class="dot" cx="450" cy="40" r="4" style="animation-delay: -1.2s;"></circle>
+            <circle class="dot" cx="500" cy="70" r="4" style="animation-delay: -0.6s;"></circle>
+            <circle class="dot" cx="550" cy="40" r="4" style="animation-delay: -1.0s;"></circle>
+            <circle class="dot" cx="600" cy="10" r="4" style="animation-delay: -0.8s;"></circle>
+            <circle class="dot" cx="650" cy="40" r="4" style="animation-delay: -1.4s;"></circle>
+            <circle class="dot" cx="750" cy="40" r="4" style="animation-delay: -0.1s;"></circle>
+            <circle class="dot" cx="800" cy="70" r="4" style="animation-delay: -1.9s;"></circle>
+            <circle class="dot" cx="850" cy="40" r="4" style="animation-delay: -0.3s;"></circle>
+            <circle class="dot" cx="900" cy="10" r="4" style="animation-delay: -1.6s;"></circle>
+            <circle class="dot" cx="950" cy="40" r="4" style="animation-delay: -0.7s;"></circle>
+            <circle class="dot" cx="1050" cy="40" r="4" style="animation-delay: -1.1s;"></circle>
+            <circle class="dot" cx="1100" cy="10" r="4" style="animation-delay: -0.9s;"></circle>
+            <circle class="dot" cx="1150" cy="40" r="4" style="animation-delay: -1.3s;"></circle>
+        </svg>
+    </div>
+
     <!-- TESTIMONIOS -->
     <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden reveal">
         <div class="absolute inset-0 z-0">
@@ -1377,7 +1643,6 @@
                 <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span>Nuestros Alumnos</span></h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
                 <!-- Testimonio 1 -->
                 <div class="testimonial-card rounded-[32px] p-6 sm:p-8 reveal reveal-up relative flex flex-col">
                     <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
@@ -1386,12 +1651,10 @@
                     </div>
                     <div class="testimonial-text-content flex flex-col flex-grow">
                         <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
-                        <div class="flex justify-center md:justify-start gap-1 text-yellow-400 mb-4 text-sm relative z-10">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
                         <p class="text-sm italic mb-8 relative z-10 flex-grow">"Excelente pedagogía del Profesor Pablo Cedeño. Los ejercicios con Factory IO y LOGO! me permitieron entender la lógica de automatización desde cero. Totalmente recomendado."</p>
                         <div class="flex items-center gap-4 relative z-10">
-                        <div class="flex items-center justify-center md:justify-start gap-4 relative z-10">
                             <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">EP</div>
                             <div>
                                 <h4 class="font-bold text-sm">Eduardo Pérez</h4>
@@ -1409,12 +1672,10 @@
                     </div>
                     <div class="testimonial-text-content flex flex-col flex-grow">
                         <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
-                        <div class="flex justify-center md:justify-start gap-1 text-yellow-400 mb-4 text-sm relative z-10">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
                         <p class="text-sm italic mb-8 relative z-10 flex-grow">"Aplicamos lo aprendido directamente en los tableros de la planta. El curso de contactores presencial superó mis expectativas. Mucha práctica y resolución de fallas reales."</p>
                         <div class="flex items-center gap-4 relative z-10">
-                        <div class="flex items-center justify-center md:justify-start gap-4 relative z-10">
                             <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">CM</div>
                             <div>
                                 <h4 class="font-bold text-sm">Carlos Mendoza</h4>
@@ -1432,12 +1693,10 @@
                     </div>
                     <div class="testimonial-text-content flex flex-col flex-grow">
                         <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
-                        <div class="flex justify-center md:justify-start gap-1 text-yellow-400 mb-4 text-sm relative z-10">
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                         </div>
                         <p class="text-sm italic mb-8 relative z-10 flex-grow">"La metodología Grafcet explicada paso a paso me ayudó a resolver problemas de secuenciación que antes me costaban días. Material de altísima calidad."</p>
                         <div class="flex items-center gap-4 relative z-10">
-                        <div class="flex items-center justify-center md:justify-start gap-4 relative z-10">
                             <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">AR</div>
                             <div>
                                 <h4 class="font-bold text-sm">Ana Rodríguez</h4>
@@ -1450,11 +1709,11 @@
         </div>
     </section>
 
-    <div class="section-divider reveal">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
-            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
-            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+    <div class="glitch-divider reveal">
+        <svg viewBox="0 0 1440 50" preserveAspectRatio="none">
+            <path class="glitch-line line-1" d="M0 25 H 1440" />
+            <path class="glitch-line line-2" d="M0 25 H 1440" />
+            <path class="glitch-line line-3" d="M0 25 H 1440" />
         </svg>
     </div>
 
@@ -1491,6 +1750,14 @@
     </section>
     </main>
 
+    <div class="section-divider reveal">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
+            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
+            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+        </svg>
+    </div>
+
     <!-- CTA Final + Contacto -->
     <section id="contacto" class="page-section relative py-24 px-6 reveal">
         <div class="max-w-5xl mx-auto relative z-10 text-center">
@@ -1504,6 +1771,34 @@
             </div>
         </div>
     </section>
+
+    <div class="grid-divider reveal">
+        <svg viewBox="0 0 1000 70" preserveAspectRatio="xMidYMid meet">
+            <g>
+                <!-- Row 1 -->
+                <circle class="grid-dot" cx="50" cy="15" r="1" style="animation-delay: -0.5s;"></circle>
+                <circle class="grid-dot" cx="150" cy="15" r="1" style="animation-delay: -1.2s;"></circle>
+                <circle class="grid-dot" cx="250" cy="15" r="1" style="animation-delay: -2.5s;"></circle>
+                <circle class="grid-dot" cx="350" cy="15" r="1" style="animation-delay: -0.8s;"></circle>
+                <circle class="grid-dot" cx="450" cy="15" r="1" style="animation-delay: -3.1s;"></circle>
+                <circle class="grid-dot" cx="550" cy="15" r="1" style="animation-delay: -1.5s;"></circle>
+                <circle class="grid-dot" cx="650" cy="15" r="1" style="animation-delay: -4.0s;"></circle>
+                <circle class="grid-dot" cx="750" cy="15" r="1" style="animation-delay: -2.1s;"></circle>
+                <circle class="grid-dot" cx="850" cy="15" r="1" style="animation-delay: -0.2s;"></circle>
+                <circle class="grid-dot" cx="950" cy="15" r="1" style="animation-delay: -3.5s;"></circle>
+                <!-- Row 2 -->
+                <circle class="grid-dot" cx="100" cy="35" r="1" style="animation-delay: -4.2s;"></circle>
+                <circle class="grid-dot" cx="200" cy="35" r="1" style="animation-delay: -1.8s;"></circle>
+                <circle class="grid-dot" cx="300" cy="35" r="1" style="animation-delay: -0.1s;"></circle>
+                <circle class="grid-dot" cx="400" cy="35" r="1" style="animation-delay: -2.9s;"></circle>
+                <circle class="grid-dot" cx="500" cy="35" r="1" style="animation-delay: -1.1s;"></circle>
+                <circle class="grid-dot" cx="600" cy="35" r="1" style="animation-delay: -3.8s;"></circle>
+                <circle class="grid-dot" cx="700" cy="35" r="1" style="animation-delay: -0.7s;"></circle>
+                <circle class="grid-dot" cx="800" cy="35" r="1" style="animation-delay: -2.2s;"></circle>
+                <circle class="grid-dot" cx="900" cy="35" r="1" style="animation-delay: -4.5s;"></circle>
+            </g>
+        </svg>
+    </div>
 
     <!-- MAPA GLOBAL -->
     <section id="comunidad-global" class="page-section relative py-24 px-6 text-center overflow-hidden reveal">
@@ -1528,6 +1823,14 @@
             </div>
         </div>
     </section>
+
+    <div class="section-divider reveal">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
+            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
+            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+        </svg>
+    </div>
 
     <!-- MÉTRICAS -->
     <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl reveal">
