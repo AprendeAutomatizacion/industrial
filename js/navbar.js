@@ -38,6 +38,12 @@
     confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
     document.head.appendChild(confettiScript);
 
+    // Inyectar fuente Orbitron para títulos
+    const orbitronFont = document.createElement('link');
+    orbitronFont.href = 'https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap';
+    orbitronFont.rel = 'stylesheet';
+    document.head.appendChild(orbitronFont);
+
     // Funciones globales de Gamificación
     window.triggerConfetti = function() {
         if (window.confetti) {
@@ -117,6 +123,16 @@
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
         .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.15); } }
+
+        /* Estilo para títulos principales */
+        .font-display {
+            font-family: 'Orbitron', sans-serif !important;
+            letter-spacing: -0.03em !important;
+            text-shadow: 0 2px 15px rgba(45, 184, 206, 0.2);
+        }
+        body.light-mode .font-display {
+            text-shadow: none !important;
+        }
         
         /* Sobrescrituras Modo Oscuro (Predeterminado) */
         body:not(.light-mode) { 
@@ -288,6 +304,12 @@
 
         /* Restaurar opacidad de imágenes en tarjetas de Aulas Virtuales (cursos.html) */
         body.light-mode #courses-grid .course-card img {
+            opacity: 1 !important;
+            mix-blend-mode: normal !important;
+        }
+
+        /* Restaurar opacidad de imágenes en tarjetas de Programas (programas.html) */
+        body.light-mode #programsGrid img {
             opacity: 1 !important;
             mix-blend-mode: normal !important;
         }
