@@ -47,7 +47,7 @@
 
         /* Estilos para que la tarjeta de estudiante en 'Mis Cursos' sea blanca en modo claro */
         body.light-mode #misCursosUserInfo .student-card {
-            background-color: #ffffff !important; /* Fondo blanco sólido */
+            background-color: #eaf0f5 !important; /* Fondo gris azulado claro */
             border-color: #e2e8f0 !important; /* Borde claro y suave */
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important; /* Sombra sutil estándar */
         }
@@ -840,7 +840,7 @@
                     levelIconColor = 'text-amber-400';
                 }
 
-                return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col fade-in group ${levelBorderClass}" style="animation-delay: ${index*0.05}s;" onclick="grantAccess(${course.id})">
+                return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col reveal reveal-up group ${levelBorderClass}" style="animation-delay: ${index*0.05}s;" onclick="grantAccess(${course.id})">
                     <div class="relative aspect-video w-full overflow-hidden bg-[#0f172a]">
                         <img src="${course.image}" class="w-full h-full object-cover opacity-70 transition-transform duration-500 group-hover:scale-105">
                         <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
@@ -1356,6 +1356,21 @@
             }, 200);
             if(window.lucide) lucide.createIcons();
             hideFloatingBackBtn();
+
+            // Animación de revelado al hacer scroll
+            function reveal() {
+                var reveals = document.querySelectorAll(".reveal");
+                for (var i = 0; i < reveals.length; i++) {
+                    var windowHeight = window.innerHeight;
+                    var elementTop = reveals[i].getBoundingClientRect().top;
+                    var elementVisible = 80; // Distancia desde la parte inferior para que aparezca el elemento
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveals[i].classList.add("active");
+                    }
+                }
+            }
+            window.addEventListener("scroll", reveal);
+            reveal(); // Ejecutar al cargar para los elementos ya visibles
         });
     </script>
 <script src="js/auth.js"></script>

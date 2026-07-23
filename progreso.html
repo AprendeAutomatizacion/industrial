@@ -375,7 +375,7 @@
 <div id="progreso-page" class="min-h-screen">
     <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
         <!-- Imagen de fondo transparente -->
-        <div class="absolute inset-0 z-0 opacity-20">
+        <div class="absolute inset-0 z-0 opacity-40">
             <img src="img/AA (3).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
         </div>
         
@@ -879,7 +879,7 @@
             });
 
             const cardHtml = `
-                <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl relative border border-white/20">
+                <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl relative border border-white/20 reveal reveal-up">
                     <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
                         <h3 class="text-white font-black uppercase tracking-tighter text-sm flex items-center gap-3">
                             <i class="fas fa-book text-blue-200"></i> ${course.name}
@@ -1182,6 +1182,21 @@
             return;
         }
         await loadData();
+
+        // Animación de revelado al hacer scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 80; // Distancia para que aparezca
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Para los elementos ya visibles
     });
 </script>
 <script src="js/auth.js"></script>
