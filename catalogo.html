@@ -310,7 +310,7 @@
         <div class="modal-content !p-8 relative">
             <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button>
             <div class="text-center mb-6">
-                <img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3">
+                <img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3" onerror="this.src='https://placehold.co/100x40/0f172a/2db8ce?text=AA'">
                 <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3>
                 <p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p>
             </div>
@@ -438,7 +438,7 @@
     <div id="page-cursos" class="min-h-screen">
         <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
             <div class="absolute inset-0 z-0">
-                <img src="img/AA (5).gif" alt="Fondo decorativo" class="w-full h-full object-cover opacity-30 mix-blend-soft-light" loading="lazy">
+                <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover opacity-30 mix-blend-soft-light" loading="lazy">
             </div>
             <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
                 <i class="fas fa-th-large"></i>
@@ -468,17 +468,25 @@
             <div class="relative flex justify-center items-center">
                 <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700/50 -translate-y-1/2 hidden md:block"></div>
                 
-                <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+                <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-6xl">
                     <!-- Paso 1: Básico -->
-                    <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105 hover:bg-slate-700">
+                    <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-cyan-500 rounded-3xl text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105 hover:bg-slate-700">
                         <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-cyan-500 group-hover:text-white">
                             <i class="fas fa-seedling text-2xl text-cyan-400 group-hover:text-white transition-colors"></i>
                         </div>
                         <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
                         <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
                     </div>
+                    <!-- Manuales Card -->
+                    <div onclick="filterByLevel('Manual', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-blue-500 hover:scale-105 hover:bg-slate-700">
+                        <div class="w-16 h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white">
+                            <i class="fas fa-book-open text-2xl text-blue-400 group-hover:text-white transition-colors"></i>
+                        </div>
+                        <h3 class="text-lg font-black text-white uppercase mb-1">Manuales</h3>
+                        <p class="text-xs text-slate-400">Guías prácticas y recursos para consulta rápida.</p>
+                    </div>
                     
-                    <!-- Paso 2: Intermedio (ahora morado) -->
+                    <!-- Paso 2: Intermedio -->
                     <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-purple-500 hover:scale-105 hover:bg-slate-700">
                         <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
                             <i class="fas fa-cogs text-2xl text-purple-400 group-hover:text-white transition-colors"></i>
@@ -549,7 +557,7 @@
                 name: "Manual de Arranque de motores con contactores", 
                 type: "Manual", 
                 desc: "Manual completo sobre el arranque y control de motores usando contactores, lógica cableada y protecciones.", 
-                image: "https://i.postimg.cc/WpST30hz/tablerogif.gif", 
+                image: "img/AA (7).gif", 
                 category: "Electricidad",
                 level: "Básico", 
                 cost: 5.00, 
@@ -561,7 +569,7 @@
                 name: "Manual de Automatización con PLC Básico", 
                 type: "Manual", 
                 desc: "Introducción a la automatización industrial utilizando PLC de gama básica como LOGO! de Siemens.", 
-                image: "https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif", 
+                image: "img/AA (11).webp", 
                 category: "PLC", 
                 level: "Básico", 
                 cost: 5.00, 
@@ -573,7 +581,7 @@
                 name: "Manual de Automatización con Contactores", 
                 type: "Manual", 
                 desc: "Aprende a diseñar y montar circuitos de control con lógica cableada para diferentes arranques de motores.", 
-                image: "https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif", 
+                image: "img/AA (36).webp", 
                 category: "Automatización", 
                 level: "Básico", 
                 cost: 5.00, 
@@ -631,6 +639,7 @@
                 }
             } catch (e) { console.error('Ping error:', e); }
         }
+
         async function fetchWithRetry(url, maxRetries = 3) {
             let delay = 1000;
             for (let i = 0; i < maxRetries; i++) {
@@ -734,7 +743,7 @@
         }
 
         let currentCategory = 'Todos';
-        let currentLevel = 'Todos';
+        let currentLevel = 'Básico'; // Default to basic on load as requested
 
         function generateCourseCard(course) {
             const isAcademic = ["Diplomado", "Maestría", "Pregrado"].includes(course.level);
@@ -794,13 +803,14 @@
             let levelBadgeStyle = '';
             let levelIconBg = 'bg-slate-500/10 border-slate-500/30';
             let levelIconColor = 'text-slate-400';
+            
             if (normalizedLevel === 'basico') {
                 levelBorderClass = 'course-card-level-basico';
                 levelBadgeStyle = 'background-color: rgba(6,182,212,0.1); color: rgb(8,145,178); border: 1px solid rgba(6,182,212,0.3);';
                 levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
                 levelIconColor = 'text-cyan-400';
             } else if (normalizedLevel === 'intermedio') {
-                levelBorderClass = 'course-card-level-intermedio'; // clase con borde morado
+                levelBorderClass = 'course-card-level-intermedio';
                 levelBadgeStyle = 'background-color: rgba(168,85,247,0.1); color: rgb(126,34,206); border: 1px solid rgba(168,85,247,0.3);';
                 levelIconBg = 'bg-purple-500/10 border-purple-500/30';
                 levelIconColor = 'text-purple-400';
@@ -809,6 +819,26 @@
                 levelBadgeStyle = 'background-color: rgba(245,158,11,0.1); color: rgb(180,83,9); border: 1px solid rgba(245,158,11,0.3);';
                 levelIconBg = 'bg-amber-500/10 border-amber-500/30';
                 levelIconColor = 'text-amber-400';
+            }
+
+            let iconsContainerHTML = '';
+            if (isManual) {
+                // Two independent icons for Manuals as requested
+                iconsContainerHTML = `
+                <div class="absolute bottom-3 left-3 flex items-center gap-2">
+                    <div class="flex items-center justify-center bg-cyan-500/10 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="Fundamentos (Básico)">
+                        <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                    </div>
+                    <div class="flex items-center justify-center bg-blue-500/10 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="Manual">
+                        <i class="fas fa-book-open text-lg text-blue-400"></i>
+                    </div>
+                </div>`;
+            } else {
+                const iconClass = normalizedLevel === 'basico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket';
+                iconsContainerHTML = `
+                <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}">
+                    <i class="fas ${iconClass} text-lg ${levelIconColor}"></i>
+                </div>`;
             }
 
             return `
@@ -822,9 +852,7 @@
                     <div class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-secondary text-[10px] font-black px-2 py-1 rounded-md border border-white/20 shadow-lg flex items-center gap-1">
                         <i class="fas fa-star text-yellow-400"></i> ${avgRating}
                     </div>
-                    <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}">
-                        <i class="fas ${normalizedLevel === 'basico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket'} text-lg ${levelIconColor}"></i>
-                    </div>
+                    ${iconsContainerHTML}
                 </div>
                 <div class="p-5 md:p-6 flex-grow flex flex-col text-left">
                     <h2 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${course.name}</h2>
@@ -881,8 +909,17 @@
                 if (currentCategory !== 'Todos' && c.category !== currentCategory) return false;
                 if (!c.name.toLowerCase().includes(query) && !c.desc.toLowerCase().includes(query)) return false;
                 if (modality !== 'Todos' && c.type !== modality) return false;
+                
                 if (currentLevel !== 'Todos') {
-                    if (c.level.toLowerCase() !== currentLevel.toLowerCase()) return false;
+                    if (currentLevel === 'Manual') {
+                        return c.type.toLowerCase() === 'manual';
+                    } else {
+                        // El filtro Básico/Fundamentos incluye tanto cursos básicos como manuales
+                        if (currentLevel === 'Básico') {
+                            return c.level.toLowerCase() === 'básico' || c.type.toLowerCase() === 'manual';
+                        }
+                        return c.level.toLowerCase() === currentLevel.toLowerCase() && c.type.toLowerCase() !== 'manual';
+                    }
                 }
                 return true;
             });
@@ -898,12 +935,16 @@
         function filterByLevel(level, element) {
             currentLevel = level;
             document.querySelectorAll('.learning-step').forEach(step => {
-                step.classList.remove('border-cyan-500', 'border-purple-500', 'border-amber-500');
+                step.classList.remove('border-cyan-500', 'border-blue-500', 'border-purple-500', 'border-amber-500');
                 step.classList.add('border-slate-700');
             });
             if (level === 'Básico') element.classList.add('border-cyan-500');
+            else if (level === 'Manual') element.classList.add('border-blue-500');
             else if (level === 'Intermedio') element.classList.add('border-purple-500');
             else if (level === 'Avanzado') element.classList.add('border-amber-500');
+            
+            // Remove from the generic reset above to ensure proper border application
+            element.classList.remove('border-slate-700');
             applyFilters();
         }
 
@@ -1271,7 +1312,16 @@
         document.addEventListener("DOMContentLoaded", () => {
             calculateCourseRatings();
             updateStudentCounts();
-            applyFilters();
+            
+            // Set basic border default logic
+            const basicoCard = document.querySelector('.learning-step:first-child');
+            if (basicoCard) {
+                document.querySelectorAll('.learning-step').forEach(step => step.classList.add('border-slate-700'));
+                basicoCard.classList.remove('border-slate-700');
+                basicoCard.classList.add('border-cyan-500');
+            }
+
+            applyFilters(); // Uses 'Básico' by default
             updateAllUI();
             if (window.lucide) lucide.createIcons();
             setTimeout(() => { initVisitorInfo(); loadData(true); }, 300);
@@ -1304,6 +1354,11 @@
                     }
                 } catch (e) { console.warn(`Fallo geoip ${service}:`, e.message); }
             }
+        }
+        
+        function logoutUser() {
+            localStorage.removeItem('user');
+            window.location.reload();
         }
     </script>
 <script src="js/auth.js"></script>
