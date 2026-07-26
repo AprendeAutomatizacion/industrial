@@ -246,6 +246,9 @@
             border-radius: 0.75rem;
             cursor: not-allowed;
         }
+        .course-card .like-btn.liked, .course-card .like-btn.liked i {
+            color: #ef4444 !important;
+        }
     </style>
 </head>
 <body class="custom-scrollbar">
@@ -587,6 +590,18 @@
                 cost: 5.00, 
                 link: "#", 
                 buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Automatización%20con%20Contactores" 
+            },
+            { 
+                id: 22, 
+                name: "Manual de PLC Método Grafcet", 
+                type: "Manual", 
+                desc: "Guía completa para diseñar secuencias de automatización complejas utilizando el método GRAFCET y su implementación en PLC.", 
+                image: "img/AA (4).gif", 
+                category: "Automatización", 
+                level: "Avanzado", 
+                cost: 5.00, 
+                link: "#", 
+                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20PLC%20Método%20Grafcet" 
             }
         ];
 
@@ -743,7 +758,7 @@
         }
 
         let currentCategory = 'Todos';
-        let currentLevel = 'Básico'; // Default to basic on load as requested
+        let currentLevel = 'Todos'; // Por defecto se muestran todos
 
         function generateCourseCard(course) {
             const isAcademic = ["Diplomado", "Maestría", "Pregrado"].includes(course.level);
@@ -823,11 +838,30 @@
 
             let iconsContainerHTML = '';
             if (isManual) {
-                // Two independent icons for Manuals as requested
+                // Let's determine the level icon for the manual
+                const normalizedManualLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                let levelIconClass = 'fa-seedling'; // default to basic
+                let levelIconColor = 'text-cyan-400';
+                let levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
+                let levelTitle = 'Fundamentos (Básico)';
+
+                if (normalizedManualLevel === 'intermedio') {
+                    levelIconClass = 'fa-cogs';
+                    levelIconColor = 'text-purple-400';
+                    levelIconBg = 'bg-purple-500/10 border-purple-500/30';
+                    levelTitle = 'Aplicaciones (Intermedio)';
+                } else if (normalizedManualLevel === 'avanzado') {
+                    levelIconClass = 'fa-rocket';
+                    levelIconColor = 'text-amber-400';
+                    levelIconBg = 'bg-amber-500/10 border-amber-500/30';
+                    levelTitle = 'Especialización (Avanzado)';
+                }
+
+                // Two independent icons for Manuals
                 iconsContainerHTML = `
                 <div class="absolute bottom-3 left-3 flex items-center gap-2">
-                    <div class="flex items-center justify-center bg-cyan-500/10 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="Fundamentos (Básico)">
-                        <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                    <div class="flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${levelTitle}">
+                        <i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i>
                     </div>
                     <div class="flex items-center justify-center bg-blue-500/10 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="Manual">
                         <i class="fas fa-book-open text-lg text-blue-400"></i>
@@ -914,11 +948,8 @@
                     if (currentLevel === 'Manual') {
                         return c.type.toLowerCase() === 'manual';
                     } else {
-                        // El filtro Básico/Fundamentos incluye tanto cursos básicos como manuales
-                        if (currentLevel === 'Básico') {
-                            return c.level.toLowerCase() === 'básico' || c.type.toLowerCase() === 'manual';
-                        }
-                        return c.level.toLowerCase() === currentLevel.toLowerCase() && c.type.toLowerCase() !== 'manual';
+                        // Para los filtros de nivel (Básico, Intermedio, Avanzado), mostrar cursos y manuales de ese nivel.
+                        return c.level.toLowerCase() === currentLevel.toLowerCase();
                     }
                 }
                 return true;
@@ -1312,16 +1343,14 @@
         document.addEventListener("DOMContentLoaded", () => {
             calculateCourseRatings();
             updateStudentCounts();
-            
-            // Set basic border default logic
-            const basicoCard = document.querySelector('.learning-step:first-child');
-            if (basicoCard) {
-                document.querySelectorAll('.learning-step').forEach(step => step.classList.add('border-slate-700'));
-                basicoCard.classList.remove('border-slate-700');
-                basicoCard.classList.add('border-cyan-500');
-            }
 
-            applyFilters(); // Uses 'Básico' by default
+            // Set no filter active on load
+            document.querySelectorAll('.learning-step').forEach(step => {
+                step.classList.add('border-slate-700');
+                step.classList.remove('border-cyan-500', 'border-blue-500', 'border-purple-500', 'border-amber-500');
+            });
+
+            applyFilters(); // Uses 'Todos' by default
             updateAllUI();
             if (window.lucide) lucide.createIcons();
             setTimeout(() => { initVisitorInfo(); loadData(true); }, 300);

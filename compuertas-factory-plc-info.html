@@ -7,7 +7,7 @@
     <link rel="icon" href="img/AA (38).png" type="image/png">
     
     <!-- LIBRERÍAS Y FUENTES -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/info-page.css">
@@ -19,7 +19,7 @@
             --celeste: #2db8ce;
         }
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Oswald', sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
             scroll-behavior: smooth;
@@ -46,8 +46,6 @@
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: #0f172a;
         }
-        
-        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
 
         .module-card {
             transition: all 0.3s ease;
@@ -164,7 +162,7 @@
 
             <!-- PERFIL DE INGRESO -->
             <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Perfil del Participante</h2>
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--celeste)">Perfil del Participante</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600 font-medium">
                     <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
                         <i class="fas fa-user-graduate text-[#2db8ce] mt-1"></i>
@@ -219,7 +217,7 @@
             <!-- TEMARIO / MÓDULOS -->
             <section class="space-y-6">
                 <div class="flex justify-between items-end mb-6">
-                    <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 border-[#2db8ce] pl-4 font-display">Contenido del curso</h2>
+                    <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 border-[#2db8ce] pl-4">Contenido del curso</h2>
                     <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">12 Clases • Acceso de por vida</span>
                 </div>
                 
@@ -230,7 +228,7 @@
                     </div>
                     <div class="flex items-center gap-3 mb-6">
                         <span class="bg-cyan-500 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">Módulo 01</span>
-                        <h3 class="text-xl font-black uppercase font-display text-white">Introducción y Lógica Básica</h3>
+                        <h3 class="text-xl font-black uppercase text-white">Introducción y Lógica Básica</h3>
                     </div>
                     <ul class="space-y-3 text-sm font-medium text-slate-200">
                         <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 text-cyan-400"></i><span>Introducción al Entorno de Trabajo de LOGO!.</span></li>
@@ -248,7 +246,7 @@
                     </div>
                     <div class="flex items-center gap-3 mb-6">
                         <span class="bg-[#0f172a] text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">Módulo 02</span>
-                        <h3 class="text-xl font-black uppercase font-display text-[#0f172a]">Simulaciones y Proyectos 3D</h3>
+                        <h3 class="text-xl font-black uppercase text-[#0f172a]">Simulaciones y Proyectos 3D</h3>
                     </div>
                     <ul class="space-y-3 text-sm font-medium text-[#0f172a]">
                         <li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 opacity-80"></i><span>Configuración y entorno de Factory IO.</span></li>
@@ -270,17 +268,17 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#2db8ce] text-white mb-4 shadow-lg shadow-cyan-500/20"><i class="fas fa-brain"></i></div>
-                        <h4 class="font-bold text-xs uppercase mb-2 text-cyan-700 font-display tracking-tight">Lógica Digital Programada</h4>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-cyan-700 tracking-tight">Lógica Digital Programada</h4>
                         <p class="text-[11px] text-slate-600 leading-relaxed">Capacidad para implementar compuertas lógicas (AND, OR, NOT) en un PLC para resolver problemas de control.</p>
                     </div>
                     <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#1877f2] text-white mb-4 shadow-lg shadow-blue-500/20"><i class="fas fa-link"></i></div>
-                        <h4 class="font-bold text-xs uppercase mb-2 text-blue-700 font-display tracking-tight">Integración de Sistemas</h4>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-blue-700 tracking-tight">Integración de Sistemas</h4>
                         <p class="text-[11px] text-slate-600 leading-relaxed">Habilidad para comunicar el PLC virtual con el simulador 3D Factory IO, enlazando la lógica con la acción.</p>
                     </div>
                     <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-emerald-500 text-white mb-4 shadow-lg shadow-emerald-500/20"><i class="fas fa-cube"></i></div>
-                        <h4 class="font-bold text-xs uppercase mb-2 text-emerald-700 font-display tracking-tight">Simulación 3D</h4>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-emerald-700 tracking-tight">Simulación 3D</h4>
                         <p class="text-[11px] text-slate-600 leading-relaxed">Competencia para probar y validar algoritmos de control en maquetas industriales virtuales hiperrealistas.</p>
                     </div>
                 </div>
@@ -296,7 +294,7 @@
                         <img src="img/AA(41).ico" alt="Certificado UPTA" class="w-full h-full object-contain">
                     </div>
                     <div class="relative z-10 text-center sm:text-left">
-                        <h4 class="font-black text-base text-white mb-1 uppercase tracking-tight font-display">Certificación UPTA</h4>
+                        <h4 class="font-black text-base text-white mb-1 uppercase tracking-tight">Certificación UPTA</h4>
                         <p class="text-xs text-slate-300 font-medium leading-relaxed">
                             Avalado por el Departamento de postgrado de la Universidad Politécnica Territorial del Estado Aragua.
                         </p>
@@ -306,7 +304,7 @@
 
             <!-- REQUISITOS (Actualizados con Tarjeta Blanca) -->
             <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Requisitos</h2>
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4" style="border-color: var(--celeste)">Requisitos</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
                         <i class="fas fa-laptop text-2xl text-emerald-500 mb-2"></i>
@@ -328,7 +326,7 @@
 
             <!-- RECURSOS (ACTUALIZADO) -->
             <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Recursos Incluidos</h2>
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4" style="border-color: var(--celeste)">Recursos Incluidos</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
                         <i class="fas fa-laptop-code text-2xl text-blue-500 mb-2"></i>
@@ -347,7 +345,7 @@
 
             <!-- DATOS GENERALES DEL CURSO -->
             <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Datos Generales del Curso</h2>
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--celeste)">Datos Generales del Curso</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm font-medium">
                     <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
                         <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Modalidad</p>
