@@ -850,6 +850,7 @@
                 <div style="display: flex; align-items: center; gap: 10px; cursor: pointer;" onclick="window.location.href='index.html'">
                 <img src="img/AA (38).webp" alt="Logo" style="height: 38px;">
                     <span class="logo-text logo-text-desktop" style="font-weight: 800; text-transform: uppercase; font-size: 13px; line-height: 1.1;">
+                <span class="logo-text font-extrabold uppercase text-[11px] lg:text-[13px] leading-[1.1] tracking-wider">
                     APRENDE <span>AUTOMATIZACIÓN</span>
                 </span>
                 </div>
