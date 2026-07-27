@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiales: Arranque de Motores con Contactores - Aprende Automatización</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+    
+    <!-- LIBRERÍAS Y FUENTES -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+<style>
+        /* Estilos para el perfil de usuario en modo claro (Cian Glass) */
+        body.light-mode #userProfileModal .modal-content > div:first-child {
+            background: rgba(45, 184, 206, 0.2); /* Cyan Glass */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        body.light-mode #userProfileModal .modal-content > div:last-child {
+            background-color: rgba(45, 184, 206, 0.1);
+            border-top: 1px solid rgba(45, 184, 206, 0.3);
+        }
+        body.light-mode #userProfileModal .text-white {
+            color: #0f172a; /* slate-900 */
+        }
+        body.light-mode #userProfileModal #profileEmail {
+            color: #0891b2; /* cyan-600 */
+        }
+        body.light-mode #userProfileModal .text-white\/50 {
+            color: #0e7490; /* cyan-700 */
+        }
+        body.light-mode #userProfileModal .hover\:text-white:hover {
+            color: #0f172a; /* slate-900 */
+        }
+        body.light-mode #userProfileModal .bg-white\/5 {
+            background-color: rgba(8, 145, 178, 0.15); /* Deeper Cyan Glass for badges */
+            border-color: rgba(8, 145, 178, 0.25);
+        }
+        body.light-mode #userProfileModal #profileInitials {
+            color: white; /* Mantener iniciales en blanco */
+        }
+        body.light-mode #userProfileModal #profileAdminBtn {
+            background-color: rgba(8, 145, 178, 0.1);
+            color: #0e7490;
+            border-color: rgba(8, 145, 178, 0.2);
+        }
+        body.light-mode #userProfileModal #profileAdminBtn:hover {
+            background-color: #0891b2;
+            color: white;
+        }
+        body.light-mode #userProfileModal #profileAdminBtn i {
+            color: #0891b2;
+        }
+        body.light-mode #userProfileModal #profileAdminBtn:hover i {
+            color: white;
+        }
+        /* 1. Definición de Variables de Color para Temas */
+        :root {
+            /* Paleta Clara */
+            --bg-default: #f7f9fb;
+            --bg-secondary: #ffffff;
+            --bg-dark: #0f172a; /* Para secciones oscuras en modo claro */
+            --bg-dark-accent: #1e293b;
+
+            --text-default: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #f8fafc; /* Para texto sobre fondos oscuros */
+            --text-accent: #2db8ce;
+
+            --border-default: #e2e8f0;
+            --border-light: rgba(255, 255, 255, 0.1);
+
+            --shadow-color: rgba(0, 0, 0, 0.1);
+
+            /* Colores para componentes de tarjetas */
+            --badge-bg-intermediate: #0891b2; /* cyan-600 */
+            --badge-bg-basic: #0d9488; /* teal-600 */
+            --badge-text: #ffffff;
+            --btn-accent-bg: #0891b2; /* cyan-600 */
+            --btn-accent-text: #ffffff;
+            --btn-accent-shadow: rgba(8, 145, 178, 0.3);
+            --btn-accent-border: #0e7490; /* cyan-700 */
+            --btn-accent-bg-hover: #0e7490; /* cyan-700 */
+        }
+
+        body:not(.light-mode) {
+            /* Paleta Oscura */
+            --bg-default: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e293b;
+
+            --text-default: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-light: #f8fafc;
+
+            --border-default: #334155;
+            --border-light: rgba(45, 184, 206, 0.3);
+
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* --- Estilos Generales --- */
+        .section-title {
+            color: var(--text-default);
+        }
+
+        /* --- Estilos movidos desde index.html y adaptados a variables --- */
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-default);
+            margin: 0;
+            padding: 0;
+            color: var(--text-default);
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .animate-on-hover:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 25px 50px -12px var(--shadow-color); filter: brightness(1.05); }
+
+        .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translate(0, 0, 0) scale(1); }
+        .reveal-up { transform: translateY(40px); }
+        .reveal-down { transform: translateY(-40px); }
+        .reveal-right { transform: translateX(-40px); }
+
+        .btn-glow { position: relative; overflow: hidden; transition: all 0.3s ease; }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .btn-glow::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s;
+        }
+        .btn-glow:hover::after { left: 100%; }
+
+        /* --- Secciones Tematizables --- */
+        .section-themed {
+            background-color: var(--bg-default);
+            border-top: 1px solid var(--border-default);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .section-themed .section-subtitle {
+            color: var(--text-accent);
+        }
+
+        .section-themed .section-title {
+            color: var(--text-default);
+        }
+
+        /* --- Estilo de Tarjetas de Curso (Estilo Catálogo Unificado) --- */
+        .course-card {
+            background-color: var(--bg-secondary);
+            border-radius: 1.5rem; /* 24px */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease-in-out;
+            text-align: left;
+            /* Se elimina border y box-shadow base para que lo controlen las clases de nivel */
+        }
+
+        .course-card .course-card-image-container {
+            position: relative;
+            height: 12rem;
+            overflow: hidden;
+        }
+
+        .course-card .course-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .course-card:hover .course-card-image {
+            transform: scale(1.05);
+        }
+
+        .course-card .course-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .course-card .course-card-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+            padding: 0.25rem 0.75rem;
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 9999px;
+            color: var(--badge-text);
+        }
+
+        .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
+        .course-card .badge-basic { background-color: var(--badge-bg-basic); }
+
+        .course-card .course-card-title {
+            color: var(--text-default);
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-card .course-card-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        .course-card .course-card-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-default);
+        }
+
+        .course-card .course-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .course-card .course-card-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-default);
+        }
+
+        .course-card .course-card-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .course-card .like-btn, .course-card .view-container {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+        }
+        .course-card .like-btn.liked,
+        .course-card .like-btn.liked i {
+            color: #ef4444 !important;
+        }
+        .course-card .view-container.has-views { color: #22c55e; }
+
+        .course-card .course-card-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Adaptación para que el botón metálico funcione dentro de la tarjeta */
+        .course-card .course-card-buttons .btn-metal {
+            flex: 1;
+            font-size: 10px;
+        }
+
+        /* --- Resplandor de Tarjetas por Nivel (Estilo Catálogo) --- */
+        .course-card-level-basico {
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+        .course-card-level-basico:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
+        }
+
+        .course-card-level-intermedio {
+            border: 1px solid rgba(168, 85, 247, 0.35);
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+        }
+        .course-card-level-intermedio:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
+        }
+
+        .course-card-level-avanzado {
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+        }
+        .course-card-level-avanzado:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
+        }
+
+        /* --- Estilo Tarjeta Misión --- */
+        .mission-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+        .mission-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
+        }
+
+        body:not(.light-mode) .mission-card {
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+        }
+        body:not(.light-mode) .mission-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+
+        /* --- Estilo Tarjeta Misión (Modo Claro) --- */
+        body.light-mode .mission-card {
+            background-color: #eaf0f5 !important;
+            border-color: #e2e8f0 !important;
+        }
+        body.light-mode .mission-card h3 {
+            color: #1e293b !important;
+        }
+        body.light-mode .mission-card ul {
+            color: #475569 !important;
+        }
+
+        /* --- Estilo Tarjeta Misión (Modo Oscuro) --- */
+        body:not(.light-mode) .mission-card { 
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        body:not(.light-mode) .mission-card h3 { color: #ffffff; }
+        body:not(.light-mode) .mission-card ul { color: #cbd5e1; } /* slate-300 */
+
+        /* Dark mode overrides para las tarjetas */
+        body:not(.light-mode) .course-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            /* El borde y la sombra ahora son controlados por las clases de nivel */
+        }
+
+        /* --- Resplandor de Tarjetas por Nivel (MODO OSCURO) --- */
+        body:not(.light-mode) .course-card-level-basico {
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-basico:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+
+        body:not(.light-mode) .course-card-level-intermedio {
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-intermedio:hover {
+            border-color: #a855f7;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+        }
+
+        body:not(.light-mode) .course-card-level-avanzado {
+            border: 1px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
+        }
+        body:not(.light-mode) .course-card-level-avanzado:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
+        }
+
+        body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
+        body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
+
+        /* --- Estilos para Divisor de Sección con Cables --- */
+        .section-divider {
+            width: 100%;
+            height: 60px; /* Altura del divisor */
+            margin: 0; /* Eliminado el margen para un look continuo */
+            position: relative;
+            overflow: hidden;
+        }
+        .section-divider svg path {
+            fill: none;
+            stroke-linecap: round;
+            stroke-width: 1.5;
+            stroke: var(--border-default);
+            opacity: 0.5;
+            animation: oscilloscope 8s linear infinite;
+        }
+        .section-divider svg path:nth-child(2) {
+            stroke-width: 2.5;
+            stroke: var(--text-accent); /* Color cian característico */
+            opacity: 0.6;
+            animation-delay: -2.5s;
+            animation-duration: 7s;
+        }
+        .section-divider svg path:nth-child(3) {
+            stroke-width: 1;
+            stroke: var(--text-secondary);
+            opacity: 0.3;
+            animation-delay: -5s;
+            animation-duration: 9s;
+        }
+
+        /* --- Estilos para Divisor de Sección Glitch --- */
+        .glitch-divider {
+            width: 100%;
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+            margin: -15px 0;
+        }
+        .glitch-divider svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .glitch-divider .glitch-line {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+        .glitch-divider .line-1 {
+            stroke: var(--text-accent);
+            animation: glitch1 2.5s infinite steps(1, end);
+        }
+        .glitch-divider .line-2 {
+            stroke: var(--text-secondary);
+            opacity: 0.5;
+            animation: glitch2 3s infinite steps(1, end);
+        }
+        .glitch-divider .line-3 {
+            stroke: var(--border-default);
+            opacity: 0.3;
+            animation: glitch3 2s infinite steps(1, end);
+        }
+
+        /* --- Estilos para Divisor de Rejilla Digital --- */
+        .grid-divider {
+            width: 100%;
+            height: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: -5px 0;
+        }
+        .grid-divider svg {
+            width: 100%;
+            max-width: 1000px;
+            height: 100%;
+        }
+        .grid-divider .grid-dot {
+            fill: var(--text-accent);
+            animation: pulse-grid 5s infinite ease-in-out;
+        }
+        body.light-mode .grid-divider .grid-dot { fill: var(--badge-bg-intermediate); opacity: 0.6; }
+
+        /* --- Estilos para Divisor de Sección de Circuito --- */
+        .circuit-divider {
+            width: 100%;
+            height: 80px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: -10px 0;
+        }
+        .circuit-divider svg {
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+        }
+        .circuit-divider .trace {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: var(--text-accent);
+            stroke-dasharray: 1500; /* Longitud aproximada del path */
+            stroke-dashoffset: 1500;
+            animation: draw-trace 20s linear infinite;
+        }
+        .circuit-divider .trace-bg {
+            fill: none;
+            stroke-width: 1.5;
+            stroke: var(--border-default);
+            opacity: 0.3;
+        }
+        .circuit-divider .dot {
+            fill: var(--text-accent);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        body.light-mode .circuit-divider .dot { fill: var(--badge-bg-intermediate); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes oscilloscope {
+            0%, 100% { d: path("M0,30 C240,50 480,10 720,30 S1200,50 1440,30"); }
+            20% { d: path("M0,35 C220,40 460,20 720,35 S1180,30 1440,25"); }
+            40% { d: path("M0,25 C260,60 500,5 720,25 S1220,60 1440,35"); }
+            60% { d: path("M0,32 C200,10 520,55 720,32 S1150,15 1440,30"); }
+            80% { d: path("M0,28 C300,65 420,-5 720,28 S1240,65 1440,28"); }
+        }
+        @keyframes glitch1 {
+            0%, 100% { transform: none; opacity: 1; }
+            5%, 15%, 25%, 35% { transform: translate(-5px, 2px) skewX(10deg); opacity: 0.7; }
+            10%, 20%, 30%, 40% { transform: translate(5px, -2px) skewX(-10deg); opacity: 0.7; }
+        }
+        @keyframes glitch2 {
+            0%, 100% { transform: none; opacity: 0.5; }
+            50%, 60%, 70% { transform: translate(8px, -3px) skewX(-15deg); opacity: 0.3; }
+            55%, 65%, 75% { transform: translate(-8px, 3px) skewX(15deg); opacity: 0.3; }
+        }
+        @keyframes glitch3 { 0%, 100% { opacity: 0.3; } 80%, 90% { opacity: 0.8; } 85%, 95% { opacity: 0.1; } }
+        @keyframes pulse-grid {
+            0%, 100% { opacity: 0.1; r: 1; }
+            50% { opacity: 0.8; r: 1.5; }
+        }
+        @keyframes draw-trace {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        @keyframes pulse-dot {
+            0%, 100% { r: 3; opacity: 0.6; }
+            50% { r: 4.5; opacity: 1; filter: drop-shadow(0 0 3px var(--text-accent)); }
+        }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .header-background {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: url('../img/AA (7).gif');
+            background-size: cover;
+            background-position: center;
+            animation: slowZoom 40s infinite alternate;
+            transition: opacity 0.5s ease-in-out, mix-blend-mode 0.5s ease-in-out;
+            will-change: transform; /* Optimización para el parallax */
+        }
+        body:not(.light-mode) .header-background {
+            opacity: 0.25;
+            mix-blend-mode: soft-light;
+        }
+        body.light-mode .header-background {
+            opacity: 0.2;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.15); } }
+
+        #notification {
+            position: fixed; bottom: 20px; right: 20px; transform: translateX(120%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 100000;
+        }
+        #notification.show { transform: translateX(0); }
+
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px);
+            z-index: 99999; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .modal-content {
+            background: var(--bg-secondary); /* Aplicando variable */
+            color: var(--text-default); /* Aplicando variable */
+            border-radius: 32px; width: 90%; max-width: 420px; padding: 0px;
+            transform: translateY(30px) scale(0.95); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px var(--shadow-color); max-height: 90vh; overflow-y: auto;
+        }
+
+        .prof-selected {
+            border: 2px solid #2db8ce !important;
+            background-color: rgba(45, 184, 206, 0.1) !important;
+            box-shadow: 0 0 25px rgba(45, 184, 206, 0.4);
+            transform: scale(1.05);
+        }
+
+        body:not(.light-mode) .prof-selected {
+            box-shadow: 0 0 35px rgba(45, 184, 206, 0.5);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--text-accent); border-radius: 10px; }
+
+        .metric-card {
+            background: var(--bg-secondary); /* Aplicando variable */
+            border: 1px solid var(--border-default); /* Aplicando variable */
+            padding: 16px; border-radius: 20px;
+            display: flex; flex-direction: column; gap: 4px; transition: all 0.3s ease;
+        }
+        #visitorMapGlobal { width: 100%; height: 100%; overflow: hidden; }
+
+        .special-course-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* --- Estilos para #comunidad --- */
+        .prof-btn {
+            background-color: var(--bg-dark-accent);
+            border: 1px solid var(--border-default);
+            box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+        }
+        /* Solo el texto principal del botón (ej. "Ingeniero") se mantiene blanco */
+        .prof-btn > span { color: #ffffff; }
+        .prof-btn .prof-count-bg {
+            background-color: var(--bg-default);
+            border: 1px solid var(--border-default);
+        }
+        /* Color para el número dentro del círculo, que se adapta al tema */
+        .prof-btn .prof-count-bg span { color: var(--text-default); }
+        body:not(.light-mode) .prof-btn .prof-count-bg span { color: var(--text-light); }
+
+        /* --- Estilos para #testimonios --- */
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+            cursor: pointer;
+        }
+        body:not(.card-active) .testimonial-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        /* Forzar texto claro ya que el fondo siempre es oscuro */
+        .testimonial-card p { color: #cbd5e1; }
+        .testimonial-card h4 { color: #ffffff; }
+        .testimonial-card .testimonial-role {
+            color: #94a3b8;
+        }
+
+        /* --- Estilos para #metodologia --- */
+        .methodology-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+            cursor: pointer;
+        }
+        body:not(.card-active) .methodology-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        .methodology-card .image-zoom-container img {
+            transition: transform 0.4s ease;
+        }
+        .methodology-card:hover .image-zoom-container img {
+            transform: scale(1.1);
+        }
+
+        /* --- Estilos para contenido expandido de Metodología --- */
+        .methodology-card .methodology-expanded-content {
+            display: none;
+        }
+
+        /* --- Estilos para efecto flotante de Tarjetas --- */
+        .card-overlay {
+            position: fixed;
+            inset: 0;
+            background: transparent;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .card-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .is-expanding {
+            position: fixed !important;
+            z-index: 2001 !important;
+            transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+        }
+
+        .methodology-card.is-expanded {
+            top: 50% !important;
+            left: 50% !important;
+            width: 90vw !important;
+            max-width: 850px !important;
+            height: auto !important;
+            transform: translate(-50%, -50%) !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 2.5rem !important;
+            padding: 2.5rem !important;
+            background-color: #0f172a !important; /* Fondo sólido y opaco */
+        }
+
+        .testimonial-card.is-expanded {
+            top: 50% !important;
+            left: 50% !important;
+            width: 90vw !important;
+            max-width: 800px !important;
+            height: auto !important;
+            transform: translate(-50%, -50%) !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 2rem !important;
+            padding: 2rem !important;
+            background-color: #0f172a !important; /* Fondo sólido y opaco */
+        }
+
+        .testimonial-card.is-expanded .testimonial-image-container {
+            width: 40% !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1 !important;
+            margin-bottom: 0 !important;
+            flex-shrink: 0 !important;
+            border-radius: 1.5rem;
+        }
+
+        .testimonial-card.is-expanded > .fa-quote-right {
+            display: none !important;
+        }
+
+        .methodology-card.is-expanded .image-zoom-container {
+            width: 40% !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1 !important;
+            margin-bottom: 0 !important;
+            flex-shrink: 0 !important;
+            border-radius: 1.5rem;
+        }
+
+        .methodology-card.is-expanded .methodology-short-desc {
+            display: none !important;
+        }
+
+        .methodology-card.is-expanded .methodology-expanded-content {
+            display: block !important;
+        }
+
+        .methodology-card.is-expanded .methodology-expanded-content p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .methodology-card.is-expanded h3 {
+            font-size: 2.25rem !important;
+            margin-bottom: 1rem !important;
+        }
+
+        /* Estilos para el botón de cambio de tema */
+        #theme-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-default);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #theme-toggle-btn:hover {
+            transform: scale(1.1);
+            color: var(--text-accent);
+        }
+
+        #theme-toggle-btn .sun-icon,
+        #theme-toggle-btn .moon-icon {
+            position: absolute;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        #theme-toggle-btn .moon-icon {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        body:not(.light-mode) #theme-toggle-btn .sun-icon {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        body:not(.light-mode) #theme-toggle-btn .moon-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Estilos para FAQ --- */
+        #faq details > summary {
+            list-style: none;
+        }
+        #faq details > summary::-webkit-details-marker {
+            display: none;
+        }
+        #faq details[open] summary ~ * {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 custom-scrollbar light-mode">
+
+    <main id="page-curso-detalle" class="page-content">
+        <div id="detalle-container" class="pb-24 relative z-10">
+            <div class="max-w-[1300px] mx-auto px-4 sm:px-6 relative">
+                <div class="flex flex-col items-start gap-8 lg:gap-10 mt-6 lg:mt-0">
+                    <div class="w-full bg-white rounded-[32px] shadow-xl border border-slate-200 text-left">
+                        <!-- Header -->
+                        <div class="h-64 sm:h-96 relative rounded-t-[32px] overflow-hidden">
+                            <img src="img/AA (7).gif" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                            <div class="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 right-6 sm:right-10">
+                                <span class="px-3 py-1.5 bg-[#2db8ce] text-white text-[10px] font-black uppercase tracking-widest rounded-md mb-4 inline-block shadow-md">Electricidad</span>
+                                <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tighter mb-4">Arranque de motores con contactores</h1>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <p class="text-slate-300 font-medium text-sm sm:text-base flex items-center gap-2 mr-2"><i data-lucide="clock" class="w-4 h-4"></i> Modalidad: <strong class="text-white">Online</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Content -->
+                        <div class="p-6 sm:p-10 lg:p-14 space-y-14">
+                            <section class="bg-slate-50 p-6 sm:p-8 rounded-[24px] border border-slate-100">
+                                <h2 class="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-lg bg-[#2db8ce]/10 text-[#2db8ce] flex items-center justify-center"><i data-lucide="info" class="w-4 h-4"></i></span> Resumen del Curso
+                                </h2>
+                                <p class="text-slate-600 leading-relaxed font-medium text-sm sm:text-base">Este curso está diseñado para brindarte los conocimientos teóricos y prácticos sobre el arranque y control de motores asíncronos trifásicos utilizando contactores.</p>
+                            </section>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <!-- Manuales -->
+                                <div id="mcManualsCard" class="bg-slate-800 p-6 sm:p-8 rounded-[32px] border border-slate-700 shadow-xl flex flex-col h-full">
+                                    <h3 class="text-sm font-black text-white uppercase tracking-widest border-l-4 border-blue-500 pl-3 mb-6">Manuales del Curso</h3>
+                                    <div class="space-y-4 flex-grow">
+                                        <!-- Manual 1 -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1ffP5ete5u4Sio_zgnudmXrYrg800Cerk" target="_blank" class="w-full text-left flex items-center justify-between p-4 sm:p-5 bg-slate-700 border-slate-600 hover:bg-slate-600 hover:border-slate-500 rounded-2xl hover:-translate-y-1 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20 group-hover:text-blue-300 flex items-center justify-center transition-colors"><i data-lucide="book" class="w-5 h-5"></i></div>
+                                                <div class="min-w-0">
+                                                    <span class="font-bold text-white text-sm block leading-tight">Manual: Arranque Directo (PDF)</span>
+                                                    <div class="flex items-center gap-3 mt-1">
+                                                        <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Documento PDF</span>
+                                                        <span class="flex items-center gap-1 text-[10px] font-bold text-slate-400"><i class="fas fa-download"></i> <span class="file-download-count" data-file-name="Manual: Arranque Directo (PDF)">0</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
+                                        </a>
+                                        <!-- Manual 2 -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1nE_PVCGs-A6zFvBN1BXdl1bhJVAehavv" target="_blank" class="w-full text-left flex items-center justify-between p-4 sm:p-5 bg-slate-700 border-slate-600 hover:bg-slate-600 hover:border-slate-500 rounded-2xl hover:-translate-y-1 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20 group-hover:text-blue-300 flex items-center justify-center transition-colors"><i data-lucide="book" class="w-5 h-5"></i></div>
+                                                <div class="min-w-0">
+                                                    <span class="font-bold text-white text-sm block leading-tight">Manual: Selección de Giro (PDF)</span>
+                                                    <div class="flex items-center gap-3 mt-1">
+                                                        <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Documento PDF</span>
+                                                        <span class="flex items-center gap-1 text-[10px] font-bold text-slate-400"><i class="fas fa-download"></i> <span class="file-download-count" data-file-name="Manual: Selección de Giro (PDF)">0</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
+                                        </a>
+                                        <!-- Manual 3 -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1NkOuj0TdfqaN1Dxsh8Bg9XHkZyfZ1sgP" target="_blank" class="w-full text-left flex items-center justify-between p-4 sm:p-5 bg-slate-700 border-slate-600 hover:bg-slate-600 hover:border-slate-500 rounded-2xl hover:-translate-y-1 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20 group-hover:text-blue-300 flex items-center justify-center transition-colors"><i data-lucide="book" class="w-5 h-5"></i></div>
+                                                <div class="min-w-0">
+                                                    <span class="font-bold text-white text-sm block leading-tight">Manual: Arranque Estrella Delta (PDF)</span>
+                                                    <div class="flex items-center gap-3 mt-1">
+                                                        <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Documento PDF</span>
+                                                        <span class="flex items-center gap-1 text-[10px] font-bold text-slate-400"><i class="fas fa-download"></i> <span class="file-download-count" data-file-name="Manual: Arranque Estrella Delta (PDF)">0</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
+                                        </a>
+                                        <!-- Manual 4 -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1jOr6szSf-HzX0urZkdgDoe5hAW1rxmzS" target="_blank" class="w-full text-left flex items-center justify-between p-4 sm:p-5 bg-slate-700 border-slate-600 hover:bg-slate-600 hover:border-slate-500 rounded-2xl hover:-translate-y-1 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 group-hover:bg-blue-500/20 group-hover:text-blue-300 flex items-center justify-center transition-colors"><i data-lucide="book" class="w-5 h-5"></i></div>
+                                                <div class="min-w-0">
+                                                    <span class="font-bold text-white text-sm block leading-tight">Manual: Arranque Rotórico (PDF)</span>
+                                                    <div class="flex items-center gap-3 mt-1">
+                                                        <span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Documento PDF</span>
+                                                        <span class="flex items-center gap-1 text-[10px] font-bold text-slate-400"><i class="fas fa-download"></i> <span class="file-download-count" data-file-name="Manual: Arranque Rotórico (PDF)">0</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <!-- Ejercicios -->
+                                <div id="mcExercisesCard" class="bg-[#0f172a] p-6 sm:p-8 rounded-[32px] border border-slate-800 shadow-xl flex flex-col h-full">
+                                    <h3 class="text-sm font-black text-white uppercase tracking-widest border-l-4 border-teal-500 pl-3 mb-6">Ejercicios Prácticos</h3>
+                                    <div class="space-y-4 flex-grow">
+                                        <!-- Ejercicio 1 -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1AXMe7TN17-d2_JORuMVSNLRn-7xWYYZH" target="_blank" class="w-full text-left flex items-center justify-between p-4 sm:p-5 bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-slate-600 rounded-2xl hover:-translate-y-1 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 group-hover:bg-green-500/20 group-hover:text-green-300 flex items-center justify-center transition-colors"><i data-lucide="file-code" class="w-5 h-5"></i></div>
+                                                <div class="min-w-0">
+                                                    <span class="font-bold text-white text-sm block leading-tight">Práctica: Arranque Directo</span>
+                                                    <div class="flex items-center gap-3 mt-1">
+                                                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Archivo de Práctica</span>
+                                                        <span class="flex items-center gap-1 text-[10px] font-bold text-slate-400"><i class="fas fa-download"></i> <span class="file-download-count" data-file-name="Práctica: Arranque Directo">0</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
+                                        </a>
+                                        <!-- Ejercicio 2 -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1wkB6CO8sLQJFr2xMJQXFUfHsvkVfUG2T" target="_blank" class="w-full text-left flex items-center justify-between p-4 sm:p-5 bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-slate-600 rounded-2xl hover:-translate-y-1 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 group-hover:bg-green-500/20 group-hover:text-green-300 flex items-center justify-center transition-colors"><i data-lucide="file-code" class="w-5 h-5"></i></div>
+                                                <div class="min-w-0">
+                                                    <span class="font-bold text-white text-sm block leading-tight">Práctica: Selección de Giro</span>
+                                                    <div class="flex items-center gap-3 mt-1">
+                                                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Archivo de Práctica</span>
+                                                        <span class="flex items-center gap-1 text-[10px] font-bold text-slate-400"><i class="fas fa-download"></i> <span class="file-download-count" data-file-name="Práctica: Selección de Giro">0</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
+                                        </a>
+                                        <!-- Ejercicio 3 -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1_q7jTpvQovCuF21HUBH5aFI7yZE8KmMw" target="_blank" class="w-full text-left flex items-center justify-between p-4 sm:p-5 bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-slate-600 rounded-2xl hover:-translate-y-1 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 group-hover:bg-green-500/20 group-hover:text-green-300 flex items-center justify-center transition-colors"><i data-lucide="file-code" class="w-5 h-5"></i></div>
+                                                <div class="min-w-0">
+                                                    <span class="font-bold text-white text-sm block leading-tight">Práctica: Arranque Estrella Delta</span>
+                                                    <div class="flex items-center gap-3 mt-1">
+                                                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Archivo de Práctica</span>
+                                                        <span class="flex items-center gap-1 text-[10px] font-bold text-slate-400"><i class="fas fa-download"></i> <span class="file-download-count" data-file-name="Práctica: Arranque Estrella Delta">0</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
+                                        </a>
+                                        <!-- Ejercicio 4 -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1CoNpKpgzv8XJmKkaIsRqnl0uIenHBUKw" target="_blank" class="w-full text-left flex items-center justify-between p-4 sm:p-5 bg-slate-800 border-slate-700 hover:bg-slate-700 hover:border-slate-600 rounded-2xl hover:-translate-y-1 transition-all group">
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-12 rounded-xl bg-green-500/10 text-green-400 group-hover:bg-green-500/20 group-hover:text-green-300 flex items-center justify-center transition-colors"><i data-lucide="file-code" class="w-5 h-5"></i></div>
+                                                <div class="min-w-0">
+                                                    <span class="font-bold text-white text-sm block leading-tight">Práctica: Arranque Rotórico</span>
+                                                    <div class="flex items-center gap-3 mt-1">
+                                                        <span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Archivo de Práctica</span>
+                                                        <span class="flex items-center gap-1 text-[10px] font-bold text-slate-400"><i class="fas fa-download"></i> <span class="file-download-count" data-file-name="Práctica: Arranque Rotórico">0</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/footer.js"></script>
+</body>
+</html>

@@ -549,12 +549,12 @@
             { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "10-auto-contactores-pre-info.html" },
             { id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "11-auto-plc-logo-pre-info.html" },
             { id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "12-auto-plc-grafcet-pre-info.html" },
-            { id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "#" },
-            { id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "#" },
-            { id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "#" },
-            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "#" },
-            { id: 17, name: "Taller de Tecnología Eléctrica III", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii" },
-            { id: 18, name: "Proyecto V", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html" },
+            { id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "13-auto-contactores-pre-info - diplomado.html" },
+            { id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "14-auto-plc-logo-pre-info - diplomado.html" },
+            { id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "15-auto-control-avanzado-pre-info - maestria.html" },
+            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "16-auto-control-aplicado-pre-info - maestria.html" },
+            { id: 17, name: "Taller de Tecnología Eléctrica III", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "17-Taller-III-pregrado.html" },
+            { id: 18, name: "Proyecto V", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "18-Sist-hid-Neu-pregrado.html" },
             { 
                 id: 19, 
                 name: "Manual de Arranque de motores con contactores", 
@@ -576,7 +576,7 @@
                 category: "PLC", 
                 level: "Básico", 
                 cost: 5.00, 
-                link: "20-Manual-auto-plc-logo-on-info.html", 
+                link: "20-auto-plc-basico-on-info.html", 
                 buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Automatización%20con%20PLC%20Básico" 
             },
             { 
@@ -776,8 +776,8 @@
 
             let buttonsHTML = '';
             if (isManual) {
-                const infoButtonDisabled = `<button class="btn-metal-gray w-full py-3 text-[10px] uppercase flex items-center justify-center gap-2" disabled><i class="fas fa-info-circle"></i> Info</button>`;
-                buttonsHTML = `<div class="flex flex-col gap-2 w-full">${infoButtonDisabled}</div>`;
+                const infoButton = `<button onclick="event.stopPropagation(); registerViewAndGo('${course.link}', ${course.id}, '_self')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del Manual</button>`;
+                buttonsHTML = `<div class="flex flex-col gap-2 w-full">${infoButton}</div>`;
             } else if (course.link && course.link !== "#" && course.link !== "") {
                 buttonsHTML = `<div class="flex flex-col gap-2 w-full"><button onclick="event.stopPropagation(); registerViewAndGo('${course.link}', ${course.id}, '_self')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del Curso</button></div>`;
             } else {
