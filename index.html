@@ -828,360 +828,6 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        /* ========== CORRECCIONES MÓVILES ========== */
-        @media (max-width: 768px) {
-            /* Header */
-            header .grid {
-                grid-template-columns: 1fr !important;
-                text-align: center !important;
-            }
-            header .md\:col-span-2 {
-                text-align: center !important;
-            }
-            header h1 {
-                font-size: 1.75rem !important;
-                line-height: 1.2 !important;
-            }
-            header p {
-                font-size: 0.95rem !important;
-                margin-left: auto !important;
-                margin-right: auto !important;
-            }
-            header .btn-glow {
-                display: inline-flex !important;
-                margin: 0 auto !important;
-            }
-            header .flex-wrap {
-                justify-content: center !important;
-            }
-            header img[alt="Icono"] {
-                height: 12rem !important;
-                margin-top: 1.5rem !important;
-            }
-            header .py-20 {
-                padding-top: 2rem !important;
-                padding-bottom: 2.5rem !important;
-            }
-            header .pt-36 {
-                padding-top: 5rem !important;
-            }
-
-            /* Secciones generales */
-            .page-section {
-                padding-top: 3rem !important;
-                padding-bottom: 3rem !important;
-                padding-left: 1rem !important;
-                padding-right: 1rem !important;
-            }
-            .section-title {
-                font-size: 1.5rem !important;
-                line-height: 1.25 !important;
-            }
-            .section-subtitle {
-                font-size: 0.65rem !important;
-                letter-spacing: 0.2em !important;
-            }
-
-            /* Instructor */
-            #instructor .grid {
-                grid-template-columns: 1fr !important;
-                text-align: center !important;
-            }
-            #instructor img {
-                max-width: 180px !important;
-                margin: 0 auto 1.5rem !important;
-            }
-            #instructor .md\:col-span-2 {
-                text-align: center !important;
-            }
-            #instructor p {
-                margin-left: auto !important;
-                margin-right: auto !important;
-            }
-
-            /* Misión */
-            #mision .mission-card {
-                padding: 1.5rem !important;
-            }
-            #mision .flex-col {
-                text-align: center !important;
-            }
-            #mision .border-l-2 {
-                border-left: none !important;
-                border-top: 2px solid rgba(6, 182, 212, 0.2) !important;
-                padding-left: 0 !important;
-                padding-top: 1.25rem !important;
-                margin-top: 0.5rem !important;
-            }
-
-            /* Curso Especial UPT */
-            #curso-especial .special-course-card {
-                flex-direction: column !important;
-            }
-            #curso-especial .lg\:w-2\/5 {
-                width: 100% !important;
-                aspect-ratio: 16/10 !important;
-                max-height: 250px !important;
-            }
-            #curso-especial .special-course-image {
-                position: absolute !important;
-                inset: 0 !important;
-            }
-            #curso-especial .lg\:w-3\/4 {
-                width: 100% !important;
-            }
-            #curso-especial h2 {
-                font-size: 1.5rem !important;
-            }
-            #curso-especial .p-8 {
-                padding: 1.25rem !important;
-            }
-            #curso-especial .lg\:p-12 {
-                padding: 1.25rem !important;
-            }
-            #curso-especial .grid-cols-2 {
-                grid-template-columns: 1fr !important;
-                gap: 0.75rem !important;
-            }
-            #curso-especial .absolute.bottom-6 {
-                position: relative !important;
-                bottom: auto !important;
-                left: auto !important;
-                right: auto !important;
-                margin-top: 0.75rem !important;
-            }
-            #curso-especial .absolute.top-6 {
-                top: 0.5rem !important;
-            }
-
-            /* Tarjetas de cursos - botones más grandes para tocar */
-            .course-card-buttons {
-                flex-direction: column !important;
-                gap: 0.5rem !important;
-            }
-            .course-card-buttons .btn-metal {
-                font-size: 11px !important;
-                padding-top: 0.7rem !important;
-                padding-bottom: 0.7rem !important;
-                min-height: 44px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-            }
-            .course-card .course-card-price {
-                font-size: 1.1rem !important;
-            }
-
-            /* Modalidades */
-            #modalidades .grid {
-                grid-template-columns: 1fr !important;
-            }
-
-            /* Metodología - asegurar 2 columnas en móvil */
-            #metodologia .grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 0.75rem !important;
-            }
-            #metodologia .methodology-card {
-                padding: 1rem !important;
-                border-radius: 28px !important;
-            }
-            #metodologia .methodology-card h3 {
-                font-size: 1rem !important;
-            }
-            #metodologia .image-zoom-container {
-                height: 120px !important;
-            }
-
-            /* Metodología expandida en móvil */
-            .methodology-card.is-expanded {
-                flex-direction: column !important;
-                width: 95vw !important;
-                max-width: 95vw !important;
-                padding: 1.25rem !important;
-                gap: 1rem !important;
-            }
-            .methodology-card.is-expanded .image-zoom-container {
-                width: 100% !important;
-                max-height: 180px !important;
-                aspect-ratio: 16/9 !important;
-            }
-            .methodology-card.is-expanded h3 {
-                font-size: 1.5rem !important;
-            }
-
-            /* Testimonios */
-            .testimonial-card.is-expanded {
-                flex-direction: column !important;
-                width: 95vw !important;
-                max-width: 95vw !important;
-                padding: 1.25rem !important;
-            }
-            .testimonial-card.is-expanded .testimonial-image-container {
-                width: 100% !important;
-                max-height: 180px !important;
-                aspect-ratio: 16/9 !important;
-            }
-
-            /* Comunidad (profesiones) */
-            #comunidad .grid {
-                grid-template-columns: 1fr !important;
-                gap: 2rem !important;
-            }
-            #comunidad .text-center {
-                text-align: center !important;
-            }
-            #comunidad .border-l-4 {
-                border-left: none !important;
-                border-bottom: 4px solid #1d4ed8 !important;
-                padding-left: 0 !important;
-                padding-bottom: 1rem !important;
-                margin: 0 auto 1rem !important;
-            }
-            #comunidad h2 br {
-                display: none !important;
-            }
-
-            /* Mapa Global */
-            #comunidad-global .flex-col {
-                gap: 1.25rem !important;
-            }
-            #comunidad-global .h-\[400px\] {
-                height: 300px !important;
-            }
-            #comunidad-global .rounded-\[2\.5rem\] {
-                border-radius: 1.5rem !important;
-            }
-            #comunidad-global .p-8 {
-                padding: 1.25rem !important;
-            }
-
-            /* Métricas */
-            #metrics .grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 0.75rem !important;
-            }
-            #metrics .text-3xl {
-                font-size: 1.35rem !important;
-            }
-            #metrics .text-2xl {
-                font-size: 1.1rem !important;
-            }
-
-            /* CTA / Contacto */
-            #contacto .btn-glow {
-                padding: 0.9rem 1.5rem !important;
-                font-size: 0.95rem !important;
-                width: 100% !important;
-                justify-content: center !important;
-            }
-
-            /* FAQ */
-            #faq details summary {
-                font-size: 0.95rem !important;
-                gap: 0.75rem !important;
-            }
-            #faq details {
-                padding: 0.9rem 1rem !important;
-            }
-
-            /* Divisores */
-            .section-divider {
-                height: 35px !important;
-            }
-            .circuit-divider {
-                height: 50px !important;
-            }
-            .glitch-divider {
-                height: 30px !important;
-                margin: -8px 0 !important;
-            }
-            .grid-divider {
-                height: 40px !important;
-            }
-
-            /* Modales */
-            .modal-content {
-                width: 92% !important;
-                max-width: 92vw !important;
-                border-radius: 24px !important;
-                max-height: 85vh !important;
-            }
-            #authModal .modal-content {
-                padding: 1.5rem !important;
-            }
-            #userProfileModal .modal-content > div:first-child {
-                padding: 1.5rem !important;
-            }
-            #userProfileModal .p-6 {
-                padding: 1rem !important;
-            }
-            #adminModal .modal-content {
-                height: 90vh !important;
-            }
-            #adminModal .flex-col {
-                flex-direction: column !important;
-            }
-            #adminModal .md\:w-1\/3 {
-                width: 100% !important;
-                max-height: 35% !important;
-            }
-            #adminModal .md\:w-2\/3 {
-                width: 100% !important;
-                max-height: 65% !important;
-            }
-            #adminModal .p-6 {
-                padding: 1rem !important;
-            }
-
-            /* Notificación toast */
-            #toastContainer {
-                bottom: 10px !important;
-                right: 10px !important;
-                left: 10px !important;
-            }
-
-            /* Botón de tema */
-            #theme-toggle-btn {
-                bottom: 15px !important;
-                left: 15px !important;
-                width: 42px !important;
-                height: 42px !important;
-            }
-
-            /* Ajuste de imágenes en tarjetas */
-            .course-card .course-card-image-container {
-                height: 10rem !important;
-            }
-
-            /* Asegurar que nada desborde horizontalmente */
-            body {
-                overflow-x: hidden !important;
-            }
-            .max-w-7xl {
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-            }
-        }
-
-        /* Móviles muy pequeños (hasta 380px) */
-        @media (max-width: 380px) {
-            #metodologia .grid {
-                grid-template-columns: 1fr !important;
-            }
-            #metrics .grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-            header h1 {
-                font-size: 1.4rem !important;
-            }
-            .course-card .course-card-meta {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 0.5rem !important;
-            }
-        }
     </style>
     <!-- GOOGLE CHARTS (PARA LOS MAPAS GLOBALES) -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -1414,13 +1060,13 @@
 
 <!-- SECCIÓN: HOME (ÚNICA PÁGINA) -->
 <div id="page-home" class="page-content active">
-    <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl px-0">
+    <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
         <!-- Imagen de fondo transparente -->
         <div class="absolute inset-0 z-0 opacity-40">
             <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy" style="opacity: 1;">
         </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-20 pt-24 md:pt-36">
-            <div class="flex flex-wrap justify-center sm:justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
+        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-20 pt-36">
+            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercaseel titulo tracking-widest">
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Formación Profesional</span>
                 <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Cursos Online y Presenciales</span>
                 <div id="visitor-info" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/40 border border-[#2db8ce]/30 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md opacity-0 transition-opacity duration-1000">
@@ -1430,13 +1076,13 @@
                 </div>
             </div>
             <div class="grid md:grid-cols-3 gap-8 items-center">
-                <div class="md:col-span-2 text-center md:text-left">
-                    <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
+                <div class="md:col-span-2 text-left md:text-left">
+                    <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
                     <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium mx-auto md:mx-0">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
                     <div class="mt-8"><button onclick="window.location.href='#cursos-destacados'" class="btn-glow px-8 py-4 bg-teal-500 text-white font-black rounded-2xl shadow-2xl shadow-teal-500/30 border border-teal-400 hover:bg-teal-600 transition-all uppercase flex items-center gap-3 text-base">Ver Cursos <i class="fas fa-chevron-down"></i></button></div>
                 </div>
                 <div class="flex justify-center items-center">
-                    <img id="parallax-header-image" src="img/AA(47).webp" alt="Icono" class="h-48 sm:h-56 md:h-80 lg:h-96 drop-shadow-lg transition-transform duration-100 ease-out mx-auto md:mx-0">
+                    <img id="parallax-header-image" src="img/AA(47).webp" alt="Icono" class="h-64 md:h-96 drop-shadow-lg transition-transform duration-100 ease-out">
                 </div>
             </div>
         </div>
@@ -1833,7 +1479,7 @@
                 <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Próximo <span>Curso Presencial</span></h2>
             </div>
             <div class="special-course-card course-card-level-intermedio rounded-3xl overflow-hidden flex flex-col lg:flex-row lg:items-stretch reveal reveal-up">
-                <div class="w-full lg:w-2/5 relative flex-shrink-0 aspect-video lg:aspect-square min-h-[200px] lg:min-h-0">
+                <div class="w-full lg:w-2/5 relative flex-shrink-0 lg:aspect-square">
                     <img src="https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif" alt="Curso presencial de automatización con contactores" class="special-course-image lg:absolute lg:inset-0 w-full h-full object-cover">
                     <div class="absolute top-6 left-6 z-20 flex items-center justify-center bg-purple-500/10 border-2 border-purple-500/30 backdrop-blur-sm rounded-full w-12 h-12 shadow-lg" title="Nivel Intermedio">
                         <i class="fas fa-cogs text-xl text-purple-400"></i>
@@ -1851,25 +1497,25 @@
                 <div class="lg:w-3/4 p-8 lg:p-12 flex flex-col justify-center">
                     <div>
                         <span class="section-subtitle text-[10px] font-black uppercase tracking-[0.4em] mb-4 block">Curso de ampliación y extensión profesional</span>
-                        <h2 class="text-3xl lg:text-5xl font-black uppercase leading-tight mb-8 text-white">AUTOMATIZACIÓN CON <br><span class="text-[#2db8ce]">CONTACTORES</span></h2>
+                        <h2 class="text-3xl lg:text-5xl font-black uppercase leading-tight mb-6 text-white">AUTOMATIZACIÓN <span class="text-[#2db8ce]">INDUSTRIAL</span></h2>
                         
                         <div class="space-y-6">
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-university text-[#2db8ce] text-sm"></i></div>
-                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-[#e2e8f0]">Institución</span><p class="text-xs font-bold text-white">Universidad Politécnica Territorial de Aragua (UPT Aragua)</p></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Institución</span><p class="text-xs font-bold text-white">Universidad Politécnica Territorial de Aragua (UPT Aragua)</p></div>
                                 </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-calendar-alt text-[#2db8ce] text-sm"></i></div>
-                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-[#e2e8f0]">Fechas</span><p class="text-xs font-bold text-white">Próximamente</p></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Fechas</span><p class="text-xs font-bold text-white">Próximamente</p></div>
                                 </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-clock text-[#2db8ce] text-sm"></i></div>
-                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-[#e2e8f0]">Horario</span><p class="text-xs font-bold text-white">8:00 a.m. a 2:00 p.m.</p></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Horario</span><p class="text-xs font-bold text-white">8:00 a.m. a 2:00 p.m.</p></div>
                                 </div>
                                 <div class="flex items-start gap-4">
                                     <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-hourglass-half text-[#2db8ce] text-sm"></i></div>
-                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-[#e2e8f0]">Duración</span><p class="text-xs font-bold text-white">2 Viernes intensivos</p></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Duración</span><p class="text-xs font-bold text-white">2 Viernes intensivos</p></div>
                                 </div>
                             </div>
                             <div class="pt-6 border-t flex items-start gap-3 border-white/10">
@@ -2204,7 +1850,7 @@
 
     <!-- MÉTRICAS -->
     <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl reveal">
-        <div class="max-w-7xl mx-auto grid grid-cols-3 sm:grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4 text-center px-2">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
             <div class="py-2 reveal reveal-up">
                 <div class="text-[#2db8ce] text-2xl mb-1"><i class="fas fa-users"></i></div>
                 <div id="metric-visitas" class="text-3xl font-black">0</div>
