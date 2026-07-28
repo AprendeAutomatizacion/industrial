@@ -768,6 +768,27 @@
             margin-bottom: 1rem !important;
         }
 
+        /* --- Responsividad para Tarjeta de Metodología Expandida en Móvil --- */
+        @media (max-width: 767px) {
+            .methodology-card.is-expanded {
+                flex-direction: column !important;
+                padding: 1.5rem !important;
+                gap: 1.5rem !important;
+            }
+            .methodology-card.is-expanded .image-zoom-container {
+                width: 100% !important;
+                aspect-ratio: 16 / 10 !important;
+            }
+            .methodology-card.is-expanded h3 {
+                font-size: 1.5rem !important;
+                text-align: center;
+            }
+            .methodology-card.is-expanded .methodology-expanded-content p {
+                font-size: 1rem !important;
+                text-align: justify;
+            }
+        }
+
         /* Estilos para el botón de cambio de tema */
         #theme-toggle-btn {
             position: fixed;
