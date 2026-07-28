@@ -831,20 +831,39 @@
                 // Determinar nivel para aplicar borde y colores
                 const normalizedLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
                 let levelBorderClass = '';
+                let levelIconClass = 'fa-question-circle';
                 let levelIconBg = 'bg-slate-500/10 border-slate-500/30';
                 let levelIconColor = 'text-slate-400';
                 if (normalizedLevel === 'basico') {
                     levelBorderClass = 'course-card-level-basico';
                     levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
                     levelIconColor = 'text-cyan-400';
+                    levelIconClass = 'fa-seedling';
                 } else if (normalizedLevel === 'intermedio') {
                     levelBorderClass = 'course-card-level-intermedio';
                     levelIconBg = 'bg-purple-500/10 border-purple-500/30';
                     levelIconColor = 'text-purple-400';
+                    levelIconClass = 'fa-cogs';
                 } else if (normalizedLevel === 'avanzado') {
                     levelBorderClass = 'course-card-level-avanzado';
                     levelIconBg = 'bg-amber-500/10 border-amber-500/30';
                     levelIconColor = 'text-amber-400';
+                    levelIconClass = 'fa-rocket';
+                }
+
+                let iconsHTML = '';
+                if (isManual) {
+                    iconsHTML = `
+                        <div class="absolute bottom-3 left-3 flex items-center gap-2">
+                            <div class="flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}">
+                                <i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i>
+                            </div>
+                            <div class="flex items-center justify-center bg-blue-500/10 border-2 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Manual">
+                                <i class="fas fa-book-open text-lg text-blue-400"></i>
+                            </div>
+                        </div>`;
+                } else {
+                    iconsHTML = `<div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}"><i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i></div>`;
                 }
 
                 return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col reveal reveal-up group ${levelBorderClass}" style="animation-delay: ${index*0.05}s;" onclick="grantAccess(${course.id})">
@@ -857,9 +876,7 @@
                         <div class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-secondary text-[10px] font-black px-2 py-1 rounded-md border border-white/20 shadow-lg flex items-center gap-1">
                             <i class="fas fa-star text-yellow-400"></i> ${avgRating}
                         </div>
-                        <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}">
-                            <i class="fas ${normalizedLevel === 'basico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket'} text-lg ${levelIconColor}"></i>
-                        </div>
+                        ${iconsHTML}
                     </div>
                     <div class="p-5 md:p-6 flex-grow flex flex-col">
                         <h3 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${course.name}</h3>
