@@ -768,7 +768,7 @@
             margin-bottom: 1rem !important;
         }
 
-        /* --- Responsividad para Tarjeta de Metodología Expandida en Móvil --- */
+        /* --- Responsividad para Tarjetas Flotantes Expandidas en Móvil --- */
         @media (max-width: 767px) {
             .methodology-card.is-expanded {
                 flex-direction: column !important;
@@ -786,6 +786,21 @@
             .methodology-card.is-expanded .methodology-expanded-content p {
                 font-size: 1rem !important;
                 text-align: justify;
+            }
+
+            .testimonial-card.is-expanded {
+                flex-direction: column !important;
+                padding: 1.5rem !important;
+                gap: 1.5rem !important;
+                justify-content: flex-start;
+                overflow-y: auto;
+            }
+
+            .testimonial-card.is-expanded .testimonial-image-container {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 16 / 9 !important;
+                flex-shrink: 0;
             }
         }
 
