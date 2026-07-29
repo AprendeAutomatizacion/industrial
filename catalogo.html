@@ -462,54 +462,54 @@
                 </p>
             </div>
         </header>
-    <main class="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
-        <!-- RUTA DE APRENDIZAJE -->
-        <section id="learning-path" class="mb-16 text-center">
-            <h2 class="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tighter text-white">Elige tu <span class="text-secondary">Ruta de Aprendizaje</span></h2>
-            <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
-            
-            <div class="relative flex justify-center items-center">
-                <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700/50 -translate-y-1/2 hidden md:block"></div>
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <main class="relative z-10 w-full">
+            <!-- RUTA DE APRENDIZAJE -->
+            <section id="learning-path" class="mb-16 text-center">
+                <h2 class="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tighter text-white">Elige tu <span class="text-secondary">Ruta de Aprendizaje</span></h2>
+                <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
                 
-                <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-6xl">
-                    <!-- Paso 1: Básico -->
-                    <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-cyan-500 rounded-3xl text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105 hover:bg-slate-700">
-                        <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-cyan-500 group-hover:text-white">
-                            <i class="fas fa-seedling text-2xl text-cyan-400 group-hover:text-white transition-colors"></i>
-                        </div>
-                        <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
-                        <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
-                    </div>
-                    <!-- Manuales Card -->
-                    <div onclick="filterByLevel('Manual', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-blue-500 hover:scale-105 hover:bg-slate-700">
-                        <div class="w-16 h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white">
-                            <i class="fas fa-book-open text-2xl text-blue-400 group-hover:text-white transition-colors"></i>
-                        </div>
-                        <h3 class="text-lg font-black text-white uppercase mb-1">Manuales</h3>
-                        <p class="text-xs text-slate-400">Guías prácticas y recursos para consulta rápida.</p>
-                    </div>
+                <div class="relative flex justify-center items-center">
+                    <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700/50 -translate-y-1/2 hidden md:block"></div>
                     
-                    <!-- Paso 2: Intermedio -->
-                    <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-purple-500 hover:scale-105 hover:bg-slate-700">
-                        <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
-                            <i class="fas fa-cogs text-2xl text-purple-400 group-hover:text-white transition-colors"></i>
+                    <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-6xl">
+                        <!-- Paso 1: Básico -->
+                        <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-cyan-500 rounded-3xl text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105 hover:bg-slate-700">
+                            <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-cyan-500 group-hover:text-white">
+                                <i class="fas fa-seedling text-2xl text-cyan-400 group-hover:text-white transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
+                            <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
                         </div>
-                        <h3 class="text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
-                        <p class="text-xs text-slate-400">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
-                    </div>
+                        <!-- Manuales Card -->
+                        <div onclick="filterByLevel('Manual', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-blue-500 hover:scale-105 hover:bg-slate-700">
+                            <div class="w-16 h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white">
+                                <i class="fas fa-book-open text-2xl text-blue-400 group-hover:text-white transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-black text-white uppercase mb-1">Manuales</h3>
+                            <p class="text-xs text-slate-400">Guías prácticas y recursos para consulta rápida.</p>
+                        </div>
+                        
+                        <!-- Paso 2: Intermedio -->
+                        <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-purple-500 hover:scale-105 hover:bg-slate-700">
+                            <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
+                                <i class="fas fa-cogs text-2xl text-purple-400 group-hover:text-white transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
+                            <p class="text-xs text-slate-400">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
+                        </div>
 
-                    <!-- Paso 3: Avanzado -->
-                    <div onclick="filterByLevel('Avanzado', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-amber-500 hover:scale-105 hover:bg-slate-700">
-                        <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-white">
-                            <i class="fas fa-rocket text-2xl text-amber-400 group-hover:text-white transition-colors"></i>
+                        <!-- Paso 3: Avanzado -->
+                        <div onclick="filterByLevel('Avanzado', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-amber-500 hover:scale-105 hover:bg-slate-700">
+                            <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-white">
+                                <i class="fas fa-rocket text-2xl text-amber-400 group-hover:text-white transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-black text-white uppercase mb-1">Especialización</h3>
+                            <p class="text-xs text-slate-400">Para profesionales que buscan dominar temas complejos y diplomados.</p>
                         </div>
-                        <h3 class="text-lg font-black text-white uppercase mb-1">Especialización</h3>
-                        <p class="text-xs text-slate-400">Para profesionales que buscan dominar temas complejos y diplomados.</p>
                     </div>
                 </div>
-            </div>
-        </section>
-        <main class="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
+            </section>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="catalog-grid">
                 <!-- Se llena dinámicamente -->
             </div>
