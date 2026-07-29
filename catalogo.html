@@ -537,25 +537,44 @@
         const MAX_DATA_ATTEMPTS = 3;
 
         const COURSES_DATA = [
-            { id: 1, name: "Arranque de motores con contactores", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "1-arranque-contactores-info.html", aulaLink: "1-aula-arranque-contactores.html" },
-            { id: 2, name: "Arranque de motores con PLC LOGO", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "2-arranque-plc-logo-info.html", aulaLink: "2-aula-arranque-plc-logo.html" },
-            { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 15.00, link: "3-compuertas-factory-plc-info.html" },
-            { id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "4-auto-contactores-on-info.html", buyLink: "https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4" },
-            { id: 5, name: "Automatización con PLC LOGO!", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "5-auto-plc-logo-on-info.html" },
-            { id: 6, name: "Automatización con PLC – Método Grafcet", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 20.00, link: "6-auto-plc-grafcet-on-info.html" },
-            { id: 7, name: "10 ejercicios de aplicaciones con Contactores", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "7-10-ejer-auto-contactores-on-info.html" },
-            { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO!", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "8-10-ejer-auto-plc-logo-on-info.html" },
-            { id: 9, name: "Automatización Industrial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "9-auto-industrial-pre-info.html" },
-            { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "10-auto-contactores-pre-info.html" },
-            { id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "11-auto-plc-logo-pre-info.html" },
-            { id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "12-auto-plc-grafcet-pre-info.html" },
-            { id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "13-auto-contactores-pre-info - diplomado.html" },
-            { id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "14-auto-plc-logo-pre-info - diplomado.html" },
-            { id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "15-auto-control-avanzado-pre-info - maestria.html" },
-            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "16-auto-control-aplicado-pre-info - maestria.html" },
-            { id: 17, name: "Taller de Tecnología Eléctrica III", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "17-Taller-III-pregrado.html" },
-            { id: 18, name: "Proyecto V", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "18-Sist-hid-Neu-pregrado.html" },
-            { 
+            
+{ id: 1, name: "Arranque de motores con contactores", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "1-arranque-contactores-info.html", aulaLink: "1-aula-arranque-contactores.html" },
+            
+{ id: 2, name: "Arranque de motores con PLC LOGO", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "2-arranque-plc-logo-info.html", aulaLink: "2-aula-arranque-plc-logo.html" },
+            
+{ id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 10.00, link: "3-compuertas-factory-plc-info.html" },
+            
+{ id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "4-auto-contactores-on-info.html", buyLink: "https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4" },
+            
+{ id: 5, name: "Automatización con PLC LOGO!", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 10.00, link: "5-auto-plc-logo-on-info.html" },
+            
+{ id: 6, name: "Automatización con PLC – Método Grafcet", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 10.00, link: "6-auto-plc-grafcet-on-info.html" },
+            
+{ id: 7, name: "10 ejercicios de aplicaciones con Contactores", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "7-10-ejer-auto-contactores-on-info.html" },
+            
+{ id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO!", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 10.00, link: "8-10-ejer-auto-plc-logo-on-info.html" },
+            
+{ id: 9, name: "Automatización Industrial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "9-auto-industrial-pre-info.html" },
+            
+{ id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "10-auto-contactores-pre-info.html" },
+            
+{ id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "11-auto-plc-logo-pre-info.html" },
+            
+{ id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "12-auto-plc-grafcet-pre-info.html" },
+            
+{ id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "13-auto-contactores-pre-info - diplomado.html" },
+            
+{ id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "14-auto-plc-logo-pre-info - diplomado.html" },
+            
+{ id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "15-auto-control-avanzado-pre-info - maestria.html" },
+            
+{ id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "16-auto-control-aplicado-pre-info - maestria.html" },
+            
+{ id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA)", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "17-Taller-III-pregrado.html" },
+            
+{ id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA)", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "18-Sist-hid-Neu-pregrado.html" },
+            
+{ 
                 id: 19, 
                 name: "Manual de Arranque de motores con contactores", 
                 type: "Manual", 
@@ -567,7 +586,8 @@
                 link: "19-Manual-arranque-contactores-info.html",
                 buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Arranque%20de%20motores%20con%20contactores" 
             },
-            { 
+            
+{ 
                 id: 20, 
                 name: "Manual de Automatización con PLC Básico", 
                 type: "Manual", 
@@ -579,7 +599,8 @@
                 link: "20-auto-plc-basico-on-info.html", 
                 buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Automatización%20con%20PLC%20Básico" 
             },
-            { 
+            
+{ 
                 id: 21, 
                 name: "Manual de Automatización con Contactores", 
                 type: "Manual", 
@@ -591,7 +612,8 @@
                 link: "21-Manual-auto-contactores-on-info.html", 
                 buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Automatización%20con%20Contactores" 
             },
-            { 
+            
+{ 
                 id: 22, 
                 name: "Manual de PLC Método Grafcet", 
                 type: "Manual", 
