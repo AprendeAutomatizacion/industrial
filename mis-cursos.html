@@ -423,8 +423,9 @@
                 <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">Accede a toda la información, ejercicios, manuales y contenido de los cursos que has adquirido.</p>
             </div>
         </header>
-        <main class="relative z-10 flex-grow max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
-            <div class="mb-10">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <main class="relative z-10 flex-grow w-full">
+                <div class="mb-10">
                 <!-- Tarjeta del estudiante con fondo cian glass, borde más visible e icono blanco -->
                 <div id="misCursosUserInfo" class="w-full hidden">
                     <div class="student-card backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
@@ -478,10 +479,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="coursesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"></div>
-            <div id="noResultsMisCursos" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200 shadow-sm max-w-2xl mx-auto"></div>
-        </main>
+                </div>
+                <div id="coursesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"></div>
+                <div id="noResultsMisCursos" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200 shadow-sm max-w-2xl mx-auto"></div>
+            </main>
+        </div>
     </div>
 
     <!-- Página Detalle de Curso -->

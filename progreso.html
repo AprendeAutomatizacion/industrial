@@ -397,121 +397,123 @@
             <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">Visualiza el avance detallado de todos tus cursos, tus logros y certificados.</p>
         </div>
     </header>
-    <main class="relative z-10 max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 w-full">
-
-        <!-- Cabecera en 2 columnas (sin cambios) -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <!-- Tarjeta del estudiante -->
-            <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
-                <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
-                <div class="relative z-10 flex flex-col gap-3 h-full">
-                    <div>
-                        <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2>
-                        <p class="text-white text-xl font-bold" id="dash-student-name">-</p>
-                    </div>
-                    <p class="text-slate-300 text-sm font-medium" id="dash-student-email">-</p>
-
-                    <div class="grid grid-cols-2 gap-3 mt-2">
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <main class="relative z-10 w-full">
+    
+            <!-- Cabecera en 2 columnas (sin cambios) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <!-- Tarjeta del estudiante -->
+                <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
+                    <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
+                    <div class="relative z-10 flex flex-col gap-3 h-full">
                         <div>
-                            <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
-                                <i class="fas fa-id-card text-slate-400 text-xs"></i> Cédula
-                            </p>
-                            <p class="text-white font-bold" id="dash-student-id">-</p>
+                            <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2>
+                            <p class="text-white text-xl font-bold" id="dash-student-name">-</p>
                         </div>
-                        <div>
-                            <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
-                                <i class="fas fa-phone text-slate-400 text-xs"></i> Teléfono
-                            </p>
-                            <p class="text-white font-bold" id="dash-student-phone">-</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3 mt-2">
-                        <div>
-                            <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
-                                <i class="fas fa-globe text-slate-400 text-xs"></i> País
-                            </p>
-                            <div class="flex items-center gap-1 mt-0.5">
-                                <img id="dash-student-flag" src="" class="w-4 h-auto hidden rounded-sm" alt="Bandera">
-                                <span class="text-white font-bold text-sm" id="dash-student-location">-</span>
+                        <p class="text-slate-300 text-sm font-medium" id="dash-student-email">-</p>
+    
+                        <div class="grid grid-cols-2 gap-3 mt-2">
+                            <div>
+                                <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                    <i class="fas fa-id-card text-slate-400 text-xs"></i> Cédula
+                                </p>
+                                <p class="text-white font-bold" id="dash-student-id">-</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                    <i class="fas fa-phone text-slate-400 text-xs"></i> Teléfono
+                                </p>
+                                <p class="text-white font-bold" id="dash-student-phone">-</p>
                             </div>
                         </div>
-                        <div>
-                            <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
-                                <i class="fas fa-briefcase text-slate-400 text-xs"></i> Profesión
-                            </p>
-                            <p class="text-white font-bold text-sm mt-0.5" id="dash-student-profession">-</p>
+    
+                        <div class="grid grid-cols-2 gap-3 mt-2">
+                            <div>
+                                <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                    <i class="fas fa-globe text-slate-400 text-xs"></i> País
+                                </p>
+                                <div class="flex items-center gap-1 mt-0.5">
+                                    <img id="dash-student-flag" src="" class="w-4 h-auto hidden rounded-sm" alt="Bandera">
+                                    <span class="text-white font-bold text-sm" id="dash-student-location">-</span>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
+                                    <i class="fas fa-briefcase text-slate-400 text-xs"></i> Profesión
+                                </p>
+                                <p class="text-white font-bold text-sm mt-0.5" id="dash-student-profession">-</p>
+                            </div>
+                        </div>
+    
+                        <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2">
+                            <div class="text-center">
+                                <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
+                                    <i class="fas fa-laptop text-teal-400 text-xs"></i> Online
+                                </span>
+                                <span class="text-white font-black text-xl" id="dash-student-online">0</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
+                                    <i class="fas fa-users text-purple-400 text-xs"></i> Presencial
+                                </span>
+                                <span class="text-white font-black text-xl" id="dash-student-presencial">0</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
+                                    <i class="fas fa-download text-blue-400 text-xs"></i> Descargas
+                                </span>
+                                <span class="text-white font-black text-xl" id="dash-student-downloads">0</span>
+                            </div>
+                            <div class="text-center">
+                                <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
+                                    <i class="fas fa-heart text-red-400 text-xs"></i> Likes
+                                </span>
+                                <span class="text-white font-black text-xl" id="dash-student-likes">0</span>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2">
-                        <div class="text-center">
-                            <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
-                                <i class="fas fa-laptop text-teal-400 text-xs"></i> Online
-                            </span>
-                            <span class="text-white font-black text-xl" id="dash-student-online">0</span>
+                </div>
+    
+                <!-- Columna derecha: LOGROS -->
+                <div class="bg-[#0f172a]/60 backdrop-blur-md border border-white/10 p-6 rounded-2xl relative flex flex-col">
+                    <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-trophy"></i></div>
+                    <div class="relative z-10 flex flex-col h-full">
+                        <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fas fa-medal text-yellow-400"></i> Logros
+                        </h2>
+                        <div id="achievements-container" class="flex-grow space-y-2 overflow-y-auto custom-scrollbar max-h-[200px]">
                         </div>
-                        <div class="text-center">
-                            <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
-                                <i class="fas fa-users text-purple-400 text-xs"></i> Presencial
-                            </span>
-                            <span class="text-white font-black text-xl" id="dash-student-presencial">0</span>
-                        </div>
-                        <div class="text-center">
-                            <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
-                                <i class="fas fa-download text-blue-400 text-xs"></i> Descargas
-                            </span>
-                            <span class="text-white font-black text-xl" id="dash-student-downloads">0</span>
-                        </div>
-                        <div class="text-center">
-                            <span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1">
-                                <i class="fas fa-heart text-red-400 text-xs"></i> Likes
-                            </span>
-                            <span class="text-white font-black text-xl" id="dash-student-likes">0</span>
+                        <div id="no-achievements" class="text-slate-400 text-xs italic mt-2">
+                            Aún no has culminado ningún curso.
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Columna derecha: LOGROS -->
-            <div class="bg-[#0f172a]/60 backdrop-blur-md border border-white/10 p-6 rounded-2xl relative flex flex-col">
-                <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-trophy"></i></div>
-                <div class="relative z-10 flex flex-col h-full">
-                    <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest mb-4 flex items-center gap-2">
-                        <i class="fas fa-medal text-yellow-400"></i> Logros
-                    </h2>
-                    <div id="achievements-container" class="flex-grow space-y-2 overflow-y-auto custom-scrollbar max-h-[200px]">
-                    </div>
-                    <div id="no-achievements" class="text-slate-400 text-xs italic mt-2">
-                        Aún no has culminado ningún curso.
-                    </div>
+    
+            <!-- Progreso detallado por curso -->
+            <div class="bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 mt-8">
+                <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                    <h3 class="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-laptop-code text-secondary"></i> Progreso en Cursos (Online/Presencial)</h3>
+                    <button onclick="manualRefreshProgress()" class="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white rounded-full px-4 py-1.5 shadow-md transition-all active:scale-95 font-black text-[10px] uppercase tracking-wider">
+                        <i id="refresh-progress-icon" class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+                <div id="individualCourseProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Cursos se renderizan aquí -->
                 </div>
             </div>
-        </div>
-
-        <!-- Progreso detallado por curso -->
-        <div class="bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 mt-8">
-            <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
-                <h3 class="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-laptop-code text-secondary"></i> Progreso en Cursos (Online/Presencial)</h3>
-                <button onclick="manualRefreshProgress()" class="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white rounded-full px-4 py-1.5 shadow-md transition-all active:scale-95 font-black text-[10px] uppercase tracking-wider">
-                    <i id="refresh-progress-icon" class="fas fa-sync-alt"></i> Actualizar
-                </button>
+    
+            <!-- Progreso detallado por MATERIAS -->
+            <div class="bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 mt-8">
+                <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                    <h3 class="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Progreso en Materias (Diplomados/Maestrías)</h3>
+                </div>
+                <div id="individualSubjectProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Materias se renderizan aquí -->
+                </div>
             </div>
-            <div id="individualCourseProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Cursos se renderizan aquí -->
-            </div>
-        </div>
-
-        <!-- Progreso detallado por MATERIAS -->
-        <div class="bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 mt-8">
-            <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
-                <h3 class="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Progreso en Materias (Diplomados/Maestrías)</h3>
-            </div>
-            <div id="individualSubjectProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Materias se renderizan aquí -->
-            </div>
-        </div>
-    </main>
+        </main>
+    </div>
 </div>
 
 <script>
