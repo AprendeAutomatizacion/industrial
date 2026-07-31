@@ -324,6 +324,138 @@
     <style>
         .bg-optimized { background-image: url('img/AA (2).gif'); }
     </style>
+    <style>
+        :root {
+            --card-bg-default: #f7f9fb;
+            --card-bg-secondary: #ffffff;
+            --card-text-default: #1e293b;
+            --card-text-secondary: #475569;
+            --card-border-default: #e2e8f0;
+            --card-shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body:not(.light-mode) {
+            --card-bg-default: #0f172a;
+            --card-bg-secondary: #1e293b;
+            --card-text-default: #f8fafc;
+            --card-text-secondary: #94a3b8;
+            --card-border-default: #334155;
+            --card-shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* --- TARJETAS DE MATERIAL VISUAL --- */
+        .material-card {
+            position: relative;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            background-color: var(--card-bg-secondary);
+            border: 1px solid var(--card-border-default);
+            box-shadow: 0 4px 20px var(--card-shadow-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+        }
+        .material-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -8px var(--card-shadow-color), 0 0 0 1px var(--aula-text-accent);
+            border-color: var(--aula-text-accent);
+        }
+        .material-card .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            flex-shrink: 0;
+        }
+        .material-card .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .material-card:hover .card-image-wrapper img {
+            transform: scale(1.08);
+        }
+        .material-card .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.3) 50%, rgba(15, 23, 42, 0.05) 100%);
+            pointer-events: none;
+        }
+        .material-card .card-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 2;
+            padding: 0.3rem 0.85rem;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 9999px;
+            color: #ffffff;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .badge-manual {
+            background: rgba(45, 184, 206, 0.25);
+            border: 1px solid rgba(34, 211, 238, 0.4);
+        }
+        .badge-practica {
+            background: rgba(34, 197, 94, 0.25);
+            border: 1px solid rgba(74, 222, 128, 0.4);
+        }
+        .material-card .card-icon-circle {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .icon-circle-manual {
+            background: rgba(45, 184, 206, 0.15);
+            border: 2px solid rgba(45, 184, 206, 0.25);
+            color: #0891b2;
+        }
+        .icon-circle-practica {
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid rgba(34, 197, 94, 0.25);
+            color: #16a34a;
+        }
+        .material-card .card-body {
+            padding: 1.25rem 1rem 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .material-card .card-title { font-size: 0.95rem; font-weight: 700; color: var(--card-text-default); line-height: 1.35; margin: 0; }
+        .material-card .card-subtitle { font-size: 0.75rem; color: var(--card-text-secondary); font-weight: 500; margin: 0; }
+        .material-card .card-footer { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-top: 1px solid var(--card-border-default); background: rgba(0, 0, 0, 0.02); }
+        body:not(.light-mode) .material-card .card-footer { background: rgba(255, 255, 255, 0.02); }
+        .material-card .download-count-badge { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; font-weight: 700; color: var(--card-text-secondary); background: var(--card-bg-default); padding: 0.3rem 0.65rem; border-radius: 9999px; border: 1px solid var(--card-border-default); }
+        body:not(.light-mode) .material-card .download-count-badge { background: rgba(255, 255, 255, 0.05); }
+        .material-card .download-btn-text { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--aula-text-accent); transition: all 0.3s; }
+        .material-card:hover .download-btn-text { color: #0e7490; gap: 0.6rem; }
+        .material-card.glow-manual, .material-card.glow-practica { border-color: #22c55e !important; box-shadow: 0 0 22px rgba(34, 197, 94, 0.45), 0 10px 30px var(--card-shadow-color) !important; }
+        .material-card.glow-manual .download-count-badge, .material-card.glow-practica .download-count-badge { color: #22c55e !important; border-color: #22c55e !important; background: rgba(34, 197, 94, 0.08) !important; }
+        .material-card.glow-manual .download-btn-text, .material-card.glow-practica .download-btn-text { color: #22c55e !important; }
+        .not-prose {
+            max-width: none !important;
+        }
+    </style>
 </head>
 <body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
     <div class="bg-optimized"></div>
@@ -424,15 +556,8 @@
                     <div id="lesson-content-text" class="space-y-6"></div>
                 </div>
 
-                <div id="panel-resources" class="hidden mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-primary/20 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-primary/30">
-                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2 drop-shadow-md"><i class="fas fa-book text-secondary"></i> Manuales y Guías</h3>
-                        <ul id="list-manuals" class="space-y-3 text-slate-200"></ul>
-                    </div>
-                    <div class="bg-secondary/10 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-secondary/30">
-                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2 drop-shadow-md"><i class="fas fa-code text-secondary"></i> Ejercicios y Programas</h3>
-                        <ul id="list-exercises" class="space-y-3 text-slate-200"></ul>
-                    </div>
+                <div id="panel-resources" class="hidden mb-8">
+                    <!-- Las tarjetas de recursos se renderizarán aquí vía JS -->
                 </div>
 
                 <div id="panel-quiz" class="hidden mb-8 bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
@@ -478,6 +603,106 @@
             if (type !== 'loading') { setTimeout(() => el.classList.remove('visible'), 3000); }
         }
 
+        // ===================== NEW FUNCTIONS FOR RESOURCE CARDS =====================
+        function getResourceImage(moduleTitle) {
+            return 'https://i.postimg.cc/WpST30hz/tablerogif.gif';
+        }
+
+        function renderResourceCards(resources, moduleTitle) {
+            if (!resources || resources.length === 0) {
+                return '<p class="text-slate-300 dark:text-slate-500">No hay materiales descargables para este módulo.</p>';
+            }
+
+            const imageUrl = getResourceImage(moduleTitle);
+
+            const cardsHtml = resources.map(resource => {
+                const isManual = resource.type.toLowerCase() === 'manual';
+                const badgeClass = isManual ? 'badge-manual' : 'badge-practica';
+                const badgeText = isManual ? 'Manual' : 'Práctica';
+                const iconCircleClass = isManual ? 'icon-circle-manual' : 'icon-circle-practica';
+                const lucideIcon = isManual ? 'book' : 'file-code';
+                const subtitle = isManual ? 'Documento PDF · Teoría y esquemas' : 'Archivo de simulación';
+                const fileName = resource.name;
+
+                return `
+                <a href="${resource.url}" target="_blank" class="material-card" data-file-name="${fileName}" download="${fileName}">
+                    <div class="card-image-wrapper">
+                        <img src="${imageUrl}" alt="${fileName}" loading="lazy">
+                        <div class="card-image-overlay"></div>
+                        <span class="card-badge ${badgeClass}">${badgeText}</span>
+                        <div class="card-icon-circle ${iconCircleClass}">
+                            <i data-lucide="${lucideIcon}" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">${resource.name}</h4>
+                        <p class="card-subtitle">${subtitle}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="download-count-badge">
+                            <i class="fas fa-download text-[10px]"></i>
+                            <span class="file-download-count" data-file-name="${fileName}">0</span>
+                        </span>
+                        <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                    </div>
+                </a>
+                `;
+            }).join('');
+
+            return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 not-prose">${cardsHtml}</div>`;
+        }
+
+        function initializeResourceCards() {
+            const SCRIPT_URL = app.scriptUrl;
+            const COURSE_ID = 19;
+
+            function ping(action, key) {
+                try {
+                    const data = new URLSearchParams({ action, key });
+                    if (navigator.sendBeacon) {
+                        navigator.sendBeacon(SCRIPT_URL, data);
+                    } else {
+                        fetch(SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' });
+                    }
+                } catch (e) { console.error('Ping error:', e); }
+            }
+
+            function applyGlow(card) {
+                if (!card) return;
+                card.classList.add('glow-practica');
+            }
+
+            function setupClickListeners() {
+                document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
+                    if (card.dataset.listenerAttached) return;
+                    card.dataset.listenerAttached = 'true';
+
+                    card.addEventListener('click', function() {
+                        const fileName = this.dataset.fileName;
+                        if (!fileName) return;
+
+                        const statKey = `descarga_curso_${COURSE_ID}_${fileName.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                        ping('update_stat', statKey);
+                        ping('update_stat', 'descargas_totales');
+
+                        const currentUser = JSON.parse(localStorage.getItem('user'));
+                        if (currentUser) {
+                            if (!Array.isArray(currentUser.downloadedFiles)) currentUser.downloadedFiles = [];
+                            if (!currentUser.downloadedFiles.includes(fileName)) currentUser.downloadedFiles.push(fileName);
+                            if (typeof currentUser.downloadCounts !== 'object') currentUser.downloadCounts = {};
+                            currentUser.downloadCounts[fileName] = (currentUser.downloadCounts[fileName] || 0) + 1;
+                            localStorage.setItem('user', JSON.stringify(currentUser));
+                            if (typeof app !== 'undefined' && typeof app.syncUserData === 'function') app.syncUserData();
+                        }
+                        applyGlow(this);
+                    });
+                });
+            }
+
+            app.updateCardData();
+            setupClickListeners();
+        }
+
         // ===================== DATOS DEL CURSO =====================
         const COURSE_DATA = [
             { 
@@ -507,7 +732,7 @@
         ];
 
         const app = {
-            scriptUrl: 'https://script.google.com/macros/s/AKfycbxk8EW1EvIi0WjIOJ6iQYX6nF735XMvDUKgcgsvaKcgKZYiHnyeYTPTO-NSl3BXewm8/exec',
+            scriptUrl: 'https://script.google.com/macros/s/AKfycbwvrtlPg8jsW0f_pkV2-KFf6iP4VzdRvIaomL-ziLelIJXq2rhwZrKrjzreCCiChvbK/exec',
             progress: JSON.parse(localStorage.getItem('curso_progress_manual_19')) || [],
             quizScores: JSON.parse(localStorage.getItem('quiz_scores_manual_19')) || {},
             currentId: 0,
@@ -662,18 +887,26 @@
                 }
             },
 
-            ping: function(action, key) {
+            syncUserData: async function() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user || !user.email) return;
+                const email = user.email.toLowerCase();
+                const userData = JSON.stringify(user);
                 try {
-                    const url = this.scriptUrl;
-                    if (navigator.sendBeacon) {
-                        navigator.sendBeacon(url, new URLSearchParams({action, key}));
-                    } else {
-                        fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` });
-                    }
-                } catch (e) { console.error('Ping error:', e); }
+                    await fetch(this.scriptUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: new URLSearchParams({ action: 'update_user', email: email, userData: userData })
+                    });
+                } catch (e) {
+                    console.error('Sync User Data Error:', e);
+                }
             },
 
             downloadResource: function(resourceName, resourceUrl) {
+                const currentUser = JSON.parse(localStorage.getItem('user'));
+                if (!currentUser) { app.showModal('Acceso Restringido', 'Debes iniciar sesión para descargar.', 'error'); return; }
+
                 if (typeof triggerDownload === 'function') {
                     triggerDownload(resourceUrl, resourceName);
                 } else {
@@ -683,9 +916,15 @@
                 this.downloadCounts[resourceName] = (this.downloadCounts[resourceName] || 0) + 1;
                 localStorage.setItem('download_counts_manual_19', JSON.stringify(this.downloadCounts));
                 
-                this.ping('update_stat', 'descargas_totales');
-                const statKey = `descarga_manual_19_${resourceName.replace(/[^a-zA-Z0-9]/g, '_')}`;
-                this.ping('update_stat', statKey);
+                if (!Array.isArray(currentUser.downloadedFiles)) currentUser.downloadedFiles = [];
+                if (!currentUser.downloadedFiles.includes(resourceName)) {
+                    currentUser.downloadedFiles.push(resourceName);
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    this.syncUserData();
+                }
+
+                fetch(`${this.scriptUrl}?action=update_stat&key=descarga_manual_19_${resourceName.replace(/[^a-zA-Z0-9]/g, '_')}`, {mode: 'no-cors'});
+                this.renderResources(COURSE_DATA[0].resources);
             },
 
             showDashboard: function() {
@@ -784,37 +1023,25 @@
                 document.getElementById('quiz-result').classList.add('hidden');
             },
             renderResources: function(res) {
-                const manList = document.getElementById('list-manuals');
-                const exList = document.getElementById('list-exercises');
-                manList.innerHTML = '';
-                exList.innerHTML = '';
-
-                if (!res || res.length === 0) {
-                    manList.innerHTML = '<li class="text-slate-400">No hay manuales.</li>';
-                    exList.innerHTML = '<li class="text-slate-400">No hay proyectos para este manual.</li>';
-                    return;
+                const container = document.getElementById('panel-resources');
+                container.innerHTML = renderResourceCards(res, this.currentLessonTitle);
+                if (window.lucide) {
+                    lucide.createIcons();
                 }
-
-                const manuals = res.filter(r => r.type === 'manual');
-                const exercises = res.filter(r => r.type === 'exercise');
-
-                if (manuals.length > 0) {
-                    manList.innerHTML = manuals.map(r => {
-                        const safeName = r.name.replace(/'/g, "\\'");
-                        return `<li><a href="#" onclick="event.preventDefault(); app.downloadResource('${safeName}', '${r.url}')" class="flex items-center gap-2 hover:text-white transition"><i class="fas fa-file-download text-secondary"></i> ${r.name}</a></li>`;
-                    }).join('');
-                } else {
-                    manList.innerHTML = '<li class="text-slate-400">No hay manuales.</li>';
-                }
-
-                if (exercises.length > 0) {
-                    exList.innerHTML = exercises.map(r => {
-                        const safeName = r.name.replace(/'/g, "\\'");
-                        return `<li><a href="#" onclick="event.preventDefault(); app.downloadResource('${safeName}', '${r.url}')" class="flex items-center gap-2 hover:text-white transition"><i class="fas fa-file-code text-secondary"></i> ${r.name}</a></li>`;
-                    }).join('');
-                } else {
-                    exList.innerHTML = '<li class="text-white/60">No hay proyectos para este manual.</li>';
-                }
+                initializeResourceCards();
+            },
+            updateCardData: function() {
+                const currentUser = JSON.parse(localStorage.getItem('user'));
+                const downloadedFiles = (currentUser && Array.isArray(currentUser.downloadedFiles)) ? currentUser.downloadedFiles : [];
+                const downloadCounts = (currentUser && typeof currentUser.downloadCounts === 'object') ? currentUser.downloadCounts : {};
+                document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
+                    const fileName = card.dataset.fileName;
+                    if (fileName) {
+                        if (downloadedFiles.includes(fileName)) card.classList.add('glow-practica');
+                        const countSpan = card.querySelector('.file-download-count');
+                        if (countSpan) countSpan.innerText = downloadCounts[fileName] || 0;
+                    }
+                });
             },
             renderQuiz: function(quiz) {
                 const cont = document.getElementById('quiz-questions');

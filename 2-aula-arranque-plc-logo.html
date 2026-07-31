@@ -346,6 +346,138 @@
     <style>
         .bg-optimized { background-image: url('img/AA (7).gif'); }
     </style>
+    <style>
+        :root {
+            --card-bg-default: #f7f9fb;
+            --card-bg-secondary: #ffffff;
+            --card-text-default: #1e293b;
+            --card-text-secondary: #475569;
+            --card-border-default: #e2e8f0;
+            --card-shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body:not(.light-mode) {
+            --card-bg-default: #0f172a;
+            --card-bg-secondary: #1e293b;
+            --card-text-default: #f8fafc;
+            --card-text-secondary: #94a3b8;
+            --card-border-default: #334155;
+            --card-shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        /* --- TARJETAS DE MATERIAL VISUAL --- */
+        .material-card {
+            position: relative;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            background-color: var(--card-bg-secondary);
+            border: 1px solid var(--card-border-default);
+            box-shadow: 0 4px 20px var(--card-shadow-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+        }
+        .material-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -8px var(--card-shadow-color), 0 0 0 1px var(--aula-text-accent);
+            border-color: var(--aula-text-accent);
+        }
+        .material-card .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            flex-shrink: 0;
+        }
+        .material-card .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .material-card:hover .card-image-wrapper img {
+            transform: scale(1.08);
+        }
+        .material-card .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.3) 50%, rgba(15, 23, 42, 0.05) 100%);
+            pointer-events: none;
+        }
+        .material-card .card-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 2;
+            padding: 0.3rem 0.85rem;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 9999px;
+            color: #ffffff;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .badge-manual {
+            background: rgba(45, 184, 206, 0.25);
+            border: 1px solid rgba(34, 211, 238, 0.4);
+        }
+        .badge-practica {
+            background: rgba(34, 197, 94, 0.25);
+            border: 1px solid rgba(74, 222, 128, 0.4);
+        }
+        .material-card .card-icon-circle {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .icon-circle-manual {
+            background: rgba(45, 184, 206, 0.15);
+            border: 2px solid rgba(45, 184, 206, 0.25);
+            color: #0891b2;
+        }
+        .icon-circle-practica {
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid rgba(34, 197, 94, 0.25);
+            color: #16a34a;
+        }
+        .material-card .card-body {
+            padding: 1.25rem 1rem 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .material-card .card-title { font-size: 0.95rem; font-weight: 700; color: var(--card-text-default); line-height: 1.35; margin: 0; }
+        .material-card .card-subtitle { font-size: 0.75rem; color: var(--card-text-secondary); font-weight: 500; margin: 0; }
+        .material-card .card-footer { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-top: 1px solid var(--card-border-default); background: rgba(0, 0, 0, 0.02); }
+        body:not(.light-mode) .material-card .card-footer { background: rgba(255, 255, 255, 0.02); }
+        .material-card .download-count-badge { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; font-weight: 700; color: var(--card-text-secondary); background: var(--card-bg-default); padding: 0.3rem 0.65rem; border-radius: 9999px; border: 1px solid var(--card-border-default); }
+        body:not(.light-mode) .material-card .download-count-badge { background: rgba(255, 255, 255, 0.05); }
+        .material-card .download-btn-text { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--aula-text-accent); transition: all 0.3s; }
+        .material-card:hover .download-btn-text { color: #0e7490; gap: 0.6rem; }
+        .material-card.glow-manual, .material-card.glow-practica { border-color: #22c55e !important; box-shadow: 0 0 22px rgba(34, 197, 94, 0.45), 0 10px 30px var(--card-shadow-color) !important; }
+        .material-card.glow-manual .download-count-badge, .material-card.glow-practica .download-count-badge { color: #22c55e !important; border-color: #22c55e !important; background: rgba(34, 197, 94, 0.08) !important; }
+        .material-card.glow-manual .download-btn-text, .material-card.glow-practica .download-btn-text { color: #22c55e !important; }
+        .not-prose {
+            max-width: none !important;
+        }
+    </style>
 </head>
 <body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
     <div class="bg-optimized"></div>
@@ -446,15 +578,8 @@
                     <div id="lesson-content-text" class="space-y-6"></div>
                 </div>
 
-                <div id="panel-resources" class="hidden mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-primary/20 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-primary/30">
-                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2 drop-shadow-md"><i class="fas fa-book text-secondary"></i> Manuales y Guías</h3>
-                        <ul id="list-manuals" class="space-y-3 text-slate-200"></ul>
-                    </div>
-                    <div class="bg-secondary/10 backdrop-blur-md p-6 rounded-2xl shadow-sm border border-secondary/30">
-                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2 drop-shadow-md"><i class="fas fa-code text-secondary"></i> Ejercicios y Programas</h3>
-                        <ul id="list-exercises" class="space-y-3 text-slate-200"></ul>
-                    </div>
+                <div id="panel-resources" class="hidden mb-8">
+                    <!-- Las tarjetas de recursos se renderizarán aquí vía JS -->
                 </div>
 
                 <div id="panel-quiz" class="hidden mb-8 bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
@@ -500,10 +625,118 @@
             if (type !== 'loading') { setTimeout(() => el.classList.remove('visible'), 3000); }
         }
 
+        // ===================== NEW FUNCTIONS FOR RESOURCE CARDS =====================
+        function getResourceImage(moduleTitle) {
+            const title = moduleTitle.toLowerCase();
+            if (title.includes('directo')) return 'img/AA (8).webp';
+            if (title.includes('giro')) return 'img/AA (11).webp';
+            if (title.includes('estrella')) return 'img/AA (15).webp';
+            if (title.includes('rotórico')) return 'img/AA (5).gif';
+            return 'img/AA (8).webp';
+        }
+
+        function renderResourceCards(resources, moduleTitle) {
+            if (!resources || resources.length === 0) {
+                return '<p class="text-slate-300 dark:text-slate-500">No hay materiales descargables para este módulo.</p>';
+            }
+
+            const imageUrl = getResourceImage(moduleTitle);
+
+            const cardsHtml = resources.map(resource => {
+                const isManual = resource.type.toLowerCase() === 'manual';
+                const badgeClass = isManual ? 'badge-manual' : 'badge-practica';
+                const badgeText = isManual ? 'Manual' : 'Práctica';
+                const iconCircleClass = isManual ? 'icon-circle-manual' : 'icon-circle-practica';
+                const lucideIcon = isManual ? 'book' : 'file-code';
+                const subtitle = isManual ? 'Documento PDF · Teoría y esquemas' : 'Archivo de simulación';
+                const fileName = resource.name;
+
+                return `
+                <a href="${resource.url}" target="_blank" class="material-card" data-file-name="${fileName}" download="${fileName}">
+                    <div class="card-image-wrapper">
+                        <img src="${imageUrl}" alt="${fileName}" loading="lazy">
+                        <div class="card-image-overlay"></div>
+                        <span class="card-badge ${badgeClass}">${badgeText}</span>
+                        <div class="card-icon-circle ${iconCircleClass}">
+                            <i data-lucide="${lucideIcon}" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">${resource.name}</h4>
+                        <p class="card-subtitle">${subtitle}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="download-count-badge">
+                            <i class="fas fa-download text-[10px]"></i>
+                            <span class="file-download-count" data-file-name="${fileName}">0</span>
+                        </span>
+                        <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                    </div>
+                </a>
+                `;
+            }).join('');
+
+            return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 not-prose">${cardsHtml}</div>`;
+        }
+
+        function initializeResourceCards() {
+            const SCRIPT_URL = app.scriptUrl;
+            const COURSE_ID = 2;
+
+            function ping(action, key) {
+                try {
+                    const data = new URLSearchParams({ action, key });
+                    if (navigator.sendBeacon) {
+                        navigator.sendBeacon(SCRIPT_URL, data);
+                    } else {
+                        fetch(SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' });
+                    }
+                } catch (e) { console.error('Ping error:', e); }
+            }
+
+            function applyGlow(card) {
+                if (!card) return;
+                card.classList.add('glow-practica');
+            }
+
+            function setupClickListeners() {
+                document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
+                    if (card.dataset.listenerAttached) return;
+                    card.dataset.listenerAttached = 'true';
+
+                    card.addEventListener('click', function() {
+                        const fileName = this.dataset.fileName;
+                        if (!fileName) return;
+
+                        const statKey = `descarga_curso_${COURSE_ID}_${fileName.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                        ping('update_stat', statKey);
+                        ping('update_stat', 'descargas_totales');
+
+                        const currentUser = JSON.parse(localStorage.getItem('user'));
+                        if (currentUser) {
+                            if (!Array.isArray(currentUser.downloadedFiles)) currentUser.downloadedFiles = [];
+                            if (!currentUser.downloadedFiles.includes(fileName)) currentUser.downloadedFiles.push(fileName);
+                            if (typeof currentUser.downloadCounts !== 'object') currentUser.downloadCounts = {};
+                            currentUser.downloadCounts[fileName] = (currentUser.downloadCounts[fileName] || 0) + 1;
+                            localStorage.setItem('user', JSON.stringify(currentUser));
+                            const countSpan = this.querySelector('.file-download-count');
+                            if (countSpan) countSpan.innerText = currentUser.downloadCounts[fileName];
+
+                            if (typeof app !== 'undefined' && typeof app.syncUserData === 'function') app.syncUserData();
+                        }
+                        applyGlow(this);
+                    });
+                });
+            }
+
+            app.updateCardData();
+            setupClickListeners();
+        }
+
         const COURSE_DATA = [
             { id: 0, title: "Introducción a los PLC", video: "", resources: [], quiz: [], hasQuiz: false, 
               content: `<div class="space-y-6"><div class="w-full rounded-xl overflow-hidden shadow-lg mb-6 border border-white/10"><img src="https://i.postimg.cc/VkmqRQzm/1772328516782-5a6a505e-f8d2-4a45-a8bf-99e36bf7743d.jpg" class="w-full h-auto opacity-80" alt="PLC Control Panel"></div><h2 class="text-2xl font-bold text-secondary">Bienvenidos al Curso</h2><p class="text-slate-300">Bienvenidos al curso de automatización de motores utilizando Controladores Lógicos Programables (PLC). Atrás quedó la época de los enormes tableros llenos de relés electromecánicos; hoy en día, la lógica reside en el software.</p><div class="bg-black/30 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3><p class="text-slate-300">Proporcionar los conocimientos y habilidades para programar, conectar y poner en marcha sistemas de control de motores industriales mediante PLCs.</p></div><div class="bg-white/5 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-white">Objetivos Específicos</h3><ul class="list-disc pl-5 space-y-2 text-slate-300"><li>Comprender la arquitectura de entradas (I) y salidas (Q) de un PLC.</li><li>Programar secuencias lógicas utilizando el lenguaje LADDER (diagrama de contactos).</li><li>Implementar arranques directos, inversores de giro y estrella-triángulo en el software del autómata.</li><li>Utilizar temporizadores y marcas de memoria internas.</li><li>Reducir el cableado físico (Lógica Cableada vs Lógica Programada).</li></ul></div></div>` },
-            { id: 1, title: "Práctica 1: Arranque Directo con PLC", video: "https://www.youtube.com/embed/oTaMF16KNsI", resources: [{type:'manual', name:'Manual Instrucciones Básicas PLC', url:'#'},{type:'ejercicio', name:'Proyecto TIA Portal - Arranque Directo', url:'#'}], hasQuiz: true,
+            { id: 1, title: "Práctica 1: Arranque Directo con PLC", video: "https://www.youtube.com/embed/oTaMF16KNsI", resources: [{type:'manual', name:'Manual: Arranque Directo con PLC (PDF)', url:'https://drive.google.com/uc?export=download&id=1pq4LyugfpdvXRy4vFamY8anr7sFFAfuE'},{type:'ejercicio', name:'Práctica: Arranque Directo con PLC', url:'https://drive.google.com/uc?export=download&id=15XVTjhOJ9WbsyLeU8w4-LIgIzWldlKE4'}], hasQuiz: true,
               content: `<h2 class="text-2xl font-bold text-secondary">Práctica 1: Arranque Directo con PLC</h2><h3 class="text-lg font-bold text-white mt-4">Objetivos</h3><ul class="list-disc pl-5 text-slate-300 mb-4"><li>Asignar variables a Entradas Físicas (I) y Salidas Físicas (Q).</li><li>Crear un circuito de retención (enclavamiento/latch) por software.</li></ul><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 text-amber-200 mb-6"><strong>IMPORTANTE:</strong> En un PLC, el pulsador de parada de emergencia siempre debe ser cableado FÍSICAMENTE e ingresado al PLC como Normalmente Cerrado (NC) por seguridad.</div><h3 class="text-xl font-bold text-white">El Programa LADDER</h3><p class="text-slate-300 mb-4">El lenguaje LADDER imita los diagramas eléctricos tradicionales. Para un arranque directo:</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-blue-900/20 p-5 border-l-4 border-blue-500/50"><h4 class="font-bold text-blue-300">Hardware (Cableado):</h4><ul class="list-disc pl-5 text-blue-100/80"><li><strong>I0.0:</strong> Pulsador de Marcha (NO)</li><li><strong>I0.1:</strong> Pulsador de Paro (NC)</li><li><strong>Q0.0:</strong> Bobina del Contactor de línea</li></ul></div><div class="bg-green-900/20 p-5 border-l-4 border-green-500/50"><h4 class="font-bold text-green-300">Software (Lógica):</h4><ul class="list-disc pl-5 text-green-100/80"><li>Contacto Abierto de I0.0 (Marcha) en paralelo con un Contacto Abierto de Q0.0 (Enclavamiento).</li><li>En serie con Contacto Abierto de I0.1 (Paro, ya que está cerrado físicamente).</li><li>Bobina de salida asignada a Q0.0.</li></ul></div></div><p class="text-slate-300 text-sm mt-4">Al reemplazar la retención física por código, ahorramos contactos auxiliares en el contactor.</p>`,
               quiz: [
                 {q:"¿Qué significa PLC?", opts:["Panel de Lógica Central","Controlador Lógico Programable","Procesador Lógico Contactor","Programa de Lenguaje C"], ans:1},
@@ -518,7 +751,7 @@
                 {q:"¿Qué dispositivo de fuerza ejecuta finalmente la acción del PLC?", opts:["El Temporizador","El Software","El Contactor","El Cable de Red"], ans:2}
               ]
             },
-            { id: 2, title: "Práctica 2: Arranque Directo con Inversión de Giro", video: "https://www.youtube.com/embed/-bdWZP2Jq74", resources:[{type:'manual', name:'Manual Inversor LADDER', url:'#'}], hasQuiz: true,
+            { id: 2, title: "Práctica 2: Arranque Directo con Inversión de Giro", video: "https://www.youtube.com/embed/-bdWZP2Jq74", resources:[{type:'manual', name:'Manual: Inversión de Giro con PLC', url:'https://drive.google.com/uc?export=download&id=1esAilKuUSS18-W1PCJlvnmnMBdC-rFSc'}, {type:'ejercicio', name:'Proyecto: Inversión de Giro', url:'https://drive.google.com/uc?export=download&id=1VW1nLvkum8JkswBVm-ifUWNc7BEPek8h'}], hasQuiz: true,
               content: `<h2 class="text-2xl font-bold text-secondary">Práctica 2: Arranque Directo con Inversión de Giro</h2><h3 class="text-lg font-bold text-white mt-4">Objetivos</h3><ul class="list-disc pl-5 text-slate-300 mb-4"><li>Controlar dos salidas (Giro Derecha / Giro Izquierda).</li><li>Programar enclavamientos cruzados de seguridad por software.</li></ul><h3 class="text-xl font-bold text-white">Seguridad en el Software vs Hardware</h3><p class="text-slate-300 mb-4">La inversión de giro se logra excitando el contactor KM1 (Derecha) o KM2 (Izquierda). Si ambos entran a la vez, se produce un cortocircuito bifásico brutal.</p><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 mb-6"><strong>Regla de Oro en PLC:</strong> El enclavamiento eléctrico por software NO sustituye al enclavamiento físico/mecánico. Un error de código o relé pegado podría causar un corto. ¡Usa ambos!</div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Enclavamiento en Software</h4><p>En la línea que activa Q0.0 (Der), ponemos un contacto Normalmente Cerrado de Q0.1 (Izq). Así, si Q0.1 está ON, se bloquea lógicamente a Q0.0, y viceversa.</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Comando de Paro Previo</h4><p>Para invertir el sentido, es una buena práctica programar el PLC para exigir pasar por el botón de STOP (I0.2) antes de cambiar el giro.</p></div></div>`,
               quiz: [
                 {q:"¿Cuántas salidas digitales (Q) usamos para un inversor de giro trifásico básico?", opts:["Una","Dos","Tres","Ninguna"], ans:1},
@@ -533,7 +766,7 @@
                 {q:"Si queremos un retardo antes de que el motor cambie de giro para asegurar que se detuvo. ¿Qué elemento de software usamos?", opts:["Contacto auxiliar","Marca (M)","Temporizador","Salida Analógica"], ans:2}
               ]
             },
-            { id: 3, title: "Práctica 3: Arranque Estrella Delta", video: "https://www.youtube.com/embed/G-dtQZIePAo", resources:[{type:'manual', name:'Manual Temporizadores TON', url:'#'}], hasQuiz: true,
+            { id: 3, title: "Práctica 3: Arranque Estrella Delta", video: "https://www.youtube.com/embed/G-dtQZIePAo", resources:[{type:'manual', name:'Manual: Arranque Estrella-Delta con PLC', url:'https://drive.google.com/uc?export=download&id=1kO4hNjU4TBIfygAZ2mTqhSxDJ7Gr1dBd'}, {type:'ejercicio', name:'Proyecto: Arranque Estrella-Delta', url:'https://drive.google.com/uc?export=download&id=1f9ObNJjEGsFC-IVMF4gfQRSLqG3fpKok'}], hasQuiz: true,
               content: `<h2 class="text-2xl font-bold text-secondary">Práctica 3: Arranque Estrella Delta</h2><h3 class="text-lg font-bold text-white mt-4">Objetivos</h3><ul class="list-disc pl-5 text-slate-300 mb-4"><li>Usar el bloque Temporizador con Retardo a la Conexión (TON).</li><li>Reducir hardware (relés temporizados) usando bloques lógicos.</li></ul><h3 class="text-xl font-bold text-white">El bloque TON (Timer On Delay)</h3><p class="text-slate-300 mb-4">A diferencia de la lógica cableada donde debes comprar un relé temporizador neumático o electrónico, en el PLC dispones de cientos de temporizadores gratuitos por software.</p><div class="space-y-4 my-6"><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">1. Fase Estrella:</h4><p>Al dar Marcha, se activa Q0.0 (Línea principal) y Q0.1 (Estrella). En el mismo segmento, arranca el temporizador (ej. T37 o TON DB1) con un valor (PT = 5 segundos).</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">2. Conmutación a Triángulo:</h4><p>Al llegar a 5s, el contacto del temporizador cambia de estado. Este evento apaga lógicamente la salida Q0.1 (Estrella) y activa la salida Q0.2 (Triángulo).</p></div></div><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 my-4"><strong>Interbloqueo Crítico:</strong> Estrella (Q0.1) y Triángulo (Q0.2) NUNCA deben coincidir encendidos. Usa contactos cruzados y respeta un pequeño margen de tiempo muerto si el PLC es muy rápido.</div>`,
               quiz: [
                 {q:"¿Qué bloque de software reemplaza al relé temporizador físico?", opts:["Marca de Memoria (M)","Temporizador TON / TOF","Salida (Q)","Contador (C)"], ans:1},
@@ -548,7 +781,7 @@
                 {q:"Si presionamos PARO durante la transición, ¿qué debe hacer el PLC?", opts:["Esperar a que termine el tiempo","Desactivar de inmediato todas las salidas (Línea, Estrella y Triángulo)","Pasar directo a Triángulo","Bloquearse"], ans:1}
               ]
             },
-            { id: 4, title: "Práctica 4: Arranque Rotórico", video: "https://www.youtube.com/embed/xxcgNJ7omwg", resources:[{type:'manual', name:'Guía de Marcas (M) y Secuencias', url:'#'}], hasQuiz: true,
+            { id: 4, title: "Práctica 4: Arranque Rotórico", video: "https://www.youtube.com/embed/xxcgNJ7omwg", resources:[{type:'manual', name:'Manual: Arranque Rotórico con PLC', url:'https://drive.google.com/uc?export=download&id=1Pybhau42ys5_xyyKGoQ-xiGHhrT8b1_i'}, {type:'ejercicio', name:'Proyecto: Arranque Rotórico', url:'https://drive.google.com/uc?export=download&id=1xTwsP53IUfOE9KQxhBKBfVO8CDLAl-Jh'}], hasQuiz: true,
               content: `<h2 class="text-2xl font-bold text-secondary">Práctica 4: Arranque Rotórico</h2><h3 class="text-lg font-bold text-white mt-4">Objetivos</h3><ul class="list-disc pl-5 text-slate-300 mb-4"><li>Comprender el uso de las Marcas Internas (M o Relés Auxiliares Internos).</li><li>Programar secuencias anidadas (un motor inicia el arranque del siguiente).</li></ul><h3 class="text-xl font-bold text-white">Las Marcas de Memoria (Merker)</h3><p class="text-slate-300 mb-4">Las marcas (ej. M0.0, M1.2) actúan como relés auxiliares virtuales. No tienen una salida física asociada, pero guardan estados lógicos (0 o 1) dentro de la memoria RAM del PLC.</p><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 mb-6"><strong>Aplicación Clásica:</strong> Arrancar una serie de cintas transportadoras en cascada inversa para evitar que el material se amontone.</div><h4 class="font-bold text-white">La Lógica Secuencial:</h4><div class="space-y-4 my-6"><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Paso 1:</h4><p>Pulsador de marcha activa Motor 3 (Q0.2) (la cinta final) e inicia Temporizador 1.</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Paso 2:</h4><p>Al terminar Temporizador 1 (ej. 5s), arranca Motor 2 (Q0.1) y arranca Temporizador 2.</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Paso 3:</h4><p>Al terminar Temporizador 2, arranca la primera cinta, Motor 1 (Q0.0).</p></div></div><p class="text-sm text-slate-400">Si un relé térmico de algún motor se dispara, la lógica de programa debe detener secuencialmente los motores anteriores para no seguir enviando carga al punto de falla.</p>`,
               quiz: [
                 {q:"¿Qué es una Marca Interna (M)?", opts:["Una salida física","Un relé auxiliar que existe solo en el software/memoria del PLC","Una entrada de 24V","Un pulsador"], ans:1},
@@ -936,24 +1169,51 @@
                     vc.classList.remove('hidden');
                 } else { vc.innerHTML = ''; vc.classList.add('hidden'); }
                 document.getElementById('lesson-tabs-container').classList.toggle('hidden', id === 0);
-                this.renderResources(lesson.resources);
+                this.renderResources(lesson.resources, lesson.title);
                 this.renderQuiz(lesson.quiz);
                 this.updateCompleteButton();
                 this.switchTab('content');
                 this.renderSidebar();
                 document.getElementById('quiz-result').classList.add('hidden');
             },
-            
-            renderResources: function(res) {
-                const man = document.getElementById('list-manuals'), exe = document.getElementById('list-exercises');
-                man.innerHTML = ''; exe.innerHTML = '';
-                if (!res || res.length === 0) { man.innerHTML = '<li class="text-white/60">No hay manuales.</li>'; exe.innerHTML = '<li class="text-white/60">No hay proyectos.</li>'; return; }
-                res.forEach(r => {
-                    const html = `<li><a href="${r.url}" target="_blank" class="flex items-center gap-2 hover:text-white transition"><i class="fas fa-file-download text-secondary"></i> ${r.name}</a></li>`;
-                    if (r.type === 'manual') man.innerHTML += html; else exe.innerHTML += html;
+            renderResources: function(res, moduleTitle) {
+                const container = document.getElementById('panel-resources');
+                container.innerHTML = renderResourceCards(res, moduleTitle);
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+                initializeResourceCards();
+            },
+            downloadResource: function(resourceName, resourceUrl) {
+                const currentUser = JSON.parse(localStorage.getItem('user'));
+                if (!currentUser) { app.showModal('Acceso Restringido', 'Debes iniciar sesión para descargar.', 'error'); return; }
+                window.open(resourceUrl, '_blank');
+                if (!Array.isArray(currentUser.downloadedFiles)) currentUser.downloadedFiles = [];
+                if (!currentUser.downloadedFiles.includes(resourceName)) { 
+                    currentUser.downloadedFiles.push(resourceName); 
+                    localStorage.setItem('user', JSON.stringify(currentUser)); 
+                    this.syncUserData(); 
+                }
+                this.renderResources(COURSE_DATA.find(l => l.id === this.currentId).resources, this.currentLessonTitle);
+            },
+            updateCardData: function() {
+                const currentUser = JSON.parse(localStorage.getItem('user'));
+                const downloadedFiles = (currentUser && Array.isArray(currentUser.downloadedFiles)) ? currentUser.downloadedFiles : [];
+                const downloadCounts = (currentUser && typeof currentUser.downloadCounts === 'object') ? currentUser.downloadCounts : {};
+
+                document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
+                    const fileName = card.dataset.fileName;
+                    if (fileName) {
+                        if (downloadedFiles.includes(fileName)) {
+                            card.classList.add('glow-practica');
+                        }
+                        const countSpan = card.querySelector('.file-download-count');
+                        if (countSpan) {
+                            countSpan.innerText = downloadCounts[fileName] || 0;
+                        }
+                    }
                 });
             },
-            
             renderQuiz: function(quiz) {
                 const cont = document.getElementById('quiz-questions');
                 if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; }
@@ -961,7 +1221,6 @@
                     `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}"><p class="font-bold text-white mb-3">${q.q}</p><div class="space-y-2">${q.opts.map((opt,oi)=>`<label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option transition" data-opt-index="${oi}"><input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}</label>`).join('')}</div><div class="correct-feedback hidden text-green-400 text-sm mt-2"></div></div>`
                 ).join('');
             },
-            
             gradeQuiz: function() {
                 const lesson = COURSE_DATA.find(l => l.id === this.currentId);
                 if (!lesson.quiz || lesson.quiz.length === 0) return;
@@ -1060,6 +1319,23 @@
                 fetch(`${this.scriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=Arranque%20de%20motores%20con%20PLC%20LOGO!&data=${encodeURIComponent(data)}`, {
                     method: 'GET', mode: 'no-cors'
                 }).catch(e => console.error);
+            },
+            syncUserData: async function() {
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user || !user.email) return;
+                const email = user.email.toLowerCase();
+                const userData = JSON.stringify(user);
+                try {
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'update_user');
+                    formData.append('email', email);
+                    formData.append('userData', userData);
+                    await fetch(this.scriptUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData
+                    });
+                } catch (e) { console.error('Sync User Data Error:', e); }
             },
             
             updateCompleteButton: function() {
