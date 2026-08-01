@@ -479,7 +479,7 @@
                     <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-trophy"></i></div>
                     <div class="relative z-10 flex flex-col h-full">
                         <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fas fa-medal text-yellow-400"></i> Logros
+                            <i class="fas fa-trophy text-yellow-400"></i> Logros
                         </h2>
                         <div id="achievements-container" class="flex-grow space-y-2 overflow-y-auto custom-scrollbar max-h-[200px]">
                         </div>
@@ -723,7 +723,7 @@
         }
 
         const getAchievementIcon = (score) => {
-            if (score === undefined || score < 70) return '🏅'; // Medalla genérica si no hay puntaje
+            if (score === undefined || score < 70) return '';
             if (score === 100) return '🏆';
             if (score >= 90) return '🥇';
             if (score >= 80) return '🥈';
@@ -887,7 +887,7 @@
                         <h3 class="text-white font-black uppercase tracking-tighter text-sm flex items-center gap-3">
                             <i class="fas fa-book text-blue-200"></i> ${course.name}
                         </h3>
-                        ${coursePercentage === 100 ? '<i class="fas fa-medal text-amber-400 text-xl" title="Curso culminado"></i>' : ''}
+                        <span class="text-xl">${getMedalIcon(progData.avgScore)}</span>
                     </div>
                     ${progressSummaryCardHtml}
                     <h4 class="text-slate-200 font-black uppercase tracking-widest text-[10px] mb-4">Desglose de Módulos</h4>
