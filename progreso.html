@@ -814,17 +814,22 @@
                     pillClass = 'bg-green-500 text-white';
                 }
                 
-                let simpleTitle = moduleName.split(':')[0];
+                let simpleTitle = moduleName.split(':')[0].trim();
+                let abbreviatedTitle = simpleTitle.toLowerCase().replace('práctica', 'prac').replace(/\s/g, '');
                 const isIntro = index === 0 && (simpleTitle.toLowerCase().includes('contenido') || simpleTitle.toLowerCase().includes('introducción'));
                 if (isIntro) {
                     simpleTitle = "Intro";
+                    abbreviatedTitle = "Intro";
                 }
 
                 const medalIcon = getMedalIcon(score);
                 const finalIcon = isIntro ? '<i class="fas fa-book text-slate-400"></i>' : medalIcon;
 
                 return `<div class="flex flex-col items-center gap-1" title="${moduleName}">
-                    <div class="w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider">${simpleTitle}</div>
+                    <div class="w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider">
+                        <span class="hidden sm:inline">${simpleTitle}</span>
+                        <span class="sm:hidden">${abbreviatedTitle}</span>
+                    </div>
                     <span class="text-lg medal-icon">${finalIcon}</span>
                 </div>`;
             }).join('');

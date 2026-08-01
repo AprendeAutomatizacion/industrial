@@ -1036,13 +1036,20 @@
                     } else if (this.progress.includes(lesson.id)) {
                         pillClass = 'bg-green-500 text-white';
                     }
-                    let simpleTitle = lesson.title.split(':')[0];
+                    let simpleTitle = lesson.title.split(':')[0].trim();
+                    let abbreviatedTitle = simpleTitle.toLowerCase().replace('práctica', 'prac').replace(/\s/g, '');
                     const isIntro = lesson.id === 0;
-                    if (isIntro) simpleTitle = "Intro";
+                    if (isIntro) {
+                        simpleTitle = "Intro";
+                        abbreviatedTitle = "Intro";
+                    }
                     const medalIcon = getMedalIcon(score);
                     const finalIcon = isIntro ? '<i class="fas fa-book text-slate-400"></i>' : medalIcon;
                     return `<div class="flex flex-col items-center gap-1" title="${lesson.title}">
-                        <div class="w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider">${simpleTitle}</div>
+                        <div class="w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider">
+                            <span class="hidden sm:inline">${simpleTitle}</span>
+                            <span class="sm:hidden">${abbreviatedTitle}</span>
+                        </div>
                         <span class="text-lg medal-icon" style="min-height: 1.5rem;">${finalIcon}</span>
                     </div>`;
                 }).join('');
