@@ -748,11 +748,11 @@
 
     function renderUserProgress() {
         const coursesContainer = document.getElementById('individualCourseProgressCards');
-        const subjectsContainer = document.getElementById('individualSubjectProgressCards');
+        const subjectsContainer = document.getElementById('individualSubjectProgressCards'); 
         if (!coursesContainer || !subjectsContainer) return;
 
         const user = currentUser;
-        const accessedIds = user?.accessedCursos || [];
+        const accessedIds = user?.accessedCursos || []; 
         const email = user?.email?.toLowerCase();
 
         if (!email || accessedIds.length === 0) {
@@ -801,7 +801,7 @@
             
             const lessonPillsHtml = moduleNamesForPills.map((moduleName, index) => {
                 const score = scores[index];
-                let pillClass = 'bg-slate-200 text-slate-600'; // Gris por defecto (pendiente)
+                let pillClass = 'bg-slate-700 text-slate-300'; // Gris por defecto (pendiente)
                 
                 if (score !== undefined && score !== null) {
                     if (score >= 70) { pillClass = 'bg-green-500 text-white'; } 
@@ -831,17 +831,17 @@
             }).join('');
 
             let progressSummaryCardHtml = `
-            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-inner mb-6">
+            <div class="progress-summary-card bg-white/5 rounded-xl p-5 border border-white/10 shadow-inner mb-6 backdrop-blur-sm">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div class="flex-1">
-                        <h4 class="font-black uppercase tracking-widest text-xs text-slate-800"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4>
+                        <h4 class="font-black uppercase tracking-widest text-xs text-slate-300"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4>
                         <div class="grid grid-cols-4 gap-x-2 gap-y-4 mt-2" title="${done} de ${progData.total} lecciones completadas">
                             ${lessonPillsHtml}
                         </div>
                     </div>
                     <div class="flex items-center justify-center w-24 h-24 relative self-center md:self-auto flex-shrink-0">
                         <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-slate-200" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
+                            <circle class="text-white/20" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
                             <circle class="${coursePercentage === 100 ? 'text-amber-500' : 'text-green-500'} transform -rotate-90 origin-center"
                                 stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50"
                                 style="stroke-dasharray: 264; stroke-dashoffset: calc(264 - (264 * ${coursePercentage}) / 100); transition: stroke-dashoffset 0.7s ease-out;" />
@@ -849,9 +849,9 @@
                         <span class="absolute text-xl font-black ${coursePercentage === 100 ? 'text-amber-500' : 'text-green-500'}">${coursePercentage}%</span>
                     </div>
                 </div>
-                <div class="mt-4 pt-4 border-t border-slate-200 grid grid-cols-2 gap-3 text-xs">
-                    <div class="flex items-center gap-2"><i class="fas fa-calendar-check text-green-400 text-sm"></i><div><p class="text-slate-500 uppercase tracking-wider text-[10px]">Inscripción</p><p class="text-slate-800 font-bold">${enrollmentDisplay}</p></div></div>
-                    <div class="flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400 text-sm"></i><div><p class="text-slate-500 uppercase tracking-wider text-[10px]">Culminación</p><p class="text-slate-800 font-bold">${completionDisplay}</p></div></div>
+                <div class="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 gap-3 text-xs">
+                    <div class="flex items-center gap-2"><i class="fas fa-calendar-check text-green-400 text-sm"></i><div><p class="text-slate-400 uppercase tracking-wider text-[10px]">Inscripción</p><p class="text-slate-100 font-bold">${enrollmentDisplay}</p></div></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400 text-sm"></i><div><p class="text-slate-400 uppercase tracking-wider text-[10px]">Culminación</p><p class="text-slate-100 font-bold">${completionDisplay}</p></div></div>
                 </div>
                 ${certificateButton}
             </div>`;
@@ -882,7 +882,7 @@
             });
 
             const cardHtml = `
-                <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl relative border border-white/20 reveal reveal-up">
+                <div class="course-progress-card bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 reveal reveal-up">
                     <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
                         <h3 class="text-white font-black uppercase tracking-tighter text-sm flex items-center gap-3">
                             <i class="fas fa-book text-blue-200"></i> ${course.name}
