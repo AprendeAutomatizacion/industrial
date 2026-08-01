@@ -1360,6 +1360,7 @@
                     document.getElementById(`panel-${t}`).classList.toggle('hidden', t !== tabId);
                     document.getElementById(`tab-${t}`).className = (t === tabId) ? "pb-2 font-bold border-b-2 border-secondary text-secondary px-2" : "pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2";
                 });
+                document.getElementById('btn-complete').parentElement.classList.toggle('hidden', tabId !== 'content');
             },
             
             showModal: function(title, msg, type) {

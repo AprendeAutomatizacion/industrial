@@ -809,9 +809,11 @@
                         buttonsHTML += `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal btn-blue py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
                     }
                 } else {
-                    const materialesOnClick = course.id === 1 
-                        ? `window.location.href='1-arranque-contactores-material.html'` 
-                        : `grantAccess(${course.id})`;
+                    const materialesOnClick = course.id === 1
+                        ? `window.location.href='1-arranque-contactores-material.html'`
+                        : (course.id === 2
+                            ? `window.location.href='2-arranque-plc-logo-material.html'`
+                            : `grantAccess(${course.id})`);
 
                     buttonsHTML = `<button type="button" onclick="${materialesOnClick}; event.stopPropagation();" class="w-full btn-metal btn-green !py-3 !text-[10px]"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
                     ${course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal btn-blue py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
