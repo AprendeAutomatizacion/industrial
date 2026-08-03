@@ -21,8 +21,7 @@
             
             const email = user.email.toLowerCase();
             const userData = JSON.stringify(user);
-            const SCRIPT_URL = window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxk8EW1EvIi0WjIOJ6iQYX6nF735XMvDUKgcgsvaKcgKZYiHnyeYTPTO-NSl3BXewm8/exec';
-            fetch(SCRIPT_URL, {
+            fetch(AuthLogic.API_URL, {
                 method: 'POST', mode: 'no-cors',
                 body: new URLSearchParams({action: 'update_user', email: email, userData: userData})
             }).catch(e => console.error('Sync error:', e));
@@ -694,6 +693,20 @@
         body.light-mode .testimonials-title {
             color: #0891b2 !important;
         }
+
+        /* ================================================= */
+        /* === MEJORAS DE RESPONSIVIDAD GLOBALES      === */
+        /* ================================================= */
+        /* Ajustar tamaños de fuente para títulos en páginas de información en móviles.
+           Esto afecta a los h2 y h3 que usan la clase 'text-xl' para que sean más pequeños en móvil. */
+        @media (max-width: 767px) {
+            main h2.text-xl,
+            main h3.text-xl {
+                font-size: 1.125rem; /* Equivalente a text-lg de Tailwind */
+                line-height: 1.75rem;
+            }
+        }
+
 
         /* ================================================= */
         /* === ESTILO DE BOTONES UNIFICADO (PLATEADO/LED) === */

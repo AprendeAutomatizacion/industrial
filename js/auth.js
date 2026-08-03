@@ -8,7 +8,7 @@ const AuthLogic = {
     pendingAction: null,
 
     // Usar SCRIPT_URL global si existe (de mis cursos), o el valor por defecto
-    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxk8EW1EvIi0WjIOJ6iQYX6nF735XMvDUKgcgsvaKcgKZYiHnyeYTPTO-NSl3BXewm8/exec',
+    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbwvrtlPg8jsW0f_pkV2-KFf6iP4VzdRvIaomL-ziLelIJXq2rhwZrKrjzreCCiChvbK/exec',
 
     // Inicializar: Revisar si hay sesión guardada en localStorage
     init: function() {
@@ -81,6 +81,7 @@ const AuthLogic = {
                         likedCourses: Array.isArray(globalUser.likedCourses) ? globalUser.likedCourses : [],
                         accessedCursos: Array.isArray(globalUser.accessedCursos) ? globalUser.accessedCursos : [],
                         downloadedFiles: Array.isArray(globalUser.downloadedFiles) ? globalUser.downloadedFiles : [],
+                        downloadCounts: (globalUser.downloadCounts && typeof globalUser.downloadCounts === 'object') ? globalUser.downloadCounts : {},
                         ratings: globalUser.ratings || {},
                         cedula: details.cedula || "N/A",
                         telefono: details.telefono || "N/A",
