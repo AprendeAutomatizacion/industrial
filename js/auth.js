@@ -18,6 +18,7 @@ const AuthLogic = {
             try {
                 this.currentUser = JSON.parse(savedSession);
                 window.currentUser = this.currentUser; // Sincronizar con la variable global de la página
+                console.log("AuthLogic.init: currentUser loaded from localStorage", this.currentUser);
             } catch (e) {
                 console.error("Error al leer sesión", e);
             }
@@ -229,6 +230,39 @@ const AuthLogic = {
 
         // Forzar recarga para refrescar todo el estado de la UI de forma consistente
         setTimeout(() => window.location.reload(), 700);
+    },
+
+    syncUserData: async function() {
+        if (!this.currentUser || !this.currentUser.email) return;
+
+        if (typeof window.showSyncIndicator === 'function') {
+            window.showSyncIndicator('Sincronizando...', 'loading');
+        }
+
+        const email = this.currentUser.email.toLowerCase();
+        const userData = JSON.stringify(this.currentUser);
+
+        try {
+            const response = await fetch(this.API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({action: 'update_user', email: email, userData: userData})
+            });
+
+            if (response.ok || response.type === 'opaque' || response.redirected) {
+                 if (typeof window.showSyncIndicator === 'function') {
+                    window.showSyncIndicator('Progreso guardado en la nube', 'success');
+                }
+            } else {
+                throw new Error(`Server responded with status: ${response.status}`);
+            }
+        } catch (e) {
+            console.error('Sync error:', e);
+            this.showNotification('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error');
+            if (typeof window.showSyncIndicator === 'function') {
+                window.showSyncIndicator('Error de sincronización', 'error');
+            }
+        }
     },
 
     showNotification: function(title, message, type = 'info') {

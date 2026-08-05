@@ -1,35 +1,28 @@
 // navbar.js - Carga el menú de navegación en todas las páginas
 
     window.buyManual = function(courseId, buyLink) {
-        let user = null;
-        try { user = JSON.parse(localStorage.getItem('user')); } catch(e) { user = null; }
-
-        if (!user) {
-            if (typeof showNotif === 'function') {
-                showNotif('Acceso Restringido', 'Debes iniciar sesión para adquirir un manual.', 'info');
+        AuthUI.requireAuth(() => {
+            // En este punto, AuthLogic.currentUser está garantizado que existe.
+            if (!AuthLogic.currentUser.accessedCursos) {
+                AuthLogic.currentUser.accessedCursos = [];
             }
-            if (typeof openModal === 'function') { openModal('authModal'); } 
-            else if (typeof AuthUI !== 'undefined' && AuthUI.openModal) { AuthUI.openModal('login'); }
-            return;
-        }
-
-        if (!user.accessedCursos) user.accessedCursos = [];
-
-        if (!user.accessedCursos.includes(courseId)) {
-            user.accessedCursos.push(courseId);
-            localStorage.setItem('user', JSON.stringify(user));
-            
-            const email = user.email.toLowerCase();
-            const userData = JSON.stringify(user);
-            fetch(AuthLogic.API_URL, {
-                method: 'POST', mode: 'no-cors',
-                body: new URLSearchParams({action: 'update_user', email: email, userData: userData})
-            }).catch(e => console.error('Sync error:', e));
-
-            if (typeof showNotif === 'function') showNotif('¡Manual Adquirido!', 'El manual ahora aparecerá en tu sección de "Mis Cursos".', 'success');
-            if (typeof renderMisCourses === 'function') renderMisCourses();
-        }
-        window.open(buyLink, '_blank');
+    
+            if (!AuthLogic.currentUser.accessedCursos.includes(courseId)) {
+                AuthLogic.currentUser.accessedCursos.push(courseId);
+                localStorage.setItem('user', JSON.stringify(AuthLogic.currentUser));
+                
+                // Usar la nueva función de sincronización centralizada
+                AuthLogic.syncUserData();
+    
+                if (typeof showNotif === 'function') {
+                    showNotif('¡Manual Adquirido!', 'El manual ahora aparecerá en tu sección de "Mis Cursos".', 'success');
+                }
+                if (typeof renderMisCourses === 'function') {
+                    renderMisCourses();
+                }
+            }
+            window.open(buyLink, '_blank');
+        });
     }
 
     // Inyectar librería de Confeti

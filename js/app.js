@@ -405,21 +405,6 @@ function ping(action, key) {
     } catch (e) { console.error('Ping error:', e); }
 }
 
-async function syncUserProgressToExcel() {
-    if (!AuthLogic.currentUser || !AuthLogic.currentUser.email) return;
-    const email = AuthLogic.currentUser.email.toLowerCase();
-    const userData = JSON.stringify(AuthLogic.currentUser);
-    try {
-        await fetch(AuthLogic.API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({action: 'update_user', email: email, userData: userData})
-        });
-    } catch (e) { console.error('Sync error:', e); AuthLogic.showNotification('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error'); }
-}
-
 function toggleLike(btn) {
     AuthUI.requireAuth(() => {
         const id = btn.dataset.id;
@@ -442,7 +427,7 @@ function toggleLike(btn) {
         }
         
         localStorage.setItem('user', JSON.stringify(AuthLogic.currentUser));
-        syncUserProgressToExcel();
+        AuthLogic.syncUserData();
     });
 }
 
@@ -491,7 +476,7 @@ function regCom(profile) {
     if (AuthLogic.currentUser) {
         AuthLogic.currentUser.profession = profile;
         localStorage.setItem('user', JSON.stringify(AuthLogic.currentUser));
-        syncUserProgressToExcel(); // Sincroniza el objeto de usuario completo con el backend
+        AuthLogic.syncUserData(); // Sincroniza el objeto de usuario completo con el backend
     }
 
     if (typeof showNotif === 'function') {
