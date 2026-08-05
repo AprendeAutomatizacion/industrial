@@ -834,6 +834,102 @@
         .sync-indicator.visible { opacity: 1; pointer-events: auto; }
         .sync-indicator.success { background: #059669; }
         .sync-indicator.error { background: #dc2626; }
+
+        /* =====================================================
+        APRENDE AUTOMATIZACIÓN — SISTEMA GLOBAL DE BOTONES
+        Estilos de main.css integrados para robustez
+        ===================================================== */
+
+        .btn-metal-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 28px;
+            font-weight: 900;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+            -webkit-font-smoothing: antialiased;
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+        .btn-metal-solid::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -80%;
+            width: 60%; height: 100%;
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.28) 50%, transparent 100%);
+            transform: skewX(-20deg);
+            transition: left 0.5s ease;
+            pointer-events: none;
+        }
+        .btn-metal-solid:hover::before { left: 130%; }
+        .btn-metal-solid::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.45);
+            border-radius: 16px 16px 0 0;
+            pointer-events: none;
+        }
+        .btn-metal-solid:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.08);
+        }
+        .btn-metal-solid:active {
+            transform: translateY(0) scale(0.97);
+            filter: brightness(0.93);
+            transition: transform 0.08s ease;
+        }
+        .btn-metal-cyan {
+            background: linear-gradient(180deg, #38c9e0 0%, #18a0b5 40%, #0f7a8a 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -1px 0 rgba(0,0,0,0.25), 0 4px 14px rgba(45, 184, 206, 0.45), 0 1px 3px rgba(0,0,0,0.2);
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+            border: 1px solid #0a6070;
+        }
+        .btn-metal-cyan:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.2), 0 8px 24px rgba(45, 184, 206, 0.6), 0 2px 6px rgba(0,0,0,0.2); }
+        .btn-metal-cyan:active { box-shadow: inset 0 2px 5px rgba(0,0,0,0.35), 0 2px 6px rgba(45, 184, 206, 0.3); }
+
+        .btn-metal-green {
+            background: linear-gradient(180deg, #34d058 0%, #1e9e3a 40%, #146b28 100%);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 0 rgba(0,0,0,0.25), 0 4px 14px rgba(34, 197, 94, 0.45), 0 1px 3px rgba(0,0,0,0.2);
+            color: #ffffff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            border: 1px solid #0f5720;
+        }
+        .btn-metal-green:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), inset 0 -1px 0 rgba(0,0,0,0.2), 0 8px 24px rgba(34, 197, 94, 0.6), 0 2px 6px rgba(0,0,0,0.2); }
+        .btn-metal-green:active { box-shadow: inset 0 2px 5px rgba(0,0,0,0.35), 0 2px 6px rgba(34, 197, 94, 0.3); }
+
+        .btn-metal-outline-cyan {
+            background: linear-gradient(180deg, rgba(45,184,206,0.08) 0%, rgba(45,184,206,0.02) 100%);
+            box-shadow: inset 0 1px 0 rgba(45,184,206,0.3), 0 2px 8px rgba(45, 184, 206, 0.15);
+            color: #2db8ce;
+            text-shadow: 0 0 12px rgba(45, 184, 206, 0.5);
+            border: 2px solid #2db8ce;
+        }
+        .btn-metal-outline-cyan:hover { background: linear-gradient(180deg, rgba(45,184,206,0.15) 0%, rgba(45,184,206,0.05) 100%); box-shadow: inset 0 1px 0 rgba(45,184,206,0.4), 0 4px 16px rgba(45, 184, 206, 0.35); }
+        .btn-metal-outline-cyan::before { display: none; }
+
+        .btn-enrolled-badge {
+            display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px 24px; border-radius: 16px; font-weight: 900; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; background: linear-gradient(180deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #86efac; color: #15803d; box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(34, 197, 94, 0.2); cursor: default; user-select: none;
+        }
+
+        .buy-actions-container .btn-metal-solid,
+        .buy-actions-container .btn-metal-outline-cyan,
+        .buy-actions-container .btn-enrolled-badge {
+            width: 100%;
+            border-radius: 18px;
+        }
     `;
     document.head.appendChild(style);
 
