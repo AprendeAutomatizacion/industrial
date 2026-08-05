@@ -412,10 +412,12 @@ async function syncUserProgressToExcel() {
     try {
         await fetch(AuthLogic.API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `action=update_user&email=${encodeURIComponent(email)}&userData=${encodeURIComponent(userData)}`
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({action: 'update_user', email: email, userData: userData})
         });
-    } catch (e) { console.error('Sync error:', e); }
+    } catch (e) { console.error('Sync error:', e); AuthLogic.showNotification('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error'); }
 }
 
 function toggleLike(btn) {

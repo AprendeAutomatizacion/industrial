@@ -712,41 +712,56 @@
         /* === ESTILO DE BOTONES UNIFICADO (PLATEADO/LED) === */
         /* ================================================= */
         .btn-metal {
-            transition: all 0.2s ease-out !important;
+            transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out !important;
             text-transform: uppercase !important;
             font-weight: 800 !important;
-            letter-spacing: 0.05em !important;
+            letter-spacing: 0.06em !important;
             border-radius: 12px !important;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 12px 24px;
+            padding: 11px 22px;
             cursor: pointer;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            overflow: hidden;
         }
-        .btn-metal:active { transform: scale(0.97); }
+        /* Shine sweep on hover */
+        .btn-metal::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 55%; height: 100%;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
+            transform: skewX(-18deg);
+            transition: left 0.45s ease;
+            pointer-events: none;
+        }
+        .btn-metal:hover::before { left: 125%; }
+        .btn-metal:hover { transform: translateY(-2px) !important; filter: brightness(1.06); }
+        .btn-metal:active { transform: scale(0.97) translateY(0) !important; filter: brightness(0.94); transition: transform 0.08s ease !important; }
 
         /* --- LIGHT MODE --- */
         body.light-mode .btn-metal {
-            background: linear-gradient(to bottom, #f0f5f9, #d9e0e6) !important;
-            border: 1px solid #c1c9d1 !important;
-            box-shadow: inset 0 1px 0 #f5f9fa, 0 1px 3px rgba(0,0,0,0.15), 0 1px 1px rgba(0,0,0,0.1) !important;
-            text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+            background: linear-gradient(180deg, #f5f9fc 0%, #dde5ee 55%, #c8d3df 100%) !important;
+            border: 1px solid #b0bbc8 !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), inset 0 -1px 0 rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.14), 0 1px 2px rgba(0,0,0,0.08) !important;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.6);
         }
-        body.light-mode .btn-metal:hover { background: linear-gradient(to bottom, #f5f9fa, #e0e7ed) !important; }
-        body.light-mode .btn-metal:active { box-shadow: inset 0 2px 3px rgba(0,0,0,0.15) !important; }
+        body.light-mode .btn-metal:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(0,0,0,0.06), 0 5px 14px rgba(0,0,0,0.18) !important; }
+        body.light-mode .btn-metal:active { box-shadow: inset 0 2px 5px rgba(0,0,0,0.18) !important; }
 
         /* --- DARK MODE --- */
         body:not(.light-mode) .btn-metal {
-            background: linear-gradient(to bottom, #4a5568, #2d3748) !important;
+            background: linear-gradient(180deg, #5a6678 0%, #3a4252 55%, #252d3a 100%) !important;
             border: 1px solid #1a202c !important;
-            box-shadow: inset 0 1px 1px #718096, 0 1px 3px rgba(0,0,0,0.5) !important;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.5);
+            box-shadow: inset 0 1px 1px rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3) !important;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.6);
         }
-        body:not(.light-mode) .btn-metal:hover { background: linear-gradient(to bottom, #5a6578, #3d4758) !important; }
-        body:not(.light-mode) .btn-metal:active { box-shadow: inset 0 2px 4px rgba(0,0,0,0.4) !important; }
+        body:not(.light-mode) .btn-metal:hover { background: linear-gradient(180deg, #68778a 0%, #47536a 55%, #303a4a 100%) !important; box-shadow: inset 0 1px 1px rgba(255,255,255,0.18), 0 5px 16px rgba(0,0,0,0.55) !important; }
+        body:not(.light-mode) .btn-metal:active { box-shadow: inset 0 2px 6px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3) !important; }
 
         /* --- LED & TEXT COLORS --- */
         .btn-metal i { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
