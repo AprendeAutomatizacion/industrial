@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Aula Virtual - Arranque de motores con Contactores</title>
+    <title>Aula Virtual - Arranque de motores con Contactores Online</title>
     <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -468,7 +468,7 @@
         <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-md w-full shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold text-secondary mb-2 drop-shadow-md">Accede a Aprende Automatización</h2>
-                <p class="text-slate-300 text-sm">Arranque de motores con Contactores</p>
+                <p class="text-slate-300 text-sm">Arranque de motores con Contactores Online</p>
             </div>
             <form id="login-form" onsubmit="app.verifyLogin(event)" class="space-y-4">
                 <div>
@@ -507,7 +507,7 @@
             <button onclick="app.toggleSidebar()" class="text-slate-300 text-xl hover:text-white transition focus:outline-none flex-none w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10">
                 <i class="fas fa-bars"></i>
             </button>
-            <span class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm header-main-title">Arranque de motores con Contactores</span>
+            <span class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm header-main-title">Arranque de motores con Contactores Online</span>
         </div>
         <div class="flex items-center gap-2 md:gap-3 flex-none pl-2">
             <button onclick="app.toggleTheme()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Cambiar modo">
@@ -853,7 +853,7 @@
         ];
 
         const app = {
-            scriptUrl: AuthLogic.API_URL,
+            scriptUrl: 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec',
             progress: JSON.parse(localStorage.getItem('curso_progress')) || [],
             quizScores: JSON.parse(localStorage.getItem('quiz_scores')) || {},
             currentId: 0,
@@ -964,7 +964,7 @@
                 btn.disabled = true; spin.classList.remove('hidden'); 
                 txt.innerText = ' Verificando...'; err.classList.add('hidden');
                 try {
-                    const url = `${this.scriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent("Arranque de motores con contactores")}&t=${Date.now()}`;
+                    const url = `${this.scriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent("Arranque de motores con contactores Online")}&t=${Date.now()}`;
                     const resp = await fetch(url);
                     const data = await resp.json();
                     if (data.success) {
@@ -1289,29 +1289,35 @@
                     this.syncProgress();
                 }
             },
-            saveCompletionToSheet: function() {
+            // --- FUNCIONES DE COMUNICACIÓN CORREGIDAS PARA SALTAR EL BLOQUEO CORS ---
+            saveCompletionToSheet: async function() {
                 const auth = JSON.parse(localStorage.getItem('curso_auth'));
                 if (!auth || !auth.correo) return;
-                fetch(`${this.scriptUrl}`, {
-                    method: 'POST', mode: 'no-cors',
-                    body: `action=save_course_completion&email=${encodeURIComponent(auth.correo)}&courseName=${encodeURIComponent("Arranque de motores con contactores")}&completionDate=${encodeURIComponent(new Date().toISOString())}`,
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                }).catch(e => console.error);
-            },
-            resetQuiz: function() {
-                const c = document.getElementById('quiz-questions');
-                c.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-                c.querySelectorAll('.correct-feedback').forEach(f => f.classList.add('hidden'));
-                c.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('correct', 'incorrect'));
-                document.getElementById('quiz-result').classList.add('hidden');
+                try {
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'save_course_completion');
+                    formData.append('email', auth.correo);
+                    formData.append('courseName', 'Arranque de motores con contactores Online');
+                    formData.append('completionDate', new Date().toISOString());
+                    await fetch(this.scriptUrl, {
+                        method: 'POST',
+                        mode: 'no-cors', // <- ESTA LÍNEA EVITA QUE EL NAVEGADOR BLOQUEE EL POST
+                        body: formData,
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    });
+                    console.log('Finalización del curso guardada en Excel');
+                } catch (e) {
+                    console.error('Error al guardar finalización:', e);
+                }
             },
             syncProgress: function() {
                 const auth = JSON.parse(localStorage.getItem('curso_auth'));
                 if (!auth) return;
                 const data = JSON.stringify({ progress: this.progress, scores: this.quizScores });
-                fetch(`${this.scriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=Arranque%20de%20motores%20con%20contactores&data=${encodeURIComponent(data)}`, {
+                const courseName = "Arranque de motores con contactores Online";
+                fetch(`${this.scriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=${encodeURIComponent(courseName)}&data=${encodeURIComponent(data)}`, {
                     method: 'GET', mode: 'no-cors'
-                }).catch(e => console.error);
+                }).catch(e => console.error('Sync Error:', e));
             },
             syncUserData: async function() {
                 const user = JSON.parse(localStorage.getItem('user'));
@@ -1325,9 +1331,11 @@
                     formData.append('userData', userData);
                     await fetch(this.scriptUrl, {
                         method: 'POST',
-                        mode: 'no-cors',
-                        body: formData
+                        mode: 'no-cors', // <- ESTA LÍNEA EVITA QUE EL NAVEGADOR BLOQUEE EL POST
+                        body: formData,
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                     });
+                    console.log('Datos de usuario sincronizados');
                 } catch (e) { console.error('Sync User Data Error:', e); }
             },
             updateCompleteButton: function() {

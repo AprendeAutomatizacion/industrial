@@ -514,28 +514,33 @@
 
 <script>
     // ===================== CONFIGURACIÓN =====================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwvrtlPg8jsW0f_pkV2-KFf6iP4VzdRvIaomL-ziLelIJXq2rhwZrKrjzreCCiChvbK/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
 
-    // Lista completa de todos los cursos (18)
+    // Lista completa de todos los cursos (18) con nombres actualizados + Manuales
     const COURSES_DATA = [
-        { id: 1, name: "Arranque de motores con contactores", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
-        { id: 2, name: "Arranque de motores con PLC LOGO", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
-        { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO", type: "Online", totalLessons: 4, level: "Básico" },
+        { id: 1, name: "Arranque de motores con contactores Online", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
+        { id: 2, name: "Arranque de motores con PLC LOGO Online", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
+        { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online", type: "Online", totalLessons: 4, level: "Básico" },
         { id: 4, name: "Automatización con Contactores Online", type: "Online", totalLessons: 6, level: "Intermedio" },
-        { id: 5, name: "Automatización con PLC LOGO!", type: "Online", totalLessons: 5, level: "Intermedio" },
-        { id: 6, name: "Automatización con PLC – Método Grafcet", type: "Online", totalLessons: 6, level: "Avanzado" },
-        { id: 7, name: "10 ejercicios de aplicaciones con Contactores", type: "Online", totalLessons: 10, level: "Intermedio" },
-        { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO!", type: "Online", totalLessons: 10, level: "Intermedio" },
-        { id: 9, name: "Automatización Industrial", type: "Presencial", totalLessons: 3, level: "Básico" },
+        { id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", totalLessons: 5, level: "Intermedio" },
+        { id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", totalLessons: 6, level: "Avanzado" },
+        { id: 7, name: "10 ejercicios de aplicaciones con Contactores Online", type: "Online", totalLessons: 10, level: "Intermedio" },
+        { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO! Online", type: "Online", totalLessons: 10, level: "Intermedio" },
+        { id: 9, name: "Automatización Industrial Presencial", type: "Presencial", totalLessons: 3, level: "Básico" },
         { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", totalLessons: 5, level: "Intermedio" },
-        { id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", totalLessons: 4, level: "Intermedio" },
-        { id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", totalLessons: 6, level: "Avanzado" },
-        { id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", totalLessons: 1, level: "Intermedio", moduleNames: ["Diplomado en Contactores"] },
-        { id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", totalLessons: 1, level: "Intermedio", moduleNames: ["Diplomado en PLC"] },
-        { id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Módulo Maestría Avanzada"] },
-        { id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Módulo Maestría Aplicada"] },
-        { id: 17, name: "Taller de Tecnología Eléctrica III", type: "Materia", totalLessons: 1, level: "Básico", moduleNames: ["Notas del Taller"] },
-        { id: 18, name: "Proyecto V", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Avances del Proyecto"] }
+        { id: 11, name: "Automatización Con PLC LOGO! Presencial", type: "Presencial", totalLessons: 4, level: "Intermedio" },
+        { id: 12, name: "Automatización con PLC – Método Grafcet Presencial", type: "Presencial", totalLessons: 6, level: "Avanzado" },
+        { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", totalLessons: 1, level: "Intermedio", moduleNames: ["Diplomado en Contactores"] },
+        { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", totalLessons: 1, level: "Intermedio", moduleNames: ["Diplomado en PLC"] },
+        { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Módulo Maestría Avanzada"] },
+        { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Módulo Maestría Aplicada"] },
+        { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", totalLessons: 1, level: "Básico", moduleNames: ["Notas del Taller"] },
+        { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", totalLessons: 1, level: "Avanzado", moduleNames: ["Avances del Proyecto"] },
+        // Manuales
+        { id: 19, name: "Arranque de motores con contactores Manual", type: "Manual", totalLessons: 1, level: "Básico", moduleNames: ["Manual Completo"] },
+        { id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", totalLessons: 1, level: "Básico", moduleNames: ["Manual Completo"] },
+        { id: 21, name: "Automatización con Contactores Manual", type: "Manual", totalLessons: 1, level: "Básico", moduleNames: ["Manual Completo"] },
+        { id: 22, name: "PLC Método Grafcet Manual", type: "Manual", totalLessons: 1, level: "Avanzado", moduleNames: ["Manual Completo"] }
     ];
 
     const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };

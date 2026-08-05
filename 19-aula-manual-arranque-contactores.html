@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Aula Virtual - Manual de Arranque de motores con Contactores</title>
+    <title>Aula Virtual - Arranque de motores con Contactores Manual</title>
     <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -466,7 +466,7 @@
         <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-md w-full shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold text-secondary mb-2 drop-shadow-md">Accede al Aula Virtual</h2>
-                <p class="text-slate-300 text-sm">Manual: Arranque de motores con Contactores</p>
+                <p class="text-slate-300 text-sm">Arranque de motores con Contactores Manual</p>
             </div>
             <form id="login-form" onsubmit="app.verifyLogin(event)" class="space-y-4">
                 <div>
@@ -505,7 +505,7 @@
             <button onclick="app.toggleSidebar()" class="text-slate-300 text-xl hover:text-white transition focus:outline-none flex-none w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10">
                 <i class="fas fa-bars"></i>
             </button>
-            <span class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm header-main-title">Manual: Arranque de motores con Contactores</span>
+            <span class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm header-main-title">Arranque de motores con Contactores Manual</span>
         </div>
         <div class="flex items-center gap-2 md:gap-3 flex-none pl-2">
             <button onclick="app.toggleTheme()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Cambiar modo">
@@ -710,7 +710,7 @@
                 title: "Video Principal y Evaluación", 
                 video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b", 
                 resources: [
-                    {type:'manual', name:'Manual de Arranque de motores con contactores (PDF)', url:'https://drive.google.com/uc?export=download&id=1V4PGjDVVFRNIo8nJCupBgiimdz7820ql'},
+                    {type:'manual', name:'Arranque de motores con contactores Manual (PDF)', url:'https://drive.google.com/uc?export=download&id=1V4PGjDVVFRNIo8nJCupBgiimdz7820ql'},
                     {type:'exercise', name:'18 Ejercicios Prácticos de Arranques (ZIP)', url:'https://drive.google.com/uc?export=download&id=1N4tiNxaTf9WiNti0Uiv2S06KZCioMxdX'},
                     {type:'exercise', name:'Software de Simulación (CadeSIMU)', url:'https://drive.google.com/uc?export=download&id=1_s-SLpfYqmeoSZOnzjvPJgkJqIsK3UY7'}
                 ], 
@@ -845,7 +845,7 @@
                     const hasAccess = user && user.accessedCursos && user.accessedCursos.includes(19);
 
                     if (hasAccess) {
-                        const courseName = "Manual de Arranque de motores con contactores";
+                        const courseName = "Arranque de motores con contactores Manual";
                         const url = `${this.scriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent(courseName)}&t=${Date.now()}`;
                         const resp = await fetch(url);
                         const data = await resp.json();
@@ -1098,7 +1098,7 @@
                 const auth = JSON.parse(localStorage.getItem('curso_auth_manual_19'));
                 if (!auth) return;
                 const data = JSON.stringify({ progress: this.progress, scores: this.quizScores });
-                const courseName = "Manual de Arranque de motores con contactores";
+                const courseName = "Arranque de motores con contactores Manual";
                 fetch(`${this.scriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=${encodeURIComponent(courseName)}&data=${encodeURIComponent(data)}`, {
                     method: 'GET', mode: 'no-cors'
                 }).catch(e => console.error('Sync Error:', e));

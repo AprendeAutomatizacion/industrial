@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Aula Virtual - Arranque de motores con PLC LOGO</title>
+    <title>Aula Virtual - Arranque de motores con PLC LOGO Online</title>
     <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -488,7 +488,7 @@
         <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-md w-full shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
             <div class="text-center mb-8">
                 <h2 class="text-2xl font-bold text-secondary mb-2 drop-shadow-md">Accede a Aprende Automatización</h2>
-                <p class="text-slate-300 text-sm">Arranque de motores con PLC LOGO!</p>
+                <p class="text-slate-300 text-sm">Arranque de motores con PLC LOGO Online</p>
             </div>
             <form id="login-form" onsubmit="app.verifyLogin(event)" class="space-y-4">
                 <div>
@@ -527,7 +527,7 @@
             <button onclick="app.toggleSidebar()" class="text-slate-300 text-xl hover:text-white transition focus:outline-none flex-none w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10">
                 <i class="fas fa-bars"></i>
             </button>
-            <span class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm header-main-title">Arranque de motores con PLC LOGO!</span>
+            <span class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm header-main-title">Arranque de motores con PLC LOGO Online</span>
         </div>
         <div class="flex items-center gap-2 md:gap-3 flex-none pl-2">
             <button onclick="app.toggleTheme()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Cambiar modo">
@@ -799,9 +799,9 @@
         ];
 
         const app = {
-            scriptUrl: 'https://script.google.com/macros/s/AKfycbxk8EW1EvIi0WjIOJ6iQYX6nF735XMvDUKgcgsvaKcgKZYiHnyeYTPTO-NSl3BXewm8/exec',
-            progress: JSON.parse(localStorage.getItem('plc_curso_progress')) || [],
-            quizScores: JSON.parse(localStorage.getItem('plc_quiz_scores')) || {},
+            scriptUrl: 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec',
+            progress: JSON.parse(localStorage.getItem('curso_progress')) || [],
+            quizScores: JSON.parse(localStorage.getItem('quiz_scores')) || {},
             currentId: 0,
             chart: null,
 
@@ -852,11 +852,11 @@
                 this.initTheme();
                 document.addEventListener('fullscreenchange', this.updateFullScreenIcon);
                 const globalUser = JSON.parse(localStorage.getItem('user'));
-                const classroomAuth = JSON.parse(localStorage.getItem('plc_curso_auth'));
+                const classroomAuth = JSON.parse(localStorage.getItem('curso_auth'));
                 if (classroomAuth && globalUser && classroomAuth.correo !== globalUser.email) {
                     this.clearLocalData();
                 }
-                if (localStorage.getItem('plc_curso_auth')) { 
+                if (localStorage.getItem('curso_auth')) { 
                     this.proceedToAula();
                     return;
                 }
@@ -865,9 +865,9 @@
                 }
             },
             clearLocalData: function() {
-                localStorage.removeItem('plc_curso_auth');
-                localStorage.removeItem('plc_curso_progress');
-                localStorage.removeItem('plc_quiz_scores');
+                localStorage.removeItem('curso_auth');
+                localStorage.removeItem('curso_progress');
+                localStorage.removeItem('quiz_scores');
                 this.progress = [];
                 this.quizScores = {};
             },
@@ -952,21 +952,21 @@
                 btn.disabled = true; spin.classList.remove('hidden'); 
                 txt.innerText = ' Verificando...'; err.classList.add('hidden');
                 try {
-                    const url = `${this.scriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent("Arranque de motores con PLC LOGO!")}&t=${Date.now()}`;
+                    const url = `${this.scriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent("Arranque de motores con PLC LOGO Online")}&t=${Date.now()}`;
                     const resp = await fetch(url);
                     const data = await resp.json();
 
                     if (data.success) {
                         this.progress = [];
                         this.quizScores = {};
-                        localStorage.setItem('plc_curso_auth', JSON.stringify({ nombre: n, cedula: c, correo: em }));
+                        localStorage.setItem('curso_auth', JSON.stringify({ nombre: n, cedula: c, correo: em }));
                         if (data.progressData) {
                             try {
                                 const p = JSON.parse(data.progressData);
                                 if (p.progress) this.progress = p.progress;
                                 if (p.scores) this.quizScores = p.scores;
-                                localStorage.setItem('plc_curso_progress', JSON.stringify(this.progress));
-                                localStorage.setItem('plc_quiz_scores', JSON.stringify(this.quizScores));
+                                localStorage.setItem('curso_progress', JSON.stringify(this.progress));
+                                localStorage.setItem('quiz_scores', JSON.stringify(this.quizScores));
                             } catch (e) {}
                         }
                         if (typeof showSyncIndicator === 'function') showSyncIndicator('Acceso concedido', 'success');
@@ -994,7 +994,7 @@
                 document.getElementById('view-lesson').classList.add('hidden');
                 const dash = document.getElementById('view-dashboard');
                 dash.classList.remove('hidden');
-                const auth = JSON.parse(localStorage.getItem('plc_curso_auth'));
+                const auth = JSON.parse(localStorage.getItem('curso_auth'));
                 const done = this.progress.length;
                 const total = COURSE_DATA.length;
                 const percent = Math.round((done / total) * 100);
@@ -1270,7 +1270,7 @@
                     if (!this.progress.includes(this.currentId)) {
                         this.progress.push(this.currentId);
                         this.progress.sort((a,b) => a - b);
-                        localStorage.setItem('plc_curso_progress', JSON.stringify(this.progress));
+                        localStorage.setItem('curso_progress', JSON.stringify(this.progress));
                         this.syncProgress();
                         this.showToast(`✅ ¡Módulo ${this.currentId + 1} completado! (${score}%)`, 'success');
                         
@@ -1301,14 +1301,24 @@
                 }
             },
             
-            saveCompletionToSheet: function() {
-                const auth = JSON.parse(localStorage.getItem('plc_curso_auth'));
+            saveCompletionToSheet: async function() {
+                const auth = JSON.parse(localStorage.getItem('curso_auth'));
                 if (!auth || !auth.correo) return;
-                fetch(this.scriptUrl, {
-                    method: 'POST', mode: 'no-cors',
-                    body: `action=save_course_completion&email=${encodeURIComponent(auth.correo)}&courseName=${encodeURIComponent("Arranque de motores con PLC LOGO!")}&completionDate=${encodeURIComponent(new Date().toISOString())}`,
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                }).catch(e => console.error);
+                try {
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'save_course_completion');
+                    formData.append('email', auth.correo);
+                    formData.append('courseName', 'Arranque de motores con PLC LOGO Online');
+                    formData.append('completionDate', new Date().toISOString());
+                    await fetch(this.scriptUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData,
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    });
+                } catch (e) {
+                    console.error('Error al guardar finalización:', e);
+                }
             },
             
             resetQuiz: function() {
@@ -1320,10 +1330,10 @@
             },
             
             syncProgress: function() {
-                const auth = JSON.parse(localStorage.getItem('plc_curso_auth'));
+                const auth = JSON.parse(localStorage.getItem('curso_auth'));
                 if (!auth) return;
                 const data = JSON.stringify({ progress: this.progress, scores: this.quizScores });
-                fetch(`${this.scriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=Arranque%20de%20motores%20con%20PLC%20LOGO!&data=${encodeURIComponent(data)}`, {
+                fetch(`${this.scriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=${encodeURIComponent("Arranque de motores con PLC LOGO Online")}&data=${encodeURIComponent(data)}`, {
                     method: 'GET', mode: 'no-cors'
                 }).catch(e => console.error);
             },
@@ -1333,14 +1343,10 @@
                 const email = user.email.toLowerCase();
                 const userData = JSON.stringify(user);
                 try {
-                    const formData = new URLSearchParams();
-                    formData.append('action', 'update_user');
-                    formData.append('email', email);
-                    formData.append('userData', userData);
                     await fetch(this.scriptUrl, {
                         method: 'POST',
                         mode: 'no-cors',
-                        body: formData
+                        body: new URLSearchParams({ action: 'update_user', email: email, userData: userData })
                     });
                 } catch (e) { console.error('Sync User Data Error:', e); }
             },
@@ -1354,7 +1360,7 @@
             
             completeLesson: function() {
                 if (this.currentId === 0) {
-                    if (!this.progress.includes(0)) { this.progress.push(0); localStorage.setItem('plc_curso_progress', JSON.stringify(this.progress)); this.syncProgress(); }
+                    if (!this.progress.includes(0)) { this.progress.push(0); localStorage.setItem('curso_progress', JSON.stringify(this.progress)); this.syncProgress(); }
                     this.loadLesson(1);
                 } else {
                     const nid = this.currentId + 1;
@@ -1404,4 +1410,4 @@
     </script>
 
 </body>
-</html>
+</html> 

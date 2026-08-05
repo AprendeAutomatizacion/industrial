@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automatización con Contactores (Presencial) - Aprende Automatización</title>
+    <title>Automatización con Contactores Presencial</title>
     <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
     
     <!-- FUENTES Y LIBRERÍAS -->
@@ -47,6 +47,15 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.3);
             color: #0f172a;
+        }
+
+        /* Estilo glass naranja para modalidad presencial */
+        .glass-orange {
+            background: rgba(251, 146, 60, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
         }
 
         .resource-card {
@@ -100,6 +109,7 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--celeste); }
     </style>
+    <link rel="stylesheet" href="CSS/main.css">
 </head>
 <body>
 
@@ -113,11 +123,14 @@
             <nav class="flex gap-2 mb-6 text-[10px] font-black uppercase tracking-widest flex-wrap">
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full" style="color: var(--celeste)">Electricidad Industrial</span>
                 <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400">Nivel Básico/Intermedio</span>
-                <span class="bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30">Modalidad Presencial</span>
+                <!-- PASTILLA DE MODALIDAD (DINÁMICA) -->
+                <span id="modalidad-badge" class="px-3 py-1 rounded-full border">
+                    Modalidad Presencial
+                </span>
             </nav>
             <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter font-display force-white-text">
                 AUTOMATIZACIÓN CON <br>
-                <span style="color: var(--celeste)">CONTACTORES</span>
+                <span style="color: var(--celeste)">CONTACTORES PRESENCIAL</span>
             </h1>
             <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed font-medium">
                 Comprende, diseña e instala sistemas de automatización industrial utilizando contactores. Aprende normativas, simulación y cableado de circuitos de control.
@@ -378,7 +391,7 @@
                     </div>
                     <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
                         <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Modalidad / Certificado</p>
-                        <p class="font-bold text-slate-800 leading-snug">Presencial. Certificado en automatización industrial.</p>
+                        <p id="modalidad-texto" class="font-bold text-slate-800 leading-snug">Presencial. Certificado en automatización industrial.</p>
                     </div>
                     <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
                         <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">Duración y Horario</p>
@@ -401,18 +414,18 @@
                         <span class="text-4xl font-black text-slate-900">$50.00</span>
                         <span class="text-slate-400 line-through text-lg">$70.00</span>
                     </div>
-                    <div class="space-y-3">
-                        <a href="javascript:alert('Para inscribirte, por favor contactar con el profesor Pablo Cedeño.')" class="btn-pulse w-full bg-[#2db8ce] text-white py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 shadow-xl hover:bg-[#2db8ce]/90 transition-all">
+                    <div id="buy-actions" class="space-y-3">
+                        <a href="javascript:alert('Para inscribirte, por favor contactar con el profesor Pablo Cedeño.')" class="btn-metal-solid btn-metal-cyan">
                             <i class="fas fa-cart-plus"></i> Comprar Ahora
                         </a>
-                        <a href="https://www.profesorpablocedeno.online/mis-cursos/arranque-de-motores-con-contactores/contactores2" class="btn-pulse w-full border-2 border-[#2db8ce] text-[#2db8ce] py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 hover:bg-[#2db8ce]/5 transition-all">
-                            <i class="fas fa-sign-in-alt"></i> Materiales del Curso
+                        <a href="https://wa.me/584121414196?text=Hola,%20deseo%20inscribirme%20en%20el%20curso:%20Automatizaci%C3%B3n%20con%20Contactores%20(Presencial)" target="_blank" class="btn-metal-solid btn-metal-green">
+                            <i class="fab fa-whatsapp"></i> Preguntar por WhatsApp
                         </a>
                     </div>
                     <div class="mt-6 pt-6 border-t border-slate-200 space-y-3">
                         <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-3 text-white flex items-center gap-3 shadow-lg border border-blue-400/50">
                             <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner shrink-0"><i class="fas fa-laptop text-sm"></i></div>
-                            <div><h4 class="font-bold text-[9px] text-blue-100 uppercase tracking-widest mb-0.5">Modalidad</h4><p class="font-black text-xs uppercase tracking-tighter text-white leading-none">100% Online</p></div>
+                            <div><h4 class="font-bold text-[9px] text-blue-100 uppercase tracking-widest mb-0.5">Modalidad</h4><p id="sidebar-modalidad" class="font-black text-xs uppercase tracking-tighter text-white leading-none">Presencial</p></div>
                         </div>
                     </div>
                 </div>
@@ -422,17 +435,71 @@
 </main>
 
 <script>
+    // ==========================================
+    // CONFIGURACIÓN DE MODALIDAD (CAMBIA A false SI ES ONLINE)
+    // ==========================================
+    const IS_PRESENCIAL = true;  // ← true = presencial, false = online
+
+    function aplicarModalidad() {
+        const badge = document.getElementById('modalidad-badge');
+        const textoModalidad = document.getElementById('modalidad-texto');
+        const sidebarModalidad = document.getElementById('sidebar-modalidad');
+
+        if (IS_PRESENCIAL) {
+            badge.className = 'glass-orange px-3 py-1 rounded-full border border-orange-300/50 text-white';
+            badge.textContent = 'Presencial';
+            if (textoModalidad) textoModalidad.textContent = 'Presencial. Certificado en automatización industrial.';
+            if (sidebarModalidad) sidebarModalidad.textContent = 'Presencial';
+        } else {
+            badge.className = 'bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30';
+            badge.textContent = 'Modalidad Online';
+            if (textoModalidad) textoModalidad.textContent = '100% Online, a tu propio ritmo.';
+            if (sidebarModalidad) sidebarModalidad.textContent = '100% Online';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        aplicarModalidad();
+
+        // ==========================================
+        // VERIFICACIÓN DE ACCESO AL CURSO
+        // ==========================================
+        const COURSE_ID_NUMERIC = 9; // ID numérico para este curso presencial
+        const IS_MANUAL = false;
+        const user = JSON.parse(localStorage.getItem('user'));
+        const hasAccess = user && user.accessedCursos && user.accessedCursos.includes(COURSE_ID_NUMERIC);
+
+        if (hasAccess) {
+            const buyActionsContainer = document.getElementById('buy-actions');
+            if (buyActionsContainer) {
+                const badgeText = IS_MANUAL ? 'Adquirido' : 'Inscrito';
+                const buttonText = IS_MANUAL ? 'Ver Materiales' : 'Ir a Mis Cursos';
+                const iconClass = IS_MANUAL ? 'fa-book-open' : 'fa-graduation-cap';
+                
+                buyActionsContainer.innerHTML = `
+                    <div class="btn-enrolled-badge">
+                        <i class="fas fa-check-circle"></i> ${badgeText}
+                    </div>
+                    <a href="mis-cursos.html?courseId=${COURSE_ID_NUMERIC}" class="btn-metal-solid btn-metal-cyan">
+                        <i class="fas ${iconClass}"></i> ${buttonText}
+                    </a>
+                `;
+            }
+        }
+    });
+</script>
+
+<script>
     const COURSE_ID = 'Automatizacion_Contactores';
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwvrtlPg8jsW0f_pkV2-KFf6iP4VzdRvIaomL-ziLelIJXq2rhwZrKrjzreCCiChvbK/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
     function toggleEmojiPicker() {
         const picker = document.getElementById('emoji-picker');
         picker.classList.toggle('show');
     }
 
-    // Función para insertar el emoji en el textarea
     function insertEmoji(emoji) {
         const textarea = document.getElementById('comentario');
-        textarea.value += emoji; // No need for skeleton here, it's already set above
+        textarea.value += emoji;
         document.getElementById('emoji-picker').classList.remove('show');
     }
 
@@ -492,7 +559,7 @@
     }
 
     async function loadComments() {
-        try { // No need for skeleton here, it's already set above
+        try {
             const response = await fetch(`${SCRIPT_URL}?id_curso=${COURSE_ID}&t=${Date.now()}`);
             const result = await response.json();
             renderComments((result.data || result.records || result).reverse());

@@ -170,81 +170,125 @@
             color: #94a3b8;
         }
 
-        /* Estilos metálicos */
-        .btn-metal-green {
-            background: linear-gradient(180deg, #4caf50 0%, #2c7744 100%);
-            border: 1px solid #1d4d2a;
-            color: white;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2);
-            transition: all 0.2s ease;
+        /* ================================================= */
+        /* === ESTILOS METÁLICOS DE COLOR — CATÁLOGO ======= */
+        /* ================================================= */
+
+        /* Base compartida para todos los btn-metal de color */
+        .btn-metal-green,
+        .btn-metal-blue,
+        .btn-metal-slate,
+        .btn-metal-teal,
+        .btn-metal-gray {
+            font-weight: 900;
+            letter-spacing: 0.06em;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
             border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        /* Bisel superior (línea brillante) */
+        .btn-metal-green::after, .btn-metal-blue::after,
+        .btn-metal-slate::after, .btn-metal-teal::after, .btn-metal-gray::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 0.75rem 0.75rem 0 0;
+            pointer-events: none;
+        }
+        /* Shine sweep */
+        .btn-metal-green::before, .btn-metal-blue::before,
+        .btn-metal-slate::before, .btn-metal-teal::before, .btn-metal-gray::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 50%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.22), transparent);
+            transform: skewX(-18deg);
+            transition: left 0.45s ease;
+            pointer-events: none;
+        }
+        .btn-metal-green:hover::before, .btn-metal-blue:hover::before,
+        .btn-metal-slate:hover::before, .btn-metal-teal:hover::before, .btn-metal-gray:hover::before {
+            left: 130%;
+        }
+        .btn-metal-green:hover, .btn-metal-blue:hover,
+        .btn-metal-slate:hover, .btn-metal-teal:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+        .btn-metal-green:active, .btn-metal-blue:active,
+        .btn-metal-slate:active, .btn-metal-teal:active {
+            transform: scale(0.97) translateY(0);
+            filter: brightness(0.93);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.3) !important;
+            transition: transform 0.08s ease;
+        }
+
+        /* GREEN */
+        .btn-metal-green {
+            background: linear-gradient(180deg, #34d058 0%, #1e9e3a 45%, #146b28 100%);
+            border: 1px solid #0f5720;
+            color: white;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.3),
+                        0 4px 14px rgba(34, 197, 94, 0.4), 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         .btn-metal-green:hover {
-            background: linear-gradient(180deg, #66bb6a 0%, #3b8c4a 100%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
-            transform: translateY(-1px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(34, 197, 94, 0.55), 0 2px 5px rgba(0,0,0,0.2);
         }
-        .btn-metal-green:active, .btn-metal-blue:active, .btn-metal-slate:active, .btn-metal-teal:active {
-            transform: translateY(0) scale(0.98);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
-        }
+
+        /* BLUE */
         .btn-metal-blue {
-            background: linear-gradient(180deg, #42a5f5 0%, #1565c0 100%);
-            border: 1px solid #0d47a1;
+            background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%);
+            border: 1px solid #1e40af;
             color: white;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2);
-            transition: all 0.2s ease;
-            border-radius: 0.75rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.3),
+                        0 4px 14px rgba(37, 99, 235, 0.4), 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         .btn-metal-blue:hover {
-            background: linear-gradient(180deg, #64b5f6 0%, #1976d2 100%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
-            transform: translateY(-1px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(37, 99, 235, 0.55), 0 2px 5px rgba(0,0,0,0.2);
         }
+
+        /* SLATE */
         .btn-metal-slate {
-            background: linear-gradient(180deg, #64748b 0%, #334155 100%);
+            background: linear-gradient(180deg, #94a3b8 0%, #475569 45%, #334155 100%);
             border: 1px solid #1e293b;
             color: white;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.2);
-            transition: all 0.2s ease;
-            border-radius: 0.75rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.3),
+                        0 3px 10px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
         }
         .btn-metal-slate:hover {
-            background: linear-gradient(180deg, #94a3b8 0%, #475569 100%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 4px 8px rgba(0,0,0,0.3);
-            transform: translateY(-1px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 5px 16px rgba(0,0,0,0.4);
         }
+
+        /* TEAL */
         .btn-metal-teal {
-            background: linear-gradient(180deg, #5eead4 0%, #0d9488 100%);
+            background: linear-gradient(180deg, #2dd4bf 0%, #0d9488 45%, #0f766e 100%);
             border: 1px solid #0f766e;
             color: white;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2);
-            transition: all 0.2s ease;
-            border-radius: 0.75rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.3),
+                        0 4px 14px rgba(20, 184, 166, 0.4), 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
         .btn-metal-teal:hover {
-            background: linear-gradient(180deg, #99f6e4 0%, #14b8a6 100%);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 4px 8px rgba(0,0,0,0.3);
-            transform: translateY(-1px);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(20, 184, 166, 0.55);
         }
+
+        /* GRAY (disabled) */
         .btn-metal-gray {
-            background: linear-gradient(180deg, #cbd5e1 0%, #94a3b8 100%);
-            border: 1px solid #64748b;
-            color: #475569;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.2s ease;
-            border-radius: 0.75rem;
+            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+            border: 1px solid #94a3b8;
+            color: #64748b;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 3px rgba(0,0,0,0.1);
             cursor: not-allowed;
+            filter: saturate(0.5);
         }
         .course-card .like-btn.liked, .course-card .like-btn.liked i {
             color: #ef4444 !important;
@@ -538,45 +582,45 @@
 
         const COURSES_DATA = [
             
-{ id: 1, name: "Arranque de motores con contactores", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "1-arranque-contactores-info.html", aulaLink: "1-aula-arranque-contactores.html" },
+{ id: 1, name: "Arranque de motores con contactores Online", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "1-arranque-contactores-info.html", aulaLink: "1-aula-arranque-contactores.html" },
             
-{ id: 2, name: "Arranque de motores con PLC LOGO", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "2-arranque-plc-logo-info.html", aulaLink: "2-aula-arranque-plc-logo.html" },
+{ id: 2, name: "Arranque de motores con PLC LOGO Online", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "2-arranque-plc-logo-info.html", aulaLink: "2-aula-arranque-plc-logo.html" },
             
-{ id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 10.00, link: "3-compuertas-factory-plc-info.html" },
+{ id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 10.00, link: "3-compuertas-factory-plc-info.html" },
             
 { id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "4-auto-contactores-on-info.html", buyLink: "https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4" },
             
-{ id: 5, name: "Automatización con PLC LOGO!", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 10.00, link: "5-auto-plc-logo-on-info.html" },
+{ id: 5, name: "Automatización con PLC LOGO Online", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 10.00, link: "5-auto-plc-logo-on-info.html" },
             
-{ id: 6, name: "Automatización con PLC – Método Grafcet", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 10.00, link: "6-auto-plc-grafcet-on-info.html" },
+{ id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 10.00, link: "6-auto-plc-grafcet-on-info.html" },
             
-{ id: 7, name: "10 ejercicios de aplicaciones con Contactores", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "7-10-ejer-auto-contactores-on-info.html" },
+{ id: 7, name: "10 ejercicios de aplicaciones con Contactores Online", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "7-10-ejer-auto-contactores-on-info.html" },
             
-{ id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO!", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 10.00, link: "8-10-ejer-auto-plc-logo-on-info.html" },
+{ id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO Online", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 10.00, link: "8-10-ejer-auto-plc-logo-on-info.html" },
             
-{ id: 9, name: "Automatización Industrial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "9-auto-industrial-pre-info.html" },
+{ id: 9, name: "Automatización Industrial Presencial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "9-auto-industrial-pre-info.html" },
             
 { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "10-auto-contactores-pre-info.html" },
             
-{ id: 11, name: "Automatización Con PLC LOGO!", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "11-auto-plc-logo-pre-info.html" },
+{ id: 11, name: "Automatización Con PLC LOGO Presencial", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "11-auto-plc-logo-pre-info.html" },
             
-{ id: 12, name: "Automatización con PLC – Método Grafcet", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "12-auto-plc-grafcet-pre-info.html" },
+{ id: 12, name: "Automatización con PLC – Método Grafcet Presencial", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "12-auto-plc-grafcet-pre-info.html" },
             
-{ id: 13, name: "Automatización con contactores (DIPLOMADO)", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "13-auto-contactores-pre-info - diplomado.html" },
+{ id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "13-auto-contactores-pre-info - diplomado.html" },
             
-{ id: 14, name: "Automatización con PLC (DIPLOMADO)", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "14-auto-plc-logo-pre-info - diplomado.html" },
+{ id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "14-auto-plc-logo-pre-info - diplomado.html" },
             
-{ id: 15, name: "Automatización y control avanzado (MAESTRÍA)", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "15-auto-control-avanzado-pre-info - maestria.html" },
+{ id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "15-auto-control-avanzado-pre-info - maestria.html" },
             
-{ id: 16, name: "Automatización y control Aplicado (MAESTRÍA)", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "16-auto-control-aplicado-pre-info - maestria.html" },
+{ id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "16-auto-control-aplicado-pre-info - maestria.html" },
             
-{ id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA)", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "17-Taller-III-pregrado.html" },
+{ id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "17-Taller-III-pregrado.html" },
             
-{ id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA)", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "18-Sist-hid-Neu-pregrado.html" },
+{ id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "18-Sist-hid-Neu-pregrado.html" },
             
 { 
                 id: 19, 
-                name: "Manual de Arranque de motores con contactores", 
+                name: "Arranque de motores con contactores Manual", 
                 type: "Manual", 
                 desc: "Manual completo sobre el arranque y control de motores usando contactores, lógica cableada y protecciones.", 
                 image: "img/AA (7).gif", 
@@ -584,12 +628,12 @@
                 level: "Básico",
                 cost: 5.00,
                 link: "19-Manual-arranque-contactores-info.html",
-                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Arranque%20de%20motores%20con%20contactores" 
+                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Arranque%20de%20motores%20con%20contactores" 
             },
             
 { 
                 id: 20, 
-                name: "Manual de Automatización con PLC Básico", 
+                name: "Automatización con PLC Básico Manual", 
                 type: "Manual", 
                 desc: "Introducción a la automatización industrial utilizando PLC de gama básica como LOGO! de Siemens.", 
                 image: "img/AA (11).webp", 
@@ -597,12 +641,12 @@
                 level: "Básico", 
                 cost: 5.00, 
                 link: "20-auto-plc-basico-on-info.html", 
-                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Automatización%20con%20PLC%20Básico" 
+                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20PLC%20Básico" 
             },
             
 { 
                 id: 21, 
-                name: "Manual de Automatización con Contactores", 
+                name: "Automatización con Contactores Manual", 
                 type: "Manual", 
                 desc: "Aprende a diseñar y montar circuitos de control con lógica cableada para diferentes arranques de motores.", 
                 image: "img/AA (36).webp", 
@@ -610,12 +654,12 @@
                 level: "Básico", 
                 cost: 5.00, 
                 link: "21-Manual-auto-contactores-on-info.html", 
-                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20Automatización%20con%20Contactores" 
+                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20Contactores" 
             },
             
 { 
                 id: 22, 
-                name: "Manual de PLC Método Grafcet", 
+                name: "PLC Método Grafcet Manual", 
                 type: "Manual", 
                 desc: "Guía completa para diseñar secuencias de automatización complejas utilizando el método GRAFCET y su implementación en PLC.", 
                 image: "img/AA (4).gif", 
@@ -623,7 +667,7 @@
                 level: "Avanzado", 
                 cost: 5.00, 
                 link: "22-Manual-auto-plc-grafcet-on-info.html", 
-                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Manual%20de%20PLC%20Método%20Grafcet" 
+                buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20PLC%20Método%20Grafcet" 
             }
         ];
 

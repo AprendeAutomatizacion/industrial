@@ -124,6 +124,7 @@
             background: var(--celeste);
         }
     </style>
+    <link rel="stylesheet" href="CSS/main.css">
 </head>
 <body>
 
@@ -160,7 +161,6 @@
             <section>
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 border-[#2db8ce] pl-4">Vídeo Promocional</h2>
                 <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-slate-200 border border-slate-200">
-                    <!-- CORRECCIÓN: URL de embed de YouTube -->
                     <iframe class="w-full h-full" src="https://www.youtube.com/embed/-mZ_iJ9PIW0" frameborder="0" allowfullscreen></iframe>
                 </div>
             </section>
@@ -432,12 +432,12 @@
                         <span class="text-4xl font-black text-slate-900">$10.00</span>
                         <span class="text-slate-400 line-through text-lg">$15.00</span>
                     </div>
-                    <div class="space-y-3">
-                        <a href="javascript:alert('Para inscribirte, por favor contactar con el profesor Pablo Cedeño.')" class="btn-pulse w-full bg-[#2db8ce] text-white py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 shadow-xl hover:bg-[#2db8ce]/90 transition-all">
+                <div id="buy-actions" class="space-y-3">
+                        <a href="javascript:alert('Para inscribirte, por favor contactar con el profesor Pablo Cedeño.')" class="btn-metal-solid btn-metal-cyan">
                             <i class="fas fa-cart-plus"></i> Comprar Ahora
                         </a>
-                        <a href="mis-cursos.html?courseId=1" class="btn-pulse w-full border-2 border-[#2db8ce] text-[#2db8ce] py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 hover:bg-[#2db8ce]/5 transition-all">
-                            <i class="fas fa-sign-in-alt"></i> Materiales del Curso
+                        <a href="https://wa.me/584121414196?text=Hola,%20deseo%20inscribirme%20en%20el%20curso:%20Arranque%20de%20Motores%20con%20Contactores" target="_blank" class="btn-metal-solid btn-metal-green">
+                            <i class="fab fa-whatsapp"></i> Preguntar por WhatsApp
                         </a>
                     </div>
                     <div class="mt-6 pt-6 border-t border-slate-200 space-y-3">
@@ -453,11 +453,39 @@
 </main>
 
 <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const COURSE_ID_NUMERIC = 1; // ID numérico de este curso
+        const IS_MANUAL = false;
+        const user = JSON.parse(localStorage.getItem('user'));
+        const hasAccess = user && user.accessedCursos && user.accessedCursos.includes(COURSE_ID_NUMERIC);
+
+        if (hasAccess) {
+            const buyActionsContainer = document.getElementById('buy-actions');
+            if (buyActionsContainer) {
+                const badgeText = IS_MANUAL ? 'Adquirido' : 'Inscrito';
+                const buttonText = IS_MANUAL ? 'Ver Materiales' : 'Ir a Mis Cursos';
+                const iconClass = IS_MANUAL ? 'fa-book-open' : 'fa-graduation-cap';
+
+                // Cambio aquí: btn-metal-solid btn-metal-cyan en lugar de btn-metal-outline-cyan
+                buyActionsContainer.innerHTML = `
+                    <div class="btn-enrolled-badge">
+                        <i class="fas fa-check-circle"></i> ${badgeText}
+                    </div>
+                    <a href="mis-cursos.html?courseId=${COURSE_ID_NUMERIC}" class="btn-metal-solid btn-metal-cyan">
+                        <i class="fas ${iconClass}"></i> ${buttonText}
+                    </a>
+                `;
+            }
+        }
+    });
+</script>
+
+<script>
     // ==========================================
     // CONFIGURACIÓN DE IDENTIFICACIÓN DEL CURSO
     // ==========================================
-    const COURSE_ID = 'Arranque_Motores'; // <--- Nombre de la pestaña en tu Excel
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbybVgusUU9tOdXGZXYWjs3irMLgj_eoXwNNiXQmEw8MG8hpf_q-sE-ncM37o0SOQxER/exec';
+    const COURSE_ID = 'Arranque_Motores';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
 
     const form = document.getElementById('comment-form');
     const commentsContainer = document.getElementById('comments-container');
