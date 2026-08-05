@@ -720,25 +720,6 @@
             }
         }
 
-        async function syncUserProgressToExcel(){ 
-            if(!window.currentUser) return;
-            const email=window.currentUser.email.toLowerCase();
-            const userData=JSON.stringify(window.currentUser);
-            try {
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        action: 'update_user', 
-                        email: email, 
-                        userData: userData
-                    })
-                });
-            } catch (e) { console.error('Fallo en la red al sincronizar progreso de usuario:', e); showNotif('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error'); }
-        }
-
         function fetchProgressForAllCourses(){
             if(!window.currentUser||!window.currentUser.accessedCursos) return;
             const email=window.currentUser.email.toLowerCase();
@@ -1086,7 +1067,7 @@
             if(!window.currentUser.downloadedFiles.includes(fileName)){
                 window.currentUser.downloadedFiles.push(fileName);
                 localStorage.setItem('user',JSON.stringify(window.currentUser));
-                syncUserProgressToExcel();
+                AuthLogic.syncUserData();
                 updateAllUI();
                 if(btnElement){
                     const isExercise = btnElement.closest('#mcExercisesCard');
@@ -1107,225 +1088,67 @@
         }
 
         function rateCourse(courseId,rating,navigate=true){
-            if(!currentUser){ openModal('authModal'); return; }
-            if(!currentUser.ratings) currentUser.ratings={};
-            currentUser.ratings[courseId]=rating;
-            localStorage.setItem('user',JSON.stringify(currentUser));
-            syncUserProgressToExcel();
-            if(currentUser.email) dbUsers[currentUser.email.toLowerCase()]=JSON.stringify(currentUser);
-            calculateCourseRatings();
-            renderMisCourses();
-            const detailVisible=document.getElementById('page-curso-detalle').style.display==='block';
-            if(detailVisible&&currentViewedCourseId===courseId) viewCourseDetail(courseId);
-            else if(navigate) viewCourseDetail(courseId);
-            showNotif('¡Valoración guardada!',`Has calificado este curso con ${rating} estrellas.`);
-        }
-
-        function toggleLike(btn){
-            if(!currentUser){ openModal('authModal'); return; }
-            const id=btn.dataset.id;
-            if(!Array.isArray(currentUser.likedCourses)) currentUser.likedCourses=[];
-            const span=btn.querySelector('.like-count');
-            let currentLikes=parseInt(span.innerText)||0;
-            if(currentUser.likedCourses.includes(id)){
-                currentUser.likedCourses=currentUser.likedCourses.filter(c=>c!==id);
-                ping('decrement_stat',`${id}_likes`);
-                btn.classList.remove('liked');
-                span.innerText=Math.max(0, currentLikes - 1);
-                if(globalStats) globalStats[`${id}_likes`]=Math.max(0, currentLikes - 1);
-            } else {
-                currentUser.likedCourses.push(id);
-                ping('update_stat',`${id}_likes`);
-                btn.classList.add('liked');
-                span.innerText=currentLikes+1;
-                if(globalStats) globalStats[`${id}_likes`]=currentLikes+1;
-            }
-            if(currentUser.email) dbUsers[currentUser.email.toLowerCase()]=JSON.stringify(currentUser);
-            localStorage.setItem('user',JSON.stringify(currentUser));
-            updateAllUI(); syncUserProgressToExcel();
-            document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn=>{
-                if(otherBtn!==btn){
-                    if(currentUser.likedCourses.includes(id)){ otherBtn.classList.add('liked'); }
-                    else { otherBtn.classList.remove('liked'); }
-                    const otherSpan=otherBtn.querySelector('.like-count');
-                    if(otherSpan) otherSpan.innerText=span.innerText;
+            AuthUI.requireAuth(() => {
+                if(!AuthLogic.currentUser.ratings) {
+                    AuthLogic.currentUser.ratings = {};
                 }
+                AuthLogic.currentUser.ratings[courseId] = rating;
+                localStorage.setItem('user', JSON.stringify(AuthLogic.currentUser));
+                AuthLogic.syncUserData();
+
+                calculateCourseRatings();
+                renderMisCourses();
+                const detailVisible = document.getElementById('page-curso-detalle').style.display === 'block';
+                if(detailVisible && currentViewedCourseId === courseId) viewCourseDetail(courseId);
+                showNotif('¡Valoración guardada!',`Has calificado este curso con ${rating} estrellas.`);
             });
         }
 
-        function switchAuthTab(tab){
-            const errBox = document.getElementById('authErrorMessage');
-            if(errBox) errBox.classList.add('hidden');
-            const loginTab=document.getElementById('tabLogin');
-            if(!loginTab) return; // Protección si el modal no existe en esta página
-            const regTab=document.getElementById('tabRegister'), nameField=document.getElementById('nameField'), countryField=document.getElementById('countryField');
-            const title=document.getElementById('authModalTitle'), sub=document.getElementById('authSubText');
-            const btn=document.getElementById('authSubmitBtn'), btnIcon=document.getElementById('authBtnIcon'), btnLabel=document.getElementById('authBtnLabel');
-            if(tab==='login'){
-                loginTab.className="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
-                regTab.className="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
-                nameField.classList.add('hidden'); title.innerText="Iniciar Sesión"; sub.innerText="Ingresa tus datos para acceder a tus cursos."; btnIcon.className="fas fa-sign-in-alt"; btnLabel.innerText="Entrar";
-                if(countryField) countryField.classList.add('hidden');
-            } else {
-                regTab.className="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
-                loginTab.className="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
-                nameField.classList.remove('hidden'); title.innerText="Crear Cuenta"; sub.innerText="Regístrate para adquirir cursos."; btnIcon.className="fas fa-user-plus"; btnLabel.innerText="Registrarse";
-                if(countryField) countryField.classList.remove('hidden');
-            }
+        function toggleLike(btn){
+            AuthUI.requireAuth(() => {
+                const id=btn.dataset.id;
+                if(!Array.isArray(window.currentUser.likedCourses)) window.currentUser.likedCourses=[];
+                const span=btn.querySelector('.like-count');
+                let currentLikes=parseInt(span.innerText)||0;
+                if(window.currentUser.likedCourses.includes(id)){
+                    window.currentUser.likedCourses=window.currentUser.likedCourses.filter(c=>c!==id);
+                    ping('decrement_stat',`${id}_likes`);
+                    btn.classList.remove('liked');
+                    span.innerText=Math.max(0, currentLikes - 1);
+                    if(globalStats) globalStats[`${id}_likes`]=Math.max(0, currentLikes - 1);
+                } else {
+                    window.currentUser.likedCourses.push(id);
+                    ping('update_stat',`${id}_likes`);
+                    btn.classList.add('liked');
+                    span.innerText=currentLikes+1;
+                    if(globalStats) globalStats[`${id}_likes`]=currentLikes+1;
+                }
+                if(window.currentUser.email) dbUsers[window.currentUser.email.toLowerCase()]=JSON.stringify(window.currentUser);
+                localStorage.setItem('user',JSON.stringify(window.currentUser));
+                updateAllUI(); 
+                AuthLogic.syncUserData(); // Usar la función centralizada
+                document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn=>{
+                    if(otherBtn!==btn){
+                        if(window.currentUser.likedCourses.includes(id)){ otherBtn.classList.add('liked'); }
+                        else { otherBtn.classList.remove('liked'); }
+                        const otherSpan=otherBtn.querySelector('.like-count');
+                        if(otherSpan) otherSpan.innerText=span.innerText;
+                    }
+                });
+            });
         }
 
         window.handleNavbarAuthClick = function(e) {
             if(e) { e.preventDefault(); e.stopPropagation(); }
-            if(currentUser) {
+            if(window.currentUser) {
                 if (typeof logoutUser === 'function') {
                     logoutUser();
                 }
             } else {
                 openModal('authModal'); 
-                switchAuthTab('login');
+                AuthUI.switchTab('login');
             }
         };
-
-        let progressChart=null;
-        function updateProgressDashboard(){
-            const course=COURSES_DATA.find(c=>c.id===currentProgressCourseId);
-            if(!course) return;
-            const total=course.totalLessons||5;
-            const emailKey=currentUser?currentUser.email.toLowerCase():"";
-            const courseProg=(userProgress[emailKey]&&userProgress[emailKey][String(currentProgressCourseId)])?userProgress[emailKey][String(currentProgressCourseId)]:{completed:0,percent:0,scores:[],avgScore:0};
-            const done=courseProg.completed||0;
-            const scores=courseProg.scores||[];
-            const percent=total>0?Math.round((done/total)*100):0;
-            const avgScore=courseProg.avgScore||0;
-            
-            const pctEl = document.getElementById('dash-percentage');
-            if(!pctEl) return; // Evita errores si la página no existe
-            
-            pctEl.innerText=percent+'%';
-            
-            if(progressChart) progressChart.destroy();
-            const chartCanvas = document.getElementById('progressChart');
-            if (chartCanvas) {
-                const ctx=chartCanvas.getContext('2d');
-                progressChart=new Chart(ctx,{
-                    type:'doughnut',
-                    data:{labels:['Completado','Pendiente'],datasets:[{data:[done,total-done],backgroundColor:['#2db8ce','rgba(255,255,255,0.1)'],borderWidth:0}]},
-                    options:{cutout:'75%',plugins:{legend:{display:false}}}
-                });
-            }
-
-            if(currentUser) {
-                let enrollmentDate = findDateInObject(latestEnrollmentDates, course.name) || '';
-                enrollmentDate = normalizeDateString(enrollmentDate);
-                const segCard = document.getElementById('seguimiento-card');
-                if(segCard) {
-                    let rawCompletion = findDateInObject(latestCompletionDates, course.name);
-                    let compDisplay = '---';
-                    if (rawCompletion) {
-                        let normalized = normalizeDateString(rawCompletion);
-                        if (normalized) compDisplay = formatCertDate(normalized);
-                    }
-                    let enrollmentDisplay = '---';
-                    if (enrollmentDate) enrollmentDisplay = formatCertDate(enrollmentDate);
-                    segCard.innerHTML = `
-                        <h2 class="font-bold text-xl text-white">Seguimiento automático</h2>
-                        <div class="mt-3 space-y-2">
-                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-check text-green-400"></i><span>Inscripción: ${enrollmentDisplay}</span></p>
-                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400"></i><span>Culminación: ${compDisplay}</span></p>
-                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-percentage text-yellow-400"></i><span>Promedio final: ${avgScore}%</span></p>
-                        </div>
-                        <p class="text-slate-200 text-sm mt-3">El progreso se actualiza al aprobar las evaluaciones de cada módulo.</p>
-                    `;
-                }
-            }
-
-            const listDiv=document.getElementById('dash-lessons-list');
-            const moduleNames=course.moduleNames||[];
-            const MODULES_DATA=[];
-            for(let i=0;i<total;i++) MODULES_DATA.push({title:moduleNames[i]||`Módulo ${i+1}`});
-            
-            listDiv.innerHTML=MODULES_DATA.map((m,i)=>{
-                let stateClass="", stateText="", score=scores[i];
-                if(score!==undefined&&score!==null&&!isNaN(score)){
-                    if(score>=70){ stateClass="border-blue-400/50 bg-blue-500/20 backdrop-blur-md"; stateText = `✅ Completado (${score}%)`; }
-                    else { stateClass="border-red-500/60 bg-red-600/20 backdrop-blur-md"; stateText=`❌ No aprobado ${score}%`; }
-                } else {
-                    if(i<done){ stateClass="border-blue-400/50 bg-blue-500/20 backdrop-blur-md"; stateText = `✅ Completado`; }
-                    else { stateClass="border-yellow-400/50 bg-yellow-500/20 backdrop-blur-md"; stateText=`⏳ Falta por evaluar`; }
-                }
-                return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01]"><span class="font-bold tracking-wide drop-shadow-md text-sm sm:text-base">${m.title}</span><span class="text-xs sm:text-sm font-bold drop-shadow-md bg-black/20 px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
-            }).join('');
-
-            if(currentUser){
-                document.getElementById('dash-student-name').innerText=currentUser.name||'-';
-                document.getElementById('dash-student-id').innerText=currentUser.cedula||'-';
-                document.getElementById('dash-student-email').innerText=currentUser.email||'-';
-            }
-        }
-
-        function generateCertificate() {
-            try {
-                if (!currentUser) { showNotif('Error', 'Debes iniciar sesión.', 'error'); return; }
-                const course = COURSES_DATA.find(c => c.id === currentProgressCourseId);
-                if (!course) return;
-                const nombreEstudiante = currentUser.name && currentUser.name !== "No provisto" ? currentUser.name : "Estudiante";
-                const cedulaEstudiante = currentUser.cedula && currentUser.cedula !== "N/A" ? currentUser.cedula : "00000000";
-                const nombreCurso = course.name;
-                const numModulos = course.totalLessons || 5;
-                const moduleNames = course.moduleNames || [];
-                let temarioHTML = "";
-                if (moduleNames.length > 0) { temarioHTML = moduleNames.map(mod => `• ${mod}<br>`).join(''); }
-                else { for(let i = 1; i <= numModulos; i++) { temarioHTML += `• Módulo ${i}: Contenido del curso...<br>`; } }
-                
-                let rawCompletion = findDateInObject(latestCompletionDates, course.name);
-                let fechaHoy = "[En proceso de registro en sistema]";
-                if (rawCompletion) {
-                    let dateOnly = extractDateOnly(rawCompletion);
-                    if (dateOnly) fechaHoy = formatCertDate(dateOnly);
-                    else fechaHoy = rawCompletion;
-                }
-                
-                const palabras = nombreCurso.split(' ').filter(p => p.length > 0 && !['con', 'de', 'y', 'el', 'la', 'en'].includes(p.toLowerCase()));
-                let siglas = ""; palabras.forEach(p => { siglas += p.charAt(0).toUpperCase(); });
-                if (!siglas) siglas = "CURSO";
-                const ciNum = parseInt(String(cedulaEstudiante).replace(/\D/g, '')) || 0;
-                const idCalculado = 13018822 + ciNum;
-                const textoFecha = `Con una estructura de ${numModulos} módulos, culminado el día ${fechaHoy}.`;
-                const certHTML = `
-                <div id="cert-content-to-download" style="width: 980px; height: 740px; padding: 30px 45px 35px 45px; position: relative; background: white; border: 6px solid #475569; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0 auto;">
-                    <img src="https://i.postimg.cc/T1jyL15x/ct.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.15; object-fit: cover; z-index: 0;" crossorigin="anonymous">
-                    <div style="text-align: center; position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 10px; left: -1cm;">
-                        <img src="img/AA (38).webp" style="height: 140px;" crossorigin="anonymous">
-                        <h1 style="font-size: 32px; font-weight: 800; color: #334155; text-transform: uppercase; margin:0;">Aprende Automatización</h1>
-                    </div>
-                    <div style="text-align: center; position: relative; z-index: 10; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; margin-top: -20px;">
-                        <p style="font-size: 20px; font-weight: 800; color: #000; margin:0 0 2px 0;">Otorga el presente:</p>
-                        <h2 style="font-size: 38px; font-weight: 900; color: #3b5998; margin:0 0 5px 0;">Certificado a:</h2>
-                        <div style="display: inline-block; text-align: center;">
-                            <h3 style="font-size: 46px; font-weight: 900; color: #111827; border-bottom: 3px solid #475569; padding-bottom: 4px; text-transform: uppercase; margin:0; display: inline-block;">${nombreEstudiante}</h3>
-                        </div>
-                        <p style="font-size: 17px; font-weight: 800; color: #000; margin: 5px 0 10px 0; font-style: italic;">Cédula de Identidad: ${cedulaEstudiante}</p>
-                        <p style="font-size: 19px; color: #000; margin:0 0 5px 0;">Por haber <strong style="font-weight: 900;">APROBADO</strong> el curso:</p>
-                        <h4 style="font-size: 36px; font-weight: 900; color: #000; margin: 0 0 15px 0; max-width: 850px; line-height: 1.2;">"${nombreCurso}"</h4>
-                        <div style="display: inline-block; text-align: center; max-width: 90%;">
-                            <p style="font-size: 14px; color: #1f2937; margin: 0 0 10px 0; font-weight: 600; white-space: nowrap;">${textoFecha}</p>
-                            <div style="margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 6px; background-color: rgba(248, 250, 252, 0.9); padding: 12px 16px; text-align: left; width: 100%; box-sizing: border-box;">
-                                <div style="column-count: 2; column-gap: 30px; font-size: 12px; color: #1f2937; font-weight: 600; line-height: 1.5;">${temarioHTML}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; padding: 0 20px;">
-                        <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">MSc. Ing. Pablo Cedeño</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Instructor</p></div>
-                        <div style="text-align: center; color: #9ca3af; font-size: 10px;">ID de Certificado: <strong style="color:#6b7280; font-weight: 900;">${siglas}</strong>-<span style="color:#6b7280; font-weight: 900;">${idCalculado}</span></div>
-                        <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">Aprende Automatización</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Dirección Académica</p></div>
-                    </div>
-                </div>`;
-                const pdfHTML = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Certificado - ${nombreCurso}</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Plus Jakarta Sans',sans-serif;background-color:#0f172a;color:#1e293b;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}.bg-pattern{position:fixed;inset:0;z-index:0;background-color:#0f172a;}.bg-pattern img{width:100%;height:100%;object-fit:cover;opacity:0.4;mix-blend-mode:luminosity;}.toolbar{position:relative;z-index:10;background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);padding:16px 24px;border-radius:16px;margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;}.btn{padding:12px 24px;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.3s;font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:8px;}.btn-print{background:#2db8ce;color:white;}.btn-print:hover{background:#3cc8de;}.certificate-container{position:relative;z-index:10;max-width:100%;overflow-x:auto;display:flex;justify-content:center;}.certificate-wrapper{box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);background:white;}@media print{@page{size:letter landscape;margin:0.5cm;}body{background:white;padding:0;margin:0;}.bg-pattern,.toolbar{display:none!important;}.certificate-container{padding:0;margin:0;width:100%;}.certificate-wrapper{box-shadow:none!important;}}</style></head><body><div class="bg-pattern"><img src="img/AA (7).gif" alt="Fondo"></div><div class="toolbar"><button class="btn btn-print" onclick="window.print()">🖨️ Imprimir Certificado</button><span>Optimizado para Hoja Carta</span></div><div class="certificate-container"><div class="certificate-wrapper">${certHTML}</div></div></body></html>`;
-                const nuevaVentana = window.open('', '_blank');
-                nuevaVentana.document.write(pdfHTML);
-                nuevaVentana.document.close();
-            } catch (error) { console.error("Error al generar el certificado:", error); showNotif('Error', 'No se pudo generar el certificado.', 'error'); }
-        }
 
         const authFormEl = document.getElementById('authForm');
         if (authFormEl) {
@@ -1396,7 +1219,7 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            if(window.currentUser) { // Use window.currentUser
+            if(window.currentUser) {
                 updateAllUI();
                 fetchProgressForAllCourses();
             }
@@ -1407,13 +1230,13 @@
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseIdParam = urlParams.get('courseId');
                     if (courseIdParam) {
-                    const id = parseInt(courseIdParam, 10);
-                    if (currentUser.accessedCursos && currentUser.accessedCursos.includes(id)) {
-                        if (id === 1) {
-                            window.location.href = '1-arranque-contactores-material.html';
-                        } else {
-                            grantAccess(id);
-                        }
+                        const id = parseInt(courseIdParam, 10);
+                        if (window.currentUser.accessedCursos && window.currentUser.accessedCursos.includes(id)) {
+                            if (id === 1) {
+                                window.location.href = '1-arranque-contactores-material.html';
+                            } else {
+                                grantAccess(id);
+                            }
                         }
                     }
                 }

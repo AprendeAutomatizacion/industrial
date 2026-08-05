@@ -707,21 +707,20 @@
                     card.addEventListener('click', function() {
                         const fileName = this.dataset.fileName;
                         if (!fileName) return;
-
+                        
                         const statKey = `descarga_curso_${COURSE_ID}_${fileName.replace(/[^a-zA-Z0-9]/g, '_')}`;
                         ping('update_stat', statKey);
                         ping('update_stat', 'descargas_totales');
-
-                        const currentUser = JSON.parse(localStorage.getItem('user'));
-                        if (currentUser) {
-                            if (!Array.isArray(currentUser.downloadedFiles)) currentUser.downloadedFiles = [];
-                            if (!currentUser.downloadedFiles.includes(fileName)) currentUser.downloadedFiles.push(fileName);
-                            if (typeof currentUser.downloadCounts !== 'object') currentUser.downloadCounts = {};
-                            currentUser.downloadCounts[fileName] = (currentUser.downloadCounts[fileName] || 0) + 1;
-                            localStorage.setItem('user', JSON.stringify(currentUser));
-                            const countSpan = this.querySelector('.file-download-count');
-                            if (countSpan) countSpan.innerText = currentUser.downloadCounts[fileName];
-
+                        
+                        if (window.currentUser) { // Use window.currentUser
+                            if (!Array.isArray(window.currentUser.downloadedFiles)) window.currentUser.downloadedFiles = [];
+                            if (!window.currentUser.downloadedFiles.includes(fileName)) window.currentUser.downloadedFiles.push(fileName);
+                            if (typeof window.currentUser.downloadCounts !== 'object') window.currentUser.downloadCounts = {};
+                            window.currentUser.downloadCounts[fileName] = (window.currentUser.downloadCounts[fileName] || 0) + 1;
+                            localStorage.setItem('user', JSON.stringify(window.currentUser));
+                            const countSpan = this.querySelector('.file-download-count'); // Update UI
+                            if (countSpan) countSpan.innerText = window.currentUser.downloadCounts[fileName];
+                            
                             if (typeof app !== 'undefined' && typeof app.syncUserData === 'function') app.syncUserData();
                         }
                         applyGlow(this);
