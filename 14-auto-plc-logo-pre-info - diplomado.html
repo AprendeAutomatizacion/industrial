@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automatización con Contactores (Presencial) - Aprende Automatización</title>
+    <title>Automatización con PLC Diplomado (Presencial) - Aprende Automatización</title>
     <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
     
     <!-- FUENTES Y LIBRERÍAS -->
@@ -62,6 +62,69 @@
             transition: transform 0.1s ease;
         }
 
+        /* 🔥 BOTÓN METALIZADO SÓLIDO (base) */
+        .btn-metal-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            padding: 0.85rem 1.8rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: #ffffff !important;
+            border: none !important;
+            outline: none;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(180deg, #b0c4de 0%, #7a8fa6 8%, #4a6078 20%, #2d4a5e 40%, #1e3a4f 60%, #1a3142 100%);
+        }
+        .btn-metal-solid::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 10%;
+            width: 80%;
+            height: 35%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .btn-metal-solid:hover {
+            background: linear-gradient(180deg, #c0d4e8 0%, #8a9fb6 8%, #5a7088 20%, #3d5a6e 40%, #2e4a5f 60%, #243e52 100%);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .btn-metal-solid:active {
+            transform: scale(0.96);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(180deg, #1a3142 0%, #1e3a4f 40%, #2d4a5e 60%, #4a6078 100%);
+        }
+
+        /* 🟢 VARIANTE CYAN METÁLICO (btn-metal-cyan) */
+        .btn-metal-cyan {
+            background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-cyan::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
+        .btn-metal-cyan:hover {
+            background: linear-gradient(180deg, #b0e0f0 0%, #6bc8d8 8%, #3daabe 20%, #2a8d9e 40%, #1f7488 60%, #155f70 100%);
+            box-shadow: 0 10px 24px rgba(15, 100, 120, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .btn-metal-cyan:active {
+            background: linear-gradient(180deg, #0b4f60 0%, #0f6478 40%, #1a7d91 60%, #2d9aae 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
+
         .star-rating i {
             cursor: pointer;
             transition: all 0.2s ease;
@@ -116,11 +179,11 @@
                 <span class="bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30">Modalidad Presencial</span>
             </nav>
             <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter font-display force-white-text">
-                AUTOMATIZACIÓN CON <br>
-                <span style="color: var(--celeste)">CONTACTORES</span>
+                AUTOMATIZACIÓN CON PLC<br>
+                <span style="color: var(--celeste)">DIPLOMADO PRESENCIAL</span>
             </h1>
             <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed font-medium">
-                Comprende, diseña e instala sistemas de automatización industrial utilizando contactores. Aprende normativas, simulación y cableado de circuitos de control.
+                Domina la programación y puesta en marcha de PLCs industriales. Aprende a diseñar sistemas de control automatizado con tecnología de vanguardia.
             </p>
         </div>
     </div>
@@ -145,10 +208,10 @@
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--azul-oscuro)">Resumen del Curso</h2>
                 <div class="text-slate-700 text-sm leading-relaxed space-y-4 font-medium">
                     <p>
-                        Este programa está diseñado para proporcionar a los participantes los conocimientos y habilidades técnicos necesarios para comprender, diseñar e instalar sistemas de automatización industrial utilizando <strong>contactores</strong>. 
+                        Este programa está diseñado para proporcionar a los participantes los conocimientos y habilidades técnicas para comprender, diseñar e implementar sistemas de automatización industrial utilizando <strong>PLCs (Controladores Lógicos Programables)</strong>. 
                     </p>
                     <p>
-                        Al finalizar el curso, serás capaz de aplicar los principios de funcionamiento electromecánico, diseñar esquemas de potencia y mando, y familiarizarte con las normas internacionales de seguridad eléctrica, desarrollando una capacidad crítica para la resolución de fallas en entornos industriales reales.
+                        Al finalizar el curso, serás capaz de programar PLCs en lenguajes normalizados, diseñar sistemas de control para procesos industriales, y realizar diagnósticos de fallas en sistemas automatizados, preparándote para los desafíos de la industria 4.0.
                     </p>
                 </div>
             </section>
@@ -162,8 +225,8 @@
                             <i class="fas fa-bullseye text-sm"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-sm text-slate-800 mb-1">Diseño Técnico</h4>
-                            <p class="text-xs text-slate-500">Elaborar esquemas eléctricos normalizados de fuerza y control para motores.</p>
+                            <h4 class="font-bold text-sm text-slate-800 mb-1">Programación de PLC</h4>
+                            <p class="text-xs text-slate-500">Dominar lenguajes Ladder y bloques de función según la norma IEC 61131-3.</p>
                         </div>
                     </div>
                     <div class="flex gap-4">
@@ -171,8 +234,8 @@
                             <i class="fas fa-tools text-sm"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-sm text-slate-800 mb-1">Montaje Práctico</h4>
-                            <p class="text-xs text-slate-500">Realizar el cableado físico de tableros de automatización siguiendo normas de seguridad.</p>
+                            <h4 class="font-bold text-sm text-slate-800 mb-1">Integración de Sistemas</h4>
+                            <p class="text-xs text-slate-500">Conectar sensores, actuadores y HMI a sistemas de control PLC.</p>
                         </div>
                     </div>
                     <div class="flex gap-4">
@@ -180,8 +243,8 @@
                             <i class="fas fa-laptop-code text-sm"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-sm text-slate-800 mb-1">Simulación Virtual</h4>
-                            <p class="text-xs text-slate-500">Validar el funcionamiento de circuitos mediante software especializado (CADeSIMU).</p>
+                            <h4 class="font-bold text-sm text-slate-800 mb-1">Simulación y Pruebas</h4>
+                            <p class="text-xs text-slate-500">Validar programas de PLC mediante software de simulación.</p>
                         </div>
                     </div>
                     <div class="flex gap-4">
@@ -190,7 +253,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-sm text-slate-800 mb-1">Protección Industrial</h4>
-                            <p class="text-xs text-slate-500">Implementar sistemas de protección adecuados para motores y operadores.</p>
+                            <p class="text-xs text-slate-500">Implementar sistemas de protección y paradas de emergencia en PLC.</p>
                         </div>
                     </div>
                 </div>
@@ -210,7 +273,7 @@
                     </div>
                     <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
                         <i class="fas fa-bolt text-[#2db8ce] mt-1"></i>
-                        <span>Electricistas residenciales que deseen escalar sus conocimientos al área industrial.</span>
+                        <span>Electricistas que deseen incursionar en la automatización con PLC.</span>
                     </div>
                     <div class="flex items-start gap-3 p-4 bg-slate-50 rounded-2xl border border-slate-100">
                         <i class="fas fa-lightbulb text-[#2db8ce] mt-1"></i>
@@ -225,27 +288,27 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
                         <i class="fas fa-check-circle text-emerald-500"></i>
-                        <span>Interpretación de simbología bajo normas IEC y NEMA.</span>
+                        <span>Fundamentos de los PLC y su arquitectura.</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
                         <i class="fas fa-check-circle text-emerald-500"></i>
-                        <span>Funcionamiento y selección de contactores y relés.</span>
+                        <span>Programación en lenguaje Ladder y FBD.</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
                         <i class="fas fa-check-circle text-emerald-500"></i>
-                        <span>Diseño de arranques directos e inversores de giro.</span>
+                        <span>Cableado y conexionado de módulos de E/S.</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
                         <i class="fas fa-check-circle text-emerald-500"></i>
-                        <span>Lógica de protección para motores trifásicos.</span>
+                        <span>Diseño de sistemas de control secuencial.</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
                         <i class="fas fa-check-circle text-emerald-500"></i>
-                        <span>Montaje práctico de tableros de control industrial.</span>
+                        <span>Implementación de protecciones eléctricas en PLC.</span>
                     </div>
                     <div class="flex items-center gap-3 text-sm text-slate-600 font-medium">
                         <i class="fas fa-check-circle text-emerald-500"></i>
-                        <span>Uso de software CADeSIMU para validación previa.</span>
+                        <span>Uso de software de simulación para validación previa.</span>
                     </div>
                 </div>
             </section>
@@ -256,16 +319,16 @@
                 
                 <!-- Sesión 1 -->
                 <div class="glass-dark-blue p-8 rounded-[2rem] border resource-card overflow-hidden relative">
-                    <div class="absolute top-0 right-0 p-6 opacity-10"><i class="fas fa-plug text-6xl"></i></div>
+                    <div class="absolute top-0 right-0 p-6 opacity-10"><i class="fas fa-microchip text-6xl"></i></div>
                     <div class="flex items-center gap-3 mb-6">
                         <span class="bg-cyan-500 text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">Sesión 01</span>
-                        <h3 class="text-xl font-black uppercase text-white">Automatismos Eléctricos</h3>
+                        <h3 class="text-xl font-black uppercase text-white">Fundamentos de PLC</h3>
                     </div>
                     <ul class="space-y-3 text-sm font-medium text-slate-200">
-                        <li>Definición y diferencias entre automatismos cableados y programados.</li>
-                        <li>Dispositivos Básicos: Pulsadores, interruptores y sensores.</li>
-                        <li>Esquemas de Fuerza (potencia) y Control (mando).</li>
-                        <li class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 font-bold text-cyan-400">Práctica: Diseño y cableado de control de bomba manual-automático.</li>
+                        <li>Definición y diferencias entre lógica cableada y programada.</li>
+                        <li>Arquitectura de un PLC: CPU, módulos de entrada y salida.</li>
+                        <li>Introducción a la programación en Ladder.</li>
+                        <li class="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 font-bold text-cyan-400">Práctica: Control de encendido y apagado de un motor mediante PLC.</li>
                     </ul>
                 </div>
 
@@ -274,12 +337,12 @@
                     <div class="absolute top-0 right-0 p-6 opacity-10"><i class="fas fa-cogs text-6xl"></i></div>
                     <div class="flex items-center gap-3 mb-6">
                         <span class="bg-[#0f172a] text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">Sesión 02</span>
-                        <h3 class="text-xl font-black uppercase text-[#0f172a]">Resolución con Contactores</h3>
+                        <h3 class="text-xl font-black uppercase text-[#0f172a]">Aplicaciones Industriales</h3>
                     </div>
                     <ul class="space-y-3 text-sm font-medium text-[#0f172a]">
-                        <li>Diseño y simulación: Arranque estrella-delta y motor de anillos.</li>
-                        <li>Control de bandas transportadoras y portones eléctricos.</li>
-                        <li class="p-3 rounded-xl bg-[#0f172a] text-white font-bold">Práctica: Diseño y cableado para control de bombas alternantes.</li>
+                        <li>Programación de temporizadores y contadores.</li>
+                        <li>Control de bandas transportadoras y sistemas secuenciales.</li>
+                        <li class="p-3 rounded-xl bg-[#0f172a] text-white font-bold">Práctica: Diseño de un sistema de control de semáforos con PLC.</li>
                     </ul>
                 </div>
             </section>
@@ -295,38 +358,20 @@
                     <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#2db8ce] text-white mb-4 shadow-lg shadow-cyan-500/20"><i class="fas fa-stethoscope"></i></div>
                         <h4 class="font-bold text-xs uppercase mb-2 text-cyan-700 tracking-tight">Diagnóstico de Fallas</h4>
-                        <p class="text-[11px] text-slate-600 leading-relaxed">Capacidad para identificar y solucionar problemas comunes en circuitos de control electromecánico en campo.</p>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Capacidad para identificar y solucionar problemas comunes en sistemas con PLC.</p>
                     </div>
                     <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#1877f2] text-white mb-4 shadow-lg shadow-blue-500/20"><i class="fas fa-project-diagram"></i></div>
-                        <h4 class="font-bold text-xs uppercase mb-2 text-blue-700 tracking-tight">Diseño de Lógica Cableada</h4>
-                        <p class="text-[11px] text-slate-600 leading-relaxed">Habilidad para crear esquemas de mando y potencia para arranques de motores, siguiendo normativas IEC/NEMA.</p>
+                        <h4 class="font-bold text-xs uppercase mb-2 text-blue-700 tracking-tight">Diseño de Lógica Programada</h4>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Habilidad para crear programas de PLC bajo normativa IEC 61131-3.</p>
                     </div>
                     <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
                         <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-emerald-500 text-white mb-4 shadow-lg shadow-emerald-500/20"><i class="fas fa-tools"></i></div>
                         <h4 class="font-bold text-xs uppercase mb-2 text-emerald-700 tracking-tight">Mantenimiento Preventivo</h4>
-                        <p class="text-[11px] text-slate-600 leading-relaxed">Competencia para realizar el mantenimiento y la correcta instalación de tableros de control industrial.</p>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Competencia para realizar el mantenimiento y la correcta instalación de sistemas automatizados.</p>
                     </div>
                 </div>
             </section>
-
-            <!-- Certificación UPTA Unificada -->
-            <div class="mt-8">
-                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <i class="fas fa-award text-8xl text-cyan-400"></i>
-                    </div>
-                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2">
-                        <img src="img/AA(41).ico" alt="Certificado UPTA" class="w-full h-full object-contain">
-                    </div>
-                    <div class="relative z-10 text-center sm:text-left">
-                        <h4 class="font-black text-base text-white mb-1 uppercase tracking-tight">Certificación UPTA</h4>
-                        <p class="text-xs text-slate-300 font-medium leading-relaxed">
-                            Avalado por el Departamento de postgrado de la Universidad Politécnica Territorial del Estado Aragua.
-                        </p>
-                    </div>
-                </div>
-            </div>
 
             <!-- REQUISITOS -->
             <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
@@ -355,7 +400,7 @@
                     </div>
                     <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
                         <i class="fas fa-desktop text-2xl text-blue-500 mb-2"></i>
-                        <p class="text-[10px] font-bold uppercase text-slate-700">Simuladores CADeSIMU / PC_SIMU</p>
+                        <p class="text-[10px] font-bold uppercase text-slate-700">Simuladores de PLC</p>
                     </div>
                 </div>
             </section>
@@ -391,28 +436,42 @@
                 </div>
             </section>
 
+            <!-- Certificación UPTA Unificada -->
+            <div class="mt-8">
+                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-award text-8xl text-cyan-400"></i>
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2">
+                        <img src="img/AA(41).ico" alt="Certificado UPTA" class="w-full h-full object-contain">
+                    </div>
+                    <div class="relative z-10 text-center sm:text-left">
+                        <h4 class="font-black text-base text-white mb-1 uppercase tracking-tight">Certificación UPTA</h4>
+                        <p class="text-xs text-slate-300 font-medium leading-relaxed">
+                            Avalado por el Departamento de postgrado de la Universidad Politécnica Territorial del Estado Aragua.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- BARRA LATERAL -->
+        <!-- BARRA LATERAL DINÁMICA -->
         <div class="lg:w-1/3 lg:sticky lg:top-0 lg:h-screen lg:flex lg:items-center">
             <div class="w-full space-y-8">
                 <div class="bg-white rounded-[40px] shadow-2xl border border-slate-200 p-8">
-                    <div class="flex items-baseline gap-2 mb-6">
-
-                        
-                    </div>
-                    <div class="space-y-3">
-                        <a href="javascript:alert('Para inscribirte, por favor contactar con el profesor Pablo Cedeño.')" class="btn-pulse w-full bg-[#2db8ce] text-white py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 shadow-xl hover:bg-[#2db8ce]/90 transition-all">
-                            <i class="fas fa-cart-plus"></i> Comprar Ahora
-                        </a>
-                        <a href="https://www.profesorpablocedeno.online/mis-cursos/arranque-de-motores-con-contactores/contactores2" class="btn-pulse w-full border-2 border-[#2db8ce] text-[#2db8ce] py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 hover:bg-[#2db8ce]/5 transition-all">
-                            <i class="fas fa-sign-in-alt"></i> Materiales del Curso
+                    <div id="access-actions" class="space-y-3">
+                        <!-- Botón por defecto (sin acceso) -->
+                        <a href="https://wa.me/584121414196?text=Hola%2C%20deseo%20solicitar%20acceso%20a%20la%20materia%20%22Automatizaci%C3%B3n%20con%20PLC%22%20del%20diplomado%20presencial%20Automatizaci%C3%B3n%20Industrial.%20Estos%20son%20mis%20datos%20nombre%2C%20c%C3%A9dula%2C%20correo%20y%20tel%C3%A9fono." 
+                           target="_blank" 
+                           class="btn-pulse w-full btn-metal-solid btn-metal-cyan py-5 rounded-2xl font-black uppercase text-sm flex items-center justify-center gap-3 border-0 text-white">
+                            <i class="fab fa-whatsapp text-lg"></i> Solicita tu Acceso
                         </a>
                     </div>
                     <div class="mt-6 pt-6 border-t border-slate-200 space-y-3">
                         <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-3 text-white flex items-center gap-3 shadow-lg border border-blue-400/50">
                             <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner shrink-0"><i class="fas fa-laptop text-sm"></i></div>
-                            <div><h4 class="font-bold text-[9px] text-blue-100 uppercase tracking-widest mb-0.5">Modalidad</h4><p class="font-black text-xs uppercase tracking-tighter text-white leading-none">100% Online</p></div>
+                            <div><h4 class="font-bold text-[9px] text-blue-100 uppercase tracking-widest mb-0.5">Modalidad</h4><p class="font-black text-xs uppercase tracking-tighter text-white leading-none">Presencial</p></div>
                         </div>
                     </div>
                 </div>
@@ -422,17 +481,35 @@
 </main>
 
 <script>
-    const COURSE_ID = 'Automatizacion_Contactores'; 
+    (function() {
+        const COURSE_ID_NUMERIC = 14; // ID para el diplomado de PLC
+        const user = JSON.parse(localStorage.getItem('user'));
+        const hasAccess = user && user.accessedCursos && user.accessedCursos.includes(COURSE_ID_NUMERIC);
+        const accessContainer = document.getElementById('access-actions');
+
+        if (hasAccess && accessContainer) {
+            accessContainer.innerHTML = `
+                <div class="flex items-center justify-center gap-2 text-emerald-600 font-bold bg-emerald-100 border border-emerald-200 rounded-xl py-3 px-4">
+                    <i class="fas fa-check-circle"></i> Inscrito
+                </div>
+                <a href="mis-cursos.html?courseId=${COURSE_ID_NUMERIC}" class="btn-metal-solid btn-metal-cyan btn-pulse w-full flex justify-center items-center gap-2 mt-3">
+                    <i class="fas fa-book-open"></i> Ir a Mis Cursos
+                </a>
+            `;
+        }
+    })();
+</script>
+
+<script>
+    const COURSE_ID = 'Automatizacion_PLC';
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzV5ytOQNAqD3gEeLYOUkDlZBrkixrjXZisEF-KCnjCW0qnaJDI123kcVtK5-5mfvS9/exec';
     function toggleEmojiPicker() {
         const picker = document.getElementById('emoji-picker');
         picker.classList.toggle('show');
     }
-
-    // Función para insertar el emoji en el textarea
     function insertEmoji(emoji) {
         const textarea = document.getElementById('comentario');
-        textarea.value += emoji; // No need for skeleton here, it's already set above
+        textarea.value += emoji;
         document.getElementById('emoji-picker').classList.remove('show');
     }
 
@@ -492,7 +569,7 @@
     }
 
     async function loadComments() {
-        try { // No need for skeleton here, it's already set above
+        try {
             const response = await fetch(`${SCRIPT_URL}?id_curso=${COURSE_ID}&t=${Date.now()}`);
             const result = await response.json();
             renderComments((result.data || result.records || result).reverse());

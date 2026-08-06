@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -143,7 +143,7 @@
                 </nav>
                 <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter font-display force-white-text">
                     Arranque de Motores <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2db8ce] to-blue-400">con Contactores</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2db8ce] to-blue-400">con Contactores (Manual)</span>
                 </h1>
                 <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed">
                     Domina el diseño y montaje de tableros de control de motores eléctricos con lógica cableada. Aprende a interpretar esquemas de fuerza y mando.
@@ -345,23 +345,6 @@
                 </div>
             </section>
 
-            <!-- Certificación UPTA Unificada -->
-            <div class="mt-8">
-                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
-                    <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
-                        <i class="fas fa-award text-8xl text-cyan-400"></i>
-                    </div>
-                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2">
-                        <img src="img/AA(41).ico" alt="Certificado UPTA" class="w-full h-full object-contain">
-                    </div>
-                    <div class="relative z-10 text-center sm:text-left">
-                        <h4 class="font-black text-base text-white mb-1 uppercase tracking-tight">Certificación UPTA</h4>
-                        <p class="text-xs text-slate-300 font-medium leading-relaxed">
-                            Avalado por el Departamento de postgrado de la Universidad Politécnica Territorial del Estado Aragua.
-                        </p>
-                    </div>
-                </div>
-            </div>
 
             <!-- REQUISITOS (Formato Lista) -->
             <section class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
@@ -422,6 +405,24 @@
                 </div>
             </section>
 
+            <!-- Certificación UPTA Unificada -->
+            <div class="mt-8">
+                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-award text-8xl text-cyan-400"></i>
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2">
+                        <img src="img/AA(41).ico" alt="Certificado UPTA" class="w-full h-full object-contain">
+                    </div>
+                    <div class="relative z-10 text-center sm:text-left">
+                        <h4 class="font-black text-base text-white mb-1 uppercase tracking-tight">Certificación UPTA</h4>
+                        <p class="text-xs text-slate-300 font-medium leading-relaxed">
+                            Avalado por el Departamento de postgrado de la Universidad Politécnica Territorial del Estado Aragua.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- BARRA LATERAL -->
@@ -432,12 +433,9 @@
                         <span class="text-4xl font-black text-slate-900">$5.00</span>
                         <span class="text-slate-400 line-through text-lg">$10.00</span>
                     </div>
-                <div id="buy-actions" class="space-y-3">
-                        <a href="javascript:alert('Para inscribirte, por favor contactar con el profesor Pablo Cedeu00f1o.')" class="btn-metal-solid btn-metal-cyan">
-                            <i class="fas fa-cart-plus"></i> Comprar Ahora
-                        </a>
-                        <a href="https://wa.me/584121414196?text=Hola,%20deseo%20adquirir%20el%20manual:%20Manual%20de%20Arranque%20de%20Motores%20con%20Contactores" target="_blank" class="btn-metal-solid btn-metal-green">
-                            <i class="fab fa-whatsapp"></i> Preguntar por WhatsApp
+                    <div id="buy-actions" class="space-y-3">
+                        <a href="https://wa.me/584121414196?text=Hola,%20deseo%20solicitar%20mi%20acceso%20al%20curso:%20Arranque%20de%20Motores%20con%20Contactores%20(Manual)" target="_blank" class="w-full flex justify-center items-center gap-2 bg-emerald-500 text-white font-bold uppercase text-sm px-6 py-3 rounded-xl shadow-md hover:bg-emerald-600 transition-colors btn-pulse">
+                            <i class="fab fa-whatsapp"></i> Solicita tu acceso
                         </a>
                     </div>
                     <div class="mt-6 pt-6 border-t border-slate-200 space-y-3">
@@ -463,14 +461,14 @@
             const buyActionsContainer = document.getElementById('buy-actions');
             if (buyActionsContainer) {
                 const badgeText = IS_MANUAL ? 'Adquirido' : 'Inscrito';
-                const buttonText = IS_MANUAL ? 'Ver Materiales' : 'Ir a Mis Cursos';
+                const buttonText = IS_MANUAL ? 'Ir a Mis Cursos' : 'Ir a Mis Cursos';
                 const iconClass = IS_MANUAL ? 'fa-book-open' : 'fa-graduation-cap';
 
                 buyActionsContainer.innerHTML = `
-                    <div class="btn-enrolled-badge">
+                    <div class="flex items-center justify-center gap-2 text-emerald-600 font-bold bg-emerald-100 border border-emerald-200 rounded-xl py-2 px-4">
                         <i class="fas fa-check-circle"></i> ${badgeText}
                     </div>
-                    <a href="mis-cursos.html?courseId=${COURSE_ID_NUMERIC}" class="btn-metal-solid btn-metal-outline-cyan">
+                    <a href="mis-cursos.html?courseId=${COURSE_ID_NUMERIC}" class="btn-metal-solid btn-metal-cyan btn-pulse">
                         <i class="fas ${iconClass}"></i> ${buttonText}
                     </a>
                 `;

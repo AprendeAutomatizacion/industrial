@@ -32,7 +32,7 @@
         }
 
         #misCursosUserInfo .student-card {
-            overflow: hidden; /* Para contener el fondo */
+            overflow: hidden;
         }
         #misCursosUserInfo .student-card::before {
             content: '';
@@ -42,26 +42,23 @@
             background-size: cover;
             background-position: center;
             z-index: 0;
-            opacity: 0.3; /* Aumentada la opacidad para mayor visibilidad */
+            opacity: 0.3;
         }
 
-        /* Estilos para que la tarjeta de estudiante en 'Mis Cursos' sea blanca en modo claro */
         body.light-mode #misCursosUserInfo .student-card {
-            background-color: #eaf0f5 !important; /* Fondo gris azulado claro */
-            border-color: #e2e8f0 !important; /* Borde claro y suave */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important; /* Sombra sutil estándar */
+            background-color: #eaf0f5 !important;
+            border-color: #e2e8f0 !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
         }
 
-        /* Ocultar el GIF de fondo en la tarjeta para el modo claro */
         body.light-mode #misCursosUserInfo .student-card::before {
             display: none;
         }
 
-        /* Ajustar colores de texto para legibilidad en fondo claro */
         body.light-mode #misCursosUserInfo .student-card .text-white,
         body.light-mode #misCursosUserInfo .student-card .text-slate-300,
         body.light-mode #misCursosUserInfo .student-card .text-slate-400 {
-            color: #1e293b !important; /* slate-800 */
+            color: #1e293b !important;
         }
         body.light-mode #misCursosUserInfo .student-card .text-white\/5 { color: #e2e6ed !important; }
         body.light-mode #misCursosUserInfo .student-card .border-white\/10 { border-color: #e2e8f0 !important; }
@@ -69,66 +66,47 @@
         body.light-mode #misCursosUserInfo .student-card .text-purple-400 { color: #a855f7 !important; }
         body.light-mode #misCursosUserInfo .student-card .text-amber-400 { color: #f59e0b !important; }
         body.light-mode #misCursosUserInfo .student-card .text-red-400 { color: #ef4444 !important; }
-    </style>
-    <style>
-        /* Forzar fondo blanco para la página de Mis Cursos */
+
         body#mis-cursos-page.light-mode {
             background-color: #d0e1ef !important;
         }
-    </style>
-    <style>
-        /* 1. Definición de Variables de Color para Temas */
+
         :root {
-            /* Paleta Clara */
             --bg-default: #f7f9fb;
             --bg-secondary: #ffffff;
-            --bg-dark: #0f172a; /* Para secciones oscuras en modo claro */
+            --bg-dark: #0f172a;
             --bg-dark-accent: #1e293b;
-
             --text-default: #1e293b;
             --text-secondary: #475569;
-            --text-light: #f8fafc; /* Para texto sobre fondos oscuros */
+            --text-light: #f8fafc;
             --text-accent: #2db8ce;
-
             --border-default: #e2e8f0;
             --border-light: rgba(255, 255, 255, 0.1);
-
             --shadow-color: rgba(0, 0, 0, 0.1);
-
-            /* Colores para componentes de tarjetas */
-            --badge-bg-intermediate: #0891b2; /* cyan-600 */
-            --badge-bg-basic: #0d9488; /* teal-600 */
+            --badge-bg-intermediate: #0891b2;
+            --badge-bg-basic: #0d9488;
             --badge-text: #ffffff;
-            --btn-accent-bg: #0891b2; /* cyan-600 */
+            --btn-accent-bg: #0891b2;
             --btn-accent-text: #ffffff;
             --btn-accent-shadow: rgba(8, 145, 178, 0.3);
-            --btn-accent-border: #0e7490; /* cyan-700 */
-            --btn-accent-bg-hover: #0e7490; /* cyan-700 */
+            --btn-accent-border: #0e7490;
+            --btn-accent-bg-hover: #0e7490;
         }
 
         body:not(.light-mode) {
-            /* Paleta Oscura */
             --bg-default: #0f172a;
             --bg-secondary: #1e293b;
             --bg-dark: #0f172a;
             --bg-dark-accent: #1e293b;
-
             --text-default: #f8fafc;
             --text-secondary: #94a3b8;
             --text-light: #f8fafc;
-
             --border-default: #334155;
             --border-light: rgba(45, 184, 206, 0.3);
-
             --shadow-color: rgba(0, 0, 0, 0.25);
         }
 
-        /* --- Estilos Generales --- */
-        .section-title {
-            color: var(--text-default);
-        }
-
-        /* --- Estilos movidos desde index.html y adaptados a variables --- */
+        .section-title { color: var(--text-default); }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -152,254 +130,149 @@
         }
         .btn-glow:hover::after { left: 100%; }
 
-        /* --- Secciones Tematizables --- */
         .section-themed {
             background-color: var(--bg-default);
             border-top: 1px solid var(--border-default);
             transition: background-color 0.3s, border-color 0.3s;
         }
+        .section-themed .section-subtitle { color: var(--text-accent); }
+        .section-themed .section-title { color: var(--text-default); }
 
-        .section-themed .section-subtitle {
-            color: var(--text-accent);
-        }
-
-        .section-themed .section-title {
-            color: var(--text-default);
-        }
-
-        /* --- Estilo de Tarjetas de Curso (Estilo Catálogo Unificado) --- */
         .course-card {
             background-color: var(--bg-secondary);
-            border-radius: 1.5rem; /* 24px */
+            border-radius: 1.5rem;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             transition: all 0.3s ease-in-out;
             text-align: left;
-            /* Se elimina border y box-shadow base para que lo controlen las clases de nivel */
         }
-
-        .course-card .course-card-image-container {
-            position: relative;
-            height: 12rem;
-            overflow: hidden;
-        }
-
-        .course-card .course-card-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .course-card:hover .course-card-image {
-            transform: scale(1.05);
-        }
-
-        .course-card .course-card-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
+        .course-card .course-card-image-container { position: relative; height: 12rem; overflow: hidden; }
+        .course-card .course-card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .course-card:hover .course-card-image { transform: scale(1.05); }
+        .course-card .course-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
         .course-card .course-card-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1;
-            padding: 0.25rem 0.75rem;
-            font-size: 9px;
-            font-weight: 900;
-            text-transform: uppercase;
-            border-radius: 9999px;
-            color: var(--badge-text);
+            position: absolute; top: 1rem; left: 1rem; z-index: 1;
+            padding: 0.25rem 0.75rem; font-size: 9px; font-weight: 900; text-transform: uppercase; border-radius: 9999px; color: var(--badge-text);
         }
-
         .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
         .course-card .badge-basic { background-color: var(--badge-bg-basic); }
-
         .course-card .course-card-title {
-            color: var(--text-default);
-            font-size: 1.125rem;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 0.5rem;
+            color: var(--text-default); font-size: 1.125rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.5rem;
         }
-
         .course-card .course-card-description {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-            line-height: 1.6;
+            color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1; line-height: 1.6;
         }
-
-        .course-card .course-card-footer {
-            margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-default);
-        }
-
-        .course-card .course-card-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .course-card .course-card-price {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--text-default);
-        }
-
-        .course-card .course-card-stats {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
+        .course-card .course-card-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-default); }
+        .course-card .course-card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .course-card .course-card-price { font-size: 1.25rem; font-weight: 800; color: var(--text-default); }
+        .course-card .course-card-stats { display: flex; align-items: center; gap: 1rem; }
         .course-card .like-btn, .course-card .view-container {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            cursor: pointer;
+            color: var(--text-secondary); font-size: 0.875rem; font-weight: 500; transition: color 0.3s; display: flex; align-items: center; gap: 0.4rem; cursor: pointer;
         }
-        .course-card .like-btn.liked,
-        .course-card .like-btn.liked i {
-            color: #ef4444 !important;
-        }
+        .course-card .like-btn.liked, .course-card .like-btn.liked i { color: #ef4444 !important; }
         .course-card .view-container.has-views { color: #22c55e; }
+        .course-card .course-card-buttons { display: flex; gap: 0.75rem; }
+        .course-card .course-card-buttons .btn-metal { flex: 1; font-size: 10px; }
 
-        .course-card .course-card-buttons {
-            display: flex;
-            gap: 0.75rem;
-        }
+        .course-card-level-basico { border: 1px solid rgba(6, 182, 212, 0.35); box-shadow: 0 0 10px rgba(6, 182, 212, 0.2); }
+        .course-card-level-basico:hover { border-color: #06b6d4; box-shadow: 0 0 25px rgba(6, 182, 212, 0.45); }
+        .course-card-level-intermedio { border: 1px solid rgba(168, 85, 247, 0.35); box-shadow: 0 0 10px rgba(168, 85, 247, 0.2); }
+        .course-card-level-intermedio:hover { border-color: #a855f7; box-shadow: 0 0 25px rgba(168, 85, 247, 0.45); }
+        .course-card-level-avanzado { border: 1px solid rgba(245, 158, 11, 0.35); box-shadow: 0 0 10px rgba(245, 158, 11, 0.2); }
+        .course-card-level-avanzado:hover { border-color: #f59e0b; box-shadow: 0 0 25px rgba(245, 158, 11, 0.45); }
 
-        /* Adaptación para que el botón metálico funcione dentro de la tarjeta */
-        .course-card .course-card-buttons .btn-metal {
-            flex: 1;
-            font-size: 10px;
-        }
-
-        /* --- Resplandor de Tarjetas por Nivel (Estilo Catálogo) --- */
-        .course-card-level-basico {
-            border: 1px solid rgba(6, 182, 212, 0.35);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
-        }
-        .course-card-level-basico:hover {
-            border-color: #06b6d4;
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
-        }
-
-        .course-card-level-intermedio {
-            border: 1px solid rgba(168, 85, 247, 0.35);
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
-        }
-        .course-card-level-intermedio:hover {
-            border-color: #a855f7;
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
-        }
-
-        .course-card-level-avanzado {
-            border: 1px solid rgba(245, 158, 11, 0.35);
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
-        }
-        .course-card-level-avanzado:hover {
-            border-color: #f59e0b;
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
-        }
-
-        /* --- Estilo Tarjeta Misión --- */
         .mission-card {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(6, 182, 212, 0.35);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+            border: 1px solid rgba(6, 182, 212, 0.35); box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
         }
-        .mission-card:hover {
-            border-color: #06b6d4;
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
-        }
-
+        .mission-card:hover { border-color: #06b6d4; box-shadow: 0 0 25px rgba(6, 182, 212, 0.45); }
+        body:not(.light-mode) .mission-card { border: 1px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 15px rgba(6, 182, 212, 0.25); }
+        body:not(.light-mode) .mission-card:hover { border-color: #06b6d4; box-shadow: 0 0 30px rgba(6, 182, 212, 0.5); }
+        body.light-mode .mission-card { background-color: #ffffff !important; border-color: #e2e8f0 !important; }
+        body.light-mode .mission-card h3 { color: #1e293b !important; }
+        body.light-mode .mission-card ul { color: #475569 !important; }
         body:not(.light-mode) .mission-card {
-            border: 1px solid rgba(6, 182, 212, 0.5);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
-        }
-        body:not(.light-mode) .mission-card:hover {
-            border-color: #06b6d4;
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
-        }
-
-        /* --- Estilo Tarjeta Misión (Modo Claro) --- */
-        body.light-mode .mission-card {
-            background-color: #ffffff !important;
-            border-color: #e2e8f0 !important;
-        }
-        body.light-mode .mission-card h3 {
-            color: #1e293b !important;
-        }
-        body.light-mode .mission-card ul {
-            color: #475569 !important;
-        }
-
-        /* --- Estilo Tarjeta Misión (Modo Oscuro) --- */
-        body:not(.light-mode) .mission-card { 
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
         }
         body:not(.light-mode) .mission-card h3 { color: #ffffff; }
-        body:not(.light-mode) .mission-card ul { color: #cbd5e1; } /* slate-300 */
+        body:not(.light-mode) .mission-card ul { color: #cbd5e1; }
 
-        /* Dark mode overrides para las tarjetas */
         body:not(.light-mode) .course-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            /* El borde y la sombra ahora son controlados por las clases de nivel */
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-
-        /* --- Resplandor de Tarjetas por Nivel (MODO OSCURO) --- */
-        body:not(.light-mode) .course-card-level-basico {
-            border: 1px solid rgba(6, 182, 212, 0.5);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
-        }
-        body:not(.light-mode) .course-card-level-basico:hover {
-            border-color: #06b6d4;
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
-        }
-
-        body:not(.light-mode) .course-card-level-intermedio {
-            border: 1px solid rgba(168, 85, 247, 0.5);
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
-        }
-        body:not(.light-mode) .course-card-level-intermedio:hover {
-            border-color: #a855f7;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
-        }
-
-        body:not(.light-mode) .course-card-level-avanzado {
-            border: 1px solid rgba(245, 158, 11, 0.5);
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
-        }
-        body:not(.light-mode) .course-card-level-avanzado:hover {
-            border-color: #f59e0b;
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
-        }
-
+        body:not(.light-mode) .course-card-level-basico { border: 1px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 15px rgba(6, 182, 212, 0.25); }
+        body:not(.light-mode) .course-card-level-basico:hover { border-color: #06b6d4; box-shadow: 0 0 30px rgba(6, 182, 212, 0.5); }
+        body:not(.light-mode) .course-card-level-intermedio { border: 1px solid rgba(168, 85, 247, 0.5); box-shadow: 0 0 15px rgba(168, 85, 247, 0.25); }
+        body:not(.light-mode) .course-card-level-intermedio:hover { border-color: #a855f7; box-shadow: 0 0 30px rgba(168, 85, 247, 0.5); }
+        body:not(.light-mode) .course-card-level-avanzado { border: 1px solid rgba(245, 158, 11, 0.5); box-shadow: 0 0 15px rgba(245, 158, 11, 0.25); }
+        body:not(.light-mode) .course-card-level-avanzado:hover { border-color: #f59e0b; box-shadow: 0 0 30px rgba(245, 158, 11, 0.5); }
         body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
         body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
+
+        /* Botones metálicos */
+        .btn-metal-solid {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+            font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;
+            padding: 0.85rem 1.8rem; border-radius: 1rem; cursor: pointer; transition: all 0.25s ease;
+            position: relative; overflow: hidden; text-decoration: none;
+            color: #ffffff !important; border: none !important; outline: none;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(180deg, #b0c4de 0%, #7a8fa6 8%, #4a6078 20%, #2d4a5e 40%, #1e3a4f 60%, #1a3142 100%);
+        }
+        .btn-metal-solid::before {
+            content: ''; position: absolute; top: 2px; left: 10%; width: 80%; height: 35%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 100%);
+            border-radius: 50%; pointer-events: none; transition: opacity 0.25s ease;
+        }
+        .btn-metal-solid:hover {
+            background: linear-gradient(180deg, #c0d4e8 0%, #8a9fb6 8%, #5a7088 20%, #3d5a6e 40%, #2e4a5f 60%, #243e52 100%);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .btn-metal-solid:active {
+            transform: scale(0.96); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(180deg, #1a3142 0%, #1e3a4f 40%, #2d4a5e 60%, #4a6078 100%);
+        }
+
+        .btn-metal-cyan {
+            background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-cyan::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
+        .btn-metal-cyan:hover {
+            background: linear-gradient(180deg, #b0e0f0 0%, #6bc8d8 8%, #3daabe 20%, #2a8d9e 40%, #1f7488 60%, #155f70 100%);
+            box-shadow: 0 10px 24px rgba(15, 100, 120, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .btn-metal-cyan:active {
+            background: linear-gradient(180deg, #0b4f60 0%, #0f6478 40%, #1a7d91 60%, #2d9aae 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-metal-teal {
+            background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-teal::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
+        .btn-metal-teal:hover {
+            background: linear-gradient(180deg, #b0f0e0 0%, #6bd8c8 8%, #3dbeae 20%, #2a9d8e 40%, #1f8878 60%, #157060 100%);
+            box-shadow: 0 10px 24px rgba(15, 100, 90, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .btn-metal-teal:active {
+            background: linear-gradient(180deg, #0b6050 0%, #0f7868 40%, #1a9180 60%, #2daa9a 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
     </style>
 </head>
 <body id="mis-cursos-page" class="custom-scrollbar light-mode">
     <button id="floatingBackBtn" onclick="handleFloatingBack()" title="Volver"><i class="fas fa-arrow-left"></i><span id="floatingBackText">Volver</span></button>
 
-    <!-- Página Mis Cursos -->
     <div id="page-mis-cursos" class="page-content">
         <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
             <div class="absolute inset-0 z-0 opacity-20">
@@ -426,7 +299,6 @@
         <div class="max-w-7xl mx-auto px-6 py-12">
             <main class="relative z-10 flex-grow w-full">
                 <div class="mb-10">
-                <!-- Tarjeta del estudiante con fondo cian glass, borde más visible e icono blanco -->
                 <div id="misCursosUserInfo" class="w-full hidden">
                     <div class="student-card backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
                         <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
@@ -436,7 +308,6 @@
                                 <p class="text-white text-xl font-bold" id="mcProfileName">-</p>
                             </div>
                             <p class="text-slate-300 text-sm font-medium" id="mcProfileEmail">-</p>
-               
                             <div class="grid grid-cols-2 gap-3 mt-2">
                                 <div>
                                     <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
@@ -451,7 +322,6 @@
                                     <p class="text-white font-bold" id="mcProfilePhone">-</p>
                                 </div>
                             </div>
-               
                             <div class="grid grid-cols-2 gap-3 mt-2">
                                 <div>
                                     <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
@@ -469,7 +339,6 @@
                                     <p class="text-white font-bold text-sm mt-0.5" id="mcProfileProfession">-</p>
                                 </div>
                             </div>
-               
                             <div class="mt-3 pt-3 border-t border-white/10 grid grid-cols-2 sm:grid-cols-4 gap-2">
                                 <div class="text-center"><span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1"><i class="fas fa-laptop text-teal-400 text-xs"></i> Online</span><span class="text-white font-black text-xl" id="mcStatOnline">0</span></div>
                                 <div class="text-center"><span class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1"><i class="fas fa-users text-purple-400 text-xs"></i> Presencial</span><span class="text-white font-black text-xl" id="mcStatPresencial">0</span></div>
@@ -486,24 +355,19 @@
         </div>
     </div>
 
-    <!-- Página Detalle de Curso -->
     <div id="page-curso-detalle" class="page-content"><div id="detalle-container" class="pb-24 relative z-10"></div></div>
-
     <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
     <script>
-        const SCRIPT_URL = window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec'; // Keep local for direct calls
-        
-        // Use window.currentUser which is managed by AuthLogic for consistency
-        // let currentUser = JSON.parse(localStorage.getItem('user')) || null; // Removed this line
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
+
         let dbUsers = {}, globalStats = {};
-        let dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {}; 
-        let studentCountsPerCourse = {}; 
+        let dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {};
+        let studentCountsPerCourse = {};
         let courseRatings = {};
         let userProgress = {};
         let currentViewedCourseId = null;
         let currentProgressCourseId = 1;
-        
         let latestEnrollmentDates = {};
         let latestCompletionDates = {};
 
@@ -537,7 +401,7 @@
                 aulaLink: "19-aula-manual-arranque-contactores.html"
             },
             { 
-            id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", desc: "Introducción a la automatización industrial utilizando PLC de gama básica.", image: "https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif", category: "PLC", level: "Básico", cost: 5.00, link: "20-auto-plc-basico-on-info.html", totalLessons: 1,
+                id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", desc: "Introducción a la automatización industrial utilizando PLC de gama básica.", image: "https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif", category: "PLC", level: "Básico", cost: 5.00, link: "20-auto-plc-basico-on-info.html", totalLessons: 1,
                 manuales: [{name: "Manual de Automatización con PLC Básico (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20PLC%20Básico"}]
             },
             { 
@@ -623,8 +487,8 @@
                     dbUsers=data.users||{}; globalStats=data.stats||{}; dbUserCourses=data.userCourses||{}; dbUserDetails=data.userDetails||{}; dbUserProgress=data.userProgress||{};
                     let enrollmentDatesBackend = data.userCourseEnrollmentDates || {};
                     let completionDatesBackend = data.userCourseCompletionDates || {};
-                    calculateCourseRatings(); updateStudentCounts(); // These use global dbUsers/globalStats
-                    if(window.currentUser && window.currentUser.email){ // Use window.currentUser
+                    calculateCourseRatings(); updateStudentCounts();
+                    if(window.currentUser && window.currentUser.email){
                         const email=window.currentUser.email.toLowerCase();
                         let myCourseNamesRaw=dbUserCourses[email]||[];
                         let myCourseNames=splitCourseNames(myCourseNamesRaw);
@@ -635,7 +499,7 @@
                             if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
                             if(found) myCourseIds.push(found.id);
                         });
-                        let globalUser=dbUsers[email]||{}; // This globalUser is from backend data
+                        let globalUser=dbUsers[email]||{};
                         if(typeof globalUser==='string'){ try{ globalUser=JSON.parse(globalUser); }catch(e){ globalUser={}; } }
                         let details=dbUserDetails[email]||{};
                         let existingIds=Array.isArray(globalUser.accessedCursos)?globalUser.accessedCursos:(window.currentUser.accessedCursos||[]);
@@ -653,8 +517,8 @@
                         const backendDatesForEmail = enrollmentDatesBackend[email] || {};
                         const backendCompDatesForEmail = completionDatesBackend[email] || {};
                         latestEnrollmentDates = backendDatesForEmail;
-                        latestCompletionDates = backendCompDatesForEmail; 
-                        localStorage.setItem('user',JSON.stringify(window.currentUser)); // Save updated window.currentUser
+                        latestCompletionDates = backendCompDatesForEmail;
+                        localStorage.setItem('user',JSON.stringify(window.currentUser));
                         updateAllUI(); fetchProgressForAllCourses(); renderMisCourses();
                     } else { renderMisCourses(); }
                     if (typeof showSyncIndicator === 'function') showSyncIndicator('Datos sincronizados', 'success');
@@ -720,6 +584,19 @@
             }
         }
 
+        async function syncUserProgressToExcel(){ 
+            if(!window.currentUser) return;
+            const email=window.currentUser.email.toLowerCase();
+            const userData=JSON.stringify(window.currentUser);
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ action: 'update_user', email: email, userData: userData })
+                });
+            } catch (e) { console.error('Fallo en la red al sincronizar progreso de usuario:', e); showNotif('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error'); }
+        }
+
         function fetchProgressForAllCourses(){
             if(!window.currentUser||!window.currentUser.accessedCursos) return;
             const email=window.currentUser.email.toLowerCase();
@@ -732,7 +609,7 @@
                 let progStr="";
                 for(let key in progresos){ let nk=normalizeName(key), nc=normalizeName(course.name); if(nk===nc||nk.includes(nc)||nc.includes(nk)){ progStr=progresos[key]; break; } }
                 const total=course.totalLessons||5;
-                userProgress[email][String(courseId)]=parseProgressString(progStr,total); // This uses the local userProgress
+                userProgress[email][String(courseId)]=parseProgressString(progStr,total);
             });
             renderMisCourses();
         }
@@ -742,7 +619,6 @@
             document.getElementById('misCursosUserInfo').classList.remove('hidden');
             const setTxt=(id,txt)=>{ const el=document.getElementById(id); if(el) el.innerText=txt; };
             
-            // Actualización de elementos de la UI principal si existieran, asegurando no fallar si fueron removidos (como los del userProfileModal)
             const initialsEl=document.getElementById('profileInitials'); const mcInitialsEl=document.getElementById('mcProfileInitials');
             if(window.currentUser.name||window.currentUser.email){ const str=window.currentUser.name||window.currentUser.email; const parts=str.trim().split(' '); const inits=parts.length>1?(parts[0][0]+parts[parts.length-1][0]).toUpperCase():parts[0][0].toUpperCase(); if(initialsEl) initialsEl.innerText=inits; if(mcInitialsEl) mcInitialsEl.innerText=inits; }
             
@@ -785,12 +661,10 @@
             setTxt('mcStatPresencial', countPresencial);
             setTxt('mcStatMaterias', countMaterias);
             setTxt('mcStatManuales', countManuales);
-
         }
 
         function renderMisCourses(){
             const grid=document.getElementById('coursesGrid'), noResults=document.getElementById('noResultsMisCursos');
-            console.log("renderMisCourses: window.currentUser.ratings", window.currentUser ? window.currentUser.ratings : "No user");
             grid.innerHTML='';
             if(!window.currentUser){
                 grid.classList.add('hidden'); noResults.classList.remove('hidden');
@@ -803,7 +677,7 @@
                 noResults.innerHTML=`<i data-lucide="library" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-slate-700">Aún no tienes cursos</h3><p class="text-slate-500 text-sm mt-2 mb-6">Explora nuestro catálogo y adquiere tu primer curso.</p><button onclick="window.open('https://wa.me/584121414196?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20cursos', '_blank')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-th"></i> Ver Catálogo</button>`;
                 if(window.lucide) lucide.createIcons(); return;
             }
-            grid.classList.remove('hidden'); noResults.classList.add('hidden'); // Ensure grid is visible
+            grid.classList.remove('hidden'); noResults.classList.add('hidden');
             const emailKey=window.currentUser.email.toLowerCase(); const myProgress=userProgress[emailKey]||{};
             grid.innerHTML=accessedCourses.map((course,index)=>{
                 const isManual = course.type === 'Manual';
@@ -823,9 +697,9 @@
                 
                 let buttonsHTML = '';
                 if (isManual) {
-                    buttonsHTML = `<button type="button" onclick="grantAccess(${course.id}); event.stopPropagation();" class="w-full btn-metal btn-green !py-3 !text-[10px]"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
+                    buttonsHTML = `<button type="button" onclick="grantAccess(${course.id}); event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
                     if (course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#') {
-                        buttonsHTML += `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal btn-blue py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
+                        buttonsHTML += `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
                     }
                 } else {
                     const materialesOnClick = course.id === 1
@@ -834,8 +708,8 @@
                             ? `window.location.href='2-arranque-plc-logo-material.html'`
                             : `grantAccess(${course.id})`);
 
-                    buttonsHTML = `<button type="button" onclick="${materialesOnClick}; event.stopPropagation();" class="w-full btn-metal btn-green !py-3 !text-[10px]"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
-                    ${course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal btn-blue py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
+                    buttonsHTML = `<button type="button" onclick="${materialesOnClick}; event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
+                    ${course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
                 }
 
                 const progressBarHTML =`
@@ -845,7 +719,6 @@
                     <p class="text-[10px] font-bold text-white/80">${completed} de ${total} lecciones completadas</p>
                 </div>`;
                 
-                // Determinar nivel para aplicar borde y colores
                 const normalizedLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
                 let levelBorderClass = '';
                 let levelIconClass = 'fa-question-circle';
@@ -1067,14 +940,14 @@
             if(!window.currentUser.downloadedFiles.includes(fileName)){
                 window.currentUser.downloadedFiles.push(fileName);
                 localStorage.setItem('user',JSON.stringify(window.currentUser));
-                AuthLogic.syncUserData();
+                syncUserProgressToExcel();
                 updateAllUI();
                 if(btnElement){
                     const isExercise = btnElement.closest('#mcExercisesCard');
                     const titleSpan=btnElement.querySelector('span.font-bold.text-sm');
                     if(titleSpan && isExercise){ titleSpan.classList.remove('text-white'); titleSpan.classList.add('text-slate-400'); }
                     const subSpan=btnElement.querySelector('span.uppercase.font-bold');
-                    if(subSpan){ subSpan.classList.remove('text-slate-400'); subSpan.classList.add('text-slate-500'); } // Ensure text color is updated
+                    if(subSpan){ subSpan.classList.remove('text-slate-400'); subSpan.classList.add('text-slate-500'); }
                     const countParent=btnElement.querySelector('.file-download-count')?.parentElement;
                     if(countParent){ countParent.classList.remove('text-white','text-teal-500','text-slate-400'); countParent.classList.add('text-slate-600'); }
                     const iconBox=btnElement.querySelector('.rounded-xl');
@@ -1088,67 +961,224 @@
         }
 
         function rateCourse(courseId,rating,navigate=true){
-            AuthUI.requireAuth(() => {
-                if(!AuthLogic.currentUser.ratings) {
-                    AuthLogic.currentUser.ratings = {};
-                }
-                AuthLogic.currentUser.ratings[courseId] = rating;
-                localStorage.setItem('user', JSON.stringify(AuthLogic.currentUser));
-                AuthLogic.syncUserData();
-
-                calculateCourseRatings();
-                renderMisCourses();
-                const detailVisible = document.getElementById('page-curso-detalle').style.display === 'block';
-                if(detailVisible && currentViewedCourseId === courseId) viewCourseDetail(courseId);
-                showNotif('¡Valoración guardada!',`Has calificado este curso con ${rating} estrellas.`);
-            });
+            if(!currentUser){ openModal('authModal'); return; }
+            if(!currentUser.ratings) currentUser.ratings={};
+            currentUser.ratings[courseId]=rating;
+            localStorage.setItem('user',JSON.stringify(currentUser));
+            syncUserProgressToExcel();
+            if(currentUser.email) dbUsers[currentUser.email.toLowerCase()]=JSON.stringify(currentUser);
+            calculateCourseRatings();
+            renderMisCourses();
+            const detailVisible=document.getElementById('page-curso-detalle').style.display==='block';
+            if(detailVisible&&currentViewedCourseId===courseId) viewCourseDetail(courseId);
+            else if(navigate) viewCourseDetail(courseId);
+            showNotif('¡Valoración guardada!',`Has calificado este curso con ${rating} estrellas.`);
         }
 
         function toggleLike(btn){
-            AuthUI.requireAuth(() => {
-                const id=btn.dataset.id;
-                if(!Array.isArray(window.currentUser.likedCourses)) window.currentUser.likedCourses=[];
-                const span=btn.querySelector('.like-count');
-                let currentLikes=parseInt(span.innerText)||0;
-                if(window.currentUser.likedCourses.includes(id)){
-                    window.currentUser.likedCourses=window.currentUser.likedCourses.filter(c=>c!==id);
-                    ping('decrement_stat',`${id}_likes`);
-                    btn.classList.remove('liked');
-                    span.innerText=Math.max(0, currentLikes - 1);
-                    if(globalStats) globalStats[`${id}_likes`]=Math.max(0, currentLikes - 1);
-                } else {
-                    window.currentUser.likedCourses.push(id);
-                    ping('update_stat',`${id}_likes`);
-                    btn.classList.add('liked');
-                    span.innerText=currentLikes+1;
-                    if(globalStats) globalStats[`${id}_likes`]=currentLikes+1;
+            if(!currentUser){ openModal('authModal'); return; }
+            const id=btn.dataset.id;
+            if(!Array.isArray(currentUser.likedCourses)) currentUser.likedCourses=[];
+            const span=btn.querySelector('.like-count');
+            let currentLikes=parseInt(span.innerText)||0;
+            if(currentUser.likedCourses.includes(id)){
+                currentUser.likedCourses=currentUser.likedCourses.filter(c=>c!==id);
+                ping('decrement_stat',`${id}_likes`);
+                btn.classList.remove('liked');
+                span.innerText=Math.max(0, currentLikes - 1);
+                if(globalStats) globalStats[`${id}_likes`]=Math.max(0, currentLikes - 1);
+            } else {
+                currentUser.likedCourses.push(id);
+                ping('update_stat',`${id}_likes`);
+                btn.classList.add('liked');
+                span.innerText=currentLikes+1;
+                if(globalStats) globalStats[`${id}_likes`]=currentLikes+1;
+            }
+            if(currentUser.email) dbUsers[currentUser.email.toLowerCase()]=JSON.stringify(currentUser);
+            localStorage.setItem('user',JSON.stringify(currentUser));
+            updateAllUI(); syncUserProgressToExcel();
+            document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn=>{
+                if(otherBtn!==btn){
+                    if(currentUser.likedCourses.includes(id)){ otherBtn.classList.add('liked'); }
+                    else { otherBtn.classList.remove('liked'); }
+                    const otherSpan=otherBtn.querySelector('.like-count');
+                    if(otherSpan) otherSpan.innerText=span.innerText;
                 }
-                if(window.currentUser.email) dbUsers[window.currentUser.email.toLowerCase()]=JSON.stringify(window.currentUser);
-                localStorage.setItem('user',JSON.stringify(window.currentUser));
-                updateAllUI(); 
-                AuthLogic.syncUserData(); // Usar la función centralizada
-                document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn=>{
-                    if(otherBtn!==btn){
-                        if(window.currentUser.likedCourses.includes(id)){ otherBtn.classList.add('liked'); }
-                        else { otherBtn.classList.remove('liked'); }
-                        const otherSpan=otherBtn.querySelector('.like-count');
-                        if(otherSpan) otherSpan.innerText=span.innerText;
-                    }
-                });
             });
+        }
+
+        function switchAuthTab(tab){
+            const errBox = document.getElementById('authErrorMessage');
+            if(errBox) errBox.classList.add('hidden');
+            const loginTab=document.getElementById('tabLogin');
+            if(!loginTab) return;
+            const regTab=document.getElementById('tabRegister'), nameField=document.getElementById('nameField'), countryField=document.getElementById('countryField');
+            const title=document.getElementById('authModalTitle'), sub=document.getElementById('authSubText');
+            const btn=document.getElementById('authSubmitBtn'), btnIcon=document.getElementById('authBtnIcon'), btnLabel=document.getElementById('authBtnLabel');
+            if(tab==='login'){
+                loginTab.className="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
+                regTab.className="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
+                nameField.classList.add('hidden'); title.innerText="Iniciar Sesión"; sub.innerText="Ingresa tus datos para acceder a tus cursos."; btnIcon.className="fas fa-sign-in-alt"; btnLabel.innerText="Entrar";
+                if(countryField) countryField.classList.add('hidden');
+            } else {
+                regTab.className="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
+                loginTab.className="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
+                nameField.classList.remove('hidden'); title.innerText="Crear Cuenta"; sub.innerText="Regístrate para adquirir cursos."; btnIcon.className="fas fa-user-plus"; btnLabel.innerText="Registrarse";
+                if(countryField) countryField.classList.remove('hidden');
+            }
         }
 
         window.handleNavbarAuthClick = function(e) {
             if(e) { e.preventDefault(); e.stopPropagation(); }
-            if(window.currentUser) {
+            if(currentUser) {
                 if (typeof logoutUser === 'function') {
                     logoutUser();
                 }
             } else {
                 openModal('authModal'); 
-                AuthUI.switchTab('login');
+                switchAuthTab('login');
             }
         };
+
+        let progressChart=null;
+        function updateProgressDashboard(){
+            const course=COURSES_DATA.find(c=>c.id===currentProgressCourseId);
+            if(!course) return;
+            const total=course.totalLessons||5;
+            const emailKey=currentUser?currentUser.email.toLowerCase():"";
+            const courseProg=(userProgress[emailKey]&&userProgress[emailKey][String(currentProgressCourseId)])?userProgress[emailKey][String(currentProgressCourseId)]:{completed:0,percent:0,scores:[],avgScore:0};
+            const done=courseProg.completed||0;
+            const scores=courseProg.scores||[];
+            const percent=total>0?Math.round((done/total)*100):0;
+            const avgScore=courseProg.avgScore||0;
+            
+            const pctEl = document.getElementById('dash-percentage');
+            if(!pctEl) return;
+            pctEl.innerText=percent+'%';
+            
+            if(progressChart) progressChart.destroy();
+            const chartCanvas = document.getElementById('progressChart');
+            if (chartCanvas) {
+                const ctx=chartCanvas.getContext('2d');
+                progressChart=new Chart(ctx,{
+                    type:'doughnut',
+                    data:{labels:['Completado','Pendiente'],datasets:[{data:[done,total-done],backgroundColor:['#2db8ce','rgba(255,255,255,0.1)'],borderWidth:0}]},
+                    options:{cutout:'75%',plugins:{legend:{display:false}}}
+                });
+            }
+
+            if(currentUser) {
+                let enrollmentDate = findDateInObject(latestEnrollmentDates, course.name) || '';
+                enrollmentDate = normalizeDateString(enrollmentDate);
+                const segCard = document.getElementById('seguimiento-card');
+                if(segCard) {
+                    let rawCompletion = findDateInObject(latestCompletionDates, course.name);
+                    let compDisplay = '---';
+                    if (rawCompletion) {
+                        let normalized = normalizeDateString(rawCompletion);
+                        if (normalized) compDisplay = formatCertDate(normalized);
+                    }
+                    let enrollmentDisplay = '---';
+                    if (enrollmentDate) enrollmentDisplay = formatCertDate(enrollmentDate);
+                    segCard.innerHTML = `
+                        <h2 class="font-bold text-xl text-white">Seguimiento automático</h2>
+                        <div class="mt-3 space-y-2">
+                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-check text-green-400"></i><span>Inscripción: ${enrollmentDisplay}</span></p>
+                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400"></i><span>Culminación: ${compDisplay}</span></p>
+                            <p class="text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-percentage text-yellow-400"></i><span>Promedio final: ${avgScore}%</span></p>
+                        </div>
+                        <p class="text-slate-200 text-sm mt-3">El progreso se actualiza al aprobar las evaluaciones de cada módulo.</p>
+                    `;
+                }
+            }
+
+            const listDiv=document.getElementById('dash-lessons-list');
+            const moduleNames=course.moduleNames||[];
+            const MODULES_DATA=[];
+            for(let i=0;i<total;i++) MODULES_DATA.push({title:moduleNames[i]||`Módulo ${i+1}`});
+            
+            listDiv.innerHTML=MODULES_DATA.map((m,i)=>{
+                let stateClass="", stateText="", score=scores[i];
+                if(score!==undefined&&score!==null&&!isNaN(score)){
+                    if(score>=70){ stateClass="border-blue-400/50 bg-blue-500/20 backdrop-blur-md"; stateText = `✅ Completado (${score}%)`; }
+                    else { stateClass="border-red-500/60 bg-red-600/20 backdrop-blur-md"; stateText=`❌ No aprobado ${score}%`; }
+                } else {
+                    if(i<done){ stateClass="border-blue-400/50 bg-blue-500/20 backdrop-blur-md"; stateText = `✅ Completado`; }
+                    else { stateClass="border-yellow-400/50 bg-yellow-500/20 backdrop-blur-md"; stateText=`⏳ Falta por evaluar`; }
+                }
+                return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01]"><span class="font-bold tracking-wide drop-shadow-md text-sm sm:text-base">${m.title}</span><span class="text-xs sm:text-sm font-bold drop-shadow-md bg-black/20 px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+            }).join('');
+
+            if(currentUser){
+                document.getElementById('dash-student-name').innerText=currentUser.name||'-';
+                document.getElementById('dash-student-id').innerText=currentUser.cedula||'-';
+                document.getElementById('dash-student-email').innerText=currentUser.email||'-';
+            }
+        }
+
+        function generateCertificate() {
+            try {
+                if (!currentUser) { showNotif('Error', 'Debes iniciar sesión.', 'error'); return; }
+                const course = COURSES_DATA.find(c => c.id === currentProgressCourseId);
+                if (!course) return;
+                const nombreEstudiante = currentUser.name && currentUser.name !== "No provisto" ? currentUser.name : "Estudiante";
+                const cedulaEstudiante = currentUser.cedula && currentUser.cedula !== "N/A" ? currentUser.cedula : "00000000";
+                const nombreCurso = course.name;
+                const numModulos = course.totalLessons || 5;
+                const moduleNames = course.moduleNames || [];
+                let temarioHTML = "";
+                if (moduleNames.length > 0) { temarioHTML = moduleNames.map(mod => `• ${mod}<br>`).join(''); }
+                else { for(let i = 1; i <= numModulos; i++) { temarioHTML += `• Módulo ${i}: Contenido del curso...<br>`; } }
+                
+                let rawCompletion = findDateInObject(latestCompletionDates, course.name);
+                let fechaHoy = "[En proceso de registro en sistema]";
+                if (rawCompletion) {
+                    let dateOnly = extractDateOnly(rawCompletion);
+                    if (dateOnly) fechaHoy = formatCertDate(dateOnly);
+                    else fechaHoy = rawCompletion;
+                }
+                
+                const palabras = nombreCurso.split(' ').filter(p => p.length > 0 && !['con', 'de', 'y', 'el', 'la', 'en'].includes(p.toLowerCase()));
+                let siglas = ""; palabras.forEach(p => { siglas += p.charAt(0).toUpperCase(); });
+                if (!siglas) siglas = "CURSO";
+                const ciNum = parseInt(String(cedulaEstudiante).replace(/\D/g, '')) || 0;
+                const idCalculado = 13018822 + ciNum;
+                const textoFecha = `Con una estructura de ${numModulos} módulos, culminado el día ${fechaHoy}.`;
+                const certHTML = `
+                <div id="cert-content-to-download" style="width: 980px; height: 740px; padding: 30px 45px 35px 45px; position: relative; background: white; border: 6px solid #475569; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; font-family: 'Plus Jakarta Sans', sans-serif; margin: 0 auto;">
+                    <img src="https://i.postimg.cc/T1jyL15x/ct.png" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.15; object-fit: cover; z-index: 0;" crossorigin="anonymous">
+                    <div style="text-align: center; position: relative; z-index: 10; display: flex; align-items: center; justify-content: center; gap: 10px; left: -1cm;">
+                        <img src="img/AA (38).webp" style="height: 140px;" crossorigin="anonymous">
+                        <h1 style="font-size: 32px; font-weight: 800; color: #334155; text-transform: uppercase; margin:0;">Aprende Automatización</h1>
+                    </div>
+                    <div style="text-align: center; position: relative; z-index: 10; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; margin-top: -20px;">
+                        <p style="font-size: 20px; font-weight: 800; color: #000; margin:0 0 2px 0;">Otorga el presente:</p>
+                        <h2 style="font-size: 38px; font-weight: 900; color: #3b5998; margin:0 0 5px 0;">Certificado a:</h2>
+                        <div style="display: inline-block; text-align: center;">
+                            <h3 style="font-size: 46px; font-weight: 900; color: #111827; border-bottom: 3px solid #475569; padding-bottom: 4px; text-transform: uppercase; margin:0; display: inline-block;">${nombreEstudiante}</h3>
+                        </div>
+                        <p style="font-size: 17px; font-weight: 800; color: #000; margin: 5px 0 10px 0; font-style: italic;">Cédula de Identidad: ${cedulaEstudiante}</p>
+                        <p style="font-size: 19px; color: #000; margin:0 0 5px 0;">Por haber <strong style="font-weight: 900;">APROBADO</strong> el curso:</p>
+                        <h4 style="font-size: 36px; font-weight: 900; color: #000; margin: 0 0 15px 0; max-width: 850px; line-height: 1.2;">"${nombreCurso}"</h4>
+                        <div style="display: inline-block; text-align: center; max-width: 90%;">
+                            <p style="font-size: 14px; color: #1f2937; margin: 0 0 10px 0; font-weight: 600; white-space: nowrap;">${textoFecha}</p>
+                            <div style="margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 6px; background-color: rgba(248, 250, 252, 0.9); padding: 12px 16px; text-align: left; width: 100%; box-sizing: border-box;">
+                                <div style="column-count: 2; column-gap: 30px; font-size: 12px; color: #1f2937; font-weight: 600; line-height: 1.5;">${temarioHTML}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; padding: 0 20px;">
+                        <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">MSc. Ing. Pablo Cedeño</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Instructor</p></div>
+                        <div style="text-align: center; color: #9ca3af; font-size: 10px;">ID de Certificado: <strong style="color:#6b7280; font-weight: 900;">${siglas}</strong>-<span style="color:#6b7280; font-weight: 900;">${idCalculado}</span></div>
+                        <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">Aprende Automatización</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Dirección Académica</p></div>
+                    </div>
+                </div>`;
+                const pdfHTML = `<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Certificado - ${nombreCurso}</title><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Plus Jakarta Sans',sans-serif;background-color:#0f172a;color:#1e293b;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}.bg-pattern{position:fixed;inset:0;z-index:0;background-color:#0f172a;}.bg-pattern img{width:100%;height:100%;object-fit:cover;opacity:0.4;mix-blend-mode:luminosity;}.toolbar{position:relative;z-index:10;background:rgba(255,255,255,0.1);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.2);padding:16px 24px;border-radius:16px;margin-bottom:20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:center;}.btn{padding:12px 24px;border:none;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.3s;font-family:'Plus Jakarta Sans',sans-serif;text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;gap:8px;}.btn-print{background:#2db8ce;color:white;}.btn-print:hover{background:#3cc8de;}.certificate-container{position:relative;z-index:10;max-width:100%;overflow-x:auto;display:flex;justify-content:center;}.certificate-wrapper{box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);background:white;}@media print{@page{size:letter landscape;margin:0.5cm;}body{background:white;padding:0;margin:0;}.bg-pattern,.toolbar{display:none!important;}.certificate-container{padding:0;margin:0;width:100%;}.certificate-wrapper{box-shadow:none!important;}}</style></head><body><div class="bg-pattern"><img src="img/AA (7).gif" alt="Fondo"></div><div class="toolbar"><button class="btn btn-print" onclick="window.print()">🖨️ Imprimir Certificado</button><span>Optimizado para Hoja Carta</span></div><div class="certificate-container"><div class="certificate-wrapper">${certHTML}</div></div></body></html>`;
+                const nuevaVentana = window.open('', '_blank');
+                nuevaVentana.document.write(pdfHTML);
+                nuevaVentana.document.close();
+            } catch (error) { console.error("Error al generar el certificado:", error); showNotif('Error', 'No se pudo generar el certificado.', 'error'); }
+        }
 
         const authFormEl = document.getElementById('authForm');
         if (authFormEl) {
@@ -1226,17 +1256,17 @@
             setTimeout(async () => {
                 await loadData();
                 ping('update_stat', 'visitas_mis_cursos');
-                if (window.currentUser) { // Use window.currentUser
+                if (window.currentUser) {
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseIdParam = urlParams.get('courseId');
                     if (courseIdParam) {
-                        const id = parseInt(courseIdParam, 10);
-                        if (window.currentUser.accessedCursos && window.currentUser.accessedCursos.includes(id)) {
-                            if (id === 1) {
-                                window.location.href = '1-arranque-contactores-material.html';
-                            } else {
-                                grantAccess(id);
-                            }
+                    const id = parseInt(courseIdParam, 10);
+                    if (currentUser.accessedCursos && currentUser.accessedCursos.includes(id)) {
+                        if (id === 1) {
+                            window.location.href = '1-arranque-contactores-material.html';
+                        } else {
+                            grantAccess(id);
+                        }
                         }
                     }
                 }
@@ -1244,25 +1274,24 @@
             if(window.lucide) lucide.createIcons();
             hideFloatingBackBtn();
 
-            // Animación de revelado al hacer scroll
             function reveal() {
                 var reveals = document.querySelectorAll(".reveal");
                 for (var i = 0; i < reveals.length; i++) {
                     var windowHeight = window.innerHeight;
                     var elementTop = reveals[i].getBoundingClientRect().top;
-                    var elementVisible = 80; // Distancia desde la parte inferior para que aparezca el elemento
+                    var elementVisible = 80;
                     if (elementTop < windowHeight - elementVisible) {
                         reveals[i].classList.add("active");
                     }
                 }
             }
             window.addEventListener("scroll", reveal);
-            reveal(); // Ejecutar al cargar para los elementos ya visibles
+            reveal();
         });
     </script>
-<script src="js/auth.js"></script>
-<script src="js/app.js"></script>
-<script src="js/navbar.js"></script>
-<script src="js/footer.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/footer.js"></script>
 </body>
 </html>

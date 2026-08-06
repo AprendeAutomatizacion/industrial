@@ -858,6 +858,86 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* 🔥 NUEVOS ESTILOS DE BOTONES METÁLICOS (unificados con Mis Cursos) */
+        .btn-metal-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            padding: 0.85rem 1.8rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: #ffffff !important;
+            border: none !important;
+            outline: none;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(180deg, #b0c4de 0%, #7a8fa6 8%, #4a6078 20%, #2d4a5e 40%, #1e3a4f 60%, #1a3142 100%);
+        }
+        .btn-metal-solid::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 10%;
+            width: 80%;
+            height: 35%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .btn-metal-solid:hover {
+            background: linear-gradient(180deg, #c0d4e8 0%, #8a9fb6 8%, #5a7088 20%, #3d5a6e 40%, #2e4a5f 60%, #243e52 100%);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .btn-metal-solid:active {
+            transform: scale(0.96);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(180deg, #1a3142 0%, #1e3a4f 40%, #2d4a5e 60%, #4a6078 100%);
+        }
+
+        /* Cian metálico (Info / Aula Virtual) */
+        .btn-metal-cyan {
+            background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-cyan::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
+        .btn-metal-cyan:hover {
+            background: linear-gradient(180deg, #b0e0f0 0%, #6bc8d8 8%, #3daabe 20%, #2a8d9e 40%, #1f7488 60%, #155f70 100%);
+            box-shadow: 0 10px 24px rgba(15, 100, 120, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .btn-metal-cyan:active {
+            background: linear-gradient(180deg, #0b4f60 0%, #0f6478 40%, #1a7d91 60%, #2d9aae 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Teal metálico (Compra / WhatsApp) */
+        .btn-metal-teal {
+            background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-teal::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
+        .btn-metal-teal:hover {
+            background: linear-gradient(180deg, #b0f0e0 0%, #6bd8c8 8%, #3dbeae 20%, #2a9d8e 40%, #1f8878 60%, #157060 100%);
+            box-shadow: 0 10px 24px rgba(15, 100, 90, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .btn-metal-teal:active {
+            background: linear-gradient(180deg, #0b6050 0%, #0f7868 40%, #1a9180 60%, #2daa9a 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
     </style>
     <!-- GOOGLE CHARTS (PARA LOS MAPAS GLOBALES) -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -1109,7 +1189,7 @@
                 <div class="md:col-span-2 text-left md:text-left">
                     <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
                     <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium mx-auto md:mx-0">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
-                    <div class="mt-8"><button onclick="window.location.href='#cursos-destacados'" class="btn-glow px-8 py-4 bg-teal-500 text-white font-black rounded-2xl shadow-2xl shadow-teal-500/30 border border-teal-400 hover:bg-teal-600 transition-all uppercase flex items-center gap-3 text-base">Ver Cursos <i class="fas fa-chevron-down"></i></button></div>
+                    <div class="mt-8"><button onclick="window.location.href='#cursos-destacados'" class="btn-metal-solid btn-metal-teal px-8 py-4 text-base rounded-2xl font-black uppercase flex items-center gap-3">Ver Cursos <i class="fas fa-chevron-down"></i></button></div>
                 </div>
                 <div class="flex justify-center items-center">
                     <img id="parallax-header-image" src="img/AA(47).webp" alt="Icono" class="h-64 md:h-96 drop-shadow-lg transition-transform duration-100 ease-out">
@@ -1243,8 +1323,10 @@
                                 </div>
                             </div>
                             <div class="course-card-buttons">
-                                <button onclick="registerViewAndGo('2-arranque-plc-logo-info.html', 2, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info del Curso</button>
-                                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Arranque%20de%20motores%20con%20PLC%20LOGO!', '_blank')" class="btn-metal btn-cyan"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                                <!-- Info: btn-metal-cyan -->
+                                <button onclick="registerViewAndGo('2-arranque-plc-logo-info.html', 2, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <!-- Compra: btn-metal-teal -->
+                                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Arranque%20de%20motores%20con%20PLC%20LOGO!', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
                             </div>
                         </div>
                     </div>
@@ -1270,8 +1352,10 @@
                                 </div>
                             </div>
                             <div class="course-card-buttons">
-                                <button onclick="registerViewAndGo('9-auto-industrial-pre-info.html', 9, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info del Curso</button>
-                                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Automatización%20Industrial', '_blank')" class="btn-metal btn-cyan"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                                <!-- Info: btn-metal-cyan -->
+                                <button onclick="registerViewAndGo('9-auto-industrial-pre-info.html', 9, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <!-- Compra: btn-metal-teal -->
+                                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Automatización%20Industrial', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
                             </div>
                         </div>
                     </div>
@@ -1297,8 +1381,10 @@
                                 </div>
                             </div>
                             <div class="course-card-buttons">
-                                <button onclick="registerViewAndGo('4-auto-contactores-on-info.html', 4, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info del Curso</button>
-                                <button onclick="window.open('https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4', '_blank')" class="btn-metal btn-cyan"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                                <!-- Info: btn-metal-cyan -->
+                                <button onclick="registerViewAndGo('4-auto-contactores-on-info.html', 4, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <!-- Compra: btn-metal-teal -->
+                                <button onclick="window.open('https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
                             </div>
                         </div>
                     </div>
@@ -1344,8 +1430,8 @@
                                 <div class="course-card-price">5$</div>
                             </div>
                             <div class="course-card-buttons">
-                                <button onclick="registerViewAndGo('19-Manual-arranque-contactores-info.html', 19, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info</button>
-                                <button onclick="buyManual(19, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Arranque%20de%20motores%20con%20contactores')" class="btn-metal btn-cyan"><i class="fas fa-download"></i> Comprar</button>
+                                <button onclick="registerViewAndGo('19-Manual-arranque-contactores-info.html', 19, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
+                                <button onclick="buyManual(19, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Arranque%20de%20motores%20con%20contactores')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-download"></i> Comprar</button>
                             </div>
                         </div>
                     </div>
@@ -1371,8 +1457,8 @@
                                 <div class="course-card-price">5$</div>
                             </div>
                             <div class="course-card-buttons">
-                                <button onclick="registerViewAndGo('20-auto-plc-basico-on-info.html', 20, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info</button>
-                                <button onclick="buyManual(20, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20PLC%20Básico')" class="btn-metal btn-cyan"><i class="fas fa-download"></i> Comprar</button>
+                                <button onclick="registerViewAndGo('20-auto-plc-basico-on-info.html', 20, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
+                                <button onclick="buyManual(20, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20PLC%20Básico')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-download"></i> Comprar</button>
                             </div>
                         </div>
                     </div>
@@ -1398,8 +1484,8 @@
                                 <div class="course-card-price">5$</div>
                             </div>
                             <div class="course-card-buttons">
-                                <button onclick="registerViewAndGo('21-Manual-auto-contactores-on-info.html', 21, '_self')" class="btn-metal btn-blue"><i class="fas fa-info-circle"></i> Info</button>
-                                <button onclick="buyManual(21, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20Contactores')" class="btn-metal btn-cyan"><i class="fas fa-download"></i> Comprar</button>
+                                <button onclick="registerViewAndGo('21-Manual-auto-contactores-on-info.html', 21, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
+                                <button onclick="buyManual(21, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20Contactores')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-download"></i> Comprar</button>
                             </div>
                         </div>
                     </div>
@@ -1459,7 +1545,7 @@
                         </ul>
                         <div class="course-card-footer !p-0 !border-t-0 mt-auto">
                             <div class="course-card-buttons">
-                                <a href="#curso-especial" class="btn-metal btn-blue w-full"><i class="fas fa-calendar-alt"></i> Ver Próximas Fechas</a>
+                                <a href="#curso-especial" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-calendar-alt"></i> Ver Próximas Fechas</a>
                             </div>
                         </div>
                     </div>
@@ -1479,7 +1565,7 @@
                         </ul>
                         <div class="course-card-footer !p-0 !border-t-0 mt-auto">
                             <div class="course-card-buttons">
-                                <a href="catalogo.html" class="btn-metal btn-cyan w-full"><i class="fas fa-th-large"></i> Ver Cursos Online</a>
+                                <a href="catalogo.html" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-th-large"></i> Ver Cursos Online</a>
                             </div>
                         </div>
                     </div>
@@ -1530,10 +1616,8 @@
                         <span class="px-4 py-2 bg-teal-500/20 backdrop-blur-lg text-teal-400 text-[10px] font-black uppercase rounded-full border border-teal-500/30">Inscripciones Abiertas</span>
                     </div>
                     <div class="absolute bottom-6 left-6 right-6 z-20">
-                        <button onclick="registerViewAndGo('10-auto-contactores-pre-info.html', 10, '_self')" class="btn-metal btn-blue w-full mb-3 py-3 text-xs"><i class="fas fa-info-circle"></i> Info del Curso</button>
-                        <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20inscribirme%20en%20el%20Curso%20de%20Automatización%20con%20Contactores!', '_blank')" class="btn-glow w-full px-8 py-4 bg-gradient-to-r from-cyan-600 to-blue-500 text-white font-black rounded-2xl shadow-2xl shadow-cyan-500/30 border border-cyan-400/50 hover:from-cyan-700 hover:to-blue-600 transition-all uppercase text-xs flex items-center justify-center gap-3">
-                            Solicitar Inscripción <i class="fab fa-whatsapp"></i>
-                        </button>
+                        <button onclick="registerViewAndGo('10-auto-contactores-pre-info.html', 10, '_self')" class="btn-metal-solid btn-metal-cyan w-full mb-3 !py-3 !text-xs !rounded-xl"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                        <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20inscribirme%20en%20el%20Curso%20de%20Automatización%20con%20Contactores!', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-4 !text-xs !rounded-2xl !font-black !uppercase !flex !items-center !justify-center !gap-3"><i class="fab fa-whatsapp"></i> Solicitar Inscripción</button>
                     </div>
                 </div>
                 <div class="lg:w-3/4 p-8 lg:p-12 flex flex-col justify-center">
@@ -1825,7 +1909,7 @@
                 <p class="text-slate-300 mt-6 mb-10 max-w-2xl mx-auto">Si tienes alguna duda o necesitas asesoría personalizada para elegir el curso ideal para ti, no dudes en contactarnos. Estamos aquí para ayudarte.</p>
             </div>
             <div class="flex flex-col md:flex-row items-center justify-center gap-6 reveal reveal-up">
-                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-glow px-10 py-6 bg-green-500 text-white font-black rounded-2xl shadow-2xl shadow-green-500/30 border border-green-400 hover:bg-green-600 transition-all uppercase flex items-center gap-4 text-xl"><i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp</button>
+                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-metal-solid btn-metal-teal !px-10 !py-6 !text-xl !rounded-2xl !font-black !uppercase !flex !items-center !gap-4"><i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp</button>
             </div>
         </div>
     </section>
