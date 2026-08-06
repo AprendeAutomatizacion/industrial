@@ -1185,7 +1185,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", async () => {
-        if (!window.currentUser) {
+        if (!currentUser) {
             document.getElementById('progreso-page').innerHTML = '<div class="text-center text-white mt-20">Debes iniciar sesión en la plataforma principal para ver tu progreso.</div>';
             return;
         }
