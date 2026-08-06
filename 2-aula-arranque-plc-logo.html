@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="js/auth.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="ccs/aula-unificada.css">
     <script>
         tailwind.config = {
             theme: {
@@ -179,6 +180,11 @@
             border-color: rgba(0,0,0,0.1) !important; 
         }
         body.light-mode .bg-green-900\/20 { background: rgba(34, 197, 94, 0.1) !important; }
+        body.light-mode .progress-track-ring { color: rgba(100, 116, 139, 0.45) !important; }
+        body.light-mode .continue-learning-btn,
+        body:not(.light-mode) .continue-learning-btn {
+            color: #ffffff !important;
+        }
 
         /* Estilos para botones de header en modo claro - Plateado/LED */
         body.light-mode header button,
@@ -306,6 +312,20 @@
             border-color: #cbd5e1 !important;
         }
         body.light-mode #modal-feedback button:hover { background-color: #cbd5e1 !important; }
+        body.light-mode #modal-feedback .modal-continue-btn,
+        body:not(.light-mode) #modal-feedback .modal-continue-btn {
+            background: linear-gradient(to bottom, #67e8f9, #0ea5b7) !important;
+            border: 1px solid #0f766e !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 6px 14px rgba(14, 165, 183, 0.35) !important;
+            color: #042f2e !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.04em;
+        }
+        body.light-mode #modal-feedback .modal-continue-btn:hover,
+        body:not(.light-mode) #modal-feedback .modal-continue-btn:hover {
+            background: linear-gradient(to bottom, #8beffb, #14b8a6) !important;
+            color: #022c22 !important;
+        }
         body.light-mode #quiz-result .text-green-400,
         body.light-mode #quiz-result .text-red-400 {
             color: #334155 !important;
@@ -517,7 +537,7 @@
             <div id="modal-icon" class="text-5xl mb-4 drop-shadow-lg"></div>
             <h3 id="modal-title" class="text-xl font-bold mb-2 text-white drop-shadow-md"></h3>
             <p id="modal-msg" class="text-slate-300 mb-6"></p>
-            <button onclick="document.getElementById('modal-feedback').classList.add('hidden')" class="w-full bg-primary/80 hover:bg-primary backdrop-blur-md border border-white/20 text-white py-3 rounded-lg font-bold transition">Continuar</button>
+            <button onclick="document.getElementById('modal-feedback').classList.add('hidden')" class="modal-continue-btn w-full backdrop-blur-md py-3 rounded-lg transition">Continuar</button>
         </div>
     </div>
 
@@ -733,9 +753,9 @@
         }
 
         const COURSE_DATA = [
-            { id: 0, title: "Introducción a los PLC", video: "", resources: [], quiz: [], hasQuiz: false, 
-              content: `<div class="space-y-6"><div class="w-full rounded-xl overflow-hidden shadow-lg mb-6 border border-white/10"><img src="https://i.postimg.cc/VkmqRQzm/1772328516782-5a6a505e-f8d2-4a45-a8bf-99e36bf7743d.jpg" class="w-full h-auto opacity-80" alt="PLC Control Panel"></div><h2 class="text-2xl font-bold text-secondary">Bienvenidos al Curso</h2><p class="text-slate-300">Bienvenidos al curso de automatización de motores utilizando Controladores Lógicos Programables (PLC). Atrás quedó la época de los enormes tableros llenos de relés electromecánicos; hoy en día, la lógica reside en el software.</p><div class="bg-black/30 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3><p class="text-slate-300">Proporcionar los conocimientos y habilidades para programar, conectar y poner en marcha sistemas de control de motores industriales mediante PLCs.</p></div><div class="bg-white/5 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-white">Objetivos Específicos</h3><ul class="list-disc pl-5 space-y-2 text-slate-300"><li>Comprender la arquitectura de entradas (I) y salidas (Q) de un PLC.</li><li>Programar secuencias lógicas utilizando el lenguaje LADDER (diagrama de contactos).</li><li>Implementar arranques directos, inversores de giro y estrella-triángulo en el software del autómata.</li><li>Utilizar temporizadores y marcas de memoria internas.</li><li>Reducir el cableado físico (Lógica Cableada vs Lógica Programada).</li></ul></div></div>` },
-            { id: 1, title: "Práctica 1: Arranque Directo con PLC", video: "https://www.youtube.com/embed/oTaMF16KNsI", resources: [{type:'manual', name:'Manual: Arranque Directo con PLC (PDF)', url:'https://drive.google.com/uc?export=download&id=1pq4LyugfpdvXRy4vFamY8anr7sFFAfuE'},{type:'ejercicio', name:'Práctica: Arranque Directo con PLC', url:'https://drive.google.com/uc?export=download&id=15XVTjhOJ9WbsyLeU8w4-LIgIzWldlKE4'}], hasQuiz: true,
+            { id: 0, title: "Introducción a los PLC", video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b", resources: [], quiz: [], hasQuiz: false, 
+              content: `<div class="space-y-6"><h2 class="text-2xl font-bold text-secondary">Bienvenidos al Curso</h2><p class="text-slate-300">Bienvenidos al curso de automatización de motores utilizando Controladores Lógicos Programables (PLC). Atrás quedó la época de los enormes tableros llenos de relés electromecánicos; hoy en día, la lógica reside en el software.</p><div class="bg-black/30 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3><p class="text-slate-300">Proporcionar los conocimientos y habilidades para programar, conectar y poner en marcha sistemas de control de motores industriales mediante PLCs.</p></div><div class="bg-white/5 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-white">Objetivos Específicos</h3><ul class="list-disc pl-5 space-y-2 text-slate-300"><li>Comprender la arquitectura de entradas (I) y salidas (Q) de un PLC.</li><li>Programar secuencias lógicas utilizando el lenguaje LADDER (diagrama de contactos).</li><li>Implementar arranques directos, inversores de giro y estrella-triángulo en el software del autómata.</li><li>Utilizar temporizadores y marcas de memoria internas.</li><li>Reducir el cableado físico (Lógica Cableada vs Lógica Programada).</li></ul></div></div>` },
+            { id: 1, title: "Práctica 1: Arranque Directo con PLC", video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b", resources: [{type:'manual', name:'Manual: Arranque Directo con PLC (PDF)', url:'https://drive.google.com/uc?export=download&id=1pq4LyugfpdvXRy4vFamY8anr7sFFAfuE'},{type:'ejercicio', name:'Práctica: Arranque Directo con PLC', url:'https://drive.google.com/uc?export=download&id=15XVTjhOJ9WbsyLeU8w4-LIgIzWldlKE4'}], hasQuiz: true,
               content: `<h2 class="text-2xl font-bold text-secondary">Práctica 1: Arranque Directo con PLC</h2><h3 class="text-lg font-bold text-white mt-4">Objetivos</h3><ul class="list-disc pl-5 text-slate-300 mb-4"><li>Asignar variables a Entradas Físicas (I) y Salidas Físicas (Q).</li><li>Crear un circuito de retención (enclavamiento/latch) por software.</li></ul><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 text-amber-200 mb-6"><strong>IMPORTANTE:</strong> En un PLC, el pulsador de parada de emergencia siempre debe ser cableado FÍSICAMENTE e ingresado al PLC como Normalmente Cerrado (NC) por seguridad.</div><h3 class="text-xl font-bold text-white">El Programa LADDER</h3><p class="text-slate-300 mb-4">El lenguaje LADDER imita los diagramas eléctricos tradicionales. Para un arranque directo:</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-blue-900/20 p-5 border-l-4 border-blue-500/50"><h4 class="font-bold text-blue-300">Hardware (Cableado):</h4><ul class="list-disc pl-5 text-blue-100/80"><li><strong>I0.0:</strong> Pulsador de Marcha (NO)</li><li><strong>I0.1:</strong> Pulsador de Paro (NC)</li><li><strong>Q0.0:</strong> Bobina del Contactor de línea</li></ul></div><div class="bg-green-900/20 p-5 border-l-4 border-green-500/50"><h4 class="font-bold text-green-300">Software (Lógica):</h4><ul class="list-disc pl-5 text-green-100/80"><li>Contacto Abierto de I0.0 (Marcha) en paralelo con un Contacto Abierto de Q0.0 (Enclavamiento).</li><li>En serie con Contacto Abierto de I0.1 (Paro, ya que está cerrado físicamente).</li><li>Bobina de salida asignada a Q0.0.</li></ul></div></div><p class="text-slate-300 text-sm mt-4">Al reemplazar la retención física por código, ahorramos contactos auxiliares en el contactor.</p>`,
               quiz: [
                 {q:"¿Qué significa PLC?", opts:["Panel de Lógica Central","Controlador Lógico Programable","Procesador Lógico Contactor","Programa de Lenguaje C"], ans:1},
@@ -750,7 +770,7 @@
                 {q:"¿Qué dispositivo de fuerza ejecuta finalmente la acción del PLC?", opts:["El Temporizador","El Software","El Contactor","El Cable de Red"], ans:2}
               ]
             },
-            { id: 2, title: "Práctica 2: Arranque Directo con Inversión de Giro", video: "https://www.youtube.com/embed/-bdWZP2Jq74", resources:[{type:'manual', name:'Manual: Inversión de Giro con PLC', url:'https://drive.google.com/uc?export=download&id=1esAilKuUSS18-W1PCJlvnmnMBdC-rFSc'}, {type:'ejercicio', name:'Proyecto: Inversión de Giro', url:'https://drive.google.com/uc?export=download&id=1VW1nLvkum8JkswBVm-ifUWNc7BEPek8h'}], hasQuiz: true,
+            { id: 2, title: "Práctica 2: Arranque Directo con Inversión de Giro", video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b", resources:[{type:'manual', name:'Manual: Inversión de Giro con PLC', url:'https://drive.google.com/uc?export=download&id=1esAilKuUSS18-W1PCJlvnmnMBdC-rFSc'}, {type:'ejercicio', name:'Proyecto: Inversión de Giro', url:'https://drive.google.com/uc?export=download&id=1VW1nLvkum8JkswBVm-ifUWNc7BEPek8h'}], hasQuiz: true,
               content: `<h2 class="text-2xl font-bold text-secondary">Práctica 2: Arranque Directo con Inversión de Giro</h2><h3 class="text-lg font-bold text-white mt-4">Objetivos</h3><ul class="list-disc pl-5 text-slate-300 mb-4"><li>Controlar dos salidas (Giro Derecha / Giro Izquierda).</li><li>Programar enclavamientos cruzados de seguridad por software.</li></ul><h3 class="text-xl font-bold text-white">Seguridad en el Software vs Hardware</h3><p class="text-slate-300 mb-4">La inversión de giro se logra excitando el contactor KM1 (Derecha) o KM2 (Izquierda). Si ambos entran a la vez, se produce un cortocircuito bifásico brutal.</p><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 mb-6"><strong>Regla de Oro en PLC:</strong> El enclavamiento eléctrico por software NO sustituye al enclavamiento físico/mecánico. Un error de código o relé pegado podría causar un corto. ¡Usa ambos!</div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Enclavamiento en Software</h4><p>En la línea que activa Q0.0 (Der), ponemos un contacto Normalmente Cerrado de Q0.1 (Izq). Así, si Q0.1 está ON, se bloquea lógicamente a Q0.0, y viceversa.</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Comando de Paro Previo</h4><p>Para invertir el sentido, es una buena práctica programar el PLC para exigir pasar por el botón de STOP (I0.2) antes de cambiar el giro.</p></div></div>`,
               quiz: [
                 {q:"¿Cuántas salidas digitales (Q) usamos para un inversor de giro trifásico básico?", opts:["Una","Dos","Tres","Ninguna"], ans:1},
@@ -765,7 +785,7 @@
                 {q:"Si queremos un retardo antes de que el motor cambie de giro para asegurar que se detuvo. ¿Qué elemento de software usamos?", opts:["Contacto auxiliar","Marca (M)","Temporizador","Salida Analógica"], ans:2}
               ]
             },
-            { id: 3, title: "Práctica 3: Arranque Estrella Delta", video: "https://www.youtube.com/embed/G-dtQZIePAo", resources:[{type:'manual', name:'Manual: Arranque Estrella-Delta con PLC', url:'https://drive.google.com/uc?export=download&id=1kO4hNjU4TBIfygAZ2mTqhSxDJ7Gr1dBd'}, {type:'ejercicio', name:'Proyecto: Arranque Estrella-Delta', url:'https://drive.google.com/uc?export=download&id=1f9ObNJjEGsFC-IVMF4gfQRSLqG3fpKok'}], hasQuiz: true,
+            { id: 3, title: "Práctica 3: Arranque Estrella Delta", video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b", resources:[{type:'manual', name:'Manual: Arranque Estrella-Delta con PLC', url:'https://drive.google.com/uc?export=download&id=1kO4hNjU4TBIfygAZ2mTqhSxDJ7Gr1dBd'}, {type:'ejercicio', name:'Proyecto: Arranque Estrella-Delta', url:'https://drive.google.com/uc?export=download&id=1f9ObNJjEGsFC-IVMF4gfQRSLqG3fpKok'}], hasQuiz: true,
               content: `<h2 class="text-2xl font-bold text-secondary">Práctica 3: Arranque Estrella Delta</h2><h3 class="text-lg font-bold text-white mt-4">Objetivos</h3><ul class="list-disc pl-5 text-slate-300 mb-4"><li>Usar el bloque Temporizador con Retardo a la Conexión (TON).</li><li>Reducir hardware (relés temporizados) usando bloques lógicos.</li></ul><h3 class="text-xl font-bold text-white">El bloque TON (Timer On Delay)</h3><p class="text-slate-300 mb-4">A diferencia de la lógica cableada donde debes comprar un relé temporizador neumático o electrónico, en el PLC dispones de cientos de temporizadores gratuitos por software.</p><div class="space-y-4 my-6"><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">1. Fase Estrella:</h4><p>Al dar Marcha, se activa Q0.0 (Línea principal) y Q0.1 (Estrella). En el mismo segmento, arranca el temporizador (ej. T37 o TON DB1) con un valor (PT = 5 segundos).</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">2. Conmutación a Triángulo:</h4><p>Al llegar a 5s, el contacto del temporizador cambia de estado. Este evento apaga lógicamente la salida Q0.1 (Estrella) y activa la salida Q0.2 (Triángulo).</p></div></div><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 my-4"><strong>Interbloqueo Crítico:</strong> Estrella (Q0.1) y Triángulo (Q0.2) NUNCA deben coincidir encendidos. Usa contactos cruzados y respeta un pequeño margen de tiempo muerto si el PLC es muy rápido.</div>`,
               quiz: [
                 {q:"¿Qué bloque de software reemplaza al relé temporizador físico?", opts:["Marca de Memoria (M)","Temporizador TON / TOF","Salida (Q)","Contador (C)"], ans:1},
@@ -780,7 +800,7 @@
                 {q:"Si presionamos PARO durante la transición, ¿qué debe hacer el PLC?", opts:["Esperar a que termine el tiempo","Desactivar de inmediato todas las salidas (Línea, Estrella y Triángulo)","Pasar directo a Triángulo","Bloquearse"], ans:1}
               ]
             },
-            { id: 4, title: "Práctica 4: Arranque Rotórico", video: "https://www.youtube.com/embed/xxcgNJ7omwg", resources:[{type:'manual', name:'Manual: Arranque Rotórico con PLC', url:'https://drive.google.com/uc?export=download&id=1Pybhau42ys5_xyyKGoQ-xiGHhrT8b1_i'}, {type:'ejercicio', name:'Proyecto: Arranque Rotórico', url:'https://drive.google.com/uc?export=download&id=1xTwsP53IUfOE9KQxhBKBfVO8CDLAl-Jh'}], hasQuiz: true,
+            { id: 4, title: "Práctica 4: Arranque Rotórico", video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b", resources:[{type:'manual', name:'Manual: Arranque Rotórico con PLC', url:'https://drive.google.com/uc?export=download&id=1Pybhau42ys5_xyyKGoQ-xiGHhrT8b1_i'}, {type:'ejercicio', name:'Proyecto: Arranque Rotórico', url:'https://drive.google.com/uc?export=download&id=1xTwsP53IUfOE9KQxhBKBfVO8CDLAl-Jh'}], hasQuiz: true,
               content: `<h2 class="text-2xl font-bold text-secondary">Práctica 4: Arranque Rotórico</h2><h3 class="text-lg font-bold text-white mt-4">Objetivos</h3><ul class="list-disc pl-5 text-slate-300 mb-4"><li>Comprender el uso de las Marcas Internas (M o Relés Auxiliares Internos).</li><li>Programar secuencias anidadas (un motor inicia el arranque del siguiente).</li></ul><h3 class="text-xl font-bold text-white">Las Marcas de Memoria (Merker)</h3><p class="text-slate-300 mb-4">Las marcas (ej. M0.0, M1.2) actúan como relés auxiliares virtuales. No tienen una salida física asociada, pero guardan estados lógicos (0 o 1) dentro de la memoria RAM del PLC.</p><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80 mb-6"><strong>Aplicación Clásica:</strong> Arrancar una serie de cintas transportadoras en cascada inversa para evitar que el material se amontone.</div><h4 class="font-bold text-white">La Lógica Secuencial:</h4><div class="space-y-4 my-6"><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Paso 1:</h4><p>Pulsador de marcha activa Motor 3 (Q0.2) (la cinta final) e inicia Temporizador 1.</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Paso 2:</h4><p>Al terminar Temporizador 1 (ej. 5s), arranca Motor 2 (Q0.1) y arranca Temporizador 2.</p></div><div class="bg-white/5 p-5"><h4 class="font-bold text-secondary">Paso 3:</h4><p>Al terminar Temporizador 2, arranca la primera cinta, Motor 1 (Q0.0).</p></div></div><p class="text-sm text-slate-400">Si un relé térmico de algún motor se dispara, la lógica de programa debe detener secuencialmente los motores anteriores para no seguir enviando carga al punto de falla.</p>`,
               quiz: [
                 {q:"¿Qué es una Marca Interna (M)?", opts:["Una salida física","Un relé auxiliar que existe solo en el software/memoria del PLC","Una entrada de 24V","Un pulsador"], ans:1},
@@ -1030,10 +1050,10 @@
                     const score = this.quizScores[lesson.id];
                     let pillClass = 'bg-slate-600 text-slate-200';
                     if (score !== undefined) {
-                        if (score >= 70) pillClass = 'bg-green-500 text-white';
+                        if (score >= 70) pillClass = 'bg-teal-500 text-white';
                         else pillClass = 'bg-red-500 text-white';
                     } else if (this.progress.includes(lesson.id)) {
-                        pillClass = 'bg-green-500 text-white';
+                        pillClass = 'bg-teal-500 text-white';
                     }
                     let simpleTitle = lesson.title.split(':')[0].trim();
                     let abbreviatedTitle = simpleTitle.toLowerCase().replace('práctica', 'prac').replace(/\s/g, '');
@@ -1081,8 +1101,8 @@
                                         </div>
                                         <div class="flex items-center justify-center w-24 h-24 relative self-center md:self-auto flex-shrink-0">
                                             <svg class="w-full h-full" viewBox="0 0 100 100">
-                                                <circle class="text-white/10" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
-                                                <circle class="text-green-400 transform -rotate-90 origin-center"
+                                                <circle class="progress-track-ring text-white/10" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
+                                                <circle class="text-teal-500 transform -rotate-90 origin-center"
                                                     stroke-width="8"
                                                     stroke-linecap="round"
                                                     stroke="currentColor"
@@ -1093,11 +1113,11 @@
                                                     style="stroke-dasharray: 264; stroke-dashoffset: calc(264 - (264 * ${percent}) / 100); transition: stroke-dashoffset 0.7s ease-out;"
                                                 />
                                             </svg>
-                                            <span class="absolute text-xl font-black text-green-400">${percent}%</span>
+                                            <span class="absolute text-xl font-black text-teal-500">${percent}%</span>
                                         </div>
                                     </div>
                                     <div class="mt-auto pt-4 flex flex-col sm:flex-row gap-2">
-                                        <button onclick="app.continueCourse()" class="flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm border border-white/5"><i class="fas fa-play text-secondary"></i> Continuar Aprendizaje</button>
+                                        <button onclick="app.continueCourse()" class="continue-learning-btn flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm border border-white/5"><i class="fas fa-play text-secondary"></i> Continuar Aprendizaje</button>
                                     </div>
                                 </div>
                             </div>
@@ -1238,7 +1258,7 @@
                     else { all = false; answers[i] = -1; }
                 });
                 
-                if (!all) { this.showModal("Faltan respuestas", "Responde todas las preguntas para continuar.", "error"); return; }
+                if (!all) { this.showModal("Atención", "Debes responder todas las preguntas antes de enviar.", "error"); return; }
                 
                 lesson.quiz.forEach((q, i) => {
                     const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
@@ -1264,40 +1284,157 @@
                 resDiv.classList.remove('hidden');
                 
                 if (score >= 70) {
-                    resDiv.innerHTML = `<span class="text-green-400 text-xl">🎉 ¡Aprobado con ${score}%!</span>`;
+                    resDiv.innerHTML = `<span class="text-green-400 text-xl">Aprobado con ${score}%. Tu mejor nota quedó guardada.</span>`;
                     
                     if (!this.progress.includes(this.currentId)) {
                         this.progress.push(this.currentId);
                         this.progress.sort((a,b) => a - b);
                         localStorage.setItem('curso_progress', JSON.stringify(this.progress));
                         this.syncProgress();
-                        this.showToast(`✅ ¡Módulo ${this.currentId + 1} completado! (${score}%)`, 'success');
                         
                         if (this.progress.length === COURSE_DATA.length) {
                             this.saveCompletionToSheet();
-                            if(typeof window.triggerConfetti === 'function') window.triggerConfetti();
-                            if(typeof window.playSuccessSound === 'function') window.playSuccessSound();
+                            this.playApplauseSound();
+                            this.launchFireworks();
                             setTimeout(() => {
                                 this.showModal("🏆 ¡Curso Finalizado!", "Has completado todos los módulos con éxito. Puedes descargar tu certificado.", "medal");
                                 this.showDashboard();
                             }, 1000);
                         } else {
-                            if(typeof window.playSuccessSound === 'function') window.playSuccessSound();
-                            setTimeout(() => {
-                                this.showModal("¡Muy bien!", `Módulo aprobado con ${score}%. Continúa con el siguiente tema.`, "success");
-                            }, 500);
+                            this.showAchievementOverlay(this.currentId, score);
                         }
                         this.renderSidebar();
                         this.updateCompleteButton();
                     } else {
+                        this.showAchievementOverlay(this.currentId, score);
                         this.syncProgress();
-                        this.showToast(`📊 Puntuación actualizada: ${score}%`, 'success');
                     }
                 } else {
-                    resDiv.innerHTML = `<span class="text-red-400 text-xl">❌ Reprobado con ${score}%. Necesitas 70%.</span>`;
-                    this.showModal("Ánimo", `Obtuviste ${score}%. Repasa el material y vuelve a intentarlo.`, "error");
+                    resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span>`;
+                    this.showEncouragementOverlay(this.currentId, score);
                     this.syncProgress();
                 }
+            },
+            playApplauseSound: function() {
+                try {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioCtx) return;
+                    const ctx = new AudioCtx();
+                    const now = ctx.currentTime;
+                    for (let i = 0; i < 12; i += 1) {
+                        const bufferSize = ctx.sampleRate * 0.05;
+                        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                        const output = buffer.getChannelData(0);
+                        for (let j = 0; j < bufferSize; j += 1) output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize);
+                        const source = ctx.createBufferSource();
+                        source.buffer = buffer;
+                        const filter = ctx.createBiquadFilter();
+                        filter.type = 'bandpass';
+                        filter.frequency.value = 900 + (Math.random() * 800);
+                        const gain = ctx.createGain();
+                        gain.gain.setValueAtTime(0.0001, now + i * 0.09);
+                        gain.gain.exponentialRampToValueAtTime(0.35, now + i * 0.09 + 0.01);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.05);
+                        source.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(ctx.destination);
+                        source.start(now + i * 0.09);
+                        source.stop(now + i * 0.09 + 0.06);
+                    }
+                } catch (e) {
+                    console.warn('No se pudo reproducir aplausos:', e);
+                }
+            },
+            launchFireworks: function() {
+                const canvas = document.createElement('canvas');
+                canvas.style.position = 'fixed';
+                canvas.style.inset = '0';
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                canvas.style.pointerEvents = 'none';
+                canvas.style.zIndex = '1200';
+                document.body.appendChild(canvas);
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+                const resize = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+                resize();
+                const colors = ['#00bcd4', '#22c55e', '#f43f5e', '#f59e0b', '#a78bfa', '#ffffff'];
+                const particles = [];
+                for (let burst = 0; burst < 6; burst += 1) {
+                    const cx = (canvas.width * (0.2 + Math.random() * 0.6));
+                    const cy = (canvas.height * (0.2 + Math.random() * 0.45));
+                    for (let i = 0; i < 55; i += 1) {
+                        const angle = (Math.PI * 2 * i) / 55;
+                        const speed = 1.5 + Math.random() * 3.5;
+                        particles.push({ x: cx, y: cy, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, alpha: 1, life: 75 + Math.random() * 25, color: colors[Math.floor(Math.random() * colors.length)], size: 2 + Math.random() * 2.5 });
+                    }
+                }
+                let frame = 0;
+                const animate = () => {
+                    frame += 1;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => {
+                        if (p.alpha <= 0) return;
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += 0.03;
+                        p.alpha -= 0.013;
+                        ctx.globalAlpha = Math.max(0, p.alpha);
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    ctx.globalAlpha = 1;
+                    if (frame < 140) requestAnimationFrame(animate);
+                    else canvas.remove();
+                };
+                requestAnimationFrame(animate);
+            },
+            showAchievementOverlay: function(moduleId, score) {
+                const old = document.getElementById('subject-achievement-overlay');
+                if (old) old.remove();
+                const overlay = document.createElement('div');
+                overlay.id = 'subject-achievement-overlay';
+                overlay.style.position = 'fixed';
+                overlay.style.inset = '0';
+                overlay.style.background = 'rgba(2, 6, 23, 0.7)';
+                overlay.style.backdropFilter = 'blur(4px)';
+                overlay.style.zIndex = '1300';
+                overlay.style.display = 'flex';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:1px solid rgba(34,211,238,.4);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45)"><div style="font-size:38px;line-height:1">👏</div><h4 style="margin:10px 0 6px;font-size:20px;font-weight:900;letter-spacing:.02em">Felicitaciones</h4><p style="margin:0 0 6px;color:#bae6fd;font-weight:700">Logro desbloqueado: Quiz ${moduleId} aprobado</p><p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Obtuviste ${score}%. Sigue así, vas excelente.</p><button id="subject-achievement-close" type="button" style="padding:10px 16px;border:0;border-radius:10px;background:#06b6d4;color:#082f49;font-weight:900;cursor:pointer">Continuar</button></div>`;
+                document.body.appendChild(overlay);
+                const close = () => overlay.remove();
+                const closeBtn = document.getElementById('subject-achievement-close');
+                if (closeBtn) closeBtn.addEventListener('click', close);
+                overlay.addEventListener('click', (ev) => { if (ev.target === overlay) close(); });
+                this.playApplauseSound();
+                this.launchFireworks();
+            },
+            showEncouragementOverlay: function(moduleId, score) {
+                const old = document.getElementById('subject-achievement-overlay');
+                if (old) old.remove();
+                const overlay = document.createElement('div');
+                overlay.id = 'subject-achievement-overlay';
+                overlay.style.position = 'fixed';
+                overlay.style.inset = '0';
+                overlay.style.background = 'rgba(15, 23, 42, 0.65)';
+                overlay.style.backdropFilter = 'blur(3px)';
+                overlay.style.zIndex = '1300';
+                overlay.style.display = 'flex';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#334155,#1e293b);border:1px solid rgba(251,191,36,.45);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45)"><div style="font-size:38px;line-height:1">💪</div><h4 style="margin:10px 0 6px;font-size:20px;font-weight:900;letter-spacing:.02em">Sigue Intentando</h4><p style="margin:0 0 6px;color:#fde68a;font-weight:700">Quiz ${moduleId} aún no aprobado (${score}%)</p><p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Vas por buen camino. Repasa el tema y vuelve a intentarlo, tú puedes lograrlo.</p><button id="subject-encouragement-close" type="button" style="padding:10px 16px;border:0;border-radius:10px;background:#f59e0b;color:#1f2937;font-weight:900;cursor:pointer">Reintentar</button></div>`;
+                document.body.appendChild(overlay);
+                const close = () => overlay.remove();
+                const closeBtn = document.getElementById('subject-encouragement-close');
+                if (closeBtn) closeBtn.addEventListener('click', close);
+                overlay.addEventListener('click', (ev) => { if (ev.target === overlay) close(); });
             },
             
             saveCompletionToSheet: async function() {

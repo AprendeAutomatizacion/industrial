@@ -192,6 +192,24 @@
         .course-card .course-card-buttons { display: flex; gap: 0.75rem; }
         .course-card .course-card-buttons .btn-metal { flex: 1; font-size: 10px; }
 
+        /* FORZAR TEXTO DE PROGRESO SIEMPRE BLANCO EN TARJETAS DE MIS CURSOS */
+        body.light-mode .course-card .progress-lessons-completed,
+        body:not(.light-mode) .course-card .progress-lessons-completed {
+            color: #ffffff !important;
+        }
+
+        /* Asegurar fondo oscuro para el contenedor de progreso en tarjetas */
+        .course-card .bg-\[\#0f172a\]\/80,
+        #detalle-container .bg-\[\#0f172a\]\/80 {
+            background-color: rgba(15, 23, 42, 0.8) !important;
+        }
+
+        /* En el detalle, el texto de progreso también debe ser blanco */
+        #detalle-container .text-slate-300.mt-1 {
+            color: #ffffff !important;
+        }
+
+        /* Niveles de curso (bordes y sombras) */
         .course-card-level-basico { border: 1px solid rgba(6, 182, 212, 0.35); box-shadow: 0 0 10px rgba(6, 182, 212, 0.2); }
         .course-card-level-basico:hover { border-color: #06b6d4; box-shadow: 0 0 25px rgba(6, 182, 212, 0.45); }
         .course-card-level-intermedio { border: 1px solid rgba(168, 85, 247, 0.35); box-shadow: 0 0 10px rgba(168, 85, 247, 0.2); }
@@ -284,6 +302,11 @@
         .btn-metal-teal:active {
             background: linear-gradient(180deg, #0b6050 0%, #0f7868 40%, #1a9180 60%, #2daa9a 100%);
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        body.light-mode .btn-metal-teal,
+        body.light-mode .btn-metal-teal i {
+            color: #ffffff !important;
         }
     </style>
 </head>
@@ -391,24 +414,24 @@
         const COURSES_DATA = [
             { id: 1, name: "Arranque de motores con contactores Online", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "arranque-contactores-info.html", aulaLink: "1-aula-arranque-contactores.html", totalLessons: 5, resumen: "Este curso está diseñado para brindarte los conocimientos teóricos y prácticos sobre el arranque y control de motores asíncronos trifásicos utilizando contactores.", manuales: [ {name: "Manual: Arranque Directo (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1ffP5ete5u4Sio_zgnudmXrYrg800Cerk"}, {name: "Manual: Selección de Giro (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1nE_PVCGs-A6zFvBN1BXdl1bhJVAehavv"}, {name: "Manual: Arranque Estrella Delta (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1NkOuj0TdfqaN1Dxsh8Bg9XHkZyfZ1sgP"}, {name: "Manual: Arranque Rotórico (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1jOr6szSf-HzX0urZkdgDoe5hAW1rxmzS"} ], ejercicios: [ {name: "Práctica: Arranque Directo", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1AXMe7TN17-d2_JORuMVSNLRn-7xWYYZH"}, {name: "Práctica: Selección de Giro", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1wkB6CO8sLQJFr2xMJQXFUfHsvkVfUG2T"}, {name: "Práctica: Arranque Estrella Delta", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1_q7jTpvQovCuF21HUBH5aFI7yZE8KmMw"}, {name: "Práctica: Arranque Rotórico", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1CoNpKpgzv8XJmKkaIsRqnl0uIenHBUKw"} ], moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
             { id: 2, name: "Arranque de motores con PLC LOGO Online", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "arranque-plc-logo-info.html", aulaLink: "2-aula-arranque-plc-logo.html", totalLessons: 5, resumen: "Descubre cómo dar el salto de la lógica cableada tradicional a la lógica programada.", manuales: [{name: "Introducción a LOGO! Soft Comfort", link: "#"}], ejercicios: [{name: "Arranque directo con PLC LOGO!", link: "#"}], moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
-            { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 15.00, link: "https://www.profesorpablocedeno.online/cursos/gf-con-logo-y-factory-io", totalLessons: 4, resumen: "Una inmersión profunda en las funciones lógicas y bloques especiales de LOGO! usando un entorno 3D realista.", manuales: [{name: "Guía de conexión Factory I/O - LOGO!", link: "#"}], ejercicios: [{name: "Escenario 1: Llenado de Tanque", link: "#"}] },
-            { id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "https://www.profesorpablocedeno.online/cursos/contactores", totalLessons: 6, resumen: "En este curso general de automatización, nos enfocaremos 100% en el control electromagnético.", manuales: [{name: "Normativa de Simbología DIN/IEC", link: "#"}], ejercicios: [{name: "Arranque directo", link: "#"}] },
-            { id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/arranque-de-motores-con-plc-logo", totalLessons: 5, resumen: "Conviértete en un experto programando LOGO!. Abordaremos temporizadores, contadores, marcas, y funciones analógicas.", manuales: [{name: "Manual de Programación FUP y KOP", link: "#"}], ejercicios: [{name: "Práctica: Control de Bomba Alternada", link: "#"}] },
-            { id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", totalLessons: 6, resumen: "Supera la complejidad de la lógica de programación mediante el GRAFCET.", manuales: [{name: "Reglas de Evolución del GRAFCET", link: "#"}], ejercicios: [{name: "Automatización de Semáforo", link: "#"}] },
-            { id: 7, name: "10 ejercicios de aplicaciones con Contactores Online", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "#", totalLessons: 10, resumen: "Un compendio de resolución de problemas reales. No es teoría, es 100% práctica.", manuales: [{name: "Planos resueltos (CadeSIMU)", link: "#"}], ejercicios: [{name: "Descargar Cuadernillo de 10 Ejercicios (PDF)", link: "#"}] },
-            { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO! Online", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "#", totalLessons: 10, resumen: "Aplica toda tu lógica programada. Te entregamos 10 escenarios industriales.", manuales: [{name: "Pistas y Soluciones de Programación", link: "#"}], ejercicios: [{name: "Tres cilindros (Archivo ZIP)", link: "#"}] },
-            { id: 9, name: "Automatización Industrial Presencial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "https://www.profesorpablocedeno.online/cursos/industrial", totalLessons: 3, resumen: "Curso presencial donde palparás los equipos físicos.", manuales: [{name: "Guía de Seguridad en el Taller", link: "#"}], ejercicios: [{name: "Hoja de Montaje en Panel", link: "#"}] },
+            { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 15.00, link: "https://www.profesorpablocedeno.online/cursos/gf-con-logo-y-factory-io", aulaLink: "3-aula-compuertas-factory-plc.html", totalLessons: 4, resumen: "Una inmersión profunda en las funciones lógicas y bloques especiales de LOGO! usando un entorno 3D realista.", manuales: [{name: "Guía de conexión Factory I/O - LOGO!", link: "#"}], ejercicios: [{name: "Escenario 1: Llenado de Tanque", link: "#"}], moduleNames: ["Contenido del Curso", "Compuertas Lógicas", "Enclavamientos y Memorias", "Integración con Factory IO"] },
+            { id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "https://www.profesorpablocedeno.online/cursos/contactores", aulaLink: "4-aula-auto-contactores-on.html", totalLessons: 6, resumen: "En este curso general de automatización, nos enfocaremos 100% en el control electromagnético.", manuales: [{name: "Normativa de Simbología DIN/IEC", link: "#"}], ejercicios: [{name: "Arranque directo", link: "#"}], moduleNames: ["Contenido del Curso", "Simbología y Normativa", "Arranque Directo", "Inversión de Giro", "Estrella-Triángulo", "Fallas y Diagnóstico"] },
+            { id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/arranque-de-motores-con-plc-logo", aulaLink: "5-aula-auto-plc-logo-on.html", totalLessons: 5, resumen: "Conviértete en un experto programando LOGO!. Abordaremos temporizadores, contadores, marcas y funciones analógicas.", manuales: [{name: "Manual de Programación FUP y KOP", link: "#"}], ejercicios: [{name: "Práctica: Control de Bomba Alternada", link: "#"}], moduleNames: ["Contenido del Curso", "Temporizadores y Contadores", "Marcas y Memorias", "Señales Analógicas", "Aplicación Integral"] },
+            { id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", aulaLink: "6-aula-auto-plc-grafcet-on.html", totalLessons: 6, resumen: "Supera la complejidad de la lógica de programación mediante el GRAFCET.", manuales: [{name: "Reglas de Evolución del GRAFCET", link: "#"}], ejercicios: [{name: "Automatización de Semáforo", link: "#"}], moduleNames: ["Contenido del Curso", "Etapas y Transiciones", "Acciones Asociadas", "Conversión a Ladder", "Seguridad y Rearme", "Proyecto Secuencial"] },
+            { id: 7, name: "10 ejercicios de aplicaciones con Contactores Online", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "#", aulaLink: "7-aula-10-ejer-auto-contactores-on.html", totalLessons: 10, resumen: "Un compendio de resolución de problemas reales. No es teoría, es 100% práctica.", manuales: [{name: "Planos resueltos (CadeSIMU)", link: "#"}], ejercicios: [{name: "Descargar Cuadernillo de 10 Ejercicios (PDF)", link: "#"}], moduleNames: ["Contenido del Curso", "Arranque con Señalización", "Inversión con Enclavamiento", "Temporización de Salidas", "Bomba Alternada", "Secuencia de Cilindros", "Mando con Protección Térmica", "Semáforo Industrial", "Dos Motores Interdependientes", "Proyecto Integrador"] },
+            { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO! Online", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "#", aulaLink: "8-aula-10-ejer-auto-plc-logo-on.html", totalLessons: 10, resumen: "Aplica toda tu lógica programada. Te entregamos 10 escenarios industriales.", manuales: [{name: "Pistas y Soluciones de Programación", link: "#"}], ejercicios: [{name: "Tres cilindros (Archivo ZIP)", link: "#"}], moduleNames: ["Contenido del Curso", "Llenado de Tanque", "Bomba Alternada", "Semáforo Inteligente", "Tres Cilindros", "Banda Transportadora", "Mezclador", "Compresor", "Clasificador", "Proyecto Integrador LOGO"] },
+            { id: 9, name: "Automatización Industrial Presencial", type: "Presencial", desc: "Fundamentos y prácticas de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "https://www.profesorpablocedeno.online/cursos/industrial", totalLessons: 3, resumen: "Curso presencial donde palparás los equipos físicos.", manuales: [{name: "Guía de Seguridad en el Taller", link: "#"}], ejercicios: [{name: "Hoja de Montaje en Panel", link: "#"}] },
             { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/mis-cursos/contactores", totalLessons: 5, resumen: "Talleres en laboratorio físico. Realizaremos montajes en gabinetes didácticos.", manuales: [{name: "Guía de Uso del Multímetro", link: "#"}], ejercicios: [{name: "Laboratorio: Mando a Distancia", link: "#"}] },
             { id: 11, name: "Automatización Con PLC LOGO! Presencial", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-logo", totalLessons: 4, resumen: "Aprende a conectar las entradas y salidas de un PLC físico.", manuales: [{name: "Diagrama de Conexión NPN y PNP", link: "#"}], ejercicios: [{name: "Laboratorio: Control de Llenado con Sensores", link: "#"}] },
             { id: 12, name: "Automatización con PLC – Método Grafcet Presencial", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", totalLessons: 6, resumen: "Controlaremos estaciones didácticas neumáticas implementando programación basada en Grafcet.", manuales: [{name: "Esquemas Neumáticos del Laboratorio", link: "#"}], ejercicios: [{name: "Laboratorio: Secuencia Neumática A+ B+ A- B-", link: "#"}] },
-            { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 150.00, link: "#", totalLessons: 5, resumen: "Diplomado intensivo en automatización con contactores.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-            { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "#", totalLessons: 5, resumen: "Diplomado avanzado en PLCs.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-            { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 5, resumen: "Maestría en automatización y control avanzado.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 5, resumen: "Maestría en automatización y control aplicado.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-            { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii", totalLessons: 5, resumen: "Seguimiento de notas del taller de Tecnología Eléctrica III. Consulta tus evaluaciones y avances.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-            { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html", totalLessons: 5, resumen: "Notas del Proyecto V.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
+            { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 150.00, link: "#", totalLessons: 5, resumen: "Diplomado intensivo en automatización con contactores.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+            { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "#", totalLessons: 5, resumen: "Diplomado avanzado en PLCs.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+            { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 5, resumen: "Maestría en automatización y control avanzado.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 5, resumen: "Maestría en automatización y control aplicado.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+            { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii", totalLessons: 5, resumen: "Seguimiento de notas del taller de Tecnología Eléctrica III. Consulta tus evaluaciones y avances.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+            { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html", totalLessons: 5, resumen: "Notas del Proyecto V.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
             { 
-                id: 19, name: "Arranque de motores con contactores Manual", type: "Manual", desc: "Manual completo sobre el arranque y control de motores usando contactores.", image: "https://i.postimg.cc/WpST30hz/tablerogif.gif", category: "Electricidad", level: "Básico", cost: 5.00, link: "#", totalLessons: 1,
+                id: 19, name: "Arranque de motores con contactores Manual", type: "Manual", desc: "Manual completo sobre el arranque y control de motores usando contactores.", image: "https://i.postimg.cc/WpST30hz/tablerogif.gif", category: "Electricidad", level: "Básico", cost: 5.00, link: "#", totalLessons: 6,
                 manuales: [{name: "Manual de Arranque de motores con contactores (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1V4PGjDVVFRNIo8nJCupBgiimdz7820ql"}],
                 ejercicios: [
                     {name: "18 Ejercicios Prácticos de Arranques (ZIP)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1N4tiNxaTf9WiNti0Uiv2S06KZCioMxdX"},
@@ -418,12 +441,24 @@
                 aulaLink: "19-aula-manual-arranque-contactores.html"
             },
             { 
-                id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", desc: "Introducción a la automatización industrial utilizando PLC de gama básica.", image: "https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif", category: "PLC", level: "Básico", cost: 5.00, link: "20-auto-plc-basico-on-info.html", totalLessons: 1,
-                manuales: [{name: "Manual de Automatización con PLC Básico (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20PLC%20Básico"}]
+                id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", desc: "Introducción a la automatización industrial utilizando PLC de gama básica.", image: "https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif", category: "PLC", level: "Básico", cost: 5.00, link: "20-auto-plc-basico-on-info.html", totalLessons: 6,
+                manuales: [{name: "Manual de Automatización con PLC Básico (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20PLC%20Básico"}],
+                aulaLink: "20-aula-manual-auto-plc-basico.html"
             },
             { 
-                id: 21, name: "Automatización con Contactores Manual", type: "Manual", desc: "Aprende a diseñar y montar circuitos de control con lógica cableada.", image: "https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif", category: "Automatización", level: "Básico", cost: 5.00, link: "#", totalLessons: 1,
-                manuales: [{name: "Manual de Automatización con Contactores (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20Contactores"}]
+                id: 21, name: "Automatización con Contactores Manual", type: "Manual", desc: "Aprende a diseñar y montar circuitos de control con lógica cableada.", image: "https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif", category: "Automatización", level: "Básico", cost: 5.00, link: "21-Manual-auto-contactores-on-info.html", totalLessons: 6,
+                manuales: [{name: "Manual de Automatización con Contactores (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20Contactores"}],
+                aulaLink: "21-aula-manual-auto-contactores-on.html"
+            },
+            {
+                id: 22, name: "PLC Método Grafcet Manual", type: "Manual", desc: "Manual aplicado al diseño secuencial y programación por metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 5.00, link: "22-Manual-auto-plc-grafcet-on-info.html", totalLessons: 6,
+                manuales: [{name: "Manual PLC Método Grafcet (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20PLC%20M%C3%A9todo%20Grafcet"}],
+                aulaLink: "22-aula-manual-auto-plc-grafcet-on.html"
+            },
+            {
+                id: 23, name: "Arranque de motores con PLC LOGO Manual", type: "Manual", desc: "Manual práctico para arranque de motores con PLC LOGO.", image: "img/AA (11).webp", category: "PLC", level: "Básico", cost: 5.00, link: "23-Manual-arranque-plc-logo-info.html", totalLessons: 6,
+                manuales: [{name: "Manual de Arranque con PLC LOGO (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Arranque%20con%20PLC%20LOGO"}],
+                aulaLink: "23-aula-manual-arranque-plc-logo.html"
             }
         ];
 
@@ -448,7 +483,9 @@
             18: '18-Sist-hid-Neu-pregrado-material.html',
             19: '19-Manual-arranque-contactores-material.html',
             20: '20-auto-plc-basico-on-material.html',
-            21: '21-Manual-auto-contactores-on-material.html'
+            21: '21-Manual-auto-contactores-on-material.html',
+            22: '22-Manual-auto-plc-grafcet-on-material.html',
+            23: '23-Manual-arranque-plc-logo-material.html'
         };
 
         function openCourseMaterial(courseId) {
@@ -635,14 +672,17 @@
         }
 
         async function syncUserProgressToExcel(){ 
-            if(!window.currentUser) return;
-            const email=window.currentUser.email.toLowerCase();
-            const userData=JSON.stringify(window.currentUser);
+            const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || AuthLogic.currentUser || JSON.parse(localStorage.getItem('user') || 'null');
+            if(!activeUser || !activeUser.email) return;
+            window.currentUser = activeUser;
+            if (typeof AuthLogic !== 'undefined') AuthLogic.currentUser = activeUser;
+            const email=activeUser.email.toLowerCase();
+            const userData=JSON.stringify(activeUser);
             try {
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({ action: 'update_user', email: email, userData: userData })
+                    body: `action=update_user&email=${encodeURIComponent(email)}&userData=${encodeURIComponent(userData)}`
                 });
             } catch (e) { console.error('Fallo en la red al sincronizar progreso de usuario:', e); showNotif('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error'); }
         }
@@ -737,10 +777,10 @@
                 const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.id}`))?'liked':'';
                 const viewsClass=vistas>0?'text-green-500':'text-slate-400';
                 const displayCount=studentCountsPerCourse[course.id]!==undefined?studentCountsPerCourse[course.id]:'...';
-                const progressData=myProgress[String(course.id)]||{completed:0,total:course.totalLessons||(isManual ? 1 : 5),percent:0,avgScore:0};
-                const completed = isManual ? 1 : progressData.completed; 
-                const total = isManual ? 1 : progressData.total;
-                const percent = isManual ? 100 : progressData.percent;
+                const progressData=myProgress[String(course.id)]||{completed:0,total:course.totalLessons||5,percent:0,avgScore:0};
+                const completed = progressData.completed;
+                const total = progressData.total;
+                const percent = progressData.percent;
                 const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[course.id])||0;
                 let starsHTML='';
                 for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.id},${i},false)"></i>`; }
@@ -762,7 +802,7 @@
                 <div class="mt-4 mb-3 bg-[#0f172a]/80 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-inner">
                     <div class="flex justify-between items-center mb-2"><span class="text-[10px] font-bold uppercase tracking-widest text-white">Progreso</span><span class="text-xs font-black text-green-400">${percent}%</span></div>
                     <div class="w-full bg-white/10 rounded-full h-1.5 mb-2 overflow-hidden"><div class="bg-green-400 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div></div>
-                    <p class="text-[10px] font-bold text-white/80">${completed} de ${total} lecciones completadas</p>
+                    <p class="progress-lessons-completed text-[10px] font-bold">${completed} de ${total} lecciones completadas</p>
                 </div>`;
                 
                 const normalizedLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -828,7 +868,7 @@
                         </div>
                         <p class="text-slate-600 text-[13px] line-clamp-2 leading-relaxed flex-grow">${course.desc}</p>
                     <div class="flex items-center gap-1.5 mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Valoración:</span><div class="flex gap-0.5">${starsHTML}</div></div>
-                    ${!isManual ? progressBarHTML : ''}
+                    ${progressBarHTML}
                     <div class="mt-auto pt-4 border-t border-slate-100 space-y-2" onclick="event.stopPropagation();">${buttonsHTML}</div>
                     </div>
                 </div>`;
@@ -1007,12 +1047,25 @@
         }
 
         function rateCourse(courseId,rating,navigate=true){
-            if(!currentUser){ openModal('authModal'); return; }
-            if(!currentUser.ratings) currentUser.ratings={};
-            currentUser.ratings[courseId]=rating;
-            localStorage.setItem('user',JSON.stringify(currentUser));
+            const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || AuthLogic.currentUser || JSON.parse(localStorage.getItem('user') || 'null');
+            if(!activeUser){ openModal('authModal'); return; }
+            if(!activeUser.ratings) activeUser.ratings={};
+            activeUser.ratings[courseId]=rating;
+            window.currentUser = activeUser;
+            if (typeof currentUser !== 'undefined') currentUser = activeUser;
+            if (typeof AuthLogic !== 'undefined') AuthLogic.currentUser = activeUser;
+            localStorage.setItem('user',JSON.stringify(activeUser));
+            if(activeUser.email) {
+                const emailKey = activeUser.email.toLowerCase();
+                let userObj = dbUsers[emailKey];
+                if (typeof userObj === 'string') {
+                    try { userObj = JSON.parse(userObj); } catch (e) { userObj = {}; }
+                }
+                userObj = userObj || {};
+                userObj.ratings = activeUser.ratings;
+                dbUsers[emailKey]=JSON.stringify(userObj);
+            }
             syncUserProgressToExcel();
-            if(currentUser.email) dbUsers[currentUser.email.toLowerCase()]=JSON.stringify(currentUser);
             calculateCourseRatings();
             renderMisCourses();
             const detailVisible=document.getElementById('page-curso-detalle').style.display==='block';
@@ -1172,9 +1225,23 @@
                 const nombreCurso = course.name;
                 const numModulos = course.totalLessons || 5;
                 const moduleNames = course.moduleNames || [];
+                const certificateMedals = ['🏆', '🥇', '🥈', '🥉'];
+                const getCertificateIcon = (mod, index) => {
+                    const normalized = String(mod || '').toLowerCase();
+                    if (index === 0 && (normalized.includes('contenido') || normalized.includes('introducción') || normalized.includes('introduccion'))) {
+                        return '📘';
+                    }
+                    return certificateMedals[index % certificateMedals.length];
+                };
                 let temarioHTML = "";
-                if (moduleNames.length > 0) { temarioHTML = moduleNames.map(mod => `• ${mod}<br>`).join(''); }
-                else { for(let i = 1; i <= numModulos; i++) { temarioHTML += `• Módulo ${i}: Contenido del curso...<br>`; } }
+                if (moduleNames.length > 0) {
+                    temarioHTML = moduleNames.map((mod, index) => `${getCertificateIcon(mod, index)} ${mod}<br>`).join('');
+                }
+                else {
+                    for(let i = 1; i <= numModulos; i++) {
+                        temarioHTML += `${i === 1 ? '📘' : certificateMedals[(i - 1) % certificateMedals.length]} Módulo ${i}: Contenido del curso...<br>`;
+                    }
+                }
                 
                 let rawCompletion = findDateInObject(latestCompletionDates, course.name);
                 let fechaHoy = "[En proceso de registro en sistema]";

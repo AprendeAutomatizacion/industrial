@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -39,7 +39,7 @@
         }
     </style>
     <style>
-        /* 1. Definición de Variables de Color para Temas */
+        /* 1. DefiniciÃ³n de Variables de Color para Temas */
         :root {
             /* Paleta Clara */
             --bg-default: #f7f9fb;
@@ -135,7 +135,7 @@
             color: var(--text-default);
         }
 
-        /* --- Estilo de Tarjetas de Curso (Estilo Catálogo Unificado) --- */
+        /* --- Estilo de Tarjetas de Curso (Estilo CatÃ¡logo Unificado) --- */
         .course-card {
             background-color: var(--bg-secondary);
             border-radius: 1.5rem; /* 24px */
@@ -246,13 +246,13 @@
             gap: 0.75rem;
         }
 
-        /* Adaptación para que el botón metálico funcione dentro de la tarjeta */
+        /* AdaptaciÃ³n para que el botÃ³n metÃ¡lico funcione dentro de la tarjeta */
         .course-card .course-card-buttons .btn-metal {
             flex: 1;
             font-size: 10px;
         }
 
-        /* --- Resplandor de Tarjetas por Nivel (Estilo Catálogo) --- */
+        /* --- Resplandor de Tarjetas por Nivel (Estilo CatÃ¡logo) --- */
         .course-card-level-basico {
             border: 1px solid rgba(6, 182, 212, 0.35);
             box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
@@ -280,7 +280,7 @@
             box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
         }
 
-        /* --- Estilo Tarjeta Misión --- */
+        /* --- Estilo Tarjeta MisiÃ³n --- */
         .mission-card {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid rgba(6, 182, 212, 0.35);
@@ -300,7 +300,7 @@
             box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
         }
 
-        /* --- Estilo Tarjeta Misión (Modo Claro) --- */
+        /* --- Estilo Tarjeta MisiÃ³n (Modo Claro) --- */
         body.light-mode .mission-card {
             background-color: #ffffff !important;
             border-color: #e2e8f0 !important;
@@ -316,49 +316,34 @@
             border-color: #e2e8f0 !important;
             box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
         }
-        body.light-mode #progreso-page h2,
-        body.light-mode #progreso-page h3,
-        body.light-mode #progreso-page h4,
-        body.light-mode #progreso-page .course-progress-card h3,
-        body.light-mode #progreso-page .course-progress-card h4,
-        body.light-mode #progreso-page .course-progress-card .text-slate-200,
-        body.light-mode #progreso-page .progress-summary-card p.text-slate-400,
-        body.light-mode #progreso-page .progress-summary-card p.text-slate-100 {
-            color: #4f6f8d !important;
+        /* Restaurar colores originales en textos clave del panel Progreso (modo claro) */
+        body.light-mode .progress-section-title { color: #000000 !important; }
+        body.light-mode .course-progress-title { color: #000000 !important; }
+        body.light-mode .progress-current-title { color: #000000 !important; }
+        body.light-mode .enrollment-label { color: #000000 !important; }
+        body.light-mode .enrollment-date { color: #000000 !important; }
+        body.light-mode .modules-breakdown-title { color: #000000 !important; }
+        body.light-mode .progress-track-ring {
+            color: rgba(100, 116, 139, 0.45) !important;
         }
-        body.light-mode .hero-main-title {
-            color: #000000 !important; /* título principal negro en modo claro */
+        body.light-mode .achievement-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
         }
-        body.light-mode .hero-main-title .text-secondary {
-            color: #2db8ce !important; /* ACADÉMICO cyan en modo claro */
-            text-shadow: none !important;
-            opacity: 1 !important;
+        body.light-mode .achievement-card-title {
+            color: #0f172a !important;
         }
-        body.light-mode #progreso-page > header .absolute.inset-0.z-0 {
-            background-color: rgba(79, 111, 141, 0.45);
-        }
-        body.light-mode #progreso-page > header .absolute.inset-0.z-0 img {
-            filter: brightness(0.58) contrast(1.05) saturate(0.9);
-            opacity: 0.85 !important;
-            mix-blend-mode: multiply;
-        }
-        body.light-mode #progreso-page .course-progress-card h3 {
-            color: #000000 !important; /* títulos de tarjeta negros */
-        }
-        body.light-mode #progreso-page .progress-summary-card h4 {
-            color: #4f6f8d !important; /* gris azulado para mejor contraste */
+        body.light-mode .achievement-card-label {
+            color: #475569 !important;
         }
         body#progreso-page .course-progress-card h3 > i.fas.fa-book,
         body#progreso-page .course-progress-card h3 > i.fas.fa-book.text-blue-200,
         body#progreso-page .course-progress-card h3 i.fas.fa-book {
-            color: #a855f7 !important; /* iconos morado para título de curso */
-        }
-        body.light-mode #progreso-page .course-progress-card h3 > i.fas.fa-book-open,
-        body.light-mode #progreso-page .course-progress-card h3 i.fas.fa-book-open {
-            color: #000000 !important; /* icono libro abierto negro en modo claro */
+            color: #a855f7 !important; /* iconos morado para tÃ­tulo de curso */
         }
 
-        /* --- Estilo Tarjeta Misión (Modo Oscuro) --- */
+        /* --- Estilo Tarjeta MisiÃ³n (Modo Oscuro) --- */
         body:not(.light-mode) .mission-card { 
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
             backdrop-filter: blur(12px);
@@ -366,6 +351,21 @@
         }
         body:not(.light-mode) .mission-card h3 { color: #ffffff; }
         body:not(.light-mode) .mission-card ul { color: #cbd5e1; } /* slate-300 */
+        body:not(.light-mode) .achievement-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(30, 64, 175, 0.2) 100%);
+            border-color: rgba(96, 165, 250, 0.45) !important;
+        }
+
+        .achievement-card {
+            border-radius: 0.9rem;
+            border: 1px solid;
+            padding: 0.75rem 0.65rem;
+            transition: all 0.25s ease;
+            min-height: 145px;
+        }
+        .achievement-card:hover {
+            transform: translateY(-2px);
+        }
 
         /* Dark mode overrides para las tarjetas */
         body:not(.light-mode) .course-card {
@@ -407,7 +407,7 @@
         body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
     </style>
     <style>
-        /* Sobrescribir la imagen de fondo global solo para esta página */
+        /* Sobrescribir la imagen de fondo global solo para esta pÃ¡gina */
         body#progreso-page-body::before {
             background-image: url('img/AA (3).gif');
         }
@@ -425,7 +425,7 @@
             <img src="img/AA (3).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
         </div>
         
-        <!-- Icono de progreso/métricas grande a la derecha -->
+        <!-- Icono de progreso/mÃ©tricas grande a la derecha -->
         <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
             <i class="fas fa-chart-line"></i>
         </div>
@@ -439,15 +439,15 @@
                 <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Rendimiento</span>
                 <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Certificados</span>
             </div>
-            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">MI PROGRESO <span class="text-secondary">ACADÉMICO</span></h1>
+            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">MI PROGRESO <span class="text-secondary">ACADÃ‰MICO</span></h1>
             <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">Visualiza el avance detallado de todos tus cursos, tus logros y certificados.</p>
         </div>
     </header>
     <div class="max-w-7xl mx-auto px-6 py-12">
         <main class="relative z-10 w-full">
     
-            <!-- Cabecera en 2 columnas (sin cambios) -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Cabecera apilada: estudiante arriba, logros abajo -->
+            <div class="grid grid-cols-1 gap-6 mb-8">
                 <!-- Tarjeta del estudiante -->
                 <div class="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col">
                     <div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div>
@@ -476,7 +476,7 @@
                         <div class="grid grid-cols-2 gap-3 mt-2">
                             <div>
                                 <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
-                                    <i class="fas fa-globe text-slate-400 text-xs"></i> País
+                                    <i class="fas fa-globe text-slate-400 text-xs"></i> PaÃ­s
                                 </p>
                                 <div class="flex items-center gap-1 mt-0.5">
                                     <img id="dash-student-flag" src="" class="w-4 h-auto hidden rounded-sm" alt="Bandera">
@@ -485,7 +485,7 @@
                             </div>
                             <div>
                                 <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
-                                    <i class="fas fa-briefcase text-slate-400 text-xs"></i> Profesión
+                                    <i class="fas fa-briefcase text-slate-400 text-xs"></i> ProfesiÃ³n
                                 </p>
                                 <p class="text-white font-bold text-sm mt-0.5" id="dash-student-profession">-</p>
                             </div>
@@ -527,10 +527,10 @@
                         <h2 class="text-slate-400 text-xs uppercase font-black tracking-widest mb-4 flex items-center gap-2">
                             <i class="fas fa-trophy text-yellow-400"></i> Logros
                         </h2>
-                        <div id="achievements-container" class="flex-grow space-y-2 overflow-y-auto custom-scrollbar max-h-[200px]">
+                        <div id="achievements-container" class="flex-grow grid grid-cols-2 md:grid-cols-10 gap-2 overflow-y-auto custom-scrollbar max-h-[260px] pr-1">
                         </div>
                         <div id="no-achievements" class="text-slate-400 text-xs italic mt-2">
-                            Aún no has culminado ningún curso.
+                            AÃºn no has culminado ningÃºn curso.
                         </div>
                     </div>
                 </div>
@@ -538,55 +538,56 @@
     
             <!-- Progreso detallado por curso -->
             <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4 mt-24">
-                <h3 class="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-laptop-code text-secondary"></i> Progreso en Cursos (Online/Presencial)</h3>
+                <h3 class="progress-section-title text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-laptop-code text-secondary"></i> Progreso en Cursos (Online/Presencial)</h3>
                 <button onclick="manualRefreshProgress()" class="flex items-center gap-2 bg-teal-500 hover:bg-teal-400 text-white rounded-full px-4 py-1.5 shadow-md transition-all active:scale-95 font-black text-[10px] uppercase tracking-wider">
                     <i id="refresh-progress-icon" class="fas fa-sync-alt"></i> Actualizar
                 </button>
             </div>
             <div id="individualCourseProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
-                <!-- Cursos se renderizan aquí -->
+                <!-- Cursos se renderizan aquÃ­ -->
             </div>
     
             <!-- Progreso detallado por MATERIAS -->
             <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4 mt-8">
-                <h3 class="text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Progreso en Materias (Diplomados/Maestrías)</h3>
+                <h3 class="progress-section-title text-white font-black uppercase tracking-widest text-xs flex items-center gap-2"><i class="fas fa-book text-secondary"></i> Progreso en Materias (Diplomados/Maestrías)</h3>
             </div>
             <div id="individualSubjectProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-                <!-- Materias se renderizan aquí -->
+                <!-- Materias se renderizan aquÃ­ -->
             </div>
         </main>
     </div>
 </div>
 
 <script>
-    // ===================== CONFIGURACIÓN =====================
+    // ===================== CONFIGURACIÃ“N =====================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
 
     // Lista completa de todos los cursos (18) con nombres actualizados + Manuales
     const COURSES_DATA = [
         { id: 1, name: "Arranque de motores con contactores Online", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
         { id: 2, name: "Arranque de motores con PLC LOGO Online", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
-        { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online", type: "Online", totalLessons: 4, level: "Básico" },
-        { id: 4, name: "Automatización con Contactores Online", type: "Online", totalLessons: 6, level: "Intermedio" },
-        { id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", totalLessons: 5, level: "Intermedio" },
-        { id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", totalLessons: 6, level: "Avanzado" },
-        { id: 7, name: "10 ejercicios de aplicaciones con Contactores Online", type: "Online", totalLessons: 10, level: "Intermedio" },
-        { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO! Online", type: "Online", totalLessons: 10, level: "Intermedio" },
+        { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online", type: "Online", totalLessons: 4, level: "Básico", moduleNames: ["Contenido del Curso", "Compuertas Lógicas", "Enclavamientos y Memorias", "Integración con Factory IO"] },
+        { id: 4, name: "Automatización con Contactores Online", type: "Online", totalLessons: 6, level: "Intermedio", moduleNames: ["Contenido del Curso", "Simbología y Normativa", "Arranque Directo", "Inversión de Giro", "Estrella-Triángulo", "Fallas y Diagnóstico"] },
+        { id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", totalLessons: 5, level: "Intermedio", moduleNames: ["Contenido del Curso", "Temporizadores y Contadores", "Marcas y Memorias", "Señales Analógicas", "Aplicación Integral"] },
+        { id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", totalLessons: 6, level: "Avanzado", moduleNames: ["Contenido del Curso", "Etapas y Transiciones", "Acciones Asociadas", "Conversión a Ladder", "Seguridad y Rearme", "Proyecto Secuencial"] },
+        { id: 7, name: "10 ejercicios de aplicaciones con Contactores Online", type: "Online", totalLessons: 10, level: "Intermedio", moduleNames: ["Contenido del Curso", "Arranque con Señalización", "Inversión con Enclavamiento", "Temporización de Salidas", "Bomba Alternada", "Secuencia de Cilindros", "Mando con Protección Térmica", "Semáforo Industrial", "Dos Motores Interdependientes", "Proyecto Integrador"] },
+        { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO! Online", type: "Online", totalLessons: 10, level: "Intermedio", moduleNames: ["Contenido del Curso", "Llenado de Tanque", "Bomba Alternada", "Semáforo Inteligente", "Tres Cilindros", "Banda Transportadora", "Mezclador", "Compresor", "Clasificador", "Proyecto Integrador LOGO"] },
         { id: 9, name: "Automatización Industrial Presencial", type: "Presencial", totalLessons: 3, level: "Básico" },
         { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", totalLessons: 5, level: "Intermedio" },
         { id: 11, name: "Automatización Con PLC LOGO! Presencial", type: "Presencial", totalLessons: 4, level: "Intermedio" },
         { id: 12, name: "Automatización con PLC – Método Grafcet Presencial", type: "Presencial", totalLessons: 6, level: "Avanzado" },
-        { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", totalLessons: 5, level: "Intermedio", moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-        { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", totalLessons: 5, level: "Intermedio", moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-        { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-        { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-        { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", totalLessons: 5, level: "Básico", moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
-        { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
+        { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", totalLessons: 5, level: "Intermedio", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+        { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", totalLessons: 5, level: "Intermedio", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+        { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+        { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+        { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", totalLessons: 5, level: "Básico", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+        { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
         // Manuales
-        { id: 19, name: "Arranque de motores con contactores Manual", type: "Manual", totalLessons: 1, level: "Básico", moduleNames: ["Manual Completo"] },
-        { id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", totalLessons: 1, level: "Básico", moduleNames: ["Manual Completo"] },
-        { id: 21, name: "Automatización con Contactores Manual", type: "Manual", totalLessons: 1, level: "Básico", moduleNames: ["Manual Completo"] },
-        { id: 22, name: "PLC Método Grafcet Manual", type: "Manual", totalLessons: 1, level: "Avanzado", moduleNames: ["Manual Completo"] }
+        { id: 19, name: "Arranque de motores con contactores Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] },
+        { id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] },
+        { id: 21, name: "Automatización con Contactores Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] },
+        { id: 22, name: "PLC Método Grafcet Manual", type: "Manual", totalLessons: 6, level: "Avanzado", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] },
+        { id: 23, name: "Arranque de motores con PLC LOGO Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] }
     ];
 
     const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
@@ -784,16 +785,21 @@
         noAchievements.classList.add('hidden');
         container.innerHTML = completedCourses.map(item => {
             const icon = getAchievementIcon(item.avgScore);
+            const achievementCourseName = item.course.name
+                .replace(/\bpresencial\b/gi, '')
+                .replace(/\(\s*\)/g, '')
+                .replace(/\s{2,}/g, ' ')
+                .trim();
             return `
-            <div class="flex items-center gap-3 border-blue-400/50 bg-blue-500/20 backdrop-blur-md shadow-[inset_0_0_10px_rgba(59,130,246,0.1)] text-white rounded-xl p-3 border">
-                <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0 text-2xl">
+            <div class="achievement-card">
+                <div class="h-full flex flex-col items-center justify-between text-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0 text-2xl">
                     ${icon}
+                    </div>
+                    <p class="achievement-card-title text-white text-[11px] font-bold leading-tight">${achievementCourseName}</p>
+                    <span class="text-teal-400 text-sm font-black whitespace-nowrap">${item.avgScore}%</span>
                 </div>
-                <div class="min-w-0 flex-1 flex items-baseline justify-between gap-2">
-                    <p class="text-white text-sm font-bold truncate">${item.course.name}</p>
-                <span class="text-teal-400 text-lg font-black whitespace-nowrap">${item.avgScore}%</span>
-                </div>
-            </div>
+            </div> 
         `}).join('');
     }
 
@@ -862,7 +868,7 @@
                 
                 let simpleTitle = moduleName.split(':')[0].trim();
                 let abbreviatedTitle = simpleTitle.toLowerCase().replace('práctica', 'prac').replace(/\s/g, '');
-                const isIntro = index === 0 && (simpleTitle.toLowerCase().includes('contenido') || simpleTitle.toLowerCase().includes('introducción'));
+                const isIntro = index === 0 && (simpleTitle.toLowerCase().includes('contenido') || simpleTitle.toLowerCase().includes('introducciÃ³n'));
                 if (isIntro) {
                     simpleTitle = "Intro";
                     abbreviatedTitle = "Intro";
@@ -884,14 +890,14 @@
             <div class="progress-summary-card bg-white/5 rounded-xl p-5 border border-white/10 shadow-inner mb-6 backdrop-blur-sm">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div class="flex-1">
-                        <h4 class="font-black uppercase tracking-widest text-xs text-slate-300"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4>
+                        <h4 class="progress-current-title font-black uppercase tracking-widest text-xs text-slate-300"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4>
                         <div class="grid grid-cols-4 gap-x-2 gap-y-4 mt-2" title="${done} de ${progData.total} lecciones completadas">
                             ${lessonPillsHtml}
                         </div>
                     </div>
                     <div class="flex items-center justify-center w-24 h-24 relative self-center md:self-auto flex-shrink-0">
                         <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/20" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
+                            <circle class="progress-track-ring text-white/20" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
                             <circle class="${coursePercentage === 100 ? 'text-amber-400' : 'text-teal-500'} transform -rotate-90 origin-center"
                                 stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50"
                                 style="stroke-dasharray: 264; stroke-dashoffset: calc(264 - (264 * ${coursePercentage}) / 100); transition: stroke-dashoffset 0.7s ease-out;" />
@@ -900,8 +906,8 @@
                     </div>
                 </div>
                 <div class="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 gap-3 text-xs">
-                    <div class="flex items-center gap-2"><i class="fas fa-calendar-check text-teal-400 text-sm"></i><div><p class="text-slate-400 uppercase tracking-wider text-[10px]">Inscripción</p><p class="text-slate-100 font-bold">${enrollmentDisplay}</p></div></div>
-                    <div class="flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400 text-sm"></i><div><p class="text-slate-400 uppercase tracking-wider text-[10px]">Culminación</p><p class="text-slate-100 font-bold">${completionDisplay}</p></div></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-calendar-check text-teal-400 text-sm"></i><div><p class="enrollment-label text-slate-400 uppercase tracking-wider text-[10px]">InscripciÃ³n</p><p class="enrollment-date text-slate-100 font-bold">${enrollmentDisplay}</p></div></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400 text-sm"></i><div><p class="enrollment-label text-slate-400 uppercase tracking-wider text-[10px]">CulminaciÃ³n</p><p class="enrollment-date text-slate-100 font-bold">${completionDisplay}</p></div></div>
                 </div>
                 ${certificateButton}
             </div>`;
@@ -934,13 +940,13 @@
             const cardHtml = `
                 <div class="course-progress-card bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 reveal reveal-up">
                     <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
-                        <h3 class="text-white font-black uppercase tracking-tighter text-sm flex items-center gap-3">
+                        <h3 class="course-progress-title text-white font-black uppercase tracking-tighter text-sm flex items-center gap-3">
                             <i class="fas fa-book-open text-blue-200"></i> ${course.name}
                         </h3>
                         <span class="text-xl">${getMedalIcon(progData.avgScore)}</span>
                     </div>
                     ${progressSummaryCardHtml}
-                    <h4 class="text-slate-200 font-black uppercase tracking-widest text-[10px] mb-4">Desglose de Módulos</h4>
+                    <h4 class="modules-breakdown-title text-slate-200 font-black uppercase tracking-widest text-[10px] mb-4">Desglose de Módulos</h4>
                     <div class="space-y-3">
                         ${modulesHtml}
                     </div>
@@ -969,7 +975,7 @@
         const estado = currentUser.estado && currentUser.estado !== "N/A" ? currentUser.estado : "";
         let locationText = pais;
         if (estado) locationText += ` (${estado})`;
-        if (!locationText) locationText = "País Desconocido";
+        if (!locationText) locationText = "PaÃ­s Desconocido";
         document.getElementById('dash-student-location').innerText = locationText;
 
         const flagImg = document.getElementById('dash-student-flag');
@@ -1024,13 +1030,13 @@
     function reproducirAplausoYCertificado(courseId) {
         const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-small-crowd-applause-443.mp3');
         audio.volume = 0.5;
-        audio.play().catch(e => console.log("No se pudo reproducir el audio automáticamente."));
+        audio.play().catch(e => console.log("No se pudo reproducir el audio automÃ¡ticamente."));
         generateCertificate(courseId);
     }
 
     function generateCertificate(courseId) {
         if (!currentUser) {
-            alert("Debes iniciar sesión para generar el certificado.");
+            alert("Debes iniciar sesiÃ³n para generar el certificado.");
             return;
         }
         const course = COURSES_DATA.find(c => c.id === courseId);
@@ -1041,7 +1047,15 @@
         const nombreCurso = course.name;
         const numModulos = course.totalLessons || 5;
         const moduleNames = course.moduleNames || [];
-        let temarioHTML = moduleNames.map(mod => `• ${mod}<br>`).join('');
+        const certificateMedals = ['🏆', '🥇', '🥈', '🥉'];
+        const getCertificateIcon = (mod, index) => {
+            const normalized = String(mod || '').toLowerCase();
+            if (index === 0 && (normalized.includes('contenido') || normalized.includes('introducción') || normalized.includes('introduccion'))) {
+                return '📘';
+            }
+            return certificateMedals[index % certificateMedals.length];
+        };
+        let temarioHTML = moduleNames.map((mod, index) => `${getCertificateIcon(mod, index)} ${mod}<br>`).join('');
 
         let rawCompletion = findDateInObject(latestCompletionDates, course.name);
         let fechaHoy = "[En proceso de registro en sistema]";
@@ -1078,7 +1092,7 @@
                 </div>
             </div>
             <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; padding: 0 20px;">
-                <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">MSc. Ing. Pablo Cedeño</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Instructor</p></div>
+                <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">MSc. Ing. Pablo CedeÃ±o</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Instructor</p></div>
                 <div style="text-align: center; color: #9ca3af; font-size: 10px;">ID de Certificado: <strong style="color:#6b7280; font-weight: 900;">${siglas}</strong>-<span style="color:#6b7280; font-weight: 900;">${idCalculado}</span></div>
                 <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">Aprende Automatización</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Dirección Académica</p></div>
             </div>
@@ -1231,12 +1245,12 @@
 
     document.addEventListener("DOMContentLoaded", async () => {
         if (!currentUser) {
-            document.getElementById('progreso-page').innerHTML = '<div class="text-center text-white mt-20">Debes iniciar sesión en la plataforma principal para ver tu progreso.</div>';
+            document.getElementById('progreso-page').innerHTML = '<div class="text-center text-white mt-20">Debes iniciar sesiÃ³n en la plataforma principal para ver tu progreso.</div>';
             return;
         }
         await loadData();
 
-        // Animación de revelado al hacer scroll
+        // AnimaciÃ³n de revelado al hacer scroll
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {

@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Aula Virtual - Aprende Automatización</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/auth.js"></script>
+    <link rel="stylesheet" href="ccs/aula-unificada.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: var(--aula-bg); color: var(--aula-text-primary); }
+        :root {
+            --aula-bg: #0d1d31;
+            --aula-overlay-bg: rgba(13, 29, 49, 0.85);
+            --aula-text-primary: #e2e8f0;
+            --aula-text-secondary: #94a3b8;
+            --aula-text-title: #ffffff;
+            --aula-text-accent: #60a5fa;
+            --aula-button-metal-bg: linear-gradient(to bottom, #4a5568, #2d3748);
+            --aula-button-metal-bg-hover: linear-gradient(to bottom, #5a6578, #3d4758);
+            --aula-button-metal-border: #1a202c;
+            --aula-button-metal-shadow: inset 0 1px 1px #718096, 0 1px 3px rgba(0,0,0,0.5);
+            --aula-button-metal-text: #e2e8f0;
+            --aula-button-icon-color: #2db8ce;
+            --aula-button-icon-shadow: 0 0 10px rgba(45, 184, 206, 0.8);
+        }
+        body.light-mode {
+            --aula-bg: #d0e1ef;
+            --aula-overlay-bg: rgba(126, 150, 171, 0.9);
+            --aula-text-primary: #334155;
+            --aula-text-secondary: #64748b;
+            --aula-text-title: #1e293b;
+            --aula-text-accent: #2db8ce;
+            --aula-button-metal-bg: linear-gradient(to bottom, #f0f5f9, #d9e0e6);
+            --aula-button-metal-bg-hover: linear-gradient(to bottom, #f5f9fa, #e0e7ed);
+            --aula-button-metal-border: #c1c9d1;
+            --aula-button-metal-shadow: inset 0 1px 0 #f5f9fa, 0 1px 3px rgba(0,0,0,0.15), 0 1px 1px rgba(0,0,0,0.1);
+            --aula-button-metal-text: #475569;
+            --aula-button-icon-color: #0891b2;
+            --aula-button-icon-shadow: 0 0 8px rgba(8, 145, 178, 0.7);
+        }
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+        .bg-optimized { position: fixed; inset: 0; background-image: url('img/AA (2).gif'); background-size: cover; background-position: center; filter: brightness(0.4) blur(3px); z-index: -2; }
+        .overlay-dark { position: fixed; inset: 0; background: var(--aula-overlay-bg); backdrop-filter: blur(4px); z-index: -1; }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.5) rotate(-15deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
+        .medal-icon { animation: popIn 0.45s ease forwards; transform-origin: center; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: #1e293b; color: white; padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .toast-success { background: #065f46; border-left: 4px solid #34d399; }
+        .quiz-option.correct { background-color: rgba(34,197,94,0.2); border-left: 4px solid #22c55e; }
+        .quiz-option.incorrect { background-color: rgba(239,68,68,0.2); border-left: 4px solid #ef4444; text-decoration: line-through; }
+        .sync-indicator { position: fixed; bottom: 20px; right: 20px; z-index: 100001; background: #0f172a; color: white; padding: 8px 20px; border-radius: 9999px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.4s ease; opacity: 0; pointer-events: none; }
+        .sync-indicator.visible { opacity: 1; pointer-events: auto; }
+        .sync-indicator.success { background: #065f46; }
+        .sync-indicator.error { background: #dc2626; }
+        .material-card { position: relative; border-radius: 1.25rem; overflow: hidden; background-color: rgba(255,255,255,0.96); border: 1px solid #e2e8f0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: all 0.3s ease; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
+        .material-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px -8px rgba(0,0,0,0.18); }
+        .material-card .card-image-wrapper { position: relative; width: 100%; height: 180px; background-color: #ffffff; }
+        .material-card .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .material-card .card-image-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15,23,42,0.25) 55%, rgba(15,23,42,0) 100%); }
+        .material-card .card-badge { position: absolute; top: 0.75rem; left: 0.75rem; z-index: 2; padding: 0.3rem 0.85rem; font-size: 9px; font-weight: 800; text-transform: uppercase; border-radius: 9999px; color: #ffffff; }
+        .badge-manual { background: rgba(45, 184, 206, 0.55); }
+        .badge-practica { background: rgba(34, 197, 94, 0.55); }
+        .card-icon-circle { position: absolute; bottom: 1rem; right: 1rem; z-index: 2; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(15,23,42,0.4); backdrop-filter: blur(10px); }
+        .material-card .card-body { padding: 1.25rem 1rem 1rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+        .material-card .card-title { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin: 0; }
+        .material-card .card-subtitle { font-size: 0.75rem; color: #475569; margin: 0; }
+        .material-card .card-footer { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-top: 1px solid #e2e8f0; background: rgba(0,0,0,0.02); }
+        .download-count-badge { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; font-weight: 700; color: #475569; background: #f8fafc; padding: 0.3rem 0.65rem; border-radius: 9999px; border: 1px solid #e2e8f0; }
+        .download-btn-text { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #0891b2; }
+        .dashboard-container { background: rgba(255,255,255,0.05) !important; backdrop-filter: blur(12px) !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+        body.light-mode .dashboard-container, body.light-mode #panel-content, body.light-mode #panel-quiz, body.light-mode .glass-panel { background: #f8fafc !important; border-color: rgba(0,0,0,0.1) !important; }
+        body.light-mode .text-slate-200, body.light-mode .text-slate-300, body.light-mode .text-slate-400, body.light-mode .text-white { color: #334155 !important; }
+        body.light-mode .bg-black\/20 { background: rgba(0,0,0,0.05) !important; }
+        body.light-mode #login-screen h2,
+        body.light-mode #login-screen #login-course-subtitle {
+            color: #000000 !important;
+        }
+        body.light-mode .progress-current-title { color: #000000 !important; }
+        body.light-mode .progress-pill-label { color: #ffffff !important; }
+        body.light-mode .progress-track-ring { color: rgba(100, 116, 139, 0.45) !important; }
+        body.light-mode .continue-learning-btn,
+        body:not(.light-mode) .continue-learning-btn {
+            color: #ffffff !important;
+        }
+        .modal-continue-btn {
+            background: linear-gradient(to bottom, #67e8f9, #0ea5b7) !important;
+            border: 1px solid #0f766e !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 6px 14px rgba(14, 165, 183, 0.35) !important;
+            color: #042f2e !important;
+            font-weight: 900 !important;
+            letter-spacing: 0.04em;
+        }
+        .modal-continue-btn:hover {
+            background: linear-gradient(to bottom, #8beffb, #14b8a6) !important;
+            color: #022c22 !important;
+        }
+        #sidebar.collapsed { width: 0; padding: 0; overflow: hidden; border: none; opacity: 0; }
+    </style>
+</head>
+<body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
+    <div class="bg-optimized"></div>
+    <div class="overlay-dark"></div>
+
+    <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity backdrop-blur-sm bg-slate-900/40">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-md w-full shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-secondary mb-2 drop-shadow-md">Accede a Aprende Automatización</h2>
+                <p id="login-course-subtitle" class="text-slate-300 text-sm">Aula virtual</p>
+            </div>
+            <form id="login-form" onsubmit="app.verifyLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Nombre Completo</label>
+                    <input type="text" id="login-nombre" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Cédula de Identidad</label>
+                    <input type="text" id="login-cedula" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Correo Electrónico</label>
+                    <input type="email" id="login-correo" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition">
+                </div>
+                <div id="login-error" class="hidden bg-red-900/50 border border-red-500/50 text-red-200 p-3 rounded-lg text-sm text-center font-bold backdrop-blur-md"></div>
+                <button type="submit" id="login-btn" class="w-full bg-primary/80 hover:bg-primary backdrop-blur-md border border-white/10 text-white py-3 rounded-lg font-bold transition shadow-lg mt-4 flex justify-center items-center gap-2">
+                    <i class="fas fa-spinner fa-spin hidden"></i> <span>Verificar Inscripción</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-feedback" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[110] flex items-center justify-center p-4">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-sm w-full text-center shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
+            <div id="modal-icon" class="text-5xl mb-4 drop-shadow-lg"></div>
+            <h3 id="modal-title" class="text-xl font-bold mb-2 text-white drop-shadow-md"></h3>
+            <p id="modal-msg" class="text-slate-300 mb-6"></p>
+            <button onclick="document.getElementById('modal-feedback').classList.add('hidden')" class="modal-continue-btn w-full backdrop-blur-md py-3 rounded-lg transition">Continuar</button>
+        </div>
+    </div>
+
+    <header class="bg-slate-900/40 backdrop-blur-lg h-16 flex-none flex items-center justify-between px-4 md:px-6 shadow-md z-20 border-b border-white/10 relative">
+        <div class="flex items-center gap-3 md:gap-4 overflow-hidden">
+            <button onclick="app.toggleSidebar()" class="text-slate-300 text-xl hover:text-white transition focus:outline-none flex-none w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10"><i class="fas fa-bars"></i></button>
+            <span id="header-course-title" class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm">Aula virtual</span>
+        </div>
+        <div class="flex items-center gap-2 md:gap-3 flex-none pl-2">
+            <button onclick="app.toggleTheme()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Cambiar modo"><i id="theme-icon" class="fas fa-sun"></i></button>
+            <button onclick="app.toggleFullScreen()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Pantalla Completa"><i id="fullscreen-icon" class="fas fa-expand"></i></button>
+            <div class="hidden sm:flex items-center justify-center bg-black/30 border border-white/10 h-10 w-10 rounded-full text-white backdrop-blur-sm" title="Usuario"><i class="fas fa-user-graduate text-secondary"></i></div>
+            <button onclick="app.showDashboard()" class="bg-primary/20 hover:bg-primary/40 backdrop-blur-md border border-primary/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg" title="Panel"><i class="fas fa-chart-line"></i></button>
+            <button onclick="app.logout()" class="bg-red-500/20 hover:bg-red-500/40 backdrop-blur-md border border-red-500/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg" title="Salir"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </header>
+
+    <div id="app-container" class="flex flex-1 overflow-hidden relative">
+        <div id="sidebar-overlay" onclick="app.toggleSidebar()" class="fixed inset-0 bg-black/60 z-30 hidden backdrop-blur-sm transition-opacity"></div>
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-800/60 backdrop-blur-xl border-r border-white/20 flex flex-col p-4 space-y-4 transform -translate-x-full transition-all duration-300 md:relative md:translate-x-0 md:flex flex-none shadow-2xl md:shadow-none h-full md:h-auto">
+            <div class="flex justify-between items-center md:hidden mb-2 px-2">
+                <h3 class="text-xs font-bold text-slate-300 uppercase tracking-widest">Menú de Clases</h3>
+                <button onclick="app.toggleSidebar()" class="text-slate-300 hover:text-white text-xl transition"><i class="fas fa-times"></i></button>
+            </div>
+            <h3 class="hidden md:block text-xs font-bold text-slate-300 uppercase tracking-widest px-2 drop-shadow-sm">Temario</h3>
+            <div id="sidebar-content" class="flex-1 overflow-y-auto custom-scroll space-y-1 pr-1"></div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 w-full custom-scroll relative">
+            <div id="view-dashboard" class="max-w-[1300px] mx-auto hidden relative mb-8"></div>
+            <div id="view-lesson" class="max-w-[1300px] mx-auto">
+                <div id="lesson-header" class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <h1 id="lesson-title" class="text-2xl md:text-3xl font-bold text-white drop-shadow-md"></h1>
+                </div>
+                <div class="flex gap-4 border-b border-white/20 mb-6 overflow-x-auto custom-scroll" id="lesson-tabs-container">
+                    <button onclick="app.switchTab('content')" id="tab-content" class="pb-2 font-bold border-b-2 border-secondary text-secondary transition whitespace-nowrap px-2 drop-shadow-sm">Contenido</button>
+                    <button onclick="app.switchTab('resources')" id="tab-resources" class="pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white transition whitespace-nowrap px-2">Descargas</button>
+                    <button onclick="app.switchTab('quiz')" id="tab-quiz" class="pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white transition whitespace-nowrap px-2">Evaluación</button>
+                </div>
+                <div id="panel-content" class="glass-panel text-slate-200 mb-8 bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
+                    <div id="lesson-video-container" class="aspect-video w-full mb-6 hidden"></div>
+                    <div id="lesson-content-text" class="space-y-6"></div>
+                </div>
+                <div id="panel-resources" class="hidden mb-8"></div>
+                <div id="panel-quiz" class="glass-panel hidden mb-8 bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
+                    <h3 class="text-2xl font-bold text-white mb-2 drop-shadow-md">Evaluación del Módulo</h3>
+                    <p class="text-sm text-slate-400 mb-4">Responde correctamente para avanzar. (70% mínimo necesario)</p>
+                    <div id="quiz-questions" class="space-y-6 mb-8"></div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="app.gradeQuiz()" id="grade-quiz-btn" class="bg-primary/80 hover:bg-primary text-white py-3 px-6 rounded-xl font-bold shadow-lg transition text-lg border border-white/20 backdrop-blur-md">Calificar Evaluación</button>
+                        <button onclick="app.resetQuiz()" class="bg-slate-600/80 hover:bg-slate-600 text-white py-3 px-6 rounded-xl font-bold shadow-lg transition">Reiniciar Quiz</button>
+                    </div>
+                    <div id="quiz-result" class="mt-4 text-center font-bold text-lg hidden"></div>
+                </div>
+                <div class="flex gap-4 mb-10">
+                    <button id="btn-complete" onclick="app.completeLesson()" class="w-full md:w-auto bg-primary/80 hover:bg-primary backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-lg font-bold transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg" disabled>Marcar como completado y continuar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="syncIndicator" class="sync-indicator"><i class="fas fa-sync-alt fa-spin text-[#2db8ce]"></i><span id="syncText"></span></div>
+    <div id="toast" class="toast hidden"></div>
+
+    <script>
+        const AULA_CONFIGS = {
+            3: {
+                id: 3,
+                name: 'Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online',
+                title: 'Funciones Lógicas Básicas GF con PLC LOGO y FACTORY IO Online',
+                materialPage: '3-compuertas-factory-plc-material.html',
+                introImage: 'img/AA (29).webp',
+                sharedResources: [
+                    { type: 'manual', name: 'Guía de conexión Factory I/O - LOGO!', url: '#' },
+                    { type: 'ejercicio', name: 'Escenario 1: Llenado de Tanque', url: '#' }
+                ],
+                intro: {
+                    summary: 'Aprende a construir funciones lógicas, simular escenarios con Factory IO y conectar el PLC LOGO con procesos virtuales.',
+                    objective: 'Diseñar y probar automatismos básicos mediante compuertas lógicas, sensores virtuales y salidas programadas en LOGO.',
+                    goals: ['Interpretar entradas y salidas digitales.', 'Programar compuertas AND, OR y NOT.', 'Simular escenarios industriales con Factory IO.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Compuertas Lógicas', summary: 'Configura funciones AND, OR y NOT usando entradas digitales en LOGO.', points: ['Asignación de entradas', 'Salidas lógicas', 'Pruebas de verdad'] },
+                    { title: 'Práctica 2: Enclavamientos y Memorias', summary: 'Usa marcas y enclavamientos para conservar estados y evitar arranques incorrectos.', points: ['Memoria interna', 'Retención', 'Bloqueos de seguridad'] },
+                    { title: 'Práctica 3: Integración con Factory IO', summary: 'Conecta un escenario virtual y supervisa sensores y actuadores desde el PLC.', points: ['Mapeo de señales', 'Prueba de escena', 'Diagnóstico básico'] }
+                ]
+            },
+            4: {
+                id: 4,
+                name: 'Automatización con Contactores Online',
+                title: 'Automatización con Contactores Online',
+                materialPage: '4-auto-contactores-on-material.html',
+                introImage: 'img/AA (5).gif',
+                sharedResources: [
+                    { type: 'manual', name: 'Normativa de Simbología DIN/IEC', url: '#' },
+                    { type: 'ejercicio', name: 'Arranque directo', url: '#' }
+                ],
+                intro: {
+                    summary: 'Domina el control electromagnético de máquinas y procesos usando contactores, relés y lógica cableada.',
+                    objective: 'Diseñar, simular y evaluar circuitos de automatización industrial con criterios técnicos y de seguridad.',
+                    goals: ['Leer diagramas eléctricos.', 'Seleccionar protecciones.', 'Resolver maniobras industriales comunes.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Simbología y Normativa', summary: 'Reconoce elementos de mando, potencia y protección en planos industriales.', points: ['Normas IEC', 'Identificación de bornes', 'Lectura de planos'] },
+                    { title: 'Práctica 2: Arranque Directo', summary: 'Implementa la maniobra más utilizada para motores trifásicos.', points: ['Mando y potencia', 'Autorretención', 'Prueba operativa'] },
+                    { title: 'Práctica 3: Inversión de Giro', summary: 'Construye un circuito seguro de cambio de sentido.', points: ['Enclavamiento', 'Secuencia segura', 'Diagnóstico'] },
+                    { title: 'Práctica 4: Arranque Estrella-Triángulo', summary: 'Reduce corriente de arranque con transición temporizada.', points: ['Tres contactores', 'Temporización', 'Conmutación'] },
+                    { title: 'Práctica 5: Fallas y Diagnóstico', summary: 'Identifica errores de cableado y comportamiento anómalo del sistema.', points: ['Sobrecargas', 'Falta de fase', 'Verificación de contactos'] }
+                ]
+            },
+            5: {
+                id: 5,
+                name: 'Automatización con PLC LOGO! Online',
+                title: 'Automatización con PLC LOGO! Online',
+                materialPage: '5-auto-plc-logo-on-material.html',
+                introImage: 'img/AA (11).webp',
+                sharedResources: [
+                    { type: 'manual', name: 'Manual de Programación FUP y KOP', url: '#' },
+                    { type: 'ejercicio', name: 'Práctica: Control de Bomba Alternada', url: '#' }
+                ],
+                intro: {
+                    summary: 'Consolida el trabajo con PLC LOGO en automatismos de mayor nivel usando temporización, memoria y señales analógicas.',
+                    objective: 'Programar soluciones robustas en LOGO para maniobras industriales y aplicaciones de control continuo.',
+                    goals: ['Programar bloques funcionales.', 'Usar memorias, temporizadores y contadores.', 'Integrar señales analógicas.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Temporizadores y Contadores', summary: 'Aplica bloques básicos para secuencias temporizadas y eventos contados.', points: ['TON/TOF', 'Contadores', 'Eventos cíclicos'] },
+                    { title: 'Práctica 2: Marcas y Memorias', summary: 'Conserva estados, permisos y bloqueos mediante memoria interna.', points: ['Marcas M', 'Set/Reset', 'Lógica secuencial'] },
+                    { title: 'Práctica 3: Señales Analógicas', summary: 'Trabaja con umbrales, comparadores y variables continuas.', points: ['Escalas', 'Comparación', 'Activación por rango'] },
+                    { title: 'Práctica 4: Aplicación Integral', summary: 'Integra entradas, salidas y lógica avanzada en un caso industrial completo.', points: ['Arquitectura', 'Pruebas', 'Optimización'] }
+                ]
+            },
+            6: {
+                id: 6,
+                name: 'Automatización con PLC – Método Grafcet Online',
+                title: 'Automatización con PLC – Método Grafcet Online',
+                materialPage: '6-auto-plc-grafcet-on-material.html',
+                introImage: 'img/AA (4).gif',
+                sharedResources: [
+                    { type: 'manual', name: 'Reglas de Evolución del GRAFCET', url: '#' },
+                    { type: 'ejercicio', name: 'Automatización de Semáforo', url: '#' }
+                ],
+                intro: {
+                    summary: 'Organiza automatismos complejos mediante etapas, transiciones y acciones, llevando el Grafcet al PLC.',
+                    objective: 'Diseñar secuencias ordenadas y convertirlas a programación funcional y mantenible.',
+                    goals: ['Definir etapas y transiciones.', 'Aplicar reglas de evolución.', 'Implementar secuencias industriales en PLC.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Etapas y Transiciones', summary: 'Construye la estructura base de un Grafcet correctamente secuenciado.', points: ['Paso inicial', 'Transiciones', 'Condiciones lógicas'] },
+                    { title: 'Práctica 2: Acciones Asociadas', summary: 'Relaciona salidas y comportamientos con cada etapa del proceso.', points: ['Acciones continuas', 'Acciones condicionadas', 'Prioridades'] },
+                    { title: 'Práctica 3: Conversión a Ladder', summary: 'Transforma un diagrama Grafcet en redes PLC interpretables.', points: ['Mapeo de etapas', 'Memorias', 'Activación de salidas'] },
+                    { title: 'Práctica 4: Seguridad y Rearme', summary: 'Añade condiciones de paro, reset y recuperación de secuencia.', points: ['Reset seguro', 'Alarmas', 'Retorno a estado inicial'] },
+                    { title: 'Práctica 5: Proyecto Secuencial', summary: 'Integra un caso industrial completo con varias etapas coordinadas.', points: ['Sincronización', 'Validación', 'Puesta en marcha'] }
+                ]
+            },
+            7: {
+                id: 7,
+                name: '10 ejercicios de aplicaciones con Contactores Online',
+                title: '10 ejercicios de aplicaciones con Contactores Online',
+                materialPage: '7-10-Ejer-auto-contactores-on-material.html',
+                introImage: 'img/AA (19).webp',
+                sharedResources: [
+                    { type: 'manual', name: 'Planos resueltos (CadeSIMU)', url: '#' },
+                    { type: 'ejercicio', name: 'Descargar Cuadernillo de 10 Ejercicios (PDF)', url: '#' }
+                ],
+                intro: {
+                    summary: 'Resuelve ejercicios prácticos de automatización con contactores enfocados en lógica cableada real.',
+                    objective: 'Fortalecer la capacidad de análisis, diseño y corrección de maniobras eléctricas industriales.',
+                    goals: ['Resolver casos reales.', 'Aplicar criterios de seguridad.', 'Mejorar velocidad de interpretación de planos.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Arranque con Señalización', summary: 'Combina marcha, paro y pilotos de estado.', points: ['Señales luminosas', 'Retención', 'Estado del motor'] },
+                    { title: 'Práctica 2: Inversión con Enclavamiento', summary: 'Refuerza el control de giro con bloqueos seguros.', points: ['Interbloqueo', 'Orden de giro', 'Protección'] },
+                    { title: 'Práctica 3: Temporización de Salidas', summary: 'Activa y desactiva elementos en secuencia temporal.', points: ['Relé de tiempo', 'Retardos', 'Transición'] },
+                    { title: 'Práctica 4: Bomba Alternada', summary: 'Gestiona alternancia básica en equipos redundantes.', points: ['Permisos', 'Cambio de prioridad', 'Prueba funcional'] },
+                    { title: 'Práctica 5: Secuencia de Cilindros', summary: 'Coordina actuadores con lógica cableada por pasos.', points: ['Orden de avance', 'Sensores', 'Rearme'] },
+                    { title: 'Práctica 6: Mando con Protección Térmica', summary: 'Evalúa disparos y bloqueo por sobrecarga.', points: ['Relé térmico', 'Reset', 'Alarma'] },
+                    { title: 'Práctica 7: Semáforo Industrial', summary: 'Programa una secuencia repetitiva de señales.', points: ['Secuencia cíclica', 'Temporizadores', 'Orden lógico'] },
+                    { title: 'Práctica 8: Dos Motores Interdependientes', summary: 'Vincula motores con permisos de arranque y paro.', points: ['Dependencias', 'Mando común', 'Fallas cruzadas'] },
+                    { title: 'Práctica 9: Proyecto Integrador', summary: 'Combina varios criterios de mando, temporización y seguridad.', points: ['Lectura de requerimiento', 'Diseño completo', 'Verificación'] }
+                ]
+            },
+            8: {
+                id: 8,
+                name: '10 ejercicios de aplicaciones con PLC LOGO! Online',
+                title: '10 ejercicios de aplicaciones con PLC LOGO! Online',
+                materialPage: '8-10-ejer-auto-plc-logo-on-material.html',
+                introImage: 'img/AA (15).webp',
+                sharedResources: [
+                    { type: 'manual', name: 'Pistas y Soluciones de Programación', url: '#' },
+                    { type: 'ejercicio', name: 'Tres cilindros (Archivo ZIP)', url: '#' }
+                ],
+                intro: {
+                    summary: 'Practica con ejercicios avanzados de PLC LOGO enfocados en secuencias, procesos y resolución de problemas.',
+                    objective: 'Mejorar la capacidad de programar, probar y depurar soluciones industriales usando LOGO.',
+                    goals: ['Resolver ejercicios secuenciales.', 'Aplicar buenas prácticas de programación.', 'Diagnosticar errores en simulación.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Llenado de Tanque', summary: 'Controla niveles, bombas y alarmas de llenado.', points: ['Sensores', 'Control de nivel', 'Paro por seguridad'] },
+                    { title: 'Práctica 2: Bomba Alternada', summary: 'Alterna bombas para balancear trabajo y redundancia.', points: ['Alternancia', 'Prioridad', 'Fallo de equipo'] },
+                    { title: 'Práctica 3: Semáforo Inteligente', summary: 'Gestiona tiempos y prioridades en una secuencia urbana.', points: ['Fases', 'Temporización', 'Reset'] },
+                    { title: 'Práctica 4: Tres Cilindros', summary: 'Sincroniza actuadores con condiciones encadenadas.', points: ['Secuencia', 'Confirmación', 'Permisos'] },
+                    { title: 'Práctica 5: Banda Transportadora', summary: 'Automatiza arranque, conteo y paro controlado.', points: ['Conteo', 'Sensores', 'Control de motor'] },
+                    { title: 'Práctica 6: Mezclador', summary: 'Programa tiempos de llenado, mezcla y descarga.', points: ['Ciclo completo', 'Temporizadores', 'Descarga segura'] },
+                    { title: 'Práctica 7: Compresor', summary: 'Controla presión con histéresis y alarmas.', points: ['Umbrales', 'Marcha/paro', 'Protección'] },
+                    { title: 'Práctica 8: Clasificador', summary: 'Decide rutas de producto por sensores y comparaciones.', points: ['Selección', 'Desvíos', 'Prioridades'] },
+                    { title: 'Práctica 9: Proyecto Integrador LOGO', summary: 'Integra bloques, memorias, temporizadores y secuencias en un caso completo.', points: ['Diseño global', 'Prueba', 'Depuración'] }
+                ]
+            },
+            19: {
+                id: 19,
+                name: 'Arranque de motores con contactores Manual',
+                title: 'Arranque de motores con contactores Manual',
+                materialPage: '19-Manual-arranque-contactores-material.html',
+                introImage: 'img/AA (7).gif',
+                sharedResources: [
+                    { type: 'manual', name: 'Manual principal del curso', url: '19-Manual-arranque-contactores-material.html' },
+                    { type: 'ejercicio', name: 'Guía de práctica supervisada', url: '19-Manual-arranque-contactores-material.html' }
+                ],
+                intro: {
+                    summary: 'Domina las bases del arranque de motores con lógica cableada, protección y maniobras industriales.',
+                    objective: 'Comprender la estructura de potencia y mando, aplicar seguridad eléctrica y ejecutar maniobras reales.',
+                    goals: ['Interpretar planos de arranque.', 'Aplicar enclavamientos seguros.', 'Diagnosticar fallas típicas de maniobra.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Arranque Directo', summary: 'Implementa circuito de mando y potencia para arranque directo.', points: ['Mando y potencia', 'Autorretención', 'Prueba funcional'] },
+                    { title: 'Práctica 2: Inversión de Giro', summary: 'Configura inversión de giro con enclavamiento eléctrico y mecánico.', points: ['Interbloqueo', 'Seguridad', 'Secuencia correcta'] },
+                    { title: 'Práctica 3: Estrella-Triángulo', summary: 'Construye y verifica transición temporizada para reducir corriente de arranque.', points: ['Tres contactores', 'Temporización', 'Conmutación'] },
+                    { title: 'Práctica 4: Arranque Rotórico', summary: 'Aplica control por resistencias en rotor para arranque controlado.', points: ['Etapas de resistencia', 'Transición', 'Protección'] },
+                    { title: 'Práctica 5: Diagnóstico y Corrección', summary: 'Detecta fallas de cableado y comportamiento en maniobras de arranque.', points: ['Falla por fase', 'Sobrecarga', 'Verificación final'] }
+                ]
+            },
+            20: {
+                id: 20,
+                name: 'Automatización con PLC Básico Manual',
+                title: 'Automatización con PLC Básico Manual',
+                materialPage: '20-auto-plc-basico-on-material.html',
+                introImage: 'img/AA (8).webp',
+                sharedResources: [
+                    { type: 'manual', name: 'Manual de PLC Básico', url: '20-auto-plc-basico-on-material.html' },
+                    { type: 'ejercicio', name: 'Plantilla de práctica PLC', url: '20-auto-plc-basico-on-material.html' }
+                ],
+                intro: {
+                    summary: 'Aprende fundamentos de programación PLC aplicados a maniobras básicas de automatización.',
+                    objective: 'Desarrollar lógica de control secuencial en PLC para resolver casos de campo.',
+                    goals: ['Crear lógica de arranque/paro.', 'Usar temporizadores y contadores.', 'Validar rutinas en simulación.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Entradas y Salidas', summary: 'Configura el mapeo básico de señales en PLC.', points: ['Direcciones I/O', 'Estados lógicos', 'Prueba de lectura'] },
+                    { title: 'Práctica 2: Arranque y Paro', summary: 'Programa una maniobra de marcha/paro con memoria.', points: ['Set/Reset', 'Permisos', 'Seguridad de paro'] },
+                    { title: 'Práctica 3: Temporizadores', summary: 'Implementa secuencias temporizadas para control de cargas.', points: ['TON/TOF', 'Retardos', 'Eventos'] },
+                    { title: 'Práctica 4: Contadores', summary: 'Integra contadores para ciclos y eventos repetitivos.', points: ['CTU/CTD', 'Reset', 'Límites'] },
+                    { title: 'Práctica 5: Integración Básica', summary: 'Une lógica, tiempo y conteo en una aplicación compacta.', points: ['Arquitectura', 'Pruebas', 'Depuración'] }
+                ]
+            },
+            21: {
+                id: 21,
+                name: 'Automatización con Contactores Manual',
+                title: 'Automatización con Contactores Manual',
+                materialPage: '21-Manual-auto-contactores-on-material.html',
+                introImage: 'img/AA (19).webp',
+                sharedResources: [
+                    { type: 'manual', name: 'Manual de automatización con contactores', url: '21-Manual-auto-contactores-on-material.html' },
+                    { type: 'ejercicio', name: 'Ejercicios de maniobras eléctricas', url: '21-Manual-auto-contactores-on-material.html' }
+                ],
+                intro: {
+                    summary: 'Fortalece el diseño de sistemas de mando con lógica cableada orientada a procesos industriales.',
+                    objective: 'Aplicar maniobras completas de control por contactores con criterios de seguridad.',
+                    goals: ['Leer e interpretar planos.', 'Diseñar maniobras robustas.', 'Corregir fallas de montaje.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Simbología Industrial', summary: 'Reconoce y organiza elementos de mando, potencia y protección.', points: ['Norma IEC', 'Etiquetado', 'Lectura de plano'] },
+                    { title: 'Práctica 2: Mando y Potencia', summary: 'Separa correctamente circuito de control y potencia.', points: ['Arquitectura', 'Cableado', 'Pruebas'] },
+                    { title: 'Práctica 3: Maniobra de Inversión', summary: 'Desarrolla inversión de giro con enclavamiento seguro.', points: ['Interbloqueo', 'Secuencia', 'Validación'] },
+                    { title: 'Práctica 4: Control Temporizado', summary: 'Automatiza transiciones con relés de tiempo.', points: ['Temporización', 'Conmutación', 'Ajustes'] },
+                    { title: 'Práctica 5: Diagnóstico Profesional', summary: 'Identifica y corrige errores frecuentes de operación.', points: ['Medición', 'Pruebas por etapa', 'Corrección final'] }
+                ]
+            },
+            22: {
+                id: 22,
+                name: 'PLC Método Grafcet Manual',
+                title: 'PLC Método Grafcet Manual',
+                materialPage: '22-Manual-auto-plc-grafcet-on-material.html',
+                introImage: 'img/AA (4).gif',
+                sharedResources: [
+                    { type: 'manual', name: 'Manual de método Grafcet', url: '22-Manual-auto-plc-grafcet-on-material.html' },
+                    { type: 'ejercicio', name: 'Casos secuenciales guiados', url: '22-Manual-auto-plc-grafcet-on-material.html' }
+                ],
+                intro: {
+                    summary: 'Aprende a diseñar secuencias claras mediante etapas y transiciones usando la metodología Grafcet.',
+                    objective: 'Traducir procesos industriales a lógica secuencial mantenible y verificable en PLC.',
+                    goals: ['Definir etapas y acciones.', 'Construir transiciones correctas.', 'Migrar a lógica ladder.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Estructura Grafcet', summary: 'Construye paso inicial, etapas y transiciones base.', points: ['Paso inicial', 'Condiciones', 'Secuencia'] },
+                    { title: 'Práctica 2: Acciones de Etapa', summary: 'Asocia salidas y comportamientos por etapa activa.', points: ['Acciones continuas', 'Condicionadas', 'Prioridades'] },
+                    { title: 'Práctica 3: Conversión a PLC', summary: 'Transforma el diagrama Grafcet en redes de PLC.', points: ['Mapeo', 'Memorias', 'Activación'] },
+                    { title: 'Práctica 4: Seguridad y Rearme', summary: 'Añade estados de paro y recuperación del proceso.', points: ['Paro seguro', 'Reset', 'Reinicio'] },
+                    { title: 'Práctica 5: Caso Integrador', summary: 'Resuelve un proceso secuencial completo con validación.', points: ['Sincronización', 'Pruebas', 'Optimización'] }
+                ]
+            },
+            23: {
+                id: 23,
+                name: 'Arranque de motores con PLC LOGO Manual',
+                title: 'Arranque de motores con PLC LOGO Manual',
+                materialPage: '23-Manual-arranque-plc-logo-material.html',
+                introImage: 'img/AA (11).webp',
+                sharedResources: [
+                    { type: 'manual', name: 'Manual de arranque con PLC LOGO', url: '23-Manual-arranque-plc-logo-material.html' },
+                    { type: 'ejercicio', name: 'Rutinas de arranque en LOGO', url: '23-Manual-arranque-plc-logo-material.html' }
+                ],
+                intro: {
+                    summary: 'Integra lógica de arranque de motores con programación en PLC LOGO desde nivel inicial hasta aplicación guiada.',
+                    objective: 'Diseñar rutinas de arranque, control de giro y protección en LOGO con enfoque práctico.',
+                    goals: ['Configurar bloques base.', 'Programar maniobras de motor.', 'Validar secuencias seguras.']
+                },
+                modules: [
+                    { title: 'Práctica 1: Bloques Básicos LOGO', summary: 'Configura funciones lógicas para control de maniobras.', points: ['AND/OR/NOT', 'Estados', 'Prueba base'] },
+                    { title: 'Práctica 2: Arranque Directo PLC', summary: 'Implementa arranque directo con lógica programada.', points: ['Marcha/paro', 'Memoria', 'Permisos'] },
+                    { title: 'Práctica 3: Inversión de Giro PLC', summary: 'Programa inversión con condiciones de seguridad.', points: ['Interbloqueo lógico', 'Secuencia', 'Diagnóstico'] },
+                    { title: 'Práctica 4: Estrella-Triángulo PLC', summary: 'Controla transición temporizada de arranque en PLC.', points: ['Temporizadores', 'Conmutación', 'Validación'] },
+                    { title: 'Práctica 5: Proyecto Final LOGO', summary: 'Integra todos los bloques en una maniobra completa de motor.', points: ['Arquitectura final', 'Pruebas', 'Correcciones'] }
+                ]
+            }
+        };
+
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
+        const SHARED_PRACTICE_VIDEO_URL = 'https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b';
+        const queryCourseId = Number(new URLSearchParams(window.location.search).get('course'));
+        const CURRENT_COURSE = AULA_CONFIGS[queryCourseId] || AULA_CONFIGS[3];
+        const STORAGE_KEYS = {
+            auth: `curso_auth_${CURRENT_COURSE.id}`,
+            progress: `curso_progress_${CURRENT_COURSE.id}`,
+            scores: `quiz_scores_${CURRENT_COURSE.id}`
+        };
+
+        function showSyncIndicator(text, type = 'loading') {
+            const el = document.getElementById('syncIndicator');
+            if (!el) return;
+            const txt = document.getElementById('syncText');
+            const icon = el.querySelector('i');
+            el.classList.remove('success', 'error', 'visible');
+            el.classList.add('visible');
+            txt.innerText = text;
+            if (type === 'success') icon.className = 'fas fa-check-circle text-green-300';
+            else if (type === 'error') icon.className = 'fas fa-exclamation-circle text-red-300';
+            else icon.className = 'fas fa-sync-alt fa-spin text-[#2db8ce]';
+            if (type !== 'loading') setTimeout(() => el.classList.remove('visible'), 2500);
+        }
+
+        function getResourceImage(moduleTitle) {
+            const title = String(moduleTitle || '').toLowerCase();
+            if (title.includes('grafcet')) return 'img/AA (4).gif';
+            if (title.includes('logo')) return 'img/AA (11).webp';
+            if (title.includes('factory')) return 'img/AA (29).webp';
+            if (title.includes('giro')) return 'img/AA (36).webp';
+            if (title.includes('rotórico') || title.includes('rotorico')) return 'img/AA (5).gif';
+            if (title.includes('contactores')) return 'img/AA (19).webp';
+            return CURRENT_COURSE.introImage || 'img/AA (7).gif';
+        }
+
+        function renderResourceCards(resources, moduleTitle) {
+            if (!resources || resources.length === 0) return '<p class="text-slate-300">No hay materiales descargables para este módulo.</p>';
+            const imageUrl = getResourceImage(moduleTitle);
+            const cardsHtml = resources.map(resource => {
+                const isManual = resource.type === 'manual';
+                const badgeClass = isManual ? 'badge-manual' : 'badge-practica';
+                const badgeText = isManual ? 'Manual' : 'Práctica';
+                const icon = isManual ? 'book' : 'file-code';
+                const subtitle = isManual ? 'Documento de apoyo y teoría' : 'Recurso práctico del módulo';
+                return `
+                <a href="${resource.url}" target="_blank" class="material-card" data-file-name="${resource.name}">
+                    <div class="card-image-wrapper">
+                        <img src="${imageUrl}" alt="${resource.name}" loading="lazy">
+                        <div class="card-image-overlay"></div>
+                        <span class="card-badge ${badgeClass}">${badgeText}</span>
+                        <div class="card-icon-circle"><i data-lucide="${icon}" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">${resource.name}</h4>
+                        <p class="card-subtitle">${subtitle}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="download-count-badge"><i class="fas fa-download text-[10px]"></i><span>Acceder</span></span>
+                        <span class="download-btn-text">Abrir <i data-lucide="arrow-right-circle" class="w-4 h-4"></i></span>
+                    </div>
+                </a>`;
+            }).join('');
+            return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 not-prose">${cardsHtml}</div>`;
+        }
+
+        function buildIntroContent(config) {
+            return `
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-secondary">Bienvenido al Aula</h2>
+                    <p class="text-slate-300">${config.intro.summary}</p>
+                    <div class="bg-black/30 p-6 rounded-xl">
+                        <h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3>
+                        <p class="text-slate-300">${config.intro.objective}</p>
+                    </div>
+                    <div class="bg-white/5 p-6 rounded-xl">
+                        <h3 class="text-xl font-bold mb-3 text-white">Lo que aprenderás</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-300">${config.intro.goals.map(goal => `<li>${goal}</li>`).join('')}</ul>
+                    </div>
+                </div>`;
+        }
+
+        function makeQuiz(topic, courseName) {
+            return [
+                { q: `¿Cuál es el objetivo principal del módulo ${topic}?`, opts: ['Decorar el tablero', 'Aplicar correctamente el concepto en una maniobra o programa', 'Cambiar el color del software', 'Eliminar las protecciones'], ans: 1 },
+                { q: `En ${courseName}, una buena práctica de seguridad es:`, opts: ['Ignorar alarmas', 'Verificar condiciones antes de energizar', 'Puenteo permanente de protecciones', 'Trabajar sin prueba'], ans: 1 },
+                { q: `¿Qué se debe validar primero al finalizar ${topic}?`, opts: ['La marca del gabinete', 'La secuencia lógica y el funcionamiento esperado', 'Solo el precio de los componentes', 'El color de los cables'], ans: 1 },
+                { q: `¿Qué ventaja aporta dominar ${topic}?`, opts: ['Menos comprensión del proceso', 'Mayor control, diagnóstico y confiabilidad', 'Más fallas intermitentes', 'Menos seguridad'], ans: 1 },
+                { q: `Si el sistema no responde como se espera durante ${topic}, lo correcto es:`, opts: ['Aumentar tensión sin medir', 'Diagnosticar por etapas y corregir la lógica o cableado', 'Eliminar entradas', 'Anular el paro'], ans: 1 }
+            ];
+        }
+
+        function buildCourseData(config) {
+            const introLesson = {
+                id: 0,
+                title: 'Contenido del Curso',
+                video: SHARED_PRACTICE_VIDEO_URL,
+                resources: [{ type: 'manual', name: 'Materiales del curso', url: config.materialPage }],
+                quiz: [],
+                hasQuiz: false,
+                content: buildIntroContent(config)
+            };
+            const modules = config.modules.map((module, index) => ({
+                id: index + 1,
+                title: module.title,
+                video: SHARED_PRACTICE_VIDEO_URL,
+                resources: [{ type: 'manual', name: 'Abrir materiales del curso', url: config.materialPage }, ...config.sharedResources],
+                hasQuiz: true,
+                content: `
+                    <h2 class="text-2xl font-bold text-secondary">${module.title}</h2>
+                    <p class="text-slate-300 mb-4">${module.summary}</p>
+                    <div class="bg-white/5 p-5 rounded-xl mb-6">
+                        <h3 class="text-xl font-bold text-white mb-3">Puntos clave</h3>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-300">${module.points.map(point => `<li>${point}</li>`).join('')}</ul>
+                    </div>
+                    <div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80">
+                        <strong>Recomendación:</strong> repasa el material de apoyo y valida cada paso antes de avanzar al siguiente módulo.
+                    </div>`,
+                quiz: makeQuiz(module.title, config.name)
+            }));
+            return [introLesson, ...modules];
+        }
+
+        const COURSE_DATA = buildCourseData(CURRENT_COURSE);
+
+        const app = {
+            scriptUrl: SCRIPT_URL,
+            progress: JSON.parse(localStorage.getItem(STORAGE_KEYS.progress) || '[]'),
+            quizScores: JSON.parse(localStorage.getItem(STORAGE_KEYS.scores) || '{}'),
+            currentId: 0,
+            init: function() {
+                document.title = `Aula Virtual - ${CURRENT_COURSE.name}`;
+                document.getElementById('login-course-subtitle').innerText = CURRENT_COURSE.name;
+                document.getElementById('header-course-title').innerText = CURRENT_COURSE.name;
+                this.initTheme();
+                document.addEventListener('fullscreenchange', this.updateFullScreenIcon);
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                const globalUser = JSON.parse(localStorage.getItem('user') || 'null');
+                if (auth && globalUser && auth.correo !== globalUser.email) this.clearLocalData();
+                if (auth) { this.proceedToAula(); return; }
+                if (globalUser && globalUser.email) this.autoVerify(globalUser);
+            },
+            clearLocalData: function() {
+                localStorage.removeItem(STORAGE_KEYS.auth);
+                localStorage.removeItem(STORAGE_KEYS.progress);
+                localStorage.removeItem(STORAGE_KEYS.scores);
+                this.progress = [];
+                this.quizScores = {};
+            },
+            initTheme: function() {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.body.classList.toggle('light-mode', savedTheme === 'light');
+                const icon = document.getElementById('theme-icon');
+                if (icon) icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+            },
+            toggleTheme: function() {
+                const isLight = document.body.classList.toggle('light-mode');
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                const icon = document.getElementById('theme-icon');
+                if (icon) icon.className = isLight ? 'fas fa-moon' : 'fas fa-sun';
+            },
+            toggleFullScreen: function() {
+                const elem = document.documentElement;
+                if (!document.fullscreenElement) elem.requestFullscreen?.().catch(() => {});
+                else document.exitFullscreen?.();
+            },
+            updateFullScreenIcon: function() {
+                const icon = document.getElementById('fullscreen-icon');
+                if (icon) icon.className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand';
+            },
+            proceedToAula: function() {
+                document.getElementById('login-screen').classList.add('hidden');
+                this.updateHeaderName();
+                this.renderSidebar();
+                this.showDashboard();
+            },
+            updateHeaderName: function() {
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                if (auth?.nombre) document.getElementById('header-course-title').innerText = CURRENT_COURSE.name;
+            },
+            showToast: function(msg, type = '') {
+                const t = document.getElementById('toast');
+                t.innerText = msg;
+                t.className = 'toast ' + (type === 'success' ? 'toast-success' : '');
+                t.classList.remove('hidden');
+                setTimeout(() => t.classList.add('hidden'), 2800);
+            },
+            playApplauseSound: function() {
+                try {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (!AudioCtx) return;
+                    const ctx = new AudioCtx();
+                    const now = ctx.currentTime;
+
+                    for (let i = 0; i < 12; i += 1) {
+                        const bufferSize = ctx.sampleRate * 0.05;
+                        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                        const output = buffer.getChannelData(0);
+                        for (let j = 0; j < bufferSize; j += 1) output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize);
+
+                        const source = ctx.createBufferSource();
+                        source.buffer = buffer;
+
+                        const filter = ctx.createBiquadFilter();
+                        filter.type = 'bandpass';
+                        filter.frequency.value = 900 + (Math.random() * 800);
+
+                        const gain = ctx.createGain();
+                        gain.gain.setValueAtTime(0.0001, now + i * 0.09);
+                        gain.gain.exponentialRampToValueAtTime(0.35, now + i * 0.09 + 0.01);
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.05);
+
+                        source.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(ctx.destination);
+                        source.start(now + i * 0.09);
+                        source.stop(now + i * 0.09 + 0.06);
+                    }
+                } catch (e) {
+                    console.warn('No se pudo reproducir aplausos:', e);
+                }
+            },
+            launchFireworks: function() {
+                const canvas = document.createElement('canvas');
+                canvas.style.position = 'fixed';
+                canvas.style.inset = '0';
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                canvas.style.pointerEvents = 'none';
+                canvas.style.zIndex = '1200';
+                document.body.appendChild(canvas);
+
+                const ctx = canvas.getContext('2d');
+                if (!ctx) return;
+
+                const resize = () => {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                };
+                resize();
+
+                const colors = ['#00bcd4', '#22c55e', '#f43f5e', '#f59e0b', '#a78bfa', '#ffffff'];
+                const particles = [];
+                for (let burst = 0; burst < 6; burst += 1) {
+                    const cx = (canvas.width * (0.2 + Math.random() * 0.6));
+                    const cy = (canvas.height * (0.2 + Math.random() * 0.45));
+                    for (let i = 0; i < 55; i += 1) {
+                        const angle = (Math.PI * 2 * i) / 55;
+                        const speed = 1.5 + Math.random() * 3.5;
+                        particles.push({
+                            x: cx,
+                            y: cy,
+                            vx: Math.cos(angle) * speed,
+                            vy: Math.sin(angle) * speed,
+                            alpha: 1,
+                            life: 75 + Math.random() * 25,
+                            color: colors[Math.floor(Math.random() * colors.length)],
+                            size: 2 + Math.random() * 2.5
+                        });
+                    }
+                }
+
+                let frame = 0;
+                const animate = () => {
+                    frame += 1;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => {
+                        if (p.alpha <= 0) return;
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.vy += 0.03;
+                        p.alpha -= 0.013;
+                        p.life -= 1;
+
+                        ctx.globalAlpha = Math.max(0, p.alpha);
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    });
+                    ctx.globalAlpha = 1;
+
+                    if (frame < 140) requestAnimationFrame(animate);
+                    else canvas.remove();
+                };
+
+                requestAnimationFrame(animate);
+            },
+            showAchievementOverlay: function(moduleId, score) {
+                const old = document.getElementById('subject-achievement-overlay');
+                if (old) old.remove();
+
+                const overlay = document.createElement('div');
+                overlay.id = 'subject-achievement-overlay';
+                overlay.style.position = 'fixed';
+                overlay.style.inset = '0';
+                overlay.style.background = 'rgba(2, 6, 23, 0.7)';
+                overlay.style.backdropFilter = 'blur(4px)';
+                overlay.style.zIndex = '1300';
+                overlay.style.display = 'flex';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.innerHTML = `
+                    <div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:1px solid rgba(34,211,238,.4);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45)">
+                        <div style="font-size:38px;line-height:1">👏</div>
+                        <h4 style="margin:10px 0 6px;font-size:20px;font-weight:900;letter-spacing:.02em">Felicitaciones</h4>
+                        <p style="margin:0 0 6px;color:#bae6fd;font-weight:700">Logro desbloqueado: Quiz ${moduleId} aprobado</p>
+                        <p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Obtuviste ${score}%. Sigue así, vas excelente.</p>
+                        <button id="subject-achievement-close" type="button" style="padding:10px 16px;border:0;border-radius:10px;background:#06b6d4;color:#082f49;font-weight:900;cursor:pointer">Continuar</button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+
+                const close = () => overlay.remove();
+                const closeBtn = document.getElementById('subject-achievement-close');
+                if (closeBtn) closeBtn.addEventListener('click', close);
+                overlay.addEventListener('click', (ev) => {
+                    if (ev.target === overlay) close();
+                });
+
+                this.playApplauseSound();
+                this.launchFireworks();
+            },
+            showEncouragementOverlay: function(moduleId, score) {
+                const old = document.getElementById('subject-achievement-overlay');
+                if (old) old.remove();
+
+                const overlay = document.createElement('div');
+                overlay.id = 'subject-achievement-overlay';
+                overlay.style.position = 'fixed';
+                overlay.style.inset = '0';
+                overlay.style.background = 'rgba(15, 23, 42, 0.65)';
+                overlay.style.backdropFilter = 'blur(3px)';
+                overlay.style.zIndex = '1300';
+                overlay.style.display = 'flex';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.innerHTML = `
+                    <div style="background:linear-gradient(160deg,#334155,#1e293b);border:1px solid rgba(251,191,36,.45);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45)">
+                        <div style="font-size:38px;line-height:1">💪</div>
+                        <h4 style="margin:10px 0 6px;font-size:20px;font-weight:900;letter-spacing:.02em">Sigue Intentando</h4>
+                        <p style="margin:0 0 6px;color:#fde68a;font-weight:700">Quiz ${moduleId} aún no aprobado (${score}%)</p>
+                        <p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Vas por buen camino. Repasa el tema y vuelve a intentarlo, tú puedes lograrlo.</p>
+                        <button id="subject-encouragement-close" type="button" style="padding:10px 16px;border:0;border-radius:10px;background:#f59e0b;color:#1f2937;font-weight:900;cursor:pointer">Reintentar</button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+
+                const close = () => overlay.remove();
+                const closeBtn = document.getElementById('subject-encouragement-close');
+                if (closeBtn) closeBtn.addEventListener('click', close);
+                overlay.addEventListener('click', (ev) => {
+                    if (ev.target === overlay) close();
+                });
+            },
+            verifyLogin: function(event) {
+                event.preventDefault();
+                const n = document.getElementById('login-nombre').value || '';
+                const c = document.getElementById('login-cedula').value || 'N/A';
+                const em = document.getElementById('login-correo').value || '';
+                this.executeVerification(n, c, em, false);
+            },
+            autoVerify: function(user) {
+                showSyncIndicator('Verificando sesión...', 'loading');
+                document.getElementById('login-nombre').value = user.name || '';
+                document.getElementById('login-cedula').value = user.cedula || 'N/A';
+                document.getElementById('login-correo').value = user.email || '';
+                this.executeVerification(user.name || '', user.cedula || 'N/A', user.email || '', true);
+            },
+            executeVerification: async function(n, c, em, isAuto) {
+                showSyncIndicator('Conectando con la base de datos...', 'loading');
+                const btn = document.getElementById('login-btn');
+                const spin = btn.querySelector('.fa-spinner');
+                const txt = btn.querySelector('span');
+                const err = document.getElementById('login-error');
+                btn.disabled = true; spin.classList.remove('hidden'); txt.innerText = ' Verificando...'; err.classList.add('hidden');
+                try {
+                    const user = JSON.parse(localStorage.getItem('user') || 'null');
+                    const isManualCourse = CURRENT_COURSE.id >= 19;
+                    const hasManualAccess = !!(user && Array.isArray(user.accessedCursos) && user.accessedCursos.includes(CURRENT_COURSE.id));
+                    if (isManualCourse) {
+                        if (!hasManualAccess) {
+                            err.innerText = 'No has adquirido este manual. Cómpralo primero desde el catálogo.';
+                            err.classList.remove('hidden');
+                            if (isAuto) this.showAccessBlocked();
+                            showSyncIndicator('Acceso denegado', 'error');
+                            return;
+                        }
+
+                        // Manuales: acceso por compra local para evitar bloqueos por verify remoto.
+                        localStorage.setItem(STORAGE_KEYS.auth, JSON.stringify({ nombre: n, cedula: c, correo: em }));
+                        showSyncIndicator('Acceso concedido', 'success');
+                        this.proceedToAula();
+                        return;
+                    }
+                    const url = `${this.scriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent(CURRENT_COURSE.name)}&t=${Date.now()}`;
+                    const resp = await fetch(url);
+                    const data = await resp.json();
+                    if (data.success) {
+                        localStorage.setItem(STORAGE_KEYS.auth, JSON.stringify({ nombre: n, cedula: c, correo: em }));
+                        if (data.progressData) {
+                            try {
+                                const p = JSON.parse(data.progressData);
+                                this.progress = Array.isArray(p.progress) ? p.progress : [];
+                                this.quizScores = p.scores || {};
+                                localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
+                                localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
+                            } catch (e) {}
+                        }
+                        showSyncIndicator('Acceso concedido', 'success');
+                        this.proceedToAula();
+                    } else {
+                        err.innerText = data.message || 'No estás inscrito.';
+                        err.classList.remove('hidden');
+                        if (isAuto) this.showAccessBlocked();
+                        showSyncIndicator('Acceso denegado', 'error');
+                    }
+                } catch (error) {
+                    err.innerText = 'Error de conexión.';
+                    err.classList.remove('hidden');
+                    showSyncIndicator('Error de conexión', 'error');
+                } finally {
+                    btn.disabled = false; spin.classList.add('hidden'); txt.innerText = ' Verificar Inscripción';
+                }
+            },
+            getMedalIcon: function(score) {
+                if (score === undefined || score < 70) return '';
+                if (score === 100) return '🏆';
+                if (score >= 90) return '🥇';
+                if (score >= 80) return '🥈';
+                return '🥉';
+            },
+            showDashboard: function() {
+                this.closeSidebarOnMobile();
+                document.getElementById('view-lesson').classList.add('hidden');
+                const dash = document.getElementById('view-dashboard');
+                dash.classList.remove('hidden');
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null') || {};
+                const done = this.progress.length;
+                const total = COURSE_DATA.length;
+                const percent = Math.round((done / total) * 100);
+                const lessonPillsHtml = COURSE_DATA.map(lesson => {
+                    const score = this.quizScores[lesson.id];
+                    let pillClass = 'bg-slate-600 text-slate-200';
+                    if (score !== undefined) pillClass = score >= 70 ? 'bg-teal-500 text-white' : 'bg-red-500 text-white';
+                    else if (this.progress.includes(lesson.id)) pillClass = 'bg-teal-500 text-white';
+                    let simpleTitle = lesson.title.split(':')[0].trim();
+                    let abbreviatedTitle = simpleTitle.toLowerCase().replace('práctica', 'prac').replace(/\s/g, '');
+                    const isIntro = lesson.id === 0;
+                    if (isIntro) { simpleTitle = 'Intro'; abbreviatedTitle = 'Intro'; }
+                    const finalIcon = isIntro ? '<i class="fas fa-book text-slate-400"></i>' : this.getMedalIcon(score);
+                    return `<div class="flex flex-col items-center gap-1" title="${lesson.title}"><div class="progress-pill-label w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider"><span class="hidden sm:inline">${simpleTitle}</span><span class="sm:hidden">${abbreviatedTitle}</span></div><span class="text-lg medal-icon" style="min-height: 1.5rem;">${finalIcon}</span></div>`;
+                }).join('');
+                const modulesHtml = COURSE_DATA.map(lesson => {
+                    const score = this.quizScores[lesson.id];
+                    let stateClass = 'border-yellow-400/50 bg-yellow-500/20 backdrop-blur-md text-white';
+                    let stateText = '⏳ Falta por evaluar';
+                    if (score !== undefined && !isNaN(score)) {
+                        if (score >= 70) { stateClass = 'border-blue-400/50 bg-blue-500/20 backdrop-blur-md text-white'; stateText = `✅ Completado (${score}%)`; }
+                        else { stateClass = 'border-red-500/60 bg-red-600/20 backdrop-blur-md text-white'; stateText = `❌ No aprobado ${score}%`; }
+                    } else if (this.progress.includes(lesson.id)) {
+                        stateClass = 'border-blue-400/50 bg-blue-500/20 backdrop-blur-md text-white'; stateText = '✅ Completado';
+                    }
+                    return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01] cursor-pointer" onclick="app.loadLesson(${lesson.id})"><span class="font-bold tracking-wide drop-shadow-md text-sm sm:text-base">${lesson.title}</span><span class="text-xs sm:text-sm font-bold drop-shadow-md bg-black/20 px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+                }).join('');
+                dash.innerHTML = `
+                    <div class="w-full dashboard-container rounded-[32px] shadow-xl overflow-hidden text-left">
+                        <div class="p-6 sm:p-8 border-b border-white/10">
+                            <div class="grid grid-cols-1 gap-6">
+                                <div class="student-card bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col h-full"><div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div><div class="relative z-10 flex flex-col gap-3 h-full"><div><h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2><p class="text-white text-xl font-bold">${auth.nombre || '-'}</p></div><p class="text-slate-300 text-sm font-medium">${auth.correo || '-'}</p><div class="grid grid-cols-1 gap-3 mt-auto pt-4 border-t border-white/10"><div><p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1"><i class="fas fa-id-card text-slate-400 text-xs"></i> Cédula</p><p class="text-white font-bold">${auth.cedula || '-'}</p></div></div></div></div>
+                                <div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]"><div class="flex flex-col h-full"><div class="flex-1"><h4 class="progress-current-title font-black uppercase tracking-widest text-xs"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4><div class="grid grid-cols-4 gap-x-2 gap-y-4 mt-2" title="${done} de ${total} lecciones completadas">${lessonPillsHtml}</div></div><div class="flex items-center justify-center w-24 h-24 relative self-center md:self-auto flex-shrink-0"><svg class="w-full h-full" viewBox="0 0 100 100"><circle class="progress-track-ring text-white/10" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" /><circle class="text-teal-500 transform -rotate-90 origin-center" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" style="stroke-dasharray: 264; stroke-dashoffset: calc(264 - (264 * ${percent}) / 100); transition: stroke-dashoffset 0.7s ease-out;" /></svg><span class="absolute text-xl font-black text-teal-500">${percent}%</span></div></div><div class="mt-auto pt-4 flex flex-col sm:flex-row gap-2"><button onclick="app.continueCourse()" class="continue-learning-btn flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm border border-white/5"><i class="fas fa-play text-secondary"></i> Continuar Aprendizaje</button></div></div>
+                            </div>
+                        </div>
+                        <div class="p-6 sm:p-10 lg:p-14"><div><h4 class="text-slate-400 font-black uppercase tracking-widest text-[10px] mb-4">Módulos del Curso</h4><div class="space-y-3">${modulesHtml}</div></div></div>
+                    </div>`;
+                if (window.lucide) lucide.createIcons();
+            },
+            continueCourse: function() {
+                const next = COURSE_DATA.find(l => !this.progress.includes(l.id));
+                if (next) this.loadLesson(next.id); else this.loadLesson(COURSE_DATA[COURSE_DATA.length - 1].id);
+            },
+            toggleSidebar: function() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebar-overlay');
+                if (window.innerWidth < 768) { sidebar.classList.toggle('-translate-x-full'); overlay.classList.toggle('hidden'); }
+                else sidebar.classList.toggle('collapsed');
+            },
+            closeSidebarOnMobile: function() {
+                if (window.innerWidth < 768) { const s = document.getElementById('sidebar'); if (!s.classList.contains('-translate-x-full')) { s.classList.add('-translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); } }
+            },
+            renderSidebar: function() {
+                const cont = document.getElementById('sidebar-content');
+                cont.innerHTML = COURSE_DATA.map(lesson => {
+                    const locked = lesson.id > 0 && !this.progress.includes(lesson.id - 1);
+                    const isCurr = this.currentId === lesson.id;
+                    return `<button onclick="${locked ? '' : `app.loadLesson(${lesson.id})`}" class="w-full text-left p-3 rounded-lg text-sm font-medium transition ${isCurr ? 'bg-secondary/40 border-l-4 border-secondary text-white shadow-inner' : 'text-slate-200'} ${locked ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10 hover:text-white'}"><i class="${this.progress.includes(lesson.id) ? 'fas fa-check-circle text-secondary' : 'far fa-circle text-slate-400'} mr-2"></i> ${lesson.title}</button>`;
+                }).join('');
+            },
+            loadLesson: function(id) {
+                if (id > 0 && !this.progress.includes(id - 1)) {
+                    this.showModal('Lección bloqueada', 'Completa la lección anterior para continuar.', 'error');
+                    return;
+                }
+                this.closeSidebarOnMobile();
+                const lesson = COURSE_DATA.find(item => item.id === id);
+                if (!lesson) return;
+                this.currentId = id;
+                document.getElementById('view-dashboard').classList.add('hidden');
+                document.getElementById('view-lesson').classList.remove('hidden');
+                document.getElementById('lesson-title').innerText = lesson.title;
+                document.getElementById('lesson-content-text').innerHTML = lesson.content;
+                const videoContainer = document.getElementById('lesson-video-container');
+                if (lesson.video) {
+                    const isEmbedUrl = lesson.video.includes('youtube.com') || lesson.video.includes('youtu.be') || lesson.video.includes('player.mediadelivery.net') || lesson.video.includes('/play/');
+                    videoContainer.innerHTML = isEmbedUrl
+                        ? `<iframe class="w-full h-full rounded-xl shadow-lg border border-white/10" src="${lesson.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+                        : `<video class="w-full h-full rounded-xl shadow-lg border border-white/10" controls src="${lesson.video}" playsinline></video>`;
+                    videoContainer.classList.remove('hidden');
+                } else {
+                    videoContainer.innerHTML = '';
+                    videoContainer.classList.add('hidden');
+                }
+                document.getElementById('panel-resources').innerHTML = renderResourceCards(lesson.resources, lesson.title);
+                this.renderQuiz(lesson.quiz);
+                this.updateCompleteButton();
+                this.switchTab('content');
+                this.renderSidebar();
+                if (window.lucide) lucide.createIcons();
+            },
+            renderQuiz: function(quiz) {
+                const cont = document.getElementById('quiz-questions');
+                if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; }
+                cont.innerHTML = quiz.map((q, i) => `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}"><p class="font-bold text-white mb-3">${q.q}</p><div class="space-y-2">${q.opts.map((opt, oi) => `<label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option transition" data-opt-index="${oi}"><input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}</label>`).join('')}</div><div class="correct-feedback hidden text-green-400 text-sm mt-2"></div></div>`).join('');
+            },
+            gradeQuiz: function() {
+                const lesson = COURSE_DATA.find(l => l.id === this.currentId);
+                if (!lesson.quiz || lesson.quiz.length === 0) return;
+                let score = 0, all = true, answers = [];
+                lesson.quiz.forEach((q, i) => {
+                    const sel = document.querySelector(`input[name="q_${i}"]:checked`);
+                    if (sel) { answers[i] = parseInt(sel.value, 10); if (answers[i] === q.ans) score += Math.round(100 / lesson.quiz.length); }
+                    else { all = false; answers[i] = -1; }
+                });
+                if (!all) { this.showModal('Atención', 'Debes responder todas las preguntas antes de enviar.', 'error'); return; }
+                lesson.quiz.forEach((q, i) => {
+                    const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
+                    const opts = qDiv.querySelectorAll('.quiz-option');
+                    const fb = qDiv.querySelector('.correct-feedback');
+                    opts.forEach(opt => {
+                        opt.classList.remove('correct', 'incorrect');
+                        const idx = parseInt(opt.dataset.optIndex, 10);
+                        if (idx === q.ans) opt.classList.add('correct');
+                        else if (answers[i] === idx) opt.classList.add('incorrect');
+                    });
+                    fb.innerHTML = `✅ ${q.opts[q.ans]}`;
+                    fb.classList.remove('hidden');
+                });
+                score = Math.min(score, 100);
+                const best = this.quizScores[this.currentId] || 0;
+                if (score > best) { this.quizScores[this.currentId] = score; localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores)); }
+                const resDiv = document.getElementById('quiz-result');
+                resDiv.classList.remove('hidden');
+                if (score >= 70) {
+                    resDiv.innerHTML = `<span class="text-green-400 text-xl">Aprobado con ${score}%. Tu mejor nota quedó guardada.</span>`;
+                    if (!this.progress.includes(this.currentId)) {
+                        this.progress.push(this.currentId);
+                        this.progress.sort((a, b) => a - b);
+                        localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
+                        this.syncProgress();
+                        if (this.progress.length === COURSE_DATA.length) {
+                            this.saveCompletionToSheet();
+                            this.playApplauseSound();
+                            this.launchFireworks();
+                            setTimeout(() => { this.showModal('🏆 ¡Curso Finalizado!', 'Has completado todos los módulos con éxito. Puedes descargar tu certificado.', 'medal'); this.showDashboard(); }, 1000);
+                        } else {
+                            this.showAchievementOverlay(this.currentId, score);
+                        }
+                        this.renderSidebar();
+                        this.updateCompleteButton();
+                    } else {
+                        this.showAchievementOverlay(this.currentId, score);
+                        this.syncProgress();
+                    }
+                } else {
+                    resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span>`;
+                    this.showEncouragementOverlay(this.currentId, score);
+                    this.syncProgress();
+                }
+            },
+            resetQuiz: function() {
+                document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(input => input.checked = false);
+                document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect'));
+                document.querySelectorAll('.correct-feedback').forEach(fb => fb.classList.add('hidden'));
+                document.getElementById('quiz-result').classList.add('hidden');
+            },
+            saveCompletionToSheet: async function() {
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                if (!auth?.correo) return;
+                try {
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'save_course_completion');
+                    formData.append('email', auth.correo);
+                    formData.append('courseName', CURRENT_COURSE.name);
+                    formData.append('completionDate', new Date().toISOString());
+                    await fetch(this.scriptUrl, { method: 'POST', mode: 'no-cors', body: formData, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+                } catch (e) { console.error('Error al guardar finalización:', e); }
+            },
+            syncProgress: function() {
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                if (!auth) return;
+                const data = JSON.stringify({ progress: this.progress, scores: this.quizScores });
+                fetch(`${this.scriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=${encodeURIComponent(CURRENT_COURSE.name)}&data=${encodeURIComponent(data)}`, { method: 'GET', mode: 'no-cors' }).catch(e => console.error('Sync Error:', e));
+            },
+            syncUserData: async function() {
+                const user = JSON.parse(localStorage.getItem('user') || 'null');
+                if (!user?.email) return;
+                try {
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'update_user');
+                    formData.append('email', user.email.toLowerCase());
+                    formData.append('userData', JSON.stringify(user));
+                    await fetch(this.scriptUrl, { method: 'POST', mode: 'no-cors', body: formData, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+                } catch (e) {}
+            },
+            updateCompleteButton: function() {
+                const lesson = COURSE_DATA.find(l => l.id === this.currentId);
+                const hasQuiz = lesson?.quiz && lesson.quiz.length > 0;
+                document.getElementById('btn-complete').disabled = hasQuiz && !this.progress.includes(this.currentId);
+            },
+            completeLesson: function() {
+                if (this.currentId === 0) {
+                    if (!this.progress.includes(0)) { this.progress.push(0); localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress)); this.syncProgress(); }
+                    this.loadLesson(1);
+                } else {
+                    const nextId = this.currentId + 1;
+                    if (nextId < COURSE_DATA.length) this.loadLesson(nextId); else this.showDashboard();
+                }
+            },
+            switchTab: function(tabId) {
+                ['content', 'resources', 'quiz'].forEach(tab => {
+                    document.getElementById(`panel-${tab}`).classList.toggle('hidden', tab !== tabId);
+                    document.getElementById(`tab-${tab}`).className = tab === tabId ? 'pb-2 font-bold border-b-2 border-secondary text-secondary px-2' : 'pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2';
+                });
+                document.getElementById('btn-complete').parentElement.classList.toggle('hidden', tabId !== 'content');
+            },
+            showModal: function(title, msg, type) {
+                document.getElementById('modal-title').innerText = title;
+                document.getElementById('modal-msg').innerText = msg;
+                let icon = '✅'; if (type === 'error') icon = '❌'; else if (type === 'medal') icon = '<i class="fas fa-trophy text-yellow-400 animate-bounce"></i>';
+                document.getElementById('modal-icon').innerHTML = icon;
+                document.getElementById('modal-feedback').classList.remove('hidden');
+            },
+            showAccessBlocked: function() {
+                const container = document.querySelector('#login-screen > div');
+                container.innerHTML = `<div class="text-center"><div class="text-6xl text-red-500 mb-6"><i class="fas fa-lock"></i></div><h2 class="text-2xl font-bold text-white mb-4">ACCESO RESTRINGIDO</h2><p class="text-slate-300 text-sm mb-8 leading-relaxed">No estás inscrito en ${CURRENT_COURSE.name}. Para acceder a esta aula virtual debes adquirir el curso primero en nuestro catálogo.</p><div class="space-y-4"><button onclick="window.location.href='catalogo.html'" class="w-full bg-primary text-white py-3 rounded-lg font-bold shadow-lg hover:brightness-110 transition">Ver Catálogo de Cursos</button><button onclick="localStorage.removeItem('user'); location.reload();" class="w-full bg-white/10 text-slate-300 py-2 rounded-lg text-xs font-bold hover:bg-white/20 transition">Ingresar con otra cuenta</button></div></div>`;
+            },
+            logout: function() {
+                if (confirm('¿Deseas cerrar sesión y salir del aula virtual?')) {
+                    this.clearLocalData();
+                    window.location.href = 'mis-cursos.html';
+                }
+            }
+        };
+
+        window.onload = () => { app.init(); if (window.lucide) lucide.createIcons(); };
+    </script>
+</body>
+</html>
