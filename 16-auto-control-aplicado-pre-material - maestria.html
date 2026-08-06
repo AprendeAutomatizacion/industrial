@@ -1,0 +1,1210 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materiales: AutomatizaciÃ³n y control Aplicado (MAESTRÃA) (Presencial) - Aprende Automatización</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest">
+    </script>
+
+    <style>
+        :root {
+            --bg-default: #f7f9fb;
+            --bg-secondary: #ffffff;
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e293b;
+            --text-default: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #f8fafc;
+            --text-accent: #2db8ce;
+            --border-default: #e2e8f0;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --badge-bg-intermediate: #0891b2;
+            --badge-bg-basic: #0d9488;
+            --badge-text: #ffffff;
+            --btn-accent-bg: #0891b2;
+            --btn-accent-text: #ffffff;
+            --btn-accent-shadow: rgba(8, 145, 178, 0.3);
+            --btn-accent-border: #0e7490;
+            --btn-accent-bg-hover: #0e7490;
+        }
+
+        body:not(.light-mode) {
+            --bg-default: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e293b;
+            --text-default: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-light: #f8fafc;
+            --border-default: #334155;
+            --border-light: rgba(45, 184, 206, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-default);
+            margin: 0;
+            padding: 0;
+            color: var(--text-default);
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.light-mode {
+            background-color: #d0e1ef !important;
+        }
+
+        body.light-mode #detalle-container .bg-white {
+            background-color: #eaf0f5 !important;
+            border-color: #e2e8f0 !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: var(--text-accent);
+            border-radius: 10px;
+        }
+
+        .section-themed {
+            background-color: var(--bg-default);
+            border-top: 1px solid var(--border-default);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        /* --- TARJETAS DE MATERIAL VISUAL --- */
+        .material-card {
+            position: relative;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+        }
+        .material-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -8px var(--shadow-color), 0 0 0 1px var(--text-accent);
+            border-color: var(--text-accent);
+        }
+        .material-card .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            flex-shrink: 0;
+        }
+        .material-card .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .material-card:hover .card-image-wrapper img {
+            transform: scale(1.08);
+        }
+        .material-card .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.3) 50%, rgba(15, 23, 42, 0.05) 100%);
+            pointer-events: none;
+        }
+        .material-card .card-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 2;
+            padding: 0.3rem 0.85rem;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 9999px;
+            color: #ffffff;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .badge-manual {
+            background: rgba(45, 184, 206, 0.25);
+            border: 1px solid rgba(34, 211, 238, 0.4);
+        }
+        .badge-practica {
+            background: rgba(34, 197, 94, 0.25);
+            border: 1px solid rgba(74, 222, 128, 0.4);
+        }
+        .badge-test {
+            background: rgba(168, 85, 247, 0.25); /* purple */
+            border: 1px solid rgba(192, 132, 252, 0.4);
+        }
+        .material-card .card-icon-circle {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .icon-circle-manual {
+            background: rgba(45, 184, 206, 0.15);
+            border: 2px solid rgba(45, 184, 206, 0.25);
+            color: #0891b2;
+        }
+        .icon-circle-practica {
+            background: rgba(34, 197, 94, 0.15);
+            border: 2px solid rgba(34, 197, 94, 0.25);
+            color: #16a34a;
+        }
+        .icon-circle-test {
+            background: rgba(168, 85, 247, 0.15);
+            border: 2px solid rgba(168, 85, 247, 0.25);
+            color: #9333ea; /* purple-700 */
+        }
+        .material-card .card-body {
+            padding: 1.25rem 1rem 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .material-card .card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-default);
+            line-height: 1.35;
+            margin: 0;
+        }
+        .material-card .card-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin: 0;
+        }
+        .material-card .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--border-default);
+            background: rgba(0, 0, 0, 0.02);
+            gap: 0.5rem;
+        }
+        .material-card .download-count-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            background: var(--bg-default);
+            padding: 0.3rem 0.65rem;
+            border-radius: 9999px;
+            white-space: nowrap;
+            border: 1px solid var(--border-default);
+            transition: all 0.3s;
+        }
+        .material-card .download-btn-text {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-accent);
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .material-card:hover .download-btn-text {
+            color: #0e7490;
+            gap: 0.6rem;
+        }
+        .material-card .download-btn-text i {
+            transition: transform 0.3s;
+        }
+        .material-card:hover .download-btn-text i {
+            transform: translateY(2px);
+        }
+
+        /* Glow states para tarjetas ya descargadas */
+        .material-card.glow-manual {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 22px rgba(59, 130, 246, 0.45), 0 10px 30px var(--shadow-color) !important;
+        }
+        .material-card.glow-practica {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 22px rgba(34, 197, 94, 0.45), 0 10px 30px var(--shadow-color) !important;
+        }
+        .material-card.glow-manual .download-count-badge,
+        .material-card.glow-practica .download-count-badge {
+            color: #22c55e !important;
+            border-color: #22c55e !important;
+            background: rgba(34, 197, 94, 0.08) !important;
+        }
+        .material-card.glow-manual .download-btn-text,
+        .material-card.glow-practica .download-btn-text {
+            color: #22c55e !important;
+        }
+
+        body:not(.light-mode) .material-card .card-footer {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        body:not(.light-mode) .material-card .download-count-badge {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .material-card .card-image-wrapper {
+                height: 140px;
+            }
+            .material-card .card-title {
+                font-size: 0.85rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .material-card {
+            animation: fadeIn 0.5s ease forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 custom-scrollbar light-mode">
+
+    <main id="page-curso-detalle" class="page-content">
+        <div id="detalle-container" class="pt-24 pb-24 relative z-10">
+            <div class="max-w-[1300px] mx-auto px-4 sm:px-6 relative">
+                <div class="flex flex-col items-start gap-8 lg:gap-10 mt-6 lg:mt-0">
+                    <div class="w-full bg-white rounded-[32px] shadow-xl border border-slate-200 text-left">
+
+                        <!-- Header -->
+                        <div class="h-64 sm:h-96 relative rounded-t-[32px] overflow-hidden">
+                            <img src="img/AA (36).webp" alt="Imagen del curso" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                            <div class="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 right-6 sm:right-10">
+                                <span class="px-3 py-1.5 bg-[#2db8ce] text-white text-[10px] font-black uppercase tracking-widest rounded-md mb-4 inline-block shadow-md">Electricidad</span>
+                                <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tighter mb-4">AutomatizaciÃ³n y control Aplicado (MAESTRÃA) (Presencial)</h1>
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <p class="text-slate-300 font-medium text-sm sm:text-base flex items-center gap-2 mr-2"><i data-lucide="clock" class="w-4 h-4"></i> Modalidad: <strong class="text-white">Online</strong></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="p-6 sm:p-10 lg:p-14 space-y-14">
+                            <!-- Resumen -->
+                            <section class="bg-slate-50 p-6 sm:p-8 rounded-[24px] border border-slate-100">
+                                <h2 class="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-tight mb-4 flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-lg bg-[#2db8ce]/10 text-[#2db8ce] flex items-center justify-center"><i data-lucide="info" class="w-4 h-4"></i></span> Resumen del Curso
+                                </h2>
+                                <p class="text-slate-600 leading-relaxed font-medium text-sm sm:text-base">Este curso estÃ¡ diseÃ±ado para brindarte los conocimientos teÃ³ricos y prÃ¡cticos sobre el arranque y control de motores asÃ­ncronos trifÃ¡sicos utilizando contactores. AprenderÃ¡s desde el arranque directo hasta mÃ©todos avanzados como estrella-delta y arranque rotÃ³rico, con material descargable de alta calidad.</p>
+                            </section>
+
+                            <!-- Materiales del Curso -->
+                            <section>
+                                <h2 class="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-tight mb-3 flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-lg bg-[#2db8ce]/10 text-[#2db8ce] flex items-center justify-center"><i data-lucide="book-marked" class="w-4 h-4"></i></span> Materiales del Curso
+                                </h2>
+                                <p class="text-slate-500 text-sm mb-8 font-medium">Descarga los manuales y ejercicios prÃ¡cticos. Cada archivo incluye contenido detallado para tu aprendizaje.</p>
+
+                                <!-- SubsecciÃ³n: Manuales -->
+                                <div class="mb-10">
+                                    <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest mb-5 flex items-center gap-2">
+                                        <i data-lucide="book-open" class="w-4 h-4 text-blue-500"></i> Manuales TeÃ³ricos
+                                    </h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                        <!-- Manual: Arranque Directo -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1ffP5ete5u4Sio_zgnudmXrYrg800Cerk" target="_blank" class="material-card" data-file-name="Manual: Arranque Directo (PDF)" download="Manual: Arranque Directo (PDF)">
+                                            <div class="card-image-wrapper">
+                                                <img src="img/AA (36).webp" alt="Motor industrial arranque directo" loading="lazy">
+                                                <div class="card-image-overlay"></div>
+                                                <span class="card-badge badge-manual">Manual</span>
+                                                <div class="card-icon-circle icon-circle-manual">
+                                                    <i data-lucide="book" class="w-5 h-5"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">Manual: Arranque Directo</h4>
+                                                <p class="card-subtitle">Documento PDF Â· TeorÃ­a completa</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="download-count-badge">
+                                                    <i class="fas fa-download text-[10px]"></i>
+                                                    <span class="file-download-count" data-file-name="Manual: Arranque Directo (PDF)">0</span>
+                                                </span>
+                                                <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                                            </div>
+                                        </a>
+
+                                        <!-- Manual: SelecciÃ³n de Giro -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1nE_PVCGs-A6zFvBN1BXdl1bhJVAehavv" target="_blank" class="material-card" data-file-name="Manual: SelecciÃ³n de Giro (PDF)" download="Manual: SelecciÃ³n de Giro (PDF)">
+                                            <div class="card-image-wrapper">
+                                                <img src="img/AA (36).webp" alt="Panel de control selecciÃ³n de giro" loading="lazy">
+                                                <div class="card-image-overlay"></div>
+                                                <span class="card-badge badge-manual">Manual</span>
+                                                <div class="card-icon-circle icon-circle-manual">
+                                                    <i data-lucide="book" class="w-5 h-5"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">Manual: SelecciÃ³n de Giro</h4>
+                                                <p class="card-subtitle">Documento PDF Â· InversiÃ³n de marcha</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="download-count-badge">
+                                                    <i class="fas fa-download text-[10px]"></i>
+                                                    <span class="file-download-count" data-file-name="Manual: SelecciÃ³n de Giro (PDF)">0</span>
+                                                </span>
+                                                <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                                            </div>
+                                        </a>
+
+                                        <!-- Manual: Arranque Estrella Delta -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1NkOuj0TdfqaN1Dxsh8Bg9XHkZyfZ1sgP" target="_blank" class="material-card" data-file-name="Manual: Arranque Estrella Delta (PDF)" download="Manual: Arranque Estrella Delta (PDF)">
+                                            <div class="card-image-wrapper">
+                                                <img src="img/AA (36).webp" alt="Diagrama estrella delta" loading="lazy">
+                                                <div class="card-image-overlay"></div>
+                                                <span class="card-badge badge-manual">Manual</span>
+                                                <div class="card-icon-circle icon-circle-manual">
+                                                    <i data-lucide="book" class="w-5 h-5"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">Manual: Arranque Estrella Delta</h4>
+                                                <p class="card-subtitle">Documento PDF Â· MÃ©todo avanzado</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="download-count-badge">
+                                                    <i class="fas fa-download text-[10px]"></i>
+                                                    <span class="file-download-count" data-file-name="Manual: Arranque Estrella Delta (PDF)">0</span>
+                                                </span>
+                                                <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                                            </div>
+                                        </a>
+
+                                        <!-- Manual: Arranque RotÃ³rico -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1jOr6szSf-HzX0urZkdgDoe5hAW1rxmzS" target="_blank" class="material-card" data-file-name="Manual: Arranque RotÃ³rico (PDF)" download="Manual: Arranque RotÃ³rico (PDF)">
+                                            <div class="card-image-wrapper">
+                                                <img src="img/AA (36).webp" alt="Rotor de motor elÃ©ctrico" loading="lazy">
+                                                <div class="card-image-overlay"></div>
+                                                <span class="card-badge badge-manual">Manual</span>
+                                                <div class="card-icon-circle icon-circle-manual">
+                                                    <i data-lucide="book" class="w-5 h-5"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">Manual: Arranque RotÃ³rico</h4>
+                                                <p class="card-subtitle">Documento PDF Â· Resistencia rotÃ³rica</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="download-count-badge">
+                                                    <i class="fas fa-download text-[10px]"></i>
+                                                    <span class="file-download-count" data-file-name="Manual: Arranque RotÃ³rico (PDF)">0</span>
+                                                </span>
+                                                <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- SubsecciÃ³n: PrÃ¡cticas -->
+                                <div>
+                                    <h3 class="text-sm font-black text-slate-500 uppercase tracking-widest mb-5 flex items-center gap-2">
+                                        <i data-lucide="file-code" class="w-4 h-4 text-green-500"></i> Ejercicios PrÃ¡cticos
+                                    </h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                        <!-- PrÃ¡ctica: Arranque Directo -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1AXMe7TN17-d2_JORuMVSNLRn-7xWYYZH" target="_blank" class="material-card" data-file-name="PrÃ¡ctica: Arranque Directo" download="PrÃ¡ctica: Arranque Directo">
+                                            <div class="card-image-wrapper">
+                                                <img src="img/AA (36).webp" alt="Tablero de contactores" loading="lazy">
+                                                <div class="card-image-overlay"></div>
+                                                <span class="card-badge badge-practica">PrÃ¡ctica</span>
+                                                <div class="card-icon-circle icon-circle-practica">
+                                                    <i data-lucide="file-code" class="w-5 h-5"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">PrÃ¡ctica: Arranque Directo</h4>
+                                                <p class="card-subtitle">Archivo de simulaciÃ³n</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="download-count-badge">
+                                                    <i class="fas fa-download text-[10px]"></i>
+                                                    <span class="file-download-count" data-file-name="PrÃ¡ctica: Arranque Directo">0</span>
+                                                </span>
+                                                <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                                            </div>
+                                        </a>
+
+                                        <!-- PrÃ¡ctica: SelecciÃ³n de Giro -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1wkB6CO8sLQJFr2xMJQXFUfHsvkVfUG2T" target="_blank" class="material-card" data-file-name="PrÃ¡ctica: SelecciÃ³n de Giro" download="PrÃ¡ctica: SelecciÃ³n de Giro">
+                                            <div class="card-image-wrapper">
+                                                <img src="img/AA (36).webp" alt="Cableado de panel elÃ©ctrico" loading="lazy">
+                                                <div class="card-image-overlay"></div>
+                                                <span class="card-badge badge-practica">PrÃ¡ctica</span>
+                                                <div class="card-icon-circle icon-circle-practica">
+                                                    <i data-lucide="file-code" class="w-5 h-5"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">PrÃ¡ctica: SelecciÃ³n de Giro</h4>
+                                                <p class="card-subtitle">Archivo de simulaciÃ³n</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="download-count-badge">
+                                                    <i class="fas fa-download text-[10px]"></i>
+                                                    <span class="file-download-count" data-file-name="PrÃ¡ctica: SelecciÃ³n de Giro">0</span>
+                                                </span>
+                                                <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                                            </div>
+                                        </a>
+
+                                        <!-- PrÃ¡ctica: Arranque Estrella Delta -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1_q7jTpvQovCuF21HUBH5aFI7yZE8KmMw" target="_blank" class="material-card" data-file-name="PrÃ¡ctica: Arranque Estrella Delta" download="PrÃ¡ctica: Arranque Estrella Delta">
+                                            <div class="card-image-wrapper">
+                                                <img src="img/AA (36).webp" alt="PLC y automatizaciÃ³n" loading="lazy">
+                                                <div class="card-image-overlay"></div>
+                                                <span class="card-badge badge-practica">PrÃ¡ctica</span>
+                                                <div class="card-icon-circle icon-circle-practica">
+                                                    <i data-lucide="file-code" class="w-5 h-5"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">PrÃ¡ctica: Arranque Estrella Delta</h4>
+                                                <p class="card-subtitle">Archivo de simulaciÃ³n</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="download-count-badge">
+                                                    <i class="fas fa-download text-[10px]"></i>
+                                                    <span class="file-download-count" data-file-name="PrÃ¡ctica: Arranque Estrella Delta">0</span>
+                                                </span>
+                                                <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                                            </div>
+                                        </a>
+
+                                        <!-- PrÃ¡ctica: Arranque RotÃ³rico -->
+                                        <a href="https://drive.google.com/uc?export=download&confirm=yTib&id=1CoNpKpgzv8XJmKkaIsRqnl0uIenHBUKw" target="_blank" class="material-card" data-file-name="PrÃ¡ctica: Arranque RotÃ³rico" download="PrÃ¡ctica: Arranque RotÃ³rico">
+                                            <div class="card-image-wrapper">
+                                                <img src="img/AA (36).webp" alt="Variador de frecuencia" loading="lazy">
+                                                <div class="card-image-overlay"></div>
+                                                <span class="card-badge badge-practica">PrÃ¡ctica</span>
+                                                <div class="card-icon-circle icon-circle-practica">
+                                                    <i data-lucide="file-code" class="w-5 h-5"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <h4 class="card-title">PrÃ¡ctica: Arranque RotÃ³rico</h4>
+                                                <p class="card-subtitle">Archivo de simulaciÃ³n</p>
+                                            </div>
+                                            <div class="card-footer">
+                                                <span class="download-count-badge">
+                                                    <i class="fas fa-download text-[10px]"></i>
+                                                    <span class="file-download-count" data-file-name="PrÃ¡ctica: Arranque RotÃ³rico">0</span>
+                                                </span>
+                                                <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Cuestionarios y Test -->
+                            <section>
+                                <h2 class="text-lg sm:text-xl font-black text-slate-900 uppercase tracking-tight mb-3 flex items-center gap-3">
+                                    <span class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-600 flex items-center justify-center"><i data-lucide="file-question" class="w-4 h-4"></i></span> Cuestionarios y Test
+                                </h2>
+                                <p class="text-slate-500 text-sm mb-8 font-medium">Pon a prueba tus conocimientos con estas evaluaciones. Necesitas un 70% para aprobar cada mÃ³dulo en el aula virtual.</p>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                    <!-- Test: Arranque Directo -->
+                                    <a href="16-auto-control-aplicado-pre-info - maestria.html" class="material-card" data-module-id="1">
+                                        <div class="card-image-wrapper">
+                                            <img src="img/AA (36).webp" alt="Test Arranque Directo" loading="lazy">
+                                            <div class="card-image-overlay"></div>
+                                            <span class="card-badge badge-test">Test</span>
+                                            <div class="card-icon-circle icon-circle-test">
+                                                <i data-lucide="file-question" class="w-5 h-5"></i>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Test: Arranque Directo</h4>
+                                            <p class="card-subtitle">10 preguntas de selecciÃ³n</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <span class="test-score-badge download-count-badge">
+                                                <i class="fas fa-check-circle text-[10px]"></i>
+                                                <span>70% para aprobar</span>
+                                            </span>
+                                            <span class="download-btn-text">Ir al Aula <i data-lucide="arrow-right-circle" class="w-4 h-4"></i></span>
+                                        </div>
+                                    </a>
+
+                                    <!-- Test: SelecciÃ³n de Giro -->
+                                    <a href="16-auto-control-aplicado-pre-info - maestria.html" class="material-card" data-module-id="2">
+                                        <div class="card-image-wrapper">
+                                            <img src="img/AA (36).webp" alt="Test SelecciÃ³n de Giro" loading="lazy">
+                                            <div class="card-image-overlay"></div>
+                                            <span class="card-badge badge-test">Test</span>
+                                            <div class="card-icon-circle icon-circle-test">
+                                                <i data-lucide="file-question" class="w-5 h-5"></i>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Test: SelecciÃ³n de Giro</h4>
+                                            <p class="card-subtitle">10 preguntas de selecciÃ³n</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <span class="test-score-badge download-count-badge">
+                                                <i class="fas fa-check-circle text-[10px]"></i>
+                                                <span>70% para aprobar</span>
+                                            </span>
+                                            <span class="download-btn-text">Ir al Aula <i data-lucide="arrow-right-circle" class="w-4 h-4"></i></span>
+                                        </div>
+                                    </a>
+
+                                    <!-- Test: Arranque Estrella Delta -->
+                                    <a href="16-auto-control-aplicado-pre-info - maestria.html" class="material-card" data-module-id="3">
+                                        <div class="card-image-wrapper">
+                                            <img src="img/AA (36).webp" alt="Test Arranque Estrella Delta" loading="lazy">
+                                            <div class="card-image-overlay"></div>
+                                            <span class="card-badge badge-test">Test</span>
+                                            <div class="card-icon-circle icon-circle-test">
+                                                <i data-lucide="file-question" class="w-5 h-5"></i>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Test: Arranque Estrella Delta</h4>
+                                            <p class="card-subtitle">10 preguntas de selecciÃ³n</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <span class="test-score-badge download-count-badge">
+                                                <i class="fas fa-check-circle text-[10px]"></i>
+                                                <span>70% para aprobar</span>
+                                            </span>
+                                            <span class="download-btn-text">Ir al Aula <i data-lucide="arrow-right-circle" class="w-4 h-4"></i></span>
+                                        </div>
+                                    </a>
+
+                                    <!-- Test: Arranque RotÃ³rico -->
+                                    <a href="16-auto-control-aplicado-pre-info - maestria.html" class="material-card" data-module-id="4">
+                                        <div class="card-image-wrapper">
+                                            <img src="img/AA (36).webp" alt="Test Arranque RotÃ³rico" loading="lazy">
+                                            <div class="card-image-overlay"></div>
+                                            <span class="card-badge badge-test">Test</span>
+                                            <div class="card-icon-circle icon-circle-test">
+                                                <i data-lucide="file-question" class="w-5 h-5"></i>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Test: Arranque RotÃ³rico</h4>
+                                            <p class="card-subtitle">10 preguntas de selecciÃ³n</p>
+                                        </div>
+                                        <div class="card-footer">
+                                            <span class="test-score-badge download-count-badge">
+                                                <i class="fas fa-check-circle text-[10px]"></i>
+                                                <span>70% para aprobar</span>
+                                            </span>
+                                            <span class="download-btn-text">Ir al Aula <i data-lucide="arrow-right-circle" class="w-4 h-4"></i></span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            try {
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            } catch (e) {
+                console.error("Error creating lucide icons:", e);
+            }
+
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
+            const COURSE_ID = 16;
+
+            function parseProgressString(raw,totalLessons){
+                if(!raw||raw.trim()==="") return {completed:0,total:totalLessons,percent:0,scores:[],avgScore:0};
+                let safe=String(raw).trim().replace(/'/g,'"');
+                let scores=new Array(totalLessons).fill(null);
+                let completed=0;
+                try{
+                    const p=JSON.parse(safe);
+                    if(p&&typeof p==='object'){
+                        if(p.progress&&Array.isArray(p.progress)) completed=p.progress.length;
+                        else if(typeof p.completed==='number') completed=p.completed;
+                        const src=p.scores||p;
+                        if(Array.isArray(src)){ for(let i=0;i<src.length&&i<totalLessons;i++) scores[i]=Number(src[i]); }
+                        else if(typeof src==='object'){ for(let k in src){ let idx=parseInt(k); if(!isNaN(idx)&&idx>=0&&idx<totalLessons) scores[idx]=Number(src[k]); } }
+                    }
+                }catch(e){
+                    if(safe.includes(',')){ let parts=safe.split(','); parts.forEach((p,i)=>{ if(i<totalLessons) scores[i]=Number(p.trim()); }); }
+                    else { let n=parseFloat(safe); if(!isNaN(n)){ if(safe.includes('%')||n<=100) completed=Math.round((n/100)*totalLessons); else completed=n; scores[0]=n; } }
+                }
+                let valid=scores.filter(n=>n!==null&&!isNaN(n));
+                if(completed===0&&valid.length>0) completed=valid.length;
+                completed=Math.min(Math.max(0,completed),totalLessons);
+                return {scores};
+            }
+
+            function ping(action, key) {
+                try {
+                    const data = new URLSearchParams({
+                        action,
+                        key
+                    });
+                    if (navigator.sendBeacon) {
+                        navigator.sendBeacon(SCRIPT_URL, data);
+                    } else {
+                        fetch(SCRIPT_URL, {
+                            method: 'POST',
+                            body: data,
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            }
+                        });
+                    }
+                } catch (e) {
+                    console.error('Ping error:', e);
+                }
+            }
+
+            async function loadPageData() {
+                try {
+                    const response = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
+                    if (!response.ok) return null;
+                    const data = await response.json();
+                    if (data.status === 'success' && data.stats) {
+                        return { stats: data.stats || {}, userProgress: data.userProgress || {}, completionDates: data.userCourseCompletionDates || {} };
+                    }
+                } catch (error) {
+                    console.error("Error loading page data:", error);
+                }
+                return null;
+            }
+
+            function applyGlow(card) {
+                if (!card) return;
+                const isManual = card.querySelector('.badge-manual');
+                card.classList.remove('glow-manual', 'glow-practica');
+                if (isManual) {
+                    card.classList.add('glow-manual');
+                } else {
+                    card.classList.add('glow-practica');
+                }
+            }
+
+            function updatePageData(pageData) {
+                if (!pageData) return;
+                const { stats, userProgress } = pageData;
+                const currentUser = JSON.parse(localStorage.getItem('user'));
+                const downloadedFiles = (currentUser && Array.isArray(currentUser.downloadedFiles)) ? currentUser
+                    .downloadedFiles : [];
+
+                document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
+                    const countSpan = card.querySelector('.file-download-count');
+                    if (countSpan) {
+                        const fileName = countSpan.dataset.fileName;
+                        if (fileName) {
+                            if (stats) {
+                                const statKey =
+                                    `descarga_curso_${COURSE_ID}_${fileName.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                                countSpan.innerText = stats[statKey] || 0;
+                            }
+                            if (downloadedFiles.includes(fileName)) {
+                                applyGlow(card);
+                            }
+                        }
+                    }
+                });
+
+                if (currentUser && userProgress) {
+                    const email = currentUser.email.toLowerCase();
+                    const courseName = "AutomatizaciÃ³n y control Aplicado (MAESTRÃA) (Presencial)";
+                    const courseProgressRaw = userProgress[email] ? (userProgress[email][courseName] || "") : "";
+                    const progressData = parseProgressString(courseProgressRaw, 5);
+                    const scores = progressData.scores || [];
+
+                    document.querySelectorAll('a.material-card[data-module-id]').forEach(card => {
+                        const moduleId = parseInt(card.dataset.moduleId, 10);
+                        const scoreBadge = card.querySelector('.test-score-badge');
+                        
+                        if (!isNaN(moduleId) && scoreBadge) {
+                            const score = scores[moduleId];
+                            
+                            if (score !== null && score !== undefined && !isNaN(score)) {
+                                if (score >= 70) {
+                                    scoreBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i> <span class="text-green-600 font-bold">Aprobado: ${score}%</span>`;
+                                    scoreBadge.classList.add('!bg-green-500/10', '!border-green-500/20');
+                                } else {
+                                    scoreBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i> <span class="text-red-600 font-bold">Reprobado: ${score}%</span>`;
+                                    scoreBadge.classList.add('!bg-red-500/10', '!border-red-500/20');
+                                }
+                            } else {
+                                scoreBadge.innerHTML = `<i class="fas fa-edit text-slate-500"></i> <span>Realizar Test</span>`;
+                            }
+                        }
+                    });
+                }
+            }
+
+            function setupClickListeners() {
+                document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        const countSpan = card.querySelector('.file-download-count');
+                        if (countSpan) {
+                            const fileName = countSpan.dataset.fileName;
+                            countSpan.innerText = (parseInt(countSpan.innerText, 10) || 0) + 1;
+                            const statKey =
+                                `descarga_curso_${COURSE_ID}_${fileName.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                            ping('update_stat', statKey);
+                            ping('update_stat', 'descargas_totales');
+
+                            const currentUser = JSON.parse(localStorage.getItem('user'));
+                            if (currentUser) {
+                                if (!Array.isArray(currentUser.downloadedFiles)) currentUser
+                                    .downloadedFiles = [];
+                                if (!currentUser.downloadedFiles.includes(fileName)) {
+                                    currentUser.downloadedFiles.push(fileName);
+                                    localStorage.setItem('user', JSON.stringify(currentUser));
+                                }
+                            }
+                            applyGlow(card);
+                        }
+                    });
+                });
+            }
+            const SUBJECT_COURSE_NAMES = {
+                13: 'Automatización con contactores (DIPLOMADO) Presencial',
+                14: 'Automatización con PLC (DIPLOMADO) Presencial',
+                15: 'Automatización y control avanzado (MAESTRÍA) Presencial',
+                16: 'Automatización y control Aplicado (MAESTRÍA) Presencial',
+                17: 'Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial',
+                18: 'Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial'
+            };
+
+            const SUBJECT_TEST_BANK = [
+                {
+                    question: '¿Cuál es la función principal de un contactor o dispositivo de control en automatización?',
+                    options: ['Medir temperatura', 'Conmutar y controlar potencia de forma segura', 'Generar señal analógica', 'Convertir corriente AC a DC'],
+                    answer: 1
+                },
+                {
+                    question: 'En un esquema de control, ¿qué representa una lógica secuencial correcta?',
+                    options: ['Acciones sin orden', 'Pasos definidos con condiciones de transición', 'Solo una alarma', 'Un circuito sin entradas'],
+                    answer: 1
+                },
+                {
+                    question: '¿Qué práctica mejora la seguridad en tableros de automatización?',
+                    options: ['Eliminar protecciones', 'Trabajar energizado siempre', 'Etiquetar, proteger y verificar ausencia de tensión', 'Usar cable sin norma'],
+                    answer: 2
+                },
+                {
+                    question: '¿Qué indicador confirma mejor el desempeño del sistema automatizado?',
+                    options: ['Número de cables', 'Color de gabinete', 'Estabilidad operativa y cumplimiento de secuencia', 'Marca de los tornillos'],
+                    answer: 2
+                },
+                {
+                    question: 'Para resolver una falla intermitente, el método más útil es:',
+                    options: ['Cambiar todo el tablero', 'Diagnóstico por etapas y registro de eventos', 'Ignorar alarmas', 'Aumentar tensión de alimentación'],
+                    answer: 1
+                }
+            ];
+
+            function parseSubjectProgress(raw) {
+                const result = { progress: [0], scores: {} };
+                if (!raw || !String(raw).trim()) return result;
+
+                try {
+                    const parsed = JSON.parse(String(raw).replace(/'/g, '"'));
+                    if (parsed && typeof parsed === 'object') {
+                        if (Array.isArray(parsed.progress)) {
+                            result.progress = parsed.progress.map(Number).filter(n => !isNaN(n));
+                        }
+                        const src = parsed.scores || parsed;
+                        if (Array.isArray(src)) {
+                            src.forEach((v, i) => {
+                                const n = Number(v);
+                                if (!isNaN(n) && i > 0) result.scores[i] = n;
+                            });
+                        } else if (src && typeof src === 'object') {
+                            Object.keys(src).forEach(k => {
+                                const idx = Number(k);
+                                const n = Number(src[k]);
+                                if (!isNaN(idx) && !isNaN(n) && idx > 0) result.scores[idx] = n;
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.warn('No se pudo parsear progreso remoto de materia:', e);
+                }
+
+                if (!result.progress.includes(0)) result.progress.unshift(0);
+                return result;
+            }
+
+            function getSubjectAuth() {
+                const user = JSON.parse(localStorage.getItem('user') || 'null');
+                const auth = JSON.parse(localStorage.getItem('curso_auth') || 'null');
+                return {
+                    email: String((user && user.email) || (auth && auth.correo) || '').toLowerCase(),
+                    cedula: String((user && user.cedula) || (auth && auth.cedula) || '')
+                };
+            }
+
+            function syncSubjectProgress(state) {
+                const courseName = SUBJECT_COURSE_NAMES[COURSE_ID];
+                const auth = getSubjectAuth();
+                if (!courseName || !auth.email) return;
+
+                const payload = JSON.stringify({
+                    progress: state.progress,
+                    scores: state.scores,
+                    completed: state.progress.length
+                });
+
+                fetch(`${SCRIPT_URL}?action=save_course_progress&correo=${encodeURIComponent(auth.email)}&cedula=${encodeURIComponent(auth.cedula)}&curso=${encodeURIComponent(courseName)}&data=${encodeURIComponent(payload)}`, {
+                    method: 'GET',
+                    mode: 'no-cors'
+                }).catch(err => console.error('Error sincronizando test de materia:', err));
+            }
+
+            async function saveSubjectCompletionToSheet(completionDateIso) {
+                const courseName = SUBJECT_COURSE_NAMES[COURSE_ID];
+                const auth = getSubjectAuth();
+                if (!courseName || !auth.email) return;
+
+                try {
+                    const formData = new URLSearchParams();
+                    formData.append('action', 'save_course_completion');
+                    formData.append('email', auth.email);
+                    formData.append('courseName', courseName);
+                    formData.append('completionDate', completionDateIso || new Date().toISOString());
+
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        body: formData,
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    });
+                } catch (e) {
+                    console.error('Error guardando culminación de materia:', e);
+                }
+            }
+
+            function initSubjectTests(pageData) {
+                if (COURSE_ID < 13 || COURSE_ID > 18) return;
+
+                const section = Array.from(document.querySelectorAll('section')).find(s => s.textContent.includes('Cuestionarios y Test'));
+                if (!section) return;
+
+                const moduleCards = Array.from(section.querySelectorAll('a.material-card[data-module-id]'));
+                if (!moduleCards.length) return;
+
+                const PASS_SCORE = 70;
+                const storageKey = `subject_test_progress_${COURSE_ID}`;
+                const completionKey = `subject_test_completion_sent_${COURSE_ID}`;
+                const state = { progress: [0], scores: {} };
+                let completionSynced = localStorage.getItem(completionKey) === '1';
+
+                const mergeState = (incoming) => {
+                    if (!incoming) return;
+                    Object.keys(incoming.scores || {}).forEach(k => {
+                        const idx = Number(k);
+                        const value = Number(incoming.scores[k]);
+                        if (!isNaN(idx) && !isNaN(value) && idx > 0) {
+                            state.scores[idx] = Math.max(Number(state.scores[idx] || 0), value);
+                        }
+                    });
+                };
+
+                const localState = JSON.parse(localStorage.getItem(storageKey) || 'null');
+                if (localState && typeof localState === 'object') mergeState({ scores: localState.scores || {} });
+
+                try {
+                    const currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+                    const email = currentUser && currentUser.email ? String(currentUser.email).toLowerCase() : '';
+                    const courseName = SUBJECT_COURSE_NAMES[COURSE_ID];
+                    const remoteRaw = (pageData && pageData.userProgress && pageData.userProgress[email] && courseName)
+                        ? (pageData.userProgress[email][courseName] || '')
+                        : '';
+                    mergeState(parseSubjectProgress(remoteRaw));
+
+                    const remoteCompletionByEmail = (pageData && pageData.completionDates && pageData.completionDates[email])
+                        ? pageData.completionDates[email]
+                        : {};
+                    const hasRemoteCompletion = Boolean(remoteCompletionByEmail && remoteCompletionByEmail[courseName]);
+                    if (hasRemoteCompletion) {
+                        completionSynced = true;
+                        localStorage.setItem(completionKey, '1');
+                    }
+                } catch (e) {
+                    console.warn('No se pudo mezclar progreso remoto de materia:', e);
+                }
+
+                const recalculateProgress = () => {
+                    state.progress = [0];
+                    moduleCards.forEach(card => {
+                        const moduleId = Number(card.dataset.moduleId);
+                        const score = Number(state.scores[moduleId]);
+                        if (!isNaN(moduleId) && !isNaN(score) && score >= PASS_SCORE) {
+                            state.progress.push(moduleId);
+                        }
+                    });
+                };
+
+                const saveLocal = () => {
+                    localStorage.setItem(storageKey, JSON.stringify(state));
+                };
+
+                const updateCardBadges = () => {
+                    moduleCards.forEach(card => {
+                        const moduleId = Number(card.dataset.moduleId);
+                        const scoreBadge = card.querySelector('.test-score-badge');
+                        if (!scoreBadge || isNaN(moduleId)) return;
+
+                        const score = Number(state.scores[moduleId]);
+                        scoreBadge.classList.remove('!bg-green-500/10', '!border-green-500/20', '!bg-red-500/10', '!border-red-500/20');
+
+                        if (!isNaN(score) && score >= PASS_SCORE) {
+                            scoreBadge.innerHTML = `<i class="fas fa-check-circle text-green-500"></i> <span class="text-green-600 font-bold">Aprobado: ${score}%</span>`;
+                            scoreBadge.classList.add('!bg-green-500/10', '!border-green-500/20');
+                        } else if (!isNaN(score)) {
+                            scoreBadge.innerHTML = `<i class="fas fa-times-circle text-red-500"></i> <span class="text-red-600 font-bold">Reprobado: ${score}%</span>`;
+                            scoreBadge.classList.add('!bg-red-500/10', '!border-red-500/20');
+                        } else {
+                            scoreBadge.innerHTML = `<i class="fas fa-edit text-slate-500"></i> <span>Realizar Test</span>`;
+                        }
+                    });
+                };
+
+                const grid = section.querySelector('.grid');
+                if (!grid) return;
+
+                let root = section.querySelector('#subject-tests-root');
+                if (!root) {
+                    root = document.createElement('div');
+                    root.id = 'subject-tests-root';
+                    root.className = 'mt-8 rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-sm';
+                    root.innerHTML = `
+                        <h3 class="text-sm sm:text-base font-black uppercase tracking-wide text-slate-900 mb-4">Tests por tema</h3>
+                        <div id="subject-test-tabs" class="flex flex-wrap gap-2 mb-4"></div>
+                        <div id="subject-test-panel" class="rounded-xl border border-slate-200 bg-slate-50 p-4"></div>
+                    `;
+                    grid.insertAdjacentElement('afterend', root);
+                }
+
+                const tabsWrap = root.querySelector('#subject-test-tabs');
+                const panel = root.querySelector('#subject-test-panel');
+                if (!tabsWrap || !panel) return;
+
+                const getQuizFor = (moduleTitle) => SUBJECT_TEST_BANK.map((q, idx) => ({
+                    question: `${q.question} (${moduleTitle} - Pregunta ${idx + 1})`,
+                    options: q.options,
+                    answer: q.answer
+                }));
+
+                const tabs = moduleCards.map(card => {
+                    const moduleId = Number(card.dataset.moduleId);
+                    const titleNode = card.querySelector('.card-title');
+                    const label = titleNode ? titleNode.textContent.replace(/^Test:\s*/i, '').trim() : `Tema ${moduleId}`;
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'px-3 py-2 rounded-lg border text-xs sm:text-sm font-black tracking-wide uppercase transition border-slate-300 text-slate-700 hover:bg-slate-100';
+                    btn.textContent = `Test ${moduleId}`;
+                    btn.dataset.moduleId = String(moduleId);
+                    tabsWrap.appendChild(btn);
+                    return { moduleId, label, btn };
+                });
+
+                const setActiveTab = (moduleId) => {
+                    tabs.forEach(t => {
+                        const active = t.moduleId === moduleId;
+                        t.btn.className = active
+                            ? 'px-3 py-2 rounded-lg border text-xs sm:text-sm font-black tracking-wide uppercase transition border-cyan-500 bg-cyan-500 text-white'
+                            : 'px-3 py-2 rounded-lg border text-xs sm:text-sm font-black tracking-wide uppercase transition border-slate-300 text-slate-700 hover:bg-slate-100';
+                    });
+                };
+
+                const renderPanel = (moduleId) => {
+                    const activeTab = tabs.find(t => t.moduleId === moduleId);
+                    if (!activeTab) return;
+
+                    const quiz = getQuizFor(activeTab.label);
+                    const prevScore = Number(state.scores[moduleId]);
+
+                    panel.innerHTML = `
+                        <div class="flex flex-col gap-3">
+                            <div>
+                                <h4 class="text-sm sm:text-base font-black text-slate-900">${activeTab.label}</h4>
+                                <p class="text-xs sm:text-sm text-slate-600">Responde ${quiz.length} preguntas. Necesitas ${PASS_SCORE}% para aprobar.</p>
+                            </div>
+                            <form id="subject-test-form" class="space-y-4"></form>
+                            <div id="subject-test-result" class="text-xs sm:text-sm font-bold"></div>
+                        </div>
+                    `;
+
+                    const form = panel.querySelector('#subject-test-form');
+                    const resultNode = panel.querySelector('#subject-test-result');
+                    if (!form || !resultNode) return;
+
+                    form.innerHTML = quiz.map((q, qIdx) => `
+                        <fieldset class="rounded-lg border border-slate-200 bg-white p-3">
+                            <legend class="text-xs sm:text-sm font-bold text-slate-800 mb-2">${qIdx + 1}. ${q.question}</legend>
+                            <div class="grid gap-2">
+                                ${q.options.map((opt, optIdx) => `
+                                    <label class="flex items-start gap-2 text-xs sm:text-sm text-slate-700">
+                                        <input type="radio" name="q_${qIdx}" value="${optIdx}" class="mt-0.5">
+                                        <span>${opt}</span>
+                                    </label>
+                                `).join('')}
+                            </div>
+                        </fieldset>
+                    `).join('') + `
+                        <button type="submit" class="w-full sm:w-auto px-4 py-2 rounded-lg bg-slate-900 text-white text-xs sm:text-sm font-black uppercase tracking-wide hover:bg-slate-800 transition">Enviar test</button>
+                    `;
+
+                    if (!isNaN(prevScore)) {
+                        resultNode.className = prevScore >= PASS_SCORE
+                            ? 'text-xs sm:text-sm font-bold text-green-600'
+                            : 'text-xs sm:text-sm font-bold text-red-600';
+                        resultNode.textContent = prevScore >= PASS_SCORE
+                            ? `Resultado guardado: ${prevScore}% (Aprobado)`
+                            : `Resultado guardado: ${prevScore}% (Reprobado)`;
+                    }
+
+                    form.addEventListener('submit', (ev) => {
+                        ev.preventDefault();
+                        let correct = 0;
+
+                        for (let i = 0; i < quiz.length; i += 1) {
+                            const selected = form.querySelector(`input[name="q_${i}"]:checked`);
+                            if (!selected) {
+                                resultNode.className = 'text-xs sm:text-sm font-bold text-amber-600';
+                                resultNode.textContent = 'Debes responder todas las preguntas antes de enviar.';
+                                return;
+                            }
+                            if (Number(selected.value) === quiz[i].answer) correct += 1;
+                        }
+
+                        const score = Math.round((correct / quiz.length) * 100);
+                        const previousBest = Number(state.scores[moduleId]);
+                        state.scores[moduleId] = isNaN(previousBest) ? score : Math.max(previousBest, score);
+
+                        recalculateProgress();
+                        saveLocal();
+                        syncSubjectProgress(state);
+                        updateCardBadges();
+                        trySendCompletion();
+
+                        const approved = score >= PASS_SCORE;
+                        resultNode.className = approved
+                            ? 'text-xs sm:text-sm font-bold text-green-600'
+                            : 'text-xs sm:text-sm font-bold text-red-600';
+                        resultNode.textContent = approved
+                            ? `Aprobado con ${score}%. Tu mejor nota quedó guardada.`
+                            : `Obtuviste ${score}%. Necesitas ${PASS_SCORE}% para aprobar.`;
+                    });
+                };
+
+                moduleCards.forEach(card => {
+                    card.addEventListener('click', (ev) => {
+                        ev.preventDefault();
+                        const moduleId = Number(card.dataset.moduleId);
+                        if (isNaN(moduleId)) return;
+                        setActiveTab(moduleId);
+                        renderPanel(moduleId);
+                        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    });
+                });
+
+                tabs.forEach(tab => {
+                    tab.btn.addEventListener('click', () => {
+                        setActiveTab(tab.moduleId);
+                        renderPanel(tab.moduleId);
+                    });
+                });
+
+                recalculateProgress();
+                saveLocal();
+                updateCardBadges();
+                syncSubjectProgress(state);
+
+                const trySendCompletion = async () => {
+                    const allApproved = state.progress.length >= (moduleCards.length + 1);
+                    if (!allApproved || completionSynced) return;
+                    completionSynced = true;
+                    localStorage.setItem(completionKey, '1');
+                    await saveSubjectCompletionToSheet(new Date().toISOString());
+                };
+
+                trySendCompletion();
+
+                if (tabs.length) {
+                    setActiveTab(tabs[0].moduleId);
+                    renderPanel(tabs[0].moduleId);
+                }
+            }
+            async function main() {
+                setupClickListeners();
+                const pageData = await loadPageData();
+                updatePageData(pageData);
+                initSubjectTests(pageData);
+            }
+
+            main();
+        });
+    </script>
+    <script src="js/auth.js">
+    </script>
+    <script src="js/navbar.js">
+    </script>
+    <script src="js/footer.js">
+    </script>
+</body>
+</html>
+
+

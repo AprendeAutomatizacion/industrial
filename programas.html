@@ -81,6 +81,23 @@
             color: var(--text-default);
         }
 
+        body.light-mode .hero-main-title {
+            color: #000000 !important;
+        }
+        body.light-mode .hero-main-title .text-secondary {
+            color: #2db8ce !important;
+            text-shadow: none !important;
+            opacity: 1 !important;
+        }
+        body.light-mode #page-programas > header .absolute.inset-0.z-0 {
+            background-color: rgba(79, 111, 141, 0.45);
+        }
+        body.light-mode #page-programas > header .absolute.inset-0.z-0 img {
+            filter: brightness(0.58) contrast(1.05) saturate(0.9);
+            opacity: 0.85 !important;
+            mix-blend-mode: multiply;
+        }
+
         /* --- Estilos movidos desde index.html y adaptados a variables --- */
 
         body {
@@ -350,6 +367,84 @@
 
         body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
         body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
+
+        /* Botones metalicos (unificados con Mis Cursos) */
+        .btn-metal-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            padding: 0.85rem 1.8rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: #ffffff !important;
+            border: none !important;
+            outline: none;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(180deg, #b0c4de 0%, #7a8fa6 8%, #4a6078 20%, #2d4a5e 40%, #1e3a4f 60%, #1a3142 100%);
+        }
+        .btn-metal-solid::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 10%;
+            width: 80%;
+            height: 35%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+        .btn-metal-solid:hover {
+            background: linear-gradient(180deg, #c0d4e8 0%, #8a9fb6 8%, #5a7088 20%, #3d5a6e 40%, #2e4a5f 60%, #243e52 100%);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .btn-metal-solid:active {
+            transform: scale(0.96);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(180deg, #1a3142 0%, #1e3a4f 40%, #2d4a5e 60%, #4a6078 100%);
+        }
+
+        .btn-metal-cyan {
+            background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-cyan::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
+        .btn-metal-cyan:hover {
+            background: linear-gradient(180deg, #b0e0f0 0%, #6bc8d8 8%, #3daabe 20%, #2a8d9e 40%, #1f7488 60%, #155f70 100%);
+            box-shadow: 0 10px 24px rgba(15, 100, 120, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .btn-metal-cyan:active {
+            background: linear-gradient(180deg, #0b4f60 0%, #0f6478 40%, #1a7d91 60%, #2d9aae 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-metal-teal {
+            background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-teal::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
+        .btn-metal-teal:hover {
+            background: linear-gradient(180deg, #b0f0e0 0%, #6bd8c8 8%, #3dbeae 20%, #2a9d8e 40%, #1f8878 60%, #157060 100%);
+            box-shadow: 0 10px 24px rgba(15, 100, 90, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .btn-metal-teal:active {
+            background: linear-gradient(180deg, #0b6050 0%, #0f7868 40%, #1a9180 60%, #2daa9a 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
     </style>
     <style>
         /* Sobrescribir la imagen de fondo global solo para esta página */
@@ -390,7 +485,7 @@
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Descargas</span>
                 <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Herramientas</span>
             </div>
-            <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">PROGRAMAS</h1>
+            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">PROGRAMAS</h1>
             <p class="text-lg md:text-xl text-blue-50 max-w-2xl drop-shadow-md font-medium">Descarga los simuladores y programas de automatización que utilizaremos.</p>
         </div>
     </header>
@@ -529,10 +624,10 @@
             let btnContent, btnClass;
             if (currentUser) {
                 btnContent = `<i data-lucide="download" class="w-4 h-4"></i> Descargar Ahora`;
-                btnClass = 'btn-metal btn-green !text-[10px]';
+                btnClass = 'btn-metal-solid btn-metal-cyan py-2 rounded-xl text-[8px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2';
             } else {
                 btnContent = `<i data-lucide="lock" class="w-4 h-4"></i> Ingresar para descargar`;
-                btnClass = 'btn-metal btn-slate !text-[10px]';
+                btnClass = 'btn-metal-solid btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2';
             }
 
             const softwareKey = `${prog.name} ${prog.version}`;

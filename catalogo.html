@@ -40,6 +40,22 @@
             scroll-behavior: smooth;
             overflow-x: clip;
         }
+        body.light-mode .hero-main-title {
+            color: #000000 !important;
+        }
+        body.light-mode .hero-main-title .text-secondary {
+            color: #2db8ce !important;
+            text-shadow: none !important;
+            opacity: 1 !important;
+        }
+        body.light-mode #page-cursos > header .absolute.inset-0.z-0 {
+            background-color: rgba(79, 111, 141, 0.45);
+        }
+        body.light-mode #page-cursos > header .absolute.inset-0.z-0 img {
+            filter: brightness(0.58) contrast(1.05) saturate(0.9);
+            opacity: 0.85 !important;
+            mix-blend-mode: multiply;
+        }
         .animate-on-hover {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
@@ -484,8 +500,8 @@
 
     <div id="page-cursos" class="min-h-screen">
         <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
-            <div class="absolute inset-0 z-0">
-                <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover opacity-30 mix-blend-soft-light" loading="lazy">
+            <div class="absolute inset-0 z-0 opacity-40">
+                <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
             </div>
             <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
                 <i class="fas fa-th-large"></i>
@@ -500,7 +516,7 @@
                     <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Contactores</span>
                     <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Arranques</span>
                 </div>
-            <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">CURSOS Y MANUALES <span class="text-secondary">OFERTADOS</span></h1>
+            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">CURSOS Y MANUALES <span class="text-secondary">OFERTADOS</span></h1>
                 <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">
                     Explora nuestra oferta académica y descubre el contenido técnico diseñado para impulsar tu futuro profesional en la automatización.
                 </p>

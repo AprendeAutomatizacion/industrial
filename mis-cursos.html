@@ -108,6 +108,23 @@
 
         .section-title { color: var(--text-default); }
 
+        body.light-mode .hero-main-title {
+            color: #000000 !important;
+        }
+        body.light-mode .hero-main-title .text-secondary {
+            color: #2db8ce !important;
+            text-shadow: none !important;
+            opacity: 1 !important;
+        }
+        body.light-mode #page-mis-cursos > header .absolute.inset-0.z-0 {
+            background-color: rgba(79, 111, 141, 0.45);
+        }
+        body.light-mode #page-mis-cursos > header .absolute.inset-0.z-0 img {
+            filter: brightness(0.58) contrast(1.05) saturate(0.9);
+            opacity: 0.85 !important;
+            mix-blend-mode: multiply;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-default);
@@ -292,7 +309,7 @@
                     <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Aprendizaje</span>
                     <span id="page-view-counter" class="hidden items-center gap-1.5 bg-slate-500/20 px-3 py-1 rounded-full text-slate-300 border border-slate-500/30 backdrop-blur-md"><i class="fas fa-eye"></i> <span>0</span></span>
                 </div>
-                <h1 class="text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">MIS CURSOS <span class="text-secondary">ADQUIRIDOS</span></h1>
+                <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">MIS CURSOS <span class="text-secondary">ADQUIRIDOS</span></h1>
                 <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">Accede a toda la información, ejercicios, manuales y contenido de los cursos que has adquirido.</p>
             </div>
         </header>
@@ -384,12 +401,12 @@
             { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/mis-cursos/contactores", totalLessons: 5, resumen: "Talleres en laboratorio físico. Realizaremos montajes en gabinetes didácticos.", manuales: [{name: "Guía de Uso del Multímetro", link: "#"}], ejercicios: [{name: "Laboratorio: Mando a Distancia", link: "#"}] },
             { id: 11, name: "Automatización Con PLC LOGO! Presencial", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-logo", totalLessons: 4, resumen: "Aprende a conectar las entradas y salidas de un PLC físico.", manuales: [{name: "Diagrama de Conexión NPN y PNP", link: "#"}], ejercicios: [{name: "Laboratorio: Control de Llenado con Sensores", link: "#"}] },
             { id: 12, name: "Automatización con PLC – Método Grafcet Presencial", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", totalLessons: 6, resumen: "Controlaremos estaciones didácticas neumáticas implementando programación basada en Grafcet.", manuales: [{name: "Esquemas Neumáticos del Laboratorio", link: "#"}], ejercicios: [{name: "Laboratorio: Secuencia Neumática A+ B+ A- B-", link: "#"}] },
-            { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 150.00, link: "#", totalLessons: 1, resumen: "Diplomado intensivo en automatización con contactores.", manuales: [], ejercicios: [], moduleNames: ["Diplomado en Contactores"] },
-            { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "#", totalLessons: 1, resumen: "Diplomado avanzado en PLCs.", manuales: [], ejercicios: [], moduleNames: ["Diplomado en PLC"] },
-            { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 1, resumen: "Maestría en automatización y control avanzado.", manuales: [], ejercicios: [], moduleNames: ["Módulo Maestría Avanzada"] },
-            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 1, resumen: "Maestría en automatización y control aplicado.", manuales: [], ejercicios: [], moduleNames: ["Módulo Maestría Aplicada"] },
-            { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii", totalLessons: 1, resumen: "Seguimiento de notas del taller de Tecnología Eléctrica III. Consulta tus evaluaciones y avances.", manuales: [], ejercicios: [], moduleNames: ["Notas del Taller"] },
-            { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html", totalLessons: 1, resumen: "Notas del Proyecto V.", manuales: [], ejercicios: [], moduleNames: ["Avances del Proyecto"] },
+            { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 150.00, link: "#", totalLessons: 5, resumen: "Diplomado intensivo en automatización con contactores.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
+            { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "#", totalLessons: 5, resumen: "Diplomado avanzado en PLCs.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
+            { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 5, resumen: "Maestría en automatización y control avanzado.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
+            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 5, resumen: "Maestría en automatización y control aplicado.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
+            { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii", totalLessons: 5, resumen: "Seguimiento de notas del taller de Tecnología Eléctrica III. Consulta tus evaluaciones y avances.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
+            { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html", totalLessons: 5, resumen: "Notas del Proyecto V.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Test Tema 1", "Test Tema 2", "Test Tema 3", "Test Tema 4"] },
             { 
                 id: 19, name: "Arranque de motores con contactores Manual", type: "Manual", desc: "Manual completo sobre el arranque y control de motores usando contactores.", image: "https://i.postimg.cc/WpST30hz/tablerogif.gif", category: "Electricidad", level: "Básico", cost: 5.00, link: "#", totalLessons: 1,
                 manuales: [{name: "Manual de Arranque de motores con contactores (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1V4PGjDVVFRNIo8nJCupBgiimdz7820ql"}],
@@ -409,6 +426,39 @@
                 manuales: [{name: "Manual de Automatización con Contactores (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20Contactores"}]
             }
         ];
+
+        const MATERIAL_PAGE_BY_ID = {
+            1: '1-arranque-contactores-material.html',
+            2: '2-arranque-plc-logo-material.html',
+            3: '3-compuertas-factory-plc-material.html',
+            4: '4-auto-contactores-on-material.html',
+            5: '5-auto-plc-logo-on-material.html',
+            6: '6-auto-plc-grafcet-on-material.html',
+            7: '7-10-Ejer-auto-contactores-on-material.html',
+            8: '8-10-ejer-auto-plc-logo-on-material.html',
+            9: '9-auto-industrial-pre-material.html',
+            10: '10-auto-contactores-pre-material.html',
+            11: '11-auto-plc-logo-pre-material.html',
+            12: '12-auto-plc-grafcet-pre-material.html',
+            13: '13-auto-contactores-pre-material - diplomado.html',
+            14: '14-auto-plc-logo-pre-material - diplomado.html',
+            15: '15-auto-control-avanzado-pre-material - maestria.html',
+            16: '16-auto-control-aplicado-pre-material - maestria.html',
+            17: '17-Taller-III-pregrado-material.html',
+            18: '18-Sist-hid-Neu-pregrado-material.html',
+            19: '19-Manual-arranque-contactores-material.html',
+            20: '20-auto-plc-basico-on-material.html',
+            21: '21-Manual-auto-contactores-on-material.html'
+        };
+
+        function openCourseMaterial(courseId) {
+            const materialPage = MATERIAL_PAGE_BY_ID[courseId];
+            if (materialPage) {
+                window.location.href = materialPage;
+                return;
+            }
+            grantAccess(courseId);
+        }
 
         const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
         const normalizeName = s => (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^\w\s]/g,'').replace(/\s+/g,' ');
@@ -697,16 +747,12 @@
                 
                 let buttonsHTML = '';
                 if (isManual) {
-                    buttonsHTML = `<button type="button" onclick="grantAccess(${course.id}); event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
+                    buttonsHTML = `<button type="button" onclick="openCourseMaterial(${course.id}); event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
                     if (course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#') {
                         buttonsHTML += `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
                     }
                 } else {
-                    const materialesOnClick = course.id === 1
-                        ? `window.location.href='1-arranque-contactores-material.html'`
-                        : (course.id === 2
-                            ? `window.location.href='2-arranque-plc-logo-material.html'`
-                            : `grantAccess(${course.id})`);
+                    const materialesOnClick = `openCourseMaterial(${course.id})`;
 
                     buttonsHTML = `<button type="button" onclick="${materialesOnClick}; event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
                     ${course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
