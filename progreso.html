@@ -366,6 +366,10 @@
         .achievement-card:hover {
             transform: translateY(-2px);
         }
+        .course-progress-card-achievement-focus {
+            box-shadow: 0 0 0 2px rgba(45, 184, 206, 0.9), 0 0 28px rgba(45, 184, 206, 0.35);
+            transition: box-shadow 0.35s ease;
+        }
 
         /* Dark mode overrides para las tarjetas */
         body:not(.light-mode) .course-card {
@@ -791,7 +795,7 @@
                 .replace(/\s{2,}/g, ' ')
                 .trim();
             return `
-            <div class="achievement-card">
+            <button type="button" class="achievement-card cursor-pointer w-full text-inherit text-left" onclick="focusProgressCard(${item.course.id})" aria-label="Ver progreso de ${achievementCourseName}">
                 <div class="h-full flex flex-col items-center justify-between text-center gap-2">
                     <div class="w-10 h-10 rounded-full bg-yellow-400/20 flex items-center justify-center flex-shrink-0 text-2xl">
                     ${icon}
@@ -799,8 +803,18 @@
                     <p class="achievement-card-title text-white text-[11px] font-bold leading-tight">${achievementCourseName}</p>
                     <span class="text-teal-400 text-sm font-black whitespace-nowrap">${item.avgScore}%</span>
                 </div>
-            </div> 
+            </button> 
         `}).join('');
+    }
+
+    function focusProgressCard(courseId) {
+        const targetCard = document.querySelector(`.course-progress-card[data-course-id="${courseId}"]`);
+        if (!targetCard) return;
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        targetCard.classList.add('course-progress-card-achievement-focus');
+        setTimeout(() => {
+            targetCard.classList.remove('course-progress-card-achievement-focus');
+        }, 1800);
     }
 
     function renderUserProgress() {
@@ -938,7 +952,7 @@
             });
 
             const cardHtml = `
-                <div class="course-progress-card bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 reveal reveal-up">
+                <div class="course-progress-card bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 reveal reveal-up" data-course-id="${course.id}">
                     <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
                         <h3 class="course-progress-title text-white font-black uppercase tracking-tighter text-sm flex items-center gap-3">
                             <i class="fas fa-book-open text-blue-200"></i> ${course.name}
