@@ -35,6 +35,78 @@ const footerHTML = `
 
 document.body.insertAdjacentHTML('beforeend', footerHTML);
 
+const mojibakeFixMap = new Map([
+    ['Ã¡', 'á'], ['Ã©', 'é'], ['Ã­', 'í'], ['Ã³', 'ó'], ['Ãº', 'ú'],
+    ['Ã', 'Á'], ['Ã‰', 'É'], ['Ã', 'Í'], ['Ã“', 'Ó'], ['Ãš', 'Ú'],
+    ['Ã±', 'ñ'], ['Ã‘', 'Ñ'], ['Ã¼', 'ü'], ['Ãœ', 'Ü'],
+    ['Â¿', '¿'], ['Â¡', '¡'], ['Â·', '·'], ['Âº', 'º'], ['Âª', 'ª'],
+    ['â€“', '–'], ['â€”', '—'], ['â€˜', '‘'], ['â€™', '’'], ['â€œ', '“'], ['â€', '”'],
+    ['â€¢', '•'], ['â€¦', '…'], ['âœ…', '✅'], ['âŒ', '❌'], ['â³', '⏳']
+]);
+
+function repairMojibakeText(text) {
+    if (!text || (!text.includes('Ã') && !text.includes('Â') && !text.includes('â'))) return text;
+    let repaired = text;
+    mojibakeFixMap.forEach((value, key) => {
+        repaired = repaired.split(key).join(value);
+    });
+    return repaired;
+}
+
+function repairMojibakeInDom(root = document.body) {
+    if (!root) return;
+
+    if (document.title) {
+        document.title = repairMojibakeText(document.title);
+    }
+
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode(node) {
+            if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+            const parentTag = node.parentElement ? node.parentElement.tagName : '';
+            if (['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(parentTag)) return NodeFilter.FILTER_REJECT;
+            return NodeFilter.FILTER_ACCEPT;
+        }
+    });
+
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(node => {
+        const fixed = repairMojibakeText(node.nodeValue);
+        if (fixed !== node.nodeValue) node.nodeValue = fixed;
+    });
+
+    root.querySelectorAll('*').forEach(el => {
+        ['title', 'alt', 'placeholder', 'aria-label', 'download', 'value'].forEach(attr => {
+            if (!el.hasAttribute(attr)) return;
+            const raw = el.getAttribute(attr);
+            const fixed = repairMojibakeText(raw);
+            if (fixed !== raw) el.setAttribute(attr, fixed);
+        });
+    });
+}
+
+repairMojibakeInDom();
+
+const mojibakeObserver = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+        mutation.addedNodes.forEach(node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const fixed = repairMojibakeText(node.nodeValue);
+                if (fixed !== node.nodeValue) node.nodeValue = fixed;
+                return;
+            }
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                repairMojibakeInDom(node);
+            }
+        });
+    });
+});
+
+if (document.body) {
+    mojibakeObserver.observe(document.body, { childList: true, subtree: true });
+}
+
 function updateFooterAdminUI() {
     const user = JSON.parse(localStorage.getItem('user'));
     const adminEmails = ['pablocdno@gmail.com'];

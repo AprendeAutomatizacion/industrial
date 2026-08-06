@@ -125,6 +125,11 @@
         body.light-mode .font-display {
             text-shadow: none !important;
         }
+
+        /* Forzar texto de progreso a blanco en ambos temas (Mis Cursos / Progreso) */
+        .progress-current-title {
+            color: #ffffff !important;
+        }
         
         /* Sobrescrituras Modo Oscuro (Predeterminado) */
         body:not(.light-mode) { 
