@@ -8,10 +8,10 @@ const AuthLogic = {
     pendingAction: null,
 
     // Usar SCRIPT_URL global si existe (de mis cursos), o el valor por defecto
-    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec',
+    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbwK46gf-I5HHJzTBzgjI2xqN6SuS3EFr9v2ZBAaqA9NS3DcG3E4vKDYYub2VuMWLMhZUA/exec',
 
     // Inicializar: Revisar si hay sesión guardada en localStorage
-    init: function() {
+    init: async function() {
         // Utilizamos 'user' como clave para compatibilidad con la app de Mis Cursos
         const savedSession = localStorage.getItem('user') || localStorage.getItem('aa_user_session');
         if (savedSession) {
@@ -19,6 +19,9 @@ const AuthLogic = {
                 this.currentUser = JSON.parse(savedSession);
                 window.currentUser = this.currentUser; // Sincronizar con la variable global de la página
                 console.log("AuthLogic.init: currentUser loaded from localStorage", this.currentUser);
+
+                // Al iniciar, refresca los datos del usuario desde el servidor para obtener los últimos cambios (ej. cursos inscritos).
+                await this.refreshSessionData();
             } catch (e) {
                 console.error("Error al leer sesión", e);
             }
@@ -31,6 +34,82 @@ const AuthLogic = {
     // Utilidad para normalizar nombres de cursos (usado para emparejar cursos de la DB)
     normalizeName: function(s) {
         return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ');
+    },
+
+    refreshSessionData: async function() {
+        if (!this.currentUser || !this.currentUser.email) return;
+
+        try {
+            const email = this.currentUser.email.toLowerCase();
+            
+            const response = await fetch(`${this.API_URL}?action=get_data&nocache=${Date.now()}`);
+            const data = await response.json();
+
+            if(data.status === 'success') {
+                let globalUser = data.users ? data.users[email] : null;
+                let details = data.userDetails ? data.userDetails[email] : {};
+
+                if (typeof globalUser === 'string') {
+                    try { globalUser = JSON.parse(globalUser); } catch(err) { globalUser = {}; }
+                }
+                globalUser = globalUser || {};
+
+                const originalUserJSON = JSON.stringify(this.currentUser);
+
+                // Consolidar fechas de culminación de todas las fuentes
+                const serverCompletionDates = (data.userCourseCompletionDates && data.userCourseCompletionDates[email]) ? data.userCourseCompletionDates[email] : {};
+                const globalUserCompletionDates = (globalUser.completionDates && typeof globalUser.completionDates === 'object') ? globalUser.completionDates : {};
+                const localCompletionDates = this.currentUser.completionDates || {};
+                // El orden importa: la data más fresca (del servidor) sobreescribe la local.
+                const mergedCompletionDates = {...localCompletionDates, ...globalUserCompletionDates, ...serverCompletionDates};
+
+                // Consolidar fechas de inscripción
+                const serverEnrollmentDates = (data.userCourseEnrollmentDates && data.userCourseEnrollmentDates[email]) ? data.userCourseEnrollmentDates[email] : {};
+                const localEnrollmentDates = this.currentUser.enrollmentDates || {};
+                const mergedEnrollmentDates = {...localEnrollmentDates, ...serverEnrollmentDates};
+
+                // Reconstruimos el objeto de usuario, similar a handleLogin, pero preservando la contraseña local
+                const refreshedUser = {
+                    name: (details.name && details.name !== "No provisto" && details.name !== "N/A") ? details.name : (globalUser.name || email.split('@')[0]),
+                    email: email,
+                    password: this.currentUser.password, // Preservar contraseña de la sesión actual
+                    profession: globalUser.profession || this.currentUser.profession || "",
+                    likedCourses: Array.isArray(globalUser.likedCourses) ? globalUser.likedCourses : (this.currentUser.likedCourses || []),
+                    accessedCursos: Array.isArray(this.currentUser.accessedCursos) ? [...this.currentUser.accessedCursos] : [], // Empezar con los cursos locales
+                    downloadedFiles: Array.isArray(globalUser.downloadedFiles) ? globalUser.downloadedFiles : (this.currentUser.downloadedFiles || []),
+                    downloadCounts: (globalUser.downloadCounts && typeof globalUser.downloadCounts === 'object') ? globalUser.downloadCounts : (this.currentUser.downloadCounts || {}),
+                    ratings: globalUser.ratings || this.currentUser.ratings || {},
+                    completionDates: mergedCompletionDates,
+                    enrollmentDates: mergedEnrollmentDates,
+                    cedula: details.cedula || this.currentUser.cedula || "N/A",
+                    telefono: details.telefono || this.currentUser.telefono || "N/A",
+                    pais: details.pais || this.currentUser.pais || "N/A",
+                    estado: details.estado || this.currentUser.estado || "N/A"
+                };
+
+                // Sincronizar cursos adquiridos desde la hoja 'userCourses' del backend
+                if (data.userCourses && data.userCourses[email] && typeof window.COURSES_DATA !== 'undefined') {
+                    let myCourseNamesRaw = data.userCourses[email] || [];
+                    let myCourseNames = [];
+                    if (Array.isArray(myCourseNamesRaw)) { myCourseNamesRaw.forEach(v => { if(typeof v === 'string') myCourseNames.push(...v.split(/[,;\n]+/).map(s=>s.trim()).filter(s=>s!=="")); else if(v) myCourseNames.push(v); }); } 
+                    else if (typeof myCourseNamesRaw === 'string') { myCourseNames.push(...myCourseNamesRaw.split(/[,;\n]+/).map(s=>s.trim()).filter(s=>s!=="")); }
+
+                    myCourseNames.forEach(cName => {
+                        let nn = AuthLogic.normalizeName(cName);
+                        let found = window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.name) === nn) || window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.name).includes(nn) || nn.includes(AuthLogic.normalizeName(x.name)));
+                        if(found && !refreshedUser.accessedCursos.includes(found.id)) { refreshedUser.accessedCursos.push(found.id); }
+                    });
+                }
+                
+                if (JSON.stringify(refreshedUser) !== originalUserJSON) {
+                    this.currentUser = refreshedUser;
+                    localStorage.setItem('user', JSON.stringify(this.currentUser));
+                    window.currentUser = this.currentUser;
+                    console.log("AuthLogic: Datos de sesión actualizados desde el servidor.");
+                    AuthUI.updateGlobalState();
+                }
+            }
+        } catch (error) { console.error("Error al refrescar los datos de sesión:", error); }
     },
 
     handleLogin: async function(e) {
@@ -73,6 +152,11 @@ const AuthLogic = {
                         return;
                     }
 
+                    // Consolidar fechas de culminación
+                    const serverCompletionDates = (data.userCourseCompletionDates && data.userCourseCompletionDates[email]) ? data.userCourseCompletionDates[email] : {};
+                    const globalUserCompletionDates = (globalUser.completionDates && typeof globalUser.completionDates === 'object') ? globalUser.completionDates : {};
+                    const mergedCompletionDates = {...globalUserCompletionDates, ...serverCompletionDates};
+
                     // Construimos el objeto maestro compatible con "Mis Cursos"
                     this.currentUser = {
                         name: (details.name && details.name !== "No provisto" && details.name !== "N/A") ? details.name : (globalUser.name || email.split('@')[0]),
@@ -84,6 +168,7 @@ const AuthLogic = {
                         downloadedFiles: Array.isArray(globalUser.downloadedFiles) ? globalUser.downloadedFiles : [],
                         downloadCounts: (globalUser.downloadCounts && typeof globalUser.downloadCounts === 'object') ? globalUser.downloadCounts : {},
                         ratings: globalUser.ratings || {},
+                        completionDates: mergedCompletionDates,
                         cedula: details.cedula || "N/A",
                         telefono: details.telefono || "N/A",
                         pais: details.pais || "N/A",
@@ -186,6 +271,7 @@ const AuthLogic = {
                         downloadedFiles: [],
                         ratings: {},
                         cedula: "",
+                        completionDates: {},
                         telefono: "",
                         pais: country,
                         estado: ""
@@ -232,10 +318,10 @@ const AuthLogic = {
         setTimeout(() => window.location.reload(), 700);
     },
 
-    syncUserData: async function() {
+    syncUserData: async function(silent = false) {
         if (!this.currentUser || !this.currentUser.email) return;
 
-        if (typeof window.showSyncIndicator === 'function') {
+        if (!silent && typeof window.showSyncIndicator === 'function') {
             window.showSyncIndicator('Sincronizando...', 'loading');
         }
 
@@ -250,7 +336,7 @@ const AuthLogic = {
             });
 
             if (response.ok || response.type === 'opaque' || response.redirected) {
-                 if (typeof window.showSyncIndicator === 'function') {
+                 if (!silent && typeof window.showSyncIndicator === 'function') {
                     window.showSyncIndicator('Progreso guardado en la nube', 'success');
                 }
             } else {
@@ -258,9 +344,11 @@ const AuthLogic = {
             }
         } catch (e) {
             console.error('Sync error:', e);
-            this.showNotification('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error');
-            if (typeof window.showSyncIndicator === 'function') {
-                window.showSyncIndicator('Error de sincronización', 'error');
+            if (!silent) {
+                this.showNotification('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error');
+                if (typeof window.showSyncIndicator === 'function') {
+                    window.showSyncIndicator('Error de sincronización', 'error');
+                }
             }
         }
     },

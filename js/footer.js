@@ -109,14 +109,14 @@ if (document.body) {
 
 function updateFooterAdminUI() {
     const user = JSON.parse(localStorage.getItem('user'));
-    const adminEmails = ['pablocdno@gmail.com'];
-    const isAdmin = user && user.email && adminEmails.includes(user.email.toLowerCase());
+    // La verificación de administrador se simplifica para ser más robusta.
+    // Solo se necesita el correo electrónico para mostrar el botón.
+    const isAdmin = user && user.email && user.email.trim().toLowerCase() === 'pablocdno@gmail.com';
     const btn = document.getElementById('adminButtonContainerFooter');
     if (btn) btn.classList.toggle('hidden', !isAdmin);
 }
 
 document.addEventListener('DOMContentLoaded', updateFooterAdminUI);
-
 // Estilos para el pie de página en modo claro
 const lightModeFooterStyles = document.createElement('style');
 lightModeFooterStyles.textContent = `

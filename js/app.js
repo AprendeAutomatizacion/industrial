@@ -162,6 +162,74 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     });
     // --- FIN: Lógica para efecto 3D inmersivo en tarjetas ---
+
+    // Lógica para el formulario de inscripción manual del administrador
+    const adminForm = document.getElementById('adminManualForm');
+    if (adminForm) {
+        adminForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const courseId = document.getElementById('adminCourseId')?.value;
+            const courseName = document.getElementById('adminCourseName')?.value || '';
+            const studentEmail = (document.getElementById('adminEmail')?.value || '').toLowerCase().trim();
+            const studentName = document.getElementById('adminName')?.value || '';
+            const studentCedula = document.getElementById('adminCedula')?.value || '';
+            const studentPhone = document.getElementById('adminPhone')?.value || '';
+            const studentCountry = document.getElementById('adminCountry')?.value || '';
+            const studentState = document.getElementById('adminState')?.value || '';
+
+            const errBox = document.getElementById('adminErrorMessage');
+            const errText = document.getElementById('adminErrorText');
+            errBox.classList.add('hidden');
+
+            if (!studentName || !studentEmail || !courseName) {
+                errText.innerText = "Nombre, correo y curso son obligatorios.";
+                errBox.classList.remove('hidden');
+                return;
+            }
+
+            const btn = document.getElementById('adminSubmitBtn');
+            const originalHTML = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin text-lg"></i> Registrando...`;
+
+            try {
+                const params = new URLSearchParams();
+                params.append('action', 'register_course_access');
+                params.append('courseName', courseName);
+                params.append('name', studentName);
+                params.append('email', studentEmail);
+                params.append('cedula', studentCedula);
+                params.append('telefono', studentPhone);
+                params.append('pais', studentCountry);
+                params.append('estado', studentState);
+
+                const response = await fetch(SCRIPT_URL, { method: 'POST', body: params });
+                const result = await response.json();
+
+                if (result.status === 'success') {
+                    showNotif('Registro Exitoso', `${studentName} ha sido inscrito en ${courseName}.`);
+                    adminForm.reset();
+                    
+                    if (currentUser && currentUser.email.toLowerCase() === studentEmail) {
+                        const courseIdNum = parseInt(courseId, 10);
+                        if (!isNaN(courseIdNum) && !currentUser.accessedCursos.includes(courseIdNum)) {
+                            currentUser.accessedCursos.push(courseIdNum);
+                            localStorage.setItem('user', JSON.stringify(currentUser));
+                        }
+                    }
+                } else {
+                    errText.innerText = result.message || "Error: El usuario ya podría estar inscrito.";
+                    errBox.classList.remove('hidden');
+                }
+            } catch (error) {
+                errText.innerText = "Error de conexión con el servidor.";
+                errBox.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        });
+    }
 });
 
 function initScrollReveal() {
