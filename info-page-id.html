@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando Curso... - Aprende Automatización</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+    
+    <!-- FUENTES Y LIBRERÍAS -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/info-page.css">
+
+    <style>
+        :root {
+            --azul-gris: #91a1af;
+            --azul-oscuro: #0f172a;
+            --celeste: #2db8ce;
+            --fb-blue: #1877f2;
+        }
+        body {
+            font-family: 'Oswald', sans-serif;
+            background-color: #d0e1ef; /* Gris azulado */
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        /* Estilos Glassmorphism */
+        .glass-light {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .glass-dark-blue {
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 184, 206, 0.25);
+            color: white;
+        }
+
+        /* Estilo Glass Azul-Gris */
+        .glass-gray-blue {
+            background: rgba(145, 161, 175, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #0f172a;
+        }
+
+        .resource-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .resource-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15);
+        }
+
+        .btn-pulse:active {
+            transform: scale(0.97);
+            transition: transform 0.1s ease;
+        }
+
+        /* Estrellas interactivas */
+        .star-rating i {
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #475569; 
+        }
+        .star-rating i.active {
+            color: #fbbf24; 
+            transform: scale(1.1);
+        }
+
+        /* Selector de emojis */
+        #emoji-picker {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            z-index: 50;
+            background: white;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+        #emoji-picker.show { display: grid; }
+        .emoji-btn {
+            padding: 6px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .emoji-btn:hover { background: #f1f5f9; }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--celeste); }
+
+        /* Acordeón */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 1200px;
+        }
+
+        /* Estilos para badges del hero en modo claro */
+        body.light-mode #hero-section .hero-badge {
+            background-color: var(--celeste) !important; /* bg-cyan-500 */
+            color: #ffffff !important; /* text-white */
+            border-color: var(--celeste) !important;
+        }
+    </style>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<!-- HERO -->
+<header id="hero-section" class="relative bg-[#0f172a] text-white py-20 px-6 overflow-hidden">
+    <div class="absolute inset-0 opacity-40">
+        <img id="hero-bg-image" src="img/AA (4).gif" class="w-full h-full object-cover" alt="Fondo">
+    </div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="lg:w-2/3">
+            <nav id="hero-badges" class="flex gap-2 mb-6 text-[10px] font-black uppercase tracking-widest flex-wrap">
+                <!-- Badges will be injected here -->
+            </nav>
+            <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter font-display force-white-text" id="course-main-title">
+                Cargando Curso...
+            </h1>
+            <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed font-medium" id="course-description">
+                Cargando descripción del curso...
+            </p>
+            <div id="course-features" class="flex flex-wrap gap-6 text-sm font-bold text-slate-300">
+                <!-- Features will be injected here -->
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+    <div class="flex flex-col lg:flex-row gap-12">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="lg:w-2/3 space-y-12">
+            
+            <!-- VIDEO -->
+            <section id="video-section">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Vídeo Promocional</h2>
+                <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-slate-200 border-4 border-white">
+                    <iframe id="course-video" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </section>
+
+            <!-- OBJETIVO GENERAL -->
+            <section id="objetivo-general-section" class="glass-light p-8 rounded-3xl border shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--azul-oscuro)">Objetivo General</h2>
+                <div id="objetivo-general-content" class="text-slate-700 text-sm leading-relaxed space-y-4 font-medium">
+                    <!-- Content will be injected here -->
+                </div>
+            </section>
+
+            <!-- PERFIL DE INGRESO -->
+            <section id="perfil-ingreso-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--celeste)">Perfil del Participante (Ingreso)</h2>
+                <ul id="perfil-ingreso-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600 font-medium">
+                    <!-- List items will be injected here -->
+                </ul>
+            </section>
+
+            <!-- CONTENIDO DE LAS UNIDADES -->
+            <section id="contenido-unidades-section" class="space-y-6">
+                <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Contenido de las Unidades</h2>
+                <div id="contenido-unidades-list" class="space-y-6">
+                    <!-- Content units will be injected here -->
+                </div>
+            </section>
+
+            <!-- REQUISITOS -->
+            <section id="requisitos-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-4 border-l-4 pl-4" style="border-color: var(--celeste)">Requisitos</h2>
+                <div id="requisitos-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Requirements will be injected here -->
+                </div>
+            </section>
+
+            <!-- RECURSOS INCLUIDOS -->
+            <section id="recursos-incluidos-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4" style="border-color: var(--celeste)">Recursos Incluidos</h2>
+                <div id="recursos-incluidos-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Resources will be injected here -->
+                </div>
+            </section>
+
+            <!-- DATOS GENERALES -->
+            <section id="datos-generales-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--celeste)">Datos Generales del Curso</h2>
+                <div id="datos-generales-list" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm font-medium">
+                    <!-- General data will be injected here -->
+                </div>
+            </section>
+
+            <!-- PERFIL DE EGRESO -->
+            <section id="perfil-egreso-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+                <div class="mb-6">
+                    <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 border-[#2db8ce] pl-4">Perfil de Egreso</h2>
+                    <p class="text-sm text-slate-500 font-medium">Al finalizar el curso, adquirirás las siguientes competencias:</p>
+                </div>
+                <div id="perfil-egreso-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Egress profile items will be injected here -->
+                </div>
+            </section>
+
+            <!-- Certificación Aprende Automatización -->
+            <div id="certification-section" class="mt-8">
+                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
+                    <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
+                        <i class="fas fa-award text-8xl text-cyan-400"></i>
+                    </div>
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2">
+                        <img id="certification-logo" src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="Certificado Aprende Automatización" class="w-full h-full object-contain">
+                    </div>
+                    <div class="relative z-10 text-center sm:text-left">
+                        <h4 id="certification-title" class="font-black text-base text-white mb-1 uppercase tracking-tight">Certificación Aprende Automatización</h4>
+                        <p id="certification-description" class="text-xs text-slate-300 font-medium leading-relaxed">
+                            Certificado digital emitido por nuestra academia para validar tus nuevas habilidades y conocimientos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BARRA LATERAL -->
+        <div class="lg:w-1/3 lg:sticky lg:top-0 lg:h-screen lg:flex lg:items-center">
+            <div class="w-full space-y-8">
+                <div class="bg-white rounded-[40px] shadow-2xl border border-slate-200 p-8">
+                    <div class="flex items-baseline gap-2 mb-6">
+                        <span id="course-price" class="text-4xl font-black text-slate-900">$0.00</span>
+                        <span id="course-old-price" class="text-slate-400 line-through text-lg">$0.00</span>
+                    </div>
+                    <div id="buy-actions" class="space-y-3">
+                        <!-- Buy actions will be injected here -->
+                    </div>
+                    <div class="mt-6 pt-6 border-t border-slate-200 space-y-3">
+                        <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-3 text-white flex items-center gap-3 shadow-lg border border-blue-400/50">
+                            <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner shrink-0"><i class="fas fa-laptop text-sm"></i></div>
+                            <div><h4 class="font-bold text-[9px] text-blue-100 uppercase tracking-widest mb-0.5">Modalidad</h4><p id="sidebar-modalidad" class="font-black text-xs uppercase tracking-tighter text-white leading-none">Cargando...</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script src="js/auth.js"></script>
+<script>
+    // ==========================================
+    // CONFIGURACIÓN GLOBAL DEL SCRIPT
+    // ==========================================
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXgO9nCxF-_llCpiye-er9T7uqe3hnuOkajD_hSV8i1Di1zavgYxXcwFVLvCh-A3pP/exec'; // URL de tu Google Apps Script
+    let COURSE_ID_NUMERIC = null; // Se obtendrá de la URL
+
+    // Función para obtener el ID del curso de la URL
+    function getCourseIdFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return parseInt(urlParams.get('courseId'));
+    }
+
+    // Función para crear un esqueleto de carga
+    function createSkeletonHTML(type, count) {
+        let html = '';
+        for (let i = 0; i < count; i++) {
+            if (type === 'comment') { // Example skeleton for comments, not directly used here but good to have
+                html += `
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm mb-4 animate-pulse">
+                        <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-slate-200"></div>
+                                <div>
+                                    <div class="h-4 bg-slate-200 rounded w-24 mb-1"></div>
+                                    <div class="h-3 bg-slate-200 rounded w-16"></div>
+                                </div>
+                            </div>
+                            <div class="h-3 bg-slate-200 rounded w-12"></div>
+                        </div>
+                        <div class="h-4 bg-slate-200 rounded w-full mb-2"></div>
+                        <div class="h-4 bg-slate-200 rounded w-5/6"></div>
+                    </div>
+                `;
+            }
+        }
+        return html;
+    }
+
+    // ==========================================
+    // FUNCIONES DE RENDERIZADO DINÁMICO
+    // ==========================================
+
+    function renderCourseDetails(course) {
+        document.title = `${course.name} - Aprende Automatización`;
+
+        // Hero Section
+        document.getElementById('hero-bg-image').src = course.image || 'img/default-hero.gif';
+        document.getElementById('course-main-title').innerHTML = `${course.name}<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2db8ce] to-blue-400">${course.type}</span>`;
+        document.getElementById('course-description').textContent = course.resumen;
+
+        const heroBadges = document.getElementById('hero-badges');
+        heroBadges.innerHTML = `
+            <span class="hero-badge bg-blue-500/20 px-3 py-1 rounded-full" style="color: var(--celeste)">${course.category}</span>
+            <span class="hero-badge bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400">${course.level}</span>
+            <span class="hero-badge bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30">Modalidad ${course.modalidad}</span>
+        `;
+
+        // NEW: Render Course Features
+        const courseFeaturesContainer = document.getElementById('course-features');
+        if (course.features && Array.isArray(course.features)) {
+            courseFeaturesContainer.innerHTML = course.features.map(feature => `
+                <div class="flex items-center gap-2"><i class="${feature.icon} text-[#2db8ce]"></i> ${feature.text}</div>
+            `).join('');
+        } else {
+            courseFeaturesContainer.innerHTML = ''; // Clear if no features
+        }
+        // Video Section
+        document.getElementById('course-video').src = course.videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ'; // Default video
+
+        // Objetivo General
+        document.getElementById('objetivo-general-content').innerHTML = `<p>${course.objetivoGeneral}</p>`;
+
+        // Perfil de Ingreso
+        const perfilIngresoList = document.getElementById('perfil-ingreso-list');
+        perfilIngresoList.innerHTML = course.perfilIngreso.map(item => `
+            <li class="flex items-start gap-3">
+                <i class="${item.icon} text-[#2db8ce] mt-1"></i>
+                <span><strong>${item.title}:</strong> ${item.desc}</span>
+            </li>
+        `).join('');
+
+        // Contenido de las Unidades
+        const contenidoUnidadesList = document.getElementById('contenido-unidades-list');
+        contenidoUnidadesList.innerHTML = course.contenidoUnidades.map((unit, index) => `
+            <div class="${index % 2 === 0 ? 'glass-dark-blue' : 'glass-gray-blue'} p-8 rounded-[2rem] border resource-card overflow-hidden relative">
+                <div class="absolute top-0 right-0 p-6 opacity-10">
+                    <i class="${unit.icon} text-6xl"></i>
+                </div>
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="${index % 2 === 0 ? 'bg-cyan-500' : 'bg-[#0f172a]'} text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">${unit.session}</span>
+                    <h3 class="text-xl font-black uppercase ${index % 2 === 0 ? 'text-white' : 'text-[#0f172a]'}">${unit.title}</h3>
+                </div>
+                <ul class="space-y-3 text-sm font-medium ${index % 2 === 0 ? 'text-slate-200' : 'text-[#0f172a]'}">
+                    ${unit.topics.map(topic => `<li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 ${index % 2 === 0 ? 'text-cyan-400' : 'opacity-80'}"></i><span>${topic}</span></li>`).join('')}
+                    ${unit.professionalPractice ? `<li class="flex items-start gap-3 p-3 rounded-xl ${index % 2 === 0 ? 'bg-cyan-500/10 border border-cyan-500/20' : 'bg-[#0f172a] text-white'}"><i class="fas fa-star mt-1 text-yellow-400"></i><span class="font-bold">${unit.professionalPractice}</span></li>` : ''}
+                </ul>
+            </div>
+        `).join('');
+
+        // Requisitos
+        const requisitosList = document.getElementById('requisitos-list');
+        requisitosList.innerHTML = course.requisitos.map(item => `
+            <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                <i class="${item.icon} text-2xl text-blue-500 mb-2"></i>
+                <h5 class="text-[10px] font-bold uppercase text-slate-700 mb-1">${item.type}</h5>
+                <p class="text-[10px] text-slate-500 font-medium leading-tight uppercase">${item.desc}</p>
+            </div>
+        `).join('');
+
+        // Recursos Incluidos
+        const recursosIncluidosList = document.getElementById('recursos-incluidos-list');
+        recursosIncluidosList.innerHTML = course.recursosIncluidos.map(item => `
+            <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+                <i class="${item.icon} text-2xl text-red-500 mb-2"></i>
+                <p class="text-[10px] font-bold uppercase text-slate-700">${item.desc}</p>
+            </div>
+        `).join('');
+
+        // Datos Generales
+        const datosGeneralesList = document.getElementById('datos-generales-list');
+        datosGeneralesList.innerHTML = course.datosGenerales.map(item => `
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">${item.title}</p>
+                <p class="font-bold text-slate-800 leading-snug">${item.value}</p>
+            </div>
+        `).join('');
+
+        // Perfil de Egreso
+        const perfilEgresoList = document.getElementById('perfil-egreso-list');
+        perfilEgresoList.innerHTML = course.perfilEgreso.map(item => `
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
+                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#2db8ce] text-white mb-4 shadow-lg shadow-cyan-500/20"><i class="${item.icon}"></i></div>
+                <h4 class="font-bold text-xs uppercase mb-2 text-cyan-700 tracking-tight">${item.title}</h4>
+                <p class="text-[11px] text-slate-600 leading-relaxed">${item.desc}</p>
+            </div>
+        `).join('');
+
+        // Certification Section (assuming it's always "Aprende Automatización" unless specified)
+        const certificationLogo = document.getElementById('certification-logo');
+        const certificationTitle = document.getElementById('certification-title');
+        const certificationDescription = document.getElementById('certification-description');
+        if (course.certification && course.certification.logo) certificationLogo.src = course.certification.logo;
+        if (course.certification && course.certification.title) certificationTitle.textContent = course.certification.title;
+        if (course.certification && course.certification.description) certificationDescription.textContent = course.certification.description;
+
+        // Sidebar
+        document.getElementById('course-price').textContent = course.precio;
+        document.getElementById('course-old-price').textContent = course.precioAnterior;
+        document.getElementById('sidebar-modalidad').textContent = course.modalidad;
+
+        const buyActionsContainer = document.getElementById('buy-actions');
+        const user = AuthLogic.currentUser; // Get current user from AuthLogic
+        const hasAccess = user && user.accessedCursos && user.accessedCursos.includes(COURSE_ID_NUMERIC);
+
+        if (hasAccess) {
+            buyActionsContainer.innerHTML = `
+                <div class="btn-enrolled-badge">
+                    <i class="fas fa-check-circle"></i> Inscrito
+                </div>
+                <a href="mis-cursos.html?courseId=${COURSE_ID_NUMERIC}" class="btn-metal-solid btn-metal-cyan">
+                    <i class="fas fa-graduation-cap"></i> Ir a Mis Cursos
+                </a>
+            `;
+        } else {
+            buyActionsContainer.innerHTML = `
+                <a href="${course.buyLink}" class="btn-metal-solid btn-metal-cyan">
+                    <i class="fas fa-cart-plus"></i> Comprar Ahora
+                </a>
+                <a href="${course.whatsappLink}" target="_blank" class="btn-metal-solid btn-metal-green">
+                    <i class="fab fa-whatsapp"></i> Preguntar por WhatsApp
+                </a>
+            `;
+        }
+    }
+
+    // ==========================================
+    // FETCH DATA FROM GOOGLE SHEET
+    // ==========================================
+
+    async function fetchCourseData(courseId) {
+        if (!courseId) {
+            console.error("No courseId provided.");
+            return null;
+        }
+
+        try {
+            // Fetch course data from Google Sheet
+            const response = await fetch(`${SCRIPT_URL}?action=get_course_info&courseId=${courseId}&t=${Date.now()}`);
+            const result = await response.json();
+
+            if (result.status === 'success' && result.data) {
+                return result.data;
+            } else {
+                console.error("Error fetching course data:", result.message || "Unknown error");
+                return null;
+            }
+        } catch (error) {
+            console.error("Network error fetching course data:", error);
+            return null;
+        }
+    }
+
+    // ==========================================
+    // INITIALIZATION
+    // ==========================================
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        COURSE_ID_NUMERIC = getCourseIdFromUrl();
+
+        if (!COURSE_ID_NUMERIC) {
+            document.getElementById('course-main-title').textContent = "Error: Curso no encontrado";
+            document.getElementById('course-description').textContent = "Por favor, asegúrate de que la URL contenga un 'courseId' válido.";
+            // Hide all sections if no courseId
+            document.querySelectorAll('main section, main div.mt-8').forEach(section => section.style.display = 'none');
+            return;
+        }
+
+        const courseData = await fetchCourseData(COURSE_ID_NUMERIC);
+
+        if (courseData) {
+            renderCourseDetails(courseData);
+        } else {
+            document.getElementById('course-main-title').textContent = "Error: Curso no encontrado";
+            document.getElementById('course-description').textContent = "No se pudo cargar la información del curso. Intenta de nuevo más tarde o contacta al soporte.";
+            // Hide all sections if data not found
+            document.querySelectorAll('main section, main div.mt-8').forEach(section => section.style.display = 'none');
+        }
+    });
+</script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+</body>
+</html>

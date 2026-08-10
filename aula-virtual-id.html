@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Aula Virtual - Aprende Automatización</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/auth.js"></script>
+    <link rel="stylesheet" href="ccs/aula-unificada.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: var(--aula-bg); color: var(--aula-text-primary); }
+        :root {
+            --aula-bg: #0d1d31;
+            --aula-overlay-bg: rgba(13, 29, 49, 0.85);
+            --aula-text-primary: #e2e8f0;
+            --aula-text-secondary: #94a3b8;
+            --aula-text-title: #ffffff;
+            --aula-text-accent: #60a5fa;
+            --aula-button-metal-bg: linear-gradient(to bottom, #4a5568, #2d3748);
+            --aula-button-metal-bg-hover: linear-gradient(to bottom, #5a6578, #3d4758);
+            --aula-button-metal-border: #1a202c;
+            --aula-button-metal-shadow: inset 0 1px 1px #718096, 0 1px 3px rgba(0,0,0,0.5);
+            --aula-button-metal-text: #e2e8f0;
+            --aula-button-icon-color: #2db8ce;
+            --aula-button-icon-shadow: 0 0 10px rgba(45, 184, 206, 0.8);
+        }
+        body.light-mode {
+            --aula-bg: #d0e1ef;
+            --aula-overlay-bg: rgba(126, 150, 171, 0.9);
+            --aula-text-primary: #334155;
+            --aula-text-secondary: #64748b;
+            --aula-text-title: #1e293b;
+            --aula-text-accent: #2db8ce;
+            --aula-button-metal-bg: linear-gradient(to bottom, #f0f5f9, #d9e0e6);
+            --aula-button-metal-bg-hover: linear-gradient(to bottom, #f5f9fa, #e0e7ed);
+            --aula-button-metal-border: #c1c9d1;
+            --aula-button-metal-shadow: inset 0 1px 0 #f5f9fa, 0 1px 3px rgba(0,0,0,0.15), 0 1px 1px rgba(0,0,0,0.1);
+            --aula-button-metal-text: #475569;
+            --aula-button-icon-color: #0891b2;
+            --aula-button-icon-shadow: 0 0 8px rgba(8, 145, 178, 0.7);
+        }
+        :root {
+            --card-bg-default: #0f172a;
+            --card-bg-secondary: #1e293b;
+            --card-text-default: #f8fafc;
+            --card-text-secondary: #94a3b8;
+            --card-border-default: #334155;
+            --card-shadow-color: rgba(0, 0, 0, 0.25);
+            --card-text-accent: #2db8ce;
+        }
+        body.light-mode {
+            --card-bg-default: #f7f9fb;
+            --card-bg-secondary: #ffffff;
+            --card-text-default: #1e293b;
+            --card-text-secondary: #475569;
+            --card-border-default: #e2e8f0;
+            --card-shadow-color: rgba(0, 0, 0, 0.1);
+            --card-text-accent: #2db8ce;
+        }
+
+
+        body.light-mode header {
+            background-color: rgba(226, 232, 240, 0.9) !important;
+            border-bottom-color: #cbd5e1 !important;
+        }
+        body.light-mode aside#sidebar {
+            background-color: rgba(226, 232, 240, 0.95) !important;
+            border-right-color: #cbd5e1 !important;
+        }
+        body.light-mode .dashboard-container {
+            background-color: rgba(226, 232, 240, 0.85) !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.1) !important;
+        }
+        body.light-mode #panel-content,
+        body.light-mode .glass-panel { 
+            background: #f8fafc !important; 
+            border-color: rgba(0,0,0,0.1) !important; 
+        }
+        body.light-mode #panel-quiz {
+            background-color: rgba(226, 232, 240, 0.85) !important;
+            border-color: #cbd5e1 !important;
+        }
+        body.light-mode #quiz-questions > div {
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+        body.light-mode #quiz-questions > div p,
+        body.light-mode #quiz-questions > div label {
+            color: #1e293b !important;
+            -webkit-text-fill-color: #1e293b !important;
+        }
+        body.light-mode #quiz-questions > div p.font-bold {
+            color: #0f172a !important;
+            -webkit-text-fill-color: #0f172a !important;
+        }
+        body.light-mode #quiz-questions input[type="radio"] {
+            accent-color: #0891b2;
+        }
+        body.light-mode #panel-quiz h3,
+        body.light-mode #panel-quiz > p {
+            color: #1e293b !important;
+            -webkit-text-fill-color: #1e293b !important;
+        }
+        
+        /* Sidebar - Estilos base */
+        #sidebar-content { overflow-x: hidden !important; overflow-y: auto !important; }
+        #sidebar-content button {
+            border-radius: 10px !important; margin: 2px 6px !important; padding: 9px 12px !important;
+            font-size: 0.8rem !important; transition: all 0.25s ease;
+            border-left: 3px solid transparent; border-right: 3px solid transparent;
+            border-top: 1px solid transparent; border-bottom: 1px solid transparent;
+            white-space: normal !important; word-wrap: break-word !important; line-height: 1.4 !important;
+        }
+        #sidebar-content button .lesson-number { display: block; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; opacity: 0.8; }
+        #sidebar-content button .lesson-topic { display: block; font-size: 0.8rem; font-weight: 600; }
+        
+        body.light-mode #sidebar-content button { color: #475569 !important; -webkit-text-fill-color: #475569 !important; }
+        body.light-mode #sidebar-content button:hover { background: rgba(255, 255, 255, 0.5) !important; color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; border-left: 3px solid rgba(8, 145, 178, 0.4); transform: translateX(2px); }
+        body.light-mode #sidebar-content button i.fa-check-circle { color: #0891b2 !important; -webkit-text-fill-color: #0891b2 !important; text-shadow: 0 0 6px rgba(8, 145, 178, 0.25); filter: drop-shadow(0 1px 2px rgba(8, 145, 178, 0.3)); }
+        body.light-mode #sidebar-content button i.far.fa-circle { color: #94a3b8 !important; -webkit-text-fill-color: #94a3b8 !important; }
+        body.light-mode #sidebar-content button.bg-secondary\/40 { background: rgba(8, 145, 178, 0.1) !important; backdrop-filter: blur(6px) !important; -webkit-backdrop-filter: blur(6px) !important; border-left: 3px solid #0891b2 !important; border-top: 1px solid rgba(8, 145, 178, 0.15) !important; border-bottom: 1px solid rgba(8, 145, 178, 0.15) !important; border-right: 1px solid rgba(8, 145, 178, 0.15) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(8, 145, 178, 0.12), 0 1px 2px rgba(0,0,0,0.05) !important; color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; font-weight: 700 !important; letter-spacing: 0.01em; }
+        body.light-mode #sidebar h3 { color: #475569 !important; -webkit-text-fill-color: #475569 !important; font-weight: 800 !important; letter-spacing: 0.05em; }
+        
+        body:not(.light-mode) #sidebar-content button { color: #cbd5e1 !important; -webkit-text-fill-color: #cbd5e1 !important; }
+        body:not(.light-mode) #sidebar-content button:hover { background: rgba(8, 145, 178, 0.08) !important; border-left: 3px solid rgba(45, 184, 206, 0.4); transform: translateX(2px); color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
+        body:not(.light-mode) #sidebar-content button i.fa-check-circle { color: #2db8ce !important; -webkit-text-fill-color: #2db8ce !important; text-shadow: 0 0 8px rgba(45, 184, 206, 0.4); filter: drop-shadow(0 1px 2px rgba(45, 184, 206, 0.4)); }
+        body:not(.light-mode) #sidebar-content button i.far.fa-circle { color: #64748b !important; -webkit-text-fill-color: #64748b !important; }
+        body:not(.light-mode) #sidebar-content button.bg-secondary\/40 { background: rgba(8, 145, 178, 0.12) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; border-left: 3px solid #2db8ce !important; border-top: 1px solid rgba(45, 184, 206, 0.2) !important; border-bottom: 1px solid rgba(45, 184, 206, 0.2) !important; border-right: 1px solid rgba(45, 184, 206, 0.2) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 10px rgba(8, 145, 178, 0.18), 0 1px 3px rgba(0,0,0,0.2) !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; font-weight: 700 !important; letter-spacing: 0.01em; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        
+        /* Botones */
+        #btn-complete, #grade-quiz-btn, #reset-quiz-btn { border-radius: 10px !important; font-weight: 700 !important; letter-spacing: 0.02em !important; transition: all 0.25s ease !important; }
+        
+        body.light-mode #btn-complete { background: rgba(8, 145, 178, 0.1) !important; backdrop-filter: blur(6px) !important; -webkit-backdrop-filter: blur(6px) !important; border: 1px solid rgba(8, 145, 178, 0.25) !important; border-left: 3px solid #0891b2 !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(8, 145, 178, 0.15), 0 1px 2px rgba(0,0,0,0.05) !important; color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; }
+        body.light-mode #btn-complete:hover:not(:disabled) { background: rgba(8, 145, 178, 0.18) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(8, 145, 178, 0.25), 0 2px 4px rgba(0,0,0,0.08) !important; transform: translateY(-1px); }
+        body.light-mode #btn-complete:disabled { background: rgba(148, 163, 184, 0.15) !important; backdrop-filter: blur(4px) !important; -webkit-backdrop-filter: blur(4px) !important; border: 1px solid rgba(148, 163, 184, 0.2) !important; border-left: 3px solid #94a3b8 !important; box-shadow: none !important; color: #94a3b8 !important; -webkit-text-fill-color: #94a3b8 !important; opacity: 0.6; }
+        
+        body:not(.light-mode) #btn-complete { background: rgba(8, 145, 178, 0.12) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; border: 1px solid rgba(45, 184, 206, 0.3) !important; border-left: 3px solid #2db8ce !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 10px rgba(8, 145, 178, 0.2), 0 1px 3px rgba(0,0,0,0.2) !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        body:not(.light-mode) #btn-complete:hover:not(:disabled) { background: rgba(8, 145, 178, 0.2) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 16px rgba(8, 145, 178, 0.3), 0 2px 6px rgba(0,0,0,0.3) !important; transform: translateY(-1px); }
+        body:not(.light-mode) #btn-complete:disabled { background: rgba(100, 116, 139, 0.1) !important; backdrop-filter: blur(4px) !important; -webkit-backdrop-filter: blur(4px) !important; border: 1px solid rgba(100, 116, 139, 0.2) !important; border-left: 3px solid #64748b !important; box-shadow: none !important; color: #64748b !important; -webkit-text-fill-color: #64748b !important; opacity: 0.5; }
+        
+        body.light-mode #grade-quiz-btn { background: rgba(8, 145, 178, 0.1) !important; backdrop-filter: blur(6px) !important; -webkit-backdrop-filter: blur(6px) !important; border: 1px solid rgba(8, 145, 178, 0.25) !important; border-left: 3px solid #0891b2 !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(8, 145, 178, 0.15), 0 1px 2px rgba(0,0,0,0.05) !important; color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; }
+        body.light-mode #grade-quiz-btn:hover { background: rgba(8, 145, 178, 0.18) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(8, 145, 178, 0.25), 0 2px 4px rgba(0,0,0,0.08) !important; transform: translateY(-1px); }
+        
+        body:not(.light-mode) #grade-quiz-btn { background: rgba(8, 145, 178, 0.12) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; border: 1px solid rgba(45, 184, 206, 0.3) !important; border-left: 3px solid #2db8ce !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 10px rgba(8, 145, 178, 0.2), 0 1px 3px rgba(0,0,0,0.2) !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        body:not(.light-mode) #grade-quiz-btn:hover { background: rgba(8, 145, 178, 0.2) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 16px rgba(8, 145, 178, 0.3), 0 2px 6px rgba(0,0,0,0.3) !important; transform: translateY(-1px); }
+        
+        body.light-mode #reset-quiz-btn { background: rgba(148, 163, 184, 0.1) !important; backdrop-filter: blur(6px) !important; -webkit-backdrop-filter: blur(6px) !important; border: 1px solid rgba(148, 163, 184, 0.25) !important; border-left: 3px solid #94a3b8 !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(148, 163, 184, 0.15), 0 1px 2px rgba(0,0,0,0.05) !important; color: #475569 !important; -webkit-text-fill-color: #475569 !important; }
+        body.light-mode #reset-quiz-btn:hover { background: rgba(148, 163, 184, 0.18) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 4px 12px rgba(148, 163, 184, 0.25), 0 2px 4px rgba(0,0,0,0.08) !important; transform: translateY(-1px); }
+        
+        body:not(.light-mode) #reset-quiz-btn { background: rgba(100, 116, 139, 0.12) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; border: 1px solid rgba(100, 116, 139, 0.3) !important; border-left: 3px solid #64748b !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 10px rgba(100, 116, 139, 0.2), 0 1px 3px rgba(0,0,0,0.2) !important; color: #cbd5e1 !important; -webkit-text-fill-color: #cbd5e1 !important; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+        body:not(.light-mode) #reset-quiz-btn:hover { background: rgba(100, 116, 139, 0.2) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 16px rgba(100, 116, 139, 0.3), 0 2px 6px rgba(0,0,0,0.3) !important; transform: translateY(-1px); }
+
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
+        .bg-optimized { position: fixed; inset: 0; background-image: url('img/AA (2).gif'); background-size: cover; background-position: center; filter: brightness(0.4) blur(3px); z-index: -2; }
+        .overlay-dark { position: fixed; inset: 0; background: var(--aula-overlay-bg); backdrop-filter: blur(4px); z-index: -1; }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.5) rotate(-15deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
+        .medal-icon { animation: popIn 0.45s ease forwards; transform-origin: center; }
+        .toast { position: fixed; bottom: 20px; right: 20px; background: #1e293b; color: white; padding: 8px 16px; border-radius: 8px; font-size: 0.75rem; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .toast-success { background: #065f46; border-left: 4px solid #34d399; }
+        .quiz-option.correct { background-color: rgba(34,197,94,0.2); border-left: 4px solid #22c55e; }
+        .quiz-option.incorrect { background-color: rgba(239,68,68,0.2); border-left: 4px solid #ef4444; text-decoration: line-through; }
+        .sync-indicator { position: fixed; bottom: 20px; right: 20px; z-index: 100001; background: #0f172a; color: white; padding: 8px 20px; border-radius: 9999px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.4s ease; opacity: 0; pointer-events: none; }
+        .sync-indicator.visible { opacity: 1; pointer-events: auto; }
+        .sync-indicator.success { background: #065f46; }
+        .sync-indicator.error { background: #dc2626; }
+
+        /* --- TARJETAS DE MATERIAL VISUAL --- */
+        .material-card { position: relative; border-radius: 1.25rem; overflow: hidden; background-color: var(--card-bg-secondary); border: 1px solid var(--card-border-default); box-shadow: 0 4px 20px var(--card-shadow-color); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; height: 100%; }
+        .material-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -8px var(--card-shadow-color), 0 0 0 1px var(--card-text-accent); border-color: var(--card-text-accent); }
+        .material-card .card-image-wrapper { position: relative; width: 100%; height: 180px; flex-shrink: 0; background-color: #ffffff; }
+        .material-card .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .material-card:hover .card-image-wrapper img { transform: scale(1.08); }
+        .material-card .card-image-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.3) 50%, rgba(15, 23, 42, 0.05) 100%); pointer-events: none; }
+        .material-card .card-badge { position: absolute; top: 0.75rem; left: 0.75rem; z-index: 2; padding: 0.3rem 0.85rem; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; border-radius: 9999px; color: #ffffff; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); }
+        .badge-manual, .badge-practica { background-color: #0e7490; border: 1px solid #0e7490; }
+        .material-card .card-icon-circle { position: absolute; bottom: 1rem; right: 1rem; z-index: 2; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .icon-circle-manual, .icon-circle-practica { background: rgba(45, 184, 206, 0.15); border: 2px solid rgba(45, 184, 206, 0.25); color: #0891b2; }
+        .material-card .card-body { padding: 1.25rem 1rem 1rem; flex-grow: 1; display: flex; flex-direction: column; gap: 0.5rem; }
+        .material-card .card-title { font-size: 0.95rem; font-weight: 700; color: var(--card-text-default); line-height: 1.35; margin: 0; }
+        .material-card .card-subtitle { font-size: 0.75rem; color: var(--card-text-secondary); font-weight: 500; margin: 0; }
+        .material-card .card-footer { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 1rem; border-top: 1px solid var(--card-border-default); background: rgba(0, 0, 0, 0.02); }
+        body:not(.light-mode) .material-card .card-footer { background: rgba(255, 255, 255, 0.02); }
+        .material-card .download-count-badge { display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; font-weight: 700; color: var(--card-text-secondary); background: var(--card-bg-default); padding: 0.3rem 0.65rem; border-radius: 9999px; border: 1px solid var(--card-border-default); }
+        body:not(.light-mode) .material-card .download-count-badge { background: rgba(255, 255, 255, 0.05); }
+        .material-card .download-btn-text { display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--card-text-accent); transition: all 0.3s; }
+        .material-card:hover .download-btn-text { color: #0e7490; gap: 0.6rem; }
+        .material-card.glow-manual, .material-card.glow-practica { border-color: var(--card-text-accent) !important; box-shadow: 0 0 22px rgba(45, 184, 206, 0.45), 0 10px 30px var(--card-shadow-color) !important; }
+        .material-card.glow-manual .download-count-badge, .material-card.glow-practica .download-count-badge { color: var(--card-text-accent) !important; border-color: var(--card-text-accent) !important; background: rgba(45, 184, 206, 0.08) !important; }
+        .material-card.glow-manual .download-btn-text, .material-card.glow-practica .download-btn-text { color: var(--card-text-accent) !important; }
+
+        .dashboard-container { background: rgba(255,255,255,0.05) !important; backdrop-filter: blur(12px) !important; border: 1px solid rgba(255,255,255,0.1) !important; }
+        body.light-mode .text-slate-200, body.light-mode .text-slate-300, body.light-mode .text-slate-400, body.light-mode .text-white { color: #334155 !important; }
+        body.light-mode .bg-black\/20 { background: rgba(0,0,0,0.05) !important; }
+        body.light-mode #login-screen h2, body.light-mode #login-screen #login-course-subtitle { color: #000000 !important; }
+        body.light-mode .progress-current-title { color: #000000 !important; }
+        body.light-mode .progress-pill-label { color: #ffffff !important; }
+        body.light-mode .progress-track-ring { color: rgba(100, 116, 139, 0.45) !important; }
+        .continue-learning-btn, body:not(.light-mode) .continue-learning-btn { color: #ffffff !important; }
+        .modal-continue-btn { background: linear-gradient(to bottom, #67e8f9, #0ea5b7) !important; border: 1px solid #0f766e !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.45), 0 6px 14px rgba(14, 165, 183, 0.35) !important; color: #042f2e !important; font-weight: 900 !important; letter-spacing: 0.04em; }
+        .modal-continue-btn:hover { background: linear-gradient(to bottom, #8beffb, #14b8a6) !important; color: #022c22 !important; }
+        body.light-mode #login-screen, body.light-mode #login-screen *, body.light-mode #modal-feedback, body.light-mode #modal-feedback * { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
+        body.light-mode #login-screen input::placeholder, body.light-mode #login-screen textarea::placeholder { color: rgba(255, 255, 255, 0.75) !important; -webkit-text-fill-color: rgba(255, 255, 255, 0.75) !important; }
+        body.light-mode header button, body.light-mode header div[title="Usuario"] { background: var(--aula-button-metal-bg) !important; border: 1px solid var(--aula-button-metal-border) !important; box-shadow: var(--aula-button-metal-shadow) !important; color: var(--aula-button-metal-text) !important; }
+        body.light-mode header button:hover, body.light-mode header div[title="Usuario"]:hover { background: var(--aula-button-metal-bg-hover) !important; }
+        body.light-mode header button i, body.light-mode header div[title="Usuario"] i { color: var(--aula-button-icon-color) !important; text-shadow: var(--aula-button-icon-shadow); }
+        body:not(.light-mode) header button, body:not(.light-mode) header div[title="Usuario"] { background: linear-gradient(to bottom, #4a5568, #2d3748) !important; border: 1px solid #1a202c !important; box-shadow: inset 0 1px 1px #718096, 0 1px 3px rgba(0,0,0,0.5) !important; color: #e2e8f0 !important; text-shadow: 0 1px 1px rgba(0,0,0,0.5); }
+        body:not(.light-mode) header button:hover, body:not(.light-mode) header div[title="Usuario"]:hover { background: linear-gradient(to bottom, #5a6578, #3d4758) !important; }
+        body:not(.light-mode) header button i, body:not(.light-mode) header div[title="Usuario"] i { color: #2db8ce !important; text-shadow: 0 0 10px rgba(45, 184, 206, 0.8); }
+        body.light-mode.course-4-theme, body.light-mode.course-4-theme :not(svg):not(path):not(circle):not(rect):not(line):not(polyline):not(polygon) { color: #000000 !important; -webkit-text-fill-color: #000000 !important; text-shadow: none !important; }
+        body.light-mode.course-4-theme input::placeholder, body.light-mode.course-4-theme textarea::placeholder { color: #000000 !important; opacity: 1 !important; }
+        body.light-mode.course-4-theme .continue-learning-btn, body.light-mode.course-4-theme .continue-learning-btn * { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
+        body.light-mode.course-4-theme .progress-pill-label, body.light-mode.course-4-theme .progress-pill-label * { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
+        body.light-mode.course-4-theme .progress-track-ring { color: rgba(20, 184, 166, 0.35) !important; }
+        body.light-mode.course-4-theme .text-teal-500 { color: #14b8a6 !important; -webkit-text-fill-color: #14b8a6 !important; }
+        #sidebar.collapsed { width: 0; padding: 0; overflow: hidden; border: none; opacity: 0; }
+    </style>
+    <style id="force-lesson-tabs-white-final">
+        body.light-mode #lesson-title, body:not(.light-mode) #lesson-title,
+        body.light-mode #lesson-tabs-container button, body:not(.light-mode) #lesson-tabs-container button {
+            color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
+        }
+    </style>
+</head>
+<body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
+    <div class="bg-optimized"></div>
+    <div class="overlay-dark"></div>
+
+    <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity backdrop-blur-sm bg-slate-900/40">
+        <!-- Initial Loader -->
+        <div id="initial-loader" class="text-center text-white">
+            <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="Logo Aprende Automatización" class="w-24 h-24 mx-auto mb-6 animate-pulse">
+            <h2 class="text-xl font-bold mb-2">Estamos cargando tu aula virtual</h2>
+            <p id="loading-course-name" class="text-slate-300"></p>
+            <i class="fas fa-spinner fa-spin text-2xl mt-4"></i>
+        </div>
+
+        <!-- Login Form Container (initially hidden) -->
+        <div id="login-form-container" class="hidden bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-md w-full shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-secondary mb-2 drop-shadow-md">Accede a Aprende Automatización</h2>
+                <p id="login-course-subtitle" class="text-slate-300 text-sm">Aula virtual</p>
+            </div>
+            <form id="login-form" onsubmit="app.verifyLogin(event)" class="space-y-4">
+                <div><label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Nombre Completo</label><input type="text" id="login-nombre" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition"></div>
+                <div><label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Cédula de Identidad</label><input type="text" id="login-cedula" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition"></div>
+                <div><label class="block text-sm font-bold text-slate-300 mb-1 tracking-wider">Correo Electrónico</label><input type="email" id="login-correo" required class="w-full px-4 py-2 bg-slate-900/50 border border-white/20 rounded-lg text-white focus:outline-none focus:border-secondary transition"></div>
+                <div id="login-error" class="hidden bg-red-900/50 border border-red-500/50 text-red-200 p-3 rounded-lg text-sm text-center font-bold backdrop-blur-md"></div>
+                <button type="submit" id="login-btn" class="w-full bg-primary/80 hover:bg-primary backdrop-blur-md border border-white/10 text-white py-3 rounded-lg font-bold transition shadow-lg mt-4 flex justify-center items-center gap-2"><i class="fas fa-spinner fa-spin hidden"></i> <span>Verificar Inscripción</span></button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-feedback" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[110] flex items-center justify-center p-4">
+        <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-sm w-full text-center shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
+            <div id="modal-icon" class="text-5xl mb-4 drop-shadow-lg"></div>
+            <h3 id="modal-title" class="text-xl font-bold mb-2 text-white drop-shadow-md"></h3>
+            <p id="modal-msg" class="text-slate-300 mb-6"></p>
+            <button onclick="document.getElementById('modal-feedback').classList.add('hidden')" class="modal-continue-btn w-full backdrop-blur-md py-3 rounded-lg transition">Continuar</button>
+        </div>
+    </div>
+
+    <header class="bg-slate-900/40 backdrop-blur-lg h-16 flex-none flex items-center justify-between px-4 md:px-6 shadow-md z-20 border-b border-white/10 relative">
+        <div class="flex items-center gap-3 md:gap-4 overflow-hidden">
+            <button onclick="app.toggleSidebar()" class="text-slate-300 text-xl hover:text-white transition focus:outline-none flex-none w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10"><i class="fas fa-bars"></i></button>
+            <span id="header-course-title" class="text-white font-bold tracking-tight text-base md:text-lg truncate drop-shadow-sm">Aula virtual</span>
+        </div>
+        <div class="flex items-center gap-2 md:gap-3 flex-none pl-2">
+            <button onclick="app.toggleTheme()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Cambiar modo"><i id="theme-icon" class="fas fa-sun"></i></button>
+            <button onclick="app.toggleFullScreen()" class="rounded-full transition flex-none w-10 h-10 flex items-center justify-center" title="Pantalla Completa"><i id="fullscreen-icon" class="fas fa-expand"></i></button>
+            <div class="hidden sm:flex items-center justify-center bg-black/30 border border-white/10 h-10 rounded-full text-white backdrop-blur-sm px-3" title="Usuario"><i class="fas fa-user-graduate text-secondary"></i><span id="header-student-name" class="text-sm font-semibold truncate hidden pl-2">-</span></div>
+            <button onclick="app.showDashboard()" class="bg-primary/20 hover:bg-primary/40 backdrop-blur-md border border-primary/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg" title="Panel"><i class="fas fa-chart-line"></i></button>
+            <button onclick="app.logout()" class="bg-red-500/20 hover:bg-red-500/40 backdrop-blur-md border border-red-500/50 text-white w-10 h-10 rounded-full flex items-center justify-center transition shadow-lg" title="Salir"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </header>
+
+    <div id="app-container" class="flex flex-1 overflow-hidden relative">
+        <div id="sidebar-overlay" onclick="app.toggleSidebar()" class="fixed inset-0 bg-black/60 z-30 hidden backdrop-blur-sm transition-opacity"></div>
+        <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-800/60 backdrop-blur-xl border-r border-white/20 flex flex-col p-4 space-y-4 transform -translate-x-full transition-all duration-300 md:relative md:translate-x-0 md:flex flex-none shadow-2xl md:shadow-none h-full md:h-auto">
+            <h3 class="hidden md:block text-xs font-bold text-slate-300 uppercase tracking-widest px-2 drop-shadow-sm">Temario</h3>
+            <div id="sidebar-content" class="flex-1 overflow-y-auto custom-scroll space-y-1"></div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-4 md:p-8 w-full custom-scroll relative">
+            <div id="view-dashboard" class="max-w-[1300px] mx-auto hidden relative mb-8"></div>
+            <div id="view-lesson" class="max-w-[1300px] mx-auto">
+                <div id="lesson-header" class="mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4"><h1 id="lesson-title" class="text-2xl md:text-3xl font-bold text-white drop-shadow-md"></h1></div>
+                <div class="flex gap-4 border-b border-white/20 mb-6 overflow-x-auto custom-scroll" id="lesson-tabs-container">
+                    <button onclick="app.switchTab('content')" id="tab-content" class="pb-2 font-bold border-b-2 border-secondary text-secondary transition whitespace-nowrap px-2 drop-shadow-sm">Contenido</button>
+                    <button onclick="app.switchTab('resources')" id="tab-resources" class="pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white transition whitespace-nowrap px-2">Descargas</button>
+                    <button onclick="app.switchTab('quiz')" id="tab-quiz" class="pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white transition whitespace-nowrap px-2">Evaluación</button>
+                </div>
+                <div id="panel-content" class="glass-panel text-slate-200 mb-8 bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
+                    <div id="lesson-video-container" class="aspect-video w-full mb-6 hidden"></div>
+                    <div id="lesson-content-text" class="space-y-6"></div>
+                </div>
+                <div id="panel-resources" class="hidden mb-8"></div>
+                <div id="panel-quiz" class="glass-panel hidden mb-8 bg-white/5 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
+                    <h3 class="text-2xl font-bold text-white mb-2 drop-shadow-md">Evaluación del Módulo</h3>
+                    <p class="text-sm text-slate-400 mb-4">Responde correctamente para avanzar. (70% mínimo necesario)</p>
+                    <div id="quiz-questions" class="space-y-6 mb-8"></div>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button onclick="app.gradeQuiz()" id="grade-quiz-btn" class="py-3 px-6 rounded-xl font-bold shadow-lg transition text-lg">Calificar Evaluación</button>
+                        <button onclick="app.resetQuiz()" id="reset-quiz-btn" class="py-3 px-6 rounded-xl font-bold shadow-lg transition text-lg">Reiniciar Quiz</button>
+                    </div>
+                    <div id="quiz-result" class="mt-4 text-center font-bold text-lg hidden"></div>
+                </div>
+                <div class="flex gap-4 mb-10">
+                    <button id="btn-complete" onclick="app.completeLesson()" class="w-full md:w-auto px-6 py-3 rounded-lg font-bold transition disabled:opacity-50 disabled:cursor-not-allowed shadow-lg" disabled>Marcar como completado y continuar</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="syncIndicator" class="sync-indicator"><i class="fas fa-sync-alt fa-spin text-[#2db8ce]"></i><span id="syncText"></span></div>
+    <div id="toast" class="toast hidden"></div>
+
+    <script>
+        const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcvWH69ZXDcSiWRKhp-wcRy_balv1QHevOdejR_bRjUqfIL3BhSjL5zv2DM4rwAphK/exec';
+        const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
+        const SHARED_PRACTICE_VIDEO_URL = '';
+        const query = new URLSearchParams(window.location.search);
+        const scriptFromQuery = query.get('script') || '';
+        const scriptFromStorage = localStorage.getItem('aula_excel_script_url') || '';
+        const accessScriptFromQuery = query.get('accessScript') || '';
+        const accessScriptFromStorage = localStorage.getItem('aula_excel_access_script_url') || '';
+        const courseFromQuery = Number(query.get('courseId') || 0);
+
+        const SCRIPT_URL = window.SCRIPT_URL || scriptFromQuery || scriptFromStorage || DEFAULT_SCRIPT_URL;
+        const ACCESS_SCRIPT_URL = accessScriptFromQuery || accessScriptFromStorage || DEFAULT_ACCESS_SCRIPT_URL;
+        window.SCRIPT_URL = SCRIPT_URL;
+        const path = window.location.pathname;
+        const filename = path.substring(path.lastIndexOf('/') + 1);
+        const match = filename.match(/(\d+)/);
+        const idFromFile = match ? Number(match[1]) : 0;
+        const courseFromStorage = Number(localStorage.getItem('aula_excel_course_id') || 0);
+        let resolvedCourseId = courseFromQuery || idFromFile || courseFromStorage || 1;
+        let CURRENT_COURSE = null;
+        let COURSE_DATA = [];
+
+        function getStorageKeys(courseId) {
+            return { auth: `curso_auth_${courseId}`, progress: `curso_progress_${courseId}`, scores: `quiz_scores_${courseId}` };
+        }
+        let STORAGE_KEYS = getStorageKeys(resolvedCourseId);
+
+        function showSyncIndicator(text, type = 'loading') {
+            const el = document.getElementById('syncIndicator');
+            if (!el) return;
+            const txt = document.getElementById('syncText');
+            const icon = el.querySelector('i');
+            el.classList.remove('success', 'error', 'visible');
+            el.classList.add('visible');
+            txt.innerText = text;
+            if (type === 'success') icon.className = 'fas fa-check-circle text-green-300';
+            else if (type === 'error') icon.className = 'fas fa-exclamation-circle text-red-300';
+            else icon.className = 'fas fa-sync-alt fa-spin text-[#2db8ce]';
+            if (type !== 'loading') setTimeout(() => el.classList.remove('visible'), 2500);
+        }
+
+        function getDirectDownloadUrl(url) {
+            if (typeof url !== 'string' || !url.includes('drive.google.com')) {
+                return url;
+            }
+            const regex = /drive\.google\.com\/(?:file\/d\/|open\?id=)([a-zA-Z0-9_-]+)/;
+            const match = url.match(regex);
+            if (match && match[1]) {
+                const fileId = match[1];
+                return `https://drive.google.com/uc?export=download&id=${fileId}`;
+            }
+            return url;
+        }
+
+        function getResourceImage(moduleTitle) {
+            const title = String(moduleTitle || '').toLowerCase();
+            if (title.includes('grafcet')) return 'img/AA (4).gif';
+            if (title.includes('logo')) return 'img/AA (11).webp';
+            if (title.includes('factory')) return 'img/AA (29).webp';
+            if (title.includes('giro')) return 'img/AA (36).webp';
+            if (title.includes('rotórico') || title.includes('rotorico')) return 'img/AA (5).gif';
+            if (title.includes('contactores')) return 'img/AA (19).webp';
+            return CURRENT_COURSE ? CURRENT_COURSE.introImage || 'img/AA (7).gif' : 'img/AA (7).gif';
+        }
+
+        function renderResourceCards(resources, moduleTitle) {
+            if (!resources || resources.length === 0) return '<p class="text-slate-300">No hay materiales descargables para este módulo.</p>';
+            const defaultImageUrl = getResourceImage(moduleTitle);
+            const cardsHtml = resources.map(resource => {
+                const imageUrl = resource.image || defaultImageUrl;
+                const lowerType = (resource.type || '').toLowerCase();
+                const bookTypes = ['guía', 'manual', 'libro', 'powerpoint', 'word', 'excel', 'pdf', 'reglamento'];
+                
+                let icon = 'file-code';
+                let subtitle = 'Recurso de la lección';
+                
+                if (bookTypes.includes(lowerType)) {
+                    icon = 'book-open';
+                    subtitle = 'Documento de apoyo y teoría';
+                } else if (lowerType.includes('programa')) {
+                    icon = 'terminal';
+                    subtitle = 'Software y herramientas';
+                } else if (lowerType.includes('ejercicio')) {
+                    icon = 'file-archive';
+                    subtitle = 'Ejercicio práctico';
+                }
+
+                const badgeClass = 'badge-manual'; // Unificar a un solo estilo
+                const badgeText = resource.type ? resource.type.charAt(0).toUpperCase() + resource.type.slice(1) : 'Recurso';
+                const iconCircleClass = 'icon-circle-manual';
+                const fileName = resource.name;
+                const directUrl = getDirectDownloadUrl(resource.url);
+                return `
+                <a href="${directUrl}" target="_blank" class="material-card" data-file-name="${fileName}" download="${fileName}">
+                    <div class="card-image-wrapper">
+                        <img src="${imageUrl}" alt="${fileName}" loading="lazy">
+                        <div class="card-image-overlay"></div>
+                        <span class="card-badge ${badgeClass}">${badgeText}</span>
+                        <div class="card-icon-circle ${iconCircleClass}">
+                            <i data-lucide="${icon}" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">${resource.name}</h4>
+                        <p class="card-subtitle">${subtitle}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="download-count-badge">
+                            <i class="fas fa-download text-[10px]"></i>
+                            <span class="file-download-count" data-file-name="${fileName}">0</span>
+                        </span>
+                        <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                    </div>
+                </a>`;
+            }).join('');
+            return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 not-prose">${cardsHtml}</div>`;
+        }
+
+        function initializeResourceCards() {
+            function applyGlow(card) { if (card) card.classList.add('glow-manual'); }
+            function updateCardData() {
+                const currentUser = AuthLogic.currentUser; if (!currentUser) return;
+                const downloadedFiles = currentUser.downloadedFiles || [];
+                const downloadCounts = currentUser.downloadCounts || {};
+                document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
+                    const fileName = card.dataset.fileName;
+                    if (fileName) { if (downloadedFiles.includes(fileName)) applyGlow(card); const countSpan = card.querySelector('.file-download-count'); if (countSpan) countSpan.innerText = downloadCounts[fileName] || 0; }
+                });
+            }
+            function setupClickListeners() {
+                document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
+                    if (card.dataset.listenerAttached) return; card.dataset.listenerAttached = 'true';
+                    card.addEventListener('click', function() {
+                        const fileName = this.dataset.fileName; if (!fileName) return;
+                        const currentUser = AuthLogic.currentUser;
+                        if (currentUser) {
+                            if (!Array.isArray(currentUser.downloadedFiles)) currentUser.downloadedFiles = [];
+                            if (!currentUser.downloadedFiles.includes(fileName)) currentUser.downloadedFiles.push(fileName);
+                            if (typeof currentUser.downloadCounts !== 'object') currentUser.downloadCounts = {};
+                            currentUser.downloadCounts[fileName] = (currentUser.downloadCounts[fileName] || 0) + 1;
+                            localStorage.setItem('user', JSON.stringify(currentUser));
+                            const countSpan = this.querySelector('.file-download-count');
+                            if (countSpan) countSpan.innerText = currentUser.downloadCounts[fileName];
+                            if (typeof AuthLogic.syncUserData === 'function') AuthLogic.syncUserData(true);
+                        }
+                        applyGlow(this);
+                    });
+                });
+            }
+            updateCardData();
+            setupClickListeners();
+        }
+
+        function buildIntroContent(config) {
+            return `<div class="space-y-6"><h2 class="text-2xl font-bold text-secondary">Bienvenido al Aula</h2><p class="text-slate-300">${config.intro.summary}</p><div class="bg-black/30 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3><p class="text-slate-300">${config.intro.objective}</p></div><div class="bg-white/5 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-white">Lo que aprenderás</h3><ul class="list-disc pl-5 space-y-2 text-slate-300">${config.intro.goals.map(goal => `<li>${goal}</li>`).join('')}</ul></div></div>`;
+        }
+
+        function buildCourseData(config) {
+            const introLesson = { id: 0, title: 'Contenido del Curso', video: config.introVideo || SHARED_PRACTICE_VIDEO_URL, resources: config.sharedResources || [{ type: 'manual', name: 'Materiales del curso', url: config.materialPage }], quiz: [], hasQuiz: false, content: buildIntroContent(config) };
+            const modules = config.modules.map((module, index) => ({ id: index + 1, title: module.title, video: module.video || SHARED_PRACTICE_VIDEO_URL, resources: module.resources || [], hasQuiz: module.quiz && module.quiz.length > 0, content: module.content || `<h2 class="text-2xl font-bold text-secondary">${module.title}</h2><p class="text-slate-300 mb-4">${module.summary}</p><div class="bg-white/5 p-5 rounded-xl mb-6"><h3 class="text-xl font-bold text-white mb-3">Puntos clave</h3><ul class="list-disc pl-5 space-y-2 text-slate-300">${(module.points || []).map(point => `<li>${point}</li>`).join('')}</ul></div><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80"><strong>Recomendación:</strong> repasa el material de apoyo y valida cada paso antes de avanzar al siguiente módulo.</div>`, quiz: Array.isArray(module.quiz) ? module.quiz : [] }));
+            return [introLesson, ...modules];
+        }
+
+        function parseMaybeJson(value) { if (value && typeof value === 'object') return value; if (typeof value !== 'string') return null; try { return JSON.parse(value); } catch (_e) { return null; } }
+        function toArray(value) { if (Array.isArray(value)) return value; if (typeof value === 'string') { const trimmed = value.trim(); if (!trimmed) return []; const parsed = parseMaybeJson(trimmed); if (Array.isArray(parsed)) return parsed; return trimmed.split('|').map(item => item.trim()).filter(Boolean); } return []; }
+        function normalizeQuizItem(item) { if (!item || typeof item !== 'object') return null; const opts = toArray(item.opts || item.options || item.opciones || []); if (!opts.length) return null; const ans = Number(item.ans ?? item.correctAnswerIndex ?? item.respuesta ?? 0); return { q: String(item.q || item.question || item.pregunta || 'Pregunta').trim(), opts, ans: Number.isFinite(ans) ? ans : 0 }; }
+        function normalizeModule(item, index) { const rawQuiz = item.quiz || item.quizzes || item.evaluacion || item.evaluaciones || []; const quizList = toArray(rawQuiz).map(normalizeQuizItem).filter(Boolean); return { moduleId: Number(item.moduleId || item.idModulo || item.id || index + 1), title: String(item.title || item.titulo || item.nombre || `Módulo ${index + 1}`), summary: String(item.summary || item.resumen || item.descripcion || ''), content: String(item.content || item.contenido || item.html || ''), points: toArray(item.points || item.puntos || []), video: String(item.video || item.videoUrl || item.linkVideo || ''), resources: toArray(item.resources || item.recursos || []), quiz: quizList }; }
+        function normalizeCoursePayload(payload, requestedCourseId) { const source = payload || {}; const moduleListRaw = source.modules || source.modulos || source.lessons || source.lecciones || []; const modules = toArray(moduleListRaw).map(normalizeModule).sort((a, b) => a.moduleId - b.moduleId); const intro = source.intro || {}; return { id: Number(source.id || source.courseId || source.cursoId || requestedCourseId || 1), name: String(source.name || source.title || source.nombre || 'Aula Virtual'), title: String(source.title || source.name || source.titulo || source.nombre || 'Aula Virtual'), type: String(source.type || source.tipo || 'Online'), materialPage: String(source.materialPage || source.materialFile || source.archivoMaterial || ''), introImage: String(source.introImage || source.imagenIntro || source.image || 'img/AA (2).gif'), sharedResources: toArray(source.sharedResources || source.recursosCompartidos || []), intro: { summary: String(intro.summary || intro.resumen || source.introSummary || ''), objective: String(intro.objective || intro.objetivo || source.introObjective || ''), goals: toArray(intro.goals || intro.objetivos || source.introGoals || []) }, introVideo: String(source.introVideo || source.videoIntro || ''), modules }; }
+        function unwrapApiResponse(data) { const parsed = parseMaybeJson(data) || data; if (!parsed || typeof parsed !== 'object') return { ok: false, message: 'La respuesta del script no es JSON válido.' }; if (parsed.success === true && parsed.content) return { ok: true, content: parsed.content }; if (parsed.status === 'success' && parsed.content) return { ok: true, content: parsed.content }; if (parsed.course || parsed.curso) return { ok: true, content: parsed.course || parsed.curso }; if (parsed.content && typeof parsed.content === 'object') return { ok: true, content: parsed.content }; if (parsed.success === false || parsed.status === 'error') return { ok: false, message: parsed.message || 'El script respondió con error.' }; if (parsed.modules || parsed.modulos || parsed.lessons || parsed.lecciones) return { ok: true, content: parsed }; return { ok: false, message: parsed.message || 'Formato no compatible en la respuesta del script.' }; }
+
+        const app = {
+            scriptUrl: SCRIPT_URL,
+            accessScriptUrl: ACCESS_SCRIPT_URL,
+            lastLoadErrorMessage: '',
+            progress: [],
+            quizScores: {},
+            currentId: 0,
+            init: async function() {
+                this.initTheme();
+                document.addEventListener('fullscreenchange', this.updateFullScreenIcon);
+                this.progress = JSON.parse(localStorage.getItem(STORAGE_KEYS.progress) || '[]');
+                this.quizScores = JSON.parse(localStorage.getItem(STORAGE_KEYS.scores) || '{}');
+                try {
+                    const courseContent = await this.fetchCourseContent(resolvedCourseId);
+                    if (!courseContent) { const reason = this.lastLoadErrorMessage || 'No se pudo cargar el contenido de este curso. Contacta al administrador.'; this.showAccessBlocked("Contenido no disponible", reason); return; }
+                    const loadingCourseNameEl = document.getElementById('loading-course-name');
+                    if (loadingCourseNameEl) {
+                        loadingCourseNameEl.innerText = courseContent.name;
+                    }
+                    CURRENT_COURSE = courseContent;
+                    COURSE_DATA = buildCourseData(CURRENT_COURSE);
+                    document.body.classList.toggle('course-4-theme', CURRENT_COURSE.id === 4);
+                    document.title = `Aula Virtual - ${CURRENT_COURSE.name}`;
+                    document.getElementById('login-course-subtitle').innerText = CURRENT_COURSE.name;
+                    document.getElementById('header-course-title').innerText = CURRENT_COURSE.name;
+                    const globalUser = JSON.parse(localStorage.getItem('user') || 'null');
+                    const classroomAuth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                if (classroomAuth && globalUser && classroomAuth.correo && globalUser.email) { if (String(classroomAuth.correo).toLowerCase() !== String(globalUser.email).toLowerCase()) { this.clearLocalData(); } } // No showSyncIndicator here
+                    if (localStorage.getItem(STORAGE_KEYS.auth)) { this.proceedToAula(); return; }
+                    if (globalUser && globalUser.email) { this.autoVerify(globalUser); return; }
+                    this.showLoginScreen();
+                } catch (error) { console.error("Error en la inicialización del aula:", error); this.showAccessBlocked("Error de Carga", "Hubo un problema al cargar el curso. Intenta de nuevo más tarde."); }
+            },
+            showLoginScreen: function() {
+                const loader = document.getElementById('initial-loader');
+                const formContainer = document.getElementById('login-form-container');
+                if (loader) loader.classList.add('hidden');
+                if (formContainer) formContainer.classList.remove('hidden');
+            },
+            autoVerify: function(user) { showSyncIndicator('Verificando sesión...', 'loading'); if (document.getElementById('login-nombre')) document.getElementById('login-nombre').value = user.name || ''; if (document.getElementById('login-cedula')) document.getElementById('login-cedula').value = user.cedula || 'N/A'; if (document.getElementById('login-correo')) document.getElementById('login-correo').value = user.email || ''; this.executeVerification(user.name || '', user.cedula || 'N/A', user.email || '', true); },
+            clearLocalData: function() { localStorage.removeItem(STORAGE_KEYS.auth); localStorage.removeItem(STORAGE_KEYS.progress); localStorage.removeItem(STORAGE_KEYS.scores); this.progress = []; this.quizScores = {}; if (typeof hideSyncIndicator === 'function') hideSyncIndicator(); },
+            fetchCourseContent: async function(courseId) {
+                this.lastLoadErrorMessage = '';
+                try {
+                    const attempts = [`${this.scriptUrl}?action=get_course_content&courseId=${courseId}&t=${Date.now()}`, `${this.scriptUrl}?action=get_course_content&id=${courseId}&t=${Date.now()}`];
+                    let lastMessage = 'No hubo respuesta válida del script.';
+                    for (let i = 0; i < attempts.length; i += 1) {
+                        const response = await fetch(attempts[i]);
+                        if (!response.ok) { lastMessage = `HTTP ${response.status}`; continue; }
+                        const raw = await response.text();
+                        const parsed = parseMaybeJson(raw);
+                        const unwrapped = unwrapApiResponse(parsed || raw);
+                        if (!unwrapped.ok) { lastMessage = unwrapped.message; continue; }
+                        const normalized = normalizeCoursePayload(unwrapped.content, courseId);
+                        if (!normalized.modules.length && !normalized.intro.summary) { lastMessage = 'El curso llegó sin módulos ni contenido de introducción.'; continue; }                        
+                        return normalized;
+                    }
+                    throw new Error(lastMessage);
+                } catch (error) { console.error("Error al obtener el contenido del curso:", error); this.lastLoadErrorMessage = error && error.message ? error.message : 'Error desconocido al cargar el contenido.'; return null; }
+            },
+            showDashboard: function() {
+                this.closeSidebarOnMobile();
+                document.getElementById('view-lesson').classList.add('hidden');
+                const dash = document.getElementById('view-dashboard');
+                dash.classList.remove('hidden');
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null') || {};
+                const done = this.progress.length;
+                const total = COURSE_DATA.length;
+                const percent = Math.round((done / total) * 100);
+                const lessonPillsHtml = COURSE_DATA.map(lesson => {
+                    const score = this.quizScores[lesson.id];
+                    let pillClass = 'bg-slate-600 text-slate-200';
+                    if (score !== undefined) pillClass = score >= 70 ? 'bg-teal-500 text-white' : 'bg-red-500 text-white';
+                    else if (this.progress.includes(lesson.id)) pillClass = 'bg-teal-500 text-white';
+                    let simpleTitle; let abbreviatedTitle; const isIntro = lesson.id === 0;
+                    if (isIntro) { simpleTitle = 'Intro'; abbreviatedTitle = 'Intro'; } else { simpleTitle = `Lección ${lesson.id}`; abbreviatedTitle = `Lec${lesson.id}`; }
+                    const finalIcon = isIntro ? '<i class="fas fa-book text-slate-400"></i>' : this.getMedalIcon(score);
+                    return `<div class="flex flex-col items-center gap-1" title="${lesson.title}"><div class="progress-pill-label w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider"><span class="hidden sm:inline">${simpleTitle}</span><span class="sm:hidden">${abbreviatedTitle}</span></div><span class="text-lg medal-icon" style="min-height: 1.5rem;">${finalIcon}</span></div>`;
+                }).join('');
+                const modulesHtml = COURSE_DATA.map((lesson, index) => {
+                    const score = this.quizScores[lesson.id];
+                    let stateClass = 'border-yellow-400/50 bg-yellow-500/20 backdrop-blur-md text-white';
+                    let stateText = '⏳ Falta por evaluar';
+                    if (score !== undefined && !isNaN(score)) { if (score >= 70) { stateClass = 'border-blue-400/50 bg-blue-500/20 backdrop-blur-md text-white'; stateText = `✅ Completado (${score}%)`; } else { stateClass = 'border-red-500/60 bg-red-600/20 backdrop-blur-md text-white'; stateText = `❌ No aprobado ${score}%`; } }
+                    else if (this.progress.includes(lesson.id)) { stateClass = 'border-blue-400/50 bg-blue-500/20 backdrop-blur-md text-white'; stateText = '✅ Completado'; }
+                    const displayModuleName = lesson.title.includes(':') ? lesson.title.split(':')[1].trim() : lesson.title;
+                    return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01] cursor-pointer" onclick="app.loadLesson(${lesson.id})"><span class="font-bold tracking-wide drop-shadow-md text-sm sm:text-base">${displayModuleName}</span><span class="text-xs sm:text-sm font-bold drop-shadow-md bg-black/20 px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+                }).join('');
+                dash.innerHTML = `<div class="w-full dashboard-container rounded-[32px] shadow-xl overflow-hidden text-left"><div class="p-6 sm:p-8 border-b border-white/10"><div class="grid grid-cols-1 gap-6"><div class="student-card bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col h-full"><div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div><div class="relative z-10 flex flex-col gap-3 h-full"><div><h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2><p class="text-white text-xl font-bold">${auth.nombre || '-'}</p></div><p class="text-slate-300 text-sm font-medium">${auth.correo || '-'}</p><div class="grid grid-cols-1 gap-3 mt-auto pt-4 border-t border-white/10"><div><p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1"><i class="fas fa-id-card text-slate-400 text-xs"></i> Cédula</p><p class="text-white font-bold">${auth.cedula || '-'}</p></div></div></div></div><div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]"><div class="flex flex-col h-full"><div class="flex-1"><h4 class="progress-current-title font-black uppercase tracking-widest text-xs"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4><div class="grid grid-cols-4 gap-x-2 gap-y-4 mt-2" title="${done} de ${total} lecciones completadas">${lessonPillsHtml}</div></div><div class="flex items-center justify-center w-24 h-24 relative self-center md:self-auto flex-shrink-0"><svg class="w-full h-full" viewBox="0 0 100 100"><circle class="progress-track-ring text-white/10" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" /><circle class="text-teal-500 transform -rotate-90 origin-center" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" style="stroke-dasharray: 264; stroke-dashoffset: calc(264 - (264 * ${percent}) / 100); transition: stroke-dashoffset 0.7s ease-out;" /></svg><span class="absolute text-xl font-black text-teal-500">${percent}%</span></div></div><div class="mt-auto pt-4 flex flex-col sm:flex-row gap-2"><button onclick="app.continueCourse()" class="continue-learning-btn flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm border border-white/5"><i class="fas fa-play text-secondary"></i> Continuar Aprendizaje</button></div></div></div></div><div class="p-6 sm:p-10 lg:p-14"><div><h4 class="text-slate-400 font-black uppercase tracking-widest text-[10px] mb-4">Módulos del Curso</h4><div class="space-y-3">${modulesHtml}</div></div></div></div>`;
+                if (window.lucide) lucide.createIcons();
+            },
+            continueCourse: function() { const next = COURSE_DATA.find(l => !this.progress.includes(l.id)); if (next) this.loadLesson(next.id); else this.loadLesson(COURSE_DATA[COURSE_DATA.length - 1].id); },
+            toggleSidebar: function() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('sidebar-overlay'); if (window.innerWidth < 768) { sidebar.classList.toggle('-translate-x-full'); overlay.classList.toggle('hidden'); } else { sidebar.classList.toggle('collapsed'); } },
+            closeSidebarOnMobile: function() { if (window.innerWidth < 768) { const s = document.getElementById('sidebar'); if (!s.classList.contains('-translate-x-full')) { s.classList.add('-translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); } } },
+            renderSidebar: function() {
+                const cont = document.getElementById('sidebar-content');
+                cont.innerHTML = COURSE_DATA.map(lesson => {
+                    const locked = lesson.id > 0 && !this.progress.includes(lesson.id - 1);
+                    const isCurr = this.currentId === lesson.id;
+                    const isIntro = lesson.id === 0;
+                    const lessonLabel = isIntro ? 'INTRODUCCIÓN' : `LECCIÓN ${lesson.id}`;
+                    const topicText = lesson.title.includes(':') ? lesson.title.split(':')[1].trim() : lesson.title;
+                    return `<button onclick="${locked ? '' : `app.loadLesson(${lesson.id})`}" class="w-full text-left rounded-lg transition ${isCurr ? 'bg-secondary/40 border-l-4 border-secondary text-white shadow-inner' : 'text-slate-200'} ${locked ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10 hover:text-white'}"><i class="${this.progress.includes(lesson.id) ? 'fas fa-check-circle text-secondary' : 'far fa-circle text-slate-400'} mr-2" style="float: left; margin-top: 3px;"></i><span class="lesson-number">${lessonLabel}</span><span class="lesson-topic">${topicText}</span></button>`;
+                }).join('');
+            },
+            loadLesson: function(id) {
+                if (id > 0 && !this.progress.includes(id - 1)) { this.showModal('Lección bloqueada', 'Completa la lección anterior para continuar.', 'error'); return; }
+                this.closeSidebarOnMobile();
+                const lesson = COURSE_DATA.find(item => item.id === id);
+                if (!lesson) return;
+                this.currentId = id;
+                document.getElementById('view-dashboard').classList.add('hidden');
+                document.getElementById('view-lesson').classList.remove('hidden');
+                document.getElementById('lesson-title').innerText = lesson.title;
+                document.getElementById('lesson-content-text').innerHTML = lesson.content;
+                const videoContainer = document.getElementById('lesson-video-container'); // ... (resto del código sin cambios)
+                if (lesson.video) { const isEmbedUrl = lesson.video.includes('youtube.com') || lesson.video.includes('youtu.be') || lesson.video.includes('player.mediadelivery.net') || lesson.video.includes('/play/'); videoContainer.innerHTML = isEmbedUrl ? `<iframe class="w-full h-full rounded-xl shadow-lg border border-white/10" src="${lesson.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>` : `<video class="w-full h-full rounded-xl shadow-lg border border-white/10" controls src="${lesson.video}" playsinline></video>`; videoContainer.classList.remove('hidden'); } else { videoContainer.innerHTML = ''; videoContainer.classList.add('hidden'); }
+                document.getElementById('panel-resources').innerHTML = renderResourceCards(lesson.resources, lesson.title);
+                this.renderQuiz(lesson.quiz);
+                this.updateCompleteButton();
+                this.switchTab('content');
+                this.renderSidebar();
+                if (window.lucide) lucide.createIcons();
+                initializeResourceCards();
+            },
+            renderQuiz: function(quiz) { const cont = document.getElementById('quiz-questions'); if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; } cont.innerHTML = quiz.map((q, i) => `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}"><p class="font-bold text-white mb-3">${q.q}</p><div class="space-y-2">${q.opts.map((opt, oi) => `<label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option transition" data-opt-index="${oi}"><input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}</label>`).join('')}</div><div class="correct-feedback hidden text-green-400 text-sm mt-2"></div></div>`).join(''); },
+            gradeQuiz: function() {
+                const lesson = COURSE_DATA.find(l => l.id === this.currentId);
+                if (!lesson.quiz || lesson.quiz.length === 0) return;
+                let score = 0, all = true, answers = [];
+                lesson.quiz.forEach((q, i) => { const sel = document.querySelector(`input[name="q_${i}"]:checked`); if (sel) { answers[i] = parseInt(sel.value, 10); if (answers[i] === q.ans) score += Math.round(100 / lesson.quiz.length); } else { all = false; answers[i] = -1; } });
+                if (!all) { this.showModal('Atención', 'Debes responder todas las preguntas antes de enviar.', 'error'); return; }
+                lesson.quiz.forEach((q, i) => {
+                    const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
+                    const opts = qDiv.querySelectorAll('.quiz-option');
+                    const fb = qDiv.querySelector('.correct-feedback');
+                    opts.forEach(opt => { opt.classList.remove('correct', 'incorrect'); const idx = parseInt(opt.dataset.optIndex, 10); if (idx === q.ans) opt.classList.add('correct'); else if (answers[i] === idx) opt.classList.add('incorrect'); });
+                    fb.innerHTML = `✅ ${q.opts[q.ans]}`; fb.classList.remove('hidden');
+                });
+                score = Math.min(score, 100);
+                const best = this.quizScores[this.currentId] || 0;
+                if (score > best) { this.quizScores[this.currentId] = score; localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores)); }
+                const resDiv = document.getElementById('quiz-result');
+                resDiv.classList.remove('hidden');
+                if (score >= 70) { resDiv.innerHTML = `<span class="text-green-400 text-xl">Aprobado con ${score}%. Tu mejor nota quedó guardada.</span>`; if (!this.progress.includes(this.currentId)) { this.progress.push(this.currentId); this.progress.sort((a, b) => a - b); localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress)); this.syncProgress(); this.renderSidebar(); this.updateCompleteButton(); this.showAchievementOverlay(this.currentId, score); } } else { resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span>`; this.showEncouragementOverlay(this.currentId, score); }
+            },
+            resetQuiz: function() { document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(input => input.checked = false); document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect')); document.querySelectorAll('.correct-feedback').forEach(fb => fb.classList.add('hidden')); document.getElementById('quiz-result').classList.add('hidden'); },
+            syncProgress: function() { const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); if (!auth) return; const data = JSON.stringify({ progress: this.progress, scores: this.quizScores }); const courseName = CURRENT_COURSE ? CURRENT_COURSE.name : 'Aula Virtual'; fetch(`${this.accessScriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&cedula=${encodeURIComponent(auth.cedula)}&curso=${encodeURIComponent(courseName)}&data=${encodeURIComponent(data)}`, { method: 'GET', mode: 'no-cors' }).catch(e => console.error('Sync Error:', e)); },
+            getMedalIcon: function(score) { if (score === undefined || score < 70) return ''; if (score === 100) return '🏆'; if (score >= 90) return '🥇'; if (score >= 80) return '🥈'; return '🥉'; },
+            playApplauseSound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 12; i += 1) { const bufferSize = ctx.sampleRate * 0.05; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j += 1) output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 900 + (Math.random() * 800); const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.09); gain.gain.exponentialRampToValueAtTime(0.35, now + i * 0.09 + 0.01); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.05); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.09); source.stop(now + i * 0.09 + 0.06); } } catch (e) { console.warn('No se pudo reproducir aplausos:', e); } },
+            launchFireworks: function() { /* ... código de fireworks ... */ },
+            showAchievementOverlay: function(moduleId, score) { const old = document.getElementById('subject-achievement-overlay'); if (old) old.remove(); const overlay = document.createElement('div'); overlay.id = 'subject-achievement-overlay'; overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(4px);z-index:1300;display:flex;align-items:center;justify-content:center;'; overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:1px solid rgba(34,211,238,.4);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45)"><div style="font-size:38px;line-height:1">👏</div><h4 style="margin:10px 0 6px;font-size:20px;font-weight:900">Felicitaciones</h4><p style="margin:0 0 6px;color:#bae6fd;font-weight:700">Logro desbloqueado: Quiz ${moduleId} aprobado</p><p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Obtuviste ${score}%. Sigue así.</p><button id="subject-achievement-close" style="padding:10px 16px;border:0;border-radius:10px;background:#06b6d4;color:#082f49;font-weight:900;cursor:pointer">Continuar</button></div>`; document.body.appendChild(overlay); const close = () => overlay.remove(); document.getElementById('subject-achievement-close').addEventListener('click', close); overlay.addEventListener('click', (ev) => { if (ev.target === overlay) close(); }); this.playApplauseSound(); this.launchFireworks(); },
+            showEncouragementOverlay: function(moduleId, score) { /* ... similar al achievement pero con mensaje de ánimo ... */ },
+            updateCompleteButton: function() { const lesson = COURSE_DATA.find(l => l.id === this.currentId); const hasQuiz = lesson?.quiz && lesson.quiz.length > 0; document.getElementById('btn-complete').disabled = hasQuiz && !this.progress.includes(this.currentId); },
+            completeLesson: function() { if (this.currentId === 0) { if (!this.progress.includes(0)) { this.progress.push(0); localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress)); this.syncProgress(); } this.loadLesson(1); } else { const nextId = this.currentId + 1; if (nextId < COURSE_DATA.length) this.loadLesson(nextId); else this.showDashboard(); } },
+            switchTab: function(tabId) { ['content', 'resources', 'quiz'].forEach(tab => { document.getElementById(`panel-${tab}`).classList.toggle('hidden', tab !== tabId); document.getElementById(`tab-${tab}`).className = tab === tabId ? 'pb-2 font-bold border-b-2 border-secondary text-secondary px-2' : 'pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2'; }); document.getElementById('btn-complete').parentElement.classList.toggle('hidden', tabId !== 'content'); },
+            showModal: function(title, msg, type) { document.getElementById('modal-title').innerText = title; document.getElementById('modal-msg').innerText = msg; let icon = '✅'; if (type === 'error') icon = '❌'; else if (type === 'medal') icon = '<i class="fas fa-trophy text-yellow-400 animate-bounce"></i>'; document.getElementById('modal-icon').innerHTML = icon; document.getElementById('modal-feedback').classList.remove('hidden'); },
+            showAccessBlocked: function(title = "ACCESO RESTRINGIDO", message) { const container = document.querySelector('#login-screen > div'); if (!container) return; const loginScreen = document.getElementById('login-screen'); if (loginScreen) loginScreen.classList.remove('hidden'); const defaultMessage = `No estás inscrito en ${CURRENT_COURSE ? CURRENT_COURSE.name : 'este curso'}. Para acceder a esta aula virtual debes adquirir el curso primero en nuestro catálogo.`; container.innerHTML = `<div class="text-center"><div class="text-6xl text-red-500 mb-6"><i class="fas fa-lock"></i></div><h2 class="text-2xl font-bold text-white mb-4">${title}</h2><p class="text-slate-300 text-sm mb-8 leading-relaxed">${message || defaultMessage}</p><div class="space-y-4"><button onclick="window.location.href='catalogo.html'" class="w-full bg-primary text-white py-3 rounded-lg font-bold shadow-lg hover:brightness-110 transition">Ver Catálogo de Cursos</button><button onclick="localStorage.removeItem('user'); location.reload();" class="w-full bg-white/10 text-slate-300 py-2 rounded-lg text-xs font-bold hover:bg-white/20 transition">Ingresar con otra cuenta</button></div></div>`; },
+            verifyLogin: function(event) { event.preventDefault(); const n = document.getElementById('login-nombre').value || ''; const c = document.getElementById('login-cedula').value || 'N/A'; const em = document.getElementById('login-correo').value || ''; this.executeVerification(n, c, em, false); }, // No showSyncIndicator here
+            executeVerification: async function(n, c, em, isAuto) {
+                const btn = document.getElementById('login-btn');
+                const err = document.getElementById('login-error');
+                if (!btn || !err) return;
+                const spin = btn.querySelector('.fa-spinner');
+                const txt = btn.querySelector('span');
+                btn.disabled = true;
+                spin.classList.remove('hidden');
+                txt.innerText = ' Verificando...';
+                err.classList.add('hidden');
+                try {
+                    const url = `${this.accessScriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent(CURRENT_COURSE.name)}&t=${Date.now()}`;
+                    const resp = await fetch(url);
+                    const data = await resp.json();
+                    if (data.success) {
+                        localStorage.setItem(STORAGE_KEYS.auth, JSON.stringify({ nombre: n, cedula: c, correo: em }));
+                        if (data.progressData) {
+                            try {
+                                const p = JSON.parse(data.progressData);
+                                this.progress = Array.isArray(p.progress) ? p.progress : [];
+                                this.quizScores = p.scores || {};
+                                localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
+                                localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
+                            } catch (e) {}
+                        }
+                        this.proceedToAula();
+                    } else {
+                        err.innerText = data.message || 'No estás inscrito.';
+                        err.classList.remove('hidden');
+                        if (isAuto) this.showAccessBlocked("ACCESO RESTRINGIDO");
+                    }
+                } catch (error) {
+                    err.innerText = 'Error de conexión.';
+                    err.classList.remove('hidden');
+                } finally {
+                    btn.disabled = false;
+                    spin.classList.add('hidden');
+                    txt.innerText = ' Verificar Inscripción';
+                }
+            },
+            proceedToAula: function() { document.getElementById('login-screen').classList.add('hidden'); this.updateHeaderName(); this.renderSidebar(); this.showDashboard(); },
+            updateHeaderName: function() { const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); const nameEl = document.getElementById('header-student-name'); if (nameEl && auth?.nombre) { nameEl.innerText = auth.nombre; nameEl.classList.remove('hidden'); } },
+            initTheme: function() { const savedTheme = localStorage.getItem('theme') || 'dark'; document.body.classList.toggle('light-mode', savedTheme === 'light'); const icon = document.getElementById('theme-icon'); if (icon) icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun'; },
+            toggleTheme: function() { const isLight = document.body.classList.toggle('light-mode'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); const icon = document.getElementById('theme-icon'); if (icon) icon.className = isLight ? 'fas fa-moon' : 'fas fa-sun'; },
+            toggleFullScreen: function() { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {}); else document.exitFullscreen?.(); },
+            updateFullScreenIcon: function() { const icon = document.getElementById('fullscreen-icon'); if (icon) icon.className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand'; },
+            logout: function() { if (confirm('¿Deseas cerrar sesión y salir del aula virtual?')) { this.clearLocalData(); window.location.href = 'mis-cursos.html'; } },
+            // Placeholder para la generación de certificados
+            reproducirAplausoYCertificado: function(courseId) {
+                this.playApplauseSound();
+                this.launchFireworks();
+                this.showModal("¡Felicidades!", "Has completado el curso. La generación del certificado está en desarrollo.", "medal");
+                console.log(`Generar certificado para el curso ID: ${courseId}`);
+            },
+            generateCertificate: function(courseId) {
+                // Esta función se implementaría para generar el PDF del certificado
+                console.log(`Lógica de generación de certificado para el curso ID: ${courseId}`);
+            }
+        };
+
+        window.onload = () => { app.init(); if (window.lucide) lucide.createIcons(); };
+    </script>
+</body>
+</html>

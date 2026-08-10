@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+﻿﻿﻿﻿﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -480,7 +480,7 @@
                         <div class="grid grid-cols-2 gap-3 mt-2">
                             <div>
                                 <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
-                                    <i class="fas fa-globe text-slate-400 text-xs"></i> PaÃ­s
+                                    <i class="fas fa-globe text-slate-400 text-xs"></i> País
                                 </p>
                                 <div class="flex items-center gap-1 mt-0.5">
                                     <img id="dash-student-flag" src="" class="w-4 h-auto hidden rounded-sm" alt="Bandera">
@@ -489,7 +489,7 @@
                             </div>
                             <div>
                                 <p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1">
-                                    <i class="fas fa-briefcase text-slate-400 text-xs"></i> ProfesiÃ³n
+                                    <i class="fas fa-briefcase text-slate-400 text-xs"></i> Profesión
                                 </p>
                                 <p class="text-white font-bold text-sm mt-0.5" id="dash-student-profession">-</p>
                             </div>
@@ -534,7 +534,7 @@
                         <div id="achievements-container" class="flex-grow grid grid-cols-2 md:grid-cols-10 gap-2 overflow-y-auto custom-scrollbar max-h-[260px] pr-1">
                         </div>
                         <div id="no-achievements" class="text-slate-400 text-xs italic mt-2">
-                            AÃºn no has culminado ningÃºn curso.
+                            Aún no has culminado ningún curso.
                         </div>
                     </div>
                 </div>
@@ -566,11 +566,14 @@
     // ===================== CONFIGURACIÃ“N =====================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
 
-    // Lista completa de todos los cursos (18) con nombres actualizados + Manuales
+    // Lista completa de todos los cursos (24) con nombres actualizados + Manuales
     const COURSES_DATA = [
         { id: 1, name: "Arranque de motores con contactores Online", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
         { id: 2, name: "Arranque de motores con PLC LOGO Online", type: "Online", totalLessons: 5, level: "Básico", moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
-        { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online", type: "Online", totalLessons: 4, level: "Básico", moduleNames: ["Contenido del Curso", "Compuertas Lógicas", "Enclavamientos y Memorias", "Integración con Factory IO"] },
+
+        { id: 3, name: "Funciones Lógicas en PLCs con Factory IO Online", type: "Online", totalLessons: 4, level: "Básico", moduleNames: ["Contenido del Curso", "Compuertas Lógicas", "Enclavamientos y Memorias", "Integración con Factory IO"] },
+
+
         { id: 4, name: "Automatización con Contactores Online", type: "Online", totalLessons: 6, level: "Intermedio", moduleNames: ["Contenido del Curso", "Simbología y Normativa", "Arranque Directo", "Inversión de Giro", "Estrella-Triángulo", "Fallas y Diagnóstico"] },
         { id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", totalLessons: 5, level: "Intermedio", moduleNames: ["Contenido del Curso", "Temporizadores y Contadores", "Marcas y Memorias", "Señales Analógicas", "Aplicación Integral"] },
         { id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", totalLessons: 6, level: "Avanzado", moduleNames: ["Contenido del Curso", "Etapas y Transiciones", "Acciones Asociadas", "Conversión a Ladder", "Seguridad y Rearme", "Proyecto Secuencial"] },
@@ -581,17 +584,32 @@
         { id: 11, name: "Automatización Con PLC LOGO! Presencial", type: "Presencial", totalLessons: 4, level: "Intermedio" },
         { id: 12, name: "Automatización con PLC – Método Grafcet Presencial", type: "Presencial", totalLessons: 6, level: "Avanzado" },
         { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", totalLessons: 5, level: "Intermedio", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+
         { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", totalLessons: 5, level: "Intermedio", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+
         { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+
         { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+
         { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", totalLessons: 5, level: "Básico", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
+
         { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", totalLessons: 5, level: "Avanzado", moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
         // Manuales
         { id: 19, name: "Arranque de motores con contactores Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] },
+
         { id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] },
+
         { id: 21, name: "Automatización con Contactores Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] },
-        { id: 22, name: "PLC Método Grafcet Manual", type: "Manual", totalLessons: 6, level: "Avanzado", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] },
-        { id: 23, name: "Arranque de motores con PLC LOGO Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames: ["Contenido del Manual", "Práctica 1", "Práctica 2", "Práctica 3", "Práctica 4", "Práctica 5"] }
+
+        { id: 22, name: "PLC Método Grafcet Manual", type: "Manual", totalLessons: 6, level: "Avanzado", moduleNames:  ["Contenido del Manual", "etapas", "transiciones", "GRAECET con Cadesimu y PCsimu", "Mini proyecto con GRAFCET Cadesimu y PCsimu", "Mini proyecto con PLC CON GRAFCET Cadesimu y PCsimu"] },
+
+        { id: 23, name: "Arranque de motores con PLC Manual", type: "Manual", totalLessons: 6, level: "Básico", moduleNames:  ["Contenido del Manual", "Arranque Directo con PLC", "Inversión de Giro", "Estrella-Triángulo", "Secuencia de Motores", "Proyecto Final con PLC"] },
+
+        { id: 24, name: "10 ejercicios de PLC Método GRAFCET Manual", type: "Manual", totalLessons: 11, level: "Avanzado", moduleNames: ["Contenido del Manual", "Secuencia Simple", "Divergencia y Convergencia", "Etapas de Espera", "Salto de Etapas", "Procesos Simultáneos", "Contadores en GRAFCET", "Temporizadores en GRAFCET", "Macro-Etapas","Aplicación con GRAFCET" , "Proyecto Final con GRAFCET" ] }
+
+
+
+
     ];
 
     const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
@@ -736,15 +754,42 @@
             const course = COURSES_DATA.find(c => c.id === courseId);
             if(!course) return;
             let progStr = "";
+            let bestMatchScore = -1;
+            const nc = normalizeName(course.name);
+
             for(let key in progresos) {
-                let nk = normalizeName(key), nc = normalizeName(course.name);
-                if(nk === nc || nk.includes(nc) || nc.includes(nk)) {
+                const nk = normalizeName(key);
+                // Se busca una coincidencia exacta para evitar errores con nombres de cursos similares.
+                // La lógica anterior de 'includes' causaba que el progreso de "PLC Método Grafcet Manual" (6 lecciones)
+                // se asignara a "10 ejercicios de PLC Método GRAFCET Manual" (11 lecciones).
+                if (nk === nc) {
                     progStr = progresos[key];
-                    break;
+                    break; // Usar la primera coincidencia exacta encontrada.
                 }
             }
             const total = course.totalLessons || 5;
             userProgress[email][String(courseId)] = parseProgressString(progStr, total);
+
+            // --- INICIO: Lógica para registrar fecha de culminación ---
+            const progressData = userProgress[email][String(courseId)];
+            const hasCompletionDate = findDateInObject(latestCompletionDates, course.name);
+
+            if (progressData.percent === 100 && !hasCompletionDate) {
+                const today = new Date();
+                const dateString = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
+
+                // Actualizar localmente para reflejar el cambio en la UI de inmediato
+                latestCompletionDates[course.name] = dateString;
+
+                // Actualizar el objeto currentUser para sincronizar con la base de datos
+                if (currentUser) {
+                    if (!currentUser.completionDates) currentUser.completionDates = {};
+                    currentUser.completionDates[course.name] = dateString;
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    if (typeof AuthLogic !== 'undefined' && AuthLogic.syncUserData) AuthLogic.syncUserData();
+                }
+            }
+            // --- FIN: Lógica para registrar fecha de culminación ---
         });
         renderUserProgress();
         renderAchievements();
@@ -880,12 +925,15 @@
                     pillClass = 'bg-teal-500 text-white';
                 }
                 
-                let simpleTitle = moduleName.split(':')[0].trim();
-                let abbreviatedTitle = simpleTitle.toLowerCase().replace('práctica', 'prac').replace(/\s/g, '');
-                const isIntro = index === 0 && (simpleTitle.toLowerCase().includes('contenido') || simpleTitle.toLowerCase().includes('introducciÃ³n'));
+                let simpleTitle;
+                let abbreviatedTitle;
+                const isIntro = index === 0 && (moduleName.toLowerCase().includes('contenido') || moduleName.toLowerCase().includes('introducción'));
                 if (isIntro) {
                     simpleTitle = "Intro";
                     abbreviatedTitle = "Intro";
+                } else {
+                    simpleTitle = `Lección ${index}`;
+                    abbreviatedTitle = `Lec${index}`;
                 }
 
                 const medalIcon = getMedalIcon(score);
@@ -920,8 +968,8 @@
                     </div>
                 </div>
                 <div class="mt-4 pt-4 border-t border-white/10 grid grid-cols-2 gap-3 text-xs">
-                    <div class="flex items-center gap-2"><i class="fas fa-calendar-check text-teal-400 text-sm"></i><div><p class="enrollment-label text-slate-400 uppercase tracking-wider text-[10px]">InscripciÃ³n</p><p class="enrollment-date text-slate-100 font-bold">${enrollmentDisplay}</p></div></div>
-                    <div class="flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400 text-sm"></i><div><p class="enrollment-label text-slate-400 uppercase tracking-wider text-[10px]">CulminaciÃ³n</p><p class="enrollment-date text-slate-100 font-bold">${completionDisplay}</p></div></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-calendar-check text-teal-400 text-sm"></i><div><p class="enrollment-label text-slate-400 uppercase tracking-wider text-[10px]">Inscripción</p><p class="enrollment-date text-slate-100 font-bold">${enrollmentDisplay}</p></div></div>
+                    <div class="flex items-center gap-2"><i class="fas fa-calendar-alt text-purple-400 text-sm"></i><div><p class="enrollment-label text-slate-400 uppercase tracking-wider text-[10px]">Culminación</p><p class="enrollment-date text-slate-100 font-bold">${completionDisplay}</p></div></div>
                 </div>
                 ${certificateButton}
             </div>`;
@@ -948,7 +996,8 @@
                         stateText = `⏳ Falta por evaluar`;
                     }
                 }
-                modulesHtml += `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01]"><span class="tracking-wide text-xs sm:text-sm">${moduleName}</span><span class="text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+                const displayModuleName = moduleName.includes(':') ? moduleName.split(':')[1].trim() : moduleName;
+                modulesHtml += `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01]"><span class="tracking-wide text-xs sm:text-sm">${displayModuleName}</span><span class="text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
             });
 
             const cardHtml = `
@@ -1044,13 +1093,13 @@
     function reproducirAplausoYCertificado(courseId) {
         const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-small-crowd-applause-443.mp3');
         audio.volume = 0.5;
-        audio.play().catch(e => console.log("No se pudo reproducir el audio automÃ¡ticamente."));
+        audio.play().catch(e => console.log("No se pudo reproducir el audio automáticamente."));
         generateCertificate(courseId);
     }
 
     function generateCertificate(courseId) {
         if (!currentUser) {
-            alert("Debes iniciar sesiÃ³n para generar el certificado.");
+            alert("Debes iniciar sesión para generar el certificado.");
             return;
         }
         const course = COURSES_DATA.find(c => c.id === courseId);
@@ -1106,7 +1155,7 @@
                 </div>
             </div>
             <div style="position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: flex-end; margin-top: 15px; padding: 0 20px;">
-                <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">MSc. Ing. Pablo CedeÃ±o</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Instructor</p></div>
+                <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">MSc. Ing. Pablo Cedeño</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Instructor</p></div>
                 <div style="text-align: center; color: #9ca3af; font-size: 10px;">ID de Certificado: <strong style="color:#6b7280; font-weight: 900;">${siglas}</strong>-<span style="color:#6b7280; font-weight: 900;">${idCalculado}</span></div>
                 <div style="text-align: center;"><div style="width: 160px; border-bottom: 1px solid #475569; margin-bottom: 4px;"></div><p style="font-weight: 800; font-size: 14px; margin:0;">Aprende Automatización</p><p style="font-size: 12px; color: #6b7280; font-weight: 600; margin:0;">Dirección Académica</p></div>
             </div>
@@ -1259,12 +1308,12 @@
 
     document.addEventListener("DOMContentLoaded", async () => {
         if (!currentUser) {
-            document.getElementById('progreso-page').innerHTML = '<div class="text-center text-white mt-20">Debes iniciar sesiÃ³n en la plataforma principal para ver tu progreso.</div>';
+            document.getElementById('progreso-page').innerHTML = '<div class="text-center text-white mt-20">Debes iniciar sesión en la plataforma principal para ver tu progreso.</div>';
             return;
         }
         await loadData();
 
-        // AnimaciÃ³n de revelado al hacer scroll
+        // Animación de revelado al hacer scroll
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {

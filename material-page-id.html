@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material del Curso - Aprende Automatización</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+
+    <!-- Fuentes y librerías -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Variables de tema (copiadas de 1-arranque-contactores-material.html) */
+        :root {
+            --bg-default: #f7f9fb;
+            --bg-secondary: #ffffff;
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e293b;
+            --text-default: #1e293b;
+            --text-secondary: #475569;
+            --text-light: #f8fafc;
+            --text-accent: #2db8ce;
+            --border-default: #e2e8f0;
+            --border-light: rgba(255, 255, 255, 0.1);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --badge-bg-intermediate: #0891b2;
+            --badge-bg-basic: #0d9488;
+            --badge-text: #ffffff;
+            --btn-accent-bg: #0891b2;
+            --btn-accent-text: #ffffff;
+            --btn-accent-shadow: rgba(8, 145, 178, 0.3);
+            --btn-accent-border: #0e7490;
+            --btn-accent-bg-hover: #0e7490;
+        }
+
+        body:not(.light-mode) {
+            --bg-default: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e293b;
+            --text-default: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-light: #f8fafc;
+            --border-default: #334155;
+            --border-light: rgba(45, 184, 206, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-default);
+            margin: 0;
+            padding: 0;
+            color: var(--text-default);
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.light-mode {
+            background-color: #d0e1ef !important;
+        }
+
+        .font-display { 
+            font-family: 'Oswald', sans-serif; 
+        }
+
+        /* Contenedor principal (copiado de 1-arranque-contactores-material.html) */
+        .main-content {
+            padding: 40px 20px;
+            max-width: 1300px; /* max-w-7xl */
+            margin: 0 auto;
+        }
+
+        /* --- TARJETAS DE MATERIAL VISUAL (copiadas de 1-arranque-contactores-material.html) --- */
+        .material-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 0;
+            list-style: none;
+        }
+        .material-card {
+            position: relative;
+            border-radius: 1.25rem;
+            overflow: hidden;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            height: 100%;
+        }
+        .material-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -8px var(--shadow-color), 0 0 0 1px var(--text-accent);
+            border-color: var(--text-accent);
+        }
+        .material-card .card-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            flex-shrink: 0;
+        }
+        .material-card .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .material-card:hover .card-image-wrapper img {
+            transform: scale(1.08);
+        }
+        .material-card .card-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.3) 50%, rgba(15, 23, 42, 0.05) 100%);
+            pointer-events: none;
+        }
+        .material-card .card-badge {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 2;
+            padding: 0.3rem 0.85rem;
+            font-size: 9px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 9999px;
+            color: #ffffff;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        /* Badge for Text/Manuals (Green) */
+        .badge-manual {
+            background: rgba(16, 185, 129, 0.25); /* emerald */
+            border: 1px solid rgba(52, 211, 153, 0.4);
+        }
+        /* Badge for Exercises (Teal) */
+        .badge-practica {
+            background-color: #0e7490; /* dark cyan/teal */
+            border: 1px solid #0e7490;
+        }
+        /* Badge for Quizzes (Purple) */
+        .badge-test {
+            background: rgba(168, 85, 247, 0.25); /* purple */
+            border: 1px solid rgba(192, 132, 252, 0.4);
+        }
+        /* Badge for Programs (Gold) */
+        .badge-programa {
+            background: rgba(245, 158, 11, 0.25); /* amber */
+            border: 1px solid rgba(251, 191, 36, 0.4);
+        }
+
+        .material-card .card-icon-circle {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 2;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        /* Icon Circle for Text/Manuals (Green) */
+        .icon-circle-manual {
+            background: rgba(16, 185, 129, 0.15);
+            border: 2px solid rgba(16, 185, 129, 0.25);
+            color: #059669; /* emerald-600 */
+        }
+        /* Icon Circle for Exercises (Teal) */
+        .icon-circle-practica {
+            background: rgba(45, 184, 206, 0.15);
+            border: 2px solid rgba(45, 184, 206, 0.25);
+            color: #0891b2;
+        }
+        /* Icon Circle for Quizzes (Purple) */
+        .icon-circle-test {
+            background: rgba(168, 85, 247, 0.15);
+            border: 2px solid rgba(168, 85, 247, 0.25);
+            color: #9333ea; /* purple-700 */
+        }
+        /* Icon Circle for Programs (Gold) */
+        .icon-circle-programa {
+            background: rgba(245, 158, 11, 0.15);
+            border: 2px solid rgba(245, 158, 11, 0.25);
+            color: #d97706; /* amber-600 */
+        }
+
+        .material-card .card-body {
+            padding: 1.25rem 1rem 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .material-card .card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-default);
+            line-height: 1.35;
+            margin: 0;
+        }
+        .material-card .card-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin: 0;
+        }
+        .material-card .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--border-default);
+            background: rgba(0, 0, 0, 0.02);
+            gap: 0.5rem;
+        }
+        .material-card .download-count-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            background: var(--bg-default);
+            padding: 0.3rem 0.65rem;
+            border-radius: 9999px;
+            white-space: nowrap;
+            border: 1px solid var(--border-default);
+            transition: all 0.3s;
+        }
+        .material-card .download-btn-text {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-accent);
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        .material-card:hover .download-btn-text {
+            color: #0e7490;
+            gap: 0.6rem;
+        }
+        .material-card .download-btn-text i {
+            transition: transform 0.3s;
+        }
+        .material-card:hover .download-btn-text i {
+            transform: translateY(2px);
+        }
+        body:not(.light-mode) .material-card .card-footer {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        body:not(.light-mode) .material-card .download-count-badge {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .material-card .card-image-wrapper {
+                height: 140px;
+            }
+            .material-card .card-title {
+                font-size: 0.85rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .material-card { animation: fadeIn 0.5s ease forwards; }
+    </style>
+    <style>
+        /* Glow states para tarjetas ya descargadas (copiado de aula-virtual-id.html) */
+        .material-card.glow-manual, .material-card.glow-practica {
+            border-color: var(--text-accent) !important;
+            box-shadow: 0 0 22px rgba(45, 184, 206, 0.45), 0 10px 30px var(--shadow-color) !important;
+        }
+        .material-card.glow-manual .download-count-badge,
+        .material-card.glow-practica .download-count-badge {
+            color: var(--text-accent) !important;
+            border-color: var(--text-accent) !important;
+            background: rgba(45, 184, 206, 0.08) !important;
+        }
+        .material-card.glow-manual .download-btn-text,
+        .material-card.glow-practica .download-btn-text {
+            color: var(--text-accent) !important;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 custom-scrollbar light-mode">
+
+    <!-- HERO (idéntico a info-page-id.html) -->
+    <header id="hero-section" class="relative bg-[#0f172a] text-white py-20 px-6 overflow-hidden">
+        <div class="absolute inset-0 opacity-40">
+            <img id="hero-bg-image" src="img/AA (4).gif" class="w-full h-full object-cover" alt="Fondo">
+        </div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="lg:w-2/3">
+                <nav id="hero-badges" class="flex gap-2 mb-6 text-[10px] font-black uppercase tracking-widest flex-wrap">
+                    <!-- Badges se cargarán aquí si existen en los datos -->
+                </nav>
+                <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter font-display" id="course-main-title">
+                    Cargando Curso...
+                </h1>
+                <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed font-medium" id="course-description">
+                    Cargando descripción del curso...
+                </p>
+                <div id="course-features" class="flex flex-wrap gap-6 text-sm font-bold text-slate-300">
+                    <!-- Features se cargarán aquí si existen en los datos -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+        <section>
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">Materiales y Descargas</h2>
+            <p class="text-gray-600 mb-8">Aquí encontrarás todos los recursos disponibles para este curso.</p>
+            
+            <!-- ARREGLO DE TARJETAS DINÁMICAS -->
+            <div id="material-cards-container" class="material-cards-grid">
+                <!-- Las tarjetas se cargarán aquí dinámicamente desde el Excel -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Tu script personalizado para cargar los datos -->
+    <script src="js/material-loader.js"></script>
+
+    <script>
+        // Inicializar Lucide Icons después de que el DOM esté cargado
+        document.addEventListener('DOMContentLoaded', () => {
+            // El script material-loader.js se encargará de inicializar los íconos dinámicos.
+            if (window.lucide) {
+                lucide.createIcons();
+            }
+        });
+    </script> 
+    <script src="js/auth.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/footer.js"></script>
+</body>
+</html>

@@ -389,7 +389,7 @@
                     </div>
                 </div>
                 </div>
-                <div id="coursesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"></div>
+                <div id="coursesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-20"></div>
                 <div id="noResultsMisCursos" class="hidden text-center py-12 bg-white rounded-2xl border border-slate-200 shadow-sm max-w-2xl mx-auto"></div>
             </main>
         </div>
@@ -414,7 +414,7 @@
         const COURSES_DATA = [
             { id: 1, name: "Arranque de motores con contactores Online", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "arranque-contactores-info.html", aulaLink: "1-aula-arranque-contactores.html", totalLessons: 5, resumen: "Este curso está diseñado para brindarte los conocimientos teóricos y prácticos sobre el arranque y control de motores asíncronos trifásicos utilizando contactores.", manuales: [ {name: "Manual: Arranque Directo (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1ffP5ete5u4Sio_zgnudmXrYrg800Cerk"}, {name: "Manual: Selección de Giro (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1nE_PVCGs-A6zFvBN1BXdl1bhJVAehavv"}, {name: "Manual: Arranque Estrella Delta (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1NkOuj0TdfqaN1Dxsh8Bg9XHkZyfZ1sgP"}, {name: "Manual: Arranque Rotórico (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1jOr6szSf-HzX0urZkdgDoe5hAW1rxmzS"} ], ejercicios: [ {name: "Práctica: Arranque Directo", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1AXMe7TN17-d2_JORuMVSNLRn-7xWYYZH"}, {name: "Práctica: Selección de Giro", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1wkB6CO8sLQJFr2xMJQXFUfHsvkVfUG2T"}, {name: "Práctica: Arranque Estrella Delta", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1_q7jTpvQovCuF21HUBH5aFI7yZE8KmMw"}, {name: "Práctica: Arranque Rotórico", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1CoNpKpgzv8XJmKkaIsRqnl0uIenHBUKw"} ], moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
             { id: 2, name: "Arranque de motores con PLC LOGO Online", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "arranque-plc-logo-info.html", aulaLink: "2-aula-arranque-plc-logo.html", totalLessons: 5, resumen: "Descubre cómo dar el salto de la lógica cableada tradicional a la lógica programada.", manuales: [{name: "Introducción a LOGO! Soft Comfort", link: "#"}], ejercicios: [{name: "Arranque directo con PLC LOGO!", link: "#"}], moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
-            { id: 3, name: "Funciones lógicas Básicas GF con PLC LOGO y FACTORY IO Online", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 15.00, link: "https://www.profesorpablocedeno.online/cursos/gf-con-logo-y-factory-io", aulaLink: "3-aula-compuertas-factory-plc.html", totalLessons: 4, resumen: "Una inmersión profunda en las funciones lógicas y bloques especiales de LOGO! usando un entorno 3D realista.", manuales: [{name: "Guía de conexión Factory I/O - LOGO!", link: "#"}], ejercicios: [{name: "Escenario 1: Llenado de Tanque", link: "#"}], moduleNames: ["Contenido del Curso", "Compuertas Lógicas", "Enclavamientos y Memorias", "Integración con Factory IO"] },
+            { id: 3, name: "Funciones Lógicas en PLCs con Factory IO Online", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 15.00, link: "https://www.profesorpablocedeno.online/cursos/gf-con-logo-y-factory-io", aulaLink: "3-aula-compuertas-factory-plc.html", totalLessons: 4, resumen: "Una inmersión profunda en las funciones lógicas y bloques especiales de LOGO! usando un entorno 3D realista.", manuales: [{name: "Guía de conexión Factory I/O - LOGO!", link: "#"}], ejercicios: [{name: "Escenario 1: Llenado de Tanque", link: "#"}], moduleNames: ["Contenido del Curso", "Compuertas Lógicas", "Enclavamientos y Memorias", "Integración con Factory IO"] },
             { id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "https://www.profesorpablocedeno.online/cursos/contactores", aulaLink: "4-aula-auto-contactores-on.html", totalLessons: 6, resumen: "En este curso general de automatización, nos enfocaremos 100% en el control electromagnético.", manuales: [{name: "Normativa de Simbología DIN/IEC", link: "#"}], ejercicios: [{name: "Arranque directo", link: "#"}], moduleNames: ["Contenido del Curso", "Simbología y Normativa", "Arranque Directo", "Inversión de Giro", "Estrella-Triángulo", "Fallas y Diagnóstico"] },
             { id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/arranque-de-motores-con-plc-logo", aulaLink: "5-aula-auto-plc-logo-on.html", totalLessons: 5, resumen: "Conviértete en un experto programando LOGO!. Abordaremos temporizadores, contadores, marcas y funciones analógicas.", manuales: [{name: "Manual de Programación FUP y KOP", link: "#"}], ejercicios: [{name: "Práctica: Control de Bomba Alternada", link: "#"}], moduleNames: ["Contenido del Curso", "Temporizadores y Contadores", "Marcas y Memorias", "Señales Analógicas", "Aplicación Integral"] },
             { id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", aulaLink: "6-aula-auto-plc-grafcet-on.html", totalLessons: 6, resumen: "Supera la complejidad de la lógica de programación mediante el GRAFCET.", manuales: [{name: "Reglas de Evolución del GRAFCET", link: "#"}], ejercicios: [{name: "Automatización de Semáforo", link: "#"}], moduleNames: ["Contenido del Curso", "Etapas y Transiciones", "Acciones Asociadas", "Conversión a Ladder", "Seguridad y Rearme", "Proyecto Secuencial"] },
@@ -437,64 +437,100 @@
                     {name: "18 Ejercicios Prácticos de Arranques (ZIP)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1N4tiNxaTf9WiNti0Uiv2S06KZCioMxdX"},
                     {name: "Software de Simulación (CadeSIMU)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1_s-SLpfYqmeoSZOnzjvPJgkJqIsK3UY7"}
                 ],
-                video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b",
-                aulaLink: "19-aula-manual-arranque-contactores.html"
+                video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b", aulaLink: "aula-virtual-id.html?courseId=19"
             },
             { 
                 id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", desc: "Introducción a la automatización industrial utilizando PLC de gama básica.", image: "https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif", category: "PLC", level: "Básico", cost: 5.00, link: "20-auto-plc-basico-on-info.html", totalLessons: 6,
                 manuales: [{name: "Manual de Automatización con PLC Básico (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20PLC%20Básico"}],
-                aulaLink: "20-aula-manual-auto-plc-basico.html"
+                aulaLink: "aula-virtual-id.html?courseId=20"
             },
             { 
                 id: 21, name: "Automatización con Contactores Manual", type: "Manual", desc: "Aprende a diseñar y montar circuitos de control con lógica cableada.", image: "https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif", category: "Automatización", level: "Básico", cost: 5.00, link: "21-Manual-auto-contactores-on-info.html", totalLessons: 6,
                 manuales: [{name: "Manual de Automatización con Contactores (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20Contactores"}],
-                aulaLink: "21-aula-manual-auto-contactores-on.html"
+                aulaLink: "aula-virtual-id.html?courseId=21"
             },
-            {
-                id: 22, name: "PLC Método Grafcet Manual", type: "Manual", desc: "Manual aplicado al diseño secuencial y programación por metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 5.00, link: "22-Manual-auto-plc-grafcet-on-info.html", totalLessons: 6,
-                manuales: [{name: "Manual PLC Método Grafcet (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20PLC%20M%C3%A9todo%20Grafcet"}],
-                aulaLink: "22-aula-manual-auto-plc-grafcet-on.html"
-            },
-            {
-                id: 23, name: "Arranque de motores con PLC LOGO Manual", type: "Manual", desc: "Manual práctico para arranque de motores con PLC LOGO.", image: "img/AA (11).webp", category: "PLC", level: "Básico", cost: 5.00, link: "23-Manual-arranque-plc-logo-info.html", totalLessons: 6,
-                manuales: [{name: "Manual de Arranque con PLC LOGO (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Arranque%20con%20PLC%20LOGO"}],
-                aulaLink: "23-aula-manual-arranque-plc-logo.html"
-            }
+            
+{            
+id: 22, 
+name: "PLC Método Grafcet Manual", 
+type: "Manual", 
+desc: "Manual aplicado al diseño secuencial y programación por metodología Grafcet.", 
+image: "img/AA (4).gif", 
+category: "Automatización", 
+level: "Avanzado", 
+cost: 5.00, 
+link: "22-Manual-auto-plc-grafcet-on-info.html", 
+totalLessons: 6,
+manuales: [{name: "Manual PLC Método Grafcet (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20PLC%20M%C3%A9todo%20Grafcet"}],
+aulaLink: "aula-virtual-id.html?courseId=22"
+},
+
+{ id: 23, 
+name: "Arranque de motores con PLC Manual", 
+type: "Manual", 
+desc: "Manual completo sobre el arranque y control de motores usando PLC.", 
+image: "img/AA (7).gif", 
+category: "Automatización", 
+level: "Básico", 
+cost: 5.00, 
+link: "material-page-id.html?courseId=23", 
+totalLessons: 6,
+aulaLink: "aula-virtual-id.html?courseId=23"
+},
+
+{ id: 24, 
+name: "10 ejercicios de PLC Método GRAFCET Manual", 
+type: "Manual", 
+desc: "Manual completo sobre Grafcet usando PLC.", 
+image: "img/AA (4).gif", 
+category: "Automatización", 
+level: "Avanzado", 
+cost: 5.00, 
+link: "24-Manual-10-ejer-auto-plc-grafcet-info.html", 
+totalLessons: 11,
+aulaLink: "aula-virtual-id.html?courseId=24"
+}
+
+
+
         ];
 
         const MATERIAL_PAGE_BY_ID = {
             1: '1-arranque-contactores-material.html',
             2: '2-arranque-plc-logo-material.html',
-            3: '3-compuertas-factory-plc-material.html',
-            4: '4-auto-contactores-on-material.html',
-            5: '5-auto-plc-logo-on-material.html',
-            6: '6-auto-plc-grafcet-on-material.html',
-            7: '7-10-Ejer-auto-contactores-on-material.html',
-            8: '8-10-ejer-auto-plc-logo-on-material.html',
-            9: '9-auto-industrial-pre-material.html',
-            10: '10-auto-contactores-pre-material.html',
-            11: '11-auto-plc-logo-pre-material.html',
-            12: '12-auto-plc-grafcet-pre-material.html',
-            13: '13-auto-contactores-pre-material - diplomado.html',
-            14: '14-auto-plc-logo-pre-material - diplomado.html',
-            15: '15-auto-control-avanzado-pre-material - maestria.html',
-            16: '16-auto-control-aplicado-pre-material - maestria.html',
-            17: '17-Taller-III-pregrado-material.html',
-            18: '18-Sist-hid-Neu-pregrado-material.html',
-            19: '19-Manual-arranque-contactores-material.html',
-            20: '20-auto-plc-basico-on-material.html',
-            21: '21-Manual-auto-contactores-on-material.html',
-            22: '22-Manual-auto-plc-grafcet-on-material.html',
-            23: '23-Manual-arranque-plc-logo-material.html'
+            3: '3-compuertas-factory-plc-material.html', // Funciones Lógicas en PLCs con Factory IO Online
+            4: '4-auto-contactores-on-material.html', // Automatización con Contactores Online
+            5: '5-auto-plc-logo-on-material.html', // Automatización con PLC LOGO! Online
+            6: '6-auto-plc-grafcet-on-material.html', // Automatización con PLC – Método Grafcet Online
+            7: '7-10-Ejer-auto-contactores-on-material.html', // 10 ejercicios de aplicaciones con Contactores Online
+            8: '8-10-ejer-auto-plc-logo-on-material.html', // 10 ejercicios de aplicaciones con PLC LOGO! Online
+            9: '9-auto-industrial-pre-info.html',
+            10: '10-auto-contactores-pre-info.html',
+            11: '11-auto-plc-logo-pre-info.html',
+            12: '12-auto-plc-grafcet-pre-info.html',
+            13: '13-auto-contactores-pre-info - diplomado.html',
+            14: '14-auto-plc-logo-pre-info - diplomado.html',
+            15: '15-auto-control-avanzado-pre-info - maestria.html',
+            16: '16-auto-control-aplicado-pre-info - maestria.html',
+            17: '17-Taller-III-pregrado.html',
+            18: '18-Sist-hid-Neu-pregrado.html',
+            19: '19-Manual-arranque-contactores-info.html',
+            20: '20-auto-plc-basico-on-info.html',
+            21: '21-Manual-auto-contactores-on-info.html',
+            22: '22-Manual-auto-plc-grafcet-on-info.html',
+            23: 'material-page-id.html?id=23',
+            24: '1-arranque-contactores-material.html'
         };
 
         function openCourseMaterial(courseId) {
+            // Esta función ahora solo navega al material, sin tracking de vistas
+            // El tracking de vistas se hará en grantAccess, que es el punto de entrada principal
             const materialPage = MATERIAL_PAGE_BY_ID[courseId];
             if (materialPage) {
                 window.location.href = materialPage;
-                return;
+            } else {
+                showNotif('Material no disponible', 'No se encontró la página de materiales para este curso.', 'info');
             }
-            grantAccess(courseId);
         }
 
         const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
@@ -697,7 +733,17 @@
                 const course=COURSES_DATA.find(c=>c.id===courseId);
                 if(!course) return;
                 let progStr="";
-                for(let key in progresos){ let nk=normalizeName(key), nc=normalizeName(course.name); if(nk===nc||nk.includes(nc)||nc.includes(nk)){ progStr=progresos[key]; break; } }
+                const nc = normalizeName(course.name);
+
+                // Se busca una coincidencia exacta para evitar el error donde el progreso de un curso
+                // con nombre similar (ej. "PLC Método Grafcet Manual") se asignaba incorrectamente
+                // a otro (ej. "10 ejercicios de PLC Método GRAFCET Manual").
+                for(let key in progresos) {
+                    if (normalizeName(key) === nc) {
+                        progStr = progresos[key];
+                        break; // Usar la primera coincidencia exacta encontrada.
+                    }
+                }
                 const total=course.totalLessons||5;
                 userProgress[email][String(courseId)]=parseProgressString(progStr,total);
             });
@@ -866,7 +912,6 @@
                                 <span class="flex items-center gap-1 ${viewsClass}"><i class="fas fa-eye"></i><span>${vistas}</span></span>
                             </div>
                         </div>
-                        <p class="text-slate-600 text-[13px] line-clamp-2 leading-relaxed flex-grow">${course.desc}</p>
                     <div class="flex items-center gap-1.5 mt-3"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Valoración:</span><div class="flex gap-0.5">${starsHTML}</div></div>
                     ${progressBarHTML}
                     <div class="mt-auto pt-4 border-t border-slate-100 space-y-2" onclick="event.stopPropagation();">${buttonsHTML}</div>
@@ -885,10 +930,15 @@
                 currentViewedCourseId = courseId;
                 ping('update_stat', `curso-${courseId}_vistas`);
                 if (globalStats) globalStats[`curso-${courseId}_vistas`] = (parseInt(globalStats[`curso-${courseId}_vistas`]) || 0) + 1;
-                
-                viewCourseDetail(courseId);
-                document.getElementById('page-mis-cursos').style.display = 'none';
-                document.getElementById('page-curso-detalle').style.display = 'block';
+
+                const materialPage = MATERIAL_PAGE_BY_ID[courseId];
+                if (materialPage) {
+                    window.location.href = materialPage;
+                    return; // Detener aquí, no mostrar la página de detalle
+                }
+
+                // Si no hay página de materiales, mostrar la página de detalle (comportamiento original)
+                viewCourseDetail(courseId); // Esto mostrará la página de información del curso
                 showFloatingBackBtn('Mis Cursos', 'page-mis-cursos');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } catch(e) {
@@ -1372,15 +1422,8 @@
                 if (window.currentUser) {
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseIdParam = urlParams.get('courseId');
-                    if (courseIdParam) {
-                    const id = parseInt(courseIdParam, 10);
-                    if (currentUser.accessedCursos && currentUser.accessedCursos.includes(id)) {
-                        if (id === 1) {
-                            window.location.href = '1-arranque-contactores-material.html';
-                        } else {
-                            grantAccess(id);
-                        }
-                        }
+                    if (courseIdParam && currentUser.accessedCursos && currentUser.accessedCursos.includes(parseInt(courseIdParam, 10))) {
+                        grantAccess(parseInt(courseIdParam, 10)); // Usar grantAccess para todos los casos
                     }
                 }
             }, 200);
