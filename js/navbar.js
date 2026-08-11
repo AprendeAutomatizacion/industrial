@@ -1090,15 +1090,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100 * index);
     });
 
-    // Efecto Parallax para la imagen del header en index.html
-    const parallaxImage = document.getElementById('parallax-header-image');
-    if (parallaxImage) {
-        window.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            // El factor 0.3 hace que la imagen se mueva más lento que el scroll, creando el efecto.
-            parallaxImage.style.transform = `translateY(${scrollY * 0.3}px)`;
-        }, { passive: true }); // Mejora de rendimiento
-    }
-
     console.log("🚀 Interfaz de Usuario optimizada por Gemini.");
 });
