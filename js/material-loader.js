@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // URL de tu Web App de Google Apps Script - ¡Pega tu URL aquí!
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJmsHsZvfWimAbW41TS5phTAO6UcJJJjq-Wd1IrMx9Tf-ANqxiuKfocD3cHt87tZH4KQ/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
 
     // 1. OBTENER EL ID DEL CURSO DESDE LA URL
     // La página se debe llamar con un parámetro, ej: material-page-id.html?id=1

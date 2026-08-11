@@ -8,7 +8,7 @@ const AuthLogic = {
     pendingAction: null,
 
     // Usar SCRIPT_URL global si existe (de mis cursos), o el valor por defecto
-    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbwK46gf-I5HHJzTBzgjI2xqN6SuS3EFr9v2ZBAaqA9NS3DcG3E4vKDYYub2VuMWLMhZUA/exec',
+    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec',
 
     // Inicializar: Revisar si hay sesión guardada en localStorage
     init: async function() {
