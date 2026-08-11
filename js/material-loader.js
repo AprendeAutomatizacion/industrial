@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     // URL de tu Web App de Google Apps Script - ¡Pega tu URL aquí!
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJmsHsZvfWimAbW41TS5phTAO6UcJJJjq-Wd1IrMx9Tf-ANqxiuKfocD3cHt87tZH4KQ/exec';
 
     // 1. OBTENER EL ID DEL CURSO DESDE LA URL
     // La página se debe llamar con un parámetro, ej: material-page-id.html?id=1
@@ -28,7 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 2. CARGAR DATOS DESDE GOOGLE SHEETS
-    fetch(`${SCRIPT_URL}?id=${courseId}`)
+    // Volvemos a usar el método GET. Es más simple y puede evitar problemas de redirección
+    // en Google Apps Script que a veces afectan a las peticiones POST.
+    fetch(`${SCRIPT_URL}?action=get_course_materials&id=${courseId}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error en la red al contactar el script: ${response.statusText}`);
