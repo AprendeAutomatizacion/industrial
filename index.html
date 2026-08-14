@@ -13,48 +13,104 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
+        /* Estilos para el perfil de usuario en modo claro (Cian Glass) */
+        body.light-mode #userProfileModal .modal-content > div:first-child {
+            background: rgba(45, 184, 206, 0.2); /* Cyan Glass */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        body.light-mode #userProfileModal .modal-content > div:last-child {
+            background-color: rgba(45, 184, 206, 0.1);
+            border-top: 1px solid rgba(45, 184, 206, 0.3);
+        }
+        body.light-mode #userProfileModal .text-white {
+            color: #0f172a; /* slate-900 */
+        }
+        body.light-mode #userProfileModal #profileEmail {
+            color: #0891b2; /* cyan-600 */
+        }
+        body.light-mode #userProfileModal .text-white\/50 {
+            color: #0e7490; /* cyan-700 */
+        }
+        body.light-mode #userProfileModal .hover\:text-white:hover {
+            color: #0f172a; /* slate-900 */
+        }
+        body.light-mode #userProfileModal .bg-white\/5 {
+            background-color: rgba(8, 145, 178, 0.15); /* Deeper Cyan Glass for badges */
+            border-color: rgba(8, 145, 178, 0.25);
+        }
+        body.light-mode #userProfileModal #profileInitials {
+            color: white; /* Mantener iniciales en blanco */
+        }
+        body.light-mode #userProfileModal #profileAdminBtn {
+            background-color: rgba(8, 145, 178, 0.1);
+            color: #0e7490;
+            border-color: rgba(8, 145, 178, 0.2);
+        }
+        body.light-mode #userProfileModal #profileAdminBtn:hover {
+            background-color: #0891b2;
+            color: white;
+        }
+        body.light-mode #userProfileModal #profileAdminBtn i {
+            color: #0891b2;
+        }
+        body.light-mode #userProfileModal #profileAdminBtn:hover i {
+            color: white;
+        }
+        /* 1. Definición de Variables de Color para Temas */
         :root {
+            /* Paleta Clara */
             --bg-default: #f7f9fb;
             --bg-secondary: #ffffff;
-            --bg-dark: #0f172a;
+            --bg-dark: #0f172a; /* Para secciones oscuras en modo claro */
             --bg-dark-accent: #1e293b;
+
             --text-default: #1e293b;
             --text-secondary: #475569;
-            --text-light: #f8fafc;
+            --text-light: #f8fafc; /* Para texto sobre fondos oscuros */
             --text-accent: #2db8ce;
+
             --border-default: #e2e8f0;
             --border-light: rgba(255, 255, 255, 0.1);
+
             --shadow-color: rgba(0, 0, 0, 0.1);
-            --badge-bg-intermediate: #0891b2;
-            --badge-bg-basic: #0d9488;
+
+            /* Colores para componentes de tarjetas */
+            --badge-bg-intermediate: #0891b2; /* cyan-600 */
+            --badge-bg-basic: #0d9488; /* teal-600 */
             --badge-text: #ffffff;
+            --btn-accent-bg: #0891b2; /* cyan-600 */
+            --btn-accent-text: #ffffff;
+            --btn-accent-shadow: rgba(8, 145, 178, 0.3);
+            --btn-accent-border: #0e7490; /* cyan-700 */
+            --btn-accent-bg-hover: #0e7490; /* cyan-700 */
         }
 
         body:not(.light-mode) {
+            /* Paleta Oscura */
             --bg-default: #0f172a;
             --bg-secondary: #1e293b;
+            --bg-dark: #0f172a;
+            --bg-dark-accent: #1e293b;
+
             --text-default: #f8fafc;
             --text-secondary: #94a3b8;
             --text-light: #f8fafc;
+
             --border-default: #334155;
             --border-light: rgba(45, 184, 206, 0.3);
+
             --shadow-color: rgba(0, 0, 0, 0.25);
         }
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-default);
-            margin: 0;
-            padding: 0;
+        /* --- Estilos Generales --- */
+        .section-title {
             color: var(--text-default);
-            scroll-behavior: smooth;
-            overflow-x: clip;
-            transition: background-color 0.3s, color 0.3s;
         }
 
-        .section-title { color: var(--text-default); }
-
-        body.light-mode .hero-main-title { color: #000000 !important; }
+        body.light-mode .hero-main-title {
+            color: #000000 !important;
+        }
         body.light-mode .hero-main-title .text-secondary {
             color: #2db8ce !important;
             text-shadow: none !important;
@@ -69,36 +125,81 @@
             mix-blend-mode: multiply;
         }
 
+        /* --- Estilos movidos desde index.html y adaptados a variables --- */
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-default);
+            margin: 0;
+            padding: 0;
+            color: var(--text-default);
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
         .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .animate-on-hover:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 25px 50px -12px var(--shadow-color); filter: brightness(1.05); }
 
+        .btn-glow { position: relative; overflow: hidden; transition: all 0.3s ease; }
+        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .btn-glow::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s;
+        }
+        .btn-glow:hover::after { left: 100%; }
+
+        /* --- Secciones Tematizables --- */
+        .section-themed {
+            background-color: var(--bg-default);
+            border-top: 1px solid var(--border-default);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .section-themed .section-subtitle {
+            color: var(--text-accent);
+        }
+
+        .section-themed .section-title {
+            color: var(--text-default);
+        }
+
+        /* --- Estilo de Tarjetas de Curso (Estilo Catálogo Unificado) --- */
         .course-card {
             background-color: var(--bg-secondary);
-            border-radius: 1.5rem;
+            border-radius: 1.5rem; /* 24px */
             overflow: hidden;
             display: flex;
             flex-direction: column;
             transition: all 0.3s ease-in-out;
             text-align: left;
+            /* Se elimina border y box-shadow base para que lo controlen las clases de nivel */
         }
+
         .course-card .course-card-image-container {
             position: relative;
             height: 12rem;
             overflow: hidden;
         }
+
         .course-card .course-card-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s ease;
         }
-        .course-card:hover .course-card-image { transform: scale(1.05); }
+
+        .course-card:hover .course-card-image {
+            transform: scale(1.05);
+        }
+
         .course-card .course-card-content {
             padding: 1.5rem;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
+
         .course-card .course-card-badge {
             position: absolute;
             top: 1rem;
@@ -111,8 +212,10 @@
             border-radius: 9999px;
             color: var(--badge-text);
         }
+
         .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
         .course-card .badge-basic { background-color: var(--badge-bg-basic); }
+
         .course-card .course-card-title {
             color: var(--text-default);
             font-size: 1.125rem;
@@ -120,6 +223,7 @@
             line-height: 1.4;
             margin-bottom: 0.5rem;
         }
+
         .course-card .course-card-description {
             color: var(--text-secondary);
             font-size: 0.875rem;
@@ -127,27 +231,32 @@
             flex-grow: 1;
             line-height: 1.6;
         }
+
         .course-card .course-card-footer {
             margin-top: auto;
             padding-top: 1rem;
             border-top: 1px solid var(--border-default);
         }
+
         .course-card .course-card-meta {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 1rem;
         }
+
         .course-card .course-card-price {
             font-size: 1.25rem;
             font-weight: 800;
             color: var(--text-default);
         }
+
         .course-card .course-card-stats {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
+
         .course-card .like-btn, .course-card .view-container {
             color: var(--text-secondary);
             font-size: 0.875rem;
@@ -159,10 +268,23 @@
             cursor: pointer;
         }
         .course-card .like-btn.liked,
-        .course-card .like-btn.liked i { color: #ef4444 !important; }
+        .course-card .like-btn.liked i {
+            color: #ef4444 !important;
+        }
         .course-card .view-container.has-views { color: #22c55e; }
-        .course-card .course-card-buttons { display: flex; gap: 0.75rem; }
 
+        .course-card .course-card-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        /* Adaptación para que el botón metálico funcione dentro de la tarjeta */
+        .course-card .course-card-buttons .btn-metal {
+            flex: 1;
+            font-size: 10px;
+        }
+
+        /* --- Resplandor de Tarjetas por Nivel (Estilo Catálogo) --- */
         .course-card-level-basico {
             border: 1px solid rgba(6, 182, 212, 0.35);
             box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
@@ -171,6 +293,7 @@
             border-color: #06b6d4;
             box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
         }
+
         .course-card-level-intermedio {
             border: 1px solid rgba(168, 85, 247, 0.35);
             box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
@@ -179,6 +302,7 @@
             border-color: #a855f7;
             box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
         }
+
         .course-card-level-avanzado {
             border: 1px solid rgba(245, 158, 11, 0.35);
             box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
@@ -188,6 +312,7 @@
             box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
         }
 
+        /* --- Estilo Tarjeta Misión --- */
         .mission-card {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid rgba(6, 182, 212, 0.35);
@@ -206,24 +331,37 @@
             border-color: #06b6d4;
             box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
         }
+
+        /* --- Estilo Tarjeta Misión (Modo Claro) --- */
         body.light-mode .mission-card {
             background-color: #eaf0f5 !important;
             border-color: #e2e8f0 !important;
         }
-        body.light-mode .mission-card h3 { color: #1e293b !important; }
-        body.light-mode .mission-card ul { color: #475569 !important; }
+        body.light-mode .mission-card h3 {
+            color: #1e293b !important;
+        }
+        body.light-mode .mission-card ul {
+            color: #475569 !important;
+        }
+
+        /* --- Estilo Tarjeta Misión (Modo Oscuro) --- */
         body:not(.light-mode) .mission-card { 
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
         body:not(.light-mode) .mission-card h3 { color: #ffffff; }
-        body:not(.light-mode) .mission-card ul { color: #cbd5e1; }
+        body:not(.light-mode) .mission-card ul { color: #cbd5e1; } /* slate-300 */
+
+        /* Dark mode overrides para las tarjetas */
         body:not(.light-mode) .course-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
+            /* El borde y la sombra ahora son controlados por las clases de nivel */
         }
+
+        /* --- Resplandor de Tarjetas por Nivel (MODO OSCURO) --- */
         body:not(.light-mode) .course-card-level-basico {
             border: 1px solid rgba(6, 182, 212, 0.5);
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
@@ -232,6 +370,7 @@
             border-color: #06b6d4;
             box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
         }
+
         body:not(.light-mode) .course-card-level-intermedio {
             border: 1px solid rgba(168, 85, 247, 0.5);
             box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
@@ -240,6 +379,7 @@
             border-color: #a855f7;
             box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
         }
+
         body:not(.light-mode) .course-card-level-avanzado {
             border: 1px solid rgba(245, 158, 11, 0.5);
             box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
@@ -248,9 +388,495 @@
             border-color: #f59e0b;
             box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
         }
+
         body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
         body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
 
+        /* --- Estilos para Divisor de Sección con Cables --- */
+        .section-divider {
+            width: 100%;
+            height: 60px; /* Altura del divisor */
+            margin: 0; /* Eliminado el margen para un look continuo */
+            position: relative;
+            overflow: hidden;
+        }
+        .section-divider svg path {
+            fill: none;
+            stroke-linecap: round;
+            stroke-width: 1.5;
+            stroke: var(--border-default);
+            opacity: 0.5;
+            animation: oscilloscope 8s linear infinite;
+        }
+        .section-divider svg path:nth-child(2) {
+            stroke-width: 2.5;
+            stroke: var(--text-accent); /* Color cian característico */
+            opacity: 0.6;
+            animation-delay: -2.5s;
+            animation-duration: 7s;
+        }
+        .section-divider svg path:nth-child(3) {
+            stroke-width: 1;
+            stroke: var(--text-secondary);
+            opacity: 0.3;
+            animation-delay: -5s;
+            animation-duration: 9s;
+        }
+
+        /* --- Estilos para Divisor de Sección Glitch --- */
+        .glitch-divider {
+            width: 100%;
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+            margin: -15px 0;
+        }
+        .glitch-divider svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .glitch-divider .glitch-line {
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+        .glitch-divider .line-1 {
+            stroke: var(--text-accent);
+            animation: glitch1 2.5s infinite steps(1, end);
+        }
+        .glitch-divider .line-2 {
+            stroke: var(--text-secondary);
+            opacity: 0.5;
+            animation: glitch2 3s infinite steps(1, end);
+        }
+        .glitch-divider .line-3 {
+            stroke: var(--border-default);
+            opacity: 0.3;
+            animation: glitch3 2s infinite steps(1, end);
+        }
+
+        /* --- Estilos para Divisor de Rejilla Digital --- */
+        .grid-divider {
+            width: 100%;
+            height: 70px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: -5px 0;
+        }
+        .grid-divider svg {
+            width: 100%;
+            max-width: 1000px;
+            height: 100%;
+        }
+        .grid-divider .grid-dot {
+            fill: var(--text-accent);
+            animation: pulse-grid 5s infinite ease-in-out;
+        }
+        body.light-mode .grid-divider .grid-dot { fill: var(--badge-bg-intermediate); opacity: 0.6; }
+
+        /* --- Estilos para Divisor de Sección de Circuito --- */
+        .circuit-divider {
+            width: 100%;
+            height: 80px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: -10px 0;
+        }
+        .circuit-divider svg {
+            width: 100%;
+            max-width: 1200px;
+            height: 100%;
+        }
+        .circuit-divider .trace {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: var(--text-accent);
+            stroke-dasharray: 1500; /* Longitud aproximada del path */
+            stroke-dashoffset: 1500;
+            animation: draw-trace 20s linear infinite;
+        }
+        .circuit-divider .trace-bg {
+            fill: none;
+            stroke-width: 1.5;
+            stroke: var(--border-default);
+            opacity: 0.3;
+        }
+        .circuit-divider .dot {
+            fill: var(--text-accent);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+        body.light-mode .circuit-divider .dot { fill: var(--badge-bg-intermediate); }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(100%); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes oscilloscope {
+            0%, 100% { d: path("M0,30 C240,50 480,10 720,30 S1200,50 1440,30"); }
+            20% { d: path("M0,35 C220,40 460,20 720,35 S1180,30 1440,25"); }
+            40% { d: path("M0,25 C260,60 500,5 720,25 S1220,60 1440,35"); }
+            60% { d: path("M0,32 C200,10 520,55 720,32 S1150,15 1440,30"); }
+            80% { d: path("M0,28 C300,65 420,-5 720,28 S1240,65 1440,28"); }
+        }
+        @keyframes glitch1 {
+            0%, 100% { transform: none; opacity: 1; }
+            5%, 15%, 25%, 35% { transform: translate(-5px, 2px) skewX(10deg); opacity: 0.7; }
+            10%, 20%, 30%, 40% { transform: translate(5px, -2px) skewX(-10deg); opacity: 0.7; }
+        }
+        @keyframes glitch2 {
+            0%, 100% { transform: none; opacity: 0.5; }
+            50%, 60%, 70% { transform: translate(8px, -3px) skewX(-15deg); opacity: 0.3; }
+            55%, 65%, 75% { transform: translate(-8px, 3px) skewX(15deg); opacity: 0.3; }
+        }
+        @keyframes glitch3 { 0%, 100% { opacity: 0.3; } 80%, 90% { opacity: 0.8; } 85%, 95% { opacity: 0.1; } }
+        @keyframes pulse-grid {
+            0%, 100% { opacity: 0.1; r: 1; }
+            50% { opacity: 0.8; r: 1.5; }
+        }
+        @keyframes draw-trace {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        @keyframes pulse-dot {
+            0%, 100% { r: 3; opacity: 0.6; }
+            50% { r: 4.5; opacity: 1; filter: drop-shadow(0 0 3px var(--text-accent)); }
+        }
+
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .header-background {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: url('../img/AA (7).gif');
+            background-size: cover;
+            background-position: center;
+            animation: slowZoom 40s infinite alternate;
+            transition: opacity 0.5s ease-in-out, mix-blend-mode 0.5s ease-in-out;
+            will-change: transform; /* Optimización para el parallax */
+        }
+        body:not(.light-mode) .header-background {
+            opacity: 0.25;
+            mix-blend-mode: soft-light;
+        }
+        body.light-mode .header-background {
+            opacity: 0.2;
+            mix-blend-mode: overlay;
+        }
+
+        @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.15); } }
+
+        #notification {
+            position: fixed; bottom: 20px; right: 20px; transform: translateX(120%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 100000;
+        }
+        #notification.show { transform: translateX(0); }
+
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px);
+            z-index: 99999; display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .modal-content {
+            background: var(--bg-secondary); /* Aplicando variable */
+            color: var(--text-default); /* Aplicando variable */
+            border-radius: 32px; width: 90%; max-width: 420px; padding: 0px;
+            transform: translateY(30px) scale(0.95); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 25px 50px -12px var(--shadow-color); max-height: 90vh; overflow-y: auto;
+        }
+
+        .prof-selected {
+            border: 2px solid #2db8ce !important;
+            background-color: rgba(45, 184, 206, 0.1) !important;
+            box-shadow: 0 0 25px rgba(45, 184, 206, 0.4);
+            transform: scale(1.05);
+        }
+
+        body:not(.light-mode) .prof-selected {
+            box-shadow: 0 0 35px rgba(45, 184, 206, 0.5);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--text-accent); border-radius: 10px; }
+
+        .metric-card {
+            background: var(--bg-secondary); /* Aplicando variable */
+            border: 1px solid var(--border-default); /* Aplicando variable */
+            padding: 16px; border-radius: 20px;
+            display: flex; flex-direction: column; gap: 4px; transition: all 0.3s ease;
+        }
+        #visitorMapGlobal { width: 100%; height: 100%; overflow: hidden; }
+
+        .special-course-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* --- Estilos para #comunidad --- */
+        .prof-btn {
+            background-color: var(--bg-dark-accent);
+            border: 1px solid var(--border-default);
+            box-shadow: 0 4px 6px -1px var(--shadow-color), 0 2px 4px -2px var(--shadow-color);
+        }
+        /* Solo el texto principal del botón (ej. "Ingeniero") se mantiene blanco */
+        .prof-btn > span { color: #ffffff; }
+        .prof-btn .prof-count-bg {
+            background-color: var(--bg-default);
+            border: 1px solid var(--border-default);
+        }
+        /* Color para el número dentro del círculo, que se adapta al tema */
+        .prof-btn .prof-count-bg span { color: var(--text-default); }
+        body:not(.light-mode) .prof-btn .prof-count-bg span { color: var(--text-light); }
+
+        /* --- Estilos para #testimonios --- */
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+            cursor: pointer;
+        }
+        body:not(.card-active) .testimonial-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        /* Forzar texto claro ya que el fondo siempre es oscuro */
+        .testimonial-card p { color: #cbd5e1; }
+        .testimonial-card h4 { color: #ffffff; }
+        .testimonial-card .testimonial-role {
+            color: #94a3b8;
+        }
+
+        /* --- Estilos para #metodologia --- */
+        .methodology-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
+            cursor: pointer;
+        }
+        body:not(.card-active) .methodology-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
+        }
+        .methodology-card .image-zoom-container img {
+            transition: transform 0.4s ease;
+        }
+        .methodology-card:hover .image-zoom-container img {
+            transform: scale(1.1);
+        }
+
+        /* --- Estilos para contenido expandido de Metodología --- */
+        .methodology-card .methodology-expanded-content {
+            display: none;
+        }
+
+        /* --- Estilos para efecto flotante de Tarjetas --- */
+        .card-overlay {
+            position: fixed;
+            inset: 0;
+            background: transparent;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .card-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .is-expanding {
+            position: fixed !important;
+            z-index: 2001 !important;
+            transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+        }
+
+        .methodology-card.is-expanded {
+            top: 50% !important;
+            left: 50% !important;
+            width: 90vw !important;
+            max-width: 850px !important;
+            height: auto !important;
+            transform: translate(-50%, -50%) !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 2.5rem !important;
+            padding: 2.5rem !important;
+            background-color: #0f172a !important; /* Fondo sólido y opaco */
+        }
+
+        .testimonial-card.is-expanded {
+            top: 50% !important;
+            left: 50% !important;
+            width: 90vw !important;
+            max-width: 800px !important;
+            height: auto !important;
+            transform: translate(-50%, -50%) !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 2rem !important;
+            padding: 2rem !important;
+            background-color: #0f172a !important; /* Fondo sólido y opaco */
+        }
+
+        .testimonial-card.is-expanded .testimonial-image-container {
+            width: 40% !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1 !important;
+            margin-bottom: 0 !important;
+            flex-shrink: 0 !important;
+            border-radius: 1.5rem;
+        }
+
+        .testimonial-card.is-expanded > .fa-quote-right {
+            display: none !important;
+        }
+
+        .methodology-card.is-expanded .image-zoom-container {
+            width: 40% !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1 !important;
+            margin-bottom: 0 !important;
+            flex-shrink: 0 !important;
+            border-radius: 1.5rem;
+        }
+
+        .methodology-card.is-expanded .methodology-short-desc {
+            display: none !important;
+        }
+
+        .methodology-card.is-expanded .methodology-expanded-content {
+            display: block !important;
+        }
+
+        .methodology-card.is-expanded .methodology-expanded-content p {
+            font-size: 1.05rem;
+            color: var(--text-light);
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        .methodology-card.is-expanded h3 {
+            font-size: 2.25rem !important;
+            margin-bottom: 1rem !important;
+        }
+
+        /* --- Responsividad para Tarjetas Flotantes Expandidas en Móvil --- */
+        @media (max-width: 767px) {
+            .methodology-card.is-expanded {
+                flex-direction: column !important;
+                padding: 1.5rem !important;
+                gap: 1.5rem !important;
+            }
+            .methodology-card.is-expanded .image-zoom-container {
+                width: 100% !important;
+                aspect-ratio: 16 / 10 !important;
+            }
+            .methodology-card.is-expanded h3 {
+                font-size: 1.5rem !important;
+                text-align: center;
+            }
+            .methodology-card.is-expanded .methodology-expanded-content p {
+                font-size: 1rem !important;
+                text-align: justify;
+            }
+
+            .testimonial-card.is-expanded {
+                flex-direction: column !important;
+                padding: 1.5rem !important;
+                gap: 1.5rem !important;
+                justify-content: flex-start;
+                overflow-y: auto;
+            }
+
+            .testimonial-card.is-expanded .testimonial-image-container {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 16 / 9 !important;
+                flex-shrink: 0;
+            }
+        }
+
+        /* Estilos para el botón de cambio de tema */
+        #theme-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 1000;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-default);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #theme-toggle-btn:hover {
+            transform: scale(1.1);
+            color: var(--text-accent);
+        }
+
+        #theme-toggle-btn .sun-icon,
+        #theme-toggle-btn .moon-icon {
+            position: absolute;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        #theme-toggle-btn .moon-icon {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        body:not(.light-mode) #theme-toggle-btn .sun-icon {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        body:not(.light-mode) #theme-toggle-btn .moon-icon {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Estilos para FAQ --- */
+        #faq details > summary {
+            list-style: none;
+        }
+        #faq details > summary::-webkit-details-marker {
+            display: none;
+        }
+        #faq details[open] summary ~ * {
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 🔥 NUEVOS ESTILOS DE BOTONES METÁLICOS (unificados con Mis Cursos) */
         .btn-metal-solid {
             display: inline-flex;
             align-items: center;
@@ -283,294 +909,54 @@
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 100%);
             border-radius: 50%;
             pointer-events: none;
+            transition: opacity 0.25s ease;
         }
         .btn-metal-solid:hover {
             background: linear-gradient(180deg, #c0d4e8 0%, #8a9fb6 8%, #5a7088 20%, #3d5a6e 40%, #2e4a5f 60%, #243e52 100%);
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
         }
+        .btn-metal-solid:active {
+            transform: scale(0.96);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(180deg, #1a3142 0%, #1e3a4f 40%, #2d4a5e 60%, #4a6078 100%);
+        }
+
+        /* Cian metálico (Info / Aula Virtual) */
         .btn-metal-cyan {
             background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%);
             box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
+        .btn-metal-cyan::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
         .btn-metal-cyan:hover {
             background: linear-gradient(180deg, #b0e0f0 0%, #6bc8d8 8%, #3daabe 20%, #2a8d9e 40%, #1f7488 60%, #155f70 100%);
-            box-shadow: 0 10px 24px rgba(15, 100, 120, 0.55);
+            box-shadow: 0 10px 24px rgba(15, 100, 120, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
         }
+        .btn-metal-cyan:active {
+            background: linear-gradient(180deg, #0b4f60 0%, #0f6478 40%, #1a7d91 60%, #2d9aae 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        /* Teal metálico (Compra / WhatsApp) */
         .btn-metal-teal {
             background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%);
             box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
+        .btn-metal-teal::before {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+        }
         .btn-metal-teal:hover {
             background: linear-gradient(180deg, #b0f0e0 0%, #6bd8c8 8%, #3dbeae 20%, #2a9d8e 40%, #1f8878 60%, #157060 100%);
-            box-shadow: 0 10px 24px rgba(15, 100, 90, 0.55);
+            box-shadow: 0 10px 24px rgba(15, 100, 90, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
         }
-
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--text-accent); border-radius: 10px; }
-
-        .section-divider {
-            width: 100%;
-            height: 60px;
-            margin: 0;
-            position: relative;
-            overflow: hidden;
+        .btn-metal-teal:active {
+            background: linear-gradient(180deg, #0b6050 0%, #0f7868 40%, #1a9180 60%, #2daa9a 100%);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
         }
-        .section-divider svg path {
-            fill: none;
-            stroke-linecap: round;
-            stroke-width: 1.5;
-            stroke: var(--border-default);
-            opacity: 0.5;
-            animation: oscilloscope 8s linear infinite;
-        }
-        .section-divider svg path:nth-child(2) {
-            stroke-width: 2.5;
-            stroke: var(--text-accent);
-            opacity: 0.6;
-            animation-delay: -2.5s;
-            animation-duration: 7s;
-        }
-        .glitch-divider {
-            width: 100%;
-            height: 50px;
-            position: relative;
-            overflow: hidden;
-            margin: -15px 0;
-        }
-        .glitch-divider .glitch-line {
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-        }
-        .glitch-divider .line-1 {
-            stroke: var(--text-accent);
-            animation: glitch1 2.5s infinite steps(1, end);
-        }
-        .grid-divider {
-            width: 100%;
-            height: 70px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            margin: -5px 0;
-        }
-        .grid-divider .grid-dot {
-            fill: var(--text-accent);
-            animation: pulse-grid 5s infinite ease-in-out;
-        }
-        .circuit-divider {
-            width: 100%;
-            height: 80px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: -10px 0;
-        }
-        .circuit-divider .trace {
-            fill: none;
-            stroke-width: 2.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            stroke: var(--text-accent);
-            stroke-dasharray: 1500;
-            stroke-dashoffset: 1500;
-            animation: draw-trace 20s linear infinite;
-        }
-        .circuit-divider .dot {
-            fill: var(--text-accent);
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        @keyframes oscilloscope {
-            0%, 100% { d: path("M0,30 C240,50 480,10 720,30 S1200,50 1440,30"); }
-            20% { d: path("M0,35 C220,40 460,20 720,35 S1180,30 1440,25"); }
-            40% { d: path("M0,25 C260,60 500,5 720,25 S1220,60 1440,35"); }
-            60% { d: path("M0,32 C200,10 520,55 720,32 S1150,15 1440,30"); }
-            80% { d: path("M0,28 C300,65 420,-5 720,28 S1240,65 1440,28"); }
-        }
-        @keyframes glitch1 {
-            0%, 100% { transform: none; opacity: 1; }
-            5%, 15%, 25%, 35% { transform: translate(-5px, 2px) skewX(10deg); opacity: 0.7; }
-            10%, 20%, 30%, 40% { transform: translate(5px, -2px) skewX(-10deg); opacity: 0.7; }
-        }
-        @keyframes pulse-grid {
-            0%, 100% { opacity: 0.1; r: 1; }
-            50% { opacity: 0.8; r: 1.5; }
-        }
-        @keyframes draw-trace { to { stroke-dashoffset: 0; } }
-        @keyframes pulse-dot {
-            0%, 100% { r: 3; opacity: 0.6; }
-            50% { r: 4.5; opacity: 1; }
-        }
-
-        /* ============ ESTILOS PARA EL TOAST DE CARGA ============ */
-        .loading-toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100002;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(45, 184, 206, 0.4);
-            border-radius: 16px;
-            padding: 16px 20px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(45, 184, 206, 0.2);
-            pointer-events: none;
-            min-width: 320px;
-            max-width: 90vw;
-            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .loading-toast.hiding { opacity: 0; transform: translateX(100px); }
-        .loading-toast .toast-logo {
-            width: 50px;
-            height: 50px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulseLogo 2s infinite;
-        }
-        .loading-toast .toast-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.4));
-        }
-        .loading-toast .toast-content { flex: 1; }
-        .loading-toast .toast-title {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 4px;
-            letter-spacing: 0.3px;
-        }
-        .loading-toast .toast-subtitle {
-            color: #94a3b8;
-            font-size: 12px;
-            font-weight: 500;
-        }
-        .loading-toast .toast-spinner {
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(45, 184, 206, 0.2);
-            border-top: 3px solid #2db8ce;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            flex-shrink: 0;
-        }
-        .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.8);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(16, 185, 129, 0.4);
-        }
-        .loading-toast.success-toast .toast-logo img {
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
-        }
-        .loading-toast.success-toast .toast-title { color: #ffffff; }
-        .loading-toast.success-toast .toast-subtitle { color: rgba(255, 255, 255, 0.9); }
-        .loading-toast.success-toast .toast-check {
-            width: 32px;
-            height: 32px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .loading-toast.success-toast .toast-check i {
-            color: #10b981;
-            font-size: 16px;
-            font-weight: 900;
-        }
-        @keyframes slideInRight {
-            from { transform: translateX(150%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes pulseLogo {
-            0%, 100% { filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.3)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 20px rgba(45, 184, 206, 0.6)); transform: scale(1.05); }
-        }
-        @keyframes bounceIn {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-        body.light-mode .loading-toast {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
-            border: 1px solid rgba(45, 184, 206, 0.6);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(45, 184, 206, 0.25);
-        }
-        body.light-mode .loading-toast .toast-title { color: #1e293b; }
-        body.light-mode .loading-toast .toast-subtitle { color: #64748b; }
-        body.light-mode .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.8);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 25px rgba(16, 185, 129, 0.4);
-        }
-        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
-        body.light-mode .loading-toast.success-toast .toast-subtitle { color: rgba(255, 255, 255, 0.95); }
-        /* ============ FIN ESTILOS TOAST ============ */
-
-        #notification {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            transform: translateX(120%);
-            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            z-index: 100000;
-        }
-        #notification.show { transform: translateX(0); }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(6px);
-            z-index: 99999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content {
-            background: var(--bg-secondary);
-            color: var(--text-default);
-            border-radius: 32px;
-            width: 90%;
-            max-width: 420px;
-            padding: 0px;
-            transform: translateY(30px) scale(0.95);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 25px 50px -12px var(--shadow-color);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translate(0, 0, 0) scale(1); }
-        .reveal-up { transform: translateY(40px); }
     </style>
-
-    <!-- GOOGLE CHARTS -->
+    <!-- GOOGLE CHARTS (PARA LOS MAPAS GLOBALES) -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
     <script>
@@ -588,83 +974,223 @@
             }
         }
     </script>
+
 </head>
 <body class="custom-scrollbar">
 
-<!-- ============ TOAST DE CARGA (NUEVO) ============ -->
-<div id="loadingToast" class="loading-toast hidden">
-    <div class="toast-logo">
-        <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
-    </div>
-    <div class="toast-content">
-        <div class="toast-title" id="loadingToastTitle">Estamos cargando la información de tus cursos</div>
-        <div class="toast-subtitle" id="loadingToastSubtitle">Conectando con la base de datos...</div>
-    </div>
-    <div class="toast-spinner" id="loadingToastSpinner"></div>
+<!-- Indicador de sincronización -->
+<div id="syncIndicator" class="sync-indicator">
+    <i class="fas fa-sync-alt fa-spin text-[#2db8ce]"></i>
+    <span id="syncText">Sincronizando datos...</span>
 </div>
 
-<script>
-    // ============ FUNCIONES DEL TOAST DE CARGA ============
-    function showLoadingToast() {
-        const toast = document.getElementById('loadingToast');
-        const title = document.getElementById('loadingToastTitle');
-        const subtitle = document.getElementById('loadingToastSubtitle');
-        const spinner = document.getElementById('loadingToastSpinner');
+<!-- MODAL PERFIL DE USUARIO UNIFICADO -->
+<div id="userProfileModal" class="modal-overlay">
+    <div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl">
+        <div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative">
+            <button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div>
+            <h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3>
+            <p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p>
+            
+            <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i>
+                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span>
+                </div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <i class="fas fa-phone text-[#2db8ce] text-[10px]"></i>
+                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span>
+                </div>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera">
+                    <i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i>
+                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span>
+                </div>
+            </div>
+        </div>
         
-        if (toast) {
-            toast.classList.remove('hidden', 'hiding', 'success-toast');
-            title.innerText = 'Estamos cargando la información de tus cursos';
-            subtitle.innerText = 'Conectando con la base de datos...';
-            if (spinner) spinner.style.display = 'block';
-            const existingCheck = toast.querySelector('.toast-check');
-            if (existingCheck) existingCheck.remove();
-            toast.style.opacity = '1';
-            toast.style.transform = 'translateY(0)';
-        }
-    }
+        <div class="p-6 bg-[#1e293b] text-left">
+            <button id="profileAdminBtn" onclick="openAdminPanel(); closeModal('userProfileModal')" class="hidden mb-3 w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl border border-slate-800 hover:bg-[#2db8ce] transition-all shadow-sm items-center justify-center gap-3">
+                <i class="fas fa-shield-alt text-[#2db8ce]"></i> Panel de Administración
+            </button>
+            <button onclick="logoutUser()" class="w-full py-4 bg-red-500/10 text-red-400 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-500/20 hover:bg-red-500/20 hover:border-red-500/40 transition-all shadow-sm flex items-center justify-center gap-3">
+                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+        </div>
+    </div>
+</div>
 
-    function showSuccessToast() {
-        const toast = document.getElementById('loadingToast');
-        const title = document.getElementById('loadingToastTitle');
-        const subtitle = document.getElementById('loadingToastSubtitle');
-        const spinner = document.getElementById('loadingToastSpinner');
+<!-- MODAL AUTENTICACIÓN UNIFICADO -->
+<div id="authModal" class="modal-overlay">
+    <div class="modal-content !p-8 relative">
+        <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button>
+        <div class="text-center mb-6">
+            <img src="https://i.postimg.cc/V64qYmsp/web-1.png" alt="Logo" class="h-10 mx-auto mb-3">
+            <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3>
+            <p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p>
+        </div>
         
-        if (toast) {
-            toast.classList.remove('hidden', 'hiding');
-            toast.classList.add('success-toast');
-            title.innerText = '¡Listo! Ya están cargados tus cursos';
-            subtitle.innerText = 'Información actualizada correctamente';
-            if (spinner) spinner.style.display = 'none';
-            const existingCheck = toast.querySelector('.toast-check');
-            if (existingCheck) existingCheck.remove();
-            const checkDiv = document.createElement('div');
-            checkDiv.className = 'toast-check';
-            checkDiv.innerHTML = '<i class="fas fa-check"></i>';
-            toast.appendChild(checkDiv);
-            toast.style.opacity = '1';
-            toast.style.transform = 'translateY(0)';
-            setTimeout(() => { hideLoadingToast(); }, 3000);
-        }
-    }
+        <div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left">
+            <i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i>
+            <span id="authErrorText" class="leading-tight">Mensaje de error</span>
+        </div>
 
-    function hideLoadingToast() {
-        const toast = document.getElementById('loadingToast');
-        if (toast) {
-            toast.classList.add('hiding');
-            setTimeout(() => {
-                toast.classList.add('hidden');
-                toast.classList.remove('hiding', 'success-toast');
-            }, 500);
-        }
-    }
-    // ============ FIN FUNCIONES DEL TOAST ============
-</script>
+        <div class="flex bg-slate-100 rounded-xl p-1 mb-6">
+            <button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button>
+            <button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button>
+        </div>
+        
+        <form id="authForm" class="space-y-4 text-left">
+            <div id="nameField" class="space-y-1 hidden">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label>
+                <div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+            </div>
+            <div class="space-y-1">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label>
+                <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+            </div>
+            <div class="space-y-1" id="passwordFieldContainer">
+                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label>
+                <div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+            </div>
+            <button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2">
+                <i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span>
+            </button>
+        </form>
+    </div>
+</div>
 
-<!-- ============ CONTENIDO PRINCIPAL ============ -->
+<!-- MODAL DE ADMINISTRACIÓN -->
+<div id="adminModal" class="modal-overlay">
+    <div class="modal-content !max-w-[800px] !w-[95%] h-[85vh] flex flex-col relative overflow-hidden bg-slate-50 border-none">
+        <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5 flex justify-between items-center z-10 shadow-lg">
+            <h3 class="font-black uppercase tracking-wide flex items-center gap-3 text-lg"><i class="fas fa-shield-alt text-[#2db8ce] text-2xl"></i> Panel de Administración</h3>
+            <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button>
+        </div>
+        
+        <div class="flex flex-col md:flex-row flex-grow overflow-hidden">
+            <div class="w-full md:w-1/3 bg-white border-r border-slate-200 overflow-y-auto custom-scrollbar flex flex-col p-3 gap-2 shadow-inner" id="adminTabsContainer">
+                <!-- Pestañas generadas por JS -->
+            </div>
+            
+            <div class="w-full md:w-2/3 p-6 md:p-8 overflow-y-auto custom-scrollbar bg-slate-50">
+                <div id="adminFormContainer" class="hidden">
+                    <div class="mb-6 border-b border-slate-200 pb-4">
+                        <h4 class="text-xl font-black text-slate-800 leading-tight" id="adminSelectedCourseTitle">Selecciona un curso</h4>
+                        <p class="text-xs text-slate-500 mt-2 font-medium">Ingresa los datos del estudiante para registrarlo <span class="text-[#2db8ce] font-bold">manualmente</span> en la pestaña de este curso en Excel.</p>
+                    </div>
+                    
+                    <div id="adminErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm slide-up text-left">
+                        <i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i>
+                        <span id="adminErrorText" class="leading-tight">Ese usuario ya existe en este curso.</span>
+                    </div>
+                    
+                    <form id="adminManualForm" class="space-y-4 text-left">
+                        <input type="hidden" id="adminCourseId">
+                        <input type="hidden" id="adminCourseName">
+                        
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo *</label>
+                            <div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminName" required placeholder="Nombre del estudiante" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                        </div>
+
+                        <div class="space-y-1">
+                            <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo Electrónico *</label>
+                            <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="adminEmail" required placeholder="correo@estudiante.com" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Cédula / ID (Opcional)</label>
+                                <div class="relative"><i class="fas fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminCedula" placeholder="Ej: V-12345678" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                            </div>
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Teléfono (Opcional)</label>
+                                <div class="relative"><i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminPhone" placeholder="+58..." class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-1">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">País (Opcional)</label>
+                                <div class="relative">
+                                    <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <select id="adminCountry" onchange="toggleAdminState()" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none shadow-sm focus:border-[#2db8ce]">
+                                        <option value="" disabled selected>Selecciona país...</option>
+                                        <option value="Venezuela">Venezuela</option>
+                                        <option value="Colombia">Colombia</option>
+                                        <option value="México">México</option>
+                                        <option value="Argentina">Argentina</option>
+                                        <option value="Perú">Perú</option>
+                                        <option value="Chile">Chile</option>
+                                        <option value="Ecuador">Ecuador</option>
+                                        <option value="España">España</option>
+                                        <option value="Otro">Otro</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                                </div>
+                            </div>
+
+                            <div id="adminStateContainer" class="space-y-1 hidden">
+                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Estado (Venezuela)</label>
+                                <div class="relative">
+                                    <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                    <select id="adminState" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none shadow-sm focus:border-[#2db8ce]">
+                                        <option value="" disabled selected>Selecciona estado...</option>
+                                        <option value="Amazonas">Amazonas</option>
+                                        <option value="Anzoátegui">Anzoátegui</option>
+                                        <option value="Apure">Apure</option>
+                                        <option value="Aragua">Aragua</option>
+                                        <option value="Barinas">Barinas</option>
+                                        <option value="Bolívar">Bolívar</option>
+                                        <option value="Carabobo">Carabobo</option>
+                                        <option value="Cojedes">Cojedes</option>
+                                        <option value="Delta Amacuro">Delta Amacuro</option>
+                                        <option value="Distrito Capital">Distrito Capital</option>
+                                        <option value="Falcón">Falcón</option>
+                                        <option value="Guárico">Guárico</option>
+                                        <option value="Lara">Lara</option>
+                                        <option value="La Guaira">La Guaira</option>
+                                        <option value="Mérida">Mérida</option>
+                                        <option value="Miranda">Miranda</option>
+                                        <option value="Monagas">Monagas</option>
+                                        <option value="Nueva Esparta">Nueva Esparta</option>
+                                        <option value="Portuguesa">Portuguesa</option>
+                                        <option value="Sucre">Sucre</option>
+                                        <option value="Táchira">Táchira</option>
+                                        <option value="Trujillo">Trujillo</option>
+                                        <option value="Yaracuy">Yaracuy</option>
+                                        <option value="Zulia">Zulia</option>
+                                    </select>
+                                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="adminSubmitBtn" class="w-full bg-teal-600 hover:bg-teal-500 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-6 transition-all shadow-lg flex items-center justify-center gap-2">
+                            <i class="fas fa-save text-lg"></i> Registrar Estudiante Manualmente
+                        </button>
+                    </form>
+                </div>
+                
+                <div id="adminNoSelection" class="h-full flex flex-col items-center justify-center text-slate-400 pb-10">
+                    <i class="fas fa-hand-pointer text-5xl mb-4 opacity-30"></i>
+                    <p class="text-sm font-bold uppercase tracking-widest text-center">Selecciona un curso<br>en el menú lateral</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SECCIÓN: HOME (ÚNICA PÁGINA) -->
 <div id="page-home" class="page-content active">
     <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
+        <!-- Imagen de fondo transparente -->
         <div class="absolute inset-0 z-0 opacity-40">
-            <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
+            <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy" style="opacity: 1;">
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-20 pt-36">
             <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
@@ -678,172 +1204,837 @@
             </div>
             <div class="flex flex-col md:grid md:grid-cols-3 gap-8 items-center text-center md:text-left">
                 <h1 class="hero-main-title text-3xl md:text-5xl font-black drop-shadow-lg uppercase tracking-tighter font-display md:col-span-2">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
+                
                 <div class="flex justify-center items-center md:col-start-3 md:row-start-1 md:row-span-2">
                     <img id="parallax-header-image" src="img/AA(47).webp" alt="Icono" class="h-64 md:h-96 drop-shadow-lg">
                 </div>
+
                 <div class="md:col-span-2">
                     <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium mx-auto md:mx-0">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
-                    <div class="mt-8">
-                        <button onclick="window.location.href='#cursos-destacados'" class="btn-metal-solid btn-metal-teal px-8 py-4 text-base rounded-2xl font-black uppercase flex items-center gap-3">Ver Cursos <i class="fas fa-chevron-down"></i></button>
-                    </div>
+                    <div class="mt-8"><button onclick="window.location.href='#cursos-destacados'" class="btn-metal-solid btn-metal-teal px-8 py-4 text-base rounded-2xl font-black uppercase flex items-center gap-3">Ver Cursos <i class="fas fa-chevron-down"></i></button></div>
                 </div>
             </div>
         </div>
     </header>
 
     <main id="main-flow-content">
-        <!-- INSTRUCTOR -->
-        <section id="instructor" class="page-section relative py-24 px-6 reveal">
-            <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
-                <div class="reveal reveal-center">
-                    <img src="img/AA (14).webp" alt="Profesor Pablo Cedeño" class="rounded-3xl aspect-square object-cover w-full max-w-[250px] mx-auto md:max-w-full shadow-2xl border-4 border-cyan-500/30">
-                </div>
-                <div class="md:col-span-2 text-center md:text-left reveal reveal-up">
-                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Guía Experto</span>
-                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Prof. Pablo <span>Cedeño</span></h2>
-                    <p class="text-slate-300 mt-6 mb-8 max-w-xl mx-auto md:mx-0">Ingeniero con más de 15 años de experiencia en el diseño, implementación y mantenimiento de sistemas de automatización industrial. Apasionado por la enseñanza y por transformar la teoría compleja en habilidades prácticas y aplicables.</p>
-                    <div class="flex flex-wrap justify-center md:justify-start items-center gap-4">
-                        <span class="text-slate-400 font-bold text-xs uppercase tracking-widest">Colaboraciones:</span>
-                        <img src="img/AA(41).ico" alt="Logo de colaboraciones" class="h-10">
-                    </div>
-                </div>
-            </div>
-        </section>
+        <div id="timeline-progress"></div>
 
-        <!-- CURSOS DESTACADOS -->
-        <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden reveal">
-            <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-10 reveal reveal-down">
-                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
-                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Mis Cursos <span>Destacados</span></h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                    <div class="course-card course-card-level-basico reveal reveal-up delay-100">
-                        <div class="course-card-image-container">
-                            <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" alt="Curso Arranque de motores" class="course-card-image">
-                            <span class="course-card-badge badge-basic">Nivel Básico</span>
-                        </div>
-                        <div class="course-card-content">
-                            <h3 class="course-card-title">Arranque de motores con PLC LOGO Online</h3>
-                            <p class="course-card-description">Domina el control de motores mediante lógica programable.</p>
-                            <div class="course-card-footer">
-                                <div class="course-card-meta">
-                                    <div class="course-card-price">10$</div>
-                                    <div class="course-card-stats">
-                                        <button class="like-btn" data-id="curso-2" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
-                                        <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-2">0</span></div>
-                                    </div>
-                                </div>
-                                <div class="course-card-buttons">
-                                    <button onclick="registerViewAndGo('2-arranque-plc-logo-info.html', 2, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
-                                    <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Arranque%20de%20motores%20con%20PLC%20LOGO!', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="course-card course-card-level-basico reveal reveal-up delay-200">
-                        <div class="course-card-image-container">
-                            <img src="img/AA (1).gif" alt="Curso Automatización Industrial" class="course-card-image">
-                            <span class="course-card-badge badge-basic">Nivel Básico</span>
-                        </div>
-                        <div class="course-card-content">
-                            <h3 class="course-card-title">Automatización Industrial Presencial</h3>
-                            <p class="course-card-description">Fundamentos de control, sensores y actuadores.</p>
-                            <div class="course-card-footer">
-                                <div class="course-card-meta">
-                                    <div class="course-card-price">100$</div>
-                                    <div class="course-card-stats">
-                                        <button class="like-btn" data-id="curso-9" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
-                                        <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-9">0</span></div>
-                                    </div>
-                                </div>
-                                <div class="course-card-buttons">
-                                    <button onclick="registerViewAndGo('9-auto-industrial-pre-info.html', 9, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
-                                    <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Automatización%20Industrial', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="course-card course-card-level-intermedio reveal reveal-up delay-300">
-                        <div class="course-card-image-container">
-                            <img src="https://i.postimg.cc/WpST30hz/tablerogif.gif" alt="Curso Automatización con Contactores" class="course-card-image">
-                            <span class="course-card-badge badge-intermediate">Nivel Intermedio</span>
-                        </div>
-                        <div class="course-card-content">
-                            <h3 class="course-card-title">Automatización con PLC LOGO Online</h3>
-                            <p class="course-card-description">Diseño de lógica cableada y control electromecánico.</p>
-                            <div class="course-card-footer">
-                                <div class="course-card-meta">
-                                    <div class="course-card-price">10$</div>
-                                    <div class="course-card-stats">
-                                        <button class="like-btn" data-id="curso-4" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
-                                        <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-4">0</span></div>
-                                    </div>
-                                </div>
-                                <div class="course-card-buttons">
-                                    <button onclick="registerViewAndGo('4-auto-contactores-on-info.html', 4, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
-                                    <button onclick="window.open('https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <!-- INSTRUCTOR -->
+    <section id="instructor" class="page-section relative py-24 px-6 reveal">
+        <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
+            <div class="reveal reveal-center">
+                <img src="img/AA (14).webp" alt="Profesor Pablo Cedeño" class="rounded-3xl aspect-square object-cover w-full max-w-[250px] mx-auto md:max-w-full shadow-2xl border-4 border-cyan-500/30">
+            </div>
+            <div class="md:col-span-2 text-center md:text-left reveal reveal-up">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Guía Experto</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Prof. Pablo <span>Cedeño</span></h2>
+                <p class="text-slate-300 mt-6 mb-8 max-w-xl mx-auto md:mx-0">Ingeniero con más de 15 años de experiencia en el diseño, implementación y mantenimiento de sistemas de automatización industrial. Apasionado por la enseñanza y por transformar la teoría compleja en habilidades prácticas y aplicables.</p>
+                <div class="flex flex-wrap justify-center md:justify-start items-center gap-4">
+                    <span class="text-slate-400 font-bold text-xs uppercase tracking-widest">Colaboraciones:</span>
+                    <img src="img/AA(41).ico" alt="Logo de colaboraciones" class="h-10">
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- CTA FINAL -->
-        <section id="contacto" class="page-section relative py-24 px-6 reveal">
-            <div class="max-w-7xl mx-auto relative z-10 text-center">
-                <div class="reveal reveal-down">
-                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">¿Tienes Preguntas?</span>
-                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Comienza a <span> Aprender Hoy</span></h2>
-                    <p class="text-slate-300 mt-6 mb-10 max-w-2xl mx-auto">Si tienes alguna duda o necesitas asesoría personalizada para elegir el curso ideal para ti, no dudes en contactarnos. Estamos aquí para ayudarte.</p>
-                </div>
-                <div class="flex flex-col md:flex-row items-center justify-center gap-6 reveal reveal-up">
-                    <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-metal-solid btn-metal-teal !px-10 !py-6 !text-xl !rounded-2xl !font-black !uppercase !flex !items-center !gap-4"><i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp</button>
+    <div class="circuit-divider reveal">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="xMidYMid meet">
+            <path class="trace-bg" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <path class="trace" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <circle class="dot" cx="150" cy="40" r="4" style="animation-delay: 0s;"></circle>
+            <circle class="dot" cx="200" cy="10" r="4" style="animation-delay: -1.5s;"></circle>
+            <circle class="dot" cx="250" cy="40" r="4" style="animation-delay: -0.2s;"></circle>
+            <circle class="dot" cx="300" cy="70" r="4" style="animation-delay: -1.8s;"></circle>
+            <circle class="dot" cx="350" cy="40" r="4" style="animation-delay: -0.4s;"></circle>
+            <circle class="dot" cx="450" cy="40" r="4" style="animation-delay: -1.2s;"></circle>
+            <circle class="dot" cx="500" cy="70" r="4" style="animation-delay: -0.6s;"></circle>
+            <circle class="dot" cx="550" cy="40" r="4" style="animation-delay: -1.0s;"></circle>
+            <circle class="dot" cx="600" cy="10" r="4" style="animation-delay: -0.8s;"></circle>
+            <circle class="dot" cx="650" cy="40" r="4" style="animation-delay: -1.4s;"></circle>
+            <circle class="dot" cx="750" cy="40" r="4" style="animation-delay: -0.1s;"></circle>
+            <circle class="dot" cx="800" cy="70" r="4" style="animation-delay: -1.9s;"></circle>
+            <circle class="dot" cx="850" cy="40" r="4" style="animation-delay: -0.3s;"></circle>
+            <circle class="dot" cx="900" cy="10" r="4" style="animation-delay: -1.6s;"></circle>
+            <circle class="dot" cx="950" cy="40" r="4" style="animation-delay: -0.7s;"></circle>
+            <circle class="dot" cx="1050" cy="40" r="4" style="animation-delay: -1.1s;"></circle>
+            <circle class="dot" cx="1100" cy="10" r="4" style="animation-delay: -0.9s;"></circle>
+            <circle class="dot" cx="1150" cy="40" r="4" style="animation-delay: -1.3s;"></circle>
+        </svg>
+    </div>
+
+    <!-- ====== Misión Académica Section Start ====== -->
+    <section id="mision" class="page-section pt-10 pb-20 lg:pt-14 lg:pb-28 relative overflow-hidden reveal">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 text-center">
+            <div class="reveal reveal-up">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">
+                    LIDERADOS POR EL PROFESOR PABLO CEDEÑO
+                </span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">
+                    Nuestra Misión <span>Académica</span>
+                </h2>
+            </div>
+
+            <div class="mt-12 max-w-5xl mx-auto reveal reveal-up" style="transition-delay: 0.2s;">
+                <div class="mission-card p-8 md:p-12 rounded-3xl text-left">
+                    <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                        <div class="flex-shrink-0"> 
+                            <img src="img/AA (16).webp" alt="Logo de la Universidad" class="h-32 w-32 rounded-full object-cover drop-shadow-lg">
+                        </div>
+                        <div class="border-t-2 md:border-t-0 md:border-l-2 border-cyan-500/20 pt-6 md:pt-0 md:pl-8">
+                            <h3 class="text-xl lg:text-2xl font-bold mb-5">Empoderando a la Próxima Generación de Innovadores</h3>
+                            <ul class="space-y-4 text-sm md:text-base">
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1.5"></i>
+                                    <span><strong>Educación Práctica y Relevante:</strong> Ofrecer contenido actualizado que responda a las necesidades reales de la industria.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1.5"></i>
+                                    <span><strong>Acceso para Todos:</strong> Democratizar el conocimiento en automatización, haciéndolo accesible sin importar la ubicación o el nivel de experiencia.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1.5"></i>
+                                    <span><strong>Comunidad y Soporte:</strong> Fomentar un ecosistema de aprendizaje colaborativo donde estudiantes y profesionales puedan crecer juntos.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
+    <!-- ====== Misión Académica Section End ====== -->
+
+    <div class="section-divider reveal">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
+            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
+            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+        </svg>
+    </div>
+
+    <!-- CURSOS DESTACADOS (HOME) -->
+    <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden reveal">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-10 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Mis Cursos <span>Destacados</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <!-- Curso 1 -->
+                <div class="course-card course-card-level-basico reveal reveal-up delay-100">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" alt="Curso Arranque de motores" class="course-card-image">
+                        <span class="course-card-badge badge-basic">Nivel Básico</span>
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
+                            <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Arranque de motores con PLC LOGO Online</h3>
+                        <p class="course-card-description">Domina el control de motores mediante lógica programable.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">10$</div>
+                                <div class="course-card-stats">
+                                    <button class="like-btn" data-id="curso-2" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
+                                    <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-2">0</span></div>
+                                </div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <!-- Info: btn-metal-cyan -->
+                                <button onclick="registerViewAndGo('2-arranque-plc-logo-info.html', 2, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <!-- Compra: btn-metal-teal -->
+                                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Arranque%20de%20motores%20con%20PLC%20LOGO!', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Curso 2 -->
+                <div class="course-card course-card-level-basico reveal reveal-up delay-200">
+                    <div class="course-card-image-container">
+                        <img src="img/AA (1).gif" alt="Curso Automatización Industrial" class="course-card-image">
+                        <span class="course-card-badge badge-basic">Nivel Básico</span>
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
+                            <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Automatización Industrial Presencial</h3>
+                        <p class="course-card-description">Fundamentos de control, sensores y actuadores.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">100$</div>
+                                <div class="course-card-stats">
+                                    <button class="like-btn" data-id="curso-9" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
+                                    <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-9">0</span></div>
+                                </div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <!-- Info: btn-metal-cyan -->
+                                <button onclick="registerViewAndGo('9-auto-industrial-pre-info.html', 9, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <!-- Compra: btn-metal-teal -->
+                                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20curso:%20Automatización%20Industrial', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Curso 3 -->
+                <div class="course-card course-card-level-intermedio reveal reveal-up delay-300">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/WpST30hz/tablerogif.gif" alt="Curso Automatización con Contactores" class="course-card-image">
+                        <span class="course-card-badge badge-intermediate">Nivel Intermedio</span>
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center bg-purple-500/10 border-2 border-purple-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Intermedio">
+                            <i class="fas fa-cogs text-lg text-purple-400"></i>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Automatización con PLC LOGO Online</h3>
+                        <p class="course-card-description">Diseño de lógica cableada y control electromecánico.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">10$</div>
+                                <div class="course-card-stats">
+                                    <button class="like-btn" data-id="curso-4" onclick="toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">0</span></button>
+                                    <div class="view-container"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-4">0</span></div>
+                                </div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <!-- Info: btn-metal-cyan -->
+                                <button onclick="registerViewAndGo('4-auto-contactores-on-info.html', 4, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                                <!-- Compra: btn-metal-teal -->
+                                <button onclick="window.open('https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="glitch-divider reveal">
+        <svg viewBox="0 0 1440 50" preserveAspectRatio="none">
+            <path class="glitch-line line-1" d="M0 25 H 1440" />
+            <path class="glitch-line line-2" d="M0 25 H 1440" />
+            <path class="glitch-line line-3" d="M0 25 H 1440" />
+        </svg>
+    </div>
+
+    <!-- MANUALES Y RECURSOS -->
+    <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden reveal">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-10 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Conocimiento Aplicado</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Manuales y <span>Recursos</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <!-- Manual 1 -->
+                <div class="course-card course-card-level-basico reveal reveal-up delay-100">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/WpST30hz/tablerogif.gif" alt="Arranque de motores con contactores Manual" class="course-card-image">
+                        <div class="absolute bottom-3 left-3 flex items-center gap-2">
+                            <div class="flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
+                                <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                            </div>
+                            <div class="flex items-center justify-center bg-blue-500/10 border-2 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Manual">
+                                <i class="fas fa-book-open text-lg text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Arranque de motores con contactores Manual</h3>
+                        <p class="course-card-description">Manual completo sobre el arranque y control de motores usando contactores, lógica cableada y protecciones.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">5$</div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="registerViewAndGo('19-Manual-arranque-contactores-info.html', 19, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
+                                <button onclick="buyManual(19, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Arranque%20de%20motores%20con%20contactores')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-download"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Manual 2 -->
+                <div class="course-card course-card-level-basico reveal reveal-up delay-200">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" alt="Automatización con PLC Básico Manual" class="course-card-image">
+                        <div class="absolute bottom-3 left-3 flex items-center gap-2">
+                            <div class="flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
+                                <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                            </div>
+                            <div class="flex items-center justify-center bg-blue-500/10 border-2 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Manual">
+                                <i class="fas fa-book-open text-lg text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Automatización con PLC Básico Manual</h3>
+                        <p class="course-card-description">Introducción a la automatización industrial utilizando PLC de gama básica como LOGO! de Siemens.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">5$</div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="registerViewAndGo('20-auto-plc-basico-on-info.html', 20, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
+                                <button onclick="buyManual(20, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20PLC%20Básico')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-download"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Manual 3 -->
+                <div class="course-card course-card-level-basico reveal reveal-up delay-300">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif" alt="Automatización con Contactores Manual" class="course-card-image">
+                        <div class="absolute bottom-3 left-3 flex items-center gap-2">
+                            <div class="flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Nivel Básico">
+                                <i class="fas fa-seedling text-lg text-cyan-400"></i>
+                            </div>
+                            <div class="flex items-center justify-center bg-blue-500/10 border-2 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Manual">
+                                <i class="fas fa-book-open text-lg text-blue-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Automatización con Contactores Manual</h3>
+                        <p class="course-card-description">Aprende a diseñar y montar circuitos de control con lógica cableada para diferentes arranques de motores.</p>
+                        <div class="course-card-footer">
+                            <div class="course-card-meta">
+                                <div class="course-card-price">5$</div>
+                            </div>
+                            <div class="course-card-buttons">
+                                <button onclick="registerViewAndGo('21-Manual-auto-contactores-on-info.html', 21, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle"></i> Info</button>
+                                <button onclick="buyManual(21, 'https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20Contactores')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-download"></i> Comprar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="grid-divider reveal">
+        <svg viewBox="0 0 1000 70" preserveAspectRatio="xMidYMid meet">
+            <g>
+                <!-- Row 1 -->
+                <circle class="grid-dot" cx="50" cy="15" r="1" style="animation-delay: -0.5s;"></circle>
+                <circle class="grid-dot" cx="150" cy="15" r="1" style="animation-delay: -1.2s;"></circle>
+                <circle class="grid-dot" cx="250" cy="15" r="1" style="animation-delay: -2.5s;"></circle>
+                <circle class="grid-dot" cx="350" cy="15" r="1" style="animation-delay: -0.8s;"></circle>
+                <circle class="grid-dot" cx="450" cy="15" r="1" style="animation-delay: -3.1s;"></circle>
+                <circle class="grid-dot" cx="550" cy="15" r="1" style="animation-delay: -1.5s;"></circle>
+                <circle class="grid-dot" cx="650" cy="15" r="1" style="animation-delay: -4.0s;"></circle>
+                <circle class="grid-dot" cx="750" cy="15" r="1" style="animation-delay: -2.1s;"></circle>
+                <circle class="grid-dot" cx="850" cy="15" r="1" style="animation-delay: -0.2s;"></circle>
+                <circle class="grid-dot" cx="950" cy="15" r="1" style="animation-delay: -3.5s;"></circle>
+                <!-- Row 2 -->
+                <circle class="grid-dot" cx="100" cy="35" r="1" style="animation-delay: -4.2s;"></circle>
+                <circle class="grid-dot" cx="200" cy="35" r="1" style="animation-delay: -1.8s;"></circle>
+                <circle class="grid-dot" cx="300" cy="35" r="1" style="animation-delay: -0.1s;"></circle>
+                <circle class="grid-dot" cx="400" cy="35" r="1" style="animation-delay: -2.9s;"></circle>
+                <circle class="grid-dot" cx="500" cy="35" r="1" style="animation-delay: -1.1s;"></circle>
+                <circle class="grid-dot" cx="600" cy="35" r="1" style="animation-delay: -3.8s;"></circle>
+                <circle class="grid-dot" cx="700" cy="35" r="1" style="animation-delay: -0.7s;"></circle>
+                <circle class="grid-dot" cx="800" cy="35" r="1" style="animation-delay: -2.2s;"></circle>
+                <circle class="grid-dot" cx="900" cy="35" r="1" style="animation-delay: -4.5s;"></circle>
+            </g>
+        </svg>
+    </div>
+
+    <!-- MODALIDADES DE APRENDIZAJE -->
+    <section id="modalidades" class="page-section relative py-24 px-6 reveal">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-8 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Flexibilidad Total</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Modalidades de <span>Aprendizaje</span></h2>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                <!-- Modalidad Presencial -->
+                <div class="course-card course-card-level-intermedio reveal reveal-right">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/WpST30hz/tablerogif.gif" alt="Formación Presencial" class="course-card-image">
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Formación Presencial</h3>
+                        <p class="course-card-description !flex-grow-0">Vive la experiencia práctica en nuestros talleres equipados con tecnología industrial real.</p>
+                        <ul class="space-y-2 text-sm text-slate-300 my-4">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1"></i><span>Talleres 100% prácticos.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1"></i><span>Equipos y tableros reales.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1"></i><span>Networking con profesionales.</span></li>
+                        </ul>
+                        <div class="course-card-footer !p-0 !border-t-0 mt-auto">
+                            <div class="course-card-buttons">
+                                <a href="#curso-especial" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-calendar-alt"></i> Ver Próximas Fechas</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modalidad Online -->
+                <div class="course-card course-card-level-basico reveal reveal-up">
+                    <div class="course-card-image-container">
+                        <img src="https://i.postimg.cc/rmzs1xpQ/automatismo.gif" alt="Formación Online" class="course-card-image">
+                    </div>
+                    <div class="course-card-content">
+                        <h3 class="course-card-title">Formación Online</h3>
+                        <p class="course-card-description !flex-grow-0">Aprende a tu ritmo, desde cualquier lugar del mundo, con acceso de por vida al material.</p>
+                        <ul class="space-y-2 text-sm text-slate-300 my-4">
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1"></i><span>Flexibilidad de horarios.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1"></i><span>Clases grabadas para repasar.</span></li>
+                            <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1"></i><span>Soporte remoto por WhatsApp y correo.</span></li>
+                        </ul>
+                        <div class="course-card-footer !p-0 !border-t-0 mt-auto">
+                            <div class="course-card-buttons">
+                                <a href="catalogo.html" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-th-large"></i> Ver Cursos Online</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="circuit-divider reveal">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="xMidYMid meet">
+            <path class="trace-bg" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <path class="trace" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <circle class="dot" cx="150" cy="40" r="4" style="animation-delay: 0s;"></circle>
+            <circle class="dot" cx="200" cy="10" r="4" style="animation-delay: -1.5s;"></circle>
+            <circle class="dot" cx="250" cy="40" r="4" style="animation-delay: -0.2s;"></circle>
+            <circle class="dot" cx="300" cy="70" r="4" style="animation-delay: -1.8s;"></circle>
+            <circle class="dot" cx="350" cy="40" r="4" style="animation-delay: -0.4s;"></circle>
+            <circle class="dot" cx="450" cy="40" r="4" style="animation-delay: -1.2s;"></circle>
+            <circle class="dot" cx="500" cy="70" r="4" style="animation-delay: -0.6s;"></circle>
+            <circle class="dot" cx="550" cy="40" r="4" style="animation-delay: -1.0s;"></circle>
+            <circle class="dot" cx="600" cy="10" r="4" style="animation-delay: -0.8s;"></circle>
+            <circle class="dot" cx="650" cy="40" r="4" style="animation-delay: -1.4s;"></circle>
+            <circle class="dot" cx="750" cy="40" r="4" style="animation-delay: -0.1s;"></circle>
+            <circle class="dot" cx="800" cy="70" r="4" style="animation-delay: -1.9s;"></circle>
+            <circle class="dot" cx="850" cy="40" r="4" style="animation-delay: -0.3s;"></circle>
+            <circle class="dot" cx="900" cy="10" r="4" style="animation-delay: -1.6s;"></circle>
+            <circle class="dot" cx="950" cy="40" r="4" style="animation-delay: -0.7s;"></circle>
+            <circle class="dot" cx="1050" cy="40" r="4" style="animation-delay: -1.1s;"></circle>
+            <circle class="dot" cx="1100" cy="10" r="4" style="animation-delay: -0.9s;"></circle>
+            <circle class="dot" cx="1150" cy="40" r="4" style="animation-delay: -1.3s;"></circle>
+        </svg>
+    </div>
+
+    <!-- CURSO ESPECIAL (UPT ARAGUA) -->
+    <section id="curso-especial" class="page-section relative py-24 px-6 overflow-hidden text-left reveal">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-8 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-6 block">ampliación y extensión profesional</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Próximo <span>Curso Presencial</span></h2>
+            </div>
+            <div class="special-course-card course-card-level-intermedio rounded-3xl overflow-hidden flex flex-col lg:flex-row lg:items-stretch reveal reveal-up">
+                <div class="w-full lg:w-2/5 relative flex-shrink-0 lg:aspect-square">
+                    <img src="https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif" alt="Curso presencial de automatización con contactores" class="special-course-image lg:absolute lg:inset-0 w-full h-full object-cover">
+                    <div class="absolute top-6 left-6 z-20 flex items-center justify-center bg-purple-500/10 border-2 border-purple-500/30 backdrop-blur-sm rounded-full w-12 h-12 shadow-lg" title="Nivel Intermedio">
+                        <i class="fas fa-cogs text-xl text-purple-400"></i>
+                    </div>
+                    <div class="absolute top-6 right-6 z-20">
+                        <span class="px-4 py-2 bg-teal-500/20 backdrop-blur-lg text-teal-400 text-[10px] font-black uppercase rounded-full border border-teal-500/30">Inscripciones Abiertas</span>
+                    </div>
+                    <div class="absolute bottom-6 left-6 right-6 z-20">
+                        <button onclick="registerViewAndGo('10-auto-contactores-pre-info.html', 10, '_self')" class="btn-metal-solid btn-metal-cyan w-full mb-3 !py-3 !text-xs !rounded-xl"><i class="fas fa-info-circle"></i> Info del Curso</button>
+                        <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20deseo%20inscribirme%20en%20el%20Curso%20de%20Automatización%20con%20Contactores!', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-4 !text-xs !rounded-2xl !font-black !uppercase !flex !items-center !justify-center !gap-3"><i class="fab fa-whatsapp"></i> Solicitar Inscripción</button>
+                    </div>
+                </div>
+                <div class="lg:w-3/4 p-8 lg:p-12 flex flex-col justify-center">
+                    <div>
+                        <span class="section-subtitle text-[10px] font-black uppercase tracking-[0.4em] mb-6 block">Curso de ampliación y extensión profesional</span>
+                        <h4 class="text-2xl lg:text-4xl font-black uppercase leading-tight mb-4 text-white">AUTOMATIZACIÓN <span class="text-[#2db8ce]">INDUSTRIAL</span></h4>
+                        
+                        <div class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-university text-[#2db8ce] text-sm"></i></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Institución</span><p class="text-xs font-bold text-white">Universidad Politécnica Territorial de Aragua (UPT Aragua)</p></div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-calendar-alt text-[#2db8ce] text-sm"></i></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Fechas</span><p class="text-xs font-bold text-white">Próximamente</p></div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-clock text-[#2db8ce] text-sm"></i></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Horario</span><p class="text-xs font-bold text-white">8:00 a.m. a 2:00 p.m.</p></div>
+                                </div>
+                                <div class="flex items-start gap-4">
+                                    <div class="w-10 h-10 rounded-2xl bg-[#2db8ce]/10 flex items-center justify-center border border-[#2db8ce]/20 shrink-0"><i class="fas fa-hourglass-half text-[#2db8ce] text-sm"></i></div>
+                                    <div><span class="text-[9px] font-black uppercase tracking-widest block mb-1 text-e2e8f0">Duración</span><p class="text-xs font-bold text-white">2 Viernes intensivos</p></div>
+                                </div>
+                            </div>
+                            <div class="pt-6 border-t flex items-start gap-3 border-white/10">
+                                <i class="fas fa-users text-[#2db8ce] text-sm mt-1"></i>
+                                <div>
+                                    <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest block">CANTIDAD DE PARTICIPANTES:</span>
+                                    <p class="text-white text-xs font-bold">12 participantes, 2 participantes por mesón de trabajo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="glitch-divider reveal">
+        <svg viewBox="0 0 1440 50" preserveAspectRatio="none">
+            <path class="glitch-line line-1" d="M0 25 H 1440" />
+            <path class="glitch-line line-2" d="M0 25 H 1440" />
+            <path class="glitch-line line-3" d="M0 25 H 1440" />
+        </svg>
+    </div>
+
+    <!-- METODOLOGÍA -->
+    <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden reveal">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="mb-10 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Nuestra <span>Metodología</span></h2>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card">
+                    <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif" class="w-full h-full object-cover"></div>
+                    <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Estudia</h3><p class="text-slate-400 text-sm methodology-short-desc">Analiza casos reales de la industria.</p><div class="methodology-expanded-content"><p>Sumérgete en escenarios industriales auténticos. Aprenderás a diagnosticar problemas, interpretar diagramas y entender el funcionamiento de sistemas de control complejos, preparando el terreno para soluciones efectivas.</p></div></div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-100 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/W4d0pxgD/GRAF.jpg" class="w-full h-full object-cover"></div>
+                    <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Diseña</h3><p class="text-slate-400 text-sm methodology-short-desc">Crea planos con estándares internacionales.</p><div class="methodology-expanded-content"><p>Domina el lenguaje universal de la automatización. Te enseñamos a crear esquemas eléctricos de mando y potencia bajo normativas IEC y NEMA, asegurando que tus diseños sean claros, seguros y profesionales.</p></div></div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-200 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/WzmDFzqL/02177232930859881fbe8801b4cfc8e3454077f6383f7cfa9a032-0.jpg" class="w-full h-full object-cover"></div>
+                    <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Simula</h3><p class="text-slate-400 text-sm methodology-short-desc">Valida tus algoritmos virtualmente.</p><div class="methodology-expanded-content"><p>Antes de tocar un solo cable, pon a prueba tu lógica. Utilizarás software de simulación como CADeSIMU y Factory I/O para verificar el comportamiento de tus circuitos, corregir errores y optimizar el rendimiento sin riesgos.</p></div></div>
+                </div>
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up delay-300 methodology-card">
+                    <div class="image-zoom-container h-48 mb-6"><img src="https://i.postimg.cc/VkmqRQzm/1772328516782-5a6a505e-f8d2-4a45-a8bf-99e36bf7743d.jpg" class="w-full h-full object-cover"></div>
+                    <div class="methodology-card-text-content"><h3 class="text-white text-xl font-black uppercase mb-3">Implementa</h3><p class="text-slate-400 text-sm methodology-short-desc">Realiza el montaje en equipos reales.</p><div class="methodology-expanded-content"><p>Lleva tus diseños del plano a la realidad. Obtendrás experiencia práctica montando componentes en tableros de entrenamiento, realizando el cableado y poniendo en marcha los sistemas que has diseñado y simulado.</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="grid-divider reveal">
+        <svg viewBox="0 0 1000 70" preserveAspectRatio="xMidYMid meet">
+            <g>
+                <!-- Row 1 -->
+                <circle class="grid-dot" cx="50" cy="15" r="1" style="animation-delay: -0.5s;"></circle>
+                <circle class="grid-dot" cx="150" cy="15" r="1" style="animation-delay: -1.2s;"></circle>
+                <circle class="grid-dot" cx="250" cy="15" r="1" style="animation-delay: -2.5s;"></circle>
+                <circle class="grid-dot" cx="350" cy="15" r="1" style="animation-delay: -0.8s;"></circle>
+                <circle class="grid-dot" cx="450" cy="15" r="1" style="animation-delay: -3.1s;"></circle>
+                <circle class="grid-dot" cx="550" cy="15" r="1" style="animation-delay: -1.5s;"></circle>
+                <circle class="grid-dot" cx="650" cy="15" r="1" style="animation-delay: -4.0s;"></circle>
+                <circle class="grid-dot" cx="750" cy="15" r="1" style="animation-delay: -2.1s;"></circle>
+                <circle class="grid-dot" cx="850" cy="15" r="1" style="animation-delay: -0.2s;"></circle>
+                <circle class="grid-dot" cx="950" cy="15" r="1" style="animation-delay: -3.5s;"></circle>
+                <!-- Row 2 -->
+                <circle class="grid-dot" cx="100" cy="35" r="1" style="animation-delay: -4.2s;"></circle>
+                <circle class="grid-dot" cx="200" cy="35" r="1" style="animation-delay: -1.8s;"></circle>
+                <circle class="grid-dot" cx="300" cy="35" r="1" style="animation-delay: -0.1s;"></circle>
+                <circle class="grid-dot" cx="400" cy="35" r="1" style="animation-delay: -2.9s;"></circle>
+                <circle class="grid-dot" cx="500" cy="35" r="1" style="animation-delay: -1.1s;"></circle>
+                <circle class="grid-dot" cx="600" cy="35" r="1" style="animation-delay: -3.8s;"></circle>
+                <circle class="grid-dot" cx="700" cy="35" r="1" style="animation-delay: -0.7s;"></circle>
+                <circle class="grid-dot" cx="800" cy="35" r="1" style="animation-delay: -2.2s;"></circle>
+                <circle class="grid-dot" cx="900" cy="35" r="1" style="animation-delay: -4.5s;"></circle>
+            </g>
+        </svg>
+    </div>
+
+    <!-- PÚBLICO OBJETIVO / COMUNIDAD -->
+    <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center reveal">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div class="text-center lg:text-left reveal reveal-right">
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span>nuestros cursos?</span></h2>
+                <p class="text-base font-semibold mb-8 border-l-4 border-blue-700 pl-6 mx-auto lg:mx-0 max-w-sm">Dinos cuál es tu perfil para registrarte en nuestras estadísticas.</p>
+            </div>
+            <div class="space-y-4 w-full max-w-md mx-auto">
+                <button id="btn-ingeniero" onclick="regCom('ingeniero')" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6 animate-on-hover transition-all">
+                    <i class="fas fa-user-tie text-3xl text-blue-700"></i>
+                    <span class="text-base font-black uppercase">Ingeniero</span>
+                    <div class="prof-count-bg ml-auto px-3 py-1 rounded-full"><span id="cntIng" class="font-black text-blue-900">0</span></div>
+                </button>
+                <button id="btn-tsu" onclick="regCom('tsu')" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6 animate-on-hover transition-all">
+                    <i class="fas fa-cogs text-3xl text-cyan-700"></i>
+                    <span class="text-base font-black uppercase">TSU</span>
+                    <div class="prof-count-bg ml-auto px-3 py-1 rounded-full"><span id="cntTsu" class="font-black text-cyan-900">0</span></div>
+                </button>
+                <button id="btn-estudiante" onclick="regCom('estudiante')" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6 animate-on-hover transition-all">
+                    <i class="fas fa-user-graduate text-3xl text-teal-700"></i>
+                    <span class="text-base font-black uppercase">Estudiante</span>
+                    <div class="prof-count-bg ml-auto px-3 py-1 rounded-full"><span id="cntEst" class="font-black text-teal-900">0</span></div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="circuit-divider reveal">
+        <svg viewBox="0 0 1200 80" preserveAspectRatio="xMidYMid meet">
+            <path class="trace-bg" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <path class="trace" d="M0 40 H 150 L 200 10 L 250 40 L 300 70 L 350 40 H 450 L 500 70 L 550 40 L 600 10 L 650 40 H 750 L 800 70 L 850 40 L 900 10 L 950 40 H 1050 L 1100 10 L 1150 40 H 1200" />
+            <circle class="dot" cx="150" cy="40" r="4" style="animation-delay: 0s;"></circle>
+            <circle class="dot" cx="200" cy="10" r="4" style="animation-delay: -1.5s;"></circle>
+            <circle class="dot" cx="250" cy="40" r="4" style="animation-delay: -0.2s;"></circle>
+            <circle class="dot" cx="300" cy="70" r="4" style="animation-delay: -1.8s;"></circle>
+            <circle class="dot" cx="350" cy="40" r="4" style="animation-delay: -0.4s;"></circle>
+            <circle class="dot" cx="450" cy="40" r="4" style="animation-delay: -1.2s;"></circle>
+            <circle class="dot" cx="500" cy="70" r="4" style="animation-delay: -0.6s;"></circle>
+            <circle class="dot" cx="550" cy="40" r="4" style="animation-delay: -1.0s;"></circle>
+            <circle class="dot" cx="600" cy="10" r="4" style="animation-delay: -0.8s;"></circle>
+            <circle class="dot" cx="650" cy="40" r="4" style="animation-delay: -1.4s;"></circle>
+            <circle class="dot" cx="750" cy="40" r="4" style="animation-delay: -0.1s;"></circle>
+            <circle class="dot" cx="800" cy="70" r="4" style="animation-delay: -1.9s;"></circle>
+            <circle class="dot" cx="850" cy="40" r="4" style="animation-delay: -0.3s;"></circle>
+            <circle class="dot" cx="900" cy="10" r="4" style="animation-delay: -1.6s;"></circle>
+            <circle class="dot" cx="950" cy="40" r="4" style="animation-delay: -0.7s;"></circle>
+            <circle class="dot" cx="1050" cy="40" r="4" style="animation-delay: -1.1s;"></circle>
+            <circle class="dot" cx="1100" cy="10" r="4" style="animation-delay: -0.9s;"></circle>
+            <circle class="dot" cx="1150" cy="40" r="4" style="animation-delay: -1.3s;"></circle>
+        </svg>
+    </div>
+
+    <!-- TESTIMONIOS -->
+    <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden reveal">
+        <div class="absolute inset-0 z-0">
+            <img src="img/AA (33).webp" class="w-full h-full object-cover opacity-30 mix-blend-luminosity">
+        </div>
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-10 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Experiencias Reales</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span>Nuestros Alumnos</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+                <!-- Testimonio 1 -->
+                <div class="testimonial-card rounded-[32px] p-6 sm:p-8 reveal reveal-up relative flex flex-col">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                    <div class="testimonial-image-container w-full h-40 rounded-2xl overflow-hidden mb-6 relative z-10 border border-slate-200/50 shadow-sm bg-[#dfe5e7] flex items-end justify-center">
+                        <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="testimonial-text-content flex flex-col flex-grow">
+                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm italic mb-8 relative z-10 flex-grow">"Excelente pedagogía del Profesor Pablo Cedeño. Los ejercicios con Factory IO y LOGO! me permitieron entender la lógica de automatización desde cero. Totalmente recomendado."</p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">EP</div>
+                            <div>
+                                <h4 class="font-bold text-sm">Eduardo Pérez</h4>
+                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest">Ingeniero de Proyectos</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio 2 -->
+                <div class="testimonial-card rounded-[32px] p-6 sm:p-8 reveal reveal-up delay-100 relative flex flex-col">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                    <div class="testimonial-image-container w-full h-40 rounded-2xl overflow-hidden mb-6 relative z-10 border border-slate-200/50 shadow-sm bg-[#dfe5e7] flex items-end justify-center">
+                        <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="testimonial-text-content flex flex-col flex-grow">
+                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm italic mb-8 relative z-10 flex-grow">"Aplicamos lo aprendido directamente en los tableros de la planta. El curso de contactores presencial superó mis expectativas. Mucha práctica y resolución de fallas reales."</p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">CM</div>
+                            <div>
+                                <h4 class="font-bold text-sm">Carlos Mendoza</h4>
+                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest">Técnico Electromecánico</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonio 3 -->
+                <div class="testimonial-card rounded-[32px] p-6 sm:p-8 reveal reveal-up delay-200 relative flex flex-col">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                    <div class="testimonial-image-container w-full h-40 rounded-2xl overflow-hidden mb-6 relative z-10 border border-slate-200/50 shadow-sm bg-[#dfe5e7] flex items-end justify-center">
+                        <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    </div>
+                    <div class="testimonial-text-content flex flex-col flex-grow">
+                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm italic mb-8 relative z-10 flex-grow">"La metodología Grafcet explicada paso a paso me ayudó a resolver problemas de secuenciación que antes me costaban días. Material de altísima calidad."</p>
+                        <div class="flex items-center gap-4 relative z-10">
+                            <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">AR</div>
+                            <div>
+                                <h4 class="font-bold text-sm">Ana Rodríguez</h4>
+                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest">Estudiante de Ing.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="glitch-divider reveal">
+        <svg viewBox="0 0 1440 50" preserveAspectRatio="none">
+            <path class="glitch-line line-1" d="M0 25 H 1440" />
+            <path class="glitch-line line-2" d="M0 25 H 1440" />
+            <path class="glitch-line line-3" d="M0 25 H 1440" />
+        </svg>
+    </div>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="page-section relative py-24 px-6 reveal">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-8 reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Resolvemos tus Dudas</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Preguntas <span>Frecuentes</span></h2>
+            </div>
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <details class="group bg-white/5 border border-white/10 rounded-xl p-5 cursor-pointer transition-all duration-300 hover:border-cyan-500/50 reveal reveal-up">
+                    <summary class="flex justify-between items-center font-bold text-white text-lg list-none">¿Necesito conocimientos previos?<i class="fas fa-chevron-down transition-transform duration-300 group-open:rotate-180"></i></summary>
+                    <div class="text-slate-400 mt-4 pt-4 border-t border-white/10"><p>Depende del curso. Cada uno indica su nivel (Básico, Intermedio, Avanzado). Los cursos de nivel Básico están diseñados para empezar desde cero, sin necesidad de experiencia previa. Para los niveles intermedios y avanzados, se recomienda tener las bases indicadas en los requisitos del curso.</p></div>
+                </details>
+                <!-- FAQ Item 2 -->
+                <details class="group bg-white/5 border border-white/10 rounded-xl p-5 cursor-pointer transition-all duration-300 hover:border-cyan-500/50 reveal reveal-up delay-100">
+                    <summary class="flex justify-between items-center font-bold text-white text-lg list-none">¿Qué incluye el curso?<i class="fas fa-chevron-down transition-transform duration-300 group-open:rotate-180"></i></summary>
+                    <div class="text-slate-400 mt-4 pt-4 border-t border-white/10"><p>Todos nuestros cursos incluyen acceso de por vida a las clases grabadas (en modalidad online), material de apoyo en PDF (manuales, guías), ejercicios prácticos, uso de software de simulación y soporte directo con el instructor para resolver dudas. Los cursos presenciales incluyen el uso de equipos y tableros reales en nuestros talleres.</p></div>
+                </details>
+                <!-- FAQ Item 3 -->
+                <details class="group bg-white/5 border border-white/10 rounded-xl p-5 cursor-pointer transition-all duration-300 hover:border-cyan-500/50 reveal reveal-up delay-200">
+                    <summary class="flex justify-between items-center font-bold text-white text-lg list-none">¿Cómo accedo a las clases online?<i class="fas fa-chevron-down transition-transform duration-300 group-open:rotate-180"></i></summary>
+                    <div class="text-slate-400 mt-4 pt-4 border-t border-white/10"><p>Una vez realizada la compra, recibirás un correo electrónico con las instrucciones y el enlace para acceder a nuestra plataforma de aulas virtuales. Podrás ver las clases a tu ritmo, cuantas veces quieras y desde cualquier dispositivo con conexión a internet.</p></div>
+                </details>
+                <!-- FAQ Item 4 -->
+                <details class="group bg-white/5 border border-white/10 rounded-xl p-5 cursor-pointer transition-all duration-300 hover:border-cyan-500/50 reveal reveal-up delay-300">
+                    <summary class="flex justify-between items-center font-bold text-white text-lg list-none">¿Se entrega certificado?<i class="fas fa-chevron-down transition-transform duration-300 group-open:rotate-180"></i></summary>
+                    <div class="text-slate-400 mt-4 pt-4 border-t border-white/10"><p>Sí, al completar el 100% de cualquier curso (online o presencial) y aprobar las evaluaciones correspondientes, se emite un certificado digital de aprobación que valida las habilidades adquiridas. Este certificado incluye un ID único para su verificación.</p></div>
+                </details>
+            </div>
+        </div>
+    </section>
     </main>
+
+    <div class="section-divider reveal">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
+            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
+            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+        </svg>
+    </div>
+
+    <!-- CTA Final + Contacto -->
+    <section id="contacto" class="page-section relative py-24 px-6 reveal">
+        <div class="max-w-7xl mx-auto relative z-10 text-center">
+            <div class="reveal reveal-down">
+                <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">¿Tienes Preguntas?</span>
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Comienza a <span> Aprender Hoy</span></h2>
+                <p class="text-slate-300 mt-6 mb-10 max-w-2xl mx-auto">Si tienes alguna duda o necesitas asesoría personalizada para elegir el curso ideal para ti, no dudes en contactarnos. Estamos aquí para ayudarte.</p>
+            </div>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 reveal reveal-up">
+                <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-metal-solid btn-metal-teal !px-10 !py-6 !text-xl !rounded-2xl !font-black !uppercase !flex !items-center !gap-4"><i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="grid-divider reveal">
+        <svg viewBox="0 0 1000 70" preserveAspectRatio="xMidYMid meet">
+            <g>
+                <!-- Row 1 -->
+                <circle class="grid-dot" cx="50" cy="15" r="1" style="animation-delay: -0.5s;"></circle>
+                <circle class="grid-dot" cx="150" cy="15" r="1" style="animation-delay: -1.2s;"></circle>
+                <circle class="grid-dot" cx="250" cy="15" r="1" style="animation-delay: -2.5s;"></circle>
+                <circle class="grid-dot" cx="350" cy="15" r="1" style="animation-delay: -0.8s;"></circle>
+                <circle class="grid-dot" cx="450" cy="15" r="1" style="animation-delay: -3.1s;"></circle>
+                <circle class="grid-dot" cx="550" cy="15" r="1" style="animation-delay: -1.5s;"></circle>
+                <circle class="grid-dot" cx="650" cy="15" r="1" style="animation-delay: -4.0s;"></circle>
+                <circle class="grid-dot" cx="750" cy="15" r="1" style="animation-delay: -2.1s;"></circle>
+                <circle class="grid-dot" cx="850" cy="15" r="1" style="animation-delay: -0.2s;"></circle>
+                <circle class="grid-dot" cx="950" cy="15" r="1" style="animation-delay: -3.5s;"></circle>
+                <!-- Row 2 -->
+                <circle class="grid-dot" cx="100" cy="35" r="1" style="animation-delay: -4.2s;"></circle>
+                <circle class="grid-dot" cx="200" cy="35" r="1" style="animation-delay: -1.8s;"></circle>
+                <circle class="grid-dot" cx="300" cy="35" r="1" style="animation-delay: -0.1s;"></circle>
+                <circle class="grid-dot" cx="400" cy="35" r="1" style="animation-delay: -2.9s;"></circle>
+                <circle class="grid-dot" cx="500" cy="35" r="1" style="animation-delay: -1.1s;"></circle>
+                <circle class="grid-dot" cx="600" cy="35" r="1" style="animation-delay: -3.8s;"></circle>
+                <circle class="grid-dot" cx="700" cy="35" r="1" style="animation-delay: -0.7s;"></circle>
+                <circle class="grid-dot" cx="800" cy="35" r="1" style="animation-delay: -2.2s;"></circle>
+                <circle class="grid-dot" cx="900" cy="35" r="1" style="animation-delay: -4.5s;"></circle>
+            </g>
+        </svg>
+    </div>
+
+    <!-- MAPA GLOBAL -->
+    <section id="comunidad-global" class="page-section relative py-24 px-6 text-center overflow-hidden reveal">
+        <div class="absolute inset-0 z-0">
+            <img src="https://i.postimg.cc/vBXrQbHB/web-3.gif" class="w-full h-full object-cover opacity-30 mix-blend-luminosity">
+        </div>
+        
+        <div class="max-w-7xl mx-auto relative z-10">
+            <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 uppercase tracking-tighter">Comunidad <span>Global</span></h2>
+            <div class="flex flex-col lg:flex-row gap-8 items-stretch h-auto lg:h-[550px] text-left">
+                <div class="w-full lg:w-2/3 h-[400px] lg:h-full rounded-[2.5rem] shadow-2xl border-2 border-[#2db8ce]/60 bg-gray-900 overflow-hidden relative">
+                    <div id="visitorMapGlobal" class="w-full h-full relative z-10"></div>
+                </div>
+                <div class="w-full lg:w-1/3 bg-white/5 border border-white/10 rounded-[2.5rem] p-8 flex flex-col shadow-2xl backdrop-blur-md relative z-10">
+                    <h3 class="text-white font-black text-xs uppercase mb-6 flex items-center justify-start gap-2">
+                        <i data-lucide="award" class="text-cyan-500 w-4 h-4"></i> Ranking Visitantes
+                    </h3>
+                    <div id="countryRankListGlobal" class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-4">
+                        <p class="text-slate-500 text-sm">Cargando ranking...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider reveal">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30" />
+            <path d="M0,35 C200,5 520,65 720,35 S1180,-5 1440,35" />
+            <path d="M0,25 C300,65 420,-5 720,25 S1240,65 1440,25" />
+        </svg>
+    </div>
+
+    <!-- MÉTRICAS -->
+    <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl reveal">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+            <div class="py-2 reveal reveal-up">
+                <div class="text-[#2db8ce] text-2xl mb-1"><i class="fas fa-users"></i></div>
+                <div id="metric-visitas" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Visitantes</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-100">
+                <div class="text-teal-400 text-2xl mb-1"><i class="fas fa-globe-americas"></i></div>
+                <div id="metric-paises" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Países</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-150">
+                <div class="text-cyan-400 text-2xl mb-1"><i class="fas fa-user-graduate"></i></div>
+                <div id="metric-estudiantes" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Estudiantes</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-200">
+                <div class="text-red-400 text-2xl mb-1"><i class="fas fa-heart"></i></div>
+                <div id="metric-likes" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Likes Totales</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-250">
+                <div class="text-cyan-400 text-2xl mb-1"><i class="fas fa-book"></i></div>
+                <div class="text-3xl font-black">12+</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Cursos</div>
+            </div>
+            <div class="py-2 reveal reveal-up delay-300">
+                <div class="text-blue-400 text-2xl mb-1"><i class="fas fa-cloud-download-alt"></i></div>
+                <div id="metric-descargas" class="text-3xl font-black">0</div>
+                <div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Descargas Totales</div>
+            </div>
+        </div>
+    </section>
 </div>
 
-<!-- ============ CONTENEDOR DE NOTIFICACIONES ============ -->
 <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
-<!-- ============ SCRIPTS EXTERNOS ============ -->
 <script src="js/auth.js"></script>
 <script src="js/app.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
-
-<script>
-    // ============ INICIALIZACIÓN ============
-    document.addEventListener("DOMContentLoaded", function() {
-        console.log('🚀 Inicializando página principal...');
-        
-        // Mostrar toast de carga al inicio
-        showLoadingToast();
-        
-        // Cargar datos y luego mostrar éxito
-        if (typeof loadCoursesFromSheet === 'function') {
-            loadCoursesFromSheet().then(() => {
-                showSuccessToast();
-            }).catch(() => {
-                hideLoadingToast();
-            });
-        } else if (typeof loadData === 'function') {
-            loadData().then(() => {
-                showSuccessToast();
-            }).catch(() => {
-                hideLoadingToast();
-            });
-        } else {
-            // Si no existe la función, simular carga
-            setTimeout(() => {
-                showSuccessToast();
-            }, 3000);
-        }
-    });
-</script>
 </body>
 </html>
