@@ -8,7 +8,7 @@ const AuthLogic = {
     pendingAction: null,
 
     // Usar SCRIPT_URL global si existe (de mis cursos), o el valor por defecto
-    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec',
+    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbx_lXVQi0dFWU3Z_RQcTS9I6JdHGs7OVWXQljBgRVQHnI-JyzgAaQyxB2mhTOf8bpzn/exec',
 
     // Inicializar: Revisar si hay sesión guardada en localStorage
     init: async function() {
@@ -96,8 +96,8 @@ const AuthLogic = {
 
                     myCourseNames.forEach(cName => {
                         let nn = AuthLogic.normalizeName(cName);
-                        let found = window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.name) === nn) || window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.name).includes(nn) || nn.includes(AuthLogic.normalizeName(x.name)));
-                        if(found && !refreshedUser.accessedCursos.includes(found.id)) { refreshedUser.accessedCursos.push(found.id); }
+                        let found = window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.Nombre) === nn) || window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.Nombre).includes(nn) || nn.includes(AuthLogic.normalizeName(x.Nombre)));
+                        if(found && !refreshedUser.accessedCursos.includes(found.ID)) { refreshedUser.accessedCursos.push(found.ID); }
                     });
                 }
                 
@@ -191,11 +191,11 @@ const AuthLogic = {
 
                         myCourseNames.forEach(cName => {
                             let nn = AuthLogic.normalizeName(cName);
-                            let found = window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.name) === nn);
-                            if(!found) found = window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.name).includes(nn) || nn.includes(AuthLogic.normalizeName(x.name)));
+                            let found = window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.Nombre) === nn);
+                            if(!found) found = window.COURSES_DATA.find(x => AuthLogic.normalizeName(x.Nombre).includes(nn) || nn.includes(AuthLogic.normalizeName(x.Nombre)));
                             
-                            if(found && !this.currentUser.accessedCursos.includes(found.id)) {
-                                this.currentUser.accessedCursos.push(found.id);
+                            if(found && !this.currentUser.accessedCursos.includes(found.ID)) {
+                                this.currentUser.accessedCursos.push(found.ID);
                             }
                         });
                     }
