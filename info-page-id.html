@@ -21,12 +21,11 @@
         }
         body {
             font-family: 'Oswald', sans-serif;
-            background-color: #d0e1ef; /* Gris azulado */
+            background-color: #d0e1ef;
             color: #1e293b;
             scroll-behavior: smooth;
         }
 
-        /* Estilos Glassmorphism */
         .glass-light {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
@@ -42,7 +41,6 @@
             color: white;
         }
 
-        /* Estilo Glass Azul-Gris */
         .glass-gray-blue {
             background: rgba(145, 161, 175, 0.85);
             backdrop-filter: blur(16px);
@@ -64,7 +62,6 @@
             transition: transform 0.1s ease;
         }
 
-        /* Estrellas interactivas */
         .star-rating i {
             cursor: pointer;
             transition: all 0.2s ease;
@@ -75,7 +72,6 @@
             transform: scale(1.1);
         }
 
-        /* Selector de emojis */
         #emoji-picker {
             display: none;
             position: absolute;
@@ -104,7 +100,6 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--celeste); }
 
-        /* Acordeón */
         .accordion-content {
             max-height: 0;
             overflow: hidden;
@@ -114,16 +109,272 @@
             max-height: 1200px;
         }
 
-        /* Estilos para badges del hero en modo claro */
         body.light-mode #hero-section .hero-badge {
-            background-color: var(--celeste) !important; /* bg-cyan-500 */
-            color: #ffffff !important; /* text-white */
+            background-color: var(--celeste) !important;
+            color: #ffffff !important;
             border-color: var(--celeste) !important;
         }
+
+        /* ============ ESTILOS PARA EL TOAST DE CARGA ============ */
+        .loading-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100002;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(45, 184, 206, 0.2);
+            pointer-events: none;
+            min-width: 320px;
+            max-width: 90vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .loading-toast.hiding {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        .loading-toast .toast-logo {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
+        }
+
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.4));
+        }
+
+        .loading-toast .toast-content {
+            flex: 1;
+        }
+
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .loading-toast .toast-subtitle {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .loading-toast .toast-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(45, 184, 206, 0.2);
+            border-top: 3px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            flex-shrink: 0;
+        }
+
+        .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .loading-toast.success-toast .toast-logo img {
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+        }
+
+        .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+
+        .loading-toast.success-toast .toast-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .loading-toast.success-toast .toast-check {
+            width: 32px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(150%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseLogo {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.3));
+                transform: scale(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(45, 184, 206, 0.6));
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(45, 184, 206, 0.25);
+        }
+
+        body.light-mode .loading-toast .toast-title {
+            color: #1e293b;
+        }
+
+        body.light-mode .loading-toast .toast-subtitle {
+            color: #64748b;
+        }
+
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+
+        body.light-mode .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+
+        body.light-mode .loading-toast.success-toast .toast-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+        }
+        /* ============ FIN ESTILOS TOAST ============ */
     </style>
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+
+<!-- ============ TOAST DE CARGA ============ -->
+<div id="loadingToast" class="loading-toast hidden">
+    <div class="toast-logo">
+        <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+    </div>
+    <div class="toast-content">
+        <div class="toast-title" id="loadingToastTitle">Estamos cargando la información de tu curso seleccionado</div>
+        <div class="toast-subtitle" id="loadingToastSubtitle">Conectando con la base de datos...</div>
+    </div>
+    <div class="toast-spinner" id="loadingToastSpinner"></div>
+</div>
+
+<script>
+    // ============ FUNCIONES DEL TOAST DE CARGA ============
+    function showLoadingToast() {
+        const toast = document.getElementById('loadingToast');
+        const title = document.getElementById('loadingToastTitle');
+        const subtitle = document.getElementById('loadingToastSubtitle');
+        const spinner = document.getElementById('loadingToastSpinner');
+        
+        if (toast) {
+            toast.classList.remove('hidden', 'hiding', 'success-toast');
+            title.innerText = 'Estamos cargando la información de tu curso seleccionado';
+            subtitle.innerText = 'Conectando con la base de datos...';
+            
+            if (spinner) spinner.style.display = 'block';
+            
+            const existingCheck = toast.querySelector('.toast-check');
+            if (existingCheck) existingCheck.remove();
+            
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        }
+    }
+
+    function showSuccessToast() {
+        const toast = document.getElementById('loadingToast');
+        const title = document.getElementById('loadingToastTitle');
+        const subtitle = document.getElementById('loadingToastSubtitle');
+        const spinner = document.getElementById('loadingToastSpinner');
+        
+        if (toast) {
+            toast.classList.remove('hidden', 'hiding');
+            toast.classList.add('success-toast');
+            
+            title.innerText = '¡Listo! Curso cargado correctamente';
+            subtitle.innerText = 'Información actualizada correctamente';
+            
+            if (spinner) spinner.style.display = 'none';
+            
+            const existingCheck = toast.querySelector('.toast-check');
+            if (existingCheck) existingCheck.remove();
+            
+            const checkDiv = document.createElement('div');
+            checkDiv.className = 'toast-check';
+            checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+            toast.appendChild(checkDiv);
+            
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+            
+            setTimeout(() => {
+                hideLoadingToast();
+            }, 3000);
+        }
+    }
+
+    function hideLoadingToast() {
+        const toast = document.getElementById('loadingToast');
+        if (toast) {
+            toast.classList.add('hiding');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('hiding', 'success-toast');
+            }, 500);
+        }
+    }
+    // ============ FIN FUNCIONES DEL TOAST ============
+</script>
 
 <!-- HERO -->
 <header id="hero-section" class="relative bg-[#0f172a] text-white py-20 px-6 overflow-hidden">
@@ -221,7 +472,7 @@
                 </div>
             </section>
 
-            <!-- Certificación Aprende Automatización -->
+            <!-- Certificación -->
             <div id="certification-section" class="mt-8">
                 <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
                     <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
@@ -270,49 +521,17 @@
     // ==========================================
     // CONFIGURACIÓN GLOBAL DEL SCRIPT
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXgO9nCxF-_llCpiye-er9T7uqe3hnuOkajD_hSV8i1Di1zavgYxXcwFVLvCh-A3pP/exec'; // URL de tu Google Apps Script
-    let COURSE_ID_NUMERIC = null; // Se obtendrá de la URL
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXgO9nCxF-_llCpiye-er9T7uqe3hnuOkajD_hSV8i1Di1zavgYxXcwFVLvCh-A3pP/exec';
+    let COURSE_ID_NUMERIC = null;
 
-    // Función para obtener el ID del curso de la URL
     function getCourseIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         return parseInt(urlParams.get('courseId'));
     }
 
-    // Función para crear un esqueleto de carga
-    function createSkeletonHTML(type, count) {
-        let html = '';
-        for (let i = 0; i < count; i++) {
-            if (type === 'comment') { // Example skeleton for comments, not directly used here but good to have
-                html += `
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm mb-4 animate-pulse">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-slate-200"></div>
-                                <div>
-                                    <div class="h-4 bg-slate-200 rounded w-24 mb-1"></div>
-                                    <div class="h-3 bg-slate-200 rounded w-16"></div>
-                                </div>
-                            </div>
-                            <div class="h-3 bg-slate-200 rounded w-12"></div>
-                        </div>
-                        <div class="h-4 bg-slate-200 rounded w-full mb-2"></div>
-                        <div class="h-4 bg-slate-200 rounded w-5/6"></div>
-                    </div>
-                `;
-            }
-        }
-        return html;
-    }
-
-    // ==========================================
-    // FUNCIONES DE RENDERIZADO DINÁMICO
-    // ==========================================
-
     function renderCourseDetails(course) {
         document.title = `${course.name} - Aprende Automatización`;
 
-        // Hero Section
         document.getElementById('hero-bg-image').src = course.image || 'img/default-hero.gif';
         document.getElementById('course-main-title').innerHTML = `${course.name}<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2db8ce] to-blue-400">${course.type}</span>`;
         document.getElementById('course-description').textContent = course.resumen;
@@ -324,22 +543,18 @@
             <span class="hero-badge bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30">Modalidad ${course.modalidad}</span>
         `;
 
-        // NEW: Render Course Features
         const courseFeaturesContainer = document.getElementById('course-features');
         if (course.features && Array.isArray(course.features)) {
             courseFeaturesContainer.innerHTML = course.features.map(feature => `
                 <div class="flex items-center gap-2"><i class="${feature.icon} text-[#2db8ce]"></i> ${feature.text}</div>
             `).join('');
         } else {
-            courseFeaturesContainer.innerHTML = ''; // Clear if no features
+            courseFeaturesContainer.innerHTML = '';
         }
-        // Video Section
-        document.getElementById('course-video').src = course.videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ'; // Default video
 
-        // Objetivo General
+        document.getElementById('course-video').src = course.videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ';
         document.getElementById('objetivo-general-content').innerHTML = `<p>${course.objetivoGeneral}</p>`;
 
-        // Perfil de Ingreso
         const perfilIngresoList = document.getElementById('perfil-ingreso-list');
         perfilIngresoList.innerHTML = course.perfilIngreso.map(item => `
             <li class="flex items-start gap-3">
@@ -348,7 +563,6 @@
             </li>
         `).join('');
 
-        // Contenido de las Unidades
         const contenidoUnidadesList = document.getElementById('contenido-unidades-list');
         contenidoUnidadesList.innerHTML = course.contenidoUnidades.map((unit, index) => `
             <div class="${index % 2 === 0 ? 'glass-dark-blue' : 'glass-gray-blue'} p-8 rounded-[2rem] border resource-card overflow-hidden relative">
@@ -366,7 +580,6 @@
             </div>
         `).join('');
 
-        // Requisitos
         const requisitosList = document.getElementById('requisitos-list');
         requisitosList.innerHTML = course.requisitos.map(item => `
             <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
@@ -376,7 +589,6 @@
             </div>
         `).join('');
 
-        // Recursos Incluidos
         const recursosIncluidosList = document.getElementById('recursos-incluidos-list');
         recursosIncluidosList.innerHTML = course.recursosIncluidos.map(item => `
             <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
@@ -385,7 +597,6 @@
             </div>
         `).join('');
 
-        // Datos Generales
         const datosGeneralesList = document.getElementById('datos-generales-list');
         datosGeneralesList.innerHTML = course.datosGenerales.map(item => `
             <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
@@ -394,7 +605,6 @@
             </div>
         `).join('');
 
-        // Perfil de Egreso
         const perfilEgresoList = document.getElementById('perfil-egreso-list');
         perfilEgresoList.innerHTML = course.perfilEgreso.map(item => `
             <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
@@ -404,7 +614,6 @@
             </div>
         `).join('');
 
-        // Certification Section (assuming it's always "Aprende Automatización" unless specified)
         const certificationLogo = document.getElementById('certification-logo');
         const certificationTitle = document.getElementById('certification-title');
         const certificationDescription = document.getElementById('certification-description');
@@ -412,13 +621,12 @@
         if (course.certification && course.certification.title) certificationTitle.textContent = course.certification.title;
         if (course.certification && course.certification.description) certificationDescription.textContent = course.certification.description;
 
-        // Sidebar
         document.getElementById('course-price').textContent = course.precio;
         document.getElementById('course-old-price').textContent = course.precioAnterior;
         document.getElementById('sidebar-modalidad').textContent = course.modalidad;
 
         const buyActionsContainer = document.getElementById('buy-actions');
-        const user = AuthLogic.currentUser; // Get current user from AuthLogic
+        const user = AuthLogic.currentUser;
         const hasAccess = user && user.accessedCursos && user.accessedCursos.includes(COURSE_ID_NUMERIC);
 
         if (hasAccess) {
@@ -435,16 +643,12 @@
                 <a href="${course.buyLink}" class="btn-metal-solid btn-metal-cyan">
                     <i class="fas fa-cart-plus"></i> Comprar Ahora
                 </a>
-                <a href="${course.whatsappLink}" target="_blank" class="btn-metal-solid btn-metal-green">
+                <a href="${course.whatsappLink}" target="_blank" class="btn-metal-solid btn-metal-teal">
                     <i class="fab fa-whatsapp"></i> Preguntar por WhatsApp
                 </a>
             `;
         }
     }
-
-    // ==========================================
-    // FETCH DATA FROM GOOGLE SHEET
-    // ==========================================
 
     async function fetchCourseData(courseId) {
         if (!courseId) {
@@ -453,25 +657,27 @@
         }
 
         try {
-            // Fetch course data from Google Sheet
+            // Mostrar toast de carga
+            showLoadingToast();
+            
             const response = await fetch(`${SCRIPT_URL}?action=get_course_info&courseId=${courseId}&t=${Date.now()}`);
             const result = await response.json();
 
             if (result.status === 'success' && result.data) {
+                // Mostrar toast de éxito
+                showSuccessToast();
                 return result.data;
             } else {
                 console.error("Error fetching course data:", result.message || "Unknown error");
+                hideLoadingToast();
                 return null;
             }
         } catch (error) {
             console.error("Network error fetching course data:", error);
+            hideLoadingToast();
             return null;
         }
     }
-
-    // ==========================================
-    // INITIALIZATION
-    // ==========================================
 
     document.addEventListener('DOMContentLoaded', async () => {
         COURSE_ID_NUMERIC = getCourseIdFromUrl();
@@ -479,7 +685,6 @@
         if (!COURSE_ID_NUMERIC) {
             document.getElementById('course-main-title').textContent = "Error: Curso no encontrado";
             document.getElementById('course-description').textContent = "Por favor, asegúrate de que la URL contenga un 'courseId' válido.";
-            // Hide all sections if no courseId
             document.querySelectorAll('main section, main div.mt-8').forEach(section => section.style.display = 'none');
             return;
         }
@@ -491,7 +696,6 @@
         } else {
             document.getElementById('course-main-title').textContent = "Error: Curso no encontrado";
             document.getElementById('course-description').textContent = "No se pudo cargar la información del curso. Intenta de nuevo más tarde o contacta al soporte.";
-            // Hide all sections if data not found
             document.querySelectorAll('main section, main div.mt-8').forEach(section => section.style.display = 'none');
         }
     });

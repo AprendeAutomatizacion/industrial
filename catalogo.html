@@ -72,10 +72,9 @@
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
         }
-        /* Bordes y resplandores por nivel - MEJORADOS */
         .course-card-level-basico {
-            border: 2px solid rgba(6, 182, 212, 0.6);           /* más opaco */
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);        /* resplandor base */
+            border: 2px solid rgba(6, 182, 212, 0.6);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
             transition: all 0.3s ease;
         }
         .course-card-level-basico:hover {
@@ -84,7 +83,7 @@
             transform: translateY(-8px) scale(1.02);
         }
         .course-card-level-intermedio {
-            border: 2px solid rgba(168, 85, 247, 0.6);          /* púrpura */
+            border: 2px solid rgba(168, 85, 247, 0.6);
             box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
             transition: all 0.3s ease;
         }
@@ -94,7 +93,7 @@
             transform: translateY(-8px) scale(1.02);
         }
         .course-card-level-avanzado {
-            border: 2px solid rgba(245, 158, 11, 0.6);          /* ámbar */
+            border: 2px solid rgba(245, 158, 11, 0.6);
             box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
             transition: all 0.3s ease;
         }
@@ -158,39 +157,11 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.4; }
         }
-        .sync-indicator {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100001;
-            background: #0f172a;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 9999px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
-            opacity: 0;
-            pointer-events: none;
-        }
-        .sync-indicator.visible { opacity: 1; pointer-events: auto; }
-        .sync-indicator.success { background: #059669; }
-        .sync-indicator.error { background: #dc2626; }
 
         #catalog-loading p {
             color: #94a3b8;
         }
 
-        /* ================================================= */
-        /* === ESTILOS METÁLICOS DE COLOR — CATÁLOGO ======= */
-        /* ================================================= */
-
-        /* Base compartida para todos los btn-metal de color */
         .btn-metal-green,
         .btn-metal-blue,
         .btn-metal-slate,
@@ -205,7 +176,6 @@
             overflow: hidden;
             cursor: pointer;
         }
-        /* Bisel superior (línea brillante) */
         .btn-metal-green::after, .btn-metal-blue::after,
         .btn-metal-slate::after, .btn-metal-teal::after, .btn-metal-gray::after {
             content: '';
@@ -216,7 +186,6 @@
             border-radius: 0.75rem 0.75rem 0 0;
             pointer-events: none;
         }
-        /* Shine sweep */
         .btn-metal-green::before, .btn-metal-blue::before,
         .btn-metal-slate::before, .btn-metal-teal::before, .btn-metal-gray::before {
             content: '';
@@ -244,8 +213,6 @@
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.3) !important;
             transition: transform 0.08s ease;
         }
-
-        /* GREEN */
         .btn-metal-green {
             background: linear-gradient(180deg, #34d058 0%, #1e9e3a 45%, #146b28 100%);
             border: 1px solid #0f5720;
@@ -257,8 +224,6 @@
         .btn-metal-green:hover {
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(34, 197, 94, 0.55), 0 2px 5px rgba(0,0,0,0.2);
         }
-
-        /* BLUE */
         .btn-metal-blue {
             background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%);
             border: 1px solid #1e40af;
@@ -270,8 +235,6 @@
         .btn-metal-blue:hover {
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(37, 99, 235, 0.55), 0 2px 5px rgba(0,0,0,0.2);
         }
-
-        /* SLATE */
         .btn-metal-slate {
             background: linear-gradient(180deg, #94a3b8 0%, #475569 45%, #334155 100%);
             border: 1px solid #1e293b;
@@ -283,8 +246,6 @@
         .btn-metal-slate:hover {
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 5px 16px rgba(0,0,0,0.4);
         }
-
-        /* TEAL */
         .btn-metal-teal {
             background: linear-gradient(180deg, #2dd4bf 0%, #0d9488 45%, #0f766e 100%);
             border: 1px solid #0f766e;
@@ -296,8 +257,6 @@
         .btn-metal-teal:hover {
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(20, 184, 166, 0.55);
         }
-
-        /* GRAY (disabled) */
         .btn-metal-gray {
             background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
             border: 1px solid #94a3b8;
@@ -309,14 +268,197 @@
         .course-card .like-btn.liked, .course-card .like-btn.liked i {
             color: #ef4444 !important;
         }
+
+        /* ============ ESTILOS PARA EL TOAST DE CARGA ============ */
+        .loading-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100002;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(45, 184, 206, 0.2);
+            pointer-events: none;
+            min-width: 320px;
+            max-width: 90vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .loading-toast.hiding {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        .loading-toast .toast-logo {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
+        }
+
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.4));
+        }
+
+        .loading-toast .toast-content {
+            flex: 1;
+        }
+
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .loading-toast .toast-subtitle {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .loading-toast .toast-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(45, 184, 206, 0.2);
+            border-top: 3px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            flex-shrink: 0;
+        }
+
+        .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .loading-toast.success-toast .toast-logo img {
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+        }
+
+        .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+
+        .loading-toast.success-toast .toast-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .loading-toast.success-toast .toast-check {
+            width: 32px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(150%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseLogo {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.3));
+                transform: scale(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(45, 184, 206, 0.6));
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(45, 184, 206, 0.25);
+        }
+
+        body.light-mode .loading-toast .toast-title {
+            color: #1e293b;
+        }
+
+        body.light-mode .loading-toast .toast-subtitle {
+            color: #64748b;
+        }
+
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+
+        body.light-mode .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+
+        body.light-mode .loading-toast.success-toast .toast-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+        }
+        /* ============ FIN ESTILOS TOAST ============ */
     </style>
 </head>
 <body class="custom-scrollbar">
 
-    <!-- Indicador de sincronización -->
-    <div id="syncIndicator" class="sync-indicator">
-        <i class="fas fa-sync-alt fa-spin text-[#2db8ce]"></i>
-        <span id="syncText">Sincronizando datos...</span>
+    <!-- Toast de carga -->
+    <div id="loadingToast" class="loading-toast hidden">
+        <div class="toast-logo">
+            <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+        </div>
+        <div class="toast-content">
+            <div class="toast-title" id="loadingToastTitle">Estamos cargando la información de tus cursos</div>
+            <div class="toast-subtitle" id="loadingToastSubtitle">Conectando con la base de datos...</div>
+        </div>
+        <div class="toast-spinner" id="loadingToastSpinner"></div>
     </div>
 
     <div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20">
@@ -398,21 +540,17 @@
                     <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label>
                     <div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
                 </div>
-            <div id="countryField" class="space-y-1 hidden">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">País</label>
-                <div class="relative">
-                    <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <select id="authCountry" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none">
-                        <option value="" disabled selected>Selecciona tu país...</option>
-                        <option value="Venezuela">Venezuela</option><option value="Colombia">Colombia</option><option value="México">México</option><option value="Argentina">Argentina</option><option value="Perú">Perú</option><option value="Chile">Chile</option><option value="Ecuador">Ecuador</option><option value="España">España</option><option value="Estados Unidos">Estados Unidos</option><option value="Otro">Otro</option>
-                    </select>
-                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
+                <div id="countryField" class="space-y-1 hidden">
+                    <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">País</label>
+                    <div class="relative">
+                        <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <select id="authCountry" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none">
+                            <option value="" disabled selected>Selecciona tu país...</option>
+                            <option value="Venezuela">Venezuela</option><option value="Colombia">Colombia</option><option value="México">México</option><option value="Argentina">Argentina</option><option value="Perú">Perú</option><option value="Chile">Chile</option><option value="Ecuador">Ecuador</option><option value="España">España</option><option value="Estados Unidos">Estados Unidos</option><option value="Otro">Otro</option>
+                        </select>
+                        <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
+                    </div>
                 </div>
-            </div>
-            <div id="phoneField" class="space-y-1 hidden">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Teléfono</label>
-                <div class="relative"><i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="tel" id="authPhone" placeholder="+58 412..." class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
-            </div>
                 <button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2">
                     <i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span>
                 </button>
@@ -509,234 +647,173 @@
             <div class="absolute right-4 top-4 text-white/5 text-8xl pointer-events-none z-0 md:hidden">
                 <i class="fas fa-th-large"></i>
             </div>
-            <div class="absolute right-0 top-0 text-white/5 text-8xl"><i data-lucide="grid"></i></div>
             <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
                 <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
                     <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Automatización</span>
                     <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Contactores</span>
                     <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Arranques</span>
                 </div>
-            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">CURSOS Y MANUALES <span class="text-secondary">OFERTADOS</span></h1>
+                <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter text-white">CURSOS Y MANUALES <span class="text-[#2db8ce]">OFERTADOS</span></h1>
                 <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">
                     Explora nuestra oferta académica y descubre el contenido técnico diseñado para impulsar tu futuro profesional en la automatización.
                 </p>
             </div>
         </header>
-    <div class="max-w-7xl mx-auto px-6 py-12">
-        <main class="relative z-10 w-full">
-            <!-- RUTA DE APRENDIZAJE -->
-            <section id="learning-path" class="mb-16 text-center">
-                <h2 class="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tighter text-white">Elige tu <span class="text-secondary">Ruta de Aprendizaje</span></h2>
-                <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
-                
-                <div class="relative flex justify-center items-center">
-                    <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700/50 -translate-y-1/2 hidden md:block"></div>
-                    
-                    <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-6xl">
-                        <!-- Paso 1: Básico -->
-                        <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-cyan-500 rounded-3xl text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105 hover:bg-slate-700">
-                            <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-cyan-500 group-hover:text-white">
-                                <i class="fas fa-seedling text-2xl text-cyan-400 group-hover:text-white transition-colors"></i>
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <main class="relative z-10 w-full">
+                <section id="learning-path" class="mb-16 text-center">
+                    <h2 class="text-3xl md:text-4xl font-black mb-4 uppercase tracking-tighter text-white">Elige tu <span class="text-[#2db8ce]">Ruta de Aprendizaje</span></h2>
+                    <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
+                    <div class="relative flex justify-center items-center">
+                        <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700/50 -translate-y-1/2 hidden md:block"></div>
+                        <div class="relative grid grid-cols-1 md:grid-cols-4 gap-8 w-full max-w-6xl">
+                            <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105 hover:bg-slate-700">
+                                <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-cyan-500 group-hover:text-white">
+                                    <i class="fas fa-seedling text-2xl text-cyan-400 group-hover:text-white transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
+                                <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
                             </div>
-                            <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
-                            <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
-                        </div>
-                        <!-- Manuales Card -->
-                        <div onclick="filterByLevel('Manual', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-blue-500 hover:scale-105 hover:bg-slate-700">
-                            <div class="w-16 h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white">
-                                <i class="fas fa-book-open text-2xl text-blue-400 group-hover:text-white transition-colors"></i>
+                            <div onclick="filterByLevel('Manual', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-blue-500 hover:scale-105 hover:bg-slate-700">
+                                <div class="w-16 h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white">
+                                    <i class="fas fa-book-open text-2xl text-blue-400 group-hover:text-white transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-black text-white uppercase mb-1">Manuales</h3>
+                                <p class="text-xs text-slate-400">Guías prácticas y recursos para consulta rápida.</p>
                             </div>
-                            <h3 class="text-lg font-black text-white uppercase mb-1">Manuales</h3>
-                            <p class="text-xs text-slate-400">Guías prácticas y recursos para consulta rápida.</p>
-                        </div>
-                        
-                        <!-- Paso 2: Intermedio -->
-                        <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-purple-500 hover:scale-105 hover:bg-slate-700">
-                            <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
-                                <i class="fas fa-cogs text-2xl text-purple-400 group-hover:text-white transition-colors"></i>
+                            <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-purple-500 hover:scale-105 hover:bg-slate-700">
+                                <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
+                                    <i class="fas fa-cogs text-2xl text-purple-400 group-hover:text-white transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
+                                <p class="text-xs text-slate-400">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
                             </div>
-                            <h3 class="text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
-                            <p class="text-xs text-slate-400">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
-                        </div>
-
-                        <!-- Paso 3: Avanzado -->
-                        <div onclick="filterByLevel('Avanzado', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-amber-500 hover:scale-105 hover:bg-slate-700">
-                            <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-white">
-                                <i class="fas fa-rocket text-2xl text-amber-400 group-hover:text-white transition-colors"></i>
+                            <div onclick="filterByLevel('Avanzado', this)" class="learning-step group cursor-pointer p-6 bg-slate-800/50 backdrop-blur-md border-2 border-slate-700 rounded-3xl text-center transition-all duration-300 hover:border-amber-500 hover:scale-105 hover:bg-slate-700">
+                                <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-white">
+                                    <i class="fas fa-rocket text-2xl text-amber-400 group-hover:text-white transition-colors"></i>
+                                </div>
+                                <h3 class="text-lg font-black text-white uppercase mb-1">Especialización</h3>
+                                <p class="text-xs text-slate-400">Para profesionales que buscan dominar temas complejos y diplomados.</p>
                             </div>
-                            <h3 class="text-lg font-black text-white uppercase mb-1">Especialización</h3>
-                            <p class="text-xs text-slate-400">Para profesionales que buscan dominar temas complejos y diplomados.</p>
                         </div>
                     </div>
+                </section>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10" id="catalog-grid"></div>
+                <div id="catalog-loading" class="col-span-full text-center py-10 hidden">
+                    <i class="fas fa-spinner fa-spin text-3xl text-[#2db8ce] mb-3"></i>
+                    <p class="text-slate-500 font-bold text-sm uppercase tracking-widest">Cargando datos desde el servidor...</p>
                 </div>
-            </section>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10" id="catalog-grid">
-                <!-- Se llena dinámicamente -->
-            </div>
-            <div id="catalog-loading" class="col-span-full text-center py-10 hidden">
-                <i class="fas fa-spinner fa-spin text-3xl text-[#2db8ce] mb-3"></i>
-                <p class="text-slate-500 font-bold text-sm uppercase tracking-widest">Cargando datos desde el servidor...</p>
-            </div>
-        </main>
+                <div id="catalog-error" class="col-span-full text-center py-10 hidden">
+                    <i class="fas fa-exclamation-triangle text-3xl text-red-400 mb-3"></i>
+                    <p class="text-red-400 font-bold text-sm uppercase tracking-widest mb-4">Error al cargar el catálogo</p>
+                    <p id="catalog-error-detail" class="text-slate-400 text-xs mb-4"></p>
+                    <button onclick="loadCoursesFromSheet()" class="px-6 py-3 bg-[#2db8ce] text-white font-bold rounded-xl hover:bg-[#1877f2] transition-all">
+                        <i class="fas fa-sync-alt mr-2"></i> Reintentar
+                    </button>
+                </div>
+            </main>
+        </div>
     </div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJCV8j5yLAGgouP43lvkXGunU6yKroegJ9JFJvAWpqHeHQzWRnXXP4IPnaBLjU7MTi/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrozAl5UD90NzUYIUTR2QJ_oXa3dTp6fsnjjEtAbjja3M8UJyEuO_BClPMFj1jjsFw/exec';
 
         let currentUser = JSON.parse(localStorage.getItem('user')) || null;
-        let dbUsers = {},
-            globalStats = {},
-            userCountry = "Desconocido";
-        let dbUserCourses = {},
-            dbUserDetails = {},
-            dbUserProgress = {};
+        let dbUsers = {}, globalStats = {}, userCountry = "Desconocido";
+        let dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {};
         let studentCountsPerCourse = {};
         let courseRatings = {};
         let dataLoaded = false;
         let dataLoadAttempts = 0;
         const MAX_DATA_ATTEMPTS = 3;
 
- /* ================================================= */
-/* ============ AGREGAR CURSOS AL CATÁLOGO ========= */
-/* ==================== INICIO ===================== */
+        let COURSES_DATA = [];
+        const CATALOG_SCRIPT_URL = SCRIPT_URL;
 
-const COURSES_DATA = [
-            
-{ id: 1, name: "Arranque de motores con contactores Online", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "1-arranque-contactores-info.html", aulaLink: "aula-virtual-id.html?courseId=1" },
-            
-{ id: 2, name: "Arranque de motores con PLC LOGO Online", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "2-arranque-plc-logo-info.html", aulaLink: "aula-virtual-id.html?courseId=2" },
-            
-{ id: 3, name: "Funciones Lógicas en PLCs con Factory IO Online", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 10.00, link: "3-compuertas-factory-plc-info.html", aulaLink: "aula-virtual-id.html?courseId=3" },
-            
-{ id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "4-auto-contactores-on-info.html", aulaLink: "aula-virtual-id.html?courseId=4", buyLink: "https://app.komvii.com/checkout/I511nURFB5aL30Zn0Me9HZ8WIMjxEaJ8?p=Mzc4" },
-            
-{ id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 10.00, link: "5-auto-plc-logo-on-info.html", aulaLink: "aula-virtual-id.html?courseId=5" },
-            
-{ id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 10.00, link: "info-page-id.html?courseId=6", aulaLink: "aula-virtual-id.html?courseId=6" },
-            
-{ id: 7, name: "10 ejercicios de aplicaciones con Contactores Online", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "7-10-ejer-auto-contactores-on-info.html", aulaLink: "aula-virtual-id.html?courseId=7" },
-            
-{ id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO! Online", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 10.00, link: "8-10-ejer-auto-plc-logo-on-info.html", aulaLink: "aula-virtual-id.html?courseId=8" },
-            
-{ id: 9, name: "Automatización Industrial Presencial", type: "Presencial", desc: "Fundamentos y practices de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "9-auto-industrial-pre-info.html" },
-            
-{ id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "10-auto-contactores-pre-info.html" },
-            
-{ id: 11, name: "Automatización Con PLC LOGO! Presencial", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "11-auto-plc-logo-pre-info.html" },
-            
-{ id: 12, name: "Automatización con PLC – Método Grafcet Presencial", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "12-auto-plc-grafcet-pre-info.html" },
-            
-{ id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "13-auto-contactores-pre-info - diplomado.html" },
-            
-{ id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 0.00, link: "14-auto-plc-logo-pre-info - diplomado.html" },
-            
-{ id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "15-auto-control-avanzado-pre-info - maestria.html" },
-            
-{ id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 0.00, link: "16-auto-control-aplicado-pre-info - maestria.html" },
-            
-{ id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "17-Taller-III-pregrado.html" },
-            
-{ id: 18, 
-name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", 
-type: "Materia", 
-desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", 
-image: "img/AA (33).webp", 
-category: "Ingeniería", 
-level: "Avanzado", 
-cost: 0.00, 
-link: "18-Sist-hid-Neu-pregrado.html" 
-},
-            
-{ id: 19, 
-name: "Arranque de motores con contactores Manual", 
-type: "Manual", 
-desc: "Manual completo sobre el arranque y control de motores usando contactores, lógica cableada y protecciones.", 
-image: "img/AA (7).gif", 
-category: "Electricidad",
-level: "Básico",
-cost: 5.00,
-link: "19-Manual-arranque-contactores-info.html",
-buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Arranque%20de%20motores%20con%20contactores", 
-aulaLink: "aula-virtual-id.html?courseId=19"
-},
-            
-{ id: 20, 
-name: "Automatización con PLC Básico Manual", 
-type: "Manual", 
-desc: "Introducción a la automatización industrial utilizando PLC de gama básica como LOGO! de Siemens.", 
-image: "img/AA (11).webp", 
-category: "PLC", 
-level: "Básico", 
-cost: 5.00, 
-link: "20-auto-plc-basico-on-info.html", 
-buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20PLC%20Básico", 
-aulaLink: "aula-virtual-id.html?courseId=20"
-},
-            
-{ id: 21, 
-name: "Automatización con Contactores Manual", 
-type: "Manual", 
-desc: "Aprende a diseñar y montar circuitos de control con lógica cableada para diferentes arranques de motores.", 
-image: "img/AA (36).webp", 
-category: "Automatización", 
-level: "Básico", 
-cost: 5.00, 
-link: "21-Manual-auto-contactores-on-info.html", 
-buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Automatización%20con%20Contactores", 
-aulaLink: "aula-virtual-id.html?courseId=21"
-},
-            
-{ id: 22, 
-name: "PLC Método Grafcet Manual", 
-type: "Manual", 
-desc: "Guía completa para diseñar secuencias de automatización complejas utilizando el método GRAFCET y su implementación en PLC.", 
-image: "img/AA (4).gif", 
-category: "Automatización", 
-level: "Avanzado", 
-cost: 5.00, 
-link: "22-Manual-auto-plc-grafcet-on-info.html", 
-buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20PLC%20Método%20Grafcet", 
-aulaLink: "aula-virtual-id.html?courseId=22"
-},
-    
-{ id: 23, 
-name: "Arranque de motores con PLC Manual", 
-type: "Manual", 
-desc: "Manual completo sobre el arranque y control de motores usando PLC.", 
-image: "img/AA (7).gif", 
-category: "Automatización", 
-level: "Básico", 
-cost: 5.00, 
-link: "23-Manual-arranque-plc-logo-info.html", 
-buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20Arranque%20de%20motores%20con%20PLC",
-aulaLink: "aula-virtual-id.html?courseId=23"
-},
-            
-{ id: 24, 
-name: "10 ejercicios de PLC Método GRAFCET Manual", 
-type: "Manual", 
-desc: "Manual completo sobre Grafcet usando PLC.", 
-image: "img/AA (4).gif", 
-category: "Automatización", 
-level: "Avanzado", 
-cost: 5.00, 
-link: "24-Manual-10-ejer-auto-plc-grafcet-info.html", 
-buyLink: "https://wa.me/584121414196?text=Hola,%20deseo%20comprar%20el%20manual:%20PLC%20Método%20Grafcet",
-aulaLink: "aula-virtual-id.html?courseId=24"
-}
+        const countryToISO = {
+            "venezuela": "ve", "colombia": "co", "méxico": "mx", "mexico": "mx", "españa": "es", "spain": "es",
+            "argentina": "ar", "perú": "pe", "peru": "pe", "chile": "cl", "ecuador": "ec", "estados unidos": "us",
+            "united states": "us", "usa": "us", "francia": "fr", "france": "fr", "brasil": "br", "brazil": "br",
+            "italy": "it", "italia": "it", "alemania": "de", "germany": "de", "canadá": "ca", "canada": "ca"
+        };
 
+        const countryToSpanish = {
+            "venezuela": "Venezuela", "colombia": "Colombia", "mexico": "México", "méxico": "México",
+            "spain": "España", "españa": "España", "argentina": "Argentina", "peru": "Perú", "perú": "Perú",
+            "chile": "Chile", "ecuador": "Ecuador", "united states": "Estados Unidos", "usa": "Estados Unidos",
+            "estados unidos": "Estados Unidos", "france": "Francia", "francia": "Francia", "brazil": "Brasil",
+            "brasil": "Brasil", "italy": "Italia", "italia": "Italia", "germany": "Alemania", "alemania": "Alemania",
+            "canada": "Canadá", "canadá": "Canadá"
+        };
 
-];
+        // ============ FUNCIONES DEL TOAST DE CARGA ============
+        function showLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            const title = document.getElementById('loadingToastTitle');
+            const subtitle = document.getElementById('loadingToastSubtitle');
+            const spinner = document.getElementById('loadingToastSpinner');
+            
+            if (toast) {
+                toast.classList.remove('hidden', 'hiding', 'success-toast');
+                title.innerText = 'Estamos cargando la información de tus cursos';
+                subtitle.innerText = 'Conectando con la base de datos...';
+                
+                if (spinner) spinner.style.display = 'block';
+                
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }
+        }
 
-/* ================================================= */
-/* ============ AGREGAR CURSOS AL CATÁLOGO ========= */
-/* ==================== INICIO ===================== */
+        function showSuccessToast() {
+            const toast = document.getElementById('loadingToast');
+            const title = document.getElementById('loadingToastTitle');
+            const subtitle = document.getElementById('loadingToastSubtitle');
+            const spinner = document.getElementById('loadingToastSpinner');
+            
+            if (toast) {
+                toast.classList.remove('hidden', 'hiding');
+                toast.classList.add('success-toast');
+                
+                title.innerText = '¡Listo! Ya están cargados tus cursos';
+                subtitle.innerText = 'Información actualizada correctamente';
+                
+                if (spinner) spinner.style.display = 'none';
+                
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                
+                const checkDiv = document.createElement('div');
+                checkDiv.className = 'toast-check';
+                checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+                toast.appendChild(checkDiv);
+                
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                
+                setTimeout(() => {
+                    hideLoadingToast();
+                }, 3000);
+            }
+        }
 
-
-        const countryToISO = { "venezuela": "ve", "colombia": "co", "méxico": "mx", "mexico": "mx", "españa": "es", "spain": "es", "argentina": "ar", "perú": "pe", "peru": "pe", "chile": "cl", "ecuador": "ec", "bolivia": "bo", "paraguay": "py", "uruguay": "uy", "costa rica": "cr", "panamá": "pa", "panama": "pa", "república dominicana": "do", "republica dominicana": "do", "guatemala": "gt", "honduras": "hn", "el salvador": "sv", "nicaragua": "ni", "cuba": "cu", "puerto rico": "pr", "puertorico": "pr", "estados unidos": "us", "united states": "us", "usa": "us", "francia": "fr", "france": "fr", "brasil": "br", "brazil": "br", "italy": "it", "italia": "it", "alemania": "de", "germany": "de", "canadá": "ca", "canada": "ca", "reino unido": "gb", "united kingdom": "gb", "portugal": "pt", "haití": "ht", "haiti": "ht", "japon": "jp", "japón": "jp", "china": "cn", "rusia": "ru", "russia": "ru", "bélgica": "be", "belgium": "be", "suiza": "ch", "switzerland": "ch", "jamaica": "jm", "trinidad y tobago": "tt", "guyana": "gy", "surinam": "sr", "belice": "bz", "bahamas": "bs", "barbados": "bb", "santa lucía": "lc", "granada": "gd", "san vicente y las granadinas": "vc", "antigua y barbuda": "ag", "dominica": "dm", "san cristóbal y nieves": "kn" };
-        const countryToSpanish = { "venezuela": "Venezuela", "colombia": "Colombia", "mexico": "México", "méxico": "México", "spain": "España", "españa": "España", "argentina": "Argentina", "peru": "Perú", "perú": "Perú", "chile": "Chile", "ecuador": "Ecuador", "bolivia": "Bolivia", "paraguay": "Paraguay", "uruguay": "Uruguay", "costa rica": "Costa Rica", "panama": "Panamá", "panamá": "Panamá", "dominican republic": "República Dominicana", "república dominicana": "República Dominicana", "guatemala": "Guatemala", "honduras": "Honduras", "el salvador": "El Salvador", "nicaragua": "Nicaragua", "cuba": "Cuba", "puerto rico": "Puerto Rico", "puertorico": "Puerto Rico", "united states": "Estados Unidos", "usa": "Estados Unidos", "estados unidos": "Estados Unidos", "france": "Francia", "francia": "Francia", "brazil": "Brasil", "brasil": "Brasil", "italy": "Italia", "italia": "Italia", "germany": "Alemania", "alemania": "Alemania", "canada": "Canadá", "canadá": "Canadá", "united kingdom": "Reino Unido", "reino unido": "Reino Unido", "portugal": "Portugal", "haiti": "Haití", "haití": "Haití", "japan": "Japón", "japón": "Japón", "china": "China", "russia": "Rusia", "rusia": "Rusia", "belgium": "Bélgica", "bélgica": "Bélgica", "switzerland": "Suiza", "suiza": "Suiza", "jamaica": "Jamaica", "trinidad and tobago": "Trinidad y Tobago", "guyana": "Guyana", "suriname": "Surinam", "belize": "Belice", "bahamas": "Bahamas", "barbados": "Barbados", "saint lucia": "Santa Lucía", "grenada": "Granada", "saint vincent and the grenadines": "San Vicente y las Granadinas", "antigua and barbuda": "Antigua y Barbuda", "dominica": "Dominica", "saint kitts and nevis": "San Cristóbal y Nieves" };
+        function hideLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            if (toast) {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.classList.remove('hiding', 'success-toast');
+                }, 500);
+            }
+        }
+        // ============ FIN FUNCIONES DEL TOAST ============
 
         function normalizeName(str) { return (str || '').trim().toLowerCase().replace(/\s+/g, ' '); }
+
         function splitCourseNames(raw) {
             if (!raw) return [];
             if (Array.isArray(raw)) return raw.map(n => n.trim()).filter(Boolean);
@@ -746,6 +823,7 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             }
             return [];
         }
+
         function showNotif(title, msg, type = 'success') {
             const n = document.getElementById('notification');
             const icon = document.getElementById('notifIcon');
@@ -758,25 +836,17 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             n.classList.add('show');
             setTimeout(() => n.classList.remove('show'), 4000);
         }
-        function showSyncIndicator(text, type = 'loading') {
-            const el = document.getElementById('syncIndicator');
-            const txt = document.getElementById('syncText');
-            const icon = el.querySelector('i');
-            el.classList.remove('success', 'error', 'visible');
-            txt.innerText = text;
-            if (type === 'success') { el.classList.add('success', 'visible'); icon.className = 'fas fa-check-circle text-green-300'; }
-            else if (type === 'error') { el.classList.add('error', 'visible'); icon.className = 'fas fa-exclamation-circle text-red-300'; }
-            else { el.classList.add('visible'); icon.className = 'fas fa-sync-alt fa-spin text-[#2db8ce]'; }
-            if (type !== 'loading') { setTimeout(() => el.classList.remove('visible', 'success', 'error'), 3000); }
-        }
-        function hideSyncIndicator() { document.getElementById('syncIndicator').classList.remove('visible', 'success', 'error'); }
+
         function openModal(id) { document.getElementById(id).classList.add('active'); }
+
         function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
         function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
         function ping(action, key) {
             try {
                 if (navigator.sendBeacon) {
-                    navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key}));
+                    navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({ action, key }));
                 } else {
                     fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` });
                 }
@@ -800,8 +870,8 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 }
             }
         }
+
         async function loadData(showIndicator = true) {
-            if (showIndicator) showSyncIndicator('Conectando con la base de datos...', 'loading');
             dataLoadAttempts++;
             try {
                 const res = await fetchWithRetry(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`, MAX_DATA_ATTEMPTS);
@@ -816,17 +886,16 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                     updateStudentCounts();
                     dataLoaded = true;
                     dataLoadAttempts = 0;
-                    if (showIndicator) showSyncIndicator('Datos sincronizados correctamente', 'success');
                     if (currentUser && currentUser.email) syncCurrentUserFromCloud();
                     applyFilters();
                     updateAllUI();
                 } else throw new Error('Respuesta del servidor sin estado success');
             } catch (e) {
                 console.error('Error al cargar datos:', e.message);
-                if (showIndicator) showSyncIndicator('Usando datos locales (sin conexión)', 'error');
                 if (dataLoadAttempts < MAX_DATA_ATTEMPTS * 2) setTimeout(() => loadData(false), 5000);
             }
         }
+
         function syncCurrentUserFromCloud() {
             if (!currentUser || !currentUser.email) return;
             const email = currentUser.email.toLowerCase();
@@ -835,9 +904,9 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             let myCourseIds = [];
             myCourseNames.forEach(cName => {
                 let nn = normalizeName(cName);
-                let found = COURSES_DATA.find(x => normalizeName(x.name) === nn);
-                if (!found) found = COURSES_DATA.find(x => normalizeName(x.name).includes(nn) || nn.includes(normalizeName(x.name)));
-                if (found) myCourseIds.push(found.id);
+                let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
+                if (!found) found = COURSES_DATA.find(x => normalizeName(x.Nombre).includes(nn) || nn.includes(normalizeName(x.Nombre)));
+                if (found) myCourseIds.push(found.ID);
             });
             let globalUser = dbUsers[email] || {};
             if (typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch (e) { globalUser = {}; } }
@@ -853,11 +922,17 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             currentUser.ratings = globalUser.ratings || currentUser.ratings || {};
             currentUser.profession = globalUser.profession || currentUser.profession || "";
             currentUser.likedCourses = globalUser.likedCourses || currentUser.likedCourses || [];
+            currentUser.visitRegistro = globalUser.visitRegistro || currentUser.visitRegistro || {
+                cursos: {},
+                infoPaginas: {},
+                aulas: {}
+            };
             localStorage.setItem('user', JSON.stringify(currentUser));
         }
+
         function calculateCourseRatings() {
             courseRatings = {};
-            COURSES_DATA.forEach(c => courseRatings[c.id] = { sum: 0, count: 0, avg: "5.0" });
+            COURSES_DATA.forEach(c => courseRatings[c.ID] = { sum: 0, count: 0, avg: "5.0" });
             for (const email in dbUsers) {
                 let u = dbUsers[email];
                 if (typeof u === 'string') { try { u = JSON.parse(u); } catch (e) { u = {}; } }
@@ -874,80 +949,87 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 if (courseRatings[cid].count > 0) courseRatings[cid].avg = (courseRatings[cid].sum / courseRatings[cid].count).toFixed(1);
             }
         }
+
         function updateStudentCounts() {
-            COURSES_DATA.forEach(c => studentCountsPerCourse[c.id] = 0);
+            COURSES_DATA.forEach(c => studentCountsPerCourse[c.ID] = 0);
             for (const email in dbUserCourses) {
                 const courses = splitCourseNames(dbUserCourses[email]);
                 courses.forEach(courseName => {
-                    let found = COURSES_DATA.find(c => normalizeName(c.name) === normalizeName(courseName));
-                    if (found) studentCountsPerCourse[found.id] += 1;
+                    let found = COURSES_DATA.find(c => normalizeName(c.Nombre) === normalizeName(courseName));
+                    if (found) studentCountsPerCourse[found.ID] += 1;
                 });
             }
         }
 
-        let currentCategory = 'Todos';
-        let currentLevel = 'Todos'; // Por defecto se muestran todos
+        let currentLevel = 'Todos';
 
         function generateCourseCard(course) {
-            const isAcademic = ["Diplomado", "Maestría", "Pregrado"].includes(course.level);
-            const priceTag = (isAcademic || course.level === 'Postgrado') ? "" : (course.cost === 0 ? '<span class="text-[#2db8ce] font-extrabold italic text-lg">GRATIS</span>' : `<span class="text-lg font-black text-slate-800">$${course.cost.toFixed(2)}</span>`);
-            const likes = globalStats[`curso-${course.id}_likes`] || 0;
-            const vistas = globalStats[`curso-${course.id}_vistas`] || 0;
-            const isLikedClass = (currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(`curso-${course.id}`)) ? 'liked' : '';
-            const viewsClass = vistas > 0 ? 'text-green-500' : 'text-slate-400';
-            const actionClick = (course.link && course.link !== "#" && course.link !== "") ? `registerViewAndGo('${course.link}', ${course.id}, '_self')` : `showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')`;
-            const isLogged = currentUser !== null;
-            const hasAccess = isLogged && currentUser.accessedCursos && currentUser.accessedCursos.includes(course.id);
-            const imageOpacityClass = hasAccess ? 'opacity-100' : 'opacity-30';
+            const courseId = course.ID || '';
+            const courseName = course.Nombre || 'Sin nombre';
+            const courseType = course.Tipo || 'Curso';
+            const courseCategory = course.Categoria || '';
+            const courseLevel = course.Nivel || 'Básico';
+            const coursePrice = parseFloat(course.Precio || 0);
+            const courseCurrency = course.Moneda || '$';
+            const courseImage = course.ImagenURL || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso';
+            const courseLink = course.EnlaceInfo || '#';
+            const courseBuyLink = course.EnlaceCompra || '';
+            const courseBadges = course.Badges || '';
+            
+            let badgesHTML = '';
+            if (courseBadges) {
+                badgesHTML = courseBadges.split('|').map(badge => {
+                    const trimmedBadge = badge.trim();
+                    if (trimmedBadge) return `<span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-sm bg-amber-500/20 text-amber-400 border border-amber-500/30 backdrop-blur-md">${trimmedBadge}</span>`;
+                    return '';
+                }).join('');
+            }
 
-            const isManual = course.type === 'Manual';
+            const priceTag = coursePrice === 0 ? '<span class="text-[#2db8ce] font-extrabold italic text-lg">GRATIS</span>' : `<span class="text-lg font-black text-slate-800">${courseCurrency}${coursePrice.toFixed(2)}</span>`;
+            const likes = globalStats[`curso-${courseId}_likes`] || 0;
+            const vistas = globalStats[`curso-${courseId}_vistas`] || 0;
+            const isLikedClass = (currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(`curso-${courseId}`)) ? 'liked' : '';
+            const viewsClass = vistas > 0 ? 'text-green-500' : 'text-slate-400';
+            const isLogged = currentUser !== null;
+            const hasAccess = isLogged && currentUser.accessedCursos && currentUser.accessedCursos.includes(parseInt(courseId));
+            const imageOpacityClass = hasAccess ? 'opacity-100' : 'opacity-30';
+            const isManual = (courseType || '').toLowerCase() === 'manual';
 
             let buttonsHTML = '';
-            if (isManual) {
-                const infoButton = `<button onclick="event.stopPropagation(); registerViewAndGo('${course.link}', ${course.id}, '_self')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del Manual</button>`;
-                buttonsHTML = `<div class="flex flex-col gap-2 w-full">${infoButton}</div>`;
-            } else if (course.link && course.link !== "#" && course.link !== "") {
-                buttonsHTML = `<div class="flex flex-col gap-2 w-full"><button onclick="event.stopPropagation(); registerViewAndGo('${course.link}', ${course.id}, '_self')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del Curso</button></div>`;
+            if (courseLink && courseLink !== '#' && courseLink !== '') {
+                buttonsHTML = `<div class="flex flex-col gap-2 w-full"><button onclick="event.stopPropagation(); registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del ${isManual ? 'Manual' : 'Curso'}</button></div>`;
             } else {
                 buttonsHTML = `<div class="flex flex-col gap-2 w-full"><button onclick="event.stopPropagation(); showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')" class="w-full bg-slate-300 text-slate-500 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest cursor-not-allowed text-center shadow-sm">PRÓXIMAMENTE</button></div>`;
             }
 
-            const avgRating = courseRatings[course.id] ? courseRatings[course.id].avg : "5.0";
-            const displayCount = studentCountsPerCourse[course.id] !== undefined ? studentCountsPerCourse[course.id] : '...';
+            const avgRating = courseRatings[courseId] ? courseRatings[courseId].avg : "5.0";
+            const displayCount = studentCountsPerCourse[courseId] !== undefined ? studentCountsPerCourse[courseId] : '...';
 
             let buyActionHTML = '';
             if (hasAccess) {
-                if (isManual) {
-                    buyActionHTML = `<span class="text-teal-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 bg-teal-50 px-3 py-1.5 rounded-lg border border-teal-100"><i class="fas fa-check-circle text-sm"></i> Adquirido</span>`;
-                } else {
-                    buyActionHTML = `<span class="text-teal-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 bg-teal-50 px-3 py-1.5 rounded-lg border border-teal-100"><i class="fas fa-check-circle text-sm"></i> Inscrito</span>`;
-                }
-            } else if (isManual) {
-                buyActionHTML = `<button onclick="event.stopPropagation(); buyManual(${course.id}, '${course.buyLink}')" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-cyan-500/30 transition-all active:scale-95 flex items-center gap-2"><i class="fas fa-shopping-cart text-[11px]"></i> Comprar</button>`;
+                buyActionHTML = `<span class="text-teal-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 bg-teal-50 px-3 py-1.5 rounded-lg border border-teal-100"><i class="fas fa-check-circle text-sm"></i> ${isManual ? 'Adquirido' : 'Inscrito'}</span>`;
+            } else if (courseBuyLink) {
+                buyActionHTML = `<button onclick="event.stopPropagation(); window.open('${courseBuyLink}', '_blank')" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-cyan-500/30 transition-all active:scale-95 flex items-center justify-center gap-2"><i class="fas fa-shopping-cart text-[11px]"></i> ${isManual ? 'Comprar' : 'Inscribirse'}</button>`;
             } else {
-                if (course.buyLink) {
-                    buyActionHTML = `<button onclick="event.stopPropagation(); window.open('${course.buyLink}', '_blank')" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-cyan-500/30 transition-all active:scale-95 flex items-center gap-2"><i class="fas fa-shopping-cart text-[11px]"></i> Comprar</button>`;
-                } else {
-                    buyActionHTML = `<button onclick="event.stopPropagation(); showNotif('Inscripción', 'Para inscribirte, por favor contactar con el profesor Pablo Cedeño.', 'info')" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-cyan-500/30 transition-all active:scale-95 flex items-center gap-2"><i class="fas fa-plus-circle text-[11px]"></i> Inscribirse</button>`;
-                }
+                buyActionHTML = `<button onclick="event.stopPropagation(); showNotif('Inscripción', 'Para inscribirte, por favor contactar con el profesor Pablo Cedeño.', 'info')" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-cyan-500/30 transition-all active:scale-95 flex items-center gap-2"><i class="fas fa-plus-circle text-[11px]"></i> Inscribirse</button>`;
             }
 
             let userRating = 0;
-            if (currentUser && currentUser.ratings && currentUser.ratings[course.id]) userRating = currentUser.ratings[course.id];
+            if (currentUser && currentUser.ratings && currentUser.ratings[courseId]) userRating = currentUser.ratings[courseId];
             let ratingStarsHTML = '';
             if (isLogged) {
-                ratingStarsHTML = `<div class="flex items-center gap-2 mt-4"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tu valoración:</span><div class="flex gap-0.5">${[1,2,3,4,5].map(star => `<i class="fas fa-star cursor-pointer text-sm ${userRating >= star ? 'text-yellow-400' : 'text-slate-300'}" onclick="event.stopPropagation(); rateCourse(${course.id}, ${star})" title="${star} estrella${star>1?'s':''}"></i>`).join('')}</div></div>`;
+                ratingStarsHTML = `<div class="flex items-center gap-2 mt-4"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tu valoración:</span><div class="flex gap-0.5">${[1,2,3,4,5].map(star => `<i class="fas fa-star cursor-pointer text-sm ${userRating >= star ? 'text-yellow-400' : 'text-slate-300'}" onclick="event.stopPropagation(); rateCourse('${courseId}', ${star})" title="${star} estrella${star>1?'s':''}"></i>`).join('')}</div></div>`;
             } else {
                 ratingStarsHTML = `<div class="mt-4"><button onclick="event.stopPropagation(); openModal('authModal')" class="text-[10px] font-bold text-slate-500 hover:text-[#2db8ce] transition-colors flex items-center gap-1"><i class="fas fa-star text-yellow-400"></i> Inicia sesión para valorar</button></div>`;
             }
 
-            const normalizedLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-            let levelBorderClass = 'course-card-level-default';
+            const normalizedLevel = (courseLevel || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            let levelBorderClass = '';
             let levelBadgeStyle = '';
             let levelIconBg = 'bg-slate-500/10 border-slate-500/30';
             let levelIconColor = 'text-slate-400';
-            
-            if (normalizedLevel === 'basico') {
+
+            if (normalizedLevel === 'basico' || normalizedLevel === 'básico') {
                 levelBorderClass = 'course-card-level-basico';
                 levelBadgeStyle = 'background-color: rgba(6,182,212,0.1); color: rgb(8,145,178); border: 1px solid rgba(6,182,212,0.3);';
                 levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
@@ -966,69 +1048,55 @@ aulaLink: "aula-virtual-id.html?courseId=24"
 
             let iconsContainerHTML = '';
             if (isManual) {
-                // Let's determine the level icon for the manual
-                const normalizedManualLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-                let levelIconClass = 'fa-seedling'; // default to basic
-                let levelIconColor = 'text-cyan-400';
-                let levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
-                let levelTitle = 'Fundamentos (Básico)';
+                let levelIconClass = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket';
+                let levelIconColorManual = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'text-cyan-400' : normalizedLevel === 'intermedio' ? 'text-purple-400' : 'text-amber-400';
+                let levelIconBgManual = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'bg-cyan-500/10 border-cyan-500/30' : normalizedLevel === 'intermedio' ? 'bg-purple-500/10 border-purple-500/30' : 'bg-amber-500/10 border-amber-500/30';
+                let levelTitle = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'Fundamentos (Básico)' : normalizedLevel === 'intermedio' ? 'Aplicaciones (Intermedio)' : 'Especialización (Avanzado)';
 
-                if (normalizedManualLevel === 'intermedio') {
-                    levelIconClass = 'fa-cogs';
-                    levelIconColor = 'text-purple-400';
-                    levelIconBg = 'bg-purple-500/10 border-purple-500/30';
-                    levelTitle = 'Aplicaciones (Intermedio)';
-                } else if (normalizedManualLevel === 'avanzado') {
-                    levelIconClass = 'fa-rocket';
-                    levelIconColor = 'text-amber-400';
-                    levelIconBg = 'bg-amber-500/10 border-amber-500/30';
-                    levelTitle = 'Especialización (Avanzado)';
-                }
-
-                // Two independent icons for Manuals
                 iconsContainerHTML = `
                 <div class="absolute bottom-3 left-3 flex items-center gap-2">
-                    <div class="flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${levelTitle}">
-                        <i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i>
+                    <div class="flex items-center justify-center ${levelIconBgManual} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${levelTitle}">
+                        <i class="fas ${levelIconClass} text-lg ${levelIconColorManual}"></i>
                     </div>
                     <div class="flex items-center justify-center bg-blue-500/10 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="Manual">
                         <i class="fas fa-book-open text-lg text-blue-400"></i>
                     </div>
                 </div>`;
             } else {
-                const iconClass = normalizedLevel === 'basico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket';
+                const iconClass = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket';
                 iconsContainerHTML = `
-                <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}">
+                <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${courseLevel}">
                     <i class="fas ${iconClass} text-lg ${levelIconColor}"></i>
                 </div>`;
             }
 
             return `
-            <div class="course-card bg-white rounded-[24px] overflow-hidden flex flex-col group fade-in text-left cursor-pointer ${levelBorderClass}" onclick="${actionClick}">
+            <div class="course-card bg-white rounded-[24px] overflow-hidden flex flex-col group fade-in text-left cursor-pointer ${levelBorderClass}" onclick="registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')">
                 <div class="aspect-video w-full overflow-hidden bg-[#0f172a] border-b border-slate-100 relative text-left">
-                    <img src="${course.image}" alt="${course.name}" class="w-full h-full object-cover ${imageOpacityClass} group-hover:scale-105 transition-all duration-500" loading="lazy">
+                    <img src="${courseImage}" alt="${courseName}" class="w-full h-full object-cover ${imageOpacityClass} group-hover:scale-105 transition-all duration-500" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Curso'">
                     <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
-                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.type}</span>
-                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-sm bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.category}</span>
+                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${courseType}</span>
+                        ${courseCategory ? `<span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-sm bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${courseCategory}</span>` : ''}
+                        ${badgesHTML}
                     </div>
-                    <div class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-secondary text-[10px] font-black px-2 py-1 rounded-md border border-white/20 shadow-lg flex items-center gap-1">
+                    <div class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-[#2db8ce] text-[10px] font-black px-2 py-1 rounded-md border border-white/20 shadow-lg flex items-center gap-1">
                         <i class="fas fa-star text-yellow-400"></i> ${avgRating}
                     </div>
                     ${iconsContainerHTML}
                 </div>
                 <div class="p-5 md:p-6 flex-grow flex flex-col text-left">
-                    <h2 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${course.name}</h2>
+                    <h2 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${courseName}</h2>
                     <div class="flex items-center justify-between mb-4 text-xs font-bold text-slate-500">
                         <div class="flex items-center gap-2">
-                            <span class="px-2 py-1 rounded-md flex items-center gap-1" style="${levelBadgeStyle}" title="Nivel del curso"><i data-lucide="book-open" class="w-3 h-3"></i> ${course.level}</span>
-                            <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md flex items-center gap-1" title="Alumnos en el curso"><i data-lucide="users" class="w-3 h-3"></i><span id="count-${course.id}">${displayCount}</span></span>
+                            <span class="px-2 py-1 rounded-md flex items-center gap-1" style="${levelBadgeStyle}" title="Nivel del curso"><i class="fas fa-book-open w-3 h-3"></i> ${courseLevel}</span>
+                            <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md flex items-center gap-1" title="Alumnos en el curso"><i class="fas fa-users w-3 h-3"></i><span id="count-${courseId}">${displayCount}</span></span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${course.id}" onclick="event.stopPropagation(); toggleLike(this)">
+                            <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${courseId}" onclick="event.stopPropagation(); toggleLike(this)">
                                 <i class="fas fa-heart"></i><span class="like-count">${likes}</span>
                             </button>
                             <span class="flex items-center gap-1 ${viewsClass} transition-colors duration-300">
-                                <i class="fas fa-eye"></i><span class="view-count" data-id="curso-${course.id}">${vistas}</span>
+                                <i class="fas fa-eye"></i><span class="view-count" data-id="curso-${courseId}">${vistas}</span>
                             </span>
                         </div>
                     </div>
@@ -1038,49 +1106,28 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                         ${buyActionHTML}
                     </div>
                 </div>
-                <div class="px-5 md:px-6 py-4 bg-slate-50 border-t border-slate-100 text-left mt-auto">
+                <div class="px-5 md:px-6 py-4 bg-slate-50 border-t border-slate-100 text-left mt-auto" onclick="event.stopPropagation();">
                     ${buttonsHTML}
                 </div>
             </div>`;
         }
 
-        function renderCatalog(filter = 'Todos') {
-            currentCategory = filter;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                if (btn.dataset.cat === filter) {
-                    btn.classList.replace('bg-white', 'bg-slate-900');
-                    btn.classList.replace('text-slate-800', 'text-white');
-                } else {
-                    btn.classList.replace('bg-slate-900', 'bg-white');
-                    btn.classList.replace('text-white', 'text-slate-800');
-                }
-            });
-            applyFilters();
-        }
-
         function applyFilters() {
-            const searchInput = document.getElementById('searchInput');
-            const query = searchInput ? searchInput.value.toLowerCase() : '';
-            const modalityFilter = document.getElementById('modalityFilter');
-            const modality = modalityFilter ? modalityFilter.value : 'Todos';
             const grid = document.getElementById('catalog-grid');
             if (!grid) return;
 
-            const filtered = COURSES_DATA.filter(c => {
-                if (currentCategory !== 'Todos' && c.category !== currentCategory) return false;
-                if (!c.name.toLowerCase().includes(query) && !c.desc.toLowerCase().includes(query)) return false;
-                if (modality !== 'Todos' && c.type !== modality) return false;
-                
-                if (currentLevel !== 'Todos') {
-                    if (currentLevel === 'Manual') {
-                        return c.type.toLowerCase() === 'manual';
-                    } else {
-                        // Para los filtros de nivel (Básico, Intermedio, Avanzado), mostrar cursos y manuales de ese nivel.
-                        return c.level.toLowerCase() === currentLevel.toLowerCase();
-                    }
-                }
-                return true;
-            });
+            let filtered = COURSES_DATA;
+
+            if (currentLevel !== 'Todos') {
+                filtered = COURSES_DATA.filter(c => {
+                    const tipo = (c.Tipo || '').toLowerCase();
+                    const nivel = (c.Nivel || '').toLowerCase();
+                    if (currentLevel === 'Manual') return tipo === 'manual';
+                    else return nivel === currentLevel.toLowerCase();
+                });
+            }
+
+            console.log(`📊 Mostrando ${filtered.length} cursos de ${COURSES_DATA.length} totales. Filtro: ${currentLevel}`);
 
             if (filtered.length === 0) {
                 grid.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400 font-bold uppercase tracking-widest text-[10px]">No se encontraron cursos que coincidan con tu búsqueda.</div>';
@@ -1088,6 +1135,74 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             }
             grid.innerHTML = filtered.map(c => generateCourseCard(c)).join('');
             if (window.lucide) lucide.createIcons();
+        }
+
+        async function loadCoursesFromSheet() {
+            const loadingEl = document.getElementById('catalog-loading');
+            const grid = document.getElementById('catalog-grid');
+            const errorEl = document.getElementById('catalog-error');
+            const errorDetail = document.getElementById('catalog-error-detail');
+
+            // Mostrar toast de carga
+            showLoadingToast();
+
+            if (loadingEl) loadingEl.classList.remove('hidden');
+            if (errorEl) errorEl.classList.add('hidden');
+            if (grid) grid.innerHTML = '';
+
+            try {
+                const url = `${CATALOG_SCRIPT_URL}?action=get_courses&nocache=${new Date().getTime()}`;
+                console.log('🔄 Cargando cursos desde:', url);
+
+                const response = await fetch(url);
+                console.log('📡 Respuesta HTTP:', response.status, response.statusText);
+
+                if (!response.ok) throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+
+                const result = await response.json();
+                console.log('📦 Datos recibidos:', result);
+
+                if (result.status !== 'success') throw new Error(result.message || 'El script devolvió un estado de error');
+                if (!result.data || !Array.isArray(result.data)) throw new Error('Los datos recibidos no tienen el formato esperado');
+
+                COURSES_DATA = result.data;
+                console.log(`✅ ${COURSES_DATA.length} cursos cargados exitosamente`);
+
+                COURSES_DATA.forEach((c, i) => {
+                    console.log(`  Curso ${i + 1}: ID=${c.ID}, Nombre="${c.Nombre}", Tipo="${c.Tipo}", Nivel="${c.Nivel}", Activo="${c.Activo}"`);
+                });
+
+                calculateCourseRatings();
+                updateStudentCounts();
+                applyFilters();
+
+                if (loadingEl) loadingEl.classList.add('hidden');
+                
+                // Mostrar toast de éxito
+                showSuccessToast();
+
+            } catch (error) {
+                console.error('❌ Error al cargar cursos:', error);
+                if (loadingEl) loadingEl.classList.add('hidden');
+                if (errorEl) errorEl.classList.remove('hidden');
+                if (errorDetail) errorDetail.innerText = error.message;
+                
+                // Ocultar toast de carga en caso de error
+                hideLoadingToast();
+
+                if (grid) {
+                    grid.innerHTML = `
+                        <div class="col-span-full text-center p-8 bg-red-900/20 border border-red-500/30 rounded-2xl">
+                            <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                            <h3 class="font-bold text-red-400 text-lg mb-2">Error al Cargar el Catálogo</h3>
+                            <p class="text-slate-300 mb-4">No se pudo conectar con la base de datos de cursos.</p>
+                            <p class="text-xs text-slate-500 mb-4">Detalle: ${error.message}</p>
+                            <button onclick="loadCoursesFromSheet()" class="px-6 py-3 bg-[#2db8ce] text-white font-bold rounded-xl hover:bg-[#1877f2] transition-all">
+                                <i class="fas fa-sync-alt mr-2"></i> Reintentar Carga
+                            </button>
+                        </div>`;
+                }
+            }
         }
 
         function filterByLevel(level, element) {
@@ -1100,13 +1215,11 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             else if (level === 'Manual') element.classList.add('border-blue-500');
             else if (level === 'Intermedio') element.classList.add('border-purple-500');
             else if (level === 'Avanzado') element.classList.add('border-amber-500');
-            
-            // Remove from the generic reset above to ensure proper border application
             element.classList.remove('border-slate-700');
             applyFilters();
         }
 
-        function registerViewAndGo(url, courseId, target = '_self') {
+        function registerViewAndGo(url, courseId, courseName = '') {
             const idKey = `curso-${courseId}`;
             ping('update_stat', `${idKey}_vistas`);
             if (globalStats) {
@@ -1115,7 +1228,91 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                     span.innerText = globalStats[`${idKey}_vistas`];
                 });
             }
-            window.open(url, target);
+            
+            if (currentUser && currentUser.email) {
+                if (!currentUser.accessedCursos) currentUser.accessedCursos = [];
+                
+                const courseIdNum = parseInt(courseId);
+                if (!currentUser.accessedCursos.includes(courseIdNum)) {
+                    currentUser.accessedCursos.push(courseIdNum);
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    syncUserProgressToExcel();
+                }
+                
+                recordVisit('curso', courseId, courseName || `Curso ${courseId}`, 'Vista al catálogo del curso');
+            }
+            
+            if (url && url !== '#') window.open(url, '_self');
+        }
+
+        async function recordVisit(visitType, itemId, itemName, details = '') {
+            if (!currentUser || !currentUser.email) return;
+            
+            const email = currentUser.email.toLowerCase();
+            
+            try {
+                const params = new URLSearchParams();
+                params.append('action', 'record_visit');
+                params.append('email', email);
+                params.append('visitType', visitType);
+                params.append('itemId', itemId);
+                params.append('itemName', itemName);
+                params.append('details', details);
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: params,
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    if (!currentUser.visitRegistro) {
+                        currentUser.visitRegistro = {
+                            cursos: {},
+                            infoPaginas: {},
+                            aulas: {}
+                        };
+                    }
+                    
+                    const typeKey = visitType === 'curso' ? 'cursos' : 
+                                   visitType === 'info' ? 'infoPaginas' : 
+                                   visitType === 'aula' ? 'aulas' : null;
+                    
+                    if (typeKey) {
+                        if (!currentUser.visitRegistro[typeKey]) {
+                            currentUser.visitRegistro[typeKey] = {};
+                        }
+                        
+                        if (!currentUser.visitRegistro[typeKey][itemId]) {
+                            currentUser.visitRegistro[typeKey][itemId] = {
+                                visitas: 0,
+                                fechas: []
+                            };
+                        }
+                        
+                        currentUser.visitRegistro[typeKey][itemId].visitas++;
+                        currentUser.visitRegistro[typeKey][itemId].fechas.push(result.fecha);
+                        
+                        localStorage.setItem('user', JSON.stringify(currentUser));
+                    }
+                    
+                    console.log('✅ Visita registrada:', visitType, itemName);
+                }
+            } catch (e) {
+                console.error('Error al registrar visita:', e);
+            }
+        }
+
+        function registerInfoVisit(pageId, pageName) {
+            if (!currentUser || !currentUser.email) return;
+            recordVisit('info', pageId, pageName, 'Visita a página de información');
+        }
+
+        function registerAulaVisit(aulaId, aulaName, cursoName) {
+            if (!currentUser || !currentUser.email) return;
+            recordVisit('aula', aulaId, aulaName, `Aula del curso: ${cursoName}`);
         }
 
         function rateCourse(courseId, rating) {
@@ -1145,13 +1342,15 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             if (currentUser.likedCourses.includes(id)) {
                 currentUser.likedCourses = currentUser.likedCourses.filter(c => c !== id);
                 ping('decrement_stat', `${id}_likes`);
-                btn.classList.remove('liked');
+                btn.classList.remove('liked', 'text-red-500');
+                btn.classList.add('text-slate-400');
                 span.innerText = Math.max(0, currentLikes - 1);
                 if (globalStats) globalStats[`${id}_likes`] = Math.max(0, currentLikes - 1);
             } else {
                 currentUser.likedCourses.push(id);
                 ping('update_stat', `${id}_likes`);
-                btn.classList.add('liked');
+                btn.classList.add('liked', 'text-red-500');
+                btn.classList.remove('text-slate-400');
                 span.innerText = currentLikes + 1;
                 if (globalStats) globalStats[`${id}_likes`] = currentLikes + 1;
             }
@@ -1161,9 +1360,11 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn => {
                 if (otherBtn !== btn) {
                     if (currentUser.likedCourses.includes(id)) {
-                        otherBtn.classList.add('liked');
+                        otherBtn.classList.add('liked', 'text-red-500');
+                        otherBtn.classList.remove('text-slate-400');
                     } else {
-                        otherBtn.classList.remove('liked');
+                        otherBtn.classList.remove('liked', 'text-red-500');
+                        otherBtn.classList.add('text-slate-400');
                     }
                     const otherSpan = otherBtn.querySelector('.like-count');
                     if (otherSpan) otherSpan.innerText = span.innerText;
@@ -1174,14 +1375,31 @@ aulaLink: "aula-virtual-id.html?courseId=24"
         async function syncUserProgressToExcel() {
             if (!currentUser || !currentUser.email) return;
             const email = currentUser.email.toLowerCase();
+            
+            if (!currentUser.likedCourses) currentUser.likedCourses = [];
+            if (!currentUser.accessedCursos) currentUser.accessedCursos = [];
+            if (!currentUser.downloadedFiles) currentUser.downloadedFiles = [];
+            if (!currentUser.ratings) currentUser.ratings = {};
+            if (!currentUser.visitRegistro) currentUser.visitRegistro = {
+                cursos: {},
+                infoPaginas: {},
+                aulas: {}
+            };
+            
             const userData = JSON.stringify(currentUser);
+            
             try {
-                await fetch(SCRIPT_URL, {
+                const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `action=update_user&email=${encodeURIComponent(email)}&userData=${encodeURIComponent(userData)}`
                 });
-            } catch (e) { console.error('Sync error:', e); }
+                
+                const result = await response.json();
+                console.log('📤 Sincronización completada:', result);
+            } catch (e) { 
+                console.error('Sync error:', e); 
+            }
         }
 
         function updateAllUI() {
@@ -1251,9 +1469,9 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             document.getElementById('adminNoSelection').classList.add('hidden');
             document.getElementById('adminFormContainer').classList.remove('hidden');
             document.getElementById('adminErrorMessage').classList.add('hidden');
-            document.getElementById('adminSelectedCourseTitle').innerText = course.name;
-            document.getElementById('adminCourseId').value = course.id;
-            document.getElementById('adminCourseName').value = course.name;
+            document.getElementById('adminSelectedCourseTitle').innerText = course.Nombre;
+            document.getElementById('adminCourseId').value = course.ID;
+            document.getElementById('adminCourseName').value = course.Nombre;
             document.getElementById('adminManualForm').reset();
             document.getElementById('adminStateContainer').classList.add('hidden');
         }
@@ -1266,14 +1484,17 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             }
             const tabsContainer = document.getElementById('adminTabsContainer');
             tabsContainer.innerHTML = '';
-            COURSES_DATA.forEach((course, index) => {
+            const coursesData = COURSES_DATA || [];
+            coursesData.forEach((course) => {
                 const btn = document.createElement('button');
-                btn.className = `w-full text-left p-4 rounded-xl border transition-all duration-200 flex flex-col gap-1 ${index === 0 ? 'bg-white border-[#2db8ce] shadow-md border-l-4' : 'bg-slate-50 border-transparent hover:bg-slate-100 border-l-4 hover:border-slate-300'}`;
-                btn.innerHTML = `<span class="font-bold text-slate-800 text-sm leading-tight">${course.name}</span><span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">${course.type}</span>`;
+                btn.className = 'w-full text-left p-4 rounded-xl border transition-all duration-200 flex flex-col gap-1 bg-slate-50 border-transparent hover:bg-slate-100 border-l-4 hover:border-slate-300 text-slate-600';
+                btn.innerHTML = `<span class="font-bold text-slate-800 text-sm leading-tight">${course.Nombre || 'Curso sin nombre'}</span><span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">${course.Tipo || 'Sin tipo'}</span>`;
                 btn.onclick = () => selectAdminCourse(course, btn);
                 tabsContainer.appendChild(btn);
-                if (index === 0) selectAdminCourse(course, btn);
             });
+            if (coursesData.length > 0) {
+                selectAdminCourse(coursesData[0], tabsContainer.querySelector('button'));
+            }
             openModal('adminModal');
         }
 
@@ -1341,7 +1562,24 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                         btn.disabled = false; icon.className = "fas fa-user-plus"; label.innerText = originalText;
                         return;
                     }
-                    currentUser = { name: inputName, email: email, password: inputPassword, pais: inputCountry, cedula: "", telefono: "", profession: "", likedCourses: [], accessedCursos: [], downloadedFiles: [], ratings: {} };
+                    currentUser = { 
+                        name: inputName, 
+                        email: email, 
+                        password: inputPassword, 
+                        pais: inputCountry, 
+                        cedula: "", 
+                        telefono: "", 
+                        profession: "", 
+                        likedCourses: [], 
+                        accessedCursos: [], 
+                        downloadedFiles: [], 
+                        ratings: {},
+                        visitRegistro: {
+                            cursos: {},
+                            infoPaginas: {},
+                            aulas: {}
+                        }
+                    };
                     await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=register&name=${encodeURIComponent(currentUser.name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(inputPassword)}&pais=${encodeURIComponent(inputCountry)}` });
                     localStorage.setItem('user', JSON.stringify(currentUser));
                     closeModal('authModal');
@@ -1377,16 +1615,27 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                     }
                     currentUser = {
                         name: details.name && details.name !== "No provisto" && details.name !== "N/A" ? details.name : (globalUser.name || email.split('@')[0]),
-                        email: email, password: inputPassword, profession: globalUser.profession || "",
-                        likedCourses: globalUser.likedCourses || [], accessedCursos: globalUser.accessedCursos || [],
-                        downloadedFiles: globalUser.downloadedFiles || [], ratings: globalUser.ratings || {},
-                        cedula: details.cedula || "N/A", telefono: details.telefono || "N/A",
-                        pais: details.pais || "N/A", estado: details.estado || "N/A"
+                        email: email, 
+                        password: inputPassword, 
+                        profession: globalUser.profession || "",
+                        likedCourses: globalUser.likedCourses || [], 
+                        accessedCursos: globalUser.accessedCursos || [],
+                        downloadedFiles: globalUser.downloadedFiles || [], 
+                        ratings: globalUser.ratings || {},
+                        visitRegistro: globalUser.visitRegistro || {
+                            cursos: {},
+                            infoPaginas: {},
+                            aulas: {}
+                        },
+                        cedula: details.cedula || "N/A", 
+                        telefono: details.telefono || "N/A",
+                        pais: details.pais || "N/A", 
+                        estado: details.estado || "N/A"
                     };
                     let myCourseNames = dbUserCourses[email] || [];
                     myCourseNames.forEach(cName => {
-                        let found = COURSES_DATA.find(x => normalizeName(x.name) === normalizeName(cName));
-                        if (found && !currentUser.accessedCursos.includes(found.id)) currentUser.accessedCursos.push(found.id);
+                        let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === normalizeName(cName));
+                        if (found && !currentUser.accessedCursos.includes(found.ID)) currentUser.accessedCursos.push(found.ID);
                     });
                     localStorage.setItem('user', JSON.stringify(currentUser));
                     closeModal('authModal');
@@ -1445,13 +1694,15 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 params.append('telefono', studentPhone);
                 params.append('pais', studentCountry);
                 params.append('estado', studentState);
-                await fetch(SCRIPT_URL, { method: 'POST', body: params, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+                const response = await fetch(SCRIPT_URL, { method: 'POST', body: params, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
+                const result = await response.json();
+                if (result.status !== 'success') throw new Error(result.message || 'El servidor devolvió un error al procesar la inscripción.');
                 if (!dbUserCourses[studentEmail]) dbUserCourses[studentEmail] = [];
                 dbUserCourses[studentEmail].push(courseName);
                 if (currentUser && studentEmail === currentUser.email.toLowerCase()) {
                     currentUser.name = studentName;
-                    const foundCourse = COURSES_DATA.find(c => normalizeName(c.name) === normalizeName(courseName));
-                    if (foundCourse && !currentUser.accessedCursos.includes(foundCourse.id)) currentUser.accessedCursos.push(foundCourse.id);
+                    const foundCourse = COURSES_DATA.find(c => normalizeName(c.Nombre) === normalizeName(courseName));
+                    if (foundCourse && !currentUser.accessedCursos.includes(parseInt(foundCourse.ID))) currentUser.accessedCursos.push(parseInt(foundCourse.ID));
                     localStorage.setItem('user', JSON.stringify(currentUser));
                     updateAllUI();
                 }
@@ -1460,7 +1711,9 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 document.getElementById('adminStateContainer').classList.add('hidden');
                 loadData(false);
             } catch (error) {
-                showNotif('Error', 'No se pudo registrar al estudiante', 'error');
+                errText.innerText = error.message;
+                errBox.classList.remove('hidden');
+                showNotif('Error de Inscripción', error.message, 'error');
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = originalText;
@@ -1468,16 +1721,11 @@ aulaLink: "aula-virtual-id.html?courseId=24"
         };
 
         document.addEventListener("DOMContentLoaded", () => {
-            calculateCourseRatings();
-            updateStudentCounts();
-
-            // Set no filter active on load
+            console.log('🚀 Inicializando Aprende Automatización...');
             document.querySelectorAll('.learning-step').forEach(step => {
                 step.classList.add('border-slate-700');
-                step.classList.remove('border-cyan-500', 'border-blue-500', 'border-purple-500', 'border-amber-500');
             });
-
-            applyFilters(); // Uses 'Todos' by default
+            loadCoursesFromSheet();
             updateAllUI();
             if (window.lucide) lucide.createIcons();
             setTimeout(() => { initVisitorInfo(); loadData(true); }, 300);
@@ -1511,14 +1759,13 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 } catch (e) { console.warn(`Fallo geoip ${service}:`, e.message); }
             }
         }
-        
+
         function logoutUser() {
             localStorage.removeItem('user');
             window.location.reload();
         }
     </script>
-<script src="js/auth.js"></script>
-<script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/navbar.js"></script>
     <script src="js/footer.js"></script>
 </body>

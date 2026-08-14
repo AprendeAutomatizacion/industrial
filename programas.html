@@ -12,93 +12,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Configuración Tailwind global -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#1877f2',
-                        secondary: '#2db8ce',
-                        dark: '#0f172a',
-                        accent: '#91a1af',
-                        light: '#f8fafc',
-                    }
-                }
-            }
-        }
-    </script>
-
     <style>
-        /* 1. Definición de Variables de Color para Temas */
         :root {
-            /* Paleta Clara */
             --bg-default: #f7f9fb;
             --bg-secondary: #ffffff;
-            --bg-dark: #0f172a; /* Para secciones oscuras en modo claro */
+            --bg-dark: #0f172a;
             --bg-dark-accent: #1e293b;
-
             --text-default: #1e293b;
             --text-secondary: #475569;
-            --text-light: #f8fafc; /* Para texto sobre fondos oscuros */
+            --text-light: #f8fafc;
             --text-accent: #2db8ce;
-
             --border-default: #e2e8f0;
             --border-light: rgba(255, 255, 255, 0.1);
-
             --shadow-color: rgba(0, 0, 0, 0.1);
-
-            /* Colores para componentes de tarjetas */
-            --badge-bg-intermediate: #0891b2; /* cyan-600 */
-            --badge-bg-basic: #0d9488; /* teal-600 */
-            --badge-text: #ffffff;
-            --btn-accent-bg: #0891b2; /* cyan-600 */
-            --btn-accent-text: #ffffff;
-            --btn-accent-shadow: rgba(8, 145, 178, 0.3);
-            --btn-accent-border: #0e7490; /* cyan-700 */
-            --btn-accent-bg-hover: #0e7490; /* cyan-700 */
         }
 
         body:not(.light-mode) {
-            /* Paleta Oscura */
             --bg-default: #0f172a;
             --bg-secondary: #1e293b;
-            --bg-dark: #0f172a;
-            --bg-dark-accent: #1e293b;
-
             --text-default: #f8fafc;
             --text-secondary: #94a3b8;
-            --text-light: #f8fafc;
-
             --border-default: #334155;
-            --border-light: rgba(45, 184, 206, 0.3);
-
             --shadow-color: rgba(0, 0, 0, 0.25);
         }
-
-        /* --- Estilos Generales --- */
-        .section-title {
-            color: var(--text-default);
-        }
-
-        body.light-mode .hero-main-title {
-            color: #000000 !important;
-        }
-        body.light-mode .hero-main-title .text-secondary {
-            color: #2db8ce !important;
-            text-shadow: none !important;
-            opacity: 1 !important;
-        }
-        body.light-mode #page-programas > header .absolute.inset-0.z-0 {
-            background-color: rgba(79, 111, 141, 0.45);
-        }
-        body.light-mode #page-programas > header .absolute.inset-0.z-0 img {
-            filter: brightness(0.58) contrast(1.05) saturate(0.9);
-            opacity: 0.85 !important;
-            mix-blend-mode: multiply;
-        }
-
-        /* --- Estilos movidos desde index.html y adaptados a variables --- */
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
@@ -108,267 +44,15 @@
             color: var(--text-default);
             scroll-behavior: smooth;
             overflow-x: clip;
-            transition: background-color 0.3s, color 0.3s;
         }
 
-        .animate-on-hover { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .animate-on-hover:hover { transform: translateY(-5px) scale(1.01); box-shadow: 0 25px 50px -12px var(--shadow-color); filter: brightness(1.05); }
-
-        .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translate(0, 0, 0) scale(1); }
-        .reveal-up { transform: translateY(40px); }
-        .reveal-down { transform: translateY(-40px); }
-        .reveal-right { transform: translateX(-40px); }
-
-        .btn-glow { position: relative; overflow: hidden; transition: all 0.3s ease; }
-        .btn-glow:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
-        .btn-glow::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); transition: 0.6s;
+        body.light-mode .hero-main-title {
+            color: #000000 !important;
         }
-        .btn-glow:hover::after { left: 100%; }
-
-        /* --- Secciones Tematizables --- */
-        .section-themed {
-            background-color: var(--bg-default);
-            border-top: 1px solid var(--border-default);
-            transition: background-color 0.3s, border-color 0.3s;
+        body.light-mode .hero-main-title .text-secondary {
+            color: #2db8ce !important;
         }
 
-        .section-themed .section-subtitle {
-            color: var(--text-accent);
-        }
-
-        .section-themed .section-title {
-            color: var(--text-default);
-        }
-
-        /* --- Estilo de Tarjetas de Curso (Estilo Catálogo Unificado) --- */
-        .course-card {
-            background-color: var(--bg-secondary);
-            border-radius: 1.5rem; /* 24px */
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease-in-out;
-            text-align: left;
-            /* Se elimina border y box-shadow base para que lo controlen las clases de nivel */
-        }
-
-        .course-card .course-card-image-container {
-            position: relative;
-            height: 12rem;
-            overflow: hidden;
-        }
-
-        .course-card .course-card-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-
-        .course-card:hover .course-card-image {
-            transform: scale(1.05);
-        }
-
-        .course-card .course-card-content {
-            padding: 1.5rem;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .course-card .course-card-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1;
-            padding: 0.25rem 0.75rem;
-            font-size: 9px;
-            font-weight: 900;
-            text-transform: uppercase;
-            border-radius: 9999px;
-            color: var(--badge-text);
-        }
-
-        .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
-        .course-card .badge-basic { background-color: var(--badge-bg-basic); }
-
-        .course-card .course-card-title {
-            color: var(--text-default);
-            font-size: 1.125rem;
-            font-weight: 700;
-            line-height: 1.4;
-            margin-bottom: 0.5rem;
-        }
-
-        .course-card .course-card-description {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-            line-height: 1.6;
-        }
-
-        .course-card .course-card-footer {
-            margin-top: auto;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-default);
-        }
-
-        .course-card .course-card-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .course-card .course-card-price {
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: var(--text-default);
-        }
-
-        .course-card .course-card-stats {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .course-card .like-btn, .course-card .view-container {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            font-weight: 500;
-            transition: color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            cursor: pointer;
-        }
-        .course-card .like-btn.liked { color: #ef4444 !important; }
-        .course-card .view-container.has-views { color: #22c55e; }
-
-        .course-card .course-card-buttons {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        /* Adaptación para que el botón metálico funcione dentro de la tarjeta */
-        .course-card .course-card-buttons .btn-metal {
-            flex: 1;
-            font-size: 10px;
-        }
-
-        /* --- Resplandor de Tarjetas por Nivel (Estilo Catálogo) --- */
-        .course-card-level-basico {
-            border: 1px solid rgba(6, 182, 212, 0.35);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
-        }
-        .course-card-level-basico:hover {
-            border-color: #06b6d4;
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
-        }
-
-        .course-card-level-intermedio {
-            border: 1px solid rgba(168, 85, 247, 0.35);
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
-        }
-        .course-card-level-intermedio:hover {
-            border-color: #a855f7;
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.45);
-        }
-
-        .course-card-level-avanzado {
-            border: 1px solid rgba(245, 158, 11, 0.35);
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
-        }
-        .course-card-level-avanzado:hover {
-            border-color: #f59e0b;
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
-        }
-
-        /* --- Estilo Tarjeta Misión --- */
-        .mission-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: 1px solid rgba(6, 182, 212, 0.35);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
-        }
-        .mission-card:hover {
-            border-color: #06b6d4;
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.45);
-        }
-
-        body:not(.light-mode) .mission-card {
-            border: 1px solid rgba(6, 182, 212, 0.5);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
-        }
-        body:not(.light-mode) .mission-card:hover {
-            border-color: #06b6d4;
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
-        }
-
-        /* --- Estilo Tarjeta Misión (Modo Claro) --- */
-        body.light-mode .mission-card {
-            background-color: #ffffff !important;
-            border-color: #e2e8f0 !important;
-        }
-        body.light-mode .mission-card h3 {
-            color: #1e293b !important;
-        }
-        body.light-mode .mission-card ul {
-            color: #475569 !important;
-        }
-
-        /* --- Estilo Tarjeta Misión (Modo Oscuro) --- */
-        body:not(.light-mode) .mission-card { 
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        body:not(.light-mode) .mission-card h3 { color: #ffffff; }
-        body:not(.light-mode) .mission-card ul { color: #cbd5e1; } /* slate-300 */
-
-        /* Dark mode overrides para las tarjetas */
-        body:not(.light-mode) .course-card {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0));
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            /* El borde y la sombra ahora son controlados por las clases de nivel */
-        }
-
-        /* --- Resplandor de Tarjetas por Nivel (MODO OSCURO) --- */
-        body:not(.light-mode) .course-card-level-basico {
-            border: 1px solid rgba(6, 182, 212, 0.5);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
-        }
-        body:not(.light-mode) .course-card-level-basico:hover {
-            border-color: #06b6d4;
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.5);
-        }
-
-        body:not(.light-mode) .course-card-level-intermedio {
-            border: 1px solid rgba(168, 85, 247, 0.5);
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
-        }
-        body:not(.light-mode) .course-card-level-intermedio:hover {
-            border-color: #a855f7;
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
-        }
-
-        body:not(.light-mode) .course-card-level-avanzado {
-            border: 1px solid rgba(245, 158, 11, 0.5);
-            box-shadow: 0 0 15px rgba(245, 158, 11, 0.25);
-        }
-        body:not(.light-mode) .course-card-level-avanzado:hover {
-            border-color: #f59e0b;
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.5);
-        }
-
-        body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
-        body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
-
-        /* Botones metalicos (unificados con Mis Cursos) */
         .btn-metal-solid {
             display: inline-flex;
             align-items: center;
@@ -382,101 +66,218 @@
             border-radius: 1rem;
             cursor: pointer;
             transition: all 0.25s ease;
-            position: relative;
-            overflow: hidden;
-            text-decoration: none;
             color: #ffffff !important;
             border: none !important;
-            outline: none;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
             background: linear-gradient(180deg, #b0c4de 0%, #7a8fa6 8%, #4a6078 20%, #2d4a5e 40%, #1e3a4f 60%, #1a3142 100%);
         }
-        .btn-metal-solid::before {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 10%;
-            width: 80%;
-            height: 35%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 100%);
-            border-radius: 50%;
-            pointer-events: none;
-            transition: opacity 0.25s ease;
-        }
-        .btn-metal-solid:hover {
-            background: linear-gradient(180deg, #c0d4e8 0%, #8a9fb6 8%, #5a7088 20%, #3d5a6e 40%, #2e4a5f 60%, #243e52 100%);
-            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-        .btn-metal-solid:active {
-            transform: scale(0.96);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.2);
-            background: linear-gradient(180deg, #1a3142 0%, #1e3a4f 40%, #2d4a5e 60%, #4a6078 100%);
-        }
-
         .btn-metal-cyan {
             background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%);
             box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
-        .btn-metal-cyan::before {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
-        }
-        .btn-metal-cyan:hover {
-            background: linear-gradient(180deg, #b0e0f0 0%, #6bc8d8 8%, #3daabe 20%, #2a8d9e 40%, #1f7488 60%, #155f70 100%);
-            box-shadow: 0 10px 24px rgba(15, 100, 120, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-        }
-        .btn-metal-cyan:active {
-            background: linear-gradient(180deg, #0b4f60 0%, #0f6478 40%, #1a7d91 60%, #2d9aae 100%);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
-        }
-
         .btn-metal-teal {
             background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%);
             box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
-        .btn-metal-teal::before {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.1) 100%);
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2db8ce; border-radius: 10px; }
+
+        /* ============ ESTILOS PARA EL TOAST DE CARGA ============ */
+        .loading-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100002;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(45, 184, 206, 0.2);
+            pointer-events: none;
+            min-width: 320px;
+            max-width: 90vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        .btn-metal-teal:hover {
-            background: linear-gradient(180deg, #b0f0e0 0%, #6bd8c8 8%, #3dbeae 20%, #2a9d8e 40%, #1f8878 60%, #157060 100%);
-            box-shadow: 0 10px 24px rgba(15, 100, 90, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        .loading-toast.hiding { opacity: 0; transform: translateX(100px); }
+        .loading-toast .toast-logo {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
         }
-        .btn-metal-teal:active {
-            background: linear-gradient(180deg, #0b6050 0%, #0f7868 40%, #1a9180 60%, #2daa9a 100%);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(0, 0, 0, 0.25);
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.4));
         }
-    </style>
-    <style>
-        /* Sobrescribir la imagen de fondo global solo para esta página */
-        body#programas-page::before {
-            background-image: url('img/AA (6).gif');
+        .loading-toast .toast-content { flex: 1; }
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
         }
-        body.light-mode#programas-page::before {
-            display: none;
+        .loading-toast .toast-subtitle {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
         }
+        .loading-toast .toast-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(45, 184, 206, 0.2);
+            border-top: 3px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            flex-shrink: 0;
+        }
+        .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+        .loading-toast.success-toast .toast-title { color: #ffffff; }
+        .loading-toast.success-toast .toast-subtitle { color: rgba(255, 255, 255, 0.9); }
+        .loading-toast.success-toast .toast-check {
+            width: 32px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 900;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(150%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulseLogo {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.3)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 20px rgba(45, 184, 206, 0.6)); transform: scale(1.05); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(45, 184, 206, 0.25);
+        }
+        body.light-mode .loading-toast .toast-title { color: #1e293b; }
+        body.light-mode .loading-toast .toast-subtitle { color: #64748b; }
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+        }
+        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+        body.light-mode .loading-toast.success-toast .toast-subtitle { color: rgba(255, 255, 255, 0.95); }
+        /* ============ FIN ESTILOS TOAST ============ */
     </style>
 </head>
-<body id="programas-page" class="custom-scrollbar">
+<body class="custom-scrollbar light-mode">
 
-<!-- Indicador de sincronización -->
-<div id="syncIndicator" class="sync-indicator">
-    <i class="fas fa-sync-alt fa-spin text-[#2db8ce]"></i>
-    <span id="syncText">Sincronizando datos...</span>
+<!-- Toast de carga -->
+<div id="loadingToast" class="loading-toast hidden">
+    <div class="toast-logo">
+        <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+    </div>
+    <div class="toast-content">
+        <div class="toast-title" id="loadingToastTitle">Estamos cargando los programas disponibles</div>
+        <div class="toast-subtitle" id="loadingToastSubtitle">Conectando con la base de datos...</div>
+    </div>
+    <div class="toast-spinner" id="loadingToastSpinner"></div>
 </div>
 
-<!-- SECCIÓN: PROGRAMAS (DESCARGAS)              -->
-<!-- ========================================== -->
+<script>
+    // ============ FUNCIONES DEL TOAST DE CARGA ============
+    function showLoadingToast() {
+        const toast = document.getElementById('loadingToast');
+        const title = document.getElementById('loadingToastTitle');
+        const subtitle = document.getElementById('loadingToastSubtitle');
+        const spinner = document.getElementById('loadingToastSpinner');
+        
+        if (toast) {
+            toast.classList.remove('hidden', 'hiding', 'success-toast');
+            title.innerText = 'Estamos cargando los programas disponibles';
+            subtitle.innerText = 'Conectando con la base de datos...';
+            if (spinner) spinner.style.display = 'block';
+            const existingCheck = toast.querySelector('.toast-check');
+            if (existingCheck) existingCheck.remove();
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+        }
+    }
+
+    function showSuccessToast() {
+        const toast = document.getElementById('loadingToast');
+        const title = document.getElementById('loadingToastTitle');
+        const subtitle = document.getElementById('loadingToastSubtitle');
+        const spinner = document.getElementById('loadingToastSpinner');
+        
+        if (toast) {
+            toast.classList.remove('hidden', 'hiding');
+            toast.classList.add('success-toast');
+            title.innerText = '¡Listo! Programas cargados correctamente';
+            subtitle.innerText = 'Información actualizada correctamente';
+            if (spinner) spinner.style.display = 'none';
+            const existingCheck = toast.querySelector('.toast-check');
+            if (existingCheck) existingCheck.remove();
+            const checkDiv = document.createElement('div');
+            checkDiv.className = 'toast-check';
+            checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+            toast.appendChild(checkDiv);
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+            setTimeout(() => { hideLoadingToast(); }, 3000);
+        }
+    }
+
+    function hideLoadingToast() {
+        const toast = document.getElementById('loadingToast');
+        if (toast) {
+            toast.classList.add('hiding');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('hiding', 'success-toast');
+            }, 500);
+        }
+    }
+    // ============ FIN FUNCIONES DEL TOAST ============
+</script>
+
+<!-- SECCIÓN: PROGRAMAS -->
 <div id="page-programas" class="page-content active flex flex-col">
     <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
-        <!-- Imagen de fondo transparente -->
         <div class="absolute inset-0 z-0 opacity-40">
             <img src="img/AA (6).gif" class="w-full h-full object-cover mix-blend-soft-light" alt="Fondo Programas">
         </div>
-        <!-- Icono de descargas grande a la derecha -->
-        <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
-            <i class="fas fa-laptop-code"></i>
-        </div>
-        <div class="absolute right-4 top-4 text-white/5 text-8xl pointer-events-none z-0 md:hidden">
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] pointer-events-none z-0 hidden md:block">
             <i class="fas fa-laptop-code"></i>
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
@@ -485,7 +286,7 @@
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Descargas</span>
                 <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Herramientas</span>
             </div>
-            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">PROGRAMAS</h1>
+            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display text-white">PROGRAMAS</h1>
             <p class="text-lg md:text-xl text-blue-50 max-w-2xl drop-shadow-md font-medium">Descarga los simuladores y programas de automatización que utilizaremos.</p>
         </div>
     </header>
@@ -501,35 +302,34 @@
     </div>
 </div>
 
-<!-- Contenedor de Notificaciones Nativas -->
 <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
 <script>
     // ==========================================
-    // VARIABLES GLOBALES Y CONEXIÓN A GOOGLE SHEETS
+    // CONFIGURACIÓN Y CONEXIÓN A GOOGLE SHEETS
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrozAl5UD90NzUYIUTR2QJ_oXa3dTp6fsnjjEtAbjja3M8UJyEuO_BClPMFj1jjsFw/exec';
     
     let currentUser = JSON.parse(localStorage.getItem('user')) || null;
-    let dbUsers = {}, globalStats = {}, dbUserCourses = {}, dbUserDetails = {}; 
+    let dbUsers = {}, globalStats = {};
     let programCounts = {}; 
     let userCountry = "Desconocido";
+    let PROGRAMS_DATA = [];
 
-    // DATOS DE PROGRAMAS PARA DESCARGA
-    const DESCARGAS_PROGRAMAS = [
-        { id: 1, name: "CadeSimu", version: "V4.0", size: "15 MB", desc: "Simulador de esquemas eléctricos, control y automatismos.", image: "img/AA (18).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1IxgxpS-7bTjni3EDKyiUEPIVY6Ivreyu" },
-        { id: 2, name: "PCSimu", version: "V3.0", size: "12 MB", desc: "Simulador de processes automáticos.", image: "img/AA (20).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1vEcFNjzSWTpLv0XpsA3EOEwUas9WOoIj" },
-        { id: 3, name: "LogoSoft Comfort", version: "V7.0", size: "120 MB", desc: "Software de programación para autómatas Siemens LOGO!.", image: "img/AA (22).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1k3ZF1ijVJsUxAYZomv43Z0nHcd89dYMC" },
-        { id: 4, name: "LogoSoft Comfort V8.3", version: "64-bit", size: "1.4 GB", desc: "Versión moderna de LogoSoft para 64 bits.", image: "img/AA (28).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1H-cfWhTuRzkqOXyEHVfQX6liKml_Xmn9" },
-        { id: 5, name: "LogoSoft Comfort V8.3", version: "32-bit", size: "1.2 GB", desc: "Versión moderna de LogoSoft para 32 bits.", image: "img/AA (28).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1zay9zFQLyFgtrgIid0khNe1VeptRWRvw" },
-        { id: 6, name: "Factory I/O", version: "V2.5", size: "900 MB", desc: "Simulador de fábrica 3D inmersivo.", image: "img/AA (31).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1OuUk0HWR8LUQ5X24LxseggiuTFzrfLJK" },
-        { id: 7, name: "Step 7 MicroWin", version: "V4.0 SP9", size: "450 MB", desc: "Entorno de programación para Siemens S7-200.", image: "img/AA (24).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1X2ak3unU9KrGb_dtg28huWJLvnuWuqE2" },
-        { id: 8, name: "Simulador S7-200", version: "V3.0", size: "5 MB", desc: "Simulación virtual de PLC Siemens S7-200.", image: "img/AA (30).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1iVZQeWNoLRX-U_mltyrCgyScpFIoejpr" },
-        { id: 9, name: "Festo FluidSIM", version: "V5.0", size: "350 MB", desc: "Simulador de neumática e hidráulica.", image: "img/AA (26).webp", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1kQF89d7vhczaz5Y7B3U1ow5bNgjReIz4" }
-    ];
-
-    const countryToISO = { "venezuela": "ve", "colombia": "co", "méxico": "mx", "mexico": "mx", "españa": "es", "spain": "es", "argentina": "ar", "perú": "pe", "peru": "pe", "chile": "cl", "ecuador": "ec" };
-    const countryToSpanish = { "venezuela": "Venezuela", "colombia": "Colombia", "mexico": "México", "méxico": "México", "spain": "España", "españa": "España", "argentina": "Argentina", "peru": "Perú", "perú": "Perú", "chile": "Chile", "ecuador": "Ecuador", "bolivia": "Bolivia", "paraguay": "Paraguay", "uruguay": "Uruguay", "costa rica": "Costa Rica", "panama": "Panamá", "panamá": "Panamá", "dominican republic": "República Dominicana", "república dominicana": "República Dominicana", "guatemala": "Guatemala", "honduras": "Honduras", "el salvador": "El Salvador", "nicaragua": "Nicaragua", "cuba": "Cuba", "puerto rico": "Puerto Rico", "puertorico": "Puerto Rico", "united states": "Estados Unidos", "usa": "Estados Unidos", "estados unidos": "Estados Unidos", "france": "Francia", "francia": "Francia", "brazil": "Brasil", "brasil": "Brasil", "italy": "Italia", "italia": "Italia", "germany": "Alemania", "alemania": "Alemania", "canada": "Canadá", "canadá": "Canadá", "united kingdom": "Reino Unido", "reino unido": "Reino Unido", "portugal": "Portugal", "haiti": "Haití", "haití": "Haití", "japan": "Japón", "japón": "Japón", "china": "China", "russia": "Rusia", "rusia": "Rusia", "belgium": "Bélgica", "bélgica": "Bélgica", "switzerland": "Suiza", "suiza": "Suiza", "jamaica": "Jamaica", "trinidad and tobago": "Trinidad y Tobago", "guyana": "Guyana", "suriname": "Surinam", "belize": "Belice", "bahamas": "Bahamas", "barbados": "Barbados", "saint lucia": "Santa Lucía", "grenada": "Granada", "saint vincent and the grenadines": "San Vicente y las Granadinas", "antigua and barbuda": "Antigua y Barbuda", "dominica": "Dominica", "saint kitts and nevis": "San Cristóbal y Nieves" };
+    const countryToSpanish = { 
+        "venezuela": "Venezuela", "colombia": "Colombia", "mexico": "México", "méxico": "México",
+        "spain": "España", "españa": "España", "argentina": "Argentina", "peru": "Perú", "perú": "Perú",
+        "chile": "Chile", "ecuador": "Ecuador", "bolivia": "Bolivia", "paraguay": "Paraguay",
+        "uruguay": "Uruguay", "costa rica": "Costa Rica", "panama": "Panamá", "panamá": "Panamá",
+        "dominican republic": "República Dominicana", "república dominicana": "República Dominicana",
+        "guatemala": "Guatemala", "honduras": "Honduras", "el salvador": "El Salvador",
+        "nicaragua": "Nicaragua", "cuba": "Cuba", "puerto rico": "Puerto Rico",
+        "united states": "Estados Unidos", "usa": "Estados Unidos", "estados unidos": "Estados Unidos",
+        "france": "Francia", "francia": "Francia", "brazil": "Brasil", "brasil": "Brasil",
+        "italy": "Italia", "italia": "Italia", "germany": "Alemania", "alemania": "Alemania",
+        "canada": "Canadá", "canadá": "Canadá", "united kingdom": "Reino Unido",
+        "portugal": "Portugal", "haiti": "Haití", "japan": "Japón", "china": "China"
+    };
 
     function getFlagEmoji(countryName) {
         const name = countryName.toLowerCase();
@@ -541,30 +341,20 @@
         if (name.includes('peru') || name.includes('perú')) return '🇵🇪';
         if (name.includes('chile')) return '🇨🇱';
         if (name.includes('ecuador')) return '🇪🇨';
-        if (name.includes('bolivia')) return '🇧🇴';
-        if (name.includes('paraguay')) return '🇵🇾';
-        if (name.includes('uruguay')) return '🇺🇾';
-        if (name.includes('costa rica')) return '🇨🇷';
-        if (name.includes('panama') || name.includes('panamá')) return '🇵🇦';
-        if (name.includes('republica dominicana') || name.includes('república')) return '🇩🇴';
-        if (name.includes('guatemala')) return '🇬🇹';
-        if (name.includes('honduras')) return '🇭🇳';
-        if (name.includes('el salvador')) return '🇸🇻';
-        if (name.includes('nicaragua')) return '🇳🇮';
         if (name.includes('estados unidos') || name.includes('usa') || name.includes('united')) return '🇺🇸';
         return '🌍';
     }
 
-    // ==========================================
-    // UTILIDADES UI Y NOTIFICACIONES
-    // ==========================================
-    function showNotif(t,m, type = 'success') { 
-        const n = document.getElementById('notification'); const icon = document.getElementById('notifIcon');
-        document.getElementById('notifTitle').innerText = t; document.getElementById('notifMsg').innerText = m; 
-        if (t.toLowerCase().includes('error') || t.toLowerCase().includes('denegado') || type === 'error') { n.classList.remove('bg-emerald-600', 'bg-blue-600'); n.classList.add('bg-red-600'); icon.className = 'fas fa-exclamation-circle text-2xl'; } 
-        else if(type === 'info') { n.classList.remove('bg-emerald-600', 'bg-red-600'); n.classList.add('bg-blue-600'); icon.className = 'fas fa-info-circle text-2xl'; }
-        else { n.classList.remove('bg-red-600', 'bg-blue-600'); n.classList.add('bg-emerald-600'); icon.className = 'fas fa-check-circle text-2xl'; }
-        n.classList.add('show'); setTimeout(() => n.classList.remove('show'), 4000); 
+    function showNotif(title, msg, type = 'success') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        const bgColor = type === 'error' ? 'bg-red-600' : type === 'info' ? 'bg-blue-600' : 'bg-emerald-600';
+        const icon = type === 'error' ? 'fa-exclamation-circle' : type === 'info' ? 'fa-info-circle' : 'fa-check-circle';
+        
+        toast.className = `${bgColor} text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 min-w-[300px] border border-white/20 pointer-events-auto z-[9999]`;
+        toast.innerHTML = `<div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0"><i class="fas ${icon} text-white"></i></div><div class="text-left"><h4 class="text-sm font-bold">${title}</h4><p class="text-xs text-white/80">${msg}</p></div>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
     }
 
     function ping(action, key) {
@@ -580,46 +370,95 @@
     function showToastDownload(itemName) {
         const container = document.getElementById('toastContainer');
         const toast = document.createElement('div');
-        toast.className = 'bg-dark text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 slide-up min-w-[300px] border border-slate-700 pointer-events-auto z-[9999]';
+        toast.className = 'bg-dark text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 min-w-[300px] border border-slate-700 pointer-events-auto z-[9999]';
         toast.innerHTML = `<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center animate-pulse"><i data-lucide="arrow-down" class="w-4 h-4 text-white"></i></div><div class="text-left"><h4 class="text-sm font-bold">Descargando</h4><p class="text-xs text-slate-300">${itemName}</p></div>`;
-        container.appendChild(toast); if(window.lucide) lucide.createIcons();
+        container.appendChild(toast);
+        if(window.lucide) lucide.createIcons();
         setTimeout(() => { toast.style.opacity='0'; setTimeout(()=>toast.remove(), 300); }, 4000);
     }
 
-    async function fetchWithRetry(url, options = {}, maxRetries = 3) {
-        let delay = 1000;
-        for (let i = 0; i < maxRetries; i++) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 6000);
-                const response = await fetch(url, { ...options, signal: controller.signal });
-                clearTimeout(timeoutId);
-                if (options.mode === 'no-cors') return { status: "sent" };
-                if (response.ok) return response;
-                throw new Error(`Error HTTP: ${response.status}`);
-            } catch (err) {
-                if (i === maxRetries - 1) throw err;
-                await new Promise(res => setTimeout(res, delay));
-                delay *= 2;
+    // ==========================================
+    // CARGAR PROGRAMAS DESDE LA HOJA "Programas"
+    // ==========================================
+    async function loadProgramsFromSheet() {
+        showLoadingToast();
+        
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=get_programs&nocache=${new Date().getTime()}`);
+            const result = await response.json();
+            
+            if (result.status === 'success' && result.data && Array.isArray(result.data)) {
+                PROGRAMS_DATA = result.data;
+                console.log(`✅ ${PROGRAMS_DATA.length} programas cargados desde la hoja "Programas"`);
+                
+                renderPrograms(PROGRAMS_DATA);
+                
+                // Cargar conteos de descargas
+                await loadDownloadCounts();
+                
+                showSuccessToast();
+            } else {
+                throw new Error(result.message || 'No se pudieron cargar los programas');
+            }
+        } catch (error) {
+            console.error('❌ Error al cargar programas:', error);
+            hideLoadingToast();
+            
+            const grid = document.getElementById('programsGrid');
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center p-8 bg-red-900/20 border border-red-500/30 rounded-2xl">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                        <h3 class="font-bold text-red-400 text-lg mb-2">Error al Cargar Programas</h3>
+                        <p class="text-slate-300 mb-4">No se pudo conectar con la base de datos.</p>
+                        <button onclick="loadProgramsFromSheet()" class="px-6 py-3 bg-[#2db8ce] text-white font-bold rounded-xl hover:bg-[#1877f2] transition-all">
+                            <i class="fas fa-sync-alt mr-2"></i> Reintentar
+                        </button>
+                    </div>`;
             }
         }
     }
 
-    // ==========================================
-    // LÓGICA DE PROGRAMAS (RENDER Y DESCARGA)
-    // ==========================================
+    async function loadDownloadCounts() {
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=get_downloads`);
+            const data = await response.json();
+            if (data && data.counts) {
+                programCounts = data.counts;
+                // Actualizar contadores en la UI
+                PROGRAMS_DATA.forEach(prog => {
+                    const countEl = document.getElementById(`progCount-${prog.id}`);
+                    if (countEl) {
+                        const key = `${prog.name} ${prog.version}`;
+                        countEl.innerText = programCounts[key] || 0;
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('Error cargando conteos de descargas:', e);
+        }
+    }
+
     function renderPrograms(data) {
         const programsGrid = document.getElementById('programsGrid');
         const noResults = document.getElementById('noResultsProgramas');
         programsGrid.innerHTML = '';
         
-        if (data.length === 0) { programsGrid.classList.add('hidden'); noResults.classList.remove('hidden'); return; }
-        programsGrid.classList.remove('hidden'); noResults.classList.add('hidden');
+        if (!data || data.length === 0) { 
+            programsGrid.classList.add('hidden'); 
+            noResults.classList.remove('hidden'); 
+            return; 
+        }
+        programsGrid.classList.remove('hidden'); 
+        noResults.classList.add('hidden');
         
         data.forEach((prog, index) => {
             const card = document.createElement('div');
             card.className = `group bg-[#0f172a]/60 backdrop-blur-xl rounded-[24px] border border-white/20 shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col fade-in text-left`;
             card.style.animationDelay = `${index * 0.05}s`;
+            
+            // La imagen se obtiene de la carpeta img/
+            const imagePath = prog.image ? `img/${prog.image}` : 'img/AA (38).webp';
             
             let btnContent, btnClass;
             if (currentUser) {
@@ -633,25 +472,26 @@
             const softwareKey = `${prog.name} ${prog.version}`;
             const displayCount = programCounts[softwareKey] !== undefined ? programCounts[softwareKey] : 0;
 
-            const isDownloaded = currentUser && currentUser.downloadedPrograms && currentUser.downloadedPrograms.includes(prog.id);
+            const isDownloaded = currentUser && currentUser.downloadedPrograms && currentUser.downloadedPrograms.includes(parseInt(prog.id));
             const userStatusTag = isDownloaded ? `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Ya has descargado este programa"><i data-lucide="check-circle" class="w-3 h-3"></i> Descargado</span>` : '';
-            
-            const userDownloadCount = currentUser && currentUser.downloadedFiles && currentUser.downloadedFiles[prog.id] ? currentUser.downloadedFiles[prog.id] : 0;
-            const userCountTag = userDownloadCount > 0 ? `<span class="bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Tus descargas"><i data-lucide="download" class="w-3 h-3"></i> ${userDownloadCount}</span>` : '';
 
             card.innerHTML = `
-                <div class="aspect-video w-full overflow-hidden bg-slate-900/50 border-b border-white/10"><img src="${prog.image}" class="w-full h-full object-cover opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-500"></div>
+                <div class="aspect-video w-full overflow-hidden bg-slate-900/50 border-b border-white/10">
+                    <img src="${imagePath}" class="w-full h-full object-cover opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-500" onerror="this.src='img/AA (38).webp'">
+                </div>
                 <div class="p-6 flex-grow">
                     <h2 class="text-lg font-bold text-white mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${prog.name}</h2>
                     <div class="flex flex-wrap gap-2 mb-3 text-xs font-bold">
-                        <span class="bg-white/10 text-slate-300 px-2 py-0.5 rounded-full border border-white/10">${prog.version}</span>
-                        <span class="bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full border border-blue-500/30">${prog.size}</span>
+                        <span class="bg-white/10 text-slate-300 px-2 py-0.5 rounded-full border border-white/10">${prog.version || 'N/A'}</span>
+                        <span class="bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full border border-blue-500/30">${prog.size || 'N/A'}</span>
                         <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Descargas totales"><i data-lucide="bar-chart-2" class="w-3 h-3"></i><span id="progCount-${prog.id}">${displayCount}</span></span>
-                        ${userStatusTag} ${userCountTag}
+                        ${userStatusTag}
                     </div>
-                    <p class="text-slate-300 text-sm line-clamp-3 leading-relaxed">${prog.desc}</p>
+                    <p class="text-slate-300 text-sm line-clamp-3 leading-relaxed">${prog.desc || 'Sin descripción'}</p>
                 </div>
-                <div class="px-6 py-4 bg-white/5 border-t border-white/10 text-left mt-auto"><button onclick="startDownload('${softwareKey}', '${prog.link}', ${prog.id})" class="w-full ${btnClass}">${btnContent}</button></div>`;
+                <div class="px-6 py-4 bg-white/5 border-t border-white/10 text-left mt-auto">
+                    <button onclick="startDownload('${softwareKey}', '${prog.link}', ${prog.id})" class="w-full ${btnClass}">${btnContent}</button>
+                </div>`;
             programsGrid.appendChild(card);
         });
         if(window.lucide) lucide.createIcons();
@@ -659,7 +499,7 @@
 
     function startDownload(softwareName, url, progId) {
         if (!currentUser) { 
-            showNotif('Acceso Restringido', 'Debes iniciar sesión para descargar.'); 
+            showNotif('Acceso Restringido', 'Debes iniciar sesión para descargar.', 'error'); 
             AuthUI.openModal('login'); 
             return; 
         }
@@ -689,71 +529,12 @@
         const countEl = document.getElementById(`progCount-${progId}`);
         if (countEl) countEl.innerText = programCounts[softwareName];
         
-        fetchWithRetry(`${SCRIPT_URL}?action=record_download&programa=${encodeURIComponent(softwareName)}&pais=${encodeURIComponent(userCountry)}&email=${encodeURIComponent(currentUser.email)}`, { 
+        fetch(`${SCRIPT_URL}?action=record_download&programa=${encodeURIComponent(softwareName)}&pais=${encodeURIComponent(userCountry)}&email=${encodeURIComponent(currentUser.email)}`, { 
             method: 'GET', 
             mode: 'no-cors' 
         }).catch(err => console.error('Error registrando descarga:', err));
         
         syncUserProgressToExcel(); 
-        updateAllUI();
-    }
-
-    async function loadData() {
-        if (typeof showSyncIndicator === 'function') showSyncIndicator('Conectando con la base de datos...', 'loading');
-        try {
-            const res = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
-            const data = await res.json();
-            
-            if(data.status === 'success') {
-                dbUsers = data.users || {}; 
-                globalStats = data.stats || {};
-                dbUserCourses = data.userCourses || {};
-                dbUserDetails = data.userDetails || {};
-                
-                if (currentUser && currentUser.email) {
-                    const email = currentUser.email.toLowerCase();
-                    let globalUser = dbUsers[email] || {};
-                    if (typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; } }
-                    let details = dbUserDetails[email] || {};
-
-                    if(details.name && details.name !== "No provisto" && details.name !== "N/A") currentUser.name = details.name;
-                    currentUser.downloadedPrograms = globalUser.downloadedPrograms || currentUser.downloadedPrograms || [];
-
-                    const toObject = (data) => {
-                        if (!data || Array.isArray(data)) return {};
-                        return data;
-                    };
-                    const serverFiles = toObject(globalUser.downloadedFiles);
-                    const localFiles = toObject(currentUser.downloadedFiles);
-                    currentUser.downloadedFiles = { ...serverFiles, ...localFiles };
-
-                    localStorage.setItem('user', JSON.stringify(currentUser));
-                    updateAllUI(); 
-                }
-                
-                try {
-                    const downloadRes = await fetch(`${SCRIPT_URL}?action=get_downloads`);
-                    const downloadData = await downloadRes.json();
-                    if (downloadData && downloadData.counts) {
-                        programCounts = downloadData.counts;
-                        DESCARGAS_PROGRAMAS.forEach(prog => {
-                            const countEl = document.getElementById(`progCount-${prog.id}`);
-                            if(countEl) {
-                                const key = `${prog.name} ${prog.version}`;
-                                countEl.innerText = programCounts[key] || 0;
-                            }
-                        });
-                    }
-                } catch(e) {
-                    console.error('Error cargando conteos de descargas:', e);
-                }
-                
-                if (typeof showSyncIndicator === 'function') showSyncIndicator('Datos sincronizados correctamente', 'success');
-            }
-        } catch (e) { 
-            console.error("Error al cargar la data global del Excel:", e); 
-            if (typeof showSyncIndicator === 'function') showSyncIndicator('Modo sin conexión', 'error');
-        }
     }
 
     async function syncUserProgressToExcel() {
@@ -762,268 +543,41 @@
         let nombresDescargados = [];
         if (currentUser.downloadedPrograms && currentUser.downloadedPrograms.length > 0) {
             nombresDescargados = currentUser.downloadedPrograms.map(id => {
-                const prog = DESCARGAS_PROGRAMAS.find(p => p.id === id);
+                const prog = PROGRAMS_DATA.find(p => parseInt(p.id) === id);
                 return prog ? prog.name : 'Desconocido';
             });
         }
         const historialNombresStr = nombresDescargados.join(', ');
         
         const userPayload = { ...currentUser, historial_descargas: historialNombresStr };
-
         const email = encodeURIComponent(currentUser.email.toLowerCase());
         const userData = encodeURIComponent(JSON.stringify(userPayload));
-        const historialParam = encodeURIComponent(historialNombresStr);
         
         await fetch(SCRIPT_URL, { 
             method: 'POST', 
             mode: 'no-cors', 
-            body: `action=update_user&email=${email}&userData=${userData}&historial=${historialParam}`, 
+            body: `action=update_user&email=${email}&userData=${userData}`, 
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' } 
         });
-    }
-
-    function updateAllUI() {
-        const adminBtnContainer = document.getElementById('adminButtonContainer');
-        const authBtnText = document.getElementById('authBtnText');
-        const rightSidebar = document.getElementById('pageRightSidebar');
-
-        if (!currentUser) {
-            if (adminBtnContainer) {
-                adminBtnContainer.classList.add('hidden');
-                adminBtnContainer.classList.remove('flex');
-            }
-            if (authBtnText) authBtnText.innerText = "Ingresar";
-
-            if(rightSidebar) {
-                rightSidebar.innerHTML = `
-                    <div class="bg-[#0f172a] rounded-2xl border border-white/10 shadow-lg p-6 mb-6 relative overflow-hidden">
-                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#2db8ce] opacity-20 rounded-full blur-2xl pointer-events-none"></div>
-                        <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 border-b border-white/10 pb-2 relative z-10">Profesor Asignado</h3>
-                        <div class="flex items-center gap-4 relative z-10">
-                            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-[#2db8ce] shadow-md flex-shrink-0 bg-slate-800">
-                                <img src="https://i.postimg.cc/rFM1MX74/unnamed.png" alt="Prof. Pablo Cedeño" class="w-full h-full object-cover">
-                            </div>
-                            <div>
-                                <p class="font-black text-white text-base leading-tight">Ing. Pablo Cedeño</p>
-                                <p class="text-[10px] text-[#2db8ce] font-bold uppercase tracking-widest mt-1">Instructor Principal</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-slate-800 rounded-2xl border border-slate-700 shadow-md p-6">
-                        <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 border-b border-slate-700 pb-2">Perfil de Estudiante</h3>
-                        <div class="flex items-center gap-4 mb-5">
-                            <div class="w-12 h-12 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 shadow-inner">
-                                <i class="fas fa-user text-xl"></i>
-                            </div>
-                            <div>
-                                <p class="font-black text-white text-sm leading-tight">Invitado</p>
-                                <p class="text-[10px] text-slate-400 font-medium mt-0.5">Inicia sesión para descargar</p>
-                            </div>
-                        </div>
-                        <button onclick="AuthUI.openModal('login')" class="w-full bg-[#2db8ce] hover:bg-white hover:text-[#0f172a] text-[#0f172a] py-3 rounded-xl font-black uppercase tracking-widest text-xs transition-all shadow-md flex items-center justify-center gap-2">
-                            <i class="fas fa-sign-in-alt"></i> Ingresar a la plataforma
-                        </button>
-                    </div>
-                `;
-            }
-        } else {
-            if (adminBtnContainer) {
-                if (currentUser.email === 'pablocdno@gmail.com') {
-                    adminBtnContainer.classList.remove('hidden'); adminBtnContainer.classList.add('flex');
-                } else {
-                    adminBtnContainer.classList.add('hidden'); adminBtnContainer.classList.remove('flex');
-                }
-            }
-            
-            if (authBtnText) authBtnText.innerText = currentUser.name ? currentUser.name : "Perfil";
-
-            if(rightSidebar) {
-                const initial = currentUser.name.charAt(0).toUpperCase();
-                const downCount = currentUser.downloadedPrograms ? currentUser.downloadedPrograms.length : 0;
-                
-                const userEmail = currentUser.email.toLowerCase();
-                
-                let userPhone = 'No registrado';
-                if (dbUserDetails && dbUserDetails[userEmail]) {
-                    userPhone = dbUserDetails[userEmail].telefono || dbUserDetails[userEmail].phone || dbUserDetails[userEmail].Telefono || 'No registrado';
-                }
-
-                const userProfileText = userEmail === 'pablocdno@gmail.com' ? 'Administrador' : 'Alumno Activo';
-                const flagEmoji = getFlagEmoji(userCountry);
-                
-                let downloadedListHTML = '';
-                if (currentUser.downloadedPrograms && currentUser.downloadedPrograms.length > 0) {
-                    const downloadedNames = currentUser.downloadedPrograms.map(id => {
-                        const prog = DESCARGAS_PROGRAMAS.find(p => p.id === id);
-                        return prog ? prog.name : 'Programa Desconocido';
-                    });
-                    
-                    downloadedListHTML = `
-                        <div class="mt-4 pt-4 border-t border-slate-700">
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Historial de descargas</p>
-                            <ul class="text-xs text-slate-300 space-y-2 max-h-32 overflow-y-auto hide-scrollbar pr-1">
-                                ${downloadedNames.map(name => `<li class="flex items-start gap-2 leading-tight"><i class="fas fa-check-circle text-[#2db8ce] text-[12px] mt-0.5 shadow-sm rounded-full bg-[#0f172a]"></i> <span>${name}</span></li>`).join('')}
-                            </ul>
-                        </div>
-                    `;
-                } else {
-                    downloadedListHTML = `
-                        <div class="mt-4 pt-4 border-t border-slate-700 text-center">
-                            <p class="text-[10px] text-slate-500 italic">Aún no has descargado ningún programa.</p>
-                        </div>
-                    `;
-                }
-
-                let activeCoursesHTML = '';
-                let userCoursesList = [];
-                if (dbUserCourses && dbUserCourses[userEmail]) {
-                    let coursesData = dbUserCourses[userEmail];
-                    
-                    if (typeof coursesData === 'string') { 
-                        try { coursesData = JSON.parse(coursesData); } catch(e){ coursesData = [coursesData]; } 
-                    }
-
-                    if (Array.isArray(coursesData)) {
-                        coursesData.forEach(c => {
-                            let courseVal = null;
-                            if (typeof c === 'string') {
-                                courseVal = c;
-                            } else if (typeof c === 'object') {
-                                courseVal = c.curso || c.Curso || c.Cursos || c.cursos || c.course || c.nombre || c.Nombre || c['Mis Cursos'] || c['mis cursos'] || c['Mis cursos'];
-                                if (!courseVal) {
-                                    const vals = Object.values(c).filter(v => typeof v === 'string' && v.trim() !== '');
-                                    if (vals.length > 0) courseVal = vals[0];
-                                }
-                            }
-                            
-                            if (courseVal) {
-                                if (typeof courseVal === 'string' && courseVal.includes(',')) {
-                                    userCoursesList.push(...courseVal.split(',').map(s => s.trim()));
-                                } else {
-                                    userCoursesList.push(courseVal);
-                                }
-                            }
-                        });
-                    } else if (typeof coursesData === 'object') {
-                        const cName = coursesData.curso || coursesData.Curso || coursesData.Cursos || coursesData.cursos || coursesData.course || coursesData.nombre || coursesData.Nombre || coursesData['Mis Cursos'] || coursesData['mis cursos'] || coursesData['Mis cursos'];
-                        if (cName) {
-                            if (typeof cName === 'string' && cName.includes(',')) {
-                                userCoursesList.push(...cName.split(',').map(s => s.trim()));
-                            } else {
-                                userCoursesList.push(cName);
-                            }
-                        }
-                    }
-                }
-                
-                userCoursesList = [...new Set(userCoursesList.filter(Boolean))]; 
-
-                if (userCoursesList.length > 0) {
-                    activeCoursesHTML = `
-                        <div class="mt-4 pt-4 border-t border-slate-700">
-                            <div class="flex justify-between items-center mb-3">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Cursos Activos</p>
-                                <span class="bg-[#2db8ce]/20 text-[#2db8ce] text-[9px] font-black px-2 py-0.5 rounded border border-[#2db8ce]/30 shadow-sm">${userCoursesList.length}</span>
-                            </div>
-                            <div class="flex flex-col gap-2 max-h-32 overflow-y-auto hide-scrollbar pr-1">
-                                ${userCoursesList.map(c => `
-                                    <div class="bg-slate-900/50 border border-slate-700 rounded-lg p-2.5 flex items-center gap-3 hover:bg-slate-800 transition-colors cursor-default shadow-sm">
-                                        <div class="w-7 h-7 rounded border border-[#2db8ce]/30 bg-[#2db8ce]/10 text-[#2db8ce] flex items-center justify-center text-xs flex-shrink-0 shadow-inner">
-                                            <i class="fas fa-laptop-code"></i>
-                                        </div>
-                                        <span class="text-xs text-slate-300 font-bold leading-tight line-clamp-2">${c}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    activeCoursesHTML = `
-                        <div class="mt-4 pt-4 border-t border-slate-700 text-center">
-                            <p class="text-[10px] text-slate-500 italic">No tienes cursos activos actualmente.</p>
-                        </div>
-                    `;
-                }
-
-                rightSidebar.innerHTML = `
-                    <div class="bg-[#0f172a] rounded-2xl border border-white/10 shadow-lg p-6 mb-6 relative overflow-hidden">
-                        <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#2db8ce] opacity-20 rounded-full blur-2xl pointer-events-none"></div>
-                        <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 border-b border-white/10 pb-2 relative z-10">Profesor Asignado</h3>
-                        <div class="flex items-center gap-4 relative z-10">
-                            <div class="w-14 h-14 rounded-full overflow-hidden border-2 border-[#2db8ce] shadow-md flex-shrink-0 bg-slate-800">
-                                <img src="https://i.postimg.cc/rFM1MX74/unnamed.png" alt="Prof. Pablo Cedeño" class="w-full h-full object-cover">
-                            </div>
-                            <div>
-                                <p class="font-black text-white text-base leading-tight">Ing. Pablo Cedeño</p>
-                                <p class="text-[10px] text-[#2db8ce] font-bold uppercase tracking-widest mt-1">Instructor Principal</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-800 rounded-2xl border border-slate-700 shadow-md p-6">
-                        <h3 class="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 border-b border-slate-700 pb-2">Perfil de Estudiante</h3>
-                        
-                        <div class="flex items-center gap-4 mb-4">
-                            <div class="w-12 h-12 rounded-full bg-[#2db8ce]/20 text-[#2db8ce] flex items-center justify-center font-black text-xl border border-[#2db8ce]/30 flex-shrink-0">
-                                ${initial}
-                            </div>
-                            <div class="min-w-0">
-                                <p class="font-black text-white text-sm leading-tight line-clamp-1">${currentUser.name}</p>
-                                <p class="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-emerald-500/20 mt-1">
-                                    <i class="fas fa-user-shield"></i> ${userProfileText}
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="bg-slate-900/50 rounded-xl p-3.5 border border-slate-700 mb-5 space-y-2.5">
-                            <div class="flex items-center gap-3 text-[10px] text-slate-300">
-                                <div class="w-4 flex justify-center text-[#2db8ce]"><i class="fas fa-envelope"></i></div>
-                                <span class="truncate" title="${currentUser.email}">${currentUser.email}</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-[10px] text-slate-300">
-                                <div class="w-4 flex justify-center text-[#2db8ce]"><i class="fas fa-phone"></i></div>
-                                <span>${userPhone}</span>
-                            </div>
-                            <div class="flex items-center gap-3 text-[10px] text-slate-300">
-                                <div class="w-4 flex justify-center text-[#2db8ce]"><i class="fas fa-map-marker-alt"></i></div>
-                                <span class="truncate" title="${userCountry}">${userCountry} <span class="text-xs ml-1">${flagEmoji}</span></span>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between items-center bg-slate-900/50 p-3.5 rounded-xl border border-slate-700">
-                            <span class="text-xs font-bold text-slate-300">Programas descargados:</span>
-                            <span class="text-lg font-black text-[#2db8ce]">${downCount}</span>
-                        </div>
-                        
-                        ${downloadedListHTML}
-                        ${activeCoursesHTML}
-                    </div>
-                `;
-            }
-        }
-        
-        renderPrograms(DESCARGAS_PROGRAMAS);
     }
 
     async function initVisitorInfo() {
         const services = [ 'https://get.geojs.io/v1/ip/geo.json', 'https://api.country.is', 'https://ipapi.co/json/' ];
         for (const service of services) {
             try {
-                const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), 4000);
-                const res = await fetch(service, { signal: controller.signal }); clearTimeout(timeoutId);
-                if (!res.ok) continue; const data = await res.json();
+                const controller = new AbortController(); 
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
+                const res = await fetch(service, { signal: controller.signal }); 
+                clearTimeout(timeoutId);
+                if (!res.ok) continue; 
+                const data = await res.json();
                 
                 let rawCountryName = data.country || data.countryName || data.country_name || "";
-                let countryCode = data.country_code || data.countryCode || data.country || "";
-                let region = data.region || data.regionName || data.stateProv || data.city || "";
-
+                
                 if (rawCountryName && rawCountryName !== "Desconocido") {
-                    let baseName = countryToSpanish[rawCountryName.toLowerCase()] || rawCountryName;
-                    if (baseName === "Venezuela" || (countryCode && countryCode.toLowerCase() === "ve")) {
-                        userCountry = region ? `Venezuela (${region})` : "Venezuela";
-                    } else { userCountry = baseName; }
+                    userCountry = countryToSpanish[rawCountryName.toLowerCase()] || rawCountryName;
                     ping('update_stat', 'visitas_totales');
-                    ping('update_stat', 'visita_pais_' + baseName);
+                    ping('update_stat', 'visita_pais_' + userCountry);
                     return;
                 }
             } catch (e) { console.warn(`Fallo geoip ${service}:`, e.message); }
@@ -1033,28 +587,14 @@
     document.addEventListener("DOMContentLoaded", async () => {
         currentUser = JSON.parse(localStorage.getItem('user')) || null;
         
-        updateAllUI();
-        renderPrograms(DESCARGAS_PROGRAMAS);
+        // Mostrar toast de carga
+        showLoadingToast();
         
-        await initVisitorInfo();
-        await loadData();
+        // Inicializar información del visitante (en segundo plano)
+        initVisitorInfo();
         
-        try {
-            const res = await fetchWithRetry(`${SCRIPT_URL}?action=get_downloads`);
-            const data = await res.json();
-            if (data && data.counts) {
-                programCounts = data.counts;
-                DESCARGAS_PROGRAMAS.forEach(prog => {
-                    const countEl = document.getElementById(`progCount-${prog.id}`);
-                    if(countEl) {
-                        const key = `${prog.name} ${prog.version}`;
-                        countEl.innerText = programCounts[key] || 0;
-                    }
-                });
-            }
-        } catch(err) {
-            console.error('Error cargando conteos de descargas:', err);
-        }
+        // Cargar programas desde la hoja "Programas" del Excel
+        await loadProgramsFromSheet();
         
         if(window.lucide) lucide.createIcons();
     });

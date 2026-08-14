@@ -14,7 +14,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        /* Variables de tema (copiadas de 1-arranque-contactores-material.html) */
         :root {
             --bg-default: #f7f9fb;
             --bg-secondary: #ffffff;
@@ -30,11 +29,6 @@
             --badge-bg-intermediate: #0891b2;
             --badge-bg-basic: #0d9488;
             --badge-text: #ffffff;
-            --btn-accent-bg: #0891b2;
-            --btn-accent-text: #ffffff;
-            --btn-accent-shadow: rgba(8, 145, 178, 0.3);
-            --btn-accent-border: #0e7490;
-            --btn-accent-bg-hover: #0e7490;
         }
 
         body:not(.light-mode) {
@@ -69,14 +63,12 @@
             font-family: 'Oswald', sans-serif; 
         }
 
-        /* Contenedor principal (copiado de 1-arranque-contactores-material.html) */
         .main-content {
             padding: 40px 20px;
-            max-width: 1300px; /* max-w-7xl */
+            max-width: 1300px;
             margin: 0 auto;
         }
 
-        /* --- TARJETAS DE MATERIAL VISUAL (copiadas de 1-arranque-contactores-material.html) --- */
         .material-cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -141,24 +133,20 @@
             -webkit-backdrop-filter: blur(8px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
-        /* Badge for Text/Manuals (Green) */
         .badge-manual {
-            background: rgba(16, 185, 129, 0.25); /* emerald */
+            background: rgba(16, 185, 129, 0.25);
             border: 1px solid rgba(52, 211, 153, 0.4);
         }
-        /* Badge for Exercises (Teal) */
         .badge-practica {
-            background-color: #0e7490; /* dark cyan/teal */
+            background-color: #0e7490;
             border: 1px solid #0e7490;
         }
-        /* Badge for Quizzes (Purple) */
         .badge-test {
-            background: rgba(168, 85, 247, 0.25); /* purple */
+            background: rgba(168, 85, 247, 0.25);
             border: 1px solid rgba(192, 132, 252, 0.4);
         }
-        /* Badge for Programs (Gold) */
         .badge-programa {
-            background: rgba(245, 158, 11, 0.25); /* amber */
+            background: rgba(245, 158, 11, 0.25);
             border: 1px solid rgba(251, 191, 36, 0.4);
         }
 
@@ -177,29 +165,25 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
         }
-        /* Icon Circle for Text/Manuals (Green) */
         .icon-circle-manual {
             background: rgba(16, 185, 129, 0.15);
             border: 2px solid rgba(16, 185, 129, 0.25);
-            color: #059669; /* emerald-600 */
+            color: #059669;
         }
-        /* Icon Circle for Exercises (Teal) */
         .icon-circle-practica {
             background: rgba(45, 184, 206, 0.15);
             border: 2px solid rgba(45, 184, 206, 0.25);
             color: #0891b2;
         }
-        /* Icon Circle for Quizzes (Purple) */
         .icon-circle-test {
             background: rgba(168, 85, 247, 0.15);
             border: 2px solid rgba(168, 85, 247, 0.25);
-            color: #9333ea; /* purple-700 */
+            color: #9333ea;
         }
-        /* Icon Circle for Programs (Gold) */
         .icon-circle-programa {
             background: rgba(245, 158, 11, 0.15);
             border: 2px solid rgba(245, 158, 11, 0.25);
-            color: #d97706; /* amber-600 */
+            color: #d97706;
         }
 
         .material-card .card-body {
@@ -274,7 +258,6 @@
             background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Responsive */
         @media (max-width: 640px) {
             .material-card .card-image-wrapper {
                 height: 140px;
@@ -289,9 +272,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .material-card { animation: fadeIn 0.5s ease forwards; }
-    </style>
-    <style>
-        /* Glow states para tarjetas ya descargadas (copiado de aula-virtual-id.html) */
+
         .material-card.glow-manual, .material-card.glow-practica {
             border-color: var(--text-accent) !important;
             box-shadow: 0 0 22px rgba(45, 184, 206, 0.45), 0 10px 30px var(--shadow-color) !important;
@@ -306,11 +287,223 @@
         .material-card.glow-practica .download-btn-text {
             color: var(--text-accent) !important;
         }
+
+        /* ============ ESTILOS PARA EL TOAST DE CARGA ============ */
+        .loading-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100002;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(45, 184, 206, 0.2);
+            pointer-events: none;
+            min-width: 320px;
+            max-width: 90vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .loading-toast.hiding {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        .loading-toast .toast-logo {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
+        }
+
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.4));
+        }
+
+        .loading-toast .toast-content {
+            flex: 1;
+        }
+
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .loading-toast .toast-subtitle {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .loading-toast .toast-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(45, 184, 206, 0.2);
+            border-top: 3px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            flex-shrink: 0;
+        }
+
+        .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .loading-toast.success-toast .toast-logo img {
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+        }
+
+        .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+
+        .loading-toast.success-toast .toast-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .loading-toast.success-toast .toast-check {
+            width: 32px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(150%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulseLogo {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.3)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 20px rgba(45, 184, 206, 0.6)); transform: scale(1.05); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(45, 184, 206, 0.25);
+        }
+        body.light-mode .loading-toast .toast-title { color: #1e293b; }
+        body.light-mode .loading-toast .toast-subtitle { color: #64748b; }
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+        body.light-mode .loading-toast.success-toast .toast-subtitle { color: rgba(255, 255, 255, 0.95); }
+        /* ============ FIN ESTILOS TOAST ============ */
     </style>
 </head>
 <body class="bg-slate-50 custom-scrollbar light-mode">
 
-    <!-- HERO (idéntico a info-page-id.html) -->
+    <!-- ============ TOAST DE CARGA ============ -->
+    <div id="loadingToast" class="loading-toast hidden">
+        <div class="toast-logo">
+            <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+        </div>
+        <div class="toast-content">
+            <div class="toast-title" id="loadingToastTitle">Estamos cargando los materiales de tu curso</div>
+            <div class="toast-subtitle" id="loadingToastSubtitle">Conectando con la base de datos...</div>
+        </div>
+        <div class="toast-spinner" id="loadingToastSpinner"></div>
+    </div>
+
+    <script>
+        // ============ FUNCIONES DEL TOAST DE CARGA ============
+        function showLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            const title = document.getElementById('loadingToastTitle');
+            const subtitle = document.getElementById('loadingToastSubtitle');
+            const spinner = document.getElementById('loadingToastSpinner');
+            
+            if (toast) {
+                toast.classList.remove('hidden', 'hiding', 'success-toast');
+                title.innerText = 'Estamos cargando los materiales de tu curso';
+                subtitle.innerText = 'Conectando con la base de datos...';
+                if (spinner) spinner.style.display = 'block';
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }
+        }
+
+        function showSuccessToast() {
+            const toast = document.getElementById('loadingToast');
+            const title = document.getElementById('loadingToastTitle');
+            const subtitle = document.getElementById('loadingToastSubtitle');
+            const spinner = document.getElementById('loadingToastSpinner');
+            
+            if (toast) {
+                toast.classList.remove('hidden', 'hiding');
+                toast.classList.add('success-toast');
+                title.innerText = '¡Listo! Materiales cargados correctamente';
+                subtitle.innerText = 'Información actualizada correctamente';
+                if (spinner) spinner.style.display = 'none';
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                const checkDiv = document.createElement('div');
+                checkDiv.className = 'toast-check';
+                checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+                toast.appendChild(checkDiv);
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                setTimeout(() => { hideLoadingToast(); }, 3000);
+            }
+        }
+
+        function hideLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            if (toast) {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.classList.remove('hiding', 'success-toast');
+                }, 500);
+            }
+        }
+        // ============ FIN FUNCIONES DEL TOAST ============
+    </script>
+
+    <!-- HERO -->
     <header id="hero-section" class="relative bg-[#0f172a] text-white py-20 px-6 overflow-hidden">
         <div class="absolute inset-0 opacity-40">
             <img id="hero-bg-image" src="img/AA (4).gif" class="w-full h-full object-cover" alt="Fondo">
@@ -347,16 +540,37 @@
     </main>
 
     <script src="js/auth.js"></script>
-    <!-- Tu script personalizado para cargar los datos -->
     <script src="js/material-loader.js"></script>
 
     <script>
-        // Inicializar Lucide Icons después de que el DOM esté cargado
         document.addEventListener('DOMContentLoaded', () => {
-            // material-loader.js vuelve a llamar a createIcons() después de añadir contenido,
-            // pero lo llamamos aquí también para los iconos estáticos que puedan existir.
             if (window.lucide && typeof lucide.createIcons === 'function') {
                 lucide.createIcons();
+            }
+            
+            // Mostrar toast de carga cuando material-loader.js comience a cargar
+            showLoadingToast();
+            
+            // Verificar si material-loader.js tiene una función de carga
+            // y mostrar el toast de éxito cuando termine
+            if (typeof loadMaterials === 'function') {
+                const originalLoadMaterials = loadMaterials;
+                loadMaterials = async function(...args) {
+                    showLoadingToast();
+                    try {
+                        const result = await originalLoadMaterials(...args);
+                        showSuccessToast();
+                        return result;
+                    } catch (error) {
+                        hideLoadingToast();
+                        throw error;
+                    }
+                };
+            } else {
+                // Si no hay función de carga, simular
+                setTimeout(() => {
+                    showSuccessToast();
+                }, 3000);
             }
         });
     </script> 

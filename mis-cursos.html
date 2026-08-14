@@ -192,24 +192,20 @@
         .course-card .course-card-buttons { display: flex; gap: 0.75rem; }
         .course-card .course-card-buttons .btn-metal { flex: 1; font-size: 10px; }
 
-        /* FORZAR TEXTO DE PROGRESO SIEMPRE BLANCO EN TARJETAS DE MIS CURSOS */
         body.light-mode .course-card .progress-lessons-completed,
         body:not(.light-mode) .course-card .progress-lessons-completed {
             color: #ffffff !important;
         }
 
-        /* Asegurar fondo oscuro para el contenedor de progreso en tarjetas */
         .course-card .bg-\[\#0f172a\]\/80,
         #detalle-container .bg-\[\#0f172a\]\/80 {
             background-color: rgba(15, 23, 42, 0.8) !important;
         }
 
-        /* En el detalle, el texto de progreso también debe ser blanco */
         #detalle-container .text-slate-300.mt-1 {
             color: #ffffff !important;
         }
 
-        /* Niveles de curso (bordes y sombras) */
         .course-card-level-basico { border: 1px solid rgba(6, 182, 212, 0.35); box-shadow: 0 0 10px rgba(6, 182, 212, 0.2); }
         .course-card-level-basico:hover { border-color: #06b6d4; box-shadow: 0 0 25px rgba(6, 182, 212, 0.45); }
         .course-card-level-intermedio { border: 1px solid rgba(168, 85, 247, 0.35); box-shadow: 0 0 10px rgba(168, 85, 247, 0.2); }
@@ -247,7 +243,6 @@
         body:not(.light-mode) .course-card .course-card-footer { border-top-color: rgba(218, 222, 241, 0.1); }
         body:not(.light-mode) .course-card .course-card-price { color: var(--text-light); }
 
-        /* Botones metálicos */
         .btn-metal-solid {
             display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
             font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em;
@@ -308,6 +303,186 @@
         body.light-mode .btn-metal-teal i {
             color: #ffffff !important;
         }
+
+        /* ============ NUEVOS ESTILOS PARA EL TOAST DE CARGA ============ */
+        .loading-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(45, 184, 206, 0.2);
+            pointer-events: none;
+            min-width: 320px;
+            max-width: 90vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .loading-toast.hiding {
+            opacity: 0;
+            transform: translateX(100px);
+        }
+
+        /* Logo sin borde circular - solo la imagen */
+        .loading-toast .toast-logo {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
+        }
+
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.4));
+        }
+
+        .loading-toast .toast-content {
+            flex: 1;
+        }
+
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .loading-toast .toast-subtitle {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .loading-toast .toast-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(45, 184, 206, 0.2);
+            border-top: 3px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            flex-shrink: 0;
+        }
+
+        /* Toast verde de éxito */
+        .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+
+        .loading-toast.success-toast .toast-logo img {
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
+        }
+
+        .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+
+        .loading-toast.success-toast .toast-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .loading-toast.success-toast .toast-check {
+            width: 32px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(150%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulseLogo {
+            0%, 100% {
+                filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.3));
+                transform: scale(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(45, 184, 206, 0.6));
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Modo claro */
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(45, 184, 206, 0.25);
+        }
+
+        body.light-mode .loading-toast .toast-title {
+            color: #1e293b;
+        }
+
+        body.light-mode .loading-toast .toast-subtitle {
+            color: #64748b;
+        }
+
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+
+        body.light-mode .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+
+        body.light-mode .loading-toast.success-toast .toast-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+        }
+        /* ============ FIN DE NUEVOS ESTILOS ============ */
     </style>
 </head>
 <body id="mis-cursos-page" class="custom-scrollbar light-mode">
@@ -396,135 +571,140 @@
     </div>
 
     <div id="page-curso-detalle" class="page-content"><div id="detalle-container" class="pb-24 relative z-10"></div></div>
+
+    <!-- Toast de carga -->
+    <div id="loadingToast" class="loading-toast hidden">
+        <div class="toast-logo">
+            <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+        </div>
+        <div class="toast-content">
+            <div class="toast-title" id="loadingToastTitle">Estamos cargando la información de tus cursos</div>
+            <div class="toast-subtitle" id="loadingToastSubtitle">Conectando con la base de datos...</div>
+        </div>
+        <div class="toast-spinner" id="loadingToastSpinner"></div>
+    </div>
+
     <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
     <script>
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxd8aZLea-A4-0in6Kja-ksZJHkTZxRfBIyVnEoKx4_KifnEJjDaUG_GSTLtDROCP4I/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrozAl5UD90NzUYIUTR2QJ_oXa3dTp6fsnjjEtAbjja3M8UJyEuO_BClPMFj1jjsFw/exec';
+
+        // Inicializar el usuario actual desde localStorage
+        let currentUser = JSON.parse(localStorage.getItem('user')) || null;
+        window.currentUser = currentUser;
 
         let dbUsers = {}, globalStats = {};
         let dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {};
         let studentCountsPerCourse = {};
         let courseRatings = {};
         let userProgress = {};
-        let currentViewedCourseId = null;
-        let currentProgressCourseId = 1;
+        let currentViewedCourseId = null, currentProgressCourseId = 1;
         let latestEnrollmentDates = {};
         let latestCompletionDates = {};
 
-        const COURSES_DATA = [
-            { id: 1, name: "Arranque de motores con contactores Online", type: "Online", desc: "Aprende los fundamentos del arranque de motores eléctricos usando contactores.", image: "img/AA (7).gif", category: "Electricidad", level: "Básico", cost: 10.00, link: "arranque-contactores-info.html", aulaLink: "1-aula-arranque-contactores.html", totalLessons: 5, resumen: "Este curso está diseñado para brindarte los conocimientos teóricos y prácticos sobre el arranque y control de motores asíncronos trifásicos utilizando contactores.", manuales: [ {name: "Manual: Arranque Directo (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1ffP5ete5u4Sio_zgnudmXrYrg800Cerk"}, {name: "Manual: Selección de Giro (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1nE_PVCGs-A6zFvBN1BXdl1bhJVAehavv"}, {name: "Manual: Arranque Estrella Delta (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1NkOuj0TdfqaN1Dxsh8Bg9XHkZyfZ1sgP"}, {name: "Manual: Arranque Rotórico (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1jOr6szSf-HzX0urZkdgDoe5hAW1rxmzS"} ], ejercicios: [ {name: "Práctica: Arranque Directo", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1AXMe7TN17-d2_JORuMVSNLRn-7xWYYZH"}, {name: "Práctica: Selección de Giro", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1wkB6CO8sLQJFr2xMJQXFUfHsvkVfUG2T"}, {name: "Práctica: Arranque Estrella Delta", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1_q7jTpvQovCuF21HUBH5aFI7yZE8KmMw"}, {name: "Práctica: Arranque Rotórico", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1CoNpKpgzv8XJmKkaIsRqnl0uIenHBUKw"} ], moduleNames: ["Contenido del Curso","Práctica 1: Arranque Directo","Práctica 2: Selección de Giro","Práctica 3: Estrella Triángulo","Práctica 4: Arranque Rotórico"] },
-            { id: 2, name: "Arranque de motores con PLC LOGO Online", type: "Online", desc: "Control de motores y configuraciones con el PLC LOGO de Siemens.", image: "img/AA (8).webp", category: "PLC", level: "Básico", cost: 10.00, link: "arranque-plc-logo-info.html", aulaLink: "2-aula-arranque-plc-logo.html", totalLessons: 5, resumen: "Descubre cómo dar el salto de la lógica cableada tradicional a la lógica programada.", manuales: [{name: "Introducción a LOGO! Soft Comfort", link: "#"}], ejercicios: [{name: "Arranque directo con PLC LOGO!", link: "#"}], moduleNames: ["Introducción a los PLC","Práctica 1: Arranque Directo con PLC","Práctica 2: Arranque Directo con Inversión de Giro","Práctica 3: Arranque Estrella Delta","Práctica 4: Arranque Rotórico"] },
-            { id: 3, name: "Funciones Lógicas en PLCs con Factory IO Online", type: "Online", desc: "Simulación e implementación de funciones lógicas combinando LOGO y Factory IO.", image: "img/AA (29).webp", category: "PLC", level: "Básico", cost: 15.00, link: "https://www.profesorpablocedeno.online/cursos/gf-con-logo-y-factory-io", aulaLink: "3-aula-compuertas-factory-plc.html", totalLessons: 4, resumen: "Una inmersión profunda en las funciones lógicas y bloques especiales de LOGO! usando un entorno 3D realista.", manuales: [{name: "Guía de conexión Factory I/O - LOGO!", link: "#"}], ejercicios: [{name: "Escenario 1: Llenado de Tanque", link: "#"}], moduleNames: ["Contenido del Curso", "Compuertas Lógicas", "Enclavamientos y Memorias", "Integración con Factory IO"] },
-            { id: 4, name: "Automatización con Contactores Online", type: "Online", desc: "Curso completo de diseño e implementación de tableros de control con contactores.", image: "img/AA (5).gif", category: "Automatización", level: "Intermedio", cost: 10.00, link: "https://www.profesorpablocedeno.online/cursos/contactores", aulaLink: "4-aula-auto-contactores-on.html", totalLessons: 6, resumen: "En este curso general de automatización, nos enfocaremos 100% en el control electromagnético.", manuales: [{name: "Normativa de Simbología DIN/IEC", link: "#"}], ejercicios: [{name: "Arranque directo", link: "#"}], moduleNames: ["Contenido del Curso", "Simbología y Normativa", "Arranque Directo", "Inversión de Giro", "Estrella-Triángulo", "Fallas y Diagnóstico"] },
-            { id: 5, name: "Automatización con PLC LOGO! Online", type: "Online", desc: "Domina la programación y aplicación del autómata LOGO! en entornos virtuales.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/arranque-de-motores-con-plc-logo", aulaLink: "5-aula-auto-plc-logo-on.html", totalLessons: 5, resumen: "Conviértete en un experto programando LOGO!. Abordaremos temporizadores, contadores, marcas y funciones analógicas.", manuales: [{name: "Manual de Programación FUP y KOP", link: "#"}], ejercicios: [{name: "Práctica: Control de Bomba Alternada", link: "#"}], moduleNames: ["Contenido del Curso", "Temporizadores y Contadores", "Marcas y Memorias", "Señales Analógicas", "Aplicación Integral"] },
-            { id: 6, name: "Automatización con PLC – Método Grafcet Online", type: "Online", desc: "Diseño secuencial de procesos industriales utilizando la metodología Grafcet.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 20.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", aulaLink: "6-aula-auto-plc-grafcet-on.html", totalLessons: 6, resumen: "Supera la complejidad de la lógica de programación mediante el GRAFCET.", manuales: [{name: "Reglas de Evolución del GRAFCET", link: "#"}], ejercicios: [{name: "Automatización de Semáforo", link: "#"}], moduleNames: ["Contenido del Curso", "Etapas y Transiciones", "Acciones Asociadas", "Conversión a Ladder", "Seguridad y Rearme", "Proyecto Secuencial"] },
-            { id: 7, name: "10 ejercicios de aplicaciones con Contactores Online", type: "Online", desc: "Práctica intensiva con 10 casos reales resueltos con lógica de contactores.", image: "img/AA (19).webp", category: "Electricidad", level: "Intermedio", cost: 10.00, link: "#", aulaLink: "7-aula-10-ejer-auto-contactores-on.html", totalLessons: 10, resumen: "Un compendio de resolución de problemas reales. No es teoría, es 100% práctica.", manuales: [{name: "Planos resueltos (CadeSIMU)", link: "#"}], ejercicios: [{name: "Descargar Cuadernillo de 10 Ejercicios (PDF)", link: "#"}], moduleNames: ["Contenido del Curso", "Arranque con Señalización", "Inversión con Enclavamiento", "Temporización de Salidas", "Bomba Alternada", "Secuencia de Cilindros", "Mando con Protección Térmica", "Semáforo Industrial", "Dos Motores Interdependientes", "Proyecto Integrador"] },
-            { id: 8, name: "10 ejercicios de aplicaciones con PLC LOGO! Online", type: "Online", desc: "Práctica intensiva con 10 ejercicios avanzados de programación en LOGO!.", image: "img/AA (15).webp", category: "PLC", level: "Intermedio", cost: 20.00, link: "#", aulaLink: "8-aula-10-ejer-auto-plc-logo-on.html", totalLessons: 10, resumen: "Aplica toda tu lógica programada. Te entregamos 10 escenarios industriales.", manuales: [{name: "Pistas y Soluciones de Programación", link: "#"}], ejercicios: [{name: "Tres cilindros (Archivo ZIP)", link: "#"}], moduleNames: ["Contenido del Curso", "Llenado de Tanque", "Bomba Alternada", "Semáforo Inteligente", "Tres Cilindros", "Banda Transportadora", "Mezclador", "Compresor", "Clasificador", "Proyecto Integrador LOGO"] },
-            { id: 9, name: "Automatización Industrial Presencial", type: "Presencial", desc: "Fundamentos y prácticas de automatización en entornos industriales presenciales.", image: "img/AA (1).gif", category: "Automatización", level: "Básico", cost: 100.00, link: "https://www.profesorpablocedeno.online/cursos/industrial", totalLessons: 3, resumen: "Curso presencial donde palparás los equipos físicos.", manuales: [{name: "Guía de Seguridad en el Taller", link: "#"}], ejercicios: [{name: "Hoja de Montaje en Panel", link: "#"}] },
-            { id: 10, name: "Automatización con contactores Presencial", type: "Presencial", desc: "Taller práctico presencial de cableado y montaje de contactores.", image: "img/AA (36).webp", category: "Automatización", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/mis-cursos/contactores", totalLessons: 5, resumen: "Talleres en laboratorio físico. Realizaremos montajes en gabinetes didácticos.", manuales: [{name: "Guía de Uso del Multímetro", link: "#"}], ejercicios: [{name: "Laboratorio: Mando a Distancia", link: "#"}] },
-            { id: 11, name: "Automatización Con PLC LOGO! Presencial", type: "Presencial", desc: "Laboratorio físico de programación y cableado del autómata LOGO!.", image: "img/AA (11).webp", category: "PLC", level: "Intermedio", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-logo", totalLessons: 4, resumen: "Aprende a conectar las entradas y salidas de un PLC físico.", manuales: [{name: "Diagrama de Conexión NPN y PNP", link: "#"}], ejercicios: [{name: "Laboratorio: Control de Llenado con Sensores", link: "#"}] },
-            { id: 12, name: "Automatización con PLC – Método Grafcet Presencial", type: "Presencial", desc: "Aplicación práctica presencial del método Grafcet en maquetas industriales.", image: "img/AA (4).gif", category: "Automatización", level: "Avanzado", cost: 50.00, link: "https://www.profesorpablocedeno.online/cursos/plc-grafcet", totalLessons: 6, resumen: "Controlaremos estaciones didácticas neumáticas implementando programación basada en Grafcet.", manuales: [{name: "Esquemas Neumáticos del Laboratorio", link: "#"}], ejercicios: [{name: "Laboratorio: Secuencia Neumática A+ B+ A- B-", link: "#"}] },
-            { id: 13, name: "Automatización con contactores (DIPLOMADO) Presencial", type: "Materia", desc: "Programa avanzado de certificación presencial en control por contactores.", image: "img/AA (19).webp", category: "Automatización", level: "Intermedio", cost: 150.00, link: "#", totalLessons: 5, resumen: "Diplomado intensivo en automatización con contactores.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
-            { id: 14, name: "Automatización con PLC (DIPLOMADO) Presencial", type: "Materia", desc: "Diplomado presencial intensivo en programación e integración de PLCs.", image: "img/AA (15).webp", category: "Automatización", level: "Intermedio", cost: 360.00, link: "#", totalLessons: 5, resumen: "Diplomado avanzado en PLCs.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
-            { id: 15, name: "Automatización y control avanzado (MAESTRÍA) Presencial", type: "Materia", desc: "Sistemas SCADA, redes industriales y control de procesos complejos a nivel maestría.", image: "img/AA (7).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 5, resumen: "Maestría en automatización y control avanzado.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
-            { id: 16, name: "Automatización y control Aplicado (MAESTRÍA) Presencial", type: "Materia", desc: "Proyectos finales e integración de tecnologías en planta a nivel maestría.", image: "img/AA (4).gif", category: "Maestría", level: "Avanzado", cost: 300.00, link: "#", totalLessons: 5, resumen: "Maestría en automatización y control aplicado.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
-            { id: 17, name: "Taller de Tecnología Eléctrica III (INGENIERÍA) Presencial", type: "Materia", desc: "Accede a tus notas por fase, tareas entregadas y rendimiento acumulado.", image: "img/AA (7).gif", category: "TSU", level: "Básico", cost: 0.00, link: "https://www.profesorpablocedeno.online/tus-notas/taller-iii", totalLessons: 5, resumen: "Seguimiento de notas del taller de Tecnología Eléctrica III. Consulta tus evaluaciones y avances.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
-            { id: 18, name: "Sistemas Hidráulicos y Neumáticos (INGENIERÍA) Presencial", type: "Materia", desc: "Consulta las calificaciones de los avances de proyecto y entregas técnicas.", image: "img/AA (33).webp", category: "Ingeniería", level: "Avanzado", cost: 0.00, link: "tus-notas.html", totalLessons: 5, resumen: "Notas del Proyecto V.", manuales: [], ejercicios: [], moduleNames: ["Contenido de la Materia", "Quiz Tema 1", "Quiz Tema 2", "Quiz Tema 3", "Quiz Tema 4"] },
-            { 
-                id: 19, name: "Arranque de motores con contactores Manual", type: "Manual", desc: "Manual completo sobre el arranque y control de motores usando contactores.", image: "https://i.postimg.cc/WpST30hz/tablerogif.gif", category: "Electricidad", level: "Básico", cost: 5.00, link: "#", totalLessons: 6,
-                manuales: [{name: "Manual de Arranque de motores con contactores (PDF)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1V4PGjDVVFRNIo8nJCupBgiimdz7820ql"}],
-                ejercicios: [
-                    {name: "18 Ejercicios Prácticos de Arranques (ZIP)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1N4tiNxaTf9WiNti0Uiv2S06KZCioMxdX"},
-                    {name: "Software de Simulación (CadeSIMU)", link: "https://drive.google.com/uc?export=download&confirm=yTib&id=1_s-SLpfYqmeoSZOnzjvPJgkJqIsK3UY7"}
-                ],
-                video: "https://player.mediadelivery.net/play/695885/5cbe7741-6e25-4907-926e-837b33c1817b", aulaLink: "aula-virtual-id.html?courseId=19"
-            },
-            { 
-                id: 20, name: "Automatización con PLC Básico Manual", type: "Manual", desc: "Introducción a la automatización industrial utilizando PLC de gama básica.", image: "https://i.postimg.cc/Y0S6HQyP/gafcet-vid-gif.gif", category: "PLC", level: "Básico", cost: 5.00, link: "20-auto-plc-basico-on-info.html", totalLessons: 6,
-                manuales: [{name: "Manual de Automatización con PLC Básico (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20PLC%20Básico"}],
-                aulaLink: "aula-virtual-id.html?courseId=20"
-            },
-            { 
-                id: 21, name: "Automatización con Contactores Manual", type: "Manual", desc: "Aprende a diseñar y montar circuitos de control con lógica cableada.", image: "https://i.postimg.cc/KcVkjX1W/contactore-Gif.gif", category: "Automatización", level: "Básico", cost: 5.00, link: "21-Manual-auto-contactores-on-info.html", totalLessons: 6,
-                manuales: [{name: "Manual de Automatización con Contactores (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20Automatización%20con%20Contactores"}],
-                aulaLink: "aula-virtual-id.html?courseId=21"
-            },
-            
-{            
-id: 22, 
-name: "PLC Método Grafcet Manual", 
-type: "Manual", 
-desc: "Manual aplicado al diseño secuencial y programación por metodología Grafcet.", 
-image: "img/AA (4).gif", 
-category: "Automatización", 
-level: "Avanzado", 
-cost: 5.00, 
-link: "22-Manual-auto-plc-grafcet-on-info.html", 
-totalLessons: 6,
-manuales: [{name: "Manual PLC Método Grafcet (PDF)", link: "https://wa.me/584121414196?text=Hola,%20solicito%20acceso%20al%20manual%20de%20PLC%20M%C3%A9todo%20Grafcet"}],
-aulaLink: "aula-virtual-id.html?courseId=22"
-},
-
-{ id: 23, 
-name: "Arranque de motores con PLC Manual", 
-type: "Manual", 
-desc: "Manual completo sobre el arranque y control de motores usando PLC.", 
-image: "img/AA (7).gif", 
-category: "Automatización", 
-level: "Básico", 
-cost: 5.00, 
-link: "material-page-id.html?courseId=23", 
-totalLessons: 6,
-aulaLink: "aula-virtual-id.html?courseId=23"
-},
-
-{ id: 24, 
-name: "10 ejercicios de PLC Método GRAFCET Manual", 
-type: "Manual", 
-desc: "Manual completo sobre Grafcet usando PLC.", 
-image: "img/AA (4).gif", 
-category: "Automatización", 
-level: "Avanzado", 
-cost: 5.00, 
-link: "24-Manual-10-ejer-auto-plc-grafcet-info.html", 
-totalLessons: 11,
-aulaLink: "aula-virtual-id.html?courseId=24"
-}
-
-
-
-        ];
+        let COURSES_DATA = [];
 
         const MATERIAL_PAGE_BY_ID = {
-            1: '1-arranque-contactores-material.html',
-            2: '2-arranque-plc-logo-material.html',
-            3: '3-compuertas-factory-plc-material.html', // Funciones Lógicas en PLCs con Factory IO Online
-            4: '4-auto-contactores-on-material.html', // Automatización con Contactores Online
-            5: '5-auto-plc-logo-on-material.html', // Automatización con PLC LOGO! Online
-            6: '6-auto-plc-grafcet-on-material.html', // Automatización con PLC – Método Grafcet Online
-            7: '7-10-Ejer-auto-contactores-on-material.html', // 10 ejercicios de aplicaciones con Contactores Online
-            8: '8-10-ejer-auto-plc-logo-on-material.html', // 10 ejercicios de aplicaciones con PLC LOGO! Online
-            9: '9-auto-industrial-pre-info.html',
-            10: '10-auto-contactores-pre-info.html',
-            11: '11-auto-plc-logo-pre-info.html',
-            12: '12-auto-plc-grafcet-pre-info.html',
-            13: '13-auto-contactores-pre-info - diplomado.html',
-            14: '14-auto-plc-logo-pre-info - diplomado.html',
-            15: '15-auto-control-avanzado-pre-info - maestria.html',
-            16: '16-auto-control-aplicado-pre-info - maestria.html',
-            17: '17-Taller-III-pregrado.html',
-            18: '18-Sist-hid-Neu-pregrado.html',
-            19: '19-Manual-arranque-contactores-info.html',
-            20: '20-auto-plc-basico-on-info.html',
-            21: '21-Manual-auto-contactores-on-info.html',
-            22: '22-Manual-auto-plc-grafcet-on-info.html',
+            1: 'material-page-id.html?id=1',
+            2: 'material-page-id.html?id=2',
+            3: 'material-page-id.html?id=3',
+            4: 'material-page-id.html?id=4',
+            5: 'material-page-id.html?id=5',
+            6: 'material-page-id.html?id=6',
+            7: 'material-page-id.html?id=7',
+            8: 'material-page-id.html?id=8',
+            9: 'material-page-id.html?id=9',
+            10: 'material-page-id.html?id=10',
+            11: 'material-page-id.html?id=11',
+            12: 'material-page-id.html?id=12',
+            13: 'material-page-id.html?id=13',
+            14: 'material-page-id.html?id=14',
+            15: 'material-page-id.html?id=15',
+            16: 'material-page-id.html?id=16',
+            17: 'material-page-id.html?id=17',
+            18: 'material-page-id.html?id=18',
+            19: 'material-page-id.html?id=19',
+            20: 'material-page-id.html?id=20',
+            21: 'material-page-id.html?id=21',
+            22: 'material-page-id.html?id=22',
             23: 'material-page-id.html?id=23',
-            24: '1-arranque-contactores-material.html'
+            24: 'material-page-id.html?id=24'
         };
 
+        // ============ FUNCIONES DEL TOAST DE CARGA ============
+        function showLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            const title = document.getElementById('loadingToastTitle');
+            const subtitle = document.getElementById('loadingToastSubtitle');
+            const spinner = document.getElementById('loadingToastSpinner');
+            
+            if (toast) {
+                // Resetear al estado de carga
+                toast.classList.remove('hidden', 'hiding', 'success-toast');
+                title.innerText = 'Estamos cargando la información de tus cursos';
+                subtitle.innerText = 'Conectando con la base de datos...';
+                
+                // Asegurar que el spinner esté visible
+                if (spinner) spinner.style.display = 'block';
+                
+                // Remover check si existe
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+            }
+        }
+
+        function showSuccessToast() {
+            const toast = document.getElementById('loadingToast');
+            const title = document.getElementById('loadingToastTitle');
+            const subtitle = document.getElementById('loadingToastSubtitle');
+            const spinner = document.getElementById('loadingToastSpinner');
+            
+            if (toast) {
+                // Cambiar a estado de éxito
+                toast.classList.remove('hidden', 'hiding');
+                toast.classList.add('success-toast');
+                
+                title.innerText = '¡Listo! Ya están cargados tus cursos';
+                subtitle.innerText = 'Información actualizada correctamente';
+                
+                // Ocultar spinner
+                if (spinner) spinner.style.display = 'none';
+                
+                // Agregar check verde
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                
+                const checkDiv = document.createElement('div');
+                checkDiv.className = 'toast-check';
+                checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+                toast.appendChild(checkDiv);
+                
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                
+                // Auto-ocultar después de 3 segundos
+                setTimeout(() => {
+                    hideLoadingToast();
+                }, 3000);
+            }
+        }
+
+        function hideLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            if (toast) {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.classList.remove('hiding', 'success-toast');
+                }, 500);
+            }
+        }
+        // ============ FIN FUNCIONES DEL TOAST ============
+
         function openCourseMaterial(courseId) {
-            // Esta función ahora solo navega al material, sin tracking de vistas
-            // El tracking de vistas se hará en grantAccess, que es el punto de entrada principal
             const materialPage = MATERIAL_PAGE_BY_ID[courseId];
             if (materialPage) {
                 window.location.href = materialPage;
@@ -550,7 +730,7 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 case 'info':
                     bgColor = 'bg-blue-800/80 border-blue-700'; iconColor = 'bg-blue-500'; icon = 'info';
                     break;
-                default: // success
+                default:
                     bgColor = 'bg-green-800/80 border-green-700'; iconColor = 'bg-green-500'; icon = 'check-circle';
                     break;
             }
@@ -564,6 +744,7 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             setTimeout(() => { t.style.opacity = '1'; t.style.transform = 'translateY(0)'; }, 10);
             setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(20px)'; setTimeout(() => t.remove(), 300); }, 4000);
         }
+
         function openModal(id){ document.getElementById(id)?.classList.add('active'); }
         function closeModal(id){ document.getElementById(id)?.classList.remove('active'); }
         function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
@@ -601,59 +782,138 @@ aulaLink: "aula-virtual-id.html?courseId=24"
         function formatCertDate(dateStr) { if (!dateStr) return "[En proceso de registro en sistema]"; if (dateStr.includes("T")) dateStr = dateStr.split("T")[0]; let parts = dateStr.split(/[/\-]/); if (parts.length === 3) { let d = parseInt(parts[0], 10); let m = parseInt(parts[1], 10); let y = parseInt(parts[2], 10); if (parts[0].length === 4) { y = parseInt(parts[0], 10); d = parseInt(parts[2], 10); } if (y < 100) y += 2000; const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]; let mIndex = m - 1; if(mIndex >= 0 && mIndex < 12 && !isNaN(d) && !isNaN(y)) return `${d} de ${monthNames[mIndex]} de ${y}`; } return dateStr; }
         function findDateInObject(normalizedObj, courseName) { if (!normalizedObj || !courseName) return null; const normCourse = normalizeName(courseName); for (let key in normalizedObj) if (normalizeName(key) === normCourse) return normalizedObj[key]; return null; }
 
+        // ==========================================
+        // FUNCIÓN loadData CORREGIDA
+        // ==========================================
         async function loadData(){
-            if (typeof showSyncIndicator === 'function') showSyncIndicator('Conectando con la base de datos...', 'loading');
             try{
                 const res=await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
                 const data=await res.json();
                 if(data.status==='success'){
-                    dbUsers=data.users||{}; globalStats=data.stats||{}; dbUserCourses=data.userCourses||{}; dbUserDetails=data.userDetails||{}; dbUserProgress=data.userProgress||{};
+                    dbUsers=data.users||{}; 
+                    globalStats=data.stats||{}; 
+                    dbUserCourses=data.userCourses||{}; 
+                    dbUserDetails=data.userDetails||{}; 
+                    dbUserProgress=data.userProgress||{};
+                    
                     let enrollmentDatesBackend = data.userCourseEnrollmentDates || {};
                     let completionDatesBackend = data.userCourseCompletionDates || {};
-                    calculateCourseRatings(); updateStudentCounts();
+                    
+                    calculateCourseRatings(); 
+                    updateStudentCounts();
+                    
+                    // ========== SINCRONIZAR CURSOS DEL USUARIO ==========
                     if(window.currentUser && window.currentUser.email){
-                        const email=window.currentUser.email.toLowerCase();
-                        let myCourseNamesRaw=dbUserCourses[email]||[];
-                        let myCourseNames=splitCourseNames(myCourseNamesRaw);
-                        let myCourseIds=[];
-                        myCourseNames.forEach(cName=>{
-                            let nn=normalizeName(cName);
-                            let found=COURSES_DATA.find(x=>normalizeName(x.name)===nn);
-                            if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
-                            if(found) myCourseIds.push(found.id);
+                        const email = window.currentUser.email.toLowerCase();
+                        
+                        let myCourseNamesRaw = dbUserCourses[email] || [];
+                        let myCourseNames = splitCourseNames(myCourseNamesRaw);
+                        
+                        console.log('📋 Cursos encontrados en Mis Cursos para', email, ':', myCourseNames);
+                        
+                        let myCourseIds = [];
+                        myCourseNames.forEach(cName => {
+                            let nn = normalizeName(cName);
+                            let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
+                            if(!found) found = COURSES_DATA.find(x => normalizeName(x.Nombre).includes(nn) || nn.includes(normalizeName(x.Nombre)));
+                            if(found) {
+                                myCourseIds.push(found.ID);
+                                console.log('  ✅ Curso encontrado:', cName, '-> ID:', found.ID);
+                            }
                         });
-                        let globalUser=dbUsers[email]||{};
-                        if(typeof globalUser==='string'){ try{ globalUser=JSON.parse(globalUser); }catch(e){ globalUser={}; } }
-                        let details=dbUserDetails[email]||{};
-                        let existingIds=Array.isArray(globalUser.accessedCursos)?globalUser.accessedCursos:(window.currentUser.accessedCursos||[]);
-                        window.currentUser.accessedCursos=[...new Set([...existingIds,...myCourseIds])];
-                        if(details.name&&details.name!="No provisto"&&details.name!="N/A") window.currentUser.name=details.name;
-                        window.currentUser.cedula=details.cedula||window.currentUser.cedula||"N/A";
-                        window.currentUser.telefono=details.telefono||window.currentUser.telefono||"N/A";
-                        window.currentUser.pais=details.pais||window.currentUser.pais||"N/A";
-                        window.currentUser.estado=details.estado||window.currentUser.estado||"N/A";
-                        window.currentUser.downloadedFiles=globalUser.downloadedFiles||window.currentUser.downloadedFiles||[];
-                        window.currentUser.ratings=globalUser.ratings||window.currentUser.ratings||{};
-                        window.currentUser.profession=globalUser.profession||window.currentUser.profession||"";
-                        window.currentUser.likedCourses=globalUser.likedCourses||window.currentUser.likedCourses||[];
-                        window.currentUser.registrationDate = globalUser.registrationDate || window.currentUser.registrationDate || '';
+                        
+                        let globalUser = dbUsers[email] || {};
+                        if(typeof globalUser === 'string'){ 
+                            try{ globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; } 
+                        }
+                        
+                        let details = dbUserDetails[email] || {};
+                        
+                        let existingIds = Array.isArray(globalUser.accessedCursos) ? globalUser.accessedCursos : (window.currentUser.accessedCursos || []);
+                        window.currentUser.accessedCursos = [...new Set([...existingIds, ...myCourseIds])];
+                        
+                        if(details.name && details.name !== "No provisto" && details.name !== "N/A") 
+                            window.currentUser.name = details.name;
+                        window.currentUser.cedula = details.cedula || window.currentUser.cedula || "N/A";
+                        window.currentUser.telefono = details.telefono || window.currentUser.telefono || "N/A";
+                        window.currentUser.pais = details.pais || window.currentUser.pais || "N/A";
+                        window.currentUser.estado = details.estado || window.currentUser.estado || "N/A";
+                        window.currentUser.downloadedFiles = globalUser.downloadedFiles || window.currentUser.downloadedFiles || [];
+                        window.currentUser.ratings = globalUser.ratings || window.currentUser.ratings || {};
+                        window.currentUser.profession = globalUser.profession || window.currentUser.profession || "";
+                        window.currentUser.likedCourses = globalUser.likedCourses || window.currentUser.likedCourses || [];
+                        window.currentUser.visitRegistro = globalUser.visitRegistro || window.currentUser.visitRegistro || {
+                            cursos: {},
+                            infoPaginas: {},
+                            aulas: {}
+                        };
+                        
                         const backendDatesForEmail = enrollmentDatesBackend[email] || {};
                         const backendCompDatesForEmail = completionDatesBackend[email] || {};
                         latestEnrollmentDates = backendDatesForEmail;
                         latestCompletionDates = backendCompDatesForEmail;
-                        localStorage.setItem('user',JSON.stringify(window.currentUser));
-                        updateAllUI(); fetchProgressForAllCourses(); renderMisCourses();
-                    } else { renderMisCourses(); }
-                    if (typeof showSyncIndicator === 'function') showSyncIndicator('Datos sincronizados', 'success');
+                        
+                        localStorage.setItem('user', JSON.stringify(window.currentUser));
+                        
+                        updateAllUI(); 
+                        fetchProgressForAllCourses(); 
+                        renderMisCourses();
+                    } else {
+                        renderMisCourses();
+                    }
                 }
             } catch(e){ 
-                console.error("Error al cargar la data global:",e); 
-                if (typeof showSyncIndicator === 'function') showSyncIndicator('Error de conexión', 'error');
+                console.error("Error al cargar la data global:", e); 
+                if(window.currentUser) {
+                    renderMisCourses();
+                }
+            }
+        }
+
+        async function loadCoursesFromSheet() {
+            try {
+                console.log('🔄 Cargando catálogo de cursos...');
+                
+                // Mostrar toast de carga
+                showLoadingToast();
+                
+                const response = await fetch(`${SCRIPT_URL}?action=get_courses&nocache=${new Date().getTime()}`);
+                if (!response.ok) {
+                    throw new Error(`Error en la red: ${response.statusText}`);
+                }
+                const result = await response.json();
+
+                if (result.status !== 'success') {
+                    throw new Error(result.message || 'El script de Google devolvió un error.');
+                }
+                
+                window.COURSES_DATA = result.data;
+                COURSES_DATA = result.data;
+                console.log('✅ Catálogo cargado:', COURSES_DATA.length, 'cursos');
+                
+                await loadData();
+
+                // Mostrar toast de éxito
+                showSuccessToast();
+
+            } catch (error) {
+                console.error('Error al cargar los cursos:', error);
+                
+                // Ocultar toast de carga en caso de error
+                hideLoadingToast();
+                
+                const grid = document.getElementById('coursesGrid');
+                if (grid) grid.innerHTML = `<div class="col-span-full text-center p-8 bg-red-100 border border-red-300 rounded-2xl text-red-800">
+                    <h3 class="font-bold">Error al Cargar Catálogo</h3><p class="mt-2">No se pudo conectar con la base de datos de cursos.</p></div>`;
             }
         }
 
         async function silentRefreshData(){
             if(!window.currentUser) return;
+            
+            // Mostrar toast de carga para la actualización silenciosa
+            showLoadingToast();
+            
             try{
                 const res=await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
                 const data=await res.json();
@@ -671,9 +931,13 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                     }
                     fetchProgressForAllCourses();
                     if(document.getElementById('page-curso-detalle').style.display==='block'&&currentViewedCourseId) viewCourseDetail(currentViewedCourseId);
-                    if(document.getElementById('page-progreso').style.display==='block') updateProgressDashboard();
                 }
-            } catch(e){ console.error("Error al actualizar progreso en segundo plano:",e); }
+            } catch(e){ 
+                console.error("Error al actualizar progreso en segundo plano:",e); 
+            } finally {
+                // Mostrar toast de éxito
+                showSuccessToast();
+            }
         }
 
         async function manualRefreshProgress(){
@@ -686,41 +950,56 @@ aulaLink: "aula-virtual-id.html?courseId=24"
 
         function calculateCourseRatings(){
             courseRatings={};
-            COURSES_DATA.forEach(c=>courseRatings[c.id]={sum:0,count:0,avg:"5.0"});
+            COURSES_DATA.forEach(c=>courseRatings[c.ID]={sum:0,count:0,avg:"5.0"});
             for(const email in dbUsers){
                 let u=dbUsers[email]; if(typeof u==='string'){ try{ u=JSON.parse(u); }catch(e){ u={}; } }
-                if(u&&u.ratings){ for(const cid in u.ratings){ if(courseRatings[cid]){ courseRatings[cid].sum+=u.ratings[cid]; courseRatings[cid].count+=1; } } }
+                if(u&&u.ratings){ for(const cid in u.ratings){ if(courseRatings[cid]){ courseRatings[cid].sum+=Number(u.ratings[cid]); courseRatings[cid].count+=1; } } }
             }
             for(const cid in courseRatings){ if(courseRatings[cid].count>0) courseRatings[cid].avg=(courseRatings[cid].sum/courseRatings[cid].count).toFixed(1); }
         }
 
         function updateStudentCounts(){
-            COURSES_DATA.forEach(c=>studentCountsPerCourse[c.id]=0);
+            COURSES_DATA.forEach(c=>studentCountsPerCourse[c.ID]=0);
             for(const email in dbUserCourses){
                 let names=splitCourseNames(dbUserCourses[email]);
                 names.forEach(courseName=>{
                     let nn=normalizeName(courseName);
-                    let found=COURSES_DATA.find(x=>normalizeName(x.name)===nn);
-                    if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
-                    if(found) studentCountsPerCourse[found.id]+=1;
+                    let found=COURSES_DATA.find(x=>normalizeName(x.Nombre)===nn);
+                    if(!found) found=COURSES_DATA.find(x=>normalizeName(x.Nombre).includes(nn)||nn.includes(normalizeName(x.Nombre)));
+                    if(found) studentCountsPerCourse[found.ID]+=1;
                 });
             }
         }
 
         async function syncUserProgressToExcel(){ 
-            const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || AuthLogic.currentUser || JSON.parse(localStorage.getItem('user') || 'null');
+            const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || JSON.parse(localStorage.getItem('user') || 'null');
             if(!activeUser || !activeUser.email) return;
             window.currentUser = activeUser;
-            if (typeof AuthLogic !== 'undefined') AuthLogic.currentUser = activeUser;
             const email=activeUser.email.toLowerCase();
+            
+            if (!activeUser.likedCourses) activeUser.likedCourses = [];
+            if (!activeUser.accessedCursos) activeUser.accessedCursos = [];
+            if (!activeUser.downloadedFiles) activeUser.downloadedFiles = [];
+            if (!activeUser.ratings) activeUser.ratings = {};
+            if (!activeUser.visitRegistro) activeUser.visitRegistro = {
+                cursos: {},
+                infoPaginas: {},
+                aulas: {}
+            };
+            
             const userData=JSON.stringify(activeUser);
             try {
-                await fetch(SCRIPT_URL, {
+                const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `action=update_user&email=${encodeURIComponent(email)}&userData=${encodeURIComponent(userData)}`
                 });
-            } catch (e) { console.error('Fallo en la red al sincronizar progreso de usuario:', e); showNotif('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error'); }
+                const result = await response.json();
+                console.log('📤 Sincronización completada:', result);
+            } catch (e) { 
+                console.error('Fallo en la red al sincronizar progreso de usuario:', e); 
+                showNotif('Error de sincronización', 'No se pudo guardar tu progreso en la nube.', 'error'); 
+            }
         }
 
         function fetchProgressForAllCourses(){
@@ -730,21 +1009,18 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             const progresos=dbUserProgress[email]||{};
             const accessed=Array.isArray(window.currentUser.accessedCursos)?window.currentUser.accessedCursos:[];
             accessed.forEach(courseId=>{
-                const course=COURSES_DATA.find(c=>c.id===courseId);
+                const course=COURSES_DATA.find(c=>c.ID===courseId);
                 if(!course) return;
                 let progStr="";
-                const nc = normalizeName(course.name);
+                const nc = normalizeName(course.Nombre);
 
-                // Se busca una coincidencia exacta para evitar el error donde el progreso de un curso
-                // con nombre similar (ej. "PLC Método Grafcet Manual") se asignaba incorrectamente
-                // a otro (ej. "10 ejercicios de PLC Método GRAFCET Manual").
                 for(let key in progresos) {
                     if (normalizeName(key) === nc) {
                         progStr = progresos[key];
-                        break; // Usar la primera coincidencia exacta encontrada.
+                        break;
                     }
                 }
-                const total=course.totalLessons||5;
+                const total=course.TotalLecciones||5;
                 userProgress[email][String(courseId)]=parseProgressString(progStr,total);
             });
             renderMisCourses();
@@ -755,41 +1031,43 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             document.getElementById('misCursosUserInfo').classList.remove('hidden');
             const setTxt=(id,txt)=>{ const el=document.getElementById(id); if(el) el.innerText=txt; };
             
-            const initialsEl=document.getElementById('profileInitials'); const mcInitialsEl=document.getElementById('mcProfileInitials');
-            if(window.currentUser.name||window.currentUser.email){ const str=window.currentUser.name||window.currentUser.email; const parts=str.trim().split(' '); const inits=parts.length>1?(parts[0][0]+parts[parts.length-1][0]).toUpperCase():parts[0][0].toUpperCase(); if(initialsEl) initialsEl.innerText=inits; if(mcInitialsEl) mcInitialsEl.innerText=inits; }
-            
-            setTxt('profileFullName',window.currentUser.name||"Estudiante"); setTxt('mcProfileName',window.currentUser.name||"Estudiante");
-            setTxt('profileEmail',window.currentUser.email); setTxt('mcProfileEmail',window.currentUser.email);
-            setTxt('profileProfession',window.currentUser.profession?capitalize(window.currentUser.profession):"Sin Perfil");
-            setTxt('profileCedula',window.currentUser.cedula&&window.currentUser.cedula!=="N/A"?window.currentUser.cedula:"Sin Cédula");
-            setTxt('profilePhone',window.currentUser.telefono&&window.currentUser.telefono!=="N/A"?window.currentUser.telefono:"Sin Teléfono");
-            
-            let locText=window.currentUser.pais&&window.currentUser.pais!=="N/A"?window.currentUser.pais:"País Desconocido";
-            if(window.currentUser.pais==="Venezuela"&&window.currentUser.estado&&window.currentUser.estado!=="N/A") locText+=` (${window.currentUser.estado})`;
-            setTxt('profileLocation',locText); setTxt('mcProfileLocation',locText);
-            
-            const flagImg=document.getElementById('profileFlag'); const globeIcon=document.getElementById('profileGlobeIcon');
-            let isoCode=null; if(window.currentUser.pais&&window.currentUser.pais!=="N/A"){ const cleanPais=window.currentUser.pais.trim().toLowerCase(); isoCode=countryToISO[cleanPais]||countryToISO[cleanPais.replace(/\s/g,'')]; }
-            if(isoCode){ if(flagImg){ flagImg.src=`https://flagcdn.com/w20/${isoCode}.png`; flagImg.classList.remove('hidden'); } if(globeIcon) globeIcon.classList.add('hidden'); }
-            else { if(flagImg) flagImg.classList.add('hidden'); if(globeIcon) globeIcon.classList.remove('hidden'); }
-            
+            setTxt('mcProfileName',window.currentUser.name||"Estudiante");
+            setTxt('mcProfileEmail',window.currentUser.email);
             setTxt('mcProfileCedula',window.currentUser.cedula&&window.currentUser.cedula!=="N/A"?window.currentUser.cedula:"Sin Cédula");
             setTxt('mcProfilePhone',window.currentUser.telefono&&window.currentUser.telefono!=="N/A"?window.currentUser.telefono:"Sin Teléfono");
             setTxt('mcProfileProfession',window.currentUser.profession?capitalize(window.currentUser.profession):"Sin Perfil");
             
+            let locText=window.currentUser.pais&&window.currentUser.pais!=="N/A"?window.currentUser.pais:"País Desconocido";
+            if(window.currentUser.pais==="Venezuela"&&window.currentUser.estado&&window.currentUser.estado!=="N/A") locText+=` (${window.currentUser.estado})`;
+            setTxt('mcProfileLocation',locText);
+            
             const mcFlag=document.getElementById('mcProfileFlag'); const mcGlobe=document.getElementById('mcProfileGlobeIcon');
-            if(mcFlag&&mcGlobe){ if(isoCode){ mcFlag.src=`https://flagcdn.com/w20/${isoCode}.png`; mcFlag.classList.remove('hidden'); mcGlobe.classList.add('hidden'); } else { mcFlag.classList.add('hidden'); mcGlobe.classList.remove('hidden'); } }
+            let isoCode=null; 
+            if(window.currentUser.pais&&window.currentUser.pais!=="N/A"){ 
+                const cleanPais=window.currentUser.pais.trim().toLowerCase(); 
+                isoCode=countryToISO[cleanPais]||countryToISO[cleanPais.replace(/\s/g,'')]; 
+            }
+            if(mcFlag&&mcGlobe){ 
+                if(isoCode){ 
+                    mcFlag.src=`https://flagcdn.com/w20/${isoCode}.png`; 
+                    mcFlag.classList.remove('hidden'); 
+                    mcGlobe.classList.add('hidden'); 
+                } else { 
+                    mcFlag.classList.add('hidden'); 
+                    mcGlobe.classList.remove('hidden'); 
+                } 
+            }
 
             const accessed=Array.isArray(window.currentUser.accessedCursos)?window.currentUser.accessedCursos:[];
             let countOnline=0, countPresencial=0, countMaterias=0, countManuales=0;
             
             accessed.forEach(cId=>{
-                const course=COURSES_DATA.find(c=>c.id===cId);
+                const course=COURSES_DATA.find(c=>c.ID===cId);
                 if(course){
-                    if(course.type === 'Online') countOnline++;
-                    else if(course.type === 'Presencial') countPresencial++;
-                    else if(course.type === 'Materia') countMaterias++;
-                    else if(course.type === 'Manual') countManuales++;
+                    if(course.Tipo === 'Online') countOnline++;
+                    else if(course.Tipo === 'Presencial') countPresencial++;
+                    else if(course.Tipo === 'Materia') countMaterias++;
+                    else if(course.Tipo === 'Manual') countManuales++;
                 }
             });
 
@@ -802,56 +1080,59 @@ aulaLink: "aula-virtual-id.html?courseId=24"
         function renderMisCourses(){
             const grid=document.getElementById('coursesGrid'), noResults=document.getElementById('noResultsMisCursos');
             grid.innerHTML='';
+            
             if(!window.currentUser){
                 grid.classList.add('hidden'); noResults.classList.remove('hidden');
                 noResults.innerHTML=`<i data-lucide="lock" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-slate-700">Acceso Restringido</h3><p class="text-slate-500 text-sm mt-2 mb-6">Debes iniciar sesión para ver tus cursos adquiridos.</p><button onclick="openModal('authModal')" class="bg-[#0f172a] hover:bg-[#2db8ce] text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button>`;
                 if(window.lucide) lucide.createIcons(); return;
             }
-            const accessedCourses=COURSES_DATA.filter(c=>window.currentUser.accessedCursos&&window.currentUser.accessedCursos.includes(c.id));
+            
+            const accessedCourses=COURSES_DATA.filter(c=>window.currentUser.accessedCursos&&window.currentUser.accessedCursos.includes(c.ID));
+            
             if(accessedCourses.length===0){
                 grid.classList.add('hidden'); noResults.classList.remove('hidden');
                 noResults.innerHTML=`<i data-lucide="library" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-slate-700">Aún no tienes cursos</h3><p class="text-slate-500 text-sm mt-2 mb-6">Explora nuestro catálogo y adquiere tu primer curso.</p><button onclick="window.open('https://wa.me/584121414196?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20cursos', '_blank')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-th"></i> Ver Catálogo</button>`;
                 if(window.lucide) lucide.createIcons(); return;
             }
+            
             grid.classList.remove('hidden'); noResults.classList.add('hidden');
             const emailKey=window.currentUser.email.toLowerCase(); const myProgress=userProgress[emailKey]||{};
+            
             grid.innerHTML=accessedCourses.map((course,index)=>{
-                const isManual = course.type === 'Manual';
-                const likes=globalStats[`curso-${course.id}_likes`]||0;
-                const vistas=globalStats[`curso-${course.id}_vistas`]||0;
-                const avgRating=courseRatings[course.id]?courseRatings[course.id].avg:"5.0";
-                const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.id}`))?'liked':'';
+                const isManual = course.Tipo === 'Manual';
+                const likes=globalStats[`curso-${course.ID}_likes`]||0;
+                const vistas=globalStats[`curso-${course.ID}_vistas`]||0;
+                const avgRating=courseRatings[course.ID]?courseRatings[course.ID].avg:"5.0";
+                const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.ID}`))?'liked':'';
                 const viewsClass=vistas>0?'text-green-500':'text-slate-400';
-                const displayCount=studentCountsPerCourse[course.id]!==undefined?studentCountsPerCourse[course.id]:'...';
-                const progressData=myProgress[String(course.id)]||{completed:0,total:course.totalLessons||5,percent:0,avgScore:0};
+                const displayCount=studentCountsPerCourse[course.ID]!==undefined?studentCountsPerCourse[course.ID]:'...';
+                const progressData=myProgress[String(course.ID)]||{completed:0,total:course.TotalLecciones||5,percent:0,avgScore:0};
                 const completed = progressData.completed;
                 const total = progressData.total;
                 const percent = progressData.percent;
-                const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[course.id])||0;
+                const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[course.ID])||0;
                 let starsHTML='';
-                for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.id},${i},false)"></i>`; }
+                for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.ID},${i},false)"></i>`; }
                 
                 let buttonsHTML = '';
                 if (isManual) {
-                    buttonsHTML = `<button type="button" onclick="openCourseMaterial(${course.id}); event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
-                    if (course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#') {
-                        buttonsHTML += `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
+                    buttonsHTML = `<button type="button" onclick="openCourseMaterial(${course.ID}); event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
+                    if (course.EnlaceAula && course.EnlaceAula.trim() !== '' && course.EnlaceAula.trim() !== '#') {
+                        buttonsHTML += `<button type="button" onclick="window.location.href='${course.EnlaceAula}'; event.stopPropagation();" class="w-full btn-metal-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
                     }
                 } else {
-                    const materialesOnClick = `openCourseMaterial(${course.id})`;
-
-                    buttonsHTML = `<button type="button" onclick="${materialesOnClick}; event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
-                    ${course.aulaLink && course.aulaLink.trim() !== '' && course.aulaLink.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.aulaLink}'; event.stopPropagation();" class="w-full btn-metal-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
+                    buttonsHTML = `<button type="button" onclick="openCourseMaterial(${course.ID}); event.stopPropagation();" class="w-full btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
+                    ${course.EnlaceAula && course.EnlaceAula.trim() !== '' && course.EnlaceAula.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.EnlaceAula}'; event.stopPropagation();" class="w-full btn-metal-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
                 }
 
                 const progressBarHTML =`
                 <div class="mt-4 mb-3 bg-[#0f172a]/80 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-inner">
                     <div class="flex justify-between items-center mb-2"><span class="text-[10px] font-bold uppercase tracking-widest text-white">Progreso</span><span class="text-xs font-black text-green-400">${percent}%</span></div>
                     <div class="w-full bg-white/10 rounded-full h-1.5 mb-2 overflow-hidden"><div class="bg-green-400 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div></div>
-                    <p class="progress-lessons-completed text-[10px] font-bold">${completed} de ${total} lecciones completadas</p>
+                    <p class="progress-lessons-completed text-[10px] font-bold text-white">${completed} de ${total} lecciones completadas</p>
                 </div>`;
                 
-                const normalizedLevel = course.level.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+                const normalizedLevel = (course.Nivel || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
                 let levelBorderClass = '';
                 let levelIconClass = 'fa-question-circle';
                 let levelIconBg = 'bg-slate-500/10 border-slate-500/30';
@@ -877,7 +1158,7 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 if (isManual) {
                     iconsHTML = `
                         <div class="absolute bottom-3 left-3 flex items-center gap-2">
-                            <div class="flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}">
+                            <div class="flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.Nivel}">
                                 <i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i>
                             </div>
                             <div class="flex items-center justify-center bg-blue-500/10 border-2 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Manual">
@@ -885,15 +1166,15 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                             </div>
                         </div>`;
                 } else {
-                    iconsHTML = `<div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.level}"><i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i></div>`;
+                    iconsHTML = `<div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.Nivel}"><i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i></div>`;
                 }
 
-                return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col reveal reveal-up group ${levelBorderClass}" style="animation-delay: ${index*0.05}s;" onclick="grantAccess(${course.id})">
+                return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col reveal reveal-up group ${levelBorderClass}" style="animation-delay: ${index*0.05}s;" onclick="grantAccess(${course.ID})">
                     <div class="relative aspect-video w-full overflow-hidden bg-[#0f172a]">
-                        <img src="${course.image}" class="w-full h-full object-cover opacity-70 transition-transform duration-500 group-hover:scale-105">
+                        <img src="${course.ImagenURL}" class="w-full h-full object-cover opacity-70 transition-transform duration-500 group-hover:scale-105">
                         <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
-                            <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.type}</span>
-                            <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.category}</span>
+                            <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.Tipo}</span>
+                            <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${course.Categoria}</span>
                         </div>
                         <div class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-secondary text-[10px] font-black px-2 py-1 rounded-md border border-white/20 shadow-lg flex items-center gap-1">
                             <i class="fas fa-star text-yellow-400"></i> ${avgRating}
@@ -901,14 +1182,14 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                         ${iconsHTML}
                     </div>
                     <div class="p-5 md:p-6 flex-grow flex flex-col">
-                        <h3 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${course.name}</h3>
+                        <h3 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${course.Nombre}</h3>
                         <div class="flex items-center justify-between mb-4 text-xs font-bold text-slate-500">
                             <div class="flex items-center gap-2">
-                                <span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md flex items-center gap-1 border border-slate-200"><i data-lucide="book-open" class="w-3 h-3"></i> ${course.level}</span>
+                                <span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md flex items-center gap-1 border border-slate-200"><i data-lucide="book-open" class="w-3 h-3"></i> ${course.Nivel}</span>
                                 <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> ${displayCount}</span>
                             </div>
                             <div class="flex items-center gap-3">
-                                <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${course.id}" onclick="event.stopPropagation(); toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">${likes}</span></button>
+                                <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${course.ID}" onclick="event.stopPropagation(); toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">${likes}</span></button>
                                 <span class="flex items-center gap-1 ${viewsClass}"><i class="fas fa-eye"></i><span>${vistas}</span></span>
                             </div>
                         </div>
@@ -931,19 +1212,81 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 ping('update_stat', `curso-${courseId}_vistas`);
                 if (globalStats) globalStats[`curso-${courseId}_vistas`] = (parseInt(globalStats[`curso-${courseId}_vistas`]) || 0) + 1;
 
+                // Registrar visita al curso
+                if (window.currentUser && window.currentUser.email) {
+                    recordVisit('curso', courseId, 'Curso ' + courseId, 'Acceso desde Mis Cursos');
+                }
+
                 const materialPage = MATERIAL_PAGE_BY_ID[courseId];
                 if (materialPage) {
                     window.location.href = materialPage;
-                    return; // Detener aquí, no mostrar la página de detalle
+                    return;
                 }
 
-                // Si no hay página de materiales, mostrar la página de detalle (comportamiento original)
-                viewCourseDetail(courseId); // Esto mostrará la página de información del curso
+                viewCourseDetail(courseId);
                 showFloatingBackBtn('Mis Cursos', 'page-mis-cursos');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } catch(e) {
                 console.error("Error intentando acceder al curso:", e);
                 showNotif("Error al cargar", "No se pudo preparar el curso, intente nuevamente.", "error");
+            }
+        }
+
+        async function recordVisit(visitType, itemId, itemName, details = '') {
+            if (!window.currentUser || !window.currentUser.email) return;
+            
+            const email = window.currentUser.email.toLowerCase();
+            
+            try {
+                const params = new URLSearchParams();
+                params.append('action', 'record_visit');
+                params.append('email', email);
+                params.append('visitType', visitType);
+                params.append('itemId', itemId);
+                params.append('itemName', itemName);
+                params.append('details', details);
+                
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: params,
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    if (!window.currentUser.visitRegistro) {
+                        window.currentUser.visitRegistro = {
+                            cursos: {},
+                            infoPaginas: {},
+                            aulas: {}
+                        };
+                    }
+                    
+                    const typeKey = visitType === 'curso' ? 'cursos' : 
+                                   visitType === 'info' ? 'infoPaginas' : 
+                                   visitType === 'aula' ? 'aulas' : null;
+                    
+                    if (typeKey) {
+                        if (!window.currentUser.visitRegistro[typeKey]) {
+                            window.currentUser.visitRegistro[typeKey] = {};
+                        }
+                        
+                        if (!window.currentUser.visitRegistro[typeKey][itemId]) {
+                            window.currentUser.visitRegistro[typeKey][itemId] = {
+                                visitas: 0,
+                                fechas: []
+                            };
+                        }
+                        
+                        window.currentUser.visitRegistro[typeKey][itemId].visitas++;
+                        window.currentUser.visitRegistro[typeKey][itemId].fechas.push(result.fecha);
+                        
+                        localStorage.setItem('user', JSON.stringify(window.currentUser));
+                    }
+                }
+            } catch (e) {
+                console.error('Error al registrar visita:', e);
             }
         }
 
@@ -961,8 +1304,8 @@ aulaLink: "aula-virtual-id.html?courseId=24"
 
         function viewCourseDetail(courseId){
             try {
-                currentViewedCourseId=courseId;
-                const course=COURSES_DATA.find(c=>c.id===courseId);
+                currentViewedCourseId = courseId;
+                const course=COURSES_DATA.find(c=>c.ID===courseId);
                 if(!course) return;
                 const container=document.getElementById('detalle-container');
                 const studentsCount=studentCountsPerCourse[courseId]||'...';
@@ -970,8 +1313,8 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 const viewsCount=globalStats[`curso-${courseId}_vistas`]||0;
                 const avgRating=courseRatings[courseId]?courseRatings[courseId].avg:"5.0";
                 const ratersCount=courseRatings[courseId]?courseRatings[courseId].count:0;
-                const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.id}`))?'text-red-500':'text-slate-400';
-                const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[course.id])||0;
+                const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.ID}`))?'text-red-500':'text-slate-400';
+                const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[course.ID])||0;
                 let starsHTML='';
                 for(let i=1;i<=5;i++){ const isFilled=i<=userRating; const starClass=isFilled?'text-yellow-400 fas fa-star drop-shadow-sm scale-110':'text-slate-300 far fa-star hover:text-yellow-400 hover:scale-110'; starsHTML+=`<i class="${starClass} text-xl cursor-pointer transition-all duration-200" onclick="rateCourse(${courseId},${i})"></i>`; }
                 
@@ -983,9 +1326,9 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                     const cardBg='bg-white border-slate-200 hover:bg-slate-50 hover:border-slate-300';
                     const iconBg=isDownloaded?'bg-green-500/20 text-slate-600':'bg-slate-100 text-slate-600 group-hover:bg-slate-200 group-hover:text-slate-800';
                     const checkIcon=isDownloaded?'<i class="fas fa-check-circle text-green-500 text-lg"></i>':'<i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-slate-700 transition-colors"></i>';
-                    const fileStatId=`descarga_curso_${course.id}_${m.name.replace(/[^a-zA-Z0-9]/g,'_')}`;
+                    const fileStatId=`descarga_curso_${course.ID}_${m.name.replace(/[^a-zA-Z0-9]/g,'_')}`;
                     const fileDownloads=globalStats[fileStatId]||0;
-                    return `<button type="button" onclick="downloadCourseMaterial('${m.name}','${m.link}',this,${course.id})" class="w-full text-left flex items-center justify-between p-4 sm:p-5 ${cardBg} rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all group"><div class="flex items-center gap-4"><div class="w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center transition-colors"><i data-lucide="book" class="w-5 h-5"></i></div><div><span class="font-bold text-slate-700 text-sm block leading-tight">${m.name}</span><div class="flex items-center gap-2 mt-1"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Documento PDF</span><span class="flex items-center gap-1 text-[10px] font-bold ${fileDownloads>0?'text-slate-600':'text-slate-400'}"><i class="fas fa-download"></i> <span class="file-download-count" data-file-id="${fileStatId}">${fileDownloads}</span></span></div></div></div>${checkIcon}</button>`;
+                    return `<button type="button" onclick="downloadCourseMaterial('${m.name}','${m.link}',this,${course.ID})" class="w-full text-left flex items-center justify-between p-4 sm:p-5 ${cardBg} rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all group"><div class="flex items-center gap-4"><div class="w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center transition-colors"><i data-lucide="book" class="w-5 h-5"></i></div><div><span class="font-bold text-slate-700 text-sm block leading-tight">${m.name}</span><div class="flex items-center gap-2 mt-1"><span class="text-[10px] uppercase font-bold text-slate-500 tracking-widest">Documento PDF</span><span class="flex items-center gap-1 text-[10px] font-bold ${fileDownloads>0?'text-slate-600':'text-slate-400'}"><i class="fas fa-download"></i> <span class="file-download-count" data-file-id="${fileStatId}">${fileDownloads}</span></span></div></div></div>${checkIcon}</button>`;
                 }).join('');
                 
                 let ejerciciosHTML=(course.ejercicios||[]).map(e=>{
@@ -996,10 +1339,10 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                     const checkIcon=isDownloaded?'<i class="fas fa-check-circle text-green-500 text-lg"></i>':'<i data-lucide="download" class="w-5 h-5 text-slate-400 group-hover:text-white transition-colors"></i>';
                     const titleColor=isDownloaded?'text-slate-400':'text-white';
                     const subtitleColor=isDownloaded?'text-slate-500':'text-slate-400';
-                    const fileStatId=`descarga_curso_${course.id}_${e.name.replace(/[^a-zA-Z0-9]/g,'_')}`;
+                    const fileStatId=`descarga_curso_${course.ID}_${e.name.replace(/[^a-zA-Z0-9]/g,'_')}`;
                     const fileDownloads=globalStats[fileStatId]||0;
                     const dlColor=isDownloaded?'text-slate-600':(fileDownloads>0?'text-teal-500':subtitleColor);
-                    return `<button type="button" onclick="downloadCourseMaterial('${e.name}','${e.link}',this,${course.id})" class="w-full text-left flex items-center justify-between p-4 sm:p-5 ${cardBg} rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all group"><div class="flex items-center gap-4"><div class="w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center transition-colors"><i data-lucide="file-code" class="w-5 h-5"></i></div><div><span class="font-bold ${titleColor} text-sm block leading-tight">${e.name}</span><div class="flex items-center gap-2 mt-1"><span class="text-[10px] uppercase font-bold ${subtitleColor} tracking-widest">Archivo de Práctica</span><span class="flex items-center gap-1 text-[10px] font-bold ${dlColor}"><i class="fas fa-download"></i> <span class="file-download-count" data-file-id="${fileStatId}">${fileDownloads}</span></span></div></div></div>${checkIcon}</button>`;
+                    return `<button type="button" onclick="downloadCourseMaterial('${e.name}','${e.link}',this,${course.ID})" class="w-full text-left flex items-center justify-between p-4 sm:p-5 ${cardBg} rounded-2xl hover:shadow-lg hover:-translate-y-1 transition-all group"><div class="flex items-center gap-4"><div class="w-12 h-12 rounded-xl ${iconBg} flex items-center justify-center transition-colors"><i data-lucide="file-code" class="w-5 h-5"></i></div><div><span class="font-bold ${titleColor} text-sm block leading-tight">${e.name}</span><div class="flex items-center gap-2 mt-1"><span class="text-[10px] uppercase font-bold ${subtitleColor} tracking-widest">Archivo de Práctica</span><span class="flex items-center gap-1 text-[10px] font-bold ${dlColor}"><i class="fas fa-download"></i> <span class="file-download-count" data-file-id="${fileStatId}">${fileDownloads}</span></span></div></div></div>${checkIcon}</button>`;
                 }).join('');
                 
                 let videoHTML = '';
@@ -1018,20 +1361,20 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                 }
 
                 const progressCardHTML=renderProgressCard(courseId);
-                const descSegura = course.resumen || course.desc || 'Sin descripción disponible.';
-                const objSeguro = course.objetivoGeneral || 'Capacitar al estudiante mediante fundamentos teóricos y aplicaciones prácticas en automatización industrial.';
+                const descSegura = course.Descripcion || 'Sin descripción disponible.';
+                const objSeguro = course.ObjetivoGeneral || 'Capacitar al estudiante mediante fundamentos teóricos y aplicaciones prácticas en automatización industrial.';
 
                 container.innerHTML=`<div class="max-w-[1300px] mx-auto px-4 sm:px-6 relative">
                     <div class="flex flex-col items-start gap-8 lg:gap-10 mt-6 lg:mt-0">
                         <div class="w-full bg-white rounded-[32px] shadow-xl border border-slate-200 text-left">
                             <div class="h-64 sm:h-96 relative rounded-t-[32px] overflow-hidden">
-                                <img src="${course.image}" class="w-full h-full object-cover">
+                                <img src="${course.ImagenURL}" class="w-full h-full object-cover">
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
                                 <div class="absolute bottom-6 sm:bottom-10 left-6 sm:left-10 right-6 sm:right-10">
-                                    <span class="px-3 py-1.5 bg-[#2db8ce] text-white text-[10px] font-black uppercase tracking-widest rounded-md mb-4 inline-block shadow-md">${course.category}</span>
-                                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tighter mb-4">${course.name}</h1>
+                                    <span class="px-3 py-1.5 bg-[#2db8ce] text-white text-[10px] font-black uppercase tracking-widest rounded-md mb-4 inline-block shadow-md">${course.Categoria}</span>
+                                    <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black text-white leading-tight tracking-tighter mb-4">${course.Nombre}</h1>
                                     <div class="flex flex-wrap items-center gap-3">
-                                        <p class="text-slate-300 font-medium text-sm sm:text-base flex items-center gap-2 mr-2"><i data-lucide="clock" class="w-4 h-4"></i> Modalidad: <strong class="text-white">${course.type}</strong></p>
+                                        <p class="text-slate-300 font-medium text-sm sm:text-base flex items-center gap-2 mr-2"><i data-lucide="clock" class="w-4 h-4"></i> Modalidad: <strong class="text-white">${course.Tipo}</strong></p>
                                         <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-sm"><i data-lucide="users" class="w-4 h-4 text-green-400"></i> ${studentsCount}</div>
                                         <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-sm"><i class="fas fa-heart text-red-400"></i> ${likesCount}</div>
                                         <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-sm"><i class="fas fa-eye text-teal-400"></i> ${viewsCount}</div>
@@ -1042,7 +1385,7 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 sm:p-8">
                                 <div class="h-full">${progressCardHTML}</div>
                                 <div class="flex flex-col sm:flex-row items-center justify-between gap-6 bg-slate-50 p-6 sm:p-8 rounded-[24px] border border-slate-200 shadow-sm h-full">
-                                    <button class="like-btn flex items-center gap-4 px-6 py-3 rounded-2xl bg-white border border-slate-200 hover:border-red-300 hover:shadow-md transition-all group ${isLikedClass}" data-id="curso-${course.id}" onclick="event.stopPropagation(); toggleLike(this)"><i class="fas fa-heart text-3xl group-hover:scale-110 transition-transform"></i><div class="text-left"><span class="block text-[10px] uppercase font-black tracking-widest text-slate-400">¿Te gustó el curso?</span><span class="font-bold text-slate-700 text-sm">Dale Me Gusta (<span class="like-count">${likesCount}</span>)</span></div></button>
+                                    <button class="like-btn flex items-center gap-4 px-6 py-3 rounded-2xl bg-white border border-slate-200 hover:border-red-300 hover:shadow-md transition-all group ${isLikedClass}" data-id="curso-${course.ID}" onclick="event.stopPropagation(); toggleLike(this)"><i class="fas fa-heart text-3xl group-hover:scale-110 transition-transform"></i><div class="text-left"><span class="block text-[10px] uppercase font-black tracking-widest text-slate-400">¿Te gustó el curso?</span><span class="font-bold text-slate-700 text-sm">Dale Me Gusta (<span class="like-count">${likesCount}</span>)</span></div></button>
                                     <div class="flex flex-col items-center sm:items-end text-center sm:text-right"><span class="block text-[10px] uppercase font-black tracking-widest text-slate-400 mb-2">Tu calificación personal</span><div class="flex gap-1 drop-shadow-sm">${starsHTML}</div></div>
                                 </div>
                             </div>
@@ -1097,13 +1440,12 @@ aulaLink: "aula-virtual-id.html?courseId=24"
         }
 
         function rateCourse(courseId,rating,navigate=true){
-            const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || AuthLogic.currentUser || JSON.parse(localStorage.getItem('user') || 'null');
+            const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || JSON.parse(localStorage.getItem('user') || 'null');
             if(!activeUser){ openModal('authModal'); return; }
             if(!activeUser.ratings) activeUser.ratings={};
             activeUser.ratings[courseId]=rating;
             window.currentUser = activeUser;
             if (typeof currentUser !== 'undefined') currentUser = activeUser;
-            if (typeof AuthLogic !== 'undefined') AuthLogic.currentUser = activeUser;
             localStorage.setItem('user',JSON.stringify(activeUser));
             if(activeUser.email) {
                 const emailKey = activeUser.email.toLowerCase();
@@ -1133,13 +1475,15 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             if(currentUser.likedCourses.includes(id)){
                 currentUser.likedCourses=currentUser.likedCourses.filter(c=>c!==id);
                 ping('decrement_stat',`${id}_likes`);
-                btn.classList.remove('liked');
+                btn.classList.remove('liked','text-red-500');
+                btn.classList.add('text-slate-400');
                 span.innerText=Math.max(0, currentLikes - 1);
                 if(globalStats) globalStats[`${id}_likes`]=Math.max(0, currentLikes - 1);
             } else {
                 currentUser.likedCourses.push(id);
                 ping('update_stat',`${id}_likes`);
-                btn.classList.add('liked');
+                btn.classList.add('liked','text-red-500');
+                btn.classList.remove('text-slate-400');
                 span.innerText=currentLikes+1;
                 if(globalStats) globalStats[`${id}_likes`]=currentLikes+1;
             }
@@ -1148,8 +1492,8 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             updateAllUI(); syncUserProgressToExcel();
             document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn=>{
                 if(otherBtn!==btn){
-                    if(currentUser.likedCourses.includes(id)){ otherBtn.classList.add('liked'); }
-                    else { otherBtn.classList.remove('liked'); }
+                    if(currentUser.likedCourses.includes(id)){ otherBtn.classList.add('liked','text-red-500'); otherBtn.classList.remove('text-slate-400'); }
+                    else { otherBtn.classList.remove('liked','text-red-500'); otherBtn.classList.add('text-slate-400'); }
                     const otherSpan=otherBtn.querySelector('.like-count');
                     if(otherSpan) otherSpan.innerText=span.innerText;
                 }
@@ -1191,9 +1535,9 @@ aulaLink: "aula-virtual-id.html?courseId=24"
 
         let progressChart=null;
         function updateProgressDashboard(){
-            const course=COURSES_DATA.find(c=>c.id===currentProgressCourseId);
+            const course=COURSES_DATA.find(c=>c.ID===currentProgressCourseId);
             if(!course) return;
-            const total=course.totalLessons||5;
+            const total=course.TotalLecciones||5;
             const emailKey=currentUser?currentUser.email.toLowerCase():"";
             const courseProg=(userProgress[emailKey]&&userProgress[emailKey][String(currentProgressCourseId)])?userProgress[emailKey][String(currentProgressCourseId)]:{completed:0,percent:0,scores:[],avgScore:0};
             const done=courseProg.completed||0;
@@ -1217,11 +1561,11 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             }
 
             if(currentUser) {
-                let enrollmentDate = findDateInObject(latestEnrollmentDates, course.name) || '';
+                let enrollmentDate = findDateInObject(latestEnrollmentDates, course.Nombre) || '';
                 enrollmentDate = normalizeDateString(enrollmentDate);
                 const segCard = document.getElementById('seguimiento-card');
                 if(segCard) {
-                    let rawCompletion = findDateInObject(latestCompletionDates, course.name);
+                    let rawCompletion = findDateInObject(latestCompletionDates, course.Nombre);
                     let compDisplay = '---';
                     if (rawCompletion) {
                         let normalized = normalizeDateString(rawCompletion);
@@ -1242,7 +1586,7 @@ aulaLink: "aula-virtual-id.html?courseId=24"
             }
 
             const listDiv=document.getElementById('dash-lessons-list');
-            const moduleNames=course.moduleNames||[];
+            const moduleNames=course.NombresModulos||[];
             const MODULES_DATA=[];
             for(let i=0;i<total;i++) MODULES_DATA.push({title:moduleNames[i]||`Módulo ${i+1}`});
             
@@ -1268,13 +1612,13 @@ aulaLink: "aula-virtual-id.html?courseId=24"
         function generateCertificate() {
             try {
                 if (!currentUser) { showNotif('Error', 'Debes iniciar sesión.', 'error'); return; }
-                const course = COURSES_DATA.find(c => c.id === currentProgressCourseId);
+                const course = COURSES_DATA.find(c => c.ID === currentProgressCourseId);
                 if (!course) return;
                 const nombreEstudiante = currentUser.name && currentUser.name !== "No provisto" ? currentUser.name : "Estudiante";
                 const cedulaEstudiante = currentUser.cedula && currentUser.cedula !== "N/A" ? currentUser.cedula : "00000000";
-                const nombreCurso = course.name;
-                const numModulos = course.totalLessons || 5;
-                const moduleNames = course.moduleNames || [];
+                const nombreCurso = course.Nombre;
+                const numModulos = course.TotalLecciones || 5;
+                const moduleNames = course.NombresModulos || [];
                 const certificateMedals = ['🏆', '🥇', '🥈', '🥉'];
                 const getCertificateIcon = (mod, index) => {
                     const normalized = String(mod || '').toLowerCase();
@@ -1293,7 +1637,7 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                     }
                 }
                 
-                let rawCompletion = findDateInObject(latestCompletionDates, course.name);
+                let rawCompletion = findDateInObject(latestCompletionDates, course.Nombre);
                 let fechaHoy = "[En proceso de registro en sistema]";
                 if (rawCompletion) {
                     let dateOnly = extractDateOnly(rawCompletion);
@@ -1361,7 +1705,26 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                         if(!inputPassword){ errText.innerText="Debes crear una contraseña."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-user-plus"; label.innerText=originalText; return; }
                         if(!inputCountry){ errText.innerText="Debes seleccionar tu país."; errBox.classList.remove('hidden'); btn.disabled=false; icon.className="fas fa-user-plus"; label.innerText=originalText; return; }
                         if(!inputName) inputName=email.split('@')[0];
-                        currentUser={name:inputName,email:email,password:inputPassword,profession:"",likedCourses:[],accessedCursos:[],downloadedFiles:[],ratings:{},cedula:"",telefono:"",pais:inputCountry,estado:""};
+                        currentUser={
+                            name:inputName,
+                            email:email,
+                            password:inputPassword,
+                            profession:"",
+                            likedCourses:[],
+                            accessedCursos:[],
+                            downloadedFiles:[],
+                            ratings:{},
+                            visitRegistro:{
+                                cursos:{},
+                                infoPaginas:{},
+                                aulas:{}
+                            },
+                            cedula:"",
+                            telefono:"",
+                            pais:inputCountry,
+                            estado:""
+                        };
+                        window.currentUser = currentUser;
                         
                         const formData = new URLSearchParams();
                         formData.append('action', 'register');
@@ -1391,15 +1754,21 @@ aulaLink: "aula-virtual-id.html?courseId=24"
                             accessedCursos:Array.isArray(globalUser.accessedCursos)?globalUser.accessedCursos:[],
                             downloadedFiles:Array.isArray(globalUser.downloadedFiles)?globalUser.downloadedFiles:[],
                             ratings:globalUser.ratings||{},
+                            visitRegistro:globalUser.visitRegistro||{
+                                cursos:{},
+                                infoPaginas:{},
+                                aulas:{}
+                            },
                             cedula:details.cedula||"N/A", telefono:details.telefono||"N/A", pais:details.pais||"N/A", estado:details.estado||"N/A"
                         };
+                        window.currentUser = currentUser;
                         let myCourseNamesRaw=dbUserCourses[email]||[];
                         let myCourseNames=splitCourseNames(myCourseNamesRaw);
                         myCourseNames.forEach(cName=>{
                             let nn=normalizeName(cName);
-                            let found=COURSES_DATA.find(x=>normalizeName(x.name)===nn);
-                            if(!found) found=COURSES_DATA.find(x=>normalizeName(x.name).includes(nn)||nn.includes(normalizeName(x.name)));
-                            if(found&&!currentUser.accessedCursos.includes(found.id)) currentUser.accessedCursos.push(found.id);
+                            let found=COURSES_DATA.find(x=>normalizeName(x.Nombre)===nn);
+                            if(!found) found=COURSES_DATA.find(x=>normalizeName(x.Nombre).includes(nn)||nn.includes(normalizeName(x.Nombre)));
+                            if(found&&!currentUser.accessedCursos.includes(found.ID)) currentUser.accessedCursos.push(found.ID);
                         });
                         localStorage.setItem('user',JSON.stringify(currentUser));
                         fetchProgressForAllCourses(); updateAllUI(); closeModal('authModal'); showNotif('¡Bienvenido de nuevo!',`Hola ${currentUser.name}.`);
@@ -1412,21 +1781,25 @@ aulaLink: "aula-virtual-id.html?courseId=24"
         }
 
         document.addEventListener("DOMContentLoaded", () => {
+            console.log('🚀 Inicializando Mis Cursos...');
             if(window.currentUser) {
-                updateAllUI();
-                fetchProgressForAllCourses();
+                console.log('👤 Usuario detectado:', window.currentUser.email);
+            } else {
+                console.log('⚠️ No hay usuario logueado');
             }
+            
             setTimeout(async () => {
-                await loadData();
+                await loadCoursesFromSheet();
                 ping('update_stat', 'visitas_mis_cursos');
                 if (window.currentUser) {
                     const urlParams = new URLSearchParams(window.location.search);
                     const courseIdParam = urlParams.get('courseId');
                     if (courseIdParam && currentUser.accessedCursos && currentUser.accessedCursos.includes(parseInt(courseIdParam, 10))) {
-                        grantAccess(parseInt(courseIdParam, 10)); // Usar grantAccess para todos los casos
+                        grantAccess(parseInt(courseIdParam, 10));
                     }
                 }
             }, 200);
+            
             if(window.lucide) lucide.createIcons();
             hideFloatingBackBtn();
 

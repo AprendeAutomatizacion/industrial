@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificado - Aprende Automatización</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+    
+    <!-- FUENTES -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FONT AWESOME PARA EL CHECK -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CONFETTI PARA CELEBRACIÓN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --accent: #2db8ce;
+            --text-dark: #334155;
+            --text-muted: #6b7280;
+            --border-color: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background-image: radial-gradient(circle at 25% 25%, rgba(45, 184, 206, 0.15) 0%, transparent 50%),
+                              radial-gradient(circle at 75% 75%, rgba(24, 119, 242, 0.15) 0%, transparent 50%);
+        }
+
+        /* ============ ESTILOS PARA EL TOAST DE CARGA ============ */
+        .loading-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100002;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 16px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(45, 184, 206, 0.2);
+            pointer-events: none;
+            min-width: 320px;
+            max-width: 90vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .loading-toast.hiding { 
+            opacity: 0; 
+            transform: translateX(150px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .loading-toast .toast-logo {
+            width: 50px;
+            height: 50px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
+        }
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.4));
+        }
+        .loading-toast .toast-content { flex: 1; }
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+        .loading-toast .toast-subtitle {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .loading-toast .toast-spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(45, 184, 206, 0.2);
+            border-top: 3px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            flex-shrink: 0;
+        }
+        .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 25px rgba(16, 185, 129, 0.4);
+        }
+        .loading-toast.success-toast .toast-logo img { 
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4)); 
+            animation: none;
+        }
+        .loading-toast.success-toast .toast-title { color: #ffffff; }
+        .loading-toast.success-toast .toast-subtitle { color: rgba(255, 255, 255, 0.9); }
+        .loading-toast.success-toast .toast-check {
+            width: 32px;
+            height: 32px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .loading-toast.success-toast .toast-check i { 
+            color: #10b981; 
+            font-size: 16px; 
+            font-weight: 900; 
+        }
+        @keyframes slideInRight { 
+            from { transform: translateX(150%); opacity: 0; } 
+            to { transform: translateX(0); opacity: 1; } 
+        }
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+        @keyframes pulseLogo {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.3)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 20px rgba(45, 184, 206, 0.6)); transform: scale(1.05); }
+        }
+        @keyframes bounceIn { 
+            0% { transform: scale(0); } 
+            50% { transform: scale(1.2); } 
+            100% { transform: scale(1); } 
+        }
+        /* ============ FIN ESTILOS TOAST ============ */
+
+        /* Barra de herramientas */
+        .certificate-toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(45, 184, 206, 0.3);
+            padding: 16px 24px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .btn-cert {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-print {
+            background: #2db8ce;
+            color: white;
+        }
+        .btn-print:hover {
+            background: #3cc8de;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(45, 184, 206, 0.4);
+        }
+
+        .btn-close {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3) !important;
+        }
+        .btn-close:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .toolbar-text {
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Contenedor del certificado */
+        .certificate-wrapper {
+            margin-top: 80px;
+            width: 100%;
+            max-width: 1000px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            background: white;
+            border-radius: 4px;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        #certificate-container {
+            width: 100%;
+            padding: 30px 45px 35px 45px;
+            position: relative;
+            background-color: white;
+            border: 6px solid var(--border-color);
+            box-sizing: border-box;
+            min-height: 740px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            background-image: url('');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Overlay para legibilidad */
+        .cert-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0.75) 100%);
+            z-index: 1;
+            pointer-events: none;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        /* Contenido del certificado */
+        .cert-content {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            min-height: 670px;
+        }
+
+        .cert-header {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .cert-logo {
+            height: 100px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .cert-title {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-dark);
+            text-transform: uppercase;
+            margin: 0;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .cert-body {
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cert-body p {
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .cert-subtitle {
+            font-size: 20px;
+            font-weight: 800;
+            color: #000;
+            margin-bottom: 2px !important;
+        }
+
+        .cert-award-title {
+            font-size: 38px;
+            font-weight: 900;
+            color: #3b5998;
+            margin-bottom: 5px !important;
+        }
+
+        .cert-student-name {
+            font-size: 46px;
+            font-weight: 900;
+            color: #111827;
+            border-bottom: 3px solid var(--border-color);
+            padding-bottom: 4px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 5px !important;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.03em;
+        }
+
+        .cert-id {
+            font-size: 17px;
+            font-weight: 800;
+            color: #000;
+            margin: 5px 0 10px 0 !important;
+            font-style: italic;
+        }
+
+        .cert-approval-text {
+            font-size: 19px;
+            color: #000;
+            margin: 0 0 5px 0 !important;
+        }
+
+        .cert-course-name {
+            font-size: 36px;
+            font-weight: 900;
+            color: #000;
+            margin: 0 0 15px 0 !important;
+            max-width: 850px;
+            line-height: 1.2;
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        .cert-date-section {
+            display: inline-block;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .cert-date {
+            font-size: 14px;
+            color: #1f2937;
+            margin: 0 0 10px 0 !important;
+            font-weight: 600;
+        }
+
+        .cert-temario-box {
+            margin: 0 auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            background-color: rgba(248, 250, 252, 0.9);
+            padding: 12px 16px;
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        /* Temario SIEMPRE 3 columnas - FILAS DINÁMICAS */
+        .cert-temario {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-flow: column;
+            gap: 2px 25px;
+            font-size: 12px;
+            color: #1f2937;
+            font-weight: 600;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .cert-temario-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            line-height: 1.4;
+        }
+
+        .cert-temario-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .cert-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 110px;
+            padding: 0 20px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .cert-signature {
+            text-align: center;
+        }
+
+        .cert-signature-line {
+            width: 160px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 4px;
+        }
+
+        .cert-signature-name {
+            font-weight: 800;
+            font-size: 14px;
+            margin: 0;
+            color: #1f2937;
+        }
+
+        .cert-signature-title {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .cert-id-badge {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 10px;
+        }
+
+        .cert-id-badge strong {
+            color: var(--text-muted);
+            font-weight: 900;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            transition: opacity 0.5s;
+        }
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(45, 184, 206, 0.2);
+            border-top: 4px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .certificate-wrapper {
+                padding: 20px;
+                margin-top: 70px;
+            }
+            #certificate-container {
+                padding: 20px 15px;
+                min-height: auto;
+            }
+            .cert-header {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .cert-logo {
+                height: 60px;
+            }
+            .cert-title {
+                font-size: 20px;
+            }
+            .cert-subtitle {
+                font-size: 16px;
+            }
+            .cert-award-title {
+                font-size: 24px;
+            }
+            .cert-student-name {
+                font-size: 28px;
+            }
+            .cert-course-name {
+                font-size: 22px;
+            }
+            .cert-footer {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            .cert-temario {
+                grid-template-columns: 1fr;
+                grid-auto-flow: row;
+                grid-template-rows: none !important;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            html, body {
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: white !important;
+                background-image: none !important;
+            }
+            
+            body {
+                display: block !important;
+                padding: 0 !important;
+            }
+            
+            .certificate-toolbar,
+            .loading-toast,
+            .loading-overlay {
+                display: none !important;
+            }
+            
+            .certificate-wrapper {
+                margin: 0 !important;
+                padding: 40px !important;
+                box-shadow: none !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                border-radius: 0 !important;
+                background: white !important;
+            }
+            
+            #certificate-container {
+                border: 6px solid var(--border-color) !important;
+                padding: 30px 45px 35px 45px !important;
+                min-height: auto !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                background-size: cover !important;
+                background-position: center !important;
+                background-repeat: no-repeat !important;
+            }
+            
+            .cert-content {
+                min-height: auto !important;
+            }
+            
+            .cert-overlay {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                display: block !important;
+                visibility: visible !important;
+                background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.65) 50%, rgba(255,255,255,0.75) 100%) !important;
+            }
+            
+            .cert-temario-box {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                background-color: rgba(248, 250, 252, 0.9) !important;
+            }
+            
+            .cert-temario {
+                grid-template-columns: repeat(3, 1fr) !important;
+                grid-auto-flow: column !important;
+            }
+            
+            @page {
+                size: letter landscape;
+                margin: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Toast de carga - SOLO UNO -->
+    <div id="loadingToast" class="loading-toast" style="display: none;">
+        <div class="toast-logo">
+            <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+        </div>
+        <div class="toast-content">
+            <div class="toast-title" id="loadingToastTitle">Estamos cargando tu certificado</div>
+            <div class="toast-subtitle" id="loadingToastSubtitle">Preparando la información del curso...</div>
+        </div>
+        <div class="toast-spinner" id="loadingToastSpinner"></div>
+    </div>
+
+    <!-- Overlay de carga -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Barra de herramientas -->
+    <div class="certificate-toolbar">
+        <button class="btn-cert btn-print" onclick="window.print()">
+            🖨️ Imprimir Certificado
+        </button>
+        <button class="btn-cert btn-close" onclick="window.close()">
+            ✕ Cerrar
+        </button>
+        <span class="toolbar-text">Optimizado para Hoja Carta - Orientación Horizontal</span>
+    </div>
+
+    <!-- Contenedor del certificado -->
+    <div class="certificate-wrapper">
+        <div id="certificate-container">
+            <!-- Overlay para legibilidad -->
+            <div class="cert-overlay"></div>
+            
+            <!-- Contenido -->
+            <div class="cert-content">
+                <!-- Encabezado -->
+                <div class="cert-header">
+                    <img id="certLogo" class="cert-logo" src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+                    <h1 class="cert-title">Aprende Automatización</h1>
+                </div>
+                
+                <!-- Cuerpo -->
+                <div class="cert-body">
+                    <p class="cert-subtitle">Otorga el presente:</p>
+                    <h2 class="cert-award-title">Certificado a:</h2>
+                    <h3 id="certStudentName" class="cert-student-name">-</h3>
+                    <p id="certStudentId" class="cert-id">Cédula de Identidad: -</p>
+                    <p class="cert-approval-text">Por haber <strong>APROBADO</strong> el curso:</p>
+                    <h4 id="certCourseName" class="cert-course-name">-</h4>
+                    <div class="cert-date-section">
+                        <p id="certDate" class="cert-date">-</p>
+                        <div class="cert-temario-box">
+                            <div id="certTemario" class="cert-temario"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Pie -->
+                <div class="cert-footer">
+                    <div class="cert-signature">
+                        <div class="cert-signature-line"></div>
+                        <p class="cert-signature-name">MSc. Ing. Pablo Cedeño</p>
+                        <p class="cert-signature-title">Instructor</p>
+                    </div>
+                    <div id="certIdBadge" class="cert-id-badge">
+                        ID de Certificado: <strong>-</strong>
+                    </div>
+                    <div class="cert-signature">
+                        <div class="cert-signature-line"></div>
+                        <p class="cert-signature-name">Aprende Automatización</p>
+                        <p class="cert-signature-title">Dirección Académica</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // CONFIGURACIÓN
+        // ==========================================
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrozAl5UD90NzUYIUTR2QJ_oXa3dTp6fsnjjEtAbjja3M8UJyEuO_BClPMFj1jjsFw/exec';
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const courseId = urlParams.get('courseId');
+        const currentUser = JSON.parse(localStorage.getItem('user')) || null;
+        
+        // ==========================================
+        // FUNCIONES DEL TOAST - CORREGIDAS
+        // ==========================================
+        function showLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            if (toast) {
+                toast.classList.remove('hidden', 'hiding', 'success-toast');
+                document.getElementById('loadingToastTitle').innerText = 'Estamos cargando tu certificado';
+                document.getElementById('loadingToastSubtitle').innerText = 'Preparando la información del curso...';
+                document.getElementById('loadingToastSpinner').style.display = 'block';
+                
+                // Eliminar cualquier check existente
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                toast.style.display = 'flex'; // Mostrar
+            }
+        }
+        
+        function showSuccessToast() {
+            const toast = document.getElementById('loadingToast');
+            if (toast) {
+                toast.classList.remove('hidden', 'hiding');
+                toast.classList.add('success-toast');
+                
+                document.getElementById('loadingToastTitle').innerText = '¡Certificado listo!';
+                document.getElementById('loadingToastSubtitle').innerText = 'Tu certificado se ha cargado correctamente';
+                
+                document.getElementById('loadingToastSpinner').style.display = 'none';
+                
+                // Eliminar check existente si hay
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                
+                // Agregar check
+                const checkDiv = document.createElement('div');
+                checkDiv.className = 'toast-check';
+                checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+                toast.appendChild(checkDiv);
+                
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                toast.style.display = 'flex';
+                
+                // Ocultar después de 3 segundos
+                setTimeout(() => { 
+                    hideLoadingToast(); 
+                }, 3000);
+            }
+        }
+        
+        function hideLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            if (toast) {
+                // Agregar clase de ocultamiento
+                toast.classList.add('hiding');
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(150px)';
+                
+                // Después de la animación, ocultar completamente
+                setTimeout(() => { 
+                    toast.classList.add('hidden');
+                    toast.classList.remove('hiding', 'success-toast');
+                    toast.style.display = 'none'; // Ocultar completamente
+                    toast.style.opacity = '1';
+                    toast.style.transform = 'translateY(0)';
+                    
+                    // Eliminar check
+                    const existingCheck = toast.querySelector('.toast-check');
+                    if (existingCheck) existingCheck.remove();
+                    
+                    // Restaurar spinner
+                    document.getElementById('loadingToastSpinner').style.display = 'block';
+                }, 500);
+            }
+        }
+        
+        // ==========================================
+        // FUNCIONES DE UTILIDAD
+        // ==========================================
+        const normalizeName = s => (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ');
+        
+        function findDateInObject(normalizedObj, courseName) {
+            if (!normalizedObj || !courseName) return null;
+            const normCourse = normalizeName(courseName);
+            for (let key in normalizedObj) {
+                if (normalizeName(key) === normCourse) return normalizedObj[key];
+            }
+            return null;
+        }
+        
+        function formatCertDate(dateStr) {
+            if (!dateStr) return "[En proceso de registro en sistema]";
+            const monthNames = ["enero", "febrero", "marzo", "abril", "mayo", "junio", 
+                               "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+            if (typeof dateStr === 'string' && dateStr.includes('GMT')) {
+                const d = new Date(dateStr);
+                if (!isNaN(d.getTime())) return `${d.getDate()} de ${monthNames[d.getMonth()]} de ${d.getFullYear()}`;
+            }
+            if (typeof dateStr === 'number') {
+                const d = new Date(dateStr);
+                if (!isNaN(d.getTime())) return `${d.getDate()} de ${monthNames[d.getMonth()]} de ${d.getFullYear()}`;
+            }
+            let str = String(dateStr).trim();
+            if (str.includes("T")) str = str.split("T")[0];
+            else if (str.includes(" ")) str = str.split(" ")[0];
+            if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+                const [year, month, day] = str.split('-').map(Number);
+                if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+                    return `${day} de ${monthNames[month - 1]} de ${year}`;
+                }
+            }
+            return dateStr;
+        }
+        
+        // ==========================================
+        // FUNCIÓN PARA OBTENER ICONO SEGÚN PUNTAJE
+        // ==========================================
+        function getAchievementIcon(score) {
+            if (score === undefined || score === null || score < 70) return '';
+            if (score === 100) return '🏆';
+            if (score >= 90) return '🥇';
+            if (score >= 80) return '🥈';
+            return '🥉';
+        }
+        
+        // ==========================================
+        // FUNCIÓN PARA PARSEAR PROGRESO
+        // ==========================================
+        function parseProgressData(progressString, totalLessons) {
+            if (!progressString || progressString.trim() === "") {
+                return { completed: 0, total: totalLessons, percent: 0, scores: [], avgScore: 0, progress: [] };
+            }
+            
+            let safe = String(progressString).trim().replace(/'/g, '"');
+            let scores = new Array(totalLessons).fill(null);
+            
+            try {
+                const p = JSON.parse(safe);
+                if (p && typeof p === 'object') {
+                    const src = p.scores || p;
+                    
+                    if (typeof src === 'object' && src !== null) {
+                        for (let k in src) {
+                            let scoreKey = parseInt(k);
+                            if (!isNaN(scoreKey) && scoreKey >= 1) {
+                                let arrayIndex = scoreKey - 1;
+                                if (arrayIndex < totalLessons) {
+                                    scores[arrayIndex] = Number(src[k]);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                console.error('Error al parsear progreso:', e);
+            }
+            
+            return { scores };
+        }
+        
+        // ==========================================
+        // FUNCIÓN PRINCIPAL: CARGAR CERTIFICADO
+        // ==========================================
+        async function loadCertificate() {
+            try {
+                showLoadingToast();
+                
+                if (!courseId) {
+                    hideLoadingToast();
+                    showError('No se especificó un curso. Por favor regresa a la página de progreso.');
+                    return;
+                }
+                
+                if (!currentUser || !currentUser.email) {
+                    hideLoadingToast();
+                    showError('Debes iniciar sesión para ver tu certificado.');
+                    return;
+                }
+                
+                console.log('📜 Cargando certificado para curso ID:', courseId);
+                
+                const coursesResponse = await fetch(`${SCRIPT_URL}?action=get_courses&nocache=${Date.now()}`);
+                const coursesData = await coursesResponse.json();
+                
+                if (coursesData.status !== 'success' || !coursesData.data) {
+                    hideLoadingToast();
+                    showError('No se pudo cargar la información del curso.');
+                    return;
+                }
+                
+                const course = coursesData.data.find(c => String(c.ID) === String(courseId));
+                
+                if (!course) {
+                    hideLoadingToast();
+                    showError('Curso no encontrado. ID: ' + courseId);
+                    return;
+                }
+                
+                console.log('📚 Curso encontrado:', course.Nombre);
+                
+                const userDataResponse = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
+                const userData = await userDataResponse.json();
+                
+                let completionDate = null;
+                let userScores = null;
+                
+                if (userData.status === 'success' && userData.userCourseCompletionDates) {
+                    const email = currentUser.email.toLowerCase();
+                    const userCompletionDates = userData.userCourseCompletionDates[email] || {};
+                    completionDate = findDateInObject(userCompletionDates, course.Nombre);
+                }
+                
+                const totalLessons = course.TotalLecciones || 5;
+                
+                if (userData.status === 'success' && userData.userProgress) {
+                    const email = currentUser.email.toLowerCase();
+                    const userProgressData = userData.userProgress[email] || {};
+                    
+                    const courseProgress = userProgressData[course.Nombre] || userProgressData[normalizeName(course.Nombre)];
+                    
+                    if (courseProgress && typeof courseProgress === 'string') {
+                        const parsed = parseProgressData(courseProgress, totalLessons);
+                        userScores = parsed.scores;
+                        console.log('📊 Scores parseados:', userScores);
+                    }
+                }
+                
+                // ========== LLENAR LOS CAMPOS ==========
+                document.getElementById('certStudentName').textContent = currentUser.name || 'Estudiante';
+                
+                const cedula = currentUser.cedula && currentUser.cedula !== 'N/A' ? currentUser.cedula : '00000000';
+                document.getElementById('certStudentId').textContent = `Cédula de Identidad: ${cedula}`;
+                
+                document.getElementById('certCourseName').textContent = `"${course.Nombre}"`;
+                
+                const fechaFormateada = formatCertDate(completionDate);
+                document.getElementById('certDate').textContent = `Con una estructura de ${totalLessons} módulos, culminado el día ${fechaFormateada}.`;
+                
+                const ciNum = parseInt(String(cedula).replace(/\D/g, '')) || 0;
+                const idCalculado = 13018822 + ciNum;
+                const siglas = course.Nombre.split(' ').filter(p => p.length > 0).map(p => p[0].toUpperCase()).join('') || 'CURSO';
+                document.getElementById('certIdBadge').innerHTML = `ID de Certificado: <strong>${siglas}</strong>-<strong>${idCalculado}</strong>`;
+                
+                // ========== TEMARIO CON ICONOS Y FILAS DINÁMICAS ==========
+                let moduleNames = [];
+                if (course.NombresModulos && typeof course.NombresModulos === 'string') {
+                    moduleNames = course.NombresModulos.split('|').filter(m => m.trim() !== '');
+                } else {
+                    moduleNames = Array.from({ length: totalLessons }, (_, i) => `Módulo ${i + 1}`);
+                }
+                
+                const totalModules = moduleNames.length;
+                const numFilas = Math.ceil(totalModules / 3);
+                
+                const temarioElement = document.getElementById('certTemario');
+                temarioElement.style.gridTemplateRows = `repeat(${numFilas}, auto)`;
+                
+                const footerElement = document.querySelector('.cert-footer');
+                
+                if (numFilas === 2) {
+                    footerElement.style.marginTop = '110px';
+                } else if (numFilas === 3) {
+                    footerElement.style.marginTop = '90px';
+                } else if (numFilas === 4) {
+                    footerElement.style.marginTop = '65px';
+                } else {
+                    footerElement.style.marginTop = '110px';
+                }
+                
+                console.log('📋 Total módulos:', totalModules, '→ Filas:', numFilas, '→ Footer margin-top:', footerElement.style.marginTop);
+                
+                const itemsHTML = moduleNames.map((moduleName, index) => {
+                    const normalizedModuleName = normalizeName(moduleName);
+                    
+                    const isIntro = index === 0 && (
+                        normalizedModuleName.includes('contenido') ||
+                        normalizedModuleName.includes('introduccion') ||
+                        normalizedModuleName.includes('bienvenida') ||
+                        normalizedModuleName.includes('bienvenido')
+                    );
+                    
+                    let icon = '';
+                    
+                    if (isIntro) {
+                        icon = '📘';
+                    } else {
+                        const score = userScores ? userScores[index - 1] : null;
+                        icon = getAchievementIcon(score);
+                    }
+                    
+                    return `<div class="cert-temario-item">
+                        <span class="cert-temario-icon">${icon}</span>
+                        <span>${moduleName}</span>
+                    </div>`;
+                }).join('');
+                
+                temarioElement.innerHTML = itemsHTML;
+                
+                // ========== IMAGEN DE FONDO ==========
+                const certificateContainer = document.getElementById('certificate-container');
+                
+                if (course.ImagenURL) {
+                    let imagePath = course.ImagenURL;
+                    if (!imagePath.startsWith('http') && !imagePath.startsWith('img/') && !imagePath.startsWith('/')) {
+                        imagePath = 'img/' + imagePath;
+                    }
+                    certificateContainer.style.backgroundImage = `url('${imagePath}')`;
+                } else {
+                    certificateContainer.style.backgroundImage = `url('img/AA (15).webp')`;
+                }
+                
+                document.getElementById('certLogo').src = 'img/AA (38).webp';
+                
+                // Ocultar overlay de carga
+                setTimeout(() => {
+                    document.getElementById('loadingOverlay').classList.add('hidden');
+                }, 500);
+                
+                // Mostrar toast de éxito
+                showSuccessToast();
+                
+                // Lanzar confetti
+                if (typeof confetti !== 'undefined') {
+                    const duration = 3 * 1000;
+                    const end = Date.now() + duration;
+                    (function frame() {
+                        confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y: 0.6 } });
+                        confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y: 0.6 } });
+                        if (Date.now() < end) requestAnimationFrame(frame);
+                    }());
+                }
+                
+            } catch (error) {
+                console.error('❌ Error al cargar certificado:', error);
+                hideLoadingToast();
+                showError('Ocurrió un error al cargar el certificado.');
+            }
+        }
+        
+        function showError(message) {
+            document.getElementById('loadingOverlay').classList.add('hidden');
+            document.getElementById('certificate-container').innerHTML = `
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 400px; text-align: center; padding: 40px;">
+                    <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+                    <h2 style="font-size: 24px; color: #dc2626; margin-bottom: 10px;">Error</h2>
+                    <p style="font-size: 16px; color: #6b7280;">${message}</p>
+                    <button onclick="window.close()" style="margin-top: 20px; padding: 12px 24px; background: #2db8ce; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 700;">
+                        Cerrar
+                    </button>
+                </div>
+            `;
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadCertificate);
+    </script>
+</body>
+</html>
