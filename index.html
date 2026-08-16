@@ -606,7 +606,7 @@
         }
 
         /* ==========================================
-           TOAST DE CARGA
+           TOAST DE CARGA (MODIFICADO: MÁS COMPACTO)
            ========================================== */
         .loading-toast {
             position: fixed;
@@ -616,20 +616,21 @@
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(45, 184, 206, 0.4);
-            border-radius: 16px;
-            padding: 16px 20px;
+            border-radius: 12px; /* Reducido de 16px a 12px */
+            padding: 8px 12px; /* Reducido de 16px 20px a 8px 12px */
             display: flex;
             align-items: center;
-            gap: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            gap: 10px; /* Reducido de 14px a 10px */
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
             pointer-events: none;
-            min-width: 320px;
+            min-width: 220px; /* Reducido de 320px a 220px */
+            max-width: 240px; /* Ajuste de ancho máximo para un globo más compacto */
             animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .loading-toast.hiding { opacity: 0; transform: translateX(100px); }
         .loading-toast .toast-logo {
-            width: 50px;
-            height: 50px;
+            width: 30px;  /* Reducido de 50px a 30px */
+            height: 30px; /* Reducido de 50px a 30px */
             flex-shrink: 0;
             animation: pulseLogo 2s infinite;
         }
@@ -637,24 +638,22 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.4));
+            filter: drop-shadow(0 0 6px rgba(45, 184, 206, 0.4));
         }
         .loading-toast .toast-title {
             color: #ffffff;
             font-weight: 700;
-            font-size: 14px;
-            margin-bottom: 4px;
+            font-size: 12px; /* Reducido de 14px a 12px */
+            margin-bottom: 0;
+            line-height: 1.2;
         }
-        .loading-toast .toast-subtitle {
-            color: #94a3b8;
-            font-size: 12px;
-            font-weight: 500;
-        }
+        /* Eliminamos .toast-subtitle por completo del HTML, 
+           así que no requiere estilo aquí */
         .loading-toast .toast-spinner {
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(45, 184, 206, 0.2);
-            border-top: 3px solid #2db8ce;
+            width: 14px;  /* Reducido de 20px a 14px */
+            height: 14px; /* Reducido de 20px a 14px */
+            border: 2px solid rgba(45, 184, 206, 0.2);
+            border-top: 2px solid #2db8ce;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             flex-shrink: 0;
@@ -748,14 +747,14 @@
 </head>
 <body class="custom-scrollbar">
 
-<!-- TOAST DE CARGA -->
+<!-- TOAST DE CARGA (Versión compacta, sin subtítulo y más pequeña) -->
 <div id="loadingToast" class="loading-toast hidden">
     <div class="toast-logo">
         <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
     </div>
     <div class="toast-content">
         <div class="toast-title">Estamos cargando la información</div>
-        <div class="toast-subtitle">Conectando con el servidor...</div>
+        <!-- La línea de subtítulo fue eliminada para compactar el globo -->
     </div>
     <div class="toast-spinner"></div>
 </div>
