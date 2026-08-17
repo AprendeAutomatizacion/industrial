@@ -559,7 +559,7 @@
     <div id="toast" class="toast hidden"></div>
 
     <script>
-        const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcvWH69ZXDcSiWRKhp-wcRy_balv1QHevOdejR_bRjUqfIL3BhSjL5zv2DM4rwAphK/exec';
+        const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRAuJGPzw0lArQF1WN5dEUY1nB7tB-JfUtjxYoVllk2D5oGXs4Ly4X-5UUD7WLbH7r/exec';
         const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrozAl5UD90NzUYIUTR2QJ_oXa3dTp6fsnjjEtAbjja3M8UJyEuO_BClPMFj1jjsFw/exec';
 
         const SHARED_PRACTICE_VIDEO_URL = '';
@@ -688,12 +688,10 @@
         function buildCourseData(config) {
             const introLesson = { id: 0, title: 'Contenido del Curso', video: config.introVideo || SHARED_PRACTICE_VIDEO_URL, resources: config.sharedResources || [{ type: 'manual', name: 'Materiales del curso', url: config.materialPage }], quiz: [], hasQuiz: false, content: buildIntroContent(config) };
             const modules = config.modules.map((module, index) => {
-                // Contenido principal (personalizado o plantilla base)
                 let mainContent = module.content;
                 if (!mainContent) {
                     mainContent = `<h2 class="text-2xl font-bold text-secondary">${module.title}</h2><p class="text-slate-300 mb-4">${module.summary}</p>`;
                 }
-                
                 return {
                     id: index + 1,
                     title: module.title,
@@ -709,11 +707,32 @@
 
         function parseMaybeJson(value) { if (value && typeof value === 'object') return value; if (typeof value !== 'string') return null; try { return JSON.parse(value); } catch (_e) { return null; } }
         function toArray(value) { if (Array.isArray(value)) return value; if (typeof value === 'string') { const trimmed = value.trim(); if (!trimmed) return []; const parsed = parseMaybeJson(trimmed); if (Array.isArray(parsed)) return parsed; return trimmed.split('|').map(item => item.trim()).filter(Boolean); } return []; }
-        function normalizeQuizItem(item) { if (!item || typeof item !== 'object') return null; const opts = toArray(item.opts || item.options || item.opciones || []); if (!opts.length) return null; const ans = Number(item.ans ?? item.correctAnswerIndex ?? item.respuesta ?? 0); return { q: String(item.q || item.question || item.pregunta || 'Pregunta').trim(), opts, ans: Number.isFinite(ans) ? ans : 0 }; }
+        function normalizeQuizItem(item) { 
+            if (!item || typeof item !== 'object') return null; 
+            const opts = toArray(item.opts || item.options || item.opciones || []); 
+            if (!opts.length) return null; 
+            const ans = Number(item.ans ?? item.correctAnswerIndex ?? item.respuesta ?? 0); 
+            
+            // Imagen opcional
+            const rawImage = item.image || item.imagen || item.img || item.foto || '';
+            let image = '';
+            if (typeof rawImage === 'string' && rawImage.trim()) {
+                image = rawImage.trim();
+                if (!/^(http|\/|data:)/.test(image)) {
+                    image = 'img/' + image;
+                }
+            }
+            
+            return { 
+                q: String(item.q || item.question || item.pregunta || 'Pregunta').trim(), 
+                opts, 
+                ans: Number.isFinite(ans) ? ans : 0,
+                image: image
+            }; 
+        }
         function normalizeModule(item, index) { 
             const rawQuiz = item.quiz || item.quizzes || item.evaluacion || item.evaluaciones || []; 
             const quizList = toArray(rawQuiz).map(normalizeQuizItem).filter(Boolean); 
-            
             return { 
                 moduleId: Number(item.moduleId || item.idModulo || item.id || index + 1), 
                 title: String(item.title || item.titulo || item.nombre || `Módulo ${index + 1}`), 
@@ -918,7 +937,33 @@
                 initializeResourceCards();
             },
             
-            renderQuiz: function(quiz) { const cont = document.getElementById('quiz-questions'); if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; } cont.innerHTML = quiz.map((q, i) => `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}"><p class="font-bold text-white mb-3">${q.q}</p><div class="space-y-2">${q.opts.map((opt, oi) => `<label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option transition" data-opt-index="${oi}"><input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}</label>`).join('')}</div><div class="correct-feedback hidden text-green-400 text-sm mt-2"></div></div>`).join(''); },
+            renderQuiz: function(quiz) { 
+                const cont = document.getElementById('quiz-questions'); 
+                if (!quiz || quiz.length === 0) { 
+                    cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; 
+                    return; 
+                } 
+                cont.innerHTML = quiz.map((q, i) => {
+                    const imageHtml = q.image ? 
+                        `<figure style="display:flex;flex-direction:column;align-items:center;margin:1rem 0;">
+                            <img src="${q.image}" alt="Imagen de la pregunta" style="max-width:100%;max-height:300px;object-fit:contain;border-radius:8px;border:1px solid #d3e0e8;">
+                        </figure>` : '';
+                    return `
+                        <div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}">
+                            <p class="font-bold text-white mb-3">${q.q}</p>
+                            ${imageHtml}
+                            <div class="space-y-2">
+                                ${q.opts.map((opt, oi) => `
+                                    <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option transition" data-opt-index="${oi}">
+                                        <input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}
+                                    </label>
+                                `).join('')}
+                            </div>
+                            <div class="correct-feedback hidden text-green-400 text-sm mt-2"></div>
+                        </div>
+                    `;
+                }).join(''); 
+            },
             
             gradeQuiz: function() {
                 const lesson = COURSE_DATA.find(l => l.id === this.currentId);
