@@ -63,7 +63,6 @@
             --card-text-accent: #2db8ce;
         }
 
-
         body.light-mode header {
             background-color: rgba(226, 232, 240, 0.9) !important;
             border-bottom-color: #cbd5e1 !important;
@@ -108,7 +107,6 @@
             -webkit-text-fill-color: #1e293b !important;
         }
         
-        /* Sidebar - Estilos base */
         #sidebar-content { overflow-x: hidden !important; overflow-y: auto !important; }
         #sidebar-content button {
             border-radius: 10px !important; margin: 2px 6px !important; padding: 9px 12px !important;
@@ -133,7 +131,6 @@
         body:not(.light-mode) #sidebar-content button i.far.fa-circle { color: #64748b !important; -webkit-text-fill-color: #64748b !important; }
         body:not(.light-mode) #sidebar-content button.bg-secondary\/40 { background: rgba(8, 145, 178, 0.12) !important; backdrop-filter: blur(8px) !important; -webkit-backdrop-filter: blur(8px) !important; border-left: 3px solid #2db8ce !important; border-top: 1px solid rgba(45, 184, 206, 0.2) !important; border-bottom: 1px solid rgba(45, 184, 206, 0.2) !important; border-right: 1px solid rgba(45, 184, 206, 0.2) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 2px 10px rgba(8, 145, 178, 0.18), 0 1px 3px rgba(0,0,0,0.2) !important; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; font-weight: 700 !important; letter-spacing: 0.01em; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
         
-        /* Botones */
         #btn-complete, #grade-quiz-btn, #reset-quiz-btn { border-radius: 10px !important; font-weight: 700 !important; letter-spacing: 0.02em !important; transition: all 0.25s ease !important; }
         
         body.light-mode #btn-complete { background: rgba(8, 145, 178, 0.1) !important; backdrop-filter: blur(6px) !important; -webkit-backdrop-filter: blur(6px) !important; border: 1px solid rgba(8, 145, 178, 0.25) !important; border-left: 3px solid #0891b2 !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 2px 8px rgba(8, 145, 178, 0.15), 0 1px 2px rgba(0,0,0,0.05) !important; color: #0f172a !important; -webkit-text-fill-color: #0f172a !important; }
@@ -172,7 +169,6 @@
         .sync-indicator.success { background: #065f46; }
         .sync-indicator.error { background: #dc2626; }
 
-        /* --- TARJETAS DE MATERIAL VISUAL --- */
         .material-card { position: relative; border-radius: 1.25rem; overflow: hidden; background-color: var(--card-bg-secondary); border: 1px solid var(--card-border-default); box-shadow: 0 4px 20px var(--card-shadow-color); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; flex-direction: column; cursor: pointer; text-decoration: none; color: inherit; height: 100%; }
         .material-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px -8px var(--card-shadow-color), 0 0 0 1px var(--card-text-accent); border-color: var(--card-text-accent); }
         .material-card .card-image-wrapper { position: relative; width: 100%; height: 180px; flex-shrink: 0; background-color: #ffffff; }
@@ -214,13 +210,145 @@
         body:not(.light-mode) header button, body:not(.light-mode) header div[title="Usuario"] { background: linear-gradient(to bottom, #4a5568, #2d3748) !important; border: 1px solid #1a202c !important; box-shadow: inset 0 1px 1px #718096, 0 1px 3px rgba(0,0,0,0.5) !important; color: #e2e8f0 !important; text-shadow: 0 1px 1px rgba(0,0,0,0.5); }
         body:not(.light-mode) header button:hover, body:not(.light-mode) header div[title="Usuario"]:hover { background: linear-gradient(to bottom, #5a6578, #3d4758) !important; }
         body:not(.light-mode) header button i, body:not(.light-mode) header div[title="Usuario"] i { color: #2db8ce !important; text-shadow: 0 0 10px rgba(45, 184, 206, 0.8); }
-        body.light-mode.course-4-theme, body.light-mode.course-4-theme :not(svg):not(path):not(circle):not(rect):not(line):not(polyline):not(polygon) { color: #000000 !important; -webkit-text-fill-color: #000000 !important; text-shadow: none !important; }
-        body.light-mode.course-4-theme input::placeholder, body.light-mode.course-4-theme textarea::placeholder { color: #000000 !important; opacity: 1 !important; }
-        body.light-mode.course-4-theme .continue-learning-btn, body.light-mode.course-4-theme .continue-learning-btn * { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
-        body.light-mode.course-4-theme .progress-pill-label, body.light-mode.course-4-theme .progress-pill-label * { color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; }
-        body.light-mode.course-4-theme .progress-track-ring { color: rgba(20, 184, 166, 0.35) !important; }
-        body.light-mode.course-4-theme .text-teal-500 { color: #14b8a6 !important; -webkit-text-fill-color: #14b8a6 !important; }
+        
+        /* ============ REGLAS PARA TODOS LOS CURSOS EN MODO CLARO ============ */
+        body.light-mode, 
+        body.light-mode :not(svg):not(path):not(circle):not(rect):not(line):not(polyline):not(polygon)) { 
+            color: #000000 !important; 
+            -webkit-text-fill-color: #000000 !important; 
+            text-shadow: none !important; 
+        }
+        body.light-mode input::placeholder, 
+        body.light-mode textarea::placeholder { 
+            color: #000000 !important; 
+            opacity: 1 !important; 
+        }
+        body.light-mode .continue-learning-btn, 
+        body.light-mode .continue-learning-btn * { 
+            color: #ffffff !important; 
+            -webkit-text-fill-color: #ffffff !important; 
+        }
+        body.light-mode .progress-pill-label, 
+        body.light-mode .progress-pill-label * { 
+            color: #ffffff !important; 
+            -webkit-text-fill-color: #ffffff !important; 
+        }
+        body.light-mode .progress-track-ring { 
+            color: rgba(20, 184, 166, 0.35) !important; 
+        }
+        body.light-mode .text-teal-500 { 
+            color: #14b8a6 !important; 
+            -webkit-text-fill-color: #14b8a6 !important; 
+        }
+        
         #sidebar.collapsed { width: 0; padding: 0; overflow: hidden; border: none; opacity: 0; }
+        
+        /* ============ ESTILOS PARA EL TOAST DE CARGA (TAMAÑO REDUCIDO) ============ */
+        .loading-toast {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 100002;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 12px;
+            padding: 8px 10px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(45, 184, 206, 0.2);
+            pointer-events: none;
+            min-width: 160px;
+            max-width: 45vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .loading-toast.hiding { opacity: 0; transform: translateX(100px); }
+        .loading-toast .toast-logo {
+            width: 25px;
+            height: 25px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
+        }
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
+        }
+        .loading-toast .toast-content { flex: 1; }
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 10px;
+            margin-bottom: 0;
+            letter-spacing: 0.2px;
+        }
+        .loading-toast .toast-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(45, 184, 206, 0.2);
+            border-top: 2px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            flex-shrink: 0;
+        }
+        .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .loading-toast.success-toast .toast-title { color: #ffffff; }
+        .loading-toast.success-toast .toast-check {
+            width: 18px;
+            height: 18px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 10px;
+            font-weight: 900;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(150%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulseLogo {
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.3)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 10px rgba(45, 184, 206, 0.6)); transform: scale(1.05); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.6);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(45, 184, 206, 0.25);
+        }
+        body.light-mode .loading-toast .toast-title { color: #1e293b; }
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+        }
+        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+        /* ============ FIN ESTILOS TOAST ============ */
     </style>
     <style id="force-lesson-tabs-white-final">
         body.light-mode #lesson-title, body:not(.light-mode) #lesson-title,
@@ -232,6 +360,117 @@
 <body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
     <div class="bg-optimized"></div>
     <div class="overlay-dark"></div>
+
+    <!-- TOAST DE CARGA (TAMAÑO REDUCIDO) -->
+    <div id="loadingToast" class="loading-toast hidden" style="display: none;">
+        <div class="toast-logo">
+            <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+        </div>
+        <div class="toast-content">
+            <div class="toast-title" id="loadingToastTitle">Cargando aula virtual...</div>
+        </div>
+        <div class="toast-spinner" id="loadingToastSpinner"></div>
+    </div>
+
+    <script>
+        // ============ FUNCIONES DEL TOAST DE CARGA (CORREGIDAS) ============
+        let toastSafetyTimeout = null;
+        
+        function showLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            const title = document.getElementById('loadingToastTitle');
+            const spinner = document.getElementById('loadingToastSpinner');
+            
+            if (toastSafetyTimeout) {
+                clearTimeout(toastSafetyTimeout);
+                toastSafetyTimeout = null;
+            }
+            
+            if (toast) {
+                toast.classList.remove('hidden', 'hiding', 'success-toast');
+                toast.style.display = 'flex';
+                title.innerText = 'Cargando aula virtual...';
+                if (spinner) spinner.style.display = 'block';
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                
+                toastSafetyTimeout = setTimeout(() => {
+                    hideLoadingToast();
+                }, 5000);
+            }
+        }
+
+        function showSuccessToast() {
+            const toast = document.getElementById('loadingToast');
+            const title = document.getElementById('loadingToastTitle');
+            const spinner = document.getElementById('loadingToastSpinner');
+            
+            if (toastSafetyTimeout) {
+                clearTimeout(toastSafetyTimeout);
+                toastSafetyTimeout = null;
+            }
+            
+            if (toast) {
+                toast.classList.remove('hidden', 'hiding');
+                toast.classList.add('success-toast');
+                toast.style.display = 'flex';
+                title.innerText = '¡Listo!';
+                if (spinner) spinner.style.display = 'none';
+                const existingCheck = toast.querySelector('.toast-check');
+                if (existingCheck) existingCheck.remove();
+                const checkDiv = document.createElement('div');
+                checkDiv.className = 'toast-check';
+                checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+                toast.appendChild(checkDiv);
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateY(0)';
+                
+                setTimeout(() => { 
+                    hideLoadingToast(); 
+                }, 2000);
+                
+                setTimeout(() => {
+                    const toastEl = document.getElementById('loadingToast');
+                    if (toastEl && !toastEl.classList.contains('hidden')) {
+                        toastEl.classList.add('hidden');
+                        toastEl.style.display = 'none';
+                    }
+                }, 3500);
+            }
+        }
+
+        function hideLoadingToast() {
+            const toast = document.getElementById('loadingToast');
+            
+            if (toastSafetyTimeout) {
+                clearTimeout(toastSafetyTimeout);
+                toastSafetyTimeout = null;
+            }
+            
+            if (toast) {
+                toast.classList.add('hiding');
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                    toast.classList.remove('hiding', 'success-toast');
+                    toast.style.display = 'none';
+                }, 500);
+                
+                setTimeout(() => {
+                    const toastEl = document.getElementById('loadingToast');
+                    if (toastEl && !toastEl.classList.contains('hidden')) {
+                        toastEl.classList.add('hidden');
+                        toastEl.style.display = 'none';
+                    }
+                }, 1000);
+            }
+        }
+        // ============ FIN FUNCIONES DEL TOAST ============
+    </script>
 
     <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity backdrop-blur-sm bg-slate-900/40">
         <div id="initial-loader" class="text-center text-white">
@@ -320,7 +559,6 @@
     <div id="toast" class="toast hidden"></div>
 
     <script>
-
         const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzcvWH69ZXDcSiWRKhp-wcRy_balv1QHevOdejR_bRjUqfIL3BhSjL5zv2DM4rwAphK/exec';
         const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyrozAl5UD90NzUYIUTR2QJ_oXa3dTp6fsnjjEtAbjja3M8UJyEuO_BClPMFj1jjsFw/exec';
 
@@ -360,7 +598,11 @@
             if (type === 'success') icon.className = 'fas fa-check-circle text-green-300';
             else if (type === 'error') icon.className = 'fas fa-exclamation-circle text-red-300';
             else icon.className = 'fas fa-sync-alt fa-spin text-[#2db8ce]';
-            if (type !== 'loading') setTimeout(() => el.classList.remove('visible'), 2500);
+            
+            // Ocultar automáticamente después de 1 segundo
+            setTimeout(() => {
+                el.classList.remove('visible');
+            }, 1000);
         }
 
         function getDirectDownloadUrl(url) {
@@ -445,16 +687,76 @@
 
         function buildCourseData(config) {
             const introLesson = { id: 0, title: 'Contenido del Curso', video: config.introVideo || SHARED_PRACTICE_VIDEO_URL, resources: config.sharedResources || [{ type: 'manual', name: 'Materiales del curso', url: config.materialPage }], quiz: [], hasQuiz: false, content: buildIntroContent(config) };
-            const modules = config.modules.map((module, index) => ({ id: index + 1, title: module.title, video: module.video || SHARED_PRACTICE_VIDEO_URL, resources: module.resources || [], hasQuiz: module.quiz && module.quiz.length > 0, content: module.content || `<h2 class="text-2xl font-bold text-secondary">${module.title}</h2><p class="text-slate-300 mb-4">${module.summary}</p><div class="bg-white/5 p-5 rounded-xl mb-6"><h3 class="text-xl font-bold text-white mb-3">Puntos clave</h3><ul class="list-disc pl-5 space-y-2 text-slate-300">${(module.points || []).map(point => `<li>${point}</li>`).join('')}</ul></div><div class="bg-amber-900/30 p-4 border-l-4 border-amber-500/80"><strong>Recomendación:</strong> repasa el material de apoyo y valida cada paso antes de avanzar al siguiente módulo.</div>`, quiz: Array.isArray(module.quiz) ? module.quiz : [] }));
+            const modules = config.modules.map((module, index) => {
+                // Contenido principal (personalizado o plantilla base)
+                let mainContent = module.content;
+                if (!mainContent) {
+                    mainContent = `<h2 class="text-2xl font-bold text-secondary">${module.title}</h2><p class="text-slate-300 mb-4">${module.summary}</p>`;
+                }
+                
+                return {
+                    id: index + 1,
+                    title: module.title,
+                    video: module.video || SHARED_PRACTICE_VIDEO_URL,
+                    resources: module.resources || [],
+                    hasQuiz: module.quiz && module.quiz.length > 0,
+                    content: mainContent,
+                    quiz: Array.isArray(module.quiz) ? module.quiz : []
+                };
+            });
             return [introLesson, ...modules];
         }
 
         function parseMaybeJson(value) { if (value && typeof value === 'object') return value; if (typeof value !== 'string') return null; try { return JSON.parse(value); } catch (_e) { return null; } }
         function toArray(value) { if (Array.isArray(value)) return value; if (typeof value === 'string') { const trimmed = value.trim(); if (!trimmed) return []; const parsed = parseMaybeJson(trimmed); if (Array.isArray(parsed)) return parsed; return trimmed.split('|').map(item => item.trim()).filter(Boolean); } return []; }
         function normalizeQuizItem(item) { if (!item || typeof item !== 'object') return null; const opts = toArray(item.opts || item.options || item.opciones || []); if (!opts.length) return null; const ans = Number(item.ans ?? item.correctAnswerIndex ?? item.respuesta ?? 0); return { q: String(item.q || item.question || item.pregunta || 'Pregunta').trim(), opts, ans: Number.isFinite(ans) ? ans : 0 }; }
-        function normalizeModule(item, index) { const rawQuiz = item.quiz || item.quizzes || item.evaluacion || item.evaluaciones || []; const quizList = toArray(rawQuiz).map(normalizeQuizItem).filter(Boolean); return { moduleId: Number(item.moduleId || item.idModulo || item.id || index + 1), title: String(item.title || item.titulo || item.nombre || `Módulo ${index + 1}`), summary: String(item.summary || item.resumen || item.descripcion || ''), content: String(item.content || item.contenido || item.html || ''), points: toArray(item.points || item.puntos || []), video: String(item.video || item.videoUrl || item.linkVideo || ''), resources: toArray(item.resources || item.recursos || []), quiz: quizList }; }
-        function normalizeCoursePayload(payload, requestedCourseId) { const source = payload || {}; const moduleListRaw = source.modules || source.modulos || source.lessons || source.lecciones || []; const modules = toArray(moduleListRaw).map(normalizeModule).sort((a, b) => a.moduleId - b.moduleId); const intro = source.intro || {}; return { id: Number(source.id || source.courseId || source.cursoId || requestedCourseId || 1), name: String(source.name || source.title || source.nombre || 'Aula Virtual'), title: String(source.title || source.name || source.titulo || source.nombre || 'Aula Virtual'), type: String(source.type || source.tipo || 'Online'), materialPage: String(source.materialPage || source.materialFile || source.archivoMaterial || ''), introImage: String(source.introImage || source.imagenIntro || source.image || 'img/AA (2).gif'), sharedResources: toArray(source.sharedResources || source.recursosCompartidos || []), intro: { summary: String(intro.summary || intro.resumen || source.introSummary || ''), objective: String(intro.objective || intro.objetivo || source.introObjective || ''), goals: toArray(intro.goals || intro.objetivos || source.introGoals || []) }, introVideo: String(source.introVideo || source.videoIntro || ''), modules }; }
-        function unwrapApiResponse(data) { const parsed = parseMaybeJson(data) || data; if (!parsed || typeof parsed !== 'object') return { ok: false, message: 'La respuesta del script no es JSON válido.' }; if (parsed.success === true && parsed.content) return { ok: true, content: parsed.content }; if (parsed.status === 'success' && parsed.content) return { ok: true, content: parsed.content }; if (parsed.course || parsed.curso) return { ok: true, content: parsed.course || parsed.curso }; if (parsed.content && typeof parsed.content === 'object') return { ok: true, content: parsed.content }; if (parsed.success === false || parsed.status === 'error') return { ok: false, message: parsed.message || 'El script respondió con error.' }; if (parsed.modules || parsed.modulos || parsed.lessons || parsed.lecciones) return { ok: true, content: parsed }; return { ok: false, message: parsed.message || 'Formato no compatible en la respuesta del script.' }; }
+        function normalizeModule(item, index) { 
+            const rawQuiz = item.quiz || item.quizzes || item.evaluacion || item.evaluaciones || []; 
+            const quizList = toArray(rawQuiz).map(normalizeQuizItem).filter(Boolean); 
+            
+            return { 
+                moduleId: Number(item.moduleId || item.idModulo || item.id || index + 1), 
+                title: String(item.title || item.titulo || item.nombre || `Módulo ${index + 1}`), 
+                summary: String(item.summary || item.resumen || item.descripcion || ''), 
+                content: String(item.content || item.contenido || item.html || ''), 
+                video: String(item.video || item.videoUrl || item.linkVideo || ''), 
+                resources: toArray(item.resources || item.recursos || []), 
+                quiz: quizList 
+            }; 
+        }
+        function normalizeCoursePayload(payload, requestedCourseId) { 
+            const source = payload || {}; 
+            const moduleListRaw = source.modules || source.modulos || source.lessons || source.lecciones || []; 
+            const modules = toArray(moduleListRaw).map(normalizeModule).sort((a, b) => a.moduleId - b.moduleId); 
+            const intro = source.intro || {}; 
+            return { 
+                id: Number(source.id || source.courseId || source.cursoId || requestedCourseId || 1), 
+                name: String(source.name || source.title || source.nombre || 'Aula Virtual'), 
+                title: String(source.title || source.name || source.titulo || source.nombre || 'Aula Virtual'), 
+                type: String(source.type || source.tipo || 'Online'), 
+                materialPage: String(source.materialPage || source.materialFile || source.archivoMaterial || ''), 
+                introImage: String(source.introImage || source.imagenIntro || source.image || 'img/AA (2).gif'), 
+                sharedResources: toArray(source.sharedResources || source.recursosCompartidos || []), 
+                intro: { 
+                    summary: String(intro.summary || intro.resumen || source.introSummary || ''), 
+                    objective: String(intro.objective || intro.objetivo || source.introObjective || ''), 
+                    goals: toArray(intro.goals || intro.objetivos || source.introGoals || []) 
+                }, 
+                introVideo: String(source.introVideo || source.videoIntro || ''), 
+                modules 
+            }; 
+        }
+        function unwrapApiResponse(data) { 
+            const parsed = parseMaybeJson(data) || data; 
+            if (!parsed || typeof parsed !== 'object') return { ok: false, message: 'La respuesta del script no es JSON válido.' }; 
+            if (parsed.success === true && parsed.content) return { ok: true, content: parsed.content }; 
+            if (parsed.status === 'success' && parsed.content) return { ok: true, content: parsed.content }; 
+            if (parsed.course || parsed.curso) return { ok: true, content: parsed.course || parsed.curso }; 
+            if (parsed.content && typeof parsed.content === 'object') return { ok: true, content: parsed.content }; 
+            if (parsed.success === false || parsed.status === 'error') return { ok: false, message: parsed.message || 'El script respondió con error.' }; 
+            if (parsed.modules || parsed.modulos || parsed.lessons || parsed.lecciones) return { ok: true, content: parsed }; 
+            return { ok: false, message: parsed.message || 'Formato no compatible en la respuesta del script.' }; 
+        }
 
         const app = {
             scriptUrl: SCRIPT_URL,
@@ -469,24 +771,43 @@
                 document.addEventListener('fullscreenchange', this.updateFullScreenIcon);
                 this.progress = JSON.parse(localStorage.getItem(STORAGE_KEYS.progress) || '[]');
                 this.quizScores = JSON.parse(localStorage.getItem(STORAGE_KEYS.scores) || '{}');
+                showLoadingToast();
+                
                 try {
                     const courseContent = await this.fetchCourseContent(resolvedCourseId);
-                    if (!courseContent) { const reason = this.lastLoadErrorMessage || 'No se pudo cargar el contenido de este curso. Contacta al administrador.'; this.showAccessBlocked("Contenido no disponible", reason); return; }
+                    if (!courseContent) { 
+                        const reason = this.lastLoadErrorMessage || 'No se pudo cargar el contenido de este curso. Contacta al administrador.'; 
+                        hideLoadingToast();
+                        this.showAccessBlocked("Contenido no disponible", reason); 
+                        return; 
+                    }
                     const loadingCourseNameEl = document.getElementById('loading-course-name');
                     if (loadingCourseNameEl) loadingCourseNameEl.innerText = courseContent.name;
                     CURRENT_COURSE = courseContent;
                     COURSE_DATA = buildCourseData(CURRENT_COURSE);
-                    document.body.classList.toggle('course-4-theme', CURRENT_COURSE.id === 4);
                     document.title = `Aula Virtual - ${CURRENT_COURSE.name}`;
                     document.getElementById('login-course-subtitle').innerText = CURRENT_COURSE.name;
                     document.getElementById('header-course-title').innerText = CURRENT_COURSE.name;
                     const globalUser = JSON.parse(localStorage.getItem('user') || 'null');
                     const classroomAuth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                     if (classroomAuth && globalUser && classroomAuth.correo && globalUser.email) { if (String(classroomAuth.correo).toLowerCase() !== String(globalUser.email).toLowerCase()) { this.clearLocalData(); } }
-                    if (localStorage.getItem(STORAGE_KEYS.auth)) { this.proceedToAula(); return; }
-                    if (globalUser && globalUser.email) { this.autoVerify(globalUser); return; }
+                    if (localStorage.getItem(STORAGE_KEYS.auth)) { 
+                        showSuccessToast(); 
+                        this.proceedToAula(); 
+                        return; 
+                    }
+                    if (globalUser && globalUser.email) { 
+                        hideLoadingToast();
+                        this.autoVerify(globalUser); 
+                        return; 
+                    }
+                    showSuccessToast();
                     this.showLoginScreen();
-                } catch (error) { console.error("Error en la inicialización del aula:", error); this.showAccessBlocked("Error de Carga", "Hubo un problema al cargar el curso. Intenta de nuevo más tarde."); }
+                } catch (error) { 
+                    console.error("Error en la inicialización del aula:", error); 
+                    hideLoadingToast(); 
+                    this.showAccessBlocked("Error de Carga", "Hubo un problema al cargar el curso. Intenta de nuevo más tarde."); 
+                }
             },
             
             showLoginScreen: function() {
@@ -496,7 +817,13 @@
                 if (formContainer) formContainer.classList.remove('hidden');
             },
             
-            autoVerify: function(user) { showSyncIndicator('Verificando sesión...', 'loading'); if (document.getElementById('login-nombre')) document.getElementById('login-nombre').value = user.name || ''; if (document.getElementById('login-cedula')) document.getElementById('login-cedula').value = user.cedula || 'N/A'; if (document.getElementById('login-correo')) document.getElementById('login-correo').value = user.email || ''; this.executeVerification(user.name || '', user.cedula || 'N/A', user.email || '', true); },
+            autoVerify: function(user) { 
+                showSyncIndicator('Verificando sesión...', 'loading'); 
+                if (document.getElementById('login-nombre')) document.getElementById('login-nombre').value = user.name || ''; 
+                if (document.getElementById('login-cedula')) document.getElementById('login-cedula').value = user.cedula || 'N/A'; 
+                if (document.getElementById('login-correo')) document.getElementById('login-correo').value = user.email || ''; 
+                this.executeVerification(user.name || '', user.cedula || 'N/A', user.email || '', true); 
+            },
             
             clearLocalData: function() { localStorage.removeItem(STORAGE_KEYS.auth); localStorage.removeItem(STORAGE_KEYS.progress); localStorage.removeItem(STORAGE_KEYS.scores); this.progress = []; this.quizScores = {}; },
             
@@ -621,12 +948,10 @@
                         this.renderSidebar(); 
                         this.updateCompleteButton();
                         
-                        // Verificar si es el último módulo
                         const totalModulos = COURSE_DATA.filter(l => l.id > 0).length;
                         const modulosCompletados = this.progress.filter(id => id > 0).length;
                         
                         if (modulosCompletados >= totalModulos) {
-                            // CURSO COMPLETADO - Guardar fecha y mostrar celebración
                             this.saveCourseCompletionDate();
                             this.showCourseCompletionCelebration();
                         } else {
