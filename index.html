@@ -14,41 +14,47 @@
     
     <style>
         /* ==========================================
-           VARIABLES Y ESTILOS BASE
+           VARIABLES Y ESTILOS BASE - MODERNO
            ========================================== */
         :root {
             --bg-default: #f7f9fb;
-            --bg-secondary: #ffffff;
-            --bg-dark: #0f172a;
-            --bg-dark-accent: #1e293b;
-            --text-default: #1e293b;
-            --text-secondary: #475569;
+            --bg-secondary: rgba(255, 255, 255, 0.85);
+            --bg-dark: #0a0f1e;
+            --bg-dark-accent: rgba(30, 41, 59, 0.6);
+            --text-default: #0f172a;
+            --text-secondary: #64748b;
             --text-light: #f8fafc;
-            --text-accent: #2db8ce;
-            --border-default: #e2e8f0;
-            --border-light: rgba(255, 255, 255, 0.1);
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --badge-bg-intermediate: #0891b2;
-            --badge-bg-basic: #0d9488;
+            --text-accent: #06b6d4;
+            --border-default: rgba(255, 255, 255, 0.18);
+            --border-light: rgba(255, 255, 255, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --badge-bg-basic: #06b6d4;
+            --badge-bg-intermediate: #8b5cf6;
+            --badge-bg-advanced: #f59e0b;
             --badge-text: #ffffff;
-            --cyan-glow: 0 0 20px rgba(45, 184, 206, 0.5), 0 0 40px rgba(45, 184, 206, 0.25);
+            --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-blur: 20px;
         }
 
         body:not(.light-mode) {
-            --bg-default: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-            --bg-secondary: #1e293b;
-            --text-default: #f8fafc;
+            --bg-default: #0a0f1e;
+            --bg-secondary: rgba(30, 41, 59, 0.5);
+            --text-default: #f1f5f9;
             --text-secondary: #94a3b8;
             --text-light: #f8fafc;
-            --border-default: #334155;
-            --border-light: rgba(45, 184, 206, 0.3);
-            --shadow-color: rgba(0, 0, 0, 0.25);
-            --cyan-glow: 0 0 25px rgba(45, 184, 206, 0.6), 0 0 50px rgba(45, 184, 206, 0.3);
+            --border-default: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(6, 182, 212, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.45), 0 0 60px rgba(6, 182, 212, 0.2);
+            --glass-bg: rgba(15, 23, 42, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0f172a;
+            background-color: #0a0f1e;
             background-image: url('img/fondo2.webp');
             background-attachment: fixed;
             background-size: cover;
@@ -59,21 +65,27 @@
             color: var(--text-default);
             scroll-behavior: smooth;
             overflow-x: clip;
-            transition: background-color 0.3s, color 0.3s;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
 
+        /* AURORA BACKGROUND EFFECT */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, 
-                rgba(15, 23, 42, 0.97) 0%, 
-                rgba(26, 37, 54, 0.95) 25%, 
-                rgba(30, 41, 59, 0.93) 50%, 
-                rgba(26, 37, 54, 0.95) 75%, 
-                rgba(15, 23, 42, 0.97) 100%);
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 50% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(10, 15, 30, 0.96) 0%, rgba(15, 23, 42, 0.94) 50%, rgba(10, 15, 30, 0.96) 100%);
             z-index: 0;
             pointer-events: none;
+            animation: auroraShift 20s ease-in-out infinite;
+        }
+
+        @keyframes auroraShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
         }
 
         body.light-mode {
@@ -89,19 +101,110 @@
             content: '';
             position: fixed;
             inset: 0;
-            background: linear-gradient(135deg, 
-                rgba(232, 237, 242, 0.98) 0%, 
-                rgba(220, 227, 234, 0.97) 25%, 
-                rgba(208, 216, 224, 0.96) 50%, 
-                rgba(220, 227, 234, 0.97) 75%, 
-                rgba(232, 237, 242, 0.98) 100%);
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(248, 250, 252, 0.95) 0%, rgba(241, 245, 249, 0.93) 50%, rgba(248, 250, 252, 0.95) 100%);
             z-index: 0;
             pointer-events: none;
         }
 
-        .section-title { color: var(--text-default); }
+        /* GRADIENT TEXT UTILITY */
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientFlow 6s ease infinite;
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* SHIMMER LOADING EFFECT */
+        .shimmer {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .section-title { 
+            color: var(--text-default); 
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .section-title span {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-subtitle {
+            color: var(--text-accent);
+            letter-spacing: 0.15em;
+            font-weight: 800;
+        }
 
         body.light-mode .hero-main-title { color: #000000 !important; }
+        body.light-mode .section-title span {
+            background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* CURSOR PERSONALIZADO SUTIL */
+        @media (pointer: fine) {
+            body { cursor: default; }
+            a, button, [onclick], .course-card, .methodology-card, .testimonial-card, details {
+                cursor: pointer;
+            }
+        }
+
+        /* SCROLLBAR PREMIUM */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { 
+            background: rgba(255, 255, 255, 0.03); 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #06b6d4, #8b5cf6); 
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #22d3ee, #a78bfa);
+        }
+
+        /* FLOATING PARTICLES BACKGROUND */
+        .particles-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(6, 182, 212, 0.3);
+            border-radius: 50%;
+            animation: float-particle 20s infinite ease-in-out;
+        }
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
         body.light-mode .hero-main-title .text-secondary {
             color: #2db8ce !important;
             text-shadow: none !important;
@@ -114,16 +217,19 @@
         }
 
         /* ==========================================
-           HEADER - ESTILOS ESPECÍFICOS
+           HEADER - GLASSMORPHISM PREMIUM
            ========================================== */
-
         header {
-            background-color: transparent !important;
-            border-bottom: 1px solid rgba(45, 184, 206, 0.3) !important;
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            border-bottom: 1px solid var(--glass-border) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
         }
 
         header .absolute.inset-0 {
-            opacity: 0.4 !important;
+            opacity: 0.3 !important;
+            filter: saturate(1.2) contrast(1.1);
         }
 
         header img {
@@ -136,57 +242,107 @@
 
         header .hero-main-title {
             color: #ffffff !important;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15) !important;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
         }
 
         header .hero-main-title .text-secondary {
-            color: #2db8ce !important;
-            text-shadow: 0 2px 10px rgba(45, 184, 206, 0.5) !important;
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none !important;
+            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
         }
 
         header p {
-            color: #e2e8f0 !important;
-            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5) !important;
+            color: rgba(255, 255, 255, 0.85) !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+            font-weight: 500;
+            letter-spacing: 0.01em;
         }
 
         header .bg-blue-500\/20 {
-            background-color: rgba(59, 130, 246, 0.3) !important;
+            background: rgba(59, 130, 246, 0.2) !important;
             color: #93c5fd !important;
-            border-color: rgba(59, 130, 246, 0.5) !important;
+            border: 1px solid rgba(59, 130, 246, 0.3) !important;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        header .bg-blue-500\/20:hover {
+            background: rgba(59, 130, 246, 0.35) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
         }
 
         header .bg-emerald-500\/20 {
-            background-color: rgba(16, 185, 129, 0.3) !important;
+            background: rgba(16, 185, 129, 0.2) !important;
             color: #6ee7b7 !important;
-            border-color: rgba(16, 185, 129, 0.5) !important;
+            border: 1px solid rgba(16, 185, 129, 0.3) !important;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        header .bg-emerald-500\/20:hover {
+            background: rgba(16, 185, 129, 0.35) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
         }
 
         header #visitor-info {
-            background-color: rgba(30, 58, 138, 0.5) !important;
-            border-color: rgba(45, 184, 206, 0.4) !important;
+            background: var(--glass-bg) !important;
+            border: 1px solid var(--glass-border) !important;
             color: #ffffff !important;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        header #visitor-info:hover {
+            border-color: rgba(6, 182, 212, 0.4) !important;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.15);
         }
 
         /* ==========================================
-           TARJETAS - SIN TRANSPARENCIA
+           TARJETAS - GLASSMORPHISM 3D
            ========================================== */
 
         .course-card {
-            background-color: var(--bg-secondary);
-            border-radius: 1.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 2rem;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             text-align: left;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            border: 1px solid var(--border-default);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            position: relative;
+        }
+        .course-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.1), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
         .course-card:hover {
-            transform: scale(1.02);
-            box-shadow: var(--cyan-glow);
-            border-color: #2db8ce;
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-color: rgba(6, 182, 212, 0.3);
             z-index: 10;
+        }
+        .course-card:hover::before {
+            opacity: 1;
         }
         .course-card .course-card-image-container {
             position: relative;
@@ -205,19 +361,29 @@
             flex-direction: column;
         }
         .course-card .course-card-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            z-index: 1;
             padding: 0.25rem 0.75rem;
             font-size: 9px;
             font-weight: 900;
             text-transform: uppercase;
             border-radius: 9999px;
             color: var(--badge-text);
+            white-space: nowrap;
+        }
+        .badge-container {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .badge-generic {
+            background-color: #475569;
         }
         .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
         .course-card .badge-basic { background-color: var(--badge-bg-basic); }
+        .course-card .badge-avanzado { background-color: var(--badge-bg-advanced); }
         .course-card .course-card-title {
             color: var(--text-default);
             font-size: 1.125rem;
@@ -295,26 +461,45 @@
         }
 
         /* ==========================================
-           TARJETA DE MISIÓN - FONDO SÓLIDO
+           TARJETA DE MISIÓN - GLASSMORPHISM
            ========================================== */
         .mission-card {
-            background-color: var(--bg-secondary);
-            border: 1px solid rgba(6, 182, 212, 0.35);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
         }
         .mission-card:hover {
-            transform: scale(1.01);
-            border-color: #2db8ce;
-            box-shadow: var(--cyan-glow);
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        .mission-card:hover::before {
+            opacity: 1;
         }
 
         body:not(.light-mode) .mission-card h3 { color: #ffffff; }
         body:not(.light-mode) .mission-card ul { color: #cbd5e1; }
 
         body.light-mode .mission-card {
-            background-color: #ffffff;
-            border-color: rgba(100, 150, 200, 0.3);
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
         }
         body.light-mode .mission-card h3 { color: #1e293b; }
         body.light-mode .mission-card ul { color: #475569; }
@@ -366,144 +551,249 @@
         }
 
         /* ==========================================
-           TESTIMONIOS - FONDO SÓLIDO
+           TESTIMONIOS - GLASSMORPHISM ELEGANTE
            ========================================== */
         .testimonial-card {
-            background-color: var(--bg-secondary);
-            border: 1px solid rgba(6, 182, 212, 0.5);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 6rem;
+            font-family: Georgia, serif;
+            color: rgba(6, 182, 212, 0.1);
+            line-height: 1;
+            pointer-events: none;
+            transition: all 0.5s ease;
         }
         .testimonial-card:hover {
-            transform: scale(1.02);
-            border-color: #2db8ce;
-            box-shadow: var(--cyan-glow);
+            transform: translateY(-6px);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: var(--cyan-glow), 0 20px 50px rgba(0, 0, 0, 0.12);
+        }
+        .testimonial-card:hover::before {
+            color: rgba(6, 182, 212, 0.2);
+            transform: scale(1.1);
         }
         .testimonial-card p { color: #cbd5e1; }
         .testimonial-card h4 { color: #ffffff; }
         .testimonial-card .testimonial-role { color: #94a3b8; }
 
         body.light-mode .testimonial-card {
-            background-color: #ffffff;
-            border-color: rgba(100, 150, 200, 0.3);
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
         }
         body.light-mode .testimonial-card p { color: #475569; }
         body.light-mode .testimonial-card h4 { color: #1e293b; }
         body.light-mode .testimonial-card .testimonial-role { color: #64748b; }
 
         /* ==========================================
-           CURSO ESPECIAL - FONDO SÓLIDO
+           CURSO ESPECIAL - GLASSMORPHISM PREMIUM
            ========================================== */
         .special-course-card {
-            background-color: var(--bg-secondary);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-            border: 1px solid var(--border-default);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .special-course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #06b6d4);
+            background-size: 200% 100%;
+            animation: gradientFlow 4s linear infinite;
         }
         .special-course-card:hover {
-            transform: scale(1.01);
-            border-color: #2db8ce;
-            box-shadow: var(--cyan-glow);
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.15);
         }
 
         body.light-mode .special-course-card {
-            background-color: #ffffff;
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
         /* ==========================================
-           FAQ - FONDO SÓLIDO
+           FAQ - GLASSMORPHISM INTERACTIVO
            ========================================== */
         #faq details {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border-default);
-            border-radius: 1rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.25rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
-        #faq summary { color: var(--text-default); }
-        #faq details p { color: var(--text-secondary); }
+        #faq details:hover {
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        #faq details[open] {
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.1);
+        }
+        #faq summary { 
+            color: var(--text-default); 
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            transition: color 0.3s ease;
+        }
+        #faq details:hover summary {
+            color: #06b6d4;
+        }
+        #faq details p { color: var(--text-secondary); line-height: 1.7; }
 
         body.light-mode #faq details {
-            background-color: #ffffff;
-            border-color: rgba(100, 150, 200, 0.3);
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
         }
 
         /* ==========================================
-           BOTONES METÁLICOS
+           BOTONES - GLOW GRADIENT PREMIUM
            ========================================== */
         .btn-metal-solid {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
-            font-weight: 700;
+            gap: 0.6rem;
+            font-weight: 800;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 0.05em;
-            padding: 0.85rem 1.8rem;
-            border-radius: 1rem;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            padding: 1rem 2rem;
+            border-radius: 1.25rem;
             cursor: pointer;
-            transition: box-shadow 0.2s ease, filter 0.2s ease;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
             overflow: hidden;
             text-decoration: none;
             color: #ffffff !important;
-            border: none !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
             outline: none;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            background: linear-gradient(180deg, #b0c4de 0%, #7a8fa6 8%, #4a6078 20%, #2d4a5e 40%, #1e3a4f 60%, #1a3142 100%);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.9) 0%, rgba(8, 145, 178, 0.95) 100%);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3), 0 0 0 1px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         .btn-metal-solid::before {
             content: '';
             position: absolute;
-            top: 2px;
-            left: 10%;
-            width: 80%;
-            height: 35%;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.08) 100%);
-            border-radius: 50%;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
+        }
+        .btn-metal-solid::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 1.35rem;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(139, 92, 246, 0.3), transparent 70%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
             pointer-events: none;
         }
         .btn-metal-solid:hover {
-            filter: brightness(1.05);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            filter: brightness(1.1);
+        }
+        .btn-metal-solid:hover::after {
+            opacity: 1;
         }
         .btn-metal-solid:active {
-            filter: brightness(0.95);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
         }
         .btn-metal-cyan {
-            background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%);
-            box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.9) 0%, rgba(6, 182, 212, 0.95) 50%, rgba(8, 145, 178, 0.9) 100%);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35), 0 0 0 1px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-metal-cyan:hover {
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.5), 0 0 0 1px rgba(6, 182, 212, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
         .btn-metal-teal {
-            background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%);
-            box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(13, 148, 136, 0.95) 50%, rgba(15, 118, 110, 0.9) 100%);
+            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3), 0 0 0 1px rgba(20, 184, 166, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-metal-teal:hover {
+            box-shadow: 0 12px 40px rgba(20, 184, 166, 0.4), 0 0 0 1px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
 
         /* ==========================================
-           BOTONES DE PERFIL
+           BOTONES DE PERFIL - GLASSMORPHISM
            ========================================== */
         .prof-btn {
-            background-color: var(--bg-dark-accent);
-            border: 1px solid var(--border-default);
-            box-shadow: 0 4px 6px -1px var(--shadow-color);
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px) saturate(180%);
+            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .prof-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
         .prof-btn:hover {
-            transform: scale(1.02);
-            border-color: #2db8ce;
-            box-shadow: 0 0 15px rgba(45, 184, 206, 0.4);
+            transform: translateY(-3px) scale(1.01);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.15), 0 0 0 1px rgba(6, 182, 212, 0.1);
         }
-        .prof-btn > span { color: #ffffff; }
+        .prof-btn:hover::before {
+            opacity: 1;
+        }
+        .prof-btn > span { color: #ffffff; position: relative; z-index: 1; }
         .prof-selected {
-            border: 2px solid #2db8ce !important;
-            background-color: rgba(45, 184, 206, 0.1) !important;
-            box-shadow: 0 0 15px rgba(45, 184, 206, 0.3);
+            border: 1px solid rgba(6, 182, 212, 0.5) !important;
+            background: rgba(6, 182, 212, 0.15) !important;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2), 0 8px 30px rgba(6, 182, 212, 0.1);
+        }
+        .prof-selected::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(139, 92, 246, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
 
         body.light-mode .prof-btn {
-            background-color: #ffffff;
-            border-color: #d0d8e0;
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
         }
         body.light-mode .prof-btn > span { color: #1e293b; }
 
@@ -522,168 +812,198 @@
         }
 
         /* ==========================================
-           DIVISORES ANIMADOS
+           DIVISORES - EFECTOS PREMIUM
            ========================================== */
         .section-divider {
             width: 100%;
-            height: 60px;
+            height: 80px;
             margin: 0;
             position: relative;
             overflow: hidden;
+            opacity: 0.6;
         }
         .section-divider svg path {
             fill: none;
             stroke-linecap: round;
-            stroke-width: 1.5;
-            stroke: var(--border-default);
-            opacity: 0.5;
-            animation: oscilloscope 8s linear infinite;
+            stroke-width: 2;
+            stroke: url(#gradient-divider);
+            opacity: 0.7;
+            animation: oscilloscope 10s ease-in-out infinite;
+            filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3));
         }
         .section-divider svg path:nth-child(2) {
-            stroke-width: 2.5;
-            stroke: var(--text-accent);
-            opacity: 0.6;
-            animation-delay: -2.5s;
-            animation-duration: 7s;
+            stroke-width: 3;
+            stroke: url(#gradient-divider-2);
+            opacity: 0.8;
+            animation-delay: -3s;
+            animation-duration: 8s;
+            filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
         }
         .glitch-divider {
             width: 100%;
-            height: 50px;
+            height: 60px;
             position: relative;
             overflow: hidden;
-            margin: -15px 0;
+            margin: -20px 0;
+            opacity: 0.7;
         }
         .glitch-divider .glitch-line {
             fill: none;
-            stroke-width: 2;
+            stroke-width: 2.5;
             stroke-linecap: round;
+            filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4));
         }
         .glitch-divider .line-1 {
-            stroke: var(--text-accent);
-            animation: glitch1 2.5s infinite steps(1, end);
+            stroke: url(#gradient-divider);
+            animation: glitch1 3s infinite steps(1, end);
         }
         .circuit-divider {
             width: 100%;
-            height: 80px;
+            height: 100px;
             position: relative;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: -10px 0;
+            margin: -15px 0;
+            opacity: 0.7;
         }
         .circuit-divider .trace {
             fill: none;
-            stroke-width: 2.5;
+            stroke-width: 3;
             stroke-linecap: round;
             stroke-linejoin: round;
-            stroke: var(--text-accent);
+            stroke: url(#gradient-divider);
             stroke-dasharray: 1500;
             stroke-dashoffset: 1500;
-            animation: draw-trace 20s linear infinite;
+            animation: draw-trace 15s linear infinite;
+            filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3));
         }
         .circuit-divider .dot {
-            fill: var(--text-accent);
+            fill: url(#gradient-dot);
             animation: pulse-dot 2s ease-in-out infinite;
         }
 
         @keyframes oscilloscope {
-            0%, 100% { d: path("M0,30 C240,50 480,10 720,30 S1200,50 1440,30"); }
-            20% { d: path("M0,35 C220,40 460,20 720,35 S1180,30 1440,25"); }
-            40% { d: path("M0,25 C260,60 500,5 720,25 S1220,60 1440,35"); }
-            60% { d: path("M0,32 C200,10 520,55 720,32 S1150,15 1440,30"); }
-            80% { d: path("M0,28 C300,65 420,-5 720,28 S1240,65 1440,28"); }
+            0%, 100% { d: path("M0,40 C240,60 480,20 720,40 S1200,60 1440,40"); }
+            20% { d: path("M0,45 C220,50 460,30 720,45 S1180,40 1440,35"); }
+            40% { d: path("M0,35 C260,70 500,15 720,35 S1220,70 1440,45"); }
+            60% { d: path("M0,42 C200,20 520,65 720,42 S1150,25 1440,40"); }
+            80% { d: path("M0,38 C300,75 420,5 720,38 S1240,75 1440,38"); }
         }
         @keyframes glitch1 {
             0%, 100% { transform: none; opacity: 1; }
-            5%, 15%, 25%, 35% { transform: translate(-5px, 2px) skewX(10deg); opacity: 0.7; }
-            10%, 20%, 30%, 40% { transform: translate(5px, -2px) skewX(-10deg); opacity: 0.7; }
+            5%, 15%, 25%, 35% { transform: translate(-8px, 3px) skewX(12deg); opacity: 0.6; }
+            10%, 20%, 30%, 40% { transform: translate(8px, -3px) skewX(-12deg); opacity: 0.6; }
         }
         @keyframes draw-trace { to { stroke-dashoffset: 0; } }
         @keyframes pulse-dot {
-            0%, 100% { r: 3; opacity: 0.6; }
-            50% { r: 4.5; opacity: 1; filter: drop-shadow(0 0 3px var(--text-accent)); }
+            0%, 100% { r: 4; opacity: 0.5; }
+            50% { r: 6; opacity: 1; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)); }
         }
 
         /* ==========================================
-           TOAST DE CARGA (MODIFICADO: MÁS COMPACTO)
+           TOAST DE CARGA - GLASSMORPHISM PREMIUM
            ========================================== */
         .loading-toast {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 24px;
+            right: 24px;
             z-index: 100002;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(45, 184, 206, 0.4);
-            border-radius: 12px; /* Reducido de 16px a 12px */
-            padding: 8px 12px; /* Reducido de 16px 20px a 8px 12px */
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            gap: 10px; /* Reducido de 14px a 10px */
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(6, 182, 212, 0.1);
             pointer-events: none;
-            min-width: 220px; /* Reducido de 320px a 220px */
-            max-width: 240px; /* Ajuste de ancho máximo para un globo más compacto */
-            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 240px;
+            max-width: 280px;
+            animation: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .loading-toast.hiding { opacity: 0; transform: translateX(100px); }
+        .loading-toast.hiding { 
+            opacity: 0; 
+            transform: translateX(120px) scale(0.95);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
         .loading-toast .toast-logo {
-            width: 30px;  /* Reducido de 50px a 30px */
-            height: 30px; /* Reducido de 50px a 30px */
+            width: 36px;
+            height: 36px;
             flex-shrink: 0;
-            animation: pulseLogo 2s infinite;
+            animation: pulseLogo 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.4));
         }
         .loading-toast .toast-logo img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 0 6px rgba(45, 184, 206, 0.4));
         }
         .loading-toast .toast-title {
             color: #ffffff;
-            font-weight: 700;
-            font-size: 12px; /* Reducido de 14px a 12px */
+            font-weight: 800;
+            font-size: 13px;
             margin-bottom: 0;
-            line-height: 1.2;
+            line-height: 1.3;
+            letter-spacing: 0.02em;
         }
-        /* Eliminamos .toast-subtitle por completo del HTML, 
-           así que no requiere estilo aquí */
         .loading-toast .toast-spinner {
-            width: 14px;  /* Reducido de 20px a 14px */
-            height: 14px; /* Reducido de 20px a 14px */
-            border: 2px solid rgba(45, 184, 206, 0.2);
-            border-top: 2px solid #2db8ce;
+            width: 16px;
+            height: 16px;
+            border: 2.5px solid rgba(6, 182, 212, 0.15);
+            border-top: 2.5px solid #06b6d4;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            animation: spin 0.8s linear infinite;
             flex-shrink: 0;
+            filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
         }
         .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            background: rgba(16, 185, 129, 0.9);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2);
         }
         @keyframes slideInRight {
-            from { transform: translateX(150%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from { transform: translateX(150%) scale(0.9); opacity: 0; }
+            to { transform: translateX(0) scale(1); opacity: 1; }
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         @keyframes pulseLogo {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.3)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.5)); }
         }
 
         /* ==========================================
-           REVEAL (SCROLL ANIMATIONS)
+           REVEAL - ANIMACIONES PREMIUM
            ========================================== */
-        .reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
-        .reveal.active { opacity: 1; transform: translate(0, 0, 0) scale(1); }
-        .reveal-up { transform: translateY(40px); }
-        .reveal-down { transform: translateY(-40px); }
-        .reveal-left { transform: translateX(-40px); }
-        .reveal-right { transform: translateX(40px); }
-        .reveal-center { transform: scale(0.9); }
+        .reveal { 
+            opacity: 0; 
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: blur(8px);
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translate(0, 0) scale(1);
+            filter: blur(0);
+        }
+        .reveal-up { transform: translateY(60px) scale(0.95); }
+        .reveal-down { transform: translateY(-60px) scale(0.95); }
+        .reveal-left { transform: translateX(-60px) scale(0.95); }
+        .reveal-right { transform: translateX(60px) scale(0.95); }
+        .reveal-center { transform: scale(0.85); }
+
+        /* Stagger delay para grids */
+        .grid .reveal:nth-child(1) { transition-delay: 0ms; }
+        .grid .reveal:nth-child(2) { transition-delay: 100ms; }
+        .grid .reveal:nth-child(3) { transition-delay: 200ms; }
+        .grid .reveal:nth-child(4) { transition-delay: 300ms; }
+        .grid .reveal:nth-child(5) { transition-delay: 400ms; }
+        .grid .reveal:nth-child(6) { transition-delay: 500ms; }
 
         /* ==========================================
            SCROLLBAR
@@ -724,6 +1044,101 @@
         .modal-overlay.active .modal-content {
             transform: translateY(0) scale(1);
         }
+
+        /* ==========================================
+           FIX: Modalidades en modo claro
+           ========================================== */
+        body.light-mode #modalidades-container .course-card-title,
+        body.light-mode #modalidades-container .course-card-description,
+        body.light-mode #modalidades-container h3,
+        body.light-mode #modalidades-container p {
+            color: #475569;
+        }
+
+        body.light-mode #modalidades-container .text-white,
+        body.light-mode #modalidades-container .text-slate-100,
+        body.light-mode #modalidades-container .text-slate-200,
+        body.light-mode #modalidades-container .text-slate-300,
+        body.light-mode #modalidades-container .text-slate-400,
+        body.light-mode #modalidades-container .text-slate-500 {
+            color: #475569 !important;
+        }
+
+        body.light-mode #modalidades-container [class*="title"],
+        body.light-mode #modalidades-container [class*="Title"] {
+            color: #1e293b !important;
+        }
+
+        /* ==========================================
+           MODALIDADES - IMAGEN VERTICAL QUE LLENA EL ALTO
+           ========================================== */
+        .course-card .modalidad-image-container {
+            height: 12rem;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .course-card .modalidad-image-container {
+                height: auto;
+                align-self: stretch;
+            }
+        }
+
+        /* ==========================================
+           TESTIMONIOS - COLOR CYAN EN MODO CLARO
+           ========================================== */
+        body.light-mode #testimonios-container .fa-quote-right {
+            color: #2db8ce !important;
+            opacity: 0.7 !important;
+        }
+
+        body.light-mode #testimonios-container h4 {
+            color: #0891b2 !important;
+        }
+
+        body.light-mode #testimonios-container .testimonial-role {
+            color: #475569 !important;
+        }
+
+        /* ==========================================
+           LOGOS DE MODALIDADES - FONDO DE LOGO COMO BACKGROUND
+           ========================================== */
+        .modalidad-logo-bg {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            min-height: 40px;
+            border-radius: 10px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 32px 32px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            background-color: #475569;
+        }
+        body.light-mode .modalidad-logo-bg {
+            background-color: #f8fafc;
+        }
+
+        /* ==========================================
+           LOADING STATES - CARGA SIMULTÁNEA
+           ========================================== */
+        .section-loading {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .section-loading.loaded {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .metrics-loading {
+            opacity: 0;
+            transition: opacity 0.8s ease 0.3s;
+        }
+        .metrics-loading.loaded {
+            opacity: 1;
+        }
     </style>
 
     <!-- GOOGLE CHARTS -->
@@ -744,8 +1159,22 @@
             }
         }
     </script>
+
 </head>
 <body class="custom-scrollbar">
+<!-- PARTÍCULAS FLOTANTES -->
+<div class="particles-bg" aria-hidden="true">
+    <div class="particle" style="left:10%;top:90%;animation-delay:0s;animation-duration:25s;"></div>
+    <div class="particle" style="left:20%;top:80%;animation-delay:5s;animation-duration:30s;width:6px;height:6px;"></div>
+    <div class="particle" style="left:35%;top:95%;animation-delay:10s;animation-duration:22s;"></div>
+    <div class="particle" style="left:50%;top:85%;animation-delay:3s;animation-duration:28s;width:5px;height:5px;"></div>
+    <div class="particle" style="left:65%;top:90%;animation-delay:8s;animation-duration:26s;"></div>
+    <div class="particle" style="left:80%;top:88%;animation-delay:12s;animation-duration:32s;width:6px;height:6px;"></div>
+    <div class="particle" style="left:90%;top:92%;animation-delay:6s;animation-duration:24s;"></div>
+    <div class="particle" style="left:15%;top:70%;animation-delay:15s;animation-duration:35s;width:3px;height:3px;background:rgba(139,92,246,0.3);"></div>
+    <div class="particle" style="left:45%;top:75%;animation-delay:18s;animation-duration:29s;width:4px;height:4px;background:rgba(139,92,246,0.3);"></div>
+    <div class="particle" style="left:75%;top:72%;animation-delay:7s;animation-duration:31s;width:3px;height:3px;background:rgba(139,92,246,0.3);"></div>
+</div>
 
 <!-- TOAST DE CARGA (Versión compacta, sin subtítulo y más pequeña) -->
 <div id="loadingToast" class="loading-toast hidden">
@@ -754,7 +1183,6 @@
     </div>
     <div class="toast-content">
         <div class="toast-title">Estamos cargando la información</div>
-        <!-- La línea de subtítulo fue eliminada para compactar el globo -->
     </div>
     <div class="toast-spinner"></div>
 </div>
@@ -808,6 +1236,18 @@
         <!-- DIVISOR OSCILOSCOPIO -->
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
             </svg>
@@ -843,12 +1283,19 @@
         <!-- DIVISOR GLITCH -->
         <div class="glitch-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
                 <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
             </svg>
         </div>
 
         <!-- CURSOS DESTACADOS -->
-        <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden reveal">
+        <section id="cursos-destacados" class="section-loading page-section relative py-24 px-6 overflow-hidden reveal">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-10 reveal reveal-down">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
@@ -861,13 +1308,25 @@
         <!-- DIVISOR OSCILOSCOPIO -->
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
             </svg>
         </div>
 
         <!-- MANUALES -->
-        <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden reveal">
+        <section id="manuales" class="section-loading page-section relative py-24 px-6 overflow-hidden reveal">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-10 reveal reveal-down">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Conocimiento Aplicado</span>
@@ -880,6 +1339,17 @@
         <!-- DIVISOR CIRCUITO -->
         <div class="circuit-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <radialGradient id="gradient-dot" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.6" />
+                    </radialGradient>
+                </defs>
                 <path class="trace" d="M0,40 L120,40 L180,20 L360,20 L420,40 L600,40 L660,60 L840,60 L900,40 L1080,40 L1140,20 L1260,20 L1320,40 L1440,40" fill="none"></path>
                 <circle class="dot" cx="180" cy="20" r="4"></circle>
                 <circle class="dot" cx="420" cy="40" r="4"></circle>
@@ -891,7 +1361,7 @@
         </div>
 
         <!-- MODALIDADES -->
-        <section id="modalidades" class="page-section relative py-24 px-6 reveal">
+        <section id="modalidades" class="section-loading page-section relative py-24 px-6 reveal">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-8 reveal reveal-down">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Flexibilidad Total</span>
@@ -904,13 +1374,25 @@
         <!-- DIVISOR OSCILOSCOPIO 2 -->
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
             </svg>
         </div>
 
         <!-- CURSO ESPECIAL -->
-        <section id="curso-especial" class="page-section relative py-24 px-6 overflow-hidden text-left reveal">
+        <section id="curso-especial" class="section-loading page-section relative py-24 px-6 overflow-hidden text-left reveal">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-8 reveal reveal-down">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-6 block">ampliación y extensión profesional</span>
@@ -923,12 +1405,19 @@
         <!-- DIVISOR GLITCH 2 -->
         <div class="glitch-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
                 <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
             </svg>
         </div>
 
         <!-- METODOLOGÍA -->
-        <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden reveal">
+        <section id="metodologia" class="section-loading page-section relative py-24 px-6 text-center overflow-hidden reveal">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="mb-10 reveal reveal-down">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
@@ -941,12 +1430,19 @@
         <!-- DIVISOR GLITCH -->
         <div class="glitch-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
                 <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
             </svg>
         </div>
 
         <!-- COMUNIDAD -->
-        <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center reveal">
+        <section id="comunidad" class="section-loading page-section relative py-24 px-6 md:px-12 text-center reveal">
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
                 <div class="text-center lg:text-left reveal reveal-right">
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span>nuestros cursos?</span></h2>
@@ -961,6 +1457,17 @@
         <!-- DIVISOR CIRCUITO 2 -->
         <div class="circuit-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <radialGradient id="gradient-dot" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.6" />
+                    </radialGradient>
+                </defs>
                 <path class="trace" d="M0,40 L120,40 L180,20 L360,20 L420,40 L600,40 L660,60 L840,60 L900,40 L1080,40 L1140,20 L1260,20 L1320,40 L1440,40" fill="none"></path>
                 <circle class="dot" cx="180" cy="20" r="4"></circle>
                 <circle class="dot" cx="420" cy="40" r="4"></circle>
@@ -972,7 +1479,7 @@
         </div>
 
         <!-- TESTIMONIOS -->
-        <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden reveal">
+        <section id="testimonios" class="section-loading page-section relative py-24 px-6 overflow-hidden reveal">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-10 reveal reveal-down">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Experiencias Reales</span>
@@ -985,13 +1492,25 @@
         <!-- DIVISOR OSCILOSCOPIO 3 -->
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
             </svg>
         </div>
 
         <!-- FAQ -->
-        <section id="faq" class="page-section relative py-24 px-6 reveal">
+        <section id="faq" class="section-loading page-section relative py-24 px-6 reveal">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-8 reveal reveal-down">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Resolvemos tus Dudas</span>
@@ -1010,23 +1529,31 @@
         <!-- DIVISOR GLITCH 3 -->
         <div class="glitch-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
                 <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
             </svg>
         </div>
 
         <!-- MAPA GLOBAL -->
-        <section id="comunidad-global" class="page-section relative py-24 px-6 text-center overflow-hidden reveal">
+        <section id="comunidad-global" class="section-loading page-section relative py-24 px-6 text-center overflow-hidden reveal">
             <div class="max-w-7xl mx-auto relative z-10">
                 <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 uppercase tracking-tighter">Comunidad <span>Global</span></h2>
                 <div class="flex flex-col lg:flex-row gap-8 items-stretch h-auto lg:h-[550px] text-left">
-                    <div class="w-full lg:w-2/3 h-[400px] lg:h-full rounded-[2.5rem] shadow-2xl border-2 border-[#2db8ce]/60 bg-gray-900 overflow-hidden relative">
+                    <div class="w-full lg:w-2/3 h-[400px] lg:h-full rounded-[2.5rem] shadow-2xl border border-white/10 bg-gray-900/80 backdrop-blur-sm overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 pointer-events-none"></div>
                         <div id="visitorMapGlobal" class="w-full h-full relative z-10"></div>
                     </div>
-                    <div class="w-full lg:w-1/3 bg-white/5 border border-white/10 rounded-[2.5rem] p-8 flex flex-col shadow-2xl backdrop-blur-md relative z-10">
-                        <h3 class="text-white font-black text-xs uppercase mb-6 flex items-center gap-2">
-                            <i class="fas fa-award text-cyan-500"></i> Ranking Visitantes
+                    <div class="w-full lg:w-1/3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 flex flex-col shadow-2xl relative z-10">
+                        <h3 class="text-white font-black text-xs uppercase mb-6 flex items-center gap-2 tracking-[0.15em]">
+                            <i class="fas fa-award text-cyan-400"></i> Ranking Visitantes
                         </h3>
-                        <div id="countryRankListGlobal" class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-4">
+                        <div id="countryRankListGlobal" class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-3">
                             <p class="text-slate-500 text-sm">Cargando ranking...</p>
                         </div>
                     </div>
@@ -1037,12 +1564,19 @@
         <!-- DIVISOR GLITCH -->
         <div class="glitch-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
                 <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
             </svg>
         </div>
 
         <!-- MÉTRICAS -->
-        <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl reveal">
+        <section id="metrics" class="section-loading" class="section-loading page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl reveal">
             <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
                 <div class="py-2"><div class="text-[#2db8ce] text-2xl mb-1"><i class="fas fa-users"></i></div><div id="metric-visitas" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Visitantes</div></div>
                 <div class="py-2"><div class="text-teal-400 text-2xl mb-1"><i class="fas fa-globe-americas"></i></div><div id="metric-paises" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Países</div></div>

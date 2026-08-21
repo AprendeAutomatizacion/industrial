@@ -5,63 +5,548 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cargando Curso... - Aprende Automatización</title>
     <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
-    
+
     <!-- FUENTES Y LIBRERÍAS -->
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/info-page.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
+        /* ==========================================
+           PREVENIR FLASH BLANCO
+           ========================================== */
+        html { background-color: #0a0f1e; }
+        html.light-mode { background-color: #f0f4f8; }
+
+        /* ==========================================
+           VARIABLES Y ESTILOS BASE - MODERNO
+           ========================================== */
         :root {
-            --azul-gris: #91a1af;
-            --azul-oscuro: #0f172a;
+            --bg-default: #f7f9fb;
+            --bg-secondary: rgba(255, 255, 255, 0.85);
+            --bg-dark: #0a0f1e;
+            --bg-dark-accent: rgba(30, 41, 59, 0.6);
+            --text-default: #0f172a;
+            --text-secondary: #64748b;
+            --text-light: #f8fafc;
+            --text-accent: #06b6d4;
+            --border-default: rgba(255, 255, 255, 0.18);
+            --border-light: rgba(255, 255, 255, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --badge-bg-basic: #06b6d4;
+            --badge-bg-intermediate: #8b5cf6;
+            --badge-bg-advanced: #f59e0b;
+            --badge-text: #ffffff;
+            --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-blur: 20px;
             --celeste: #2db8ce;
-            --fb-blue: #1877f2;
-        }
-        body {
-            font-family: 'Oswald', sans-serif;
-            background-color: #d0e1ef;
-            color: #1e293b;
-            scroll-behavior: smooth;
+            --azul-oscuro: #0f172a;
+            --azul-gris: #91a1af;
         }
 
+        body:not(.light-mode) {
+            --bg-default: #0a0f1e;
+            --bg-secondary: rgba(30, 41, 59, 0.5);
+            --text-default: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-light: #f8fafc;
+            --border-default: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(6, 182, 212, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.45), 0 0 60px rgba(6, 182, 212, 0.2);
+            --glass-bg: rgba(15, 23, 42, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0a0f1e;
+            background-image: url('img/fondo2.webp');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            color: var(--text-default);
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* AURORA BACKGROUND EFFECT */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 50% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(10, 15, 30, 0.96) 0%, rgba(15, 23, 42, 0.94) 50%, rgba(10, 15, 30, 0.96) 100%);
+            z-index: 0;
+            pointer-events: none;
+            animation: auroraShift 20s ease-in-out infinite;
+        }
+
+        @keyframes auroraShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        body.light-mode {
+            background-color: #f0f4f8;
+            background-image: url('img/fondo2.webp');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        body.light-mode::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(248, 250, 252, 0.88) 0%, rgba(241, 245, 249, 0.85) 50%, rgba(248, 250, 252, 0.88) 100%);
+            z-index: 0;
+            pointer-events: none;
+            animation: none;
+        }
+
+        /* FLOATING PARTICLES BACKGROUND */
+        .particles-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(6, 182, 212, 0.3);
+            border-radius: 50%;
+            animation: float-particle 20s infinite ease-in-out;
+        }
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        main, header, section, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* GRADIENT TEXT */
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientFlow 6s ease infinite;
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .section-title { 
+            color: var(--text-default); 
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .section-title span {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-subtitle {
+            color: var(--text-accent);
+            letter-spacing: 0.15em;
+            font-weight: 800;
+        }
+
+        /* SCROLLBAR PREMIUM */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { 
+            background: rgba(255, 255, 255, 0.03); 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #06b6d4, #8b5cf6); 
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #22d3ee, #a78bfa);
+        }
+
+        /* ==========================================
+           HEADER / HERO - GLASSMORPHISM PREMIUM
+           ========================================== */
+        #hero-section {
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            border-bottom: 1px solid var(--glass-border) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        #hero-section .absolute.inset-0 {
+            opacity: 0.3 !important;
+            filter: saturate(1.2) contrast(1.1);
+        }
+
+        #course-main-title,
+        .hero-main-title {
+            letter-spacing: -0.03em !important;
+            line-height: 1.1 !important;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-weight: 800 !important;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15) !important;
+        }
+
+        #course-main-title .course-name-text,
+        .hero-main-title .course-name-text {
+            color: #ffffff;
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+
+        #course-main-title .course-type-gradient,
+        .hero-main-title .course-type-gradient {
+            display: inline;
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #8b5cf6 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 6s ease infinite;
+            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+        }
+
+        #course-description {
+            color: rgba(255, 255, 255, 0.85) !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+
+        .hero-badge {
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        .hero-badge:hover {
+            transform: translateY(-1px);
+        }
+
+        /* ==========================================
+           GLASS CARDS - UNIVERSAL
+           ========================================== */
         .glass-light {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
         }
 
         .glass-dark-blue {
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(45, 184, 206, 0.25);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(6, 182, 212, 0.15);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
             color: white;
         }
 
         .glass-gray-blue {
-            background: rgba(145, 161, 175, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #0f172a;
+            background: rgba(145, 161, 175, 0.2);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            color: var(--text-default);
         }
 
+        /* ==========================================
+           RESOURCE CARDS & HOVER
+           ========================================== */
         .resource-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.1), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
         .resource-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.15);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-color: rgba(6, 182, 212, 0.3);
+            z-index: 10;
+        }
+        .resource-card:hover::before {
+            opacity: 1;
         }
 
-        .btn-pulse:active {
-            transform: scale(0.97);
-            transition: transform 0.1s ease;
+        /* ==========================================
+           BOTONES - GLOW GRADIENT PREMIUM
+           ========================================== */
+        .btn-metal-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            padding: 1rem 2rem;
+            border-radius: 1.25rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            outline: none;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.9) 0%, rgba(8, 145, 178, 0.95) 100%);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3), 0 0 0 1px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-metal-solid::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
+        }
+        .btn-metal-solid::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 1.35rem;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(139, 92, 246, 0.3), transparent 70%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .btn-metal-solid:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            filter: brightness(1.1);
+        }
+        .btn-metal-solid:hover::after {
+            opacity: 1;
+        }
+        .btn-metal-solid:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+        .btn-metal-cyan {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.9) 0%, rgba(6, 182, 212, 0.95) 50%, rgba(8, 145, 178, 0.9) 100%);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35), 0 0 0 1px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-metal-cyan:hover {
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.5), 0 0 0 1px rgba(6, 182, 212, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-teal {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(13, 148, 136, 0.95) 50%, rgba(15, 118, 110, 0.9) 100%);
+            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3), 0 0 0 1px rgba(20, 184, 166, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-metal-teal:hover {
+            box-shadow: 0 12px 40px rgba(20, 184, 166, 0.4), 0 0 0 1px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
         }
 
+        .btn-enrolled-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            padding: 1rem 2rem;
+            border-radius: 1.25rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.95) 100%);
+            color: #ffffff !important;
+            border: 1px solid rgba(16, 185, 129, 0.3) !important;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        /* ==========================================
+           TOAST DE CARGA - GLASSMORPHISM PREMIUM
+           ========================================== */
+        .loading-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100002;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(6, 182, 212, 0.1);
+            pointer-events: none;
+            min-width: 240px;
+            max-width: 280px;
+            animation: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .loading-toast.hiding { 
+            opacity: 0; 
+            transform: translateX(120px) scale(0.95);
+        }
+        .loading-toast .toast-logo {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            animation: pulseLogo 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.4));
+        }
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 13px;
+            margin-bottom: 0;
+            line-height: 1.3;
+            letter-spacing: 0.02em;
+        }
+        .loading-toast .toast-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2.5px solid rgba(6, 182, 212, 0.15);
+            border-top: 2.5px solid #06b6d4;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
+        }
+        .loading-toast.success-toast {
+            background: rgba(16, 185, 129, 0.9);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2);
+        }
+        .loading-toast.success-toast .toast-title { color: #ffffff; }
+        .loading-toast.success-toast .toast-check {
+            width: 22px;
+            height: 22px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 11px;
+            font-weight: 900;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(150%) scale(0.9); opacity: 0; }
+            to { transform: translateX(0) scale(1); opacity: 1; }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulseLogo {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.3)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.5)); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* ==========================================
+           REVEAL ANIMATIONS
+           ========================================== */
+        .reveal { 
+            opacity: 0; 
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: blur(8px);
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translate(0, 0) scale(1);
+            filter: blur(0);
+        }
+        .reveal-up { transform: translateY(60px) scale(0.95); }
+        .reveal-down { transform: translateY(-60px) scale(0.95); }
+        .reveal-left { transform: translateX(-60px) scale(0.95); }
+        .reveal-right { transform: translateX(60px) scale(0.95); }
+        .reveal-center { transform: scale(0.85); }
+
+        /* Stagger delay para grids */
+        .grid .reveal:nth-child(1) { transition-delay: 0ms; }
+        .grid .reveal:nth-child(2) { transition-delay: 100ms; }
+        .grid .reveal:nth-child(3) { transition-delay: 200ms; }
+        .grid .reveal:nth-child(4) { transition-delay: 300ms; }
+        .grid .reveal:nth-child(5) { transition-delay: 400ms; }
+        .grid .reveal:nth-child(6) { transition-delay: 500ms; }
+
+        /* ==========================================
+           ACCORDION
+           ========================================== */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .accordion-content.open {
+            max-height: 1200px;
+        }
+
+        /* ==========================================
+           STAR RATING
+           ========================================== */
         .star-rating i {
             cursor: pointer;
             transition: all 0.2s ease;
@@ -72,14 +557,18 @@
             transform: scale(1.1);
         }
 
+        /* ==========================================
+           EMOJI PICKER
+           ========================================== */
         #emoji-picker {
             display: none;
             position: absolute;
             bottom: 100%;
             right: 0;
             z-index: 50;
-            background: white;
-            border: 1px solid #e2e8f0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
             border-radius: 12px;
             padding: 8px;
@@ -93,192 +582,85 @@
             cursor: pointer;
             text-align: center;
         }
-        .emoji-btn:hover { background: #f1f5f9; }
+        .emoji-btn:hover { background: rgba(6, 182, 212, 0.1); }
 
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--celeste); }
-
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease-out;
+        /* ==========================================
+           FIXES MODO CLARO
+           ========================================== */
+        body.light-mode .glass-light {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
         }
-        .accordion-content.open {
-            max-height: 1200px;
+        body.light-mode .glass-gray-blue {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(226, 232, 240, 0.5);
+            color: #1e293b;
         }
-
-        body.light-mode #hero-section .hero-badge {
-            background-color: var(--celeste) !important;
-            color: #ffffff !important;
-            border-color: var(--celeste) !important;
+        body.light-mode .glass-dark-blue {
+            background: rgba(15, 23, 42, 0.9);
         }
-
-        /* ============ ESTILOS PARA EL TOAST DE CARGA (TAMAÑO REDUCIDO) ============ */
-        .loading-toast {
-            position: fixed;
-            bottom: 15px;
-            right: 15px;
-            z-index: 100002;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(45, 184, 206, 0.4);
-            border-radius: 12px;
-            padding: 8px 10px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(45, 184, 206, 0.2);
-            pointer-events: none;
-            min-width: 160px;
-            max-width: 45vw;
-            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        .loading-toast.hiding {
-            opacity: 0;
-            transform: translateX(100px);
-        }
-
-        .loading-toast .toast-logo {
-            width: 25px;
-            height: 25px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulseLogo 2s infinite;
-        }
-
-        .loading-toast .toast-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
-        }
-
-        .loading-toast .toast-content {
-            flex: 1;
-        }
-
-        .loading-toast .toast-title {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 10px;
-            margin-bottom: 0;
-            letter-spacing: 0.2px;
-        }
-
-        .loading-toast .toast-spinner {
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(45, 184, 206, 0.2);
-            border-top: 2px solid #2db8ce;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            flex-shrink: 0;
-        }
-
-        .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.8);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(16, 185, 129, 0.4);
-        }
-
-        .loading-toast.success-toast .toast-logo img {
-            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
-        }
-
-        .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
-
-        .loading-toast.success-toast .toast-check {
-            width: 18px;
-            height: 18px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .loading-toast.success-toast .toast-check i {
-            color: #10b981;
-            font-size: 10px;
-            font-weight: 900;
-        }
-
-        @keyframes slideInRight {
-            from {
-                transform: translateX(150%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes pulseLogo {
-            0%, 100% {
-                filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.3));
-                transform: scale(1);
-            }
-            50% {
-                filter: drop-shadow(0 0 10px rgba(45, 184, 206, 0.6));
-                transform: scale(1.05);
-            }
-        }
-
-        @keyframes bounceIn {
-            0% {
-                transform: scale(0);
-            }
-            50% {
-                transform: scale(1.2);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-
         body.light-mode .loading-toast {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
             border: 1px solid rgba(45, 184, 206, 0.6);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(45, 184, 206, 0.25);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15), 0 0 12px rgba(45, 184, 206, 0.25);
         }
-
-        body.light-mode .loading-toast .toast-title {
-            color: #1e293b;
-        }
-
+        body.light-mode .loading-toast .toast-title { color: #1e293b; }
         body.light-mode .loading-toast.success-toast {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
             border: 1px solid rgba(16, 185, 129, 0.8);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+        body.light-mode #course-main-title .course-name-text {
+            color: #ffffff;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15);
+        }
+        body.light-mode #course-description {
+            color: rgba(255, 255, 255, 0.85) !important;
+        }
+        body.light-mode .section-title { color: var(--text-default); }
+        body.light-mode .section-title span {
+            background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        body.light-mode .loading-toast.success-toast .toast-title {
-            color: #ffffff;
+        /* Sidebar card fixes */
+        body.light-mode .sidebar-card {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(255, 255, 255, 0.5);
         }
-        /* ============ FIN ESTILOS TOAST ============ */
+
+        /* ==========================================
+           UNIT TITLE STYLING
+           ========================================== */
+        .unit-title {
+            font-family: 'Plus Jakarta Sans', sans-serif !important;
+            font-weight: 800 !important;
+            letter-spacing: -0.02em !important;
+            line-height: 1.2 !important;
+        }
     </style>
     <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
 
-<!-- ============ TOAST DE CARGA (TAMAÑO REDUCIDO) ============ -->
+</head>
+<body class="custom-scrollbar">
+
+<!-- PARTÍCULAS FLOTANTES -->
+<div class="particles-bg" aria-hidden="true">
+    <div class="particle" style="left:10%;top:90%;animation-delay:0s;animation-duration:25s;"></div>
+    <div class="particle" style="left:20%;top:80%;animation-delay:5s;animation-duration:30s;width:6px;height:6px;"></div>
+    <div class="particle" style="left:35%;top:95%;animation-delay:10s;animation-duration:22s;"></div>
+    <div class="particle" style="left:50%;top:85%;animation-delay:3s;animation-duration:28s;width:5px;height:5px;"></div>
+    <div class="particle" style="left:65%;top:90%;animation-delay:8s;animation-duration:26s;"></div>
+    <div class="particle" style="left:80%;top:88%;animation-delay:12s;animation-duration:32s;width:6px;height:6px;"></div>
+    <div class="particle" style="left:90%;top:92%;animation-delay:6s;animation-duration:24s;"></div>
+    <div class="particle" style="left:15%;top:70%;animation-delay:15s;animation-duration:35s;width:3px;height:3px;background:rgba(139,92,246,0.3);"></div>
+    <div class="particle" style="left:45%;top:75%;animation-delay:18s;animation-duration:29s;width:4px;height:4px;background:rgba(139,92,246,0.3);"></div>
+    <div class="particle" style="left:75%;top:72%;animation-delay:7s;animation-duration:31s;width:3px;height:3px;background:rgba(139,92,246,0.3);"></div>
+</div>
+
+<!-- ============ TOAST DE CARGA ============ -->
 <div id="loadingToast" class="loading-toast hidden">
     <div class="toast-logo">
         <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
@@ -290,21 +672,21 @@
 </div>
 
 <script>
-    // ============ FUNCIONES DEL TOAST DE CARGA (TAMAÑO REDUCIDO) ============
+    // ============ FUNCIONES DEL TOAST DE CARGA ============
     function showLoadingToast() {
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
         const spinner = document.getElementById('loadingToastSpinner');
-        
+
         if (toast) {
             toast.classList.remove('hidden', 'hiding', 'success-toast');
             title.innerText = 'Cargando curso...';
-            
+
             if (spinner) spinner.style.display = 'block';
-            
+
             const existingCheck = toast.querySelector('.toast-check');
             if (existingCheck) existingCheck.remove();
-            
+
             toast.style.opacity = '1';
             toast.style.transform = 'translateY(0)';
         }
@@ -314,26 +696,26 @@
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
         const spinner = document.getElementById('loadingToastSpinner');
-        
+
         if (toast) {
             toast.classList.remove('hidden', 'hiding');
             toast.classList.add('success-toast');
-            
+
             title.innerText = '¡Listo!';
-            
+
             if (spinner) spinner.style.display = 'none';
-            
+
             const existingCheck = toast.querySelector('.toast-check');
             if (existingCheck) existingCheck.remove();
-            
+
             const checkDiv = document.createElement('div');
             checkDiv.className = 'toast-check';
             checkDiv.innerHTML = '<i class="fas fa-check"></i>';
             toast.appendChild(checkDiv);
-            
+
             toast.style.opacity = '1';
             toast.style.transform = 'translateY(0)';
-            
+
             setTimeout(() => {
                 hideLoadingToast();
             }, 3000);
@@ -354,8 +736,8 @@
 </script>
 
 <!-- HERO -->
-<header id="hero-section" class="relative bg-[#0f172a] text-white py-20 px-6 overflow-hidden">
-    <div class="absolute inset-0 opacity-40">
+<header id="hero-section" class="relative overflow-hidden py-20 px-6">
+    <div class="absolute inset-0 z-0 opacity-30">
         <img id="hero-bg-image" src="img/AA (4).gif" class="w-full h-full object-cover" alt="Fondo">
     </div>
     <div class="max-w-7xl mx-auto relative z-10">
@@ -363,10 +745,10 @@
             <nav id="hero-badges" class="flex gap-2 mb-6 text-[10px] font-black uppercase tracking-widest flex-wrap">
                 <!-- Badges will be injected here -->
             </nav>
-            <h1 class="text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter font-display force-white-text" id="course-main-title">
+            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-6 leading-tight uppercase tracking-tighter" id="course-main-title">
                 Cargando Curso...
             </h1>
-            <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed font-medium" id="course-description">
+            <p class="text-lg mb-8 max-w-2xl leading-relaxed font-medium" id="course-description">
                 Cargando descripción del curso...
             </p>
             <div id="course-features" class="flex flex-wrap gap-6 text-sm font-bold text-slate-300">
@@ -378,36 +760,36 @@
 
 <main class="max-w-7xl mx-auto px-6 py-12">
     <div class="flex flex-col lg:flex-row gap-12">
-        
+
         <!-- COLUMNA IZQUIERDA -->
         <div class="lg:w-2/3 space-y-12">
-            
+
             <!-- VIDEO -->
-            <section id="video-section">
+            <section id="video-section" class="reveal reveal-up">
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Vídeo Promocional</h2>
-                <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-slate-200 border-4 border-white">
+                <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl bg-slate-900/50 border border-white/10">
                     <iframe id="course-video" class="w-full h-full" src="" frameborder="0" allowfullscreen></iframe>
                 </div>
             </section>
 
             <!-- OBJETIVO GENERAL -->
-            <section id="objetivo-general-section" class="glass-light p-8 rounded-3xl border shadow-sm">
+            <section id="objetivo-general-section" class="glass-light p-8 rounded-3xl resource-card reveal reveal-up">
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--azul-oscuro)">Objetivo General</h2>
-                <div id="objetivo-general-content" class="text-slate-700 text-sm leading-relaxed space-y-4 font-medium">
+                <div id="objetivo-general-content" class="text-sm leading-relaxed space-y-4 font-medium" style="color: var(--text-secondary)">
                     <!-- Content will be injected here -->
                 </div>
             </section>
 
             <!-- PERFIL DE INGRESO -->
-            <section id="perfil-ingreso-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+            <section id="perfil-ingreso-section" class="glass-light p-8 rounded-3xl resource-card reveal reveal-up">
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--celeste)">Perfil del Participante (Ingreso)</h2>
-                <ul id="perfil-ingreso-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-600 font-medium">
+                <ul id="perfil-ingreso-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm font-medium" style="color: var(--text-secondary)">
                     <!-- List items will be injected here -->
                 </ul>
             </section>
 
             <!-- CONTENIDO DE LAS UNIDADES -->
-            <section id="contenido-unidades-section" class="space-y-6">
+            <section id="contenido-unidades-section" class="space-y-6 reveal reveal-up">
                 <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 pl-4 font-display" style="border-color: var(--celeste)">Contenido de las Unidades</h2>
                 <div id="contenido-unidades-list" class="space-y-6">
                     <!-- Content units will be injected here -->
@@ -415,7 +797,7 @@
             </section>
 
             <!-- REQUISITOS -->
-            <section id="requisitos-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+            <section id="requisitos-section" class="glass-light p-8 rounded-3xl resource-card reveal reveal-up">
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-4 border-l-4 pl-4" style="border-color: var(--celeste)">Requisitos</h2>
                 <div id="requisitos-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Requirements will be injected here -->
@@ -423,7 +805,7 @@
             </section>
 
             <!-- RECURSOS INCLUIDOS -->
-            <section id="recursos-incluidos-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+            <section id="recursos-incluidos-section" class="glass-light p-8 rounded-3xl resource-card reveal reveal-up">
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4" style="border-color: var(--celeste)">Recursos Incluidos</h2>
                 <div id="recursos-incluidos-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Resources will be injected here -->
@@ -431,7 +813,7 @@
             </section>
 
             <!-- DATOS GENERALES -->
-            <section id="datos-generales-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+            <section id="datos-generales-section" class="glass-light p-8 rounded-3xl resource-card reveal reveal-up">
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-6 border-l-4 pl-4" style="border-color: var(--celeste)">Datos Generales del Curso</h2>
                 <div id="datos-generales-list" class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm font-medium">
                     <!-- General data will be injected here -->
@@ -439,10 +821,10 @@
             </section>
 
             <!-- PERFIL DE EGRESO -->
-            <section id="perfil-egreso-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+            <section id="perfil-egreso-section" class="glass-light p-8 rounded-3xl resource-card reveal reveal-up">
                 <div class="mb-6">
                     <h2 class="text-xl font-black uppercase tracking-tighter border-l-4 border-[#2db8ce] pl-4">Perfil de Egreso</h2>
-                    <p class="text-sm text-slate-500 font-medium">Al finalizar el curso, adquirirás las siguientes competencias:</p>
+                    <p class="text-sm font-medium mt-2" style="color: var(--text-secondary)">Al finalizar el curso, adquirirás las siguientes competencias:</p>
                 </div>
                 <div id="perfil-egreso-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <!-- Egress profile items will be injected here -->
@@ -450,12 +832,12 @@
             </section>
 
             <!-- Certificación -->
-            <div id="certification-section" class="mt-8">
-                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border shadow-2xl resource-card h-fit relative overflow-hidden group">
+            <div id="certification-section" class="mt-8 reveal reveal-up">
+                <div class="w-full flex flex-col sm:flex-row items-center gap-5 p-8 glass-dark-blue rounded-3xl border resource-card h-fit relative overflow-hidden group">
                     <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
                         <i class="fas fa-award text-8xl text-cyan-400"></i>
                     </div>
-                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2">
+                    <div class="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center shrink-0 shadow-inner p-2 border border-cyan-500/20">
                         <img id="certification-logo" src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="Certificado Aprende Automatización" class="w-full h-full object-contain">
                     </div>
                     <div class="relative z-10 text-center sm:text-left">
@@ -472,15 +854,15 @@
         <!-- BARRA LATERAL -->
         <div class="lg:w-1/3 lg:sticky lg:top-0 lg:h-screen lg:flex lg:items-center">
             <div class="w-full space-y-8">
-                <div class="bg-white rounded-[40px] shadow-2xl border border-slate-200 p-8">
+                <div class="sidebar-card glass-light rounded-[40px] shadow-2xl border p-8">
                     <div class="flex items-baseline gap-2 mb-6">
-                        <span id="course-price" class="text-4xl font-black text-slate-900">$0.00</span>
-                        <span id="course-old-price" class="text-slate-400 line-through text-lg">$0.00</span>
+                        <span id="course-price" class="text-4xl font-black" style="color: var(--text-default)">$0.00</span>
+                        <span id="course-old-price" class="line-through text-lg" style="color: var(--text-secondary)">$0.00</span>
                     </div>
                     <div id="buy-actions" class="space-y-3">
                         <!-- Buy actions will be injected here -->
                     </div>
-                    <div class="mt-6 pt-6 border-t border-slate-200 space-y-3">
+                    <div class="mt-6 pt-6 border-t" style="border-color: var(--border-default)">
                         <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-3 text-white flex items-center gap-3 shadow-lg border border-blue-400/50">
                             <div class="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-md border border-white/30 shadow-inner shrink-0"><i class="fas fa-laptop text-sm"></i></div>
                             <div><h4 class="font-bold text-[9px] text-blue-100 uppercase tracking-widest mb-0.5">Modalidad</h4><p id="sidebar-modalidad" class="font-black text-xs uppercase tracking-tighter text-white leading-none">Cargando...</p></div>
@@ -510,14 +892,14 @@
         document.title = `${course.name} - Aprende Automatización`;
 
         document.getElementById('hero-bg-image').src = course.image || 'img/default-hero.gif';
-        document.getElementById('course-main-title').innerHTML = `${course.name}<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2db8ce] to-blue-400">${course.type}</span>`;
+        document.getElementById('course-main-title').innerHTML = `<span class="course-name-text">${course.name}</span><br><span class="course-type-gradient">${course.type}</span>`;
         document.getElementById('course-description').textContent = course.resumen;
 
         const heroBadges = document.getElementById('hero-badges');
         heroBadges.innerHTML = `
-            <span class="hero-badge bg-blue-500/20 px-3 py-1 rounded-full" style="color: var(--celeste)">${course.category}</span>
-            <span class="hero-badge bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400">${course.level}</span>
-            <span class="hero-badge bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30">Modalidad ${course.modalidad}</span>
+            <span class="hero-badge bg-blue-500/20 px-3 py-1 rounded-full border border-blue-500/30 backdrop-blur-md" style="color: #93c5fd">${course.category}</span>
+            <span class="hero-badge bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">${course.level}</span>
+            <span class="hero-badge bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30 backdrop-blur-md">Modalidad ${course.modalidad}</span>
         `;
 
         const courseFeaturesContainer = document.getElementById('course-features');
@@ -536,58 +918,58 @@
         perfilIngresoList.innerHTML = course.perfilIngreso.map(item => `
             <li class="flex items-start gap-3">
                 <i class="${item.icon} text-[#2db8ce] mt-1"></i>
-                <span><strong>${item.title}:</strong> ${item.desc}</span>
+                <span><strong style="color: var(--text-default)">${item.title}:</strong> ${item.desc}</span>
             </li>
         `).join('');
 
         const contenidoUnidadesList = document.getElementById('contenido-unidades-list');
         contenidoUnidadesList.innerHTML = course.contenidoUnidades.map((unit, index) => `
-            <div class="${index % 2 === 0 ? 'glass-dark-blue' : 'glass-gray-blue'} p-8 rounded-[2rem] border resource-card overflow-hidden relative">
+            <div class="${index % 2 === 0 ? 'glass-dark-blue' : 'glass-gray-blue'} p-8 rounded-[2rem] border resource-card overflow-hidden relative reveal reveal-up" style="transition-delay: ${index * 100}ms">
                 <div class="absolute top-0 right-0 p-6 opacity-10">
                     <i class="${unit.icon} text-6xl"></i>
                 </div>
                 <div class="flex items-center gap-3 mb-6">
                     <span class="${index % 2 === 0 ? 'bg-cyan-500' : 'bg-[#0f172a]'} text-white px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest">${unit.session}</span>
-                    <h3 class="text-xl font-black uppercase ${index % 2 === 0 ? 'text-white' : 'text-[#0f172a]'}">${unit.title}</h3>
+                    <h3 class="text-xl unit-title uppercase ${index % 2 === 0 ? 'text-white' : 'text-[#0f172a]'}" style="${index % 2 !== 0 ? 'color: var(--text-default) !important' : ''}">${unit.title}</h3>
                 </div>
-                <ul class="space-y-3 text-sm font-medium ${index % 2 === 0 ? 'text-slate-200' : 'text-[#0f172a]'}">
+                <ul class="space-y-3 text-sm font-medium ${index % 2 === 0 ? 'text-slate-200' : ''}" style="${index % 2 !== 0 ? 'color: var(--text-default)' : ''}">
                     ${unit.topics.map(topic => `<li class="flex items-start gap-3"><i class="fas fa-check-circle mt-1 ${index % 2 === 0 ? 'text-cyan-400' : 'opacity-80'}"></i><span>${topic}</span></li>`).join('')}
-                    ${unit.professionalPractice ? `<li class="flex items-start gap-3 p-3 rounded-xl ${index % 2 === 0 ? 'bg-cyan-500/10 border border-cyan-500/20' : 'bg-[#0f172a] text-white'}"><i class="fas fa-star mt-1 text-yellow-400"></i><span class="font-bold">${unit.professionalPractice}</span></li>` : ''}
+                    ${unit.professionalPractice ? `<li class="flex items-start gap-3 p-3 rounded-xl ${index % 2 === 0 ? 'bg-cyan-500/10 border border-cyan-500/20' : 'bg-[#0f172a]/5 border border-[#0f172a]/10'}"><i class="fas fa-star mt-1 text-yellow-400"></i><span class="font-bold">${unit.professionalPractice}</span></li>` : ''}
                 </ul>
             </div>
         `).join('');
 
         const requisitosList = document.getElementById('requisitos-list');
         requisitosList.innerHTML = course.requisitos.map(item => `
-            <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+            <div class="p-4 rounded-2xl text-center resource-card" style="background: rgba(6,182,212,0.05); border: 1px dashed rgba(6,182,212,0.2)">
                 <i class="${item.icon} text-2xl text-blue-500 mb-2"></i>
-                <h5 class="text-[10px] font-bold uppercase text-slate-700 mb-1">${item.type}</h5>
-                <p class="text-[10px] text-slate-500 font-medium leading-tight uppercase">${item.desc}</p>
+                <h5 class="text-[10px] font-bold uppercase mb-1" style="color: var(--text-default)">${item.type}</h5>
+                <p class="text-[10px] font-medium leading-tight uppercase" style="color: var(--text-secondary)">${item.desc}</p>
             </div>
         `).join('');
 
         const recursosIncluidosList = document.getElementById('recursos-incluidos-list');
         recursosIncluidosList.innerHTML = course.recursosIncluidos.map(item => `
-            <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
+            <div class="p-4 rounded-2xl text-center resource-card" style="background: rgba(6,182,212,0.05); border: 1px dashed rgba(6,182,212,0.2)">
                 <i class="${item.icon} text-2xl text-red-500 mb-2"></i>
-                <p class="text-[10px] font-bold uppercase text-slate-700">${item.desc}</p>
+                <p class="text-[10px] font-bold uppercase" style="color: var(--text-default)">${item.desc}</p>
             </div>
         `).join('');
 
         const datosGeneralesList = document.getElementById('datos-generales-list');
         datosGeneralesList.innerHTML = course.datosGenerales.map(item => `
-            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+            <div class="p-4 rounded-2xl" style="background: rgba(6,182,212,0.05); border: 1px solid rgba(6,182,212,0.1)">
                 <p class="text-[10px] font-black uppercase text-[#2db8ce] mb-1">${item.title}</p>
-                <p class="font-bold text-slate-800 leading-snug">${item.value}</p>
+                <p class="font-bold leading-snug" style="color: var(--text-default)">${item.value}</p>
             </div>
         `).join('');
 
         const perfilEgresoList = document.getElementById('perfil-egreso-list');
         perfilEgresoList.innerHTML = course.perfilEgreso.map(item => `
-            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
+            <div class="p-6 rounded-2xl border resource-card" style="background: rgba(6,182,212,0.05); border-color: rgba(6,182,212,0.1)">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-[#2db8ce] text-white mb-4 shadow-lg shadow-cyan-500/20"><i class="${item.icon}"></i></div>
                 <h4 class="font-bold text-xs uppercase mb-2 text-cyan-700 tracking-tight">${item.title}</h4>
-                <p class="text-[11px] text-slate-600 leading-relaxed">${item.desc}</p>
+                <p class="text-[11px] leading-relaxed" style="color: var(--text-secondary)">${item.desc}</p>
             </div>
         `).join('');
 
@@ -625,6 +1007,17 @@
                 </a>
             `;
         }
+
+        // Re-initialize reveal animations for newly injected content
+        setTimeout(() => {
+            const newReveals = document.querySelectorAll('.reveal:not(.active)');
+            newReveals.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('active');
+                }
+            });
+        }, 100);
     }
 
     async function fetchCourseData(courseId) {
@@ -634,14 +1027,12 @@
         }
 
         try {
-            // Mostrar toast de carga
             showLoadingToast();
-            
+
             const response = await fetch(`${SCRIPT_URL}?action=get_course_info&courseId=${courseId}&t=${Date.now()}`);
             const result = await response.json();
 
             if (result.status === 'success' && result.data) {
-                // Mostrar toast de éxito
                 showSuccessToast();
                 return result.data;
             } else {
@@ -675,6 +1066,30 @@
             document.getElementById('course-description').textContent = "No se pudo cargar la información del curso. Intenta de nuevo más tarde o contacta al soporte.";
             document.querySelectorAll('main section, main div.mt-8').forEach(section => section.style.display = 'none');
         }
+
+        // Scroll reveal observer
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // Trigger initial reveal
+        setTimeout(() => {
+            document.querySelectorAll('.reveal').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    el.classList.add('active');
+                }
+            });
+        }, 100);
     });
 </script>
 <script src="js/navbar.js"></script>
