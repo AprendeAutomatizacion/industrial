@@ -327,16 +327,18 @@ function updateCountryRanking(stats) {
     rankContainer.innerHTML = rankData.slice(0, 10).map((item, index) => {
         const isoCode = countryToISO[item.country.toLowerCase()];
         const flagHtml = isoCode 
-            ? `<img src="https://flagcdn.com/w40/${isoCode}.png" class="w-6 h-4 object-cover rounded-sm" alt="${item.country}">` 
+            ? `<img src="https://flagcdn.com/w40/${isoCode}.png" class="w-6 h-4 object-cover rounded shadow-sm" alt="${item.country}">` 
             : `<i class="fas fa-globe text-slate-500"></i>`;
+        const rankColors = ['text-yellow-400', 'text-slate-300', 'text-amber-600', 'text-slate-400'];
+        const rankClass = index < 3 ? rankColors[index] : rankColors[3];
         return `
-            <div class="flex items-center justify-between gap-4 p-3 rounded-lg bg-white/5">
+            <div class="flex items-center justify-between gap-4 p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/5 hover:bg-white/10 hover:border-cyan-500/20 transition-all duration-300 cursor-default">
                 <div class="flex items-center gap-3">
-                    <span class="font-bold text-slate-400 text-xs">${index + 1}</span>
+                    <span class="font-black ${rankClass} text-sm w-5 text-center">${index + 1}</span>
                     ${flagHtml}
-                    <span class="font-semibold text-white text-sm">${item.country}</span>
+                    <span class="font-semibold text-white text-sm tracking-wide">${item.country}</span>
                 </div>
-                <span class="font-black text-cyan-400 text-sm">${item.visits}</span>
+                <span class="font-black text-cyan-400 text-sm tabular-nums">${item.visits.toLocaleString()}</span>
             </div>`;
     }).join('');
 }
@@ -351,9 +353,7 @@ async function loadData(showIndicator = true) {
         if(data.status === 'success') {
             dbUsers = data.users || {}; 
             globalStats = data.stats || {};
-            
-            updateIndexMetrics(globalStats);
-            
+
             if (currentUser && currentUser.email) {
                 const serverUser = dbUsers[currentUser.email.toLowerCase()];
                 if (serverUser) {
@@ -371,7 +371,6 @@ async function loadData(showIndicator = true) {
 // CARGAR PÁGINA
 // ==========================================
 async function loadHomePageData() {
-    showLoadingToast();
     try {
         const response = await fetch(`${API_URL}?action=get_home_page&t=${Date.now()}`);
         const data = await response.json();
@@ -391,11 +390,95 @@ async function loadHomePageData() {
                 comunidad: data.data.comunidad || []
             };
             renderHomePage();
-            showSuccessToast();
+            return true;
         }
+        return false;
     } catch (error) {
-        hideLoadingToast();
+        console.error('Error cargando datos de página:', error);
+        return false;
     }
+}
+
+// ==========================================
+// MOSTRAR TODAS LAS SECCIONES DE GOLPE
+// ==========================================
+function revealAllSections() {
+    document.querySelectorAll('.section-loading').forEach(el => {
+        el.classList.add('loaded');
+    });
+    // Reactivar animaciones reveal
+    setTimeout(() => {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
+    }, 100);
+}
+
+// ==========================================
+// MOSTRAR MÉTRICAS
+// ==========================================
+function revealMetrics() {
+    const metrics = document.getElementById('metrics');
+    if (metrics) {
+        metrics.classList.remove('section-loading');
+        metrics.classList.add('metrics-loading');
+        // Forzar reflow
+        void metrics.offsetWidth;
+        metrics.classList.add('loaded');
+    }
+}
+
+// ==========================================
+// FUNCIONES AUXILIARES PARA BADGES MÚLTIPLES
+// ==========================================
+function getBadgeTags(badge) {
+    if (!badge || badge.trim() === '') return [];
+    return badge.split('|').map(s => s.trim()).filter(s => s);
+}
+
+function getLevelInfoFromTags(tags) {
+    const levelOrder = ['Avanzado', 'Intermedio', 'Básico'];
+    let detectedLevel = null;
+    for (const level of levelOrder) {
+        if (tags.some(tag => tag.toLowerCase().includes(level.toLowerCase()))) {
+            detectedLevel = level;
+            break;
+        }
+    }
+    if (!detectedLevel) detectedLevel = 'Básico';
+
+    const levelMap = {
+        'Básico': {
+            levelClass: 'course-card-level-basico',
+            badgeClass: 'badge-basic',
+            iconClass: 'fa-seedling text-cyan-400',
+            iconBg: 'bg-cyan-500/10 border-cyan-500/30'
+        },
+        'Intermedio': {
+            levelClass: 'course-card-level-intermedio',
+            badgeClass: 'badge-intermediate',
+            iconClass: 'fa-cogs text-purple-400',
+            iconBg: 'bg-purple-500/10 border-purple-500/30'
+        },
+        'Avanzado': {
+            levelClass: 'course-card-level-avanzado',
+            badgeClass: 'badge-avanzado',
+            iconClass: 'fa-rocket text-amber-400',
+            iconBg: 'bg-amber-500/10 border-amber-500/30'
+        }
+    };
+    return levelMap[detectedLevel];
+}
+
+function renderBadgeTags(tags) {
+    if (!tags || tags.length === 0) return '';
+    const badges = tags.map(tag => {
+        const lower = tag.toLowerCase();
+        let badgeClass = 'badge-generic';
+        if (lower.includes('básico') || lower.includes('basico')) badgeClass = 'badge-basic';
+        else if (lower.includes('intermedio')) badgeClass = 'badge-intermediate';
+        else if (lower.includes('avanzado')) badgeClass = 'badge-avanzado';
+        return `<span class="course-card-badge ${badgeClass}">${tag}</span>`;
+    }).join('');
+    return `<div class="badge-container">${badges}</div>`;
 }
 
 // ==========================================
@@ -430,9 +513,7 @@ function renderHomePage() {
         }
     }
     
-    // ==========================================
-    // MISIÓN ACADÉMICA - COMPLETAMENTE EDITABLE
-    // ==========================================
+    // Misión académica
     if (homePageData.mision && homePageData.mision.length > 0) {
         const mision = homePageData.mision[0];
         const section = document.querySelector('#mision');
@@ -459,12 +540,9 @@ function renderHomePage() {
             const ulEl = section.querySelector('.mission-card ul');
             if (ulEl) {
                 let items = [];
-                
-                // Obtener items desde "badge" del Excel (separados por |)
                 if (mision.badge && mision.badge.trim() !== '') {
                     items = mision.badge.split('|').map(s => s.trim()).filter(s => s);
                 }
-                
                 if (items.length === 0) {
                     items = [
                         'Educación Práctica: Contenido actualizado para la industria.',
@@ -472,7 +550,6 @@ function renderHomePage() {
                         'Comunidad y Soporte: Aprendizaje colaborativo.'
                     ];
                 }
-                
                 ulEl.innerHTML = items.map(item => {
                     const colonIndex = item.indexOf(':');
                     if (colonIndex > 0) {
@@ -495,9 +572,7 @@ function renderHomePage() {
         }
     }
     
-    // ==========================================
-    // COMUNIDAD - PERFILES EDITABLES DESDE EXCEL (BADGE)
-    // ==========================================
+    // Comunidad - Perfiles
     if (homePageData.comunidad && homePageData.comunidad.length > 0) {
         const comunidad = homePageData.comunidad[0];
         const section = document.querySelector('#comunidad');
@@ -510,27 +585,19 @@ function renderHomePage() {
                     tituloEl.innerHTML = comunidad.titulo;
                 }
             }
-            
             const descEl = section.querySelector('p');
             if (descEl && comunidad.descripcion) {
                 descEl.textContent = comunidad.descripcion;
             }
-            
             const buttonsContainer = section.querySelector('.space-y-4');
             if (buttonsContainer) {
                 let perfiles = [];
-                
-                // Obtener perfiles desde "badge" del Excel (separados por |)
                 if (comunidad.badge && comunidad.badge.trim() !== '') {
                     perfiles = comunidad.badge.split('|').map(s => s.trim()).filter(s => s);
                 }
-                
                 if (perfiles.length === 0) {
                     perfiles = ['Ingeniero', 'TSU', 'Estudiante'];
                 }
-                
-                console.log('👥 Perfiles cargados desde Badge:', perfiles);
-                
                 const iconMap = {
                     'ingeniero': 'fa-user-tie text-blue-700',
                     'tsu': 'fa-cogs text-cyan-700',
@@ -558,13 +625,11 @@ function renderHomePage() {
                     'estudiante de postgrado': 'fa-book-open text-amber-700',
                     'estudiante universitario': 'fa-user-graduate text-teal-700'
                 };
-                
                 buttonsContainer.innerHTML = perfiles.map((perfil, index) => {
                     const perfilNormalizado = perfil.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
                     const perfilKey = perfilNormalizado.replace(/\s+/g, '_');
                     const iconClass = iconMap[perfilNormalizado] || iconMap[perfilKey] || 'fa-user text-slate-400';
                     const count = globalStats[`perfil_${perfilKey}`] || 0;
-                    
                     return `
                     <button onclick="regCom('${perfilKey}')" id="btn-${perfilKey}" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
                         <i class="fas ${iconClass} text-3xl"></i>
@@ -590,16 +655,16 @@ function renderHomePage() {
                 const courseNum = curso.id ? (curso.id.match(/\d+/) || [index + 1])[0] : (index + 1);
                 const dataId = `curso-${courseNum}`;
                 const isLiked = currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(dataId);
-                const nivelClass = curso.badge && curso.badge.includes('Intermedio') ? 'course-card-level-intermedio' : 'course-card-level-basico';
-                const badgeClass = curso.badge && curso.badge.includes('Intermedio') ? 'badge-intermediate' : 'badge-basic';
-                const iconClass = curso.badge && curso.badge.includes('Intermedio') ? 'fa-cogs text-purple-400' : 'fa-seedling text-cyan-400';
+                const tags = getBadgeTags(curso.badge);
+                const levelInfo = getLevelInfoFromTags(tags);
+                const badgesHTML = renderBadgeTags(tags);
                 return `
-                <div class="course-card ${nivelClass} reveal reveal-up">
+                <div class="course-card ${levelInfo.levelClass} reveal reveal-up">
                     <div class="course-card-image-container">
                         <img src="${curso.imagen_url || 'img/AA (1).gif'}" class="course-card-image" onerror="this.src='img/AA (1).gif'">
-                        ${curso.badge ? `<span class="course-card-badge ${badgeClass}">${curso.badge}</span>` : ''}
-                        <div class="absolute bottom-3 left-3 flex items-center justify-center bg-cyan-500/10 border-2 border-cyan-500/30 rounded-full w-10 h-10">
-                            <i class="fas ${iconClass} text-lg"></i>
+                        ${badgesHTML}
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelInfo.iconBg} border-2 rounded-full w-10 h-10">
+                            <i class="fas ${levelInfo.iconClass} text-lg"></i>
                         </div>
                     </div>
                     <div class="course-card-content">
@@ -628,16 +693,23 @@ function renderHomePage() {
         }
     }
     
-    // Manuales
+    // Manuales y Recursos
     if (homePageData.manuales.length > 0) {
         const container = document.querySelector('#manuales .grid');
         if (container) {
             container.innerHTML = homePageData.manuales.map((manual, index) => {
                 const manualNum = manual.id ? (manual.id.match(/\d+/) || [index + 20])[0] : (index + 20);
+                const tags = getBadgeTags(manual.badge);
+                const levelInfo = getLevelInfoFromTags(tags);
+                const badgesHTML = renderBadgeTags(tags);
                 return `
-                <div class="course-card course-card-level-basico reveal reveal-up">
+                <div class="course-card ${levelInfo.levelClass} reveal reveal-up">
                     <div class="course-card-image-container">
                         <img src="${manual.imagen_url || 'img/AA (1).gif'}" class="course-card-image" onerror="this.src='img/AA (1).gif'">
+                        ${badgesHTML}
+                        <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelInfo.iconBg} border-2 rounded-full w-10 h-10">
+                            <i class="fas ${levelInfo.iconClass} text-lg"></i>
+                        </div>
                     </div>
                     <div class="course-card-content">
                         <h3 class="course-card-title">${manual.titulo}</h3>
@@ -659,33 +731,69 @@ function renderHomePage() {
     if (homePageData.modalidades.length > 0) {
         const container = document.querySelector('#modalidades .grid');
         if (container) {
-            container.innerHTML = homePageData.modalidades.map((modalidad, index) => `
-                <div class="course-card ${index === 0 ? 'course-card-level-intermedio' : 'course-card-level-basico'} reveal reveal-up">
-                    <div class="course-card-image-container">
-                        <img src="${modalidad.imagen_url || 'img/AA (1).gif'}" class="course-card-image" onerror="this.src='img/AA (1).gif'">
-                    </div>
-                    <div class="course-card-content">
-                        <h3 class="course-card-title">${modalidad.titulo}</h3>
-                        <p class="course-card-description">${modalidad.descripcion || ''}</p>
-                    </div>
-                </div>`).join('');
+            container.innerHTML = homePageData.modalidades.map((modalidad, index) => {
+                const caracteristicas = modalidad.badge 
+                    ? modalidad.badge.split('|').map(s => s.trim()).filter(s => s) 
+                    : [];
+                const listaViñetas = caracteristicas.length > 0 
+                    ? `<ul class="modalidad-list mt-4 space-y-2">
+                        ${caracteristicas.map(item => `
+                            <li class="flex items-start gap-2 text-sm">
+                                <i class="fas fa-check-circle text-cyan-500 mt-1"></i>
+                                <span>${item}</span>
+                            </li>`).join('')}
+                       </ul>` 
+                    : '';
+                const botones = `
+                    <div class="course-card-buttons mt-6">
+                        ${modalidad.enlace_info ? `<button onclick="registerViewAndGo('${modalidad.enlace_info}', ${index + 30}, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle mr-1"></i> Más Información</button>` : ''}
+                        ${modalidad.enlace_compra ? `<button onclick="window.open('${modalidad.enlace_compra}', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart mr-1"></i> Comprar</button>` : ''}
+                    </div>`;
+                const tituloNormalizado = modalidad.titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                let logoUrl = '';
+                if (tituloNormalizado.includes('presencial')) {
+                    logoUrl = 'img/AA (40).webp';
+                } else if (tituloNormalizado.includes('online')) {
+                    logoUrl = 'img/AA (38).webp';
+                }
+                const logoHTML = logoUrl 
+                    ? `<div class="modalidad-logo-bg" style="background-image: url('${logoUrl}');" title="Logo ${modalidad.titulo}"></div>` 
+                    : '';
+                return `
+                    <div class="course-card course-card-level-basico reveal reveal-up flex flex-col md:flex-row overflow-hidden">
+                        <div class="course-card-content flex-1 p-6 md:p-8">
+                            <div class="flex items-center gap-2 mb-2">
+                                ${logoHTML}
+                                <h3 class="course-card-title !m-0">${modalidad.titulo}</h3>
+                            </div>
+                            <p class="course-card-description">${modalidad.descripcion || ''}</p>
+                            ${listaViñetas}
+                            ${botones}
+                        </div>
+                        <div class="course-card-image-container modalidad-image-container md:w-1/2 lg:w-2/5 shrink-0 bg-gradient-to-br from-slate-900 to-slate-800 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10 pointer-events-none"></div>
+                            <img src="${modalidad.imagen_url || 'img/AA (1).gif'}" 
+                                 alt="${modalidad.titulo}" 
+                                 class="course-card-image w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
+                                 onerror="this.src='img/AA (1).gif'">
+                        </div>
+                    </div>`;
+            }).join('');
         }
     }
     
-    // Curso Especial - CON CAMPOS EDITABLES DESDE EXCEL
+    // Curso Especial
     if (homePageData.curso_especial.length > 0) {
         const especial = homePageData.curso_especial[0];
         const container = document.querySelector('#curso-especial .special-course-card');
         if (container && especial.titulo) {
             const words = especial.titulo.split(' ');
             const titleHtml = words.length > 1 ? `${words[0]} <span class="text-[#2db8ce]">${words.slice(1).join(' ')}</span>` : especial.titulo;
-            
             const institucion = especial.institucion || 'Universidad Politécnica Territorial de Aragua (UPT Aragua)';
             const fechas = especial.fechas || 'Próximamente';
             const horario = especial.horario || '8:00 a.m. a 2:00 p.m.';
             const duracion = especial.duracion || '2 Viernes intensivos';
             const participantes = especial.participantes || '12 participantes, 2 participantes por mesón de trabajo.';
-            
             container.innerHTML = `
             <div class="w-full lg:w-2/5 relative flex-shrink-0 lg:aspect-square">
                 <img src="${especial.imagen_url || 'img/AA (1).gif'}" alt="${especial.titulo}" class="special-course-image lg:absolute lg:inset-0 w-full h-full object-cover" onerror="this.src='img/AA (1).gif'">
@@ -704,7 +812,6 @@ function renderHomePage() {
                 <div>
                     <span class="section-subtitle text-[10px] font-black uppercase tracking-[0.4em] mb-6 block">${especial.subtitulo || 'Curso de ampliación y extensión profesional'}</span>
                     <h4 class="text-2xl lg:text-4xl font-black uppercase leading-tight mb-4 text-white">${titleHtml}</h4>
-                    
                     <div class="space-y-6">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                             <div class="flex items-start gap-4">
@@ -758,18 +865,18 @@ function renderHomePage() {
         if (container) {
             container.innerHTML = homePageData.testimonios.map((test, index) => {
                 const initials = test.titulo ? test.titulo.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase() : '??';
-                
                 let imageUrl = test.imagen_url || '';
                 if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('https') && !imageUrl.startsWith('data:')) {
                     if (!imageUrl.startsWith('img/') && !imageUrl.startsWith('./img/') && !imageUrl.startsWith('/')) {
                         imageUrl = 'img/' + imageUrl;
                     }
                 }
-                
                 let imageHTML = '';
                 if (imageUrl && imageUrl.trim() !== '') {
                     imageHTML = `
-                        <img src="${imageUrl}" alt="${test.titulo}" class="w-full h-full object-cover" 
+                        <img src="${imageUrl}" alt="${test.titulo}" 
+                             class="course-card-image w-full h-48 object-cover opacity-100" 
+                             style="opacity:1; mix-blend-mode:normal; image-rendering:auto;"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="w-full h-full hidden items-end justify-center bg-[#dfe5e7]">
                             <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
@@ -780,19 +887,25 @@ function renderHomePage() {
                             <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                         </div>`;
                 }
-                
                 return `
-                <div class="testimonial-card rounded-[32px] p-6 sm:p-8 reveal reveal-up relative flex flex-col" style="cursor: pointer;">
-                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
-                    <div class="testimonial-image-container w-full h-40 rounded-2xl overflow-hidden mb-6 relative z-10 border border-slate-200/50 shadow-sm">
+                <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
+                    <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
                         ${imageHTML}
                     </div>
-                    <div class="testimonial-text-content flex flex-col flex-grow">
-                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm relative z-10"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                        <p class="text-sm italic mb-8 relative z-10 flex-grow">"${test.descripcion || ''}"</p>
-                        <div class="flex items-center gap-4 relative z-10">
-                            <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">${initials}</div>
-                            <div><h4 class="font-bold text-sm">${test.titulo}</h4><span class="testimonial-role text-[10px] uppercase font-bold tracking-widest">${test.subtitulo || ''}</span></div>
+                    <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
+                        <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                        <div class="relative z-10">
+                            <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"${test.descripcion || ''}"</p>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">${initials}</div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-gray-800 dark:text-white">${test.titulo}</h4>
+                                    <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">${test.subtitulo || ''}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>`;
@@ -859,9 +972,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     showLoadingToast();
     initScrollReveal();
     initVisitorInfo();
-    await loadData(false);
-    await loadHomePageData();
-    
+
+    // Cargar datos de página y stats en paralelo
+    const [pageLoaded, statsLoaded] = await Promise.all([
+        loadHomePageData(),
+        loadData(false)
+    ]);
+
+    // Una vez todo renderizado, mostrar todas las secciones de golpe
+    revealAllSections();
+    hideLoadingToast();
+
+    // Luego de mostrar el contenido, cargar métricas con delay
+    setTimeout(() => {
+        updateIndexMetrics(globalStats);
+        revealMetrics();
+    }, 800);
+
     const profession = currentUser?.profession || localStorage.getItem('user_profile_selected');
     if (profession) {
         const btn = document.getElementById(`btn-${profession}`);
@@ -874,8 +1001,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
     document.querySelectorAll('.prof-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
-    
-    setTimeout(() => loadGoogleCharts(), 1000);
-    
+
+    setTimeout(() => loadGoogleCharts(), 1500);
+
     console.log('✅ Inicialización completada');
 });
