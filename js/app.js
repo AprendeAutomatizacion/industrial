@@ -389,7 +389,6 @@ async function loadHomePageData() {
                 mision: data.data.mision || [],
                 comunidad: data.data.comunidad || []
             };
-            renderHomePage();
             return true;
         }
         return false;
@@ -399,6 +398,95 @@ async function loadHomePageData() {
     }
 }
 
+
+// ==========================================
+// EXPANSIÓN DE TARJETAS DE METODOLOGÍA (CLONE AL BODY)
+// ==========================================
+let methodologyClone = null;
+let methodologyOriginal = null;
+
+function initMethodologyCards() {
+    const cards = document.querySelectorAll('.methodology-card');
+    if (!cards.length) return;
+
+    // Crear overlay si no existe
+    let overlay = document.querySelector('.card-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'card-overlay';
+        document.body.appendChild(overlay);
+    }
+
+    cards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (methodologyClone) return; // Ya hay una expandida
+            expandMethodologyCard(card, overlay);
+        });
+    });
+
+    overlay.addEventListener('click', closeExpandedMethodologyCard);
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeExpandedMethodologyCard();
+    });
+}
+
+function expandMethodologyCard(card, overlay) {
+    const rect = card.getBoundingClientRect();
+
+    // Clonar la tarjeta y ponerla en el body (fuera de stacking contexts)
+    methodologyOriginal = card;
+    methodologyClone = card.cloneNode(true);
+
+    // Estilos iniciales del clon (posición exacta de la original)
+    methodologyClone.style.position = 'fixed';
+    methodologyClone.style.top = rect.top + 'px';
+    methodologyClone.style.left = rect.left + 'px';
+    methodologyClone.style.width = rect.width + 'px';
+    methodologyClone.style.height = rect.height + 'px';
+    methodologyClone.style.margin = '0';
+    methodologyClone.style.zIndex = '100011';
+    methodologyClone.style.transition = 'all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1)';
+    methodologyClone.classList.remove('reveal', 'reveal-up', 'delay-100', 'delay-200', 'delay-300');
+
+    // Ocultar original
+    card.style.visibility = 'hidden';
+
+    // Agregar clon al body
+    document.body.appendChild(methodologyClone);
+
+    // Activar overlay
+    overlay.classList.add('visible');
+
+    // Forzar reflow
+    void methodologyClone.offsetWidth;
+
+    // Animar al centro
+    requestAnimationFrame(() => {
+        methodologyClone.classList.add('is-expanded');
+    });
+}
+
+function closeExpandedMethodologyCard() {
+    if (!methodologyClone) return;
+
+    const overlay = document.querySelector('.card-overlay');
+
+    // Quitar clase expandida para animar de vuelta
+    methodologyClone.classList.remove('is-expanded');
+    if (overlay) overlay.classList.remove('visible');
+
+    // Esperar la transición y limpiar
+    setTimeout(() => {
+        if (methodologyClone && methodologyClone.parentNode) {
+            methodologyClone.parentNode.removeChild(methodologyClone);
+        }
+        if (methodologyOriginal) {
+            methodologyOriginal.style.visibility = '';
+        }
+        methodologyClone = null;
+        methodologyOriginal = null;
+    }, 500);
+}
 // ==========================================
 // MOSTRAR TODAS LAS SECCIONES DE GOLPE
 // ==========================================
@@ -848,14 +936,22 @@ function renderHomePage() {
     if (homePageData.metodologia.length > 0) {
         const container = document.querySelector('#metodologia .grid');
         if (container) {
-            container.innerHTML = homePageData.metodologia.map((met, index) => `
-                <div class="bg-white/5 rounded-[40px] p-6 methodology-card cursor-pointer">
+            container.innerHTML = homePageData.metodologia.map((met, index) => {
+                const expandedText = met.badge || met.descripcion || '';
+                return `
+                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="${index}">
                     <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
                         <img src="${met.imagen_url || 'img/AA (1).gif'}" class="w-full h-full object-cover" onerror="this.src='img/AA (1).gif'">
                     </div>
-                    <h3 class="text-white text-xl font-black uppercase mb-3">${met.titulo}</h3>
-                    <p class="text-slate-400 text-sm">${met.descripcion || ''}</p>
-                </div>`).join('');
+                    <div class="methodology-card-text-content">
+                        <h3 class="text-white text-xl font-black uppercase mb-3">${met.titulo}</h3>
+                        <p class="text-slate-400 text-sm methodology-short-desc">${met.descripcion || ''}</p>
+                        <div class="methodology-expanded-content">
+                            <p>${expandedText}</p>
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
         }
     }
     
@@ -978,6 +1074,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         loadHomePageData(),
         loadData(false)
     ]);
+
+    // Renderizar AHORA que globalStats ya está cargado
+    renderHomePage();
+
+    // Inicializar tarjetas expandibles de metodología
+    initMethodologyCards();
 
     // Una vez todo renderizado, mostrar todas las secciones de golpe
     revealAllSections();
