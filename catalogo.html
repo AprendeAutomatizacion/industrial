@@ -62,7 +62,7 @@
             --shadow-color: rgba(0, 0, 0, 0.4);
             --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.45), 0 0 60px rgba(6, 182, 212, 0.2);
             --glass-bg: rgba(15, 23, 42, 0.55);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(6, 182, 212, 0.22);
         }
 
         body {
@@ -93,6 +93,9 @@
                 linear-gradient(180deg, rgba(10, 15, 30, 0.96) 0%, rgba(15, 23, 42, 0.94) 50%, rgba(10, 15, 30, 0.96) 100%);
             z-index: 0;
             pointer-events: none;
+        }
+
+        body:not(.light-mode)::before {
             animation: auroraShift 20s ease-in-out infinite;
         }
 
@@ -102,7 +105,7 @@
         }
 
         body.light-mode {
-            background-color: #f0f4f8;
+            background-color: #d0e1ef;
             background-image: url('img/fondo2.webp');
             background-attachment: fixed;
             background-size: cover;
@@ -114,13 +117,17 @@
             content: '';
             position: fixed;
             inset: 0;
-            background: 
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
-                linear-gradient(180deg, rgba(248, 250, 252, 0.88) 0%, rgba(241, 245, 249, 0.85) 50%, rgba(248, 250, 252, 0.88) 100%);
+            background: linear-gradient(
+                180deg,
+                rgba(208, 225, 239, 0.78) 0%,
+                rgba(208, 225, 239, 0.72) 40%,
+                rgba(208, 225, 239, 0.68) 100%
+            );
+            backdrop-filter: blur(2px) saturate(110%);
+            -webkit-backdrop-filter: blur(2px) saturate(110%);
             z-index: 0;
             pointer-events: none;
-            animation: none;
+            animation: none !important;
         }
 
         /* GRADIENT TEXT UTILITY */
@@ -155,27 +162,49 @@
             font-weight: 800;
         }
 
-        body.light-mode .hero-main-title { color: #000000 !important; }
-        body.light-mode .hero-main-title .text-secondary {
+        body.light-mode .section-title { color: #334155 !important; }
+        body.light-mode .section-title span {
             background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        body.light-mode .section-subtitle { color: #0891b2 !important; }
 
-        /* Corrección header en modo claro: título blanco + gradiente animado */
-        body.light-mode header .hero-main-title {
-            color: #ffffff !important;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15) !important;
+        /* Header modo claro - estilo Aula Virtual / Progreso */
+        body.light-mode header {
+            background: rgba(227, 241, 248, 0.72) !important;
+            backdrop-filter: blur(16px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+            border-bottom: 1px solid #d3e1e8 !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
         }
-        body.light-mode header .hero-main-title .text-secondary {
-            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #8b5cf6 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientFlow 6s ease infinite;
-            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+        body.light-mode header .hero-main-title {
+            color: #334155 !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header p {
+            color: #64748b !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header .bg-blue-500\/20 {
+            background: rgba(8, 145, 178, 0.1) !important;
+            border: 1px solid rgba(8, 145, 178, 0.2) !important;
+            color: #0891b2 !important;
+        }
+        body.light-mode header .bg-emerald-500\/20 {
+            background: rgba(16, 185, 129, 0.1) !important;
+            border: 1px solid rgba(16, 185, 129, 0.2) !important;
+            color: #10b981 !important;
+        }
+        body.light-mode header .bg-orange-500\/20 {
+            background: rgba(245, 158, 11, 0.1) !important;
+            border: 1px solid rgba(245, 158, 11, 0.2) !important;
+            color: #f59e0b !important;
+        }
+        body.light-mode header .absolute.inset-0 img {
+            opacity: 0.15 !important;
+            filter: saturate(0.5);
         }
         body.light-mode .section-title span {
             background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%);
@@ -307,7 +336,8 @@
             cursor: pointer;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             border: 1px solid var(--glass-border);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.08);
             position: relative;
         }
         .course-card::before {
@@ -325,9 +355,9 @@
             transition: opacity 0.5s ease;
         }
         .course-card:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.2);
-            border-color: rgba(6, 182, 212, 0.3);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15);
+            border-color: rgba(6, 182, 212, 0.4);
             z-index: 10;
         }
         .course-card:hover::before {
@@ -386,6 +416,10 @@
             margin-bottom: 1rem;
             flex-grow: 1;
             line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         .course-card .course-card-footer {
             margin-top: auto;
@@ -425,28 +459,43 @@
         .course-card .course-card-buttons { display: flex; gap: 0.75rem; }
 
         .course-card-level-basico {
-            border: 1px solid rgba(6, 182, 212, 0.35);
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+            border: 2px solid rgba(6, 182, 212, 0.7);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.25), 
+                        inset 0 0 60px rgba(6, 182, 212, 0.08);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
         }
         .course-card-level-basico:hover {
-            border-color: #2db8ce;
-            box-shadow: var(--cyan-glow);
+            border: 2.5px solid rgba(6, 182, 212, 1);
+            box-shadow: 0 0 50px rgba(6, 182, 212, 0.5), 
+                        0 12px 40px rgba(6, 182, 212, 0.3), 
+                        inset 0 0 80px rgba(6, 182, 212, 0.12);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.15) 0%, rgba(8, 12, 33, 0.5) 100%);
         }
         .course-card-level-intermedio {
-            border: 1px solid rgba(168, 85, 247, 0.35);
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+            border: 2px solid rgba(139, 92, 246, 0.7);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.25), 
+                        inset 0 0 60px rgba(139, 92, 246, 0.08);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
         }
         .course-card-level-intermedio:hover {
-            border-color: #2db8ce;
-            box-shadow: var(--cyan-glow);
+            border: 2.5px solid rgba(139, 92, 246, 1);
+            box-shadow: 0 0 50px rgba(139, 92, 246, 0.5), 
+                        0 12px 40px rgba(139, 92, 246, 0.3), 
+                        inset 0 0 80px rgba(139, 92, 246, 0.12);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.15) 0%, rgba(8, 12, 33, 0.5) 100%);
         }
         .course-card-level-avanzado {
-            border: 1px solid rgba(245, 158, 11, 0.35);
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.2);
+            border: 2px solid rgba(245, 158, 11, 0.7);
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.25), 
+                        inset 0 0 60px rgba(245, 158, 11, 0.08);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
         }
         .course-card-level-avanzado:hover {
-            border-color: #2db8ce;
-            box-shadow: var(--cyan-glow);
+            border: 2.5px solid rgba(245, 158, 11, 1);
+            box-shadow: 0 0 50px rgba(245, 158, 11, 0.5), 
+                        0 12px 40px rgba(245, 158, 11, 0.3), 
+                        inset 0 0 80px rgba(245, 158, 11, 0.12);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.15) 0%, rgba(8, 12, 33, 0.5) 100%);
         }
 
         /* ==========================================
@@ -493,11 +542,20 @@
         }
 
         body.light-mode .learning-step {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(226, 232, 240, 0.72) !important;
+            backdrop-filter: blur(12px) saturate(140%) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        body.light-mode .learning-step h3 { color: #1e293b; }
-        body.light-mode .learning-step p { color: #64748b; }
+        body.light-mode .learning-step:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15), 0 20px 60px rgba(0, 0, 0, 0.15);
+            border-color: rgba(6, 182, 212, 0.4) !important;
+            z-index: 10;
+        }
+        body.light-mode .learning-step h3 { color: #334155 !important; }
+        body.light-mode .learning-step p { color: #64748b !important; }
 
         /* ==========================================
            BOTONES - GLOW GRADIENT PREMIUM
@@ -772,33 +830,6 @@
         }
 
         /* ==========================================
-           REVEAL - ANIMACIONES PREMIUM
-           ========================================== */
-        .reveal { 
-            opacity: 0; 
-            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-            filter: blur(8px);
-        }
-        .reveal.active { 
-            opacity: 1; 
-            transform: translate(0, 0) scale(1);
-            filter: blur(0);
-        }
-        .reveal-up { transform: translateY(60px) scale(0.95); }
-        .reveal-down { transform: translateY(-60px) scale(0.95); }
-        .reveal-left { transform: translateX(-60px) scale(0.95); }
-        .reveal-right { transform: translateX(60px) scale(0.95); }
-        .reveal-center { transform: scale(0.85); }
-
-        /* Stagger delay para grids */
-        .grid .reveal:nth-child(1) { transition-delay: 0ms; }
-        .grid .reveal:nth-child(2) { transition-delay: 100ms; }
-        .grid .reveal:nth-child(3) { transition-delay: 200ms; }
-        .grid .reveal:nth-child(4) { transition-delay: 300ms; }
-        .grid .reveal:nth-child(5) { transition-delay: 400ms; }
-        .grid .reveal:nth-child(6) { transition-delay: 500ms; }
-
-        /* ==========================================
            TOAST DE CARGA - GLASSMORPHISM PREMIUM
            ========================================== */
         .loading-toast {
@@ -873,6 +904,33 @@
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.3)); }
             50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.5)); }
         }
+
+        /* ==========================================
+           REVEAL - ANIMACIONES PREMIUM
+           ========================================== */
+        .reveal { 
+            opacity: 0; 
+            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+            filter: blur(8px);
+        }
+        .reveal.active { 
+            opacity: 1; 
+            transform: translate(0, 0) scale(1);
+            filter: blur(0);
+        }
+        .reveal-up { transform: translateY(60px) scale(0.95); }
+        .reveal-down { transform: translateY(-60px) scale(0.95); }
+        .reveal-left { transform: translateX(-60px) scale(0.95); }
+        .reveal-right { transform: translateX(60px) scale(0.95); }
+        .reveal-center { transform: scale(0.85); }
+
+        /* Stagger delay para grids */
+        .grid .reveal:nth-child(1) { transition-delay: 0ms; }
+        .grid .reveal:nth-child(2) { transition-delay: 100ms; }
+        .grid .reveal:nth-child(3) { transition-delay: 200ms; }
+        .grid .reveal:nth-child(4) { transition-delay: 300ms; }
+        .grid .reveal:nth-child(5) { transition-delay: 400ms; }
+        .grid .reveal:nth-child(6) { transition-delay: 500ms; }
 
         /* ==========================================
            MODALS - GLASSMORPHISM
@@ -951,26 +1009,43 @@
             50% { opacity: 0.4; }
         }
 
-        /* Fix modo claro catálogo */
+        /* Fix modo claro catálogo - estilo Progreso/Aula */
         body.light-mode #catalog-grid .course-card {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(255, 255, 255, 0.5);
+            background-color: rgba(226, 232, 240, 0.85) !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.1);
         }
-        body.light-mode #catalog-grid .course-card h2 { color: #1e293b; }
-        body.light-mode #catalog-grid .course-card .text-slate-900 { color: #1e293b !important; }
-        body.light-mode #catalog-grid .course-card .text-slate-800 { color: #1e293b !important; }
+        body.light-mode #catalog-grid .course-card:hover {
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15), 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-color: rgba(6, 182, 212, 0.3) !important;
+            transform: translateY(-8px) scale(1.01);
+            z-index: 10;
+        }
+        body.light-mode #catalog-grid .course-card h2 { color: #334155 !important; }
+        body.light-mode #catalog-grid .course-card .text-slate-900 { color: #334155 !important; }
+        body.light-mode #catalog-grid .course-card .text-slate-800 { color: #334155 !important; }
         body.light-mode #catalog-grid .course-card .text-slate-500 { color: #64748b !important; }
         body.light-mode #catalog-grid .course-card .text-slate-400 { color: #94a3b8 !important; }
-        body.light-mode #catalog-grid .course-card .bg-slate-50 { background: rgba(241, 245, 249, 0.8); }
-        body.light-mode #catalog-grid .course-card .bg-slate-100 { background: rgba(226, 232, 240, 0.8); }
-        body.light-mode #catalog-grid .course-card .border-slate-100 { border-color: rgba(226, 232, 240, 0.5); }
+        body.light-mode #catalog-grid .course-card .bg-slate-50 { background: rgba(255, 255, 255, 0.6) !important; }
+        body.light-mode #catalog-grid .course-card .bg-slate-100 { background: rgba(255, 255, 255, 0.45) !important; }
+        body.light-mode #catalog-grid .course-card .border-slate-100 { border-color: rgba(0, 0, 0, 0.06) !important; }
+        body.light-mode #catalog-grid .course-card .border-slate-900 { border-color: rgba(0, 0, 0, 0.08) !important; }
 
         body.light-mode .learning-step {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(226, 232, 240, 0.72) !important;
+            backdrop-filter: blur(12px) saturate(140%) !important;
+            border-color: rgba(255, 255, 255, 0.5) !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        body.light-mode .learning-step h3 { color: #1e293b; }
-        body.light-mode .learning-step p { color: #64748b; }
+        body.light-mode .learning-step:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15), 0 20px 60px rgba(0, 0, 0, 0.15);
+            border-color: rgba(6, 182, 212, 0.4) !important;
+            z-index: 10;
+        }
+        body.light-mode .learning-step h3 { color: #334155 !important; }
+        body.light-mode .learning-step p { color: #64748b !important; }
 
         body.light-mode #catalog-loading p { color: #64748b; }
         body.light-mode #catalog-error p { color: #64748b; }
@@ -986,7 +1061,43 @@
             border: 1px solid rgba(16, 185, 129, 0.8);
         }
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+        body.light-mode .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.03);
+        }
+        body.light-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #0891b2, #6366f1);
+        }
+
+        /* ==========================================
+           FIX MODO CLARO: TEXTOS DEL CONTENIDO PRINCIPAL EN NEGRO
+           ========================================== */
+        body.light-mode main .text-slate-50,
+        body.light-mode main .text-slate-100,
+        body.light-mode main .text-slate-200,
+        body.light-mode main .text-slate-300,
+        body.light-mode main .text-slate-400,
+        body.light-mode main .text-slate-500,
+        body.light-mode main .text-slate-600,
+        body.light-mode main .text-slate-700,
+        body.light-mode main .text-slate-800,
+        body.light-mode main .text-slate-900 {
+            color: #0f172a !important;
+        }
+        body.light-mode main .text-white {
+            color: #0f172a !important;
+        }
+        body.light-mode main .text-blue-50 {
+            color: #0f172a !important;
+        }
+
+        /* ============ NUEVO: Mantener texto blanco en badges de tarjetas en modo claro ============ */
+        body.light-mode main .course-card .text-white {
+            color: #ffffff !important;
+        }
+        /* ========================================== */
     </style>
+
+
 
 </head>
 <body class="custom-scrollbar">
@@ -1259,25 +1370,32 @@
                 </div>
             </section>
 
-            <!-- DIVISOR OSCILOSCOPIO -->
-            <div class="section-divider" aria-hidden="true">
-                <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                    <defs>
-                        <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                            <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                            <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                        </linearGradient>
-                        <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                            <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
-                            <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-                    <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-                </svg>
-            </div>
+        </main>
+    </div>
+
+    <!-- DIVISOR OSCILOSCOPIO -->
+<div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+        <defs>
+            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+            </linearGradient>
+            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+            </linearGradient>
+        </defs>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+    </svg>
+</div>
+
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <main class="relative z-10 w-full">
+
 
             <!-- CATÁLOGO DE CURSOS -->
             <section id="catalog-section" class="py-12 reveal">
@@ -1285,7 +1403,7 @@
                     <span id="catalog-subtitle" class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Nuestra Oferta</span>
                     <h2 id="catalog-title" class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Catálogo <span>Completo</span></h2>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10" id="catalog-grid"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="catalog-grid"></div>
                 <div id="catalog-loading" class="col-span-full text-center py-10 hidden">
                     <i class="fas fa-spinner fa-spin text-3xl text-[#2db8ce] mb-3"></i>
                     <p class="text-slate-500 font-bold text-sm uppercase tracking-widest">Cargando datos desde el servidor...</p>
@@ -1299,7 +1417,7 @@
                     </button>
                 </div>
             </section>
-        </main>
+                </main>
     </div>
 </div>
 
@@ -1559,6 +1677,9 @@
             const courseLink = course.EnlaceInfo || '#';
             const courseBuyLink = course.EnlaceCompra || '';
             const courseBadges = course.Badges || '';
+            // ===== Descripción desde la columna F =====
+            const courseDescription = course.Descripcion || course['Descripción'] || course.descripcion || course['descripción'] || '';
+            // =========================================
             
             let badgesHTML = '';
             if (courseBadges) {
@@ -1684,6 +1805,7 @@
                             </span>
                         </div>
                     </div>
+                    ${courseDescription ? `<p class="course-card-description">${courseDescription}</p>` : ''}
                     ${ratingStarsHTML}
                     <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
                         ${priceTag}

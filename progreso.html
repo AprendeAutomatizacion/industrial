@@ -51,6 +51,24 @@
             --glass-bg: rgba(255, 255, 255, 0.75);
             --glass-border: rgba(255, 255, 255, 0.5);
             --glass-blur: 20px;
+            /* Colores modo claro del Aula Virtual */
+            --aula-bg: #d0e1ef;
+            --aula-overlay-bg: rgba(126, 150, 171, 0.9);
+            --aula-text-primary: #334155;
+            --aula-text-secondary: #64748b;
+            --aula-text-title: #1e293b;
+            --aula-text-accent: #2db8ce;
+            --aula-button-metal-bg: linear-gradient(to bottom, #f0f5f9, #d9e0e6);
+            --aula-button-metal-bg-hover: linear-gradient(to bottom, #f5f9fa, #e0e7ed);
+            --aula-button-metal-border: #c1c9d1;
+            --aula-button-metal-shadow: inset 0 1px 0 #f5f9fa, 0 1px 3px rgba(0,0,0,0.15), 0 1px 1px rgba(0,0,0,0.1);
+            --aula-button-metal-text: #475569;
+            --aula-button-icon-color: #0891b2;
+            --aula-button-icon-shadow: 0 0 8px rgba(8, 145, 178, 0.7);
+            --aula-card-bg: rgba(226, 232, 240, 0.85);
+            --aula-card-border: #cbd5e1;
+            --aula-header-bg: rgba(227, 241, 248, 0.9);
+            --aula-header-border: #d3e1e8;
         }
 
         body:not(.light-mode) {
@@ -83,7 +101,7 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* AURORA BACKGROUND EFFECT */
+        /* AURORA BACKGROUND EFFECT - MODO OSCURO */
         body::before {
             content: '';
             position: fixed;
@@ -103,8 +121,12 @@
             50% { opacity: 0.85; }
         }
 
+        /* ============================================================
+           MODO CLARO - ESTILO AULA VIRTUAL (azul claro + métricas)
+           Overlay transparente para ver sutilmente la imagen de fondo
+           ============================================================ */
         body.light-mode {
-            background-color: #f0f4f8;
+            background-color: var(--aula-bg);
             background-image: url('img/fondo2.webp');
             background-attachment: fixed;
             background-size: cover;
@@ -116,13 +138,173 @@
             content: '';
             position: fixed;
             inset: 0;
-            background: 
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
-                linear-gradient(180deg, rgba(248, 250, 252, 0.88) 0%, rgba(241, 245, 249, 0.85) 50%, rgba(248, 250, 252, 0.88) 100%);
+            background: linear-gradient(
+                180deg,
+                rgba(208, 225, 239, 0.78) 0%,
+                rgba(208, 225, 239, 0.72) 40%,
+                rgba(208, 225, 239, 0.68) 100%
+            );
+            backdrop-filter: blur(2px) saturate(110%);
+            -webkit-backdrop-filter: blur(2px) saturate(110%);
             z-index: 0;
             pointer-events: none;
             animation: none;
+        }
+
+        /* Header modo claro - estilo Aula Virtual */
+        body.light-mode header {
+            background: rgba(227, 241, 248, 0.72) !important;
+            backdrop-filter: blur(16px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+            border-bottom: 1px solid rgba(255,255,255,0.45) !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
+        }
+        body.light-mode header .hero-main-title {
+            color: #334155 !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header p {
+            color: #64748b !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header .bg-blue-500\/20 {
+            background: rgba(8, 145, 178, 0.1) !important;
+            border: 1px solid rgba(8, 145, 178, 0.2) !important;
+            color: #0891b2 !important;
+        }
+        body.light-mode header .bg-emerald-500\/20 {
+            background: rgba(16, 185, 129, 0.1) !important;
+            border: 1px solid rgba(16, 185, 129, 0.2) !important;
+            color: #10b981 !important;
+        }
+        body.light-mode header .bg-orange-500\/20 {
+            background: rgba(245, 158, 11, 0.1) !important;
+            border: 1px solid rgba(245, 158, 11, 0.2) !important;
+            color: #f59e0b !important;
+        }
+        body.light-mode header .absolute.inset-0 img {
+            opacity: 0.15 !important;
+            filter: saturate(0.5);
+        }
+
+        /* Tarjeta del estudiante modo claro - estilo Aula Virtual */
+        body.light-mode #progreso-page .bg-white\/10,
+        body.light-mode #progreso-page .bg-\[\#0f172a\]\/60 {
+            background: rgba(226, 232, 240, 0.65) !important;
+            backdrop-filter: blur(12px) saturate(140%) !important;
+            -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+            border-color: rgba(255,255,255,0.55) !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08) !important;
+        }
+        body.light-mode #progreso-page h2,
+        body.light-mode #progreso-page h3,
+        body.light-mode #progreso-page .text-white {
+            color: #334155 !important;
+        }
+        body.light-mode #progreso-page .text-slate-300,
+        body.light-mode #progreso-page .text-slate-400 {
+            color: #64748b !important;
+        }
+        body.light-mode #progreso-page .border-white\/10,
+        body.light-mode #progreso-page .border-white\/20 {
+            border-color: rgba(0,0,0,0.08) !important;
+        }
+        body.light-mode #dash-student-name,
+        body.light-mode #dash-student-id,
+        body.light-mode #dash-student-phone,
+        body.light-mode #dash-student-location,
+        body.light-mode #dash-student-profession,
+        body.light-mode #dash-student-online,
+        body.light-mode #dash-student-presencial,
+        body.light-mode #dash-student-downloads,
+        body.light-mode #dash-student-likes {
+            color: #334155 !important;
+        }
+        body.light-mode .achievement-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.06) 0%, rgba(30, 64, 175, 0.04) 100%) !important;
+            backdrop-filter: blur(8px) !important;
+            border-color: rgba(96, 165, 250, 0.2) !important;
+        }
+        body.light-mode .achievement-card p {
+            color: #334155 !important;
+        }
+
+        /* Tarjetas de curso modo claro - estilo Aula Virtual */
+        body.light-mode .course-progress-card {
+            background: rgba(226, 232, 240, 0.62) !important;
+            backdrop-filter: blur(10px) saturate(130%) !important;
+            -webkit-backdrop-filter: blur(10px) saturate(130%) !important;
+            border-color: rgba(255,255,255,0.5) !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08) !important;
+        }
+        body.light-mode .course-progress-card h3,
+        body.light-mode .course-progress-card .text-white {
+            color: #334155 !important;
+        }
+        body.light-mode .course-progress-card .text-slate-200,
+        body.light-mode .course-progress-card .text-slate-300 {
+            color: #64748b !important;
+        }
+        body.light-mode .course-progress-card .bg-white\/5 {
+            background: rgba(255, 255, 255, 0.45) !important;
+            border-color: rgba(0,0,0,0.06) !important;
+        }
+        body.light-mode .course-progress-card .border-white\/10 {
+            border-color: rgba(0,0,0,0.06) !important;
+        }
+
+        /* Píldoras de progreso modo claro */
+        body.light-mode .lesson-pill {
+            background: #e2e8f0 !important;
+            color: #475569 !important;
+        }
+        body.light-mode .lesson-pill.completed {
+            background: rgba(8, 145, 178, 0.15) !important;
+            color: #0891b2 !important;
+        }
+        body.light-mode .lesson-pill.failed {
+            background: rgba(239, 68, 68, 0.15) !important;
+            color: #ef4444 !important;
+        }
+
+        /* Botón actualizar modo claro - estilo metálico Aula Virtual */
+        body.light-mode button[onclick="manualRefreshProgress()"] {
+            background: var(--aula-button-metal-bg) !important;
+            border: 1px solid var(--aula-button-metal-border) !important;
+            box-shadow: var(--aula-button-metal-shadow) !important;
+            color: var(--aula-button-metal-text) !important;
+        }
+        body.light-mode button[onclick="manualRefreshProgress()"]:hover {
+            background: var(--aula-button-metal-bg-hover) !important;
+        }
+        body.light-mode button[onclick="manualRefreshProgress()"] i {
+            color: var(--aula-button-icon-color) !important;
+            text-shadow: var(--aula-button-icon-shadow);
+        }
+
+        /* Botón certificado modo claro */
+        body.light-mode .btn-metal-solid.btn-metal-cyan {
+            background: linear-gradient(180deg, #4ea9ff 0%, #2563eb 100%) !important;
+            border: 1px solid rgba(255,255,255,0.18) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3) !important;
+        }
+
+        /* Módulos modo claro - fondo base */
+        body.light-mode .module-row {
+            background: rgba(255,255,255,0.6) !important;
+            border-color: rgba(0,0,0,0.06) !important;
+        }
+        body.light-mode .module-row span {
+            color: #334155 !important;
+        }
+
+        /* Scrollbar modo claro */
+        body.light-mode .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.03);
+        }
+        body.light-mode .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #0891b2, #6366f1);
         }
 
         /* GRADIENT TEXT UTILITY */
@@ -416,48 +598,52 @@
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
         /* ============ FIN ESTILOS TOAST ============ */
 
-        /* ==========================================
-           FIXES MODO CLARO - PROGRESO
-           ========================================== */
-        body.light-mode #progreso-page .bg-white\/10,
-        body.light-mode #progreso-page .bg-\[\#0f172a\]\/60 {
-            background: rgba(255, 255, 255, 0.8) !important;
-            border-color: rgba(255, 255, 255, 0.5) !important;
+        /* =====================================================
+           MÓDULOS: MANTENER GLASS DE COLOR EN MODO CLARO
+           PERO CON TEXTO EN GRIS OSCURO (#334155)
+           ===================================================== */
+        body.light-mode .module-row.module-completed {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(30, 64, 175, 0.20) 100%) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(59, 130, 246, 0.45) !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 2px 10px rgba(59, 130, 246, 0.18) !important;
         }
-        body.light-mode #progreso-page h2,
-        body.light-mode #progreso-page h3,
-        body.light-mode #progreso-page .text-white {
-            color: #1e293b !important;
+        body.light-mode .module-row.module-completed span {
+            color: #334155 !important;
+            -webkit-text-fill-color: #334155 !important;
+            text-shadow: none !important;
         }
-        body.light-mode #progreso-page .text-slate-300,
-        body.light-mode #progreso-page .text-slate-400 {
-            color: #64748b !important;
+
+        body.light-mode .module-row.module-failed {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.25) 0%, rgba(185, 28, 28, 0.20) 100%) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(239, 68, 68, 0.45) !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 2px 10px rgba(239, 68, 68, 0.18) !important;
         }
-        body.light-mode #progreso-page .border-white\/10,
-        body.light-mode #progreso-page .border-white\/20 {
-            border-color: rgba(226, 232, 240, 0.5) !important;
+        body.light-mode .module-row.module-failed span {
+            color: #334155 !important;
+            -webkit-text-fill-color: #334155 !important;
+            text-shadow: none !important;
         }
-        body.light-mode .achievement-card {
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(30, 64, 175, 0.08) 100%);
-            border-color: rgba(96, 165, 250, 0.3) !important;
+
+        body.light-mode .module-row.module-pending {
+            background: linear-gradient(135deg, rgba(250, 204, 21, 0.25) 0%, rgba(202, 138, 4, 0.20) 100%) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            border: 1px solid rgba(250, 204, 21, 0.45) !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 2px 10px rgba(250, 204, 21, 0.18) !important;
         }
-        body.light-mode .course-progress-card {
-            background: rgba(255, 255, 255, 0.8) !important;
-            border-color: rgba(226, 232, 240, 0.5) !important;
+        body.light-mode .module-row.module-pending span {
+            color: #334155 !important;
+            -webkit-text-fill-color: #334155 !important;
+            text-shadow: none !important;
         }
-        body.light-mode .course-progress-card h3,
-        body.light-mode .course-progress-card .text-white {
-            color: #1e293b !important;
-        }
-        body.light-mode .course-progress-card .text-slate-200,
-        body.light-mode .course-progress-card .text-slate-300 {
-            color: #475569 !important;
-        }
-        body.light-mode .course-progress-card .bg-white\/5 {
-            background: rgba(241, 245, 249, 0.8) !important;
-            border-color: rgba(226, 232, 240, 0.5) !important;
-        }
+        /* ===================================================== */
+
     </style>
+
 
 </head>
 <body id="progreso-page-body" class="custom-scrollbar">
@@ -927,16 +1113,20 @@
             else { moduleNamesForPills = Array.from({length: progData.total}, (_, i) => `Módulo ${i + 1}`); }
             const lessonPillsHtml = moduleNamesForPills.map((moduleName, index) => {
                 const score = scores[index];
-                let pillClass = 'bg-slate-700 text-slate-300';
-                if (score !== undefined && score !== null) { if (score >= 70) { pillClass = 'bg-teal-500 text-white'; } else { pillClass = 'bg-red-500 text-white'; } }
-                else if (progressIndices.includes(index)) { pillClass = 'bg-teal-500 text-white'; }
+                let pillClass = 'bg-slate-600 text-slate-200'; // Cambiado aquí
+                if (score !== undefined && score !== null) {
+                    if (score >= 70) { pillClass = 'bg-teal-500 text-white'; }
+                    else { pillClass = 'bg-red-500 text-white'; }
+                } else if (progressIndices.includes(index)) {
+                    pillClass = 'bg-teal-500 text-white';
+                }
                 const isIntro = index === 0 && (moduleName.toLowerCase().includes('contenido') || moduleName.toLowerCase().includes('introducción'));
                 const simpleTitle = isIntro ? "Intro" : `Lección ${index}`;
                 const abbreviatedTitle = isIntro ? "Intro" : `Lec${index}`;
                 const medalIcon = getMedalIcon(score);
                 const finalIcon = isIntro ? '<i class="fas fa-book text-slate-400"></i>' : medalIcon;
                 return `<div class="flex flex-col items-center gap-1" title="${moduleName}">
-                    <div class="w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider">
+                    <div class="progress-pill-label w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider">
                         <span class="hidden sm:inline">${simpleTitle}</span>
                         <span class="sm:hidden">${abbreviatedTitle}</span>
                     </div>
@@ -952,7 +1142,7 @@
                     </div>
                     <div class="flex items-center justify-center w-24 h-24 relative self-center md:self-auto flex-shrink-0">
                         <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/20" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" />
+                            <circle class="text-white/10" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" /> <!-- Cambiado de /20 a /10 -->
                             <circle class="${coursePercentage === 100 ? 'text-amber-400' : 'text-teal-500'} transform -rotate-90 origin-center"
                                 stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50"
                                 style="stroke-dasharray: 264; stroke-dashoffset: calc(264 - (264 * ${coursePercentage}) / 100); transition: stroke-dashoffset 0.7s ease-out;" />
@@ -971,19 +1161,35 @@
             if (course.NombresModulos && typeof course.NombresModulos === 'string') { moduleNames = course.NombresModulos.split('|'); }
             else { moduleNames = Array.from({length: progData.total}, (_, i) => `Módulo ${i + 1}`); }
             moduleNames.forEach((moduleName, i) => {
-                let stateClass = "", stateText = "", score = scores[i];
+                let stateClass = "", stateText = "", score = scores[i], stateModifier = '';
+                
                 if (score !== undefined && score !== null && !isNaN(score)) {
-                    if (score >= 70) { stateClass = "border-blue-500/50 bg-blue-900/30 text-white"; stateText = `✅ Completado (${score}%)`; }
-                    else { stateClass = "border-red-500/50 bg-red-900/30 text-white"; stateText = `❌ No aprobado ${score}%`; }
+                    if (score >= 70) {
+                        stateClass = "border-blue-400/50 bg-blue-500/20 text-white";
+                        stateText = `✅ Completado (${score}%)`;
+                        stateModifier = 'module-completed';
+                    } else {
+                        stateClass = "border-red-500/60 bg-red-600/20 text-white";
+                        stateText = `❌ No aprobado ${score}%`;
+                        stateModifier = 'module-failed';
+                    }
                 } else {
-                    if (progressIndices.includes(i) || (done > 0 && i < done)) { stateClass = "border-blue-500/50 bg-blue-900/30 text-white"; stateText = `✅ Completado`; }
-                    else { stateClass = "border-slate-500/50 bg-slate-700/30 text-slate-300"; stateText = `⏳ Falta por evaluar`; }
+                    if (progressIndices.includes(i) || (done > 0 && i < done)) {
+                        stateClass = "border-blue-400/50 bg-blue-500/20 text-white";
+                        stateText = `✅ Completado`;
+                        stateModifier = 'module-completed';
+                    } else {
+                        stateClass = "border-yellow-400/50 bg-yellow-500/20 text-white";
+                        stateText = `⏳ Falta por evaluar`;
+                        stateModifier = 'module-pending';
+                    }
                 }
+                
                 const displayModuleName = moduleName.includes(':') ? moduleName.split(':')[1].trim() : moduleName;
-                modulesHtml += `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01]"><span class="tracking-wide text-xs sm:text-sm">${displayModuleName}</span><span class="text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+                modulesHtml += `<div class="module-row ${stateModifier} flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01]"><span class="tracking-wide text-xs sm:text-sm">${displayModuleName}</span><span class="text-xs sm:text-sm font-bold px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
             });
             const cardHtml = `
-                <div class="course-progress-card bg-[#0f172a]/60 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 reveal reveal-up" data-course-id="${course.ID}">
+                <div class="course-progress-card bg-white/5 backdrop-blur-md p-6 rounded-2xl relative border border-white/10 reveal reveal-up" data-course-id="${course.ID}">
                     <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
                         <h3 class="text-white font-black uppercase tracking-tighter text-sm flex items-center gap-3">
                             <i class="fas fa-book-open text-blue-200"></i> ${course.Nombre}
