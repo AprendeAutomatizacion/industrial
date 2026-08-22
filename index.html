@@ -32,10 +32,10 @@
             --badge-bg-intermediate: #8b5cf6;
             --badge-bg-advanced: #f59e0b;
             --badge-text: #ffffff;
-            --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15);
-            --glass-bg: rgba(255, 255, 255, 0.75);
+            --cyan-glow: 0 4px 16px rgba(6, 182, 212, 0.2), 0 0 24px rgba(6, 182, 212, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.92);
             --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-blur: 20px;
+            --glass-blur: 12px;
         }
 
         body:not(.light-mode) {
@@ -47,8 +47,8 @@
             --border-default: rgba(255, 255, 255, 0.08);
             --border-light: rgba(6, 182, 212, 0.15);
             --shadow-color: rgba(0, 0, 0, 0.4);
-            --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.45), 0 0 60px rgba(6, 182, 212, 0.2);
-            --glass-bg: rgba(15, 23, 42, 0.55);
+            --cyan-glow: 0 4px 16px rgba(6, 182, 212, 0.25), 0 0 24px rgba(6, 182, 212, 0.1);
+            --glass-bg: rgba(15, 23, 42, 0.82);
             --glass-border: rgba(255, 255, 255, 0.08);
         }
 
@@ -74,10 +74,10 @@
             position: fixed;
             inset: 0;
             background: 
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse 50% 50% at 50% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
-                linear-gradient(180deg, rgba(10, 15, 30, 0.96) 0%, rgba(15, 23, 42, 0.94) 50%, rgba(10, 15, 30, 0.96) 100%);
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 50% 100%, rgba(6, 182, 212, 0.04) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(10, 15, 30, 0.98) 0%, rgba(15, 23, 42, 0.97) 50%, rgba(10, 15, 30, 0.98) 100%);
             z-index: 0;
             pointer-events: none;
         }
@@ -88,7 +88,7 @@
 
         @keyframes auroraShift {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
+            50% { opacity: 0.92; }
         }
 
         /* ============================================================
@@ -110,12 +110,12 @@
             inset: 0;
             background: linear-gradient(
                 180deg,
-                rgba(208, 225, 239, 0.78) 0%,
-                rgba(208, 225, 239, 0.72) 40%,
-                rgba(208, 225, 239, 0.68) 100%
+                rgba(208, 225, 239, 0.95) 0%,
+                rgba(208, 225, 239, 0.92) 40%,
+                rgba(208, 225, 239, 0.88) 100%
             );
-            backdrop-filter: blur(2px) saturate(110%);
-            -webkit-backdrop-filter: blur(2px) saturate(110%);
+            backdrop-filter: blur(1px) saturate(105%);
+            -webkit-backdrop-filter: blur(1px) saturate(105%);
             z-index: 0;
             pointer-events: none;
             animation: none !important;
@@ -128,7 +128,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             background-size: 200% 200%;
-            animation: gradientFlow 6s ease infinite;
+            animation: gradientFlow 8s ease infinite;
         }
         @keyframes gradientFlow {
             0% { background-position: 0% 50%; }
@@ -138,7 +138,7 @@
 
         /* SHIMMER LOADING EFFECT */
         .shimmer {
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
             background-size: 200% 100%;
             animation: shimmer 2s infinite;
         }
@@ -233,8 +233,8 @@
            ========================================== */
         header {
             background: var(--glass-bg) !important;
-            backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
-            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            backdrop-filter: blur(10px) saturate(140%) !important;
+            -webkit-backdrop-filter: blur(10px) saturate(140%) !important;
             border-bottom: 1px solid var(--glass-border) !important;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
         }
@@ -320,8 +320,8 @@
 
         .course-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
             border-radius: 2rem;
             overflow: hidden;
             display: flex;
@@ -349,9 +349,9 @@
             transition: opacity 0.5s ease;
         }
         .course-card:hover {
-            transform: translateY(-8px) scale(1.01);
-            box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.2);
-            border-color: rgba(6, 182, 212, 0.3);
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--cyan-glow), 0 12px 32px rgba(0, 0, 0, 0.15);
+            border-color: rgba(6, 182, 212, 0.25);
             z-index: 10;
         }
         .course-card:hover::before {
@@ -453,43 +453,43 @@
         .course-card .course-card-buttons { display: flex; gap: 0.75rem; }
 
         .course-card-level-basico {
-            border: 2px solid rgba(6, 182, 212, 0.7);
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.25), 
-                        inset 0 0 60px rgba(6, 182, 212, 0.08);
-            background: linear-gradient(180deg, rgba(6, 182, 212, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
+            border: 1.5px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.12), 
+                        inset 0 0 30px rgba(6, 182, 212, 0.04);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
         }
         .course-card-level-basico:hover {
-            border: 2.5px solid rgba(6, 182, 212, 1);
-            box-shadow: 0 0 50px rgba(6, 182, 212, 0.5), 
-                        0 12px 40px rgba(6, 182, 212, 0.3), 
-                        inset 0 0 80px rgba(6, 182, 212, 0.12);
-            background: linear-gradient(180deg, rgba(6, 182, 212, 0.15) 0%, rgba(8, 12, 33, 0.5) 100%);
+            border: 2px solid rgba(6, 182, 212, 0.8);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.25), 
+                        0 8px 24px rgba(6, 182, 212, 0.15), 
+                        inset 0 0 40px rgba(6, 182, 212, 0.08);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
         }
         .course-card-level-intermedio {
-            border: 2px solid rgba(139, 92, 246, 0.7);
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.25), 
-                        inset 0 0 60px rgba(139, 92, 246, 0.08);
-            background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
+            border: 1.5px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.12), 
+                        inset 0 0 30px rgba(139, 92, 246, 0.04);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
         }
         .course-card-level-intermedio:hover {
-            border: 2.5px solid rgba(139, 92, 246, 1);
-            box-shadow: 0 0 50px rgba(139, 92, 246, 0.5), 
-                        0 12px 40px rgba(139, 92, 246, 0.3), 
-                        inset 0 0 80px rgba(139, 92, 246, 0.12);
-            background: linear-gradient(180deg, rgba(139, 92, 246, 0.15) 0%, rgba(8, 12, 33, 0.5) 100%);
+            border: 2px solid rgba(139, 92, 246, 0.8);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.25), 
+                        0 8px 24px rgba(139, 92, 246, 0.15), 
+                        inset 0 0 40px rgba(139, 92, 246, 0.08);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
         }
         .course-card-level-avanzado {
-            border: 2px solid rgba(245, 158, 11, 0.7);
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.25), 
-                        inset 0 0 60px rgba(245, 158, 11, 0.08);
-            background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
+            border: 1.5px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.12), 
+                        inset 0 0 30px rgba(245, 158, 11, 0.04);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
         }
         .course-card-level-avanzado:hover {
-            border: 2.5px solid rgba(245, 158, 11, 1);
-            box-shadow: 0 0 50px rgba(245, 158, 11, 0.5), 
-                        0 12px 40px rgba(245, 158, 11, 0.3), 
-                        inset 0 0 80px rgba(245, 158, 11, 0.12);
-            background: linear-gradient(180deg, rgba(245, 158, 11, 0.15) 0%, rgba(8, 12, 33, 0.5) 100%);
+            border: 2px solid rgba(245, 158, 11, 0.8);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.25), 
+                        0 8px 24px rgba(245, 158, 11, 0.15), 
+                        inset 0 0 40px rgba(245, 158, 11, 0.08);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
         }
 
         /* ==========================================
@@ -497,8 +497,8 @@
            ========================================== */
         .mission-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
             border: 1px solid var(--glass-border);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -518,9 +518,9 @@
             pointer-events: none;
         }
         .mission-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(6, 182, 212, 0.3);
-            box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 6px 24px rgba(6, 182, 212, 0.1), 0 12px 32px rgba(0, 0, 0, 0.1);
         }
         .mission-card:hover::before {
             opacity: 1;
@@ -549,9 +549,9 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
         .methodology-card:hover {
-            transform: scale(1.02);
-            border-color: #2db8ce;
-            box-shadow: var(--cyan-glow);
+            transform: scale(1.01);
+            border-color: rgba(45, 184, 206, 0.6);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08);
         }
         .methodology-card .image-zoom-container {
             overflow: hidden;
@@ -576,8 +576,8 @@
            ========================================== */
         .testimonial-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
             border: 1px solid var(--glass-border);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
             cursor: pointer;
@@ -598,9 +598,9 @@
             transition: all 0.5s ease;
         }
         .testimonial-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(6, 182, 212, 0.3);
-            box-shadow: var(--cyan-glow), 0 20px 50px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 6px 24px rgba(6, 182, 212, 0.1), 0 12px 32px rgba(0, 0, 0, 0.08);
         }
         .testimonial-card:hover::before {
             color: rgba(6, 182, 212, 0.2);
@@ -623,8 +623,8 @@
            ========================================== */
         .special-course-card {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             border: 1px solid var(--glass-border);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -640,7 +640,7 @@
             height: 3px;
             background: linear-gradient(90deg, #06b6d4, #8b5cf6, #06b6d4);
             background-size: 200% 100%;
-            animation: gradientFlow 4s linear infinite;
+            animation: gradientFlow 6s linear infinite;
         }
         .special-course-card:hover {
             transform: translateY(-4px);
@@ -658,8 +658,8 @@
            ========================================== */
         #faq details {
             background: var(--glass-bg);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            backdrop-filter: blur(8px) saturate(140%);
+            -webkit-backdrop-filter: blur(8px) saturate(140%);
             border: 1px solid var(--glass-border);
             border-radius: 1.25rem;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -696,13 +696,13 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 0.6rem;
-            font-weight: 800;
+            gap: 0.4rem;
+            font-weight: 700;
             text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.08em;
-            padding: 1rem 2rem;
-            border-radius: 1.25rem;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            padding: 0.65rem 1.4rem;
+            border-radius: 0.85rem;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
@@ -771,8 +771,10 @@
         .btn-metal-slate,
         .btn-metal-teal,
         .btn-metal-gray {
-            font-weight: 900;
-            letter-spacing: 0.06em;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            font-size: 0.7rem;
+            padding: 0.5rem 1rem;
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
             transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
             border-radius: 0.75rem;
@@ -864,8 +866,8 @@
            ========================================== */
         .prof-btn {
             background: var(--glass-bg);
-            backdrop-filter: blur(12px) saturate(180%);
-            -webkit-backdrop-filter: blur(12px) saturate(180%);
+            backdrop-filter: blur(8px) saturate(140%);
+            -webkit-backdrop-filter: blur(8px) saturate(140%);
             border: 1px solid var(--glass-border);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             cursor: pointer;
@@ -945,7 +947,7 @@
             stroke-width: 2;
             stroke: url(#gradient-divider);
             opacity: 0.7;
-            animation: oscilloscope 10s ease-in-out infinite;
+            animation: oscilloscope 15s ease-in-out infinite;
             filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3));
         }
         .section-divider svg path:nth-child(2) {
@@ -953,7 +955,7 @@
             stroke: url(#gradient-divider-2);
             opacity: 0.8;
             animation-delay: -3s;
-            animation-duration: 8s;
+            animation-duration: 12s;
             filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
         }
         .glitch-divider {
@@ -972,7 +974,7 @@
         }
         .glitch-divider .line-1 {
             stroke: url(#gradient-divider);
-            animation: glitch1 3s infinite steps(1, end);
+            animation: glitch1 5s infinite steps(1, end);
         }
         .circuit-divider {
             width: 100%;
@@ -993,7 +995,7 @@
             stroke: url(#gradient-divider);
             stroke-dasharray: 1500;
             stroke-dashoffset: 1500;
-            animation: draw-trace 15s linear infinite;
+            animation: draw-trace 20s linear infinite;
             filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3));
         }
         .circuit-divider .dot {
@@ -1028,8 +1030,8 @@
             right: 24px;
             z-index: 100002;
             background: var(--glass-bg);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 12px 16px;
@@ -1425,6 +1427,170 @@
                 text-align: justify;
             }
         }
+
+        /* ==========================================
+           MEJORAS RESPONSIVE GENERALES
+           ========================================== */
+        @media (max-width: 768px) {
+            /* Reducir padding del header */
+            header .relative.z-10 { padding-top: 6rem !important; padding-bottom: 3rem !important; }
+
+            /* Títulos más pequeños en móvil */
+            .hero-main-title { font-size: 1.75rem !important; line-height: 1.15 !important; }
+            .section-title { font-size: 1.5rem !important; }
+            .section-subtitle { font-size: 0.6rem !important; letter-spacing: 0.2em !important; }
+
+            /* Reducir espaciado de secciones */
+            .page-section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+
+            /* Imagen del hero más pequeña */
+            header img[alt="Icono"] { height: 10rem !important; }
+
+            /* Reducir animaciones en móvil para mejor rendimiento */
+            .reveal { transition-duration: 0.5s !important; }
+            .reveal-up { transform: translateY(30px) scale(0.97) !important; }
+            .reveal-down { transform: translateY(-30px) scale(0.97) !important; }
+            .reveal-left { transform: translateX(-30px) scale(0.97) !important; }
+            .reveal-right { transform: translateX(30px) scale(0.97) !important; }
+
+            /* Partículas menos intensas en móvil */
+            .particles-bg { display: none; }
+
+            /* Divisores más compactos */
+            .section-divider { height: 40px; }
+            .glitch-divider { height: 30px; margin: -10px 0; }
+            .circuit-divider { height: 50px; margin: -8px 0; }
+
+            /* Tarjetas sin transform excesivo en móvil */
+            .course-card:hover { transform: translateY(-2px) scale(1.005) !important; }
+            .mission-card:hover { transform: translateY(-2px) !important; }
+            .testimonial-card:hover { transform: translateY(-3px) !important; }
+            .methodology-card:hover { transform: scale(1.01) !important; }
+
+            /* Métricas más compactas */
+            #metrics .text-3xl { font-size: 1.5rem !important; }
+            #metrics .text-2xl { font-size: 1.1rem !important; }
+            #metrics .text-\[9px\] { font-size: 8px !important; }
+
+            /* FAQ más compacto */
+            #faq details { border-radius: 0.75rem; }
+            #faq summary { font-size: 0.85rem; padding: 0.75rem 1rem; }
+            #faq details p { font-size: 0.8rem; padding: 0 1rem 1rem; }
+
+            /* Toast más pequeño */
+            .loading-toast { min-width: 180px; max-width: 240px; padding: 8px 12px; bottom: 12px; right: 12px; }
+            .loading-toast .toast-logo { width: 28px; height: 28px; }
+            .loading-toast .toast-title { font-size: 11px; }
+
+            /* Mapa más compacto */
+            #comunidad-global .h-\[400px\] { height: 280px !important; }
+            #comunidad-global .rounded-\[2\.5rem\] { border-radius: 1.5rem !important; }
+
+            /* Modalidades */
+            .modalidad-logo-bg { width: 32px; height: 32px; background-size: 24px 24px; }
+        }
+
+        /* Reduce motion para accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+        }
+
+        /* Scrollbar más fina en móvil */
+        @media (max-width: 768px) {
+            .custom-scrollbar::-webkit-scrollbar { width: 3px; }
+        }
+
+        
+
+        /* Botones que NO deben ocupar todo el ancho */
+        .btn-auto {
+            width: auto !important;
+            display: inline-flex !important;
+        }
+
+        /* ==========================================
+           BOTÓN WHATSAPP FLOTANTE
+           ========================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 26px;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35), 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 99998;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.12) translateY(-3px);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+        }
+        .whatsapp-float::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid rgba(37, 211, 102, 0.35);
+            animation: whatsappPulse 2.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes whatsappPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0; }
+        }
+        /* Tooltip sutil */
+        .whatsapp-float::after {
+            content: '¿Dudas? Escríbenos';
+            position: absolute;
+            right: calc(100% + 12px);
+            top: 50%;
+            transform: translateY(-50%) scale(0.9);
+            background: rgba(15, 23, 42, 0.9);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        .whatsapp-float:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+        body.light-mode .whatsapp-float::after {
+            background: rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 16px;
+                right: 16px;
+            }
+            .whatsapp-float::after { display: none; }
+        }
     </style>
 
     <!-- GOOGLE CHARTS -->
@@ -1446,24 +1612,9 @@
         }
     </script>
 
-<base target="_blank">
-<base target="_blank">
+
 </head>
 <body class="custom-scrollbar">
-<!-- PARTÍCULAS FLOTANTES -->
-<div class="particles-bg" aria-hidden="true">
-    <div class="particle" style="left:10%;top:90%;animation-delay:0s;animation-duration:25s;"></div>
-    <div class="particle" style="left:20%;top:80%;animation-delay:5s;animation-duration:30s;width:6px;height:6px;"></div>
-    <div class="particle" style="left:35%;top:95%;animation-delay:10s;animation-duration:22s;"></div>
-    <div class="particle" style="left:50%;top:85%;animation-delay:3s;animation-duration:28s;width:5px;height:5px;"></div>
-    <div class="particle" style="left:65%;top:90%;animation-delay:8s;animation-duration:26s;"></div>
-    <div class="particle" style="left:80%;top:88%;animation-delay:12s;animation-duration:32s;width:6px;height:6px;"></div>
-    <div class="particle" style="left:90%;top:92%;animation-delay:6s;animation-duration:24s;"></div>
-    <div class="particle" style="left:15%;top:70%;animation-delay:15s;animation-duration:35s;width:3px;height:3px;background:rgba(139,92,246,0.3);"></div>
-    <div class="particle" style="left:45%;top:75%;animation-delay:18s;animation-duration:29s;width:4px;height:4px;background:rgba(139,92,246,0.3);"></div>
-    <div class="particle" style="left:75%;top:72%;animation-delay:7s;animation-duration:31s;width:3px;height:3px;background:rgba(139,92,246,0.3);"></div>
-</div>
-
 <!-- TOAST DE CARGA (Versión compacta, sin subtítulo y más pequeña) -->
 <div id="loadingToast" class="loading-toast hidden">
     <div class="toast-logo">
@@ -1481,7 +1632,7 @@
         <div class="absolute inset-0 z-0 opacity-40">
             <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-20 pt-36">
+        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-16 pt-24">
             <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Formación Profesional</span>
                 <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Cursos Online y Presenciales</span>
@@ -1499,7 +1650,7 @@
                 <div class="md:col-span-2">
                     <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium mx-auto md:mx-0">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
                     <div class="mt-8">
-                        <button onclick="window.location.href='#cursos-destacados'" class="btn-metal-solid btn-metal-teal px-8 py-4 text-base rounded-2xl font-black uppercase flex items-center gap-3">Ver Cursos <i class="fas fa-chevron-down"></i></button>
+                        <button onclick="window.location.href='#cursos-destacados'" class="btn-metal-solid btn-metal-teal btn-auto px-3 py-1.5 text-[11px] rounded-md font-bold uppercase flex items-center gap-1.5 md:px-5 md:py-2.5 md:text-xs md:rounded-xl md:gap-2">Ver Cursos <i class="fas fa-chevron-down text-[9px] md:text-[10px]"></i></button>
                     </div>
                 </div>
             </div>
@@ -1569,18 +1720,25 @@
         </section>
 
         <!-- DIVISOR GLITCH -->
-        <div class="glitch-divider" aria-hidden="true">
-            <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                <defs>
-                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                    </linearGradient>
-                </defs>
-                <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
-            </svg>
-        </div>
+        <!-- DIVISOR OSCILOSCOPIO -->
+<div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+        <defs>
+            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+            </linearGradient>
+            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+            </linearGradient>
+        </defs>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+    </svg>
+</div>
 
         <!-- CURSOS DESTACADOS -->
         <section id="cursos-destacados" class="section-loading page-section relative py-24 px-6 overflow-hidden reveal">
@@ -1691,18 +1849,25 @@
         </section>
 
         <!-- DIVISOR GLITCH 2 -->
-        <div class="glitch-divider" aria-hidden="true">
-            <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                <defs>
-                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                    </linearGradient>
-                </defs>
-                <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
-            </svg>
-        </div>
+        <!-- DIVISOR OSCILOSCOPIO -->
+<div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+        <defs>
+            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+            </linearGradient>
+            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+            </linearGradient>
+        </defs>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+    </svg>
+</div>
 
         <!-- METODOLOGÍA -->
         <section id="metodologia" class="section-loading page-section relative py-24 px-6 text-center overflow-hidden reveal">
@@ -1716,18 +1881,25 @@
         </section>
 
         <!-- DIVISOR GLITCH -->
-        <div class="glitch-divider" aria-hidden="true">
-            <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                <defs>
-                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                    </linearGradient>
-                </defs>
-                <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
-            </svg>
-        </div>
+        <!-- DIVISOR OSCILOSCOPIO -->
+<div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+        <defs>
+            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+            </linearGradient>
+            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+            </linearGradient>
+        </defs>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+    </svg>
+</div>
 
         <!-- COMUNIDAD -->
         <section id="comunidad" class="section-loading page-section relative py-24 px-6 md:px-12 text-center reveal">
@@ -1807,26 +1979,35 @@
                 <div class="space-y-4" id="faq-container"></div>
                 <div class="text-center mt-10 reveal reveal-up">
                     <p class="text-slate-400 text-sm mb-4 font-medium">Si tienes alguna otra duda, pregúntame por WhatsApp</p>
-                    <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-metal-solid btn-metal-teal !px-8 !py-4 !text-base !rounded-2xl !font-black !uppercase !flex !items-center !gap-3 mx-auto">
-                        <i class="fab fa-whatsapp"></i> Escríbenos por WhatsApp
+                    <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-metal-solid btn-metal-teal btn-auto !px-3 !py-1.5 !text-[11px] !rounded-md !font-bold !uppercase !flex !items-center !gap-1.5 mx-auto md:!px-5 md:!py-2.5 md:!text-xs md:!rounded-xl md:!gap-2">
+                        <i class="fab fa-whatsapp text-[11px] md:text-sm"></i>
+                        <span class="hidden md:inline">WhatsApp</span>
+                        <span class="md:hidden">Escríbenos por WhatsApp</span>
                     </button>
                 </div>
             </div>
         </section>
 
         <!-- DIVISOR GLITCH 3 -->
-        <div class="glitch-divider" aria-hidden="true">
-            <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                <defs>
-                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                    </linearGradient>
-                </defs>
-                <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
-            </svg>
-        </div>
+        <!-- DIVISOR OSCILOSCOPIO -->
+<div class="section-divider" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+        <defs>
+            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+            </linearGradient>
+            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+            </linearGradient>
+        </defs>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+    </svg>
+</div>
 
         <!-- MAPA GLOBAL -->
         <section id="comunidad-global" class="section-loading page-section relative py-24 px-6 text-center overflow-hidden reveal">
@@ -1894,7 +2075,7 @@
     </div>
 </div>
 
-id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20" style="position:fixed;bottom:20px;right:20px;transform:translateX(120%);transition:transform 0.5s cubic-bezier(0.68,-0.55,0.27,1.55);z-index:100000;">
+<div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20" style="position:fixed;bottom:20px;right:20px;transform:translateX(120%);transition:transform 0.5s cubic-bezier(0.68,-0.55,0.27,1.55);z-index:100000;">
     <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
     <div>
         <p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p>
@@ -1906,5 +2087,10 @@ id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl
 <script src="js/app.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
+<!-- BOTÓN WHATSAPP FLOTANTE -->
+<a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
 </body>
 </html>
