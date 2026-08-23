@@ -17,6 +17,7 @@
             --azul-gris: #91a1af;
             --azul-oscuro: #0f172a;
             --celeste: #2db8ce;
+            --cyan: #06b6d4;
             --fb-blue: #1877f2;
         }
 
@@ -33,13 +34,12 @@
             background-repeat: no-repeat;
             margin: 0;
             padding: 0;
-            color: #1e293b; /* color base para modo claro */
+            color: #1e293b;
             scroll-behavior: smooth;
             overflow-x: clip;
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* Overlay oscuro (por defecto) */
         body::before {
             content: '';
             position: fixed;
@@ -59,7 +59,6 @@
             50% { opacity: 0.85; }
         }
 
-        /* Modo claro */
         body.light-mode {
             background-color: #d0e1ef;
             background-image: url('img/fondo2.webp');
@@ -86,7 +85,6 @@
             animation: none !important;
         }
 
-        /* Asegurar que el contenido esté por encima del overlay */
         header, main, section, footer, .page-content {
             position: relative;
             z-index: 1;
@@ -108,7 +106,6 @@
             color: white;
         }
 
-        /* Estilo Glass Azul-Gris */
         .glass-gray-blue {
             background: rgba(145, 161, 175, 0.85);
             backdrop-filter: blur(16px);
@@ -130,7 +127,6 @@
             transition: transform 0.1s ease;
         }
 
-        /* Estrellas interactivas */
         .star-rating i {
             cursor: pointer;
             transition: all 0.2s ease;
@@ -141,7 +137,6 @@
             transform: scale(1.1);
         }
 
-        /* Selector de emojis */
         #emoji-picker {
             display: none;
             position: absolute;
@@ -170,7 +165,6 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: var(--celeste); }
 
-        /* Acordeón */
         .accordion-content {
             max-height: 0;
             overflow: hidden;
@@ -180,14 +174,113 @@
             max-height: 1200px;
         }
 
-        /* Estilos para badges del hero en modo claro */
-        body.light-mode #hero-section .hero-badge {
-            background-color: var(--celeste) !important; /* bg-cyan-500 */
-            color: #ffffff !important; /* text-white */
-            border-color: var(--celeste) !important;
+        /* ==========================================
+           MODO CLARO: BADGES Y PILLS SÓLIDOS CIAN
+           ========================================== */
+        body.light-mode header #hero-badges > *,
+        body.light-mode header #hero-badges * {
+            background-color: var(--cyan) !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            border-color: var(--cyan) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3) !important;
         }
 
-        /* Ajuste de texto en modo claro para el contenido (para mantener legibilidad) */
+        body.light-mode header #course-features > div,
+        body.light-mode header #course-features > span {
+            background-color: var(--cyan) !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            border: 1px solid var(--cyan) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3) !important;
+        }
+
+        body.light-mode header #course-features > div i,
+        body.light-mode header #course-features > span i {
+            color: #ffffff !important;
+        }
+
+        body.light-mode header #course-features > div:hover,
+        body.light-mode header #course-features > span:hover {
+            background-color: #0891b2 !important;
+            border-color: #0891b2 !important;
+        }
+
+        /* ==========================================
+           RECURSOS INCLUIDOS COMO PÍLDORAS (header y sección)
+           ========================================== */
+        .hero-resource-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            transition: all 0.3s ease;
+        }
+        .hero-resource-badge:hover {
+            background: rgba(255, 255, 255, 0.20);
+            transform: translateY(-2px);
+        }
+        .hero-resource-badge i {
+            font-size: 0.875rem;
+        }
+        body.light-mode .hero-resource-badge {
+            background-color: var(--cyan) !important;
+            color: #ffffff !important;
+            border-color: var(--cyan) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3) !important;
+        }
+        body.light-mode .hero-resource-badge i {
+            color: #ffffff !important;
+        }
+        body.light-mode .hero-resource-badge:hover {
+            background-color: #0891b2 !important;
+            border-color: #0891b2 !important;
+        }
+
+        /* ==========================================
+           OTROS AJUSTES DE MODO CLARO
+           ========================================== */
+        body.light-mode header {
+            background: rgba(227, 241, 248, 0.72) !important;
+            backdrop-filter: blur(16px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+            border-bottom: 1px solid #d3e1e8 !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
+        }
+        body.light-mode header .hero-main-title,
+        body.light-mode header .force-white-text,
+        body.light-mode header .text-white {
+            color: #0f172a !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header p,
+        body.light-mode header #course-description {
+            color: #475569 !important;
+            text-shadow: none !important;
+        }
+
+        body.light-mode header .absolute.inset-0 img {
+            opacity: 0.15 !important;
+            filter: saturate(0.5);
+        }
+
+        /* Ajustes de contraste en contenido principal */
         body.light-mode main .text-slate-700,
         body.light-mode main .text-slate-600,
         body.light-mode main .text-slate-500 {
@@ -203,7 +296,6 @@
             color: #0e7490 !important;
         }
 
-        /* Ajuste de fondos de tarjetas en modo claro para mayor transparencia */
         body.light-mode .bg-white {
             background-color: rgba(255, 255, 255, 0.75) !important;
             backdrop-filter: blur(8px);
@@ -215,51 +307,36 @@
             -webkit-backdrop-filter: blur(6px);
         }
 
-        /* ==========================================
-           FIX MODO CLARO: TEXTO EN UNIDADES Y CERTIFICACIÓN
-           ========================================== */
-
-        /* Sesión 01 (glass-dark-blue) → texto blanco */
+        /* Fix textos específicos */
         body.light-mode #contenido-unidades-list .glass-dark-blue h3,
         body.light-mode #contenido-unidades-list .glass-dark-blue li,
         body.light-mode #contenido-unidades-list .glass-dark-blue span {
             color: #ffffff !important;
         }
-
-        /* Sesión 02 (glass-gray-blue) → texto negro */
         body.light-mode #contenido-unidades-list .glass-gray-blue h3,
         body.light-mode #contenido-unidades-list .glass-gray-blue li,
         body.light-mode #contenido-unidades-list .glass-gray-blue span {
             color: #0f172a !important;
         }
-
-        /* Preservar texto blanco en badges y prácticas profesionales */
         body.light-mode #contenido-unidades-list .glass-dark-blue .text-white,
         body.light-mode #contenido-unidades-list .glass-gray-blue .text-white,
         body.light-mode #contenido-unidades-list .glass-dark-blue .text-white *,
         body.light-mode #contenido-unidades-list .glass-gray-blue .text-white * {
             color: #ffffff !important;
         }
-
-        /* Certificación → texto blanco */
         body.light-mode #certification-section h4,
         body.light-mode #certification-section p {
             color: #ffffff !important;
         }
-
-        /* Estrella dorada en Práctica Profesional 2 (Sesión 02, modo claro) */
         body.light-mode #contenido-unidades-list .glass-gray-blue .fa-star {
             color: #fbbf24 !important;
         }
-
-        /* Sidebar de precios (modo claro) → fondo oscuro como Sesión 01 */
         body.light-mode main .lg\:w-1\/3 .bg-white.rounded-\[40px\].shadow-2xl {
             background: rgba(15, 23, 42, 0.92) !important;
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(45, 184, 206, 0.25) !important;
         }
-        /* Textos del sidebar en blanco para legibilidad sobre fondo oscuro */
         body.light-mode main .lg\:w-1\/3 .bg-white.rounded-\[40px\].shadow-2xl h4,
         body.light-mode main .lg\:w-1\/3 .bg-white.rounded-\[40px\].shadow-2xl p,
         body.light-mode main .lg\:w-1\/3 .bg-white.rounded-\[40px\].shadow-2xl span,
@@ -271,13 +348,236 @@
         body.light-mode main .lg\:w-1\/3 .bg-white.rounded-\[40px\].shadow-2xl .border-t {
             border-color: rgba(255, 255, 255, 0.15) !important;
         }
+
+        /* ==========================================
+           BOTÓN WHATSAPP FLOTANTE
+           ========================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 26px;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35), 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 99998;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.12) translateY(-3px);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+        }
+        .whatsapp-float::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid rgba(37, 211, 102, 0.35);
+            animation: whatsappPulse 2.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes whatsappPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0; }
+        }
+        .whatsapp-float::after {
+            content: '¿Dudas? Escríbenos';
+            position: absolute;
+            right: calc(100% + 12px);
+            top: 50%;
+            transform: translateY(-50%) scale(0.9);
+            background: rgba(15, 23, 42, 0.9);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        .whatsapp-float:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+        body.light-mode .whatsapp-float::after {
+            background: rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 16px;
+                right: 16px;
+            }
+            .whatsapp-float::after { display: none; }
+        }
+    /* ==========================================
+       TOAST DE CARGA - ESTILO COMPACTO
+       ========================================== */
+    .loading-toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 100002;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(45, 184, 206, 0.35);
+        border-radius: 12px;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(45, 184, 206, 0.15);
+        pointer-events: none;
+        min-width: 200px;
+        max-width: 240px;
+        animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .loading-toast.hiding {
+        opacity: 0;
+        transform: translateX(120px);
+    }
+    .loading-toast.hidden {
+        display: none;
+    }
+    .loading-toast .toast-logo {
+        width: 25px;
+        height: 25px;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: pulseLogo 2.5s infinite ease-in-out;
+    }
+    .loading-toast .toast-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
+    }
+    .loading-toast .toast-title {
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 10px;
+        line-height: 1.3;
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+    .loading-toast .toast-spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid rgba(45, 184, 206, 0.2);
+        border-top: 2px solid #2db8ce;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+        flex-shrink: 0;
+    }
+    .loading-toast.success-toast {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.96) 0%, rgba(5, 150, 105, 0.96) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.7);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(16, 185, 129, 0.35);
+    }
+    .loading-toast.success-toast .toast-title {
+        color: #ffffff;
+    }
+    .loading-toast.success-toast .toast-check {
+        width: 20px;
+        height: 20px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .loading-toast.success-toast .toast-check i {
+        color: #10b981;
+        font-size: 10px;
+        font-weight: 900;
+    }
+    body.light-mode .loading-toast {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+        border: 1px solid rgba(45, 184, 206, 0.5);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 10px rgba(45, 184, 206, 0.2);
+    }
+    body.light-mode .loading-toast .toast-title {
+        color: #1e293b;
+    }
+    body.light-mode .loading-toast.success-toast {
+        background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+        border: 1px solid rgba(16, 185, 129, 0.7);
+    }
+    body.light-mode .loading-toast.success-toast .toast-title {
+        color: #ffffff;
+    }
+    @keyframes slideInRight {
+        from { transform: translateX(150%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes pulseLogo {
+        0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); }
+        50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); }
+    }
+    @keyframes bounceIn {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+    @media (max-width: 640px) {
+        .loading-toast {
+            bottom: 16px;
+            right: 16px;
+            left: 16px;
+            min-width: auto;
+            max-width: none;
+            padding: 8px 12px;
+        }
+    }
     </style>
     <link rel="stylesheet" href="css/main.css">
 
 
 
+
+
 </head>
 <body>
+<!-- Toast de carga -->
+<div id="loadingToast" class="loading-toast hidden">
+    <div class="toast-logo">
+        <img src="img/AA (38).webp" alt="Aprende Automatizacion" onerror="this.style.display='none'">
+    </div>
+    <div class="toast-content flex-1">
+        <div class="toast-title" id="loadingToastTitle">Cargando curso...</div>
+    </div>
+    <div class="toast-spinner" id="loadingToastSpinner"></div>
+</div>
+
 
 <!-- HERO -->
 <header id="hero-section" class="relative bg-[#0f172a] text-white py-20 px-6 overflow-hidden">
@@ -297,6 +597,9 @@
             </p>
             <div id="course-features" class="flex flex-wrap gap-6 text-sm font-bold text-slate-300">
                 <!-- Features will be injected here -->
+            </div>
+            <div id="hero-resources" class="flex flex-wrap gap-3 mt-6">
+                <!-- Recursos incluidos se mostrarán aquí en el encabezado -->
             </div>
         </div>
     </div>
@@ -351,7 +654,8 @@
             <!-- RECURSOS INCLUIDOS -->
             <section id="recursos-incluidos-section" class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
                 <h2 class="text-xl font-black uppercase tracking-tighter mb-8 border-l-4 pl-4" style="border-color: var(--celeste)">Recursos Incluidos</h2>
-                <div id="recursos-incluidos-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <!-- Contenedor cambiado a flex para pastillas -->
+                <div id="recursos-incluidos-list" class="flex flex-wrap gap-3">
                     <!-- Resources will be injected here -->
                 </div>
             </section>
@@ -424,49 +728,62 @@
     // ==========================================
     // CONFIGURACIÓN GLOBAL DEL SCRIPT
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXgO9nCxF-_llCpiye-er9T7uqe3hnuOkajD_hSV8i1Di1zavgYxXcwFVLvCh-A3pP/exec'; // URL de tu Google Apps Script
-    let COURSE_ID_NUMERIC = null; // Se obtendrá de la URL
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXgO9nCxF-_llCpiye-er9T7uqe3hnuOkajD_hSV8i1Di1zavgYxXcwFVLvCh-A3pP/exec';
+    let COURSE_ID_NUMERIC = null;
 
-    // Función para obtener el ID del curso de la URL
     function getCourseIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         return parseInt(urlParams.get('courseId'));
     }
 
-    // Función para crear un esqueleto de carga
-    function createSkeletonHTML(type, count) {
-        let html = '';
-        for (let i = 0; i < count; i++) {
-            if (type === 'comment') { // Example skeleton for comments, not directly used here but good to have
-                html += `
-                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm mb-4 animate-pulse">
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-slate-200"></div>
-                                <div>
-                                    <div class="h-4 bg-slate-200 rounded w-24 mb-1"></div>
-                                    <div class="h-3 bg-slate-200 rounded w-16"></div>
-                                </div>
-                            </div>
-                            <div class="h-3 bg-slate-200 rounded w-12"></div>
-                        </div>
-                        <div class="h-4 bg-slate-200 rounded w-full mb-2"></div>
-                        <div class="h-4 bg-slate-200 rounded w-5/6"></div>
-                    </div>
-                `;
-            }
-        }
-        return html;
+    // ============ FUNCIONES DEL TOAST ============
+    function showLoadingToast(msg) {
+        const toast = document.getElementById('loadingToast');
+        const title = document.getElementById('loadingToastTitle');
+        const spinner = document.getElementById('loadingToastSpinner');
+        if (!toast) return;
+        toast.classList.remove('hidden', 'hiding', 'success-toast');
+        title.innerText = msg || 'Cargando...';
+        if (spinner) spinner.style.display = 'block';
+        const existingCheck = toast.querySelector('.toast-check');
+        if (existingCheck) existingCheck.remove();
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(0)';
     }
 
-    // ==========================================
-    // FUNCIONES DE RENDERIZADO DINÁMICO
-    // ==========================================
+    function showSuccessToast(msg) {
+        const toast = document.getElementById('loadingToast');
+        const title = document.getElementById('loadingToastTitle');
+        const spinner = document.getElementById('loadingToastSpinner');
+        if (!toast) return;
+        toast.classList.remove('hidden', 'hiding');
+        toast.classList.add('success-toast');
+        title.innerText = msg || '¡Listo!';
+        if (spinner) spinner.style.display = 'none';
+        const existingCheck = toast.querySelector('.toast-check');
+        if (existingCheck) existingCheck.remove();
+        const checkDiv = document.createElement('div');
+        checkDiv.className = 'toast-check';
+        checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+        toast.appendChild(checkDiv);
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(0)';
+        setTimeout(() => { hideLoadingToast(); }, 2500);
+    }
+
+    function hideLoadingToast() {
+        const toast = document.getElementById('loadingToast');
+        if (!toast) return;
+        toast.classList.add('hiding');
+        setTimeout(() => {
+            toast.classList.add('hidden');
+            toast.classList.remove('hiding', 'success-toast');
+        }, 500);
+    }
 
     function renderCourseDetails(course) {
         document.title = `${course.name} - Aprende Automatización`;
 
-        // Hero Section
         document.getElementById('hero-bg-image').src = course.image || 'img/default-hero.gif';
         document.getElementById('course-main-title').innerHTML = `${course.name}<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-[#2db8ce] to-blue-400">${course.type}</span>`;
         document.getElementById('course-description').textContent = course.resumen;
@@ -478,22 +795,58 @@
             <span class="hero-badge bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30">Modalidad ${course.modalidad}</span>
         `;
 
-        // NEW: Render Course Features
         const courseFeaturesContainer = document.getElementById('course-features');
         if (course.features && Array.isArray(course.features)) {
             courseFeaturesContainer.innerHTML = course.features.map(feature => `
                 <div class="flex items-center gap-2"><i class="${feature.icon} text-[#2db8ce]"></i> ${feature.text}</div>
             `).join('');
         } else {
-            courseFeaturesContainer.innerHTML = ''; // Clear if no features
+            courseFeaturesContainer.innerHTML = '';
         }
-        // Video Section
-        document.getElementById('course-video').src = course.videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ'; // Default video
 
-        // Objetivo General
+        // ==========================================
+        // RECURSOS INCLUIDOS EN EL HEADER
+        // ==========================================
+        const heroResourcesContainer = document.getElementById('hero-resources');
+        let heroResourcesHTML = '';
+        if (course.recursosIncluidos && Array.isArray(course.recursosIncluidos)) {
+            heroResourcesHTML += course.recursosIncluidos.map(item => `
+                <span class="hero-resource-badge"><i class="${item.icon}"></i> ${item.desc}</span>
+            `).join('');
+        }
+        const staticResources = [
+            { icon: 'fas fa-file-alt', desc: 'Guías de GRAFCET' },
+            { icon: 'fas fa-laptop-code', desc: 'Software de Simulación' }
+        ];
+        staticResources.forEach(res => {
+            if (!heroResourcesHTML.includes(res.desc)) {
+                heroResourcesHTML += `<span class="hero-resource-badge"><i class="${res.icon}"></i> ${res.desc}</span>`;
+            }
+        });
+        heroResourcesContainer.innerHTML = heroResourcesHTML;
+
+        // ==========================================
+        // RECURSOS INCLUIDOS EN LA SECCIÓN PRINCIPAL (COMO PÍLDORAS)
+        // ==========================================
+        const recursosIncluidosList = document.getElementById('recursos-incluidos-list');
+        let recursosIncluidosHTML = '';
+        if (course.recursosIncluidos && Array.isArray(course.recursosIncluidos)) {
+            recursosIncluidosHTML += course.recursosIncluidos.map(item => `
+                <span class="hero-resource-badge"><i class="${item.icon}"></i> ${item.desc}</span>
+            `).join('');
+        }
+        staticResources.forEach(res => {
+            if (!recursosIncluidosHTML.includes(res.desc)) {
+                recursosIncluidosHTML += `<span class="hero-resource-badge"><i class="${res.icon}"></i> ${res.desc}</span>`;
+            }
+        });
+        recursosIncluidosList.innerHTML = recursosIncluidosHTML;
+
+        // Video Section
+        document.getElementById('course-video').src = course.videoUrl || 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+
         document.getElementById('objetivo-general-content').innerHTML = `<p>${course.objetivoGeneral}</p>`;
 
-        // Perfil de Ingreso
         const perfilIngresoList = document.getElementById('perfil-ingreso-list');
         perfilIngresoList.innerHTML = course.perfilIngreso.map(item => `
             <li class="flex items-start gap-3">
@@ -502,7 +855,6 @@
             </li>
         `).join('');
 
-        // Contenido de las Unidades
         const contenidoUnidadesList = document.getElementById('contenido-unidades-list');
         contenidoUnidadesList.innerHTML = course.contenidoUnidades.map((unit, index) => `
             <div class="${index % 2 === 0 ? 'glass-dark-blue' : 'glass-gray-blue'} p-8 rounded-[2rem] border resource-card overflow-hidden relative">
@@ -520,7 +872,6 @@
             </div>
         `).join('');
 
-        // Requisitos
         const requisitosList = document.getElementById('requisitos-list');
         requisitosList.innerHTML = course.requisitos.map(item => `
             <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
@@ -530,16 +881,6 @@
             </div>
         `).join('');
 
-        // Recursos Incluidos
-        const recursosIncluidosList = document.getElementById('recursos-incluidos-list');
-        recursosIncluidosList.innerHTML = course.recursosIncluidos.map(item => `
-            <div class="p-4 rounded-2xl bg-slate-50 border border-dashed border-slate-300 text-center resource-card">
-                <i class="${item.icon} text-2xl text-red-500 mb-2"></i>
-                <p class="text-[10px] font-bold uppercase text-slate-700">${item.desc}</p>
-            </div>
-        `).join('');
-
-        // Datos Generales
         const datosGeneralesList = document.getElementById('datos-generales-list');
         datosGeneralesList.innerHTML = course.datosGenerales.map(item => `
             <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100">
@@ -548,7 +889,6 @@
             </div>
         `).join('');
 
-        // Perfil de Egreso
         const perfilEgresoList = document.getElementById('perfil-egreso-list');
         perfilEgresoList.innerHTML = course.perfilEgreso.map(item => `
             <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 resource-card">
@@ -558,7 +898,6 @@
             </div>
         `).join('');
 
-        // Certification Section (assuming it's always "Aprende Automatización" unless specified)
         const certificationLogo = document.getElementById('certification-logo');
         const certificationTitle = document.getElementById('certification-title');
         const certificationDescription = document.getElementById('certification-description');
@@ -566,13 +905,12 @@
         if (course.certification && course.certification.title) certificationTitle.textContent = course.certification.title;
         if (course.certification && course.certification.description) certificationDescription.textContent = course.certification.description;
 
-        // Sidebar
         document.getElementById('course-price').textContent = course.precio;
         document.getElementById('course-old-price').textContent = course.precioAnterior;
         document.getElementById('sidebar-modalidad').textContent = course.modalidad;
 
         const buyActionsContainer = document.getElementById('buy-actions');
-        const user = AuthLogic.currentUser; // Get current user from AuthLogic
+        const user = AuthLogic.currentUser;
         const hasAccess = user && user.accessedCursos && user.accessedCursos.includes(COURSE_ID_NUMERIC);
 
         if (hasAccess) {
@@ -596,22 +934,20 @@
         }
     }
 
-    // ==========================================
-    // FETCH DATA FROM GOOGLE SHEET
-    // ==========================================
-
     async function fetchCourseData(courseId) {
         if (!courseId) {
             console.error("No courseId provided.");
             return null;
         }
 
+        showLoadingToast('Cargando información del curso...');
+
         try {
-            // Fetch course data from Google Sheet
             const response = await fetch(`${SCRIPT_URL}?action=get_course_info&courseId=${courseId}&t=${Date.now()}`);
             const result = await response.json();
 
             if (result.status === 'success' && result.data) {
+                showSuccessToast('Curso cargado');
                 return result.data;
             } else {
                 console.error("Error fetching course data:", result.message || "Unknown error");
@@ -619,13 +955,10 @@
             }
         } catch (error) {
             console.error("Network error fetching course data:", error);
+            hideLoadingToast();
             return null;
         }
     }
-
-    // ==========================================
-    // INITIALIZATION
-    // ==========================================
 
     document.addEventListener('DOMContentLoaded', async () => {
         COURSE_ID_NUMERIC = getCourseIdFromUrl();
@@ -633,7 +966,6 @@
         if (!COURSE_ID_NUMERIC) {
             document.getElementById('course-main-title').textContent = "Error: Curso no encontrado";
             document.getElementById('course-description').textContent = "Por favor, asegúrate de que la URL contenga un 'courseId' válido.";
-            // Hide all sections if no courseId
             document.querySelectorAll('main section, main div.mt-8').forEach(section => section.style.display = 'none');
             return;
         }
@@ -645,12 +977,15 @@
         } else {
             document.getElementById('course-main-title').textContent = "Error: Curso no encontrado";
             document.getElementById('course-description').textContent = "No se pudo cargar la información del curso. Intenta de nuevo más tarde o contacta al soporte.";
-            // Hide all sections if data not found
             document.querySelectorAll('main section, main div.mt-8').forEach(section => section.style.display = 'none');
         }
     });
 </script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
+<a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
 </body>
 </html>

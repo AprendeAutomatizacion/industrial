@@ -469,7 +469,7 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .material-card { animation: fadeIn 0.5s ease forwards; }
+        
 
         .material-card.glow-manual, .material-card.glow-practica {
             border-color: var(--text-accent) !important;
@@ -643,7 +643,224 @@
             border-color: rgba(226, 232, 240, 0.5) !important;
             color: #64748b !important;
         }
-    </style>
+    
+        /* ==========================================
+           BOTÓN WHATSAPP FLOTANTE
+           ========================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 26px;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35), 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 99998;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.12) translateY(-3px);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+        }
+        .whatsapp-float::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid rgba(37, 211, 102, 0.35);
+            animation: whatsappPulse 2.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes whatsappPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0; }
+        }
+        .whatsapp-float::after {
+            content: '¿Dudas? Escríbenos';
+            position: absolute;
+            right: calc(100% + 12px);
+            top: 50%;
+            transform: translateY(-50%) scale(0.9);
+            background: rgba(15, 23, 42, 0.9);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        .whatsapp-float:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+        body.light-mode .whatsapp-float::after {
+            background: rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 16px;
+                right: 16px;
+            }
+            .whatsapp-float::after { display: none; }
+        }
+
+        /* ==========================================
+           FIXES MODO CLARO - HEADER
+           ========================================== */
+        body.light-mode header {
+            background: rgba(227, 241, 248, 0.72) !important;
+            backdrop-filter: blur(16px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+            border-bottom: 1px solid #d3e1e8 !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
+        }
+        body.light-mode header .hero-main-title,
+        body.light-mode header .force-white-text,
+        body.light-mode header .text-white {
+            color: #0f172a !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header p,
+        body.light-mode header #course-description {
+            color: #475569 !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header .hero-badge {
+            background: rgba(8, 145, 178, 0.10) !important;
+            border: 1px solid rgba(8, 145, 178, 0.20) !important;
+            color: #0891b2 !important;
+        }
+        body.light-mode header .bg-emerald-500\/20 {
+            background: rgba(16, 185, 129, 0.10) !important;
+            border: 1px solid rgba(16, 185, 129, 0.20) !important;
+            color: #10b981 !important;
+        }
+        body.light-mode header .bg-red-500\/20 {
+            background: rgba(239, 68, 68, 0.10) !important;
+            border: 1px solid rgba(239, 68, 68, 0.20) !important;
+            color: #ef4444 !important;
+        }
+        body.light-mode header .absolute.inset-0 img {
+            opacity: 0.15 !important;
+            filter: saturate(0.5);
+        }
+
+        /* ==========================================
+           FEATURE PILLS EN EL HEADER
+           ========================================== */
+        #course-features {
+            gap: 0.75rem !important;
+        }
+        #course-features > div,
+        #course-features > span {
+            display: inline-flex !important;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.20);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            transition: all 0.3s ease;
+        }
+        #course-features > div:hover,
+        #course-features > span:hover {
+            background: rgba(255, 255, 255, 0.20);
+            transform: translateY(-2px);
+        }
+        #course-features > div i,
+        #course-features > span i {
+            color: #2db8ce;
+            font-size: 0.875rem;
+            background: transparent !important;
+        }
+        /* Quitar fondo blanco de cualquier contenedor del icono */
+        #course-features > div > div,
+        #course-features > span > div,
+        #course-features > div > span,
+        #course-features > span > span {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+        body.light-mode #course-features > div,
+        body.light-mode #course-features > span {
+            background: rgba(15, 23, 42, 0.08) !important;
+            border-color: rgba(15, 23, 42, 0.15) !important;
+            color: #0f172a !important;
+        }
+        body.light-mode #course-features > div:hover,
+        body.light-mode #course-features > span:hover {
+            background: rgba(15, 23, 42, 0.15) !important;
+        }
+        body.light-mode #course-features > div i,
+        body.light-mode #course-features > span i {
+            color: #06b6d4 !important;
+        }
+
+        /* ==========================================
+           MODO CLARO: BADGES Y PILLS SÓLIDOS CIAN CON TEXTO BLANCO
+           (Aplicado según página de información)
+           ========================================== */
+        body.light-mode header #hero-badges > *,
+        body.light-mode header #hero-badges * {
+            background-color: #06b6d4 !important; /* cyan sólido */
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            border-color: #06b6d4 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3) !important;
+        }
+
+        body.light-mode header #course-features > div,
+        body.light-mode header #course-features > span {
+            background-color: #06b6d4 !important;
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            border: 1px solid #06b6d4 !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            box-shadow: 0 2px 8px rgba(6, 182, 212, 0.3) !important;
+        }
+
+        body.light-mode header #course-features > div i,
+        body.light-mode header #course-features > span i {
+            color: #ffffff !important; /* iconos blancos para contraste */
+        }
+
+        body.light-mode header #course-features > div:hover,
+        body.light-mode header #course-features > span:hover {
+            background-color: #0891b2 !important;
+            border-color: #0891b2 !important;
+        }
+</style>
+
+
 
 </head>
 <body class="custom-scrollbar">
@@ -742,8 +959,10 @@
                 <p class="text-white text-lg mb-8 max-w-2xl leading-relaxed font-medium" id="course-description">
                     Cargando descripción del curso...
                 </p>
-                <div id="course-features" class="flex flex-wrap gap-6 text-sm font-bold text-slate-300">
-                    <!-- Features se cargarán aquí si existen en los datos -->
+                <div id="course-features" class="flex flex-wrap gap-3 text-sm font-bold">
+                    <div><i class="fas fa-bolt"></i> Electricidad Industrial</div>
+                    <div><i class="fas fa-layer-group"></i> Nivel Intermedio</div>
+                    <div><i class="fas fa-globe"></i> Modalidad Online</div>
                 </div>
             </div>
         </div>
@@ -799,5 +1018,10 @@
     </script> 
     <script src="js/navbar.js"></script>
     <script src="js/footer.js"></script>
+<!-- BOTÓN WHATSAPP FLOTANTE -->
+<a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
 </body>
 </html>

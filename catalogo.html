@@ -836,103 +836,127 @@
            ========================================== */
         .loading-toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            bottom: 15px;
+            right: 15px;
             z-index: 100002;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px) saturate(140%);
-            -webkit-backdrop-filter: blur(12px) saturate(140%);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 12px;
+            padding: 8px 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(6, 182, 212, 0.1);
+            gap: 7px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(45, 184, 206, 0.2);
             pointer-events: none;
-            min-width: 240px;
-            max-width: 280px;
-            animation: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            min-width: 160px;
+            max-width: 45vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
-        .loading-toast.hiding { 
-            opacity: 0; 
-            transform: translateX(120px) scale(0.95);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        .loading-toast.hiding {
+            opacity: 0;
+            transform: translateX(100px);
         }
         .loading-toast .toast-logo {
-            width: 36px;
-            height: 36px;
+            width: 25px;
+            height: 25px;
             flex-shrink: 0;
-            animation: pulseLogo 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.4));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
         }
         .loading-toast .toast-logo img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
+        }
+        .loading-toast .toast-content {
+            flex: 1;
         }
         .loading-toast .toast-title {
             color: #ffffff;
-            font-weight: 800;
-            font-size: 13px;
+            font-weight: 700;
+            font-size: 10px;
             margin-bottom: 0;
-            line-height: 1.3;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.2px;
         }
         .loading-toast .toast-spinner {
-            width: 16px;
-            height: 16px;
-            border: 2.5px solid rgba(6, 182, 212, 0.15);
-            border-top: 2.5px solid #06b6d4;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(45, 184, 206, 0.2);
+            border-top: 2px solid #2db8ce;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 1s linear infinite;
             flex-shrink: 0;
-            filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
         }
         .loading-toast.success-toast {
-            background: rgba(16, 185, 129, 0.9);
-            border-color: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .loading-toast.success-toast .toast-logo img {
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.4));
+        }
+        .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+        .loading-toast.success-toast .toast-check {
+            width: 18px;
+            height: 18px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 10px;
+            font-weight: 900;
         }
         @keyframes slideInRight {
-            from { transform: translateX(150%) scale(0.9); opacity: 0; }
-            to { transform: translateX(0) scale(1); opacity: 1; }
+            from { transform: translateX(150%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         @keyframes pulseLogo {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.3)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.5)); }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.3)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 10px rgba(45, 184, 206, 0.6)); transform: scale(1.05); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         /* ==========================================
            REVEAL - ANIMACIONES PREMIUM
            ========================================== */
         .reveal { 
-            opacity: 0; 
-            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-            filter: blur(8px);
+            opacity: 1 !important; 
+            transition: none !important;
+            filter: none !important;
         }
-        .reveal.active { 
-            opacity: 1; 
-            transform: translate(0, 0) scale(1);
-            filter: blur(0);
+        .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-center {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
         }
-        .reveal-up { transform: translateY(60px) scale(0.95); }
-        .reveal-down { transform: translateY(-60px) scale(0.95); }
-        .reveal-left { transform: translateX(-60px) scale(0.95); }
-        .reveal-right { transform: translateX(60px) scale(0.95); }
-        .reveal-center { transform: scale(0.85); }
 
-        /* Stagger delay para grids */
-        .grid .reveal:nth-child(1) { transition-delay: 0ms; }
-        .grid .reveal:nth-child(2) { transition-delay: 100ms; }
-        .grid .reveal:nth-child(3) { transition-delay: 200ms; }
-        .grid .reveal:nth-child(4) { transition-delay: 300ms; }
-        .grid .reveal:nth-child(5) { transition-delay: 400ms; }
-        .grid .reveal:nth-child(6) { transition-delay: 500ms; }
+        .section-loading {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
 
         /* ==========================================
            MODALS - GLASSMORPHISM
@@ -984,13 +1008,9 @@
            LOADING STATES
            ========================================== */
         .section-loading {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
-        }
-        .section-loading.loaded {
-            opacity: 1;
-            transform: translateY(0);
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
         }
 
         /* ==========================================
@@ -1055,12 +1075,13 @@
         body.light-mode .loading-toast {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
             border: 1px solid rgba(45, 184, 206, 0.6);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15), 0 0 12px rgba(45, 184, 206, 0.25);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(45, 184, 206, 0.25);
         }
         body.light-mode .loading-toast .toast-title { color: #1e293b; }
         body.light-mode .loading-toast.success-toast {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
             border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 15px rgba(16, 185, 129, 0.4);
         }
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
         body.light-mode .custom-scrollbar::-webkit-scrollbar-track {
@@ -1225,6 +1246,7 @@
 
 
 
+
 </head>
 <body class="custom-scrollbar">
 
@@ -1249,7 +1271,7 @@
     <div class="toast-spinner" id="loadingToastSpinner"></div>
 </div>
 
-<div <div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20">
+<div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20">
     <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
     <div>
         <p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p>
@@ -1451,8 +1473,8 @@
     <div class="max-w-7xl mx-auto px-6 py-12">
         <main class="relative z-10 w-full">
             <!-- RUTA DE APRENDIZAJE -->
-            <section id="learning-path" class="mb-16 text-center reveal">
-                <div class="reveal reveal-down">
+            <section id="learning-path" class="mb-16 text-center">
+                <div>
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Camino</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">Elige tu <span>Ruta de Aprendizaje</span></h2>
                     <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
@@ -1460,28 +1482,28 @@
                 <div class="relative flex justify-center items-center">
                     <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700/50 -translate-y-1/2 hidden md:block"></div>
                     <div class="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full max-w-6xl">
-                        <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105 reveal reveal-up">
+                        <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105">
                             <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-cyan-500 group-hover:text-white">
                                 <i class="fas fa-seedling text-lg md:text-2xl text-cyan-400 group-hover:text-white transition-colors"></i>
                             </div>
                             <h3 class="text-sm md:text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
                             <p class="text-[10px] md:text-xs text-slate-400 leading-tight md:leading-normal">Para principiantes que inician en el mundo de la automatización.</p>
                         </div>
-                        <div onclick="filterByLevel('Manual', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-blue-500 hover:scale-105 reveal reveal-up" style="transition-delay: 100ms;">
+                        <div onclick="filterByLevel('Manual', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-blue-500 hover:scale-105" style="transition-delay: 100ms;">
                             <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white">
                                 <i class="fas fa-book-open text-lg md:text-2xl text-blue-400 group-hover:text-white transition-colors"></i>
                             </div>
                             <h3 class="text-sm md:text-lg font-black text-white uppercase mb-1">Manuales</h3>
                             <p class="text-[10px] md:text-xs text-slate-400 leading-tight md:leading-normal">Guías prácticas y recursos para consulta rápida.</p>
                         </div>
-                        <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-purple-500 hover:scale-105 reveal reveal-up" style="transition-delay: 200ms;">
+                        <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-purple-500 hover:scale-105" style="transition-delay: 200ms;">
                             <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
                                 <i class="fas fa-cogs text-lg md:text-2xl text-purple-400 group-hover:text-white transition-colors"></i>
                             </div>
                             <h3 class="text-sm md:text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
                             <p class="text-[10px] md:text-xs text-slate-400 leading-tight md:leading-normal">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
                         </div>
-                        <div onclick="filterByLevel('Avanzado', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-amber-500 hover:scale-105 reveal reveal-up" style="transition-delay: 300ms;">
+                        <div onclick="filterByLevel('Avanzado', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-amber-500 hover:scale-105" style="transition-delay: 300ms;">
                             <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-white">
                                 <i class="fas fa-rocket text-lg md:text-2xl text-amber-400 group-hover:text-white transition-colors"></i>
                             </div>
@@ -1520,8 +1542,8 @@
 
 
             <!-- CATÁLOGO DE CURSOS -->
-            <section id="catalog-section" class="py-12 reveal">
-                <div class="text-center mb-10 reveal reveal-down">
+            <section id="catalog-section" class="py-12">
+                <div class="text-center mb-10">
                     <span id="catalog-subtitle" class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Nuestra Oferta</span>
                     <h2 id="catalog-title" class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Catálogo <span>Completo</span></h2>
                 </div>
@@ -1603,7 +1625,7 @@
                 toast.classList.remove('hidden', 'hiding');
                 toast.classList.add('success-toast');
                 
-                title.innerText = '¡Listo! Ya están cargados los cursos';
+                title.innerText = '¡Listo!';
                 
                 if (spinner) spinner.style.display = 'none';
                 
@@ -2623,33 +2645,26 @@
         }
     </script>
 <script>
-    // Reveal animations on scroll
-    document.addEventListener('DOMContentLoaded', function() {
-        const revealElements = document.querySelectorAll('.reveal');
-
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
-
-        revealElements.forEach(el => revealObserver.observe(el));
-
-        // Trigger initial reveal for elements already in view
-        setTimeout(() => {
-            revealElements.forEach(el => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    el.classList.add('active');
-                }
-            });
-        }, 100);
-    });
+    // Reveal animations on scroll - DESACTIVADO: todo visible de una vez
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const revealElements = document.querySelectorAll('.reveal');
+    //     const revealObserver = new IntersectionObserver((entries) => {
+    //         entries.forEach(entry => {
+    //             if (entry.isIntersecting) {
+    //                 entry.target.classList.add('active');
+    //             }
+    //         });
+    //     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    //     revealElements.forEach(el => revealObserver.observe(el));
+    //     setTimeout(() => {
+    //         revealElements.forEach(el => {
+    //             const rect = el.getBoundingClientRect();
+    //             if (rect.top < window.innerHeight && rect.bottom > 0) {
+    //                 el.classList.add('active');
+    //             }
+    //         });
+    //     }, 100);
+    // });
 </script>
 <script src="js/auth.js"></script>
 <script src="js/navbar.js"></script>

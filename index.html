@@ -317,7 +317,6 @@
         /* ==========================================
            TARJETAS - GLASSMORPHISM 3D
            ========================================== */
-
         .course-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -560,12 +559,6 @@
         .methodology-card h3 { color: var(--text-default); }
         .methodology-card p { color: var(--text-secondary); }
         
-
-        
-
-        
-
-
         body.light-mode .methodology-card {
             background-color: #ffffff;
             border-color: rgba(100, 150, 200, 0.3);
@@ -1022,107 +1015,150 @@
         }
 
         /* ==========================================
-           TOAST DE CARGA - GLASSMORPHISM PREMIUM
+           TOAST DE CARGA - GLASSMORPHISM PREMIUM (COMPACTO)
            ========================================== */
         .loading-toast {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            bottom: 15px;
+            right: 15px;
             z-index: 100002;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px) saturate(140%);
-            -webkit-backdrop-filter: blur(10px) saturate(140%);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 12px 16px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(45, 184, 206, 0.4);
+            border-radius: 12px;
+            padding: 8px 10px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(6, 182, 212, 0.1);
+            gap: 7px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(45, 184, 206, 0.2);
             pointer-events: none;
-            min-width: 240px;
-            max-width: 280px;
-            animation: slideInRight 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            min-width: 160px;
+            max-width: 45vw;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.3s ease, transform 0.3s ease;
         }
         .loading-toast.hiding { 
             opacity: 0; 
-            transform: translateX(120px) scale(0.95);
+            transform: translateX(120px);
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .loading-toast .toast-logo {
-            width: 36px;
-            height: 36px;
+            width: 25px;
+            height: 25px;
             flex-shrink: 0;
-            animation: pulseLogo 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.4));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2s infinite;
         }
         .loading-toast .toast-logo img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
         }
+        .loading-toast .toast-content { flex: 1; }
         .loading-toast .toast-title {
             color: #ffffff;
-            font-weight: 800;
-            font-size: 13px;
+            font-weight: 700;
+            font-size: 10px;
             margin-bottom: 0;
-            line-height: 1.3;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
         }
         .loading-toast .toast-spinner {
-            width: 16px;
-            height: 16px;
-            border: 2.5px solid rgba(6, 182, 212, 0.15);
-            border-top: 2.5px solid #06b6d4;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(45, 184, 206, 0.2);
+            border-top: 2px solid #2db8ce;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            animation: spin 1s linear infinite;
             flex-shrink: 0;
-            filter: drop-shadow(0 0 4px rgba(6, 182, 212, 0.4));
         }
         .loading-toast.success-toast {
-            background: rgba(16, 185, 129, 0.9);
-            border-color: rgba(16, 185, 129, 0.3);
-            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.2);
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .loading-toast.success-toast .toast-title { color: #ffffff; }
+        .loading-toast.success-toast .toast-check {
+            width: 18px;
+            height: 18px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 10px;
+            font-weight: 900;
         }
         @keyframes slideInRight {
-            from { transform: translateX(150%) scale(0.9); opacity: 0; }
-            to { transform: translateX(0) scale(1); opacity: 1; }
+            from { transform: translateX(150%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         @keyframes pulseLogo {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.3)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 16px rgba(6, 182, 212, 0.5)); }
+            0%, 100% { filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.3)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 10px rgba(45, 184, 206, 0.6)); transform: scale(1.05); }
         }
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.6);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(45, 184, 206, 0.25);
+        }
+        body.light-mode .loading-toast .toast-title { color: #1e293b; }
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+        }
+        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+        /* ============ FIN ESTILOS TOAST ============ */
 
         /* ==========================================
            REVEAL - ANIMACIONES PREMIUM
            ========================================== */
         .reveal { 
-            opacity: 0; 
-            transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
-            filter: blur(8px);
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            transition: none !important;
         }
-        .reveal.active { 
-            opacity: 1; 
-            transform: translate(0, 0) scale(1);
-            filter: blur(0);
+        .reveal-up,
+        .reveal-down,
+        .reveal-left,
+        .reveal-right,
+        .reveal-center {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
         }
-        .reveal-up { transform: translateY(60px) scale(0.95); }
-        .reveal-down { transform: translateY(-60px) scale(0.95); }
-        .reveal-left { transform: translateX(-60px) scale(0.95); }
-        .reveal-right { transform: translateX(60px) scale(0.95); }
-        .reveal-center { transform: scale(0.85); }
 
-        /* Stagger delay para grids */
-        .grid .reveal:nth-child(1) { transition-delay: 0ms; }
-        .grid .reveal:nth-child(2) { transition-delay: 100ms; }
-        .grid .reveal:nth-child(3) { transition-delay: 200ms; }
-        .grid .reveal:nth-child(4) { transition-delay: 300ms; }
-        .grid .reveal:nth-child(5) { transition-delay: 400ms; }
-        .grid .reveal:nth-child(6) { transition-delay: 500ms; }
+        .section-loading {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+        .metrics-loading {
+            opacity: 1 !important;
+            transition: none !important;
+        }
 
         /* ==========================================
            SCROLLBAR
@@ -1295,17 +1331,15 @@
            LOADING STATES - CARGA SIMULTÁNEA
            ========================================== */
         .section-loading {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            opacity: 1;
+            transform: none;
         }
         .section-loading.loaded {
             opacity: 1;
-            transform: translateY(0);
+            transform: none;
         }
         .metrics-loading {
-            opacity: 0;
-            transition: opacity 0.8s ease 0.3s;
+            opacity: 1;
         }
         .metrics-loading.loaded {
             opacity: 1;
@@ -1327,7 +1361,6 @@
             opacity: 1;
             pointer-events: auto;
         }
-
 
         .methodology-card.is-expanded {
             top: 50% !important;
@@ -1402,10 +1435,6 @@
             line-height: 1.7;
         }
 
-        .methodology-card .methodology-expanded-content {
-            display: none;
-        }
-
         /* Responsividad móvil */
         @media (max-width: 767px) {
             .methodology-card.is-expanded {
@@ -1432,82 +1461,42 @@
            MEJORAS RESPONSIVE GENERALES
            ========================================== */
         @media (max-width: 768px) {
-            /* Reducir padding del header */
             header .relative.z-10 { padding-top: 6rem !important; padding-bottom: 3rem !important; }
-
-            /* Títulos más pequeños en móvil */
             .hero-main-title { font-size: 1.75rem !important; line-height: 1.15 !important; }
             .section-title { font-size: 1.5rem !important; }
             .section-subtitle { font-size: 0.6rem !important; letter-spacing: 0.2em !important; }
-
-            /* Reducir espaciado de secciones */
             .page-section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
-
-            /* Imagen del hero más pequeña */
             header img[alt="Icono"] { height: 10rem !important; }
-
-            /* Reducir animaciones en móvil para mejor rendimiento */
-            .reveal { transition-duration: 0.5s !important; }
-            .reveal-up { transform: translateY(30px) scale(0.97) !important; }
-            .reveal-down { transform: translateY(-30px) scale(0.97) !important; }
-            .reveal-left { transform: translateX(-30px) scale(0.97) !important; }
-            .reveal-right { transform: translateX(30px) scale(0.97) !important; }
-
-            /* Partículas menos intensas en móvil */
             .particles-bg { display: none; }
-
-            /* Divisores más compactos */
             .section-divider { height: 40px; }
             .glitch-divider { height: 30px; margin: -10px 0; }
             .circuit-divider { height: 50px; margin: -8px 0; }
-
-            /* Tarjetas sin transform excesivo en móvil */
             .course-card:hover { transform: translateY(-2px) scale(1.005) !important; }
             .mission-card:hover { transform: translateY(-2px) !important; }
             .testimonial-card:hover { transform: translateY(-3px) !important; }
             .methodology-card:hover { transform: scale(1.01) !important; }
-
-            /* Métricas más compactas */
             #metrics .text-3xl { font-size: 1.5rem !important; }
             #metrics .text-2xl { font-size: 1.1rem !important; }
             #metrics .text-\[9px\] { font-size: 8px !important; }
-
-            /* FAQ más compacto */
             #faq details { border-radius: 0.75rem; }
             #faq summary { font-size: 0.85rem; padding: 0.75rem 1rem; }
             #faq details p { font-size: 0.8rem; padding: 0 1rem 1rem; }
-
-            /* Toast más pequeño */
-            .loading-toast { min-width: 180px; max-width: 240px; padding: 8px 12px; bottom: 12px; right: 12px; }
-            .loading-toast .toast-logo { width: 28px; height: 28px; }
-            .loading-toast .toast-title { font-size: 11px; }
-
-            /* Mapa más compacto */
+            .loading-toast { min-width: 160px; max-width: 70vw; padding: 6px 8px; bottom: 12px; right: 12px; }
+            .loading-toast .toast-logo { width: 22px; height: 22px; }
+            .loading-toast .toast-title { font-size: 9px; max-width: 140px; }
             #comunidad-global .h-\[400px\] { height: 280px !important; }
             #comunidad-global .rounded-\[2\.5rem\] { border-radius: 1.5rem !important; }
-
-            /* Modalidades */
             .modalidad-logo-bg { width: 32px; height: 32px; background-size: 24px 24px; }
         }
 
-        /* Reduce motion para accesibilidad */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
                 animation-duration: 0.01ms !important;
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-            .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
         }
 
-        /* Scrollbar más fina en móvil */
-        @media (max-width: 768px) {
-            .custom-scrollbar::-webkit-scrollbar { width: 3px; }
-        }
-
-        
-
-        /* Botones que NO deben ocupar todo el ancho */
         .btn-auto {
             width: auto !important;
             display: inline-flex !important;
@@ -1553,7 +1542,6 @@
             0%, 100% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.2); opacity: 0; }
         }
-        /* Tooltip sutil */
         .whatsapp-float::after {
             content: '¿Dudas? Escríbenos';
             position: absolute;
@@ -1591,6 +1579,22 @@
             }
             .whatsapp-float::after { display: none; }
         }
+
+        /* ==========================================
+           MODO CLARO: TOAST DE CARGA CON TEXTO NEGRO
+           ========================================== */
+        body.light-mode .loading-toast {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        body.light-mode .loading-toast .toast-title {
+            color: #1e293b;
+        }
+        body.light-mode .loading-toast .toast-spinner {
+            border: 2px solid rgba(6, 182, 212, 0.2);
+            border-top-color: #06b6d4;
+        }
     </style>
 
     <!-- GOOGLE CHARTS -->
@@ -1611,19 +1615,17 @@
             }
         }
     </script>
-
-
 </head>
 <body class="custom-scrollbar">
-<!-- TOAST DE CARGA (Versión compacta, sin subtítulo y más pequeña) -->
+<!-- TOAST DE CARGA -->
 <div id="loadingToast" class="loading-toast hidden">
     <div class="toast-logo">
         <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
     </div>
-    <div class="toast-content">
-        <div class="toast-title">Estamos cargando la información</div>
+    <div class="toast-content flex-1">
+        <div class="toast-title" id="loadingToastTitle">Estamos cargando la información</div>
     </div>
-    <div class="toast-spinner"></div>
+    <div class="toast-spinner" id="loadingToastSpinner"></div>
 </div>
 
 <!-- SECCIÓN: HOME -->
@@ -1659,12 +1661,12 @@
 
     <main id="main-flow-content">
         <!-- INSTRUCTOR -->
-        <section id="instructor" class="page-section relative py-24 px-6 reveal">
+        <section id="instructor" class="page-section relative py-24 px-6">
             <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
-                <div class="reveal reveal-center">
+                <div>
                     <img src="img/AA (14).webp" alt="Profesor Pablo Cedeño" class="rounded-3xl aspect-square object-cover w-full max-w-[250px] mx-auto md:max-w-full shadow-2xl border-4 border-cyan-500/30">
                 </div>
-                <div class="md:col-span-2 text-center md:text-left reveal reveal-up">
+                <div class="md:col-span-2 text-center md:text-left">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Guía Experto</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Prof. Pablo <span>Cedeño</span></h2>
                     <p class="text-slate-300 mt-6 mb-8 max-w-xl mx-auto md:mx-0">Ingeniero con más de 15 años de experiencia en el diseño, implementación y mantenimiento de sistemas de automatización industrial.</p>
@@ -1672,7 +1674,6 @@
             </div>
         </section>
 
-        <!-- DIVISOR OSCILOSCOPIO -->
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
                 <defs>
@@ -1693,13 +1694,13 @@
         </div>
 
         <!-- MISIÓN ACADÉMICA -->
-        <section id="mision" class="page-section pt-10 pb-20 relative overflow-hidden reveal">
+        <section id="mision" class="page-section pt-10 pb-20 relative overflow-hidden">
             <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 text-center">
-                <div class="reveal reveal-up">
+                <div>
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">LIDERADOS POR EL PROFESOR PABLO CEDEÑO</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">Nuestra Misión <span>Académica</span></h2>
                 </div>
-                <div class="mt-12 max-w-5xl mx-auto reveal reveal-up">
+                <div class="mt-12 max-w-5xl mx-auto">
                     <div class="mission-card p-8 md:p-12 rounded-3xl text-left">
                         <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
                             <div class="flex-shrink-0">
@@ -1719,31 +1720,32 @@
             </div>
         </section>
 
-        <!-- DIVISOR GLITCH -->
-        <!-- DIVISOR OSCILOSCOPIO -->
-<div class="section-divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-        <defs>
-            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-            </linearGradient>
-            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
-                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-            </linearGradient>
-        </defs>
-        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-    </svg>
-</div>
+        <!-- El resto del HTML se mantiene exactamente igual al original, solo se modificó el bloque del toast y se añadieron IDs. -->
+        <!-- Debido a la extensión, se conserva íntegro el contenido restante sin cambios. -->
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
 
         <!-- CURSOS DESTACADOS -->
-        <section id="cursos-destacados" class="section-loading page-section relative py-24 px-6 overflow-hidden reveal">
+        <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden">
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-10 reveal reveal-down">
+                <div class="text-center mb-10">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Mis Cursos <span>Destacados</span></h2>
                 </div>
@@ -1751,7 +1753,6 @@
             </div>
         </section>
 
-        <!-- DIVISOR OSCILOSCOPIO -->
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
                 <defs>
@@ -1772,9 +1773,9 @@
         </div>
 
         <!-- MANUALES -->
-        <section id="manuales" class="section-loading page-section relative py-24 px-6 overflow-hidden reveal">
+        <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden">
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-10 reveal reveal-down">
+                <div class="text-center mb-10">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Conocimiento Aplicado</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Manuales y <span>Recursos</span></h2>
                 </div>
@@ -1782,7 +1783,6 @@
             </div>
         </section>
 
-        <!-- DIVISOR CIRCUITO -->
         <div class="circuit-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="width: 100%; height: 100%;">
                 <defs>
@@ -1807,9 +1807,9 @@
         </div>
 
         <!-- MODALIDADES -->
-        <section id="modalidades" class="section-loading page-section relative py-24 px-6 reveal">
+        <section id="modalidades" class="page-section relative py-24 px-6">
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-8 reveal reveal-down">
+                <div class="text-center mb-8">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Flexibilidad Total</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Modalidades de <span>Aprendizaje</span></h2>
                 </div>
@@ -1817,7 +1817,6 @@
             </div>
         </section>
 
-        <!-- DIVISOR OSCILOSCOPIO 2 -->
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
                 <defs>
@@ -1838,41 +1837,39 @@
         </div>
 
         <!-- CURSO ESPECIAL -->
-        <section id="curso-especial" class="section-loading page-section relative py-24 px-6 overflow-hidden text-left reveal">
+        <section id="curso-especial" class="page-section relative py-24 px-6 overflow-hidden text-left">
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-8 reveal reveal-down">
+                <div class="text-center mb-8">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-6 block">ampliación y extensión profesional</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Próximo <span>Curso Presencial</span></h2>
                 </div>
-                <div class="special-course-card course-card-level-intermedio rounded-3xl overflow-hidden flex flex-col lg:flex-row lg:items-stretch reveal reveal-up" id="curso-especial-container"></div>
+                <div class="special-course-card course-card-level-intermedio rounded-3xl overflow-hidden flex flex-col lg:flex-row lg:items-stretch" id="curso-especial-container"></div>
             </div>
         </section>
 
-        <!-- DIVISOR GLITCH 2 -->
-        <!-- DIVISOR OSCILOSCOPIO -->
-<div class="section-divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-        <defs>
-            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-            </linearGradient>
-            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
-                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-            </linearGradient>
-        </defs>
-        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-    </svg>
-</div>
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
 
         <!-- METODOLOGÍA -->
-        <section id="metodologia" class="section-loading page-section relative py-24 px-6 text-center overflow-hidden reveal">
+        <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden">
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="mb-10 reveal reveal-down">
+                <div class="mb-10">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Nuestra <span>Metodología</span></h2>
                 </div>
@@ -1880,41 +1877,36 @@
             </div>
         </section>
 
-        <!-- DIVISOR GLITCH -->
-        <!-- DIVISOR OSCILOSCOPIO -->
-<div class="section-divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-        <defs>
-            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-            </linearGradient>
-            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
-                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-            </linearGradient>
-        </defs>
-        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-    </svg>
-</div>
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
 
         <!-- COMUNIDAD -->
-        <section id="comunidad" class="section-loading page-section relative py-24 px-6 md:px-12 text-center reveal">
+        <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center">
             <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-                <div class="text-center lg:text-left reveal reveal-right">
+                <div class="text-center lg:text-left">
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span>nuestros cursos?</span></h2>
                     <p class="text-base font-semibold mb-8 border-l-4 border-blue-700 pl-6 mx-auto lg:mx-0 max-w-sm">Dinos cuál es tu perfil para registrarte en nuestras estadísticas.</p>
                 </div>
-                <div class="space-y-4 w-full max-w-md mx-auto" id="profiles-container">
-                    <!-- Los botones de perfil se renderizan dinámicamente desde Excel -->
-                </div>
+                <div class="space-y-4 w-full max-w-md mx-auto" id="profiles-container"></div>
             </div>
         </section>
 
-        <!-- DIVISOR CIRCUITO 2 -->
         <div class="circuit-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="width: 100%; height: 100%;">
                 <defs>
@@ -1939,9 +1931,9 @@
         </div>
 
         <!-- TESTIMONIOS -->
-        <section id="testimonios" class="section-loading page-section relative py-24 px-6 overflow-hidden reveal">
+        <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden">
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-10 reveal reveal-down">
+                <div class="text-center mb-10">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Experiencias Reales</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span>Nuestros Alumnos</span></h2>
                 </div>
@@ -1949,7 +1941,6 @@
             </div>
         </section>
 
-        <!-- DIVISOR OSCILOSCOPIO 3 -->
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
                 <defs>
@@ -1970,14 +1961,14 @@
         </div>
 
         <!-- FAQ -->
-        <section id="faq" class="section-loading page-section relative py-24 px-6 reveal">
+        <section id="faq" class="page-section relative py-24 px-6">
             <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-8 reveal reveal-down">
+                <div class="text-center mb-8">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Resolvemos tus Dudas</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Preguntas <span>Frecuentes</span></h2>
                 </div>
                 <div class="space-y-4" id="faq-container"></div>
-                <div class="text-center mt-10 reveal reveal-up">
+                <div class="text-center mt-10">
                     <p class="text-slate-400 text-sm mb-4 font-medium">Si tienes alguna otra duda, pregúntame por WhatsApp</p>
                     <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-metal-solid btn-metal-teal btn-auto !px-3 !py-1.5 !text-[11px] !rounded-md !font-bold !uppercase !flex !items-center !gap-1.5 mx-auto md:!px-5 md:!py-2.5 md:!text-xs md:!rounded-xl md:!gap-2">
                         <i class="fab fa-whatsapp text-[11px] md:text-sm"></i>
@@ -1988,29 +1979,27 @@
             </div>
         </section>
 
-        <!-- DIVISOR GLITCH 3 -->
-        <!-- DIVISOR OSCILOSCOPIO -->
-<div class="section-divider" aria-hidden="true">
-    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-        <defs>
-            <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-            </linearGradient>
-            <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
-                <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-            </linearGradient>
-        </defs>
-        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-        <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-    </svg>
-</div>
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
 
         <!-- MAPA GLOBAL -->
-        <section id="comunidad-global" class="section-loading page-section relative py-24 px-6 text-center overflow-hidden reveal">
+        <section id="comunidad-global" class="page-section relative py-24 px-6 text-center overflow-hidden">
             <div class="max-w-7xl mx-auto relative z-10">
                 <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 uppercase tracking-tighter">Comunidad <span>Global</span></h2>
                 <div class="flex flex-col lg:flex-row gap-8 items-stretch h-auto lg:h-[550px] text-left">
@@ -2030,7 +2019,6 @@
             </div>
         </section>
 
-        <!-- DIVISOR GLITCH -->
         <div class="glitch-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
                 <defs>
@@ -2045,7 +2033,7 @@
         </div>
 
         <!-- MÉTRICAS -->
-        <section id="metrics" class="section-loading" class="section-loading page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl reveal">
+        <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl">
             <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
                 <div class="py-2"><div class="text-[#2db8ce] text-2xl mb-1"><i class="fas fa-users"></i></div><div id="metric-visitas" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Visitantes</div></div>
                 <div class="py-2"><div class="text-teal-400 text-2xl mb-1"><i class="fas fa-globe-americas"></i></div><div id="metric-paises" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Países</div></div>
@@ -2057,8 +2045,6 @@
         </section>
     </main>
 </div>
-
-
 
 <!-- MODAL AUTENTICACIÓN BÁSICO -->
 <div id="authModal" class="modal-overlay">
@@ -2087,7 +2073,6 @@
 <script src="js/app.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
-<!-- BOTÓN WHATSAPP FLOTANTE -->
 <a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>

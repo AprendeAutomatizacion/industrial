@@ -343,6 +343,11 @@
             font-size: 10px;
             margin-bottom: 0;
             letter-spacing: 0.2px;
+            /* Nueva propiedad para una sola línea */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 180px;
         }
         .loading-toast .toast-spinner {
             width: 14px;
@@ -405,12 +410,54 @@
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
         /* ============ FIN ESTILOS TOAST ============ */
 
+        body.light-mode header {
+            background: rgba(227, 241, 248, 0.72) !important;
+            backdrop-filter: blur(16px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+            border-bottom: 1px solid #d3e1e8 !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
+        }
+        body.light-mode header .hero-main-title {
+            color: #334155 !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header p {
+            color: #64748b !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header .bg-red-500\/20,
+        body.light-mode header .bg-blue-500\/20,
+        body.light-mode header .bg-orange-500\/20 {
+            background: rgba(8, 145, 178, 0.10) !important;
+            border: 1px solid rgba(8, 145, 178, 0.20) !important;
+            color: #0891b2 !important;
+        }
+        body.light-mode header .bg-red-500\/20 {
+            background: rgba(239, 68, 68, 0.10) !important;
+            border: 1px solid rgba(239, 68, 68, 0.20) !important;
+            color: #ef4444 !important;
+        }
+        body.light-mode header .bg-orange-500\/20 {
+            background: rgba(245, 158, 11, 0.10) !important;
+            border: 1px solid rgba(245, 158, 11, 0.20) !important;
+            color: #f59e0b !important;
+        }
+        body.light-mode header .absolute.inset-0 img {
+            opacity: 0.15 !important;
+            filter: saturate(0.5);
+        }
         /* ==========================================
            FIXES MODO CLARO - PROGRAMAS
            ========================================== */
         body.light-mode #page-programas .bg-\[\#0f172a\]\/60 {
-            background: rgba(255, 255, 255, 0.8) !important;
-            border-color: rgba(255, 255, 255, 0.5) !important;
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px) saturate(180%);
+            border-color: rgba(255, 255, 255, 0.6) !important;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+        }
+        body.light-mode #page-programas .bg-\[\#0f172a\]\/60:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.10), 0 0 20px rgba(6, 182, 212, 0.12);
+            border-color: rgba(6, 182, 212, 0.30) !important;
         }
         body.light-mode #page-programas h2,
         body.light-mode #page-programas .text-white {
@@ -421,15 +468,102 @@
         }
         body.light-mode #page-programas .border-white\/10,
         body.light-mode #page-programas .border-white\/20 {
-            border-color: rgba(226, 232, 240, 0.5) !important;
+            border-color: rgba(226, 232, 240, 0.6) !important;
         }
         body.light-mode #page-programas .bg-white\/5 {
-            background: rgba(241, 245, 249, 0.8) !important;
+            background: rgba(241, 245, 249, 0.9) !important;
+            border-color: rgba(226, 232, 240, 0.5) !important;
+        }
+        body.light-mode #page-programas .bg-slate-900\/50 {
+            background: rgba(241, 245, 249, 0.6) !important;
+            border-color: rgba(226, 232, 240, 0.5) !important;
         }
         body.light-mode #noResultsProgramas h3,
         body.light-mode #noResultsProgramas i {
             color: #64748b !important;
         }
+        body.light-mode #page-programas .group-hover\:text-\[\#2db8ce\]:hover {
+            color: #0891b2 !important;
+        }
+
+        /* ==========================================
+           BOTÓN WHATSAPP FLOTANTE
+           ========================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 26px;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35), 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 99998;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.12) translateY(-3px);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+        }
+        .whatsapp-float::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid rgba(37, 211, 102, 0.35);
+            animation: whatsappPulse 2.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes whatsappPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0; }
+        }
+        .whatsapp-float::after {
+            content: '¿Dudas? Escríbenos';
+            position: absolute;
+            right: calc(100% + 12px);
+            top: 50%;
+            transform: translateY(-50%) scale(0.9);
+            background: rgba(15, 23, 42, 0.9);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        .whatsapp-float:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+        body.light-mode .whatsapp-float::after {
+            background: rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 16px;
+                right: 16px;
+            }
+            .whatsapp-float::after { display: none; }
+        }
+
     </style>
 
 </head>
@@ -696,8 +830,8 @@
         
         data.forEach((prog, index) => {
             const card = document.createElement('div');
-            card.className = `group bg-[#0f172a]/60 backdrop-blur-xl rounded-[24px] border border-white/20 shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col fade-in text-left`;
-            card.style.animationDelay = `${index * 0.05}s`;
+            card.className = `group bg-[#0f172a]/60 backdrop-blur-xl rounded-[24px] border border-white/20 shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col text-left`;
+            
             
             // La imagen se obtiene de la carpeta img/
             const imagePath = prog.image ? `img/${prog.image}` : 'img/AA (38).webp';
@@ -845,5 +979,10 @@
 <script src="js/auth.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
+<!-- BOTÓN WHATSAPP FLOTANTE -->
+<a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
 </body>
 </html>
