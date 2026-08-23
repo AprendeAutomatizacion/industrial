@@ -353,30 +353,27 @@ const AuthLogic = {
     },
 
     /**
-     * Registra una visita en visitRegistro y sincroniza con el servidor
+     * Registra una visita en visitRegistro (solo fecha + ID del curso)
      */
-    recordVisit: function(type, id, details = {}) {
+    recordVisit: function(type, cursoId) {
         if (!this.currentUser) return;
 
         if (!this.currentUser.visitRegistro) {
             this.currentUser.visitRegistro = { cursos: {}, infoPaginas: {}, aulas: {}, materiales: {} };
         }
 
-        const timestamp = new Date().toISOString();
-        const entry = { lastVisit: timestamp, ...details };
+        const fecha = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const entry = { fecha: fecha, cursoId: cursoId };
 
         switch(type) {
             case 'aula':
-                this.currentUser.visitRegistro.aulas[id] = entry;
+                this.currentUser.visitRegistro.aulas[cursoId] = entry;
                 break;
             case 'info':
-                this.currentUser.visitRegistro.infoPaginas[id] = entry;
+                this.currentUser.visitRegistro.infoPaginas[cursoId] = entry;
                 break;
             case 'material':
-                this.currentUser.visitRegistro.materiales[id] = entry;
-                break;
-            case 'curso':
-                this.currentUser.visitRegistro.cursos[id] = entry;
+                this.currentUser.visitRegistro.materiales[cursoId] = entry;
                 break;
             default:
                 console.warn('[AuthLogic] Tipo de visita desconocido:', type);
@@ -385,9 +382,9 @@ const AuthLogic = {
 
         localStorage.setItem('user', JSON.stringify(this.currentUser));
         window.currentUser = this.currentUser;
-        this.syncUserData(true); // true = silencioso, sin spinner
+        this.syncUserData(true); // silencioso
 
-        console.log(`[AuthLogic] Visita registrada: ${type} | ${id}`);
+        console.log(`[AuthLogic] Visita registrada: ${type} | ${cursoId} | ${fecha}`);
     },
 
     syncUserData: async function(silent = false) {
@@ -859,12 +856,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Registrar la visita
-        AuthLogic.recordVisit(type, pageId, {
-            url: url,
-            title: document.title || 'Sin título',
-            path: path
-        });
+        // Registrar la visita (solo fecha + cursoId)
+        AuthLogic.recordVisit(type, pageId);
 
         console.log(`[AutoTrack] ✅ ${type.toUpperCase()} registrado | ID: ${pageId}`);
     }
