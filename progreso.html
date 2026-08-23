@@ -753,7 +753,7 @@
             <!-- PROGRESO EN MATERIAS -->
             <div class="flex items-center justify-between mb-6 pb-4 mt-8" style="border-bottom: 1px solid var(--border-default);">
                 <h3 class="card-value font-black uppercase tracking-widest text-xs flex items-center gap-2.5">
-                    <i class="fas fa-book text-secondary"></i> Progreso en Materias (Diplomados/Maestrias)
+                    <i class="fas fa-book text-secondary"></i> Progreso en Materias (Ingeniería/Diplomados/Maestrias)
                 </h3>
             </div>
             <div id="individualSubjectProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
@@ -763,8 +763,13 @@
 </div>
 
 <script>
+
+
     // ===================== CONFIGURACION =====================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby96uXpi4RhkMI0_TkNQmVeWRtMhueW3ORaz1ZDcA49qcrumXQEy6kA5ZUEUB7NiQNZ/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNk3MlpXGcrLEMYgB-2rX2CdvldAEJ9p1MoZOIshtcUunf31Xuq4mvWDCGXAFaAkFC/exec';
+
+
+
 
     let COURSES_DATA = [];
     const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "espana": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
@@ -1195,7 +1200,7 @@
             if (course.Tipo === 'Materia') { subjectsHtml += cardHtml; } else { coursesHtml += cardHtml; }
         });
         coursesContainer.innerHTML = coursesHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos (Online/Presencial) para mostrar.</div>';
-        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias (Diplomados/Maestrias) para mostrar.</div>';
+        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias (Ingeniería/Diplomados/Maestrias) para mostrar.</div>';
 
 
     }
