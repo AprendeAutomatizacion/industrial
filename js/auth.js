@@ -780,105 +780,98 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ==========================================
-// AUTO-TRACKING DE VISITAS
-// Detecta automáticamente el tipo de página según la URL
-// y registra la visita sin tocar cada HTML individual
+// AUTO-TRACKING DE VISITAS — VERSIÓN RESTRICTIVA
+// Solo registra: aula virtual, página info, página de materiales.
+// Todo lo demás (landing, dashboard, home, etc.) se ignora.
 // ==========================================
 (function setupAutoTracking() {
 
     function detectAndTrack() {
         // Solo si hay usuario logueado
         if (typeof AuthLogic === 'undefined' || !AuthLogic.currentUser) {
-            console.log('[AutoTrack] Sin sesión activa, no se registra visita.');
+            console.log('[AutoTrack] Sin sesión activa.');
             return;
         }
 
-        const url = window.location.href.toLowerCase();
+        const url = window.location.href;
+        const lowerUrl = url.toLowerCase();
         const path = window.location.pathname.toLowerCase();
         const urlParams = new URLSearchParams(window.location.search);
 
-        // --- DETECTAR ID DEL CURSO ---
-        let courseId = 'general';
-
-        // 1. Buscar en parámetros URL comunes
-        const paramNames = ['id', 'curso', 'course', 'courseid', 'aula', 'cursoid'];
-        for (const param of paramNames) {
-            const val = urlParams.get(param);
-            if (val) { courseId = val; break; }
-        }
-
-        // 2. Si no hay param, intentar extraer del path (ej: /aula-plc-basico.html)
-        if (courseId === 'general') {
-            const pathMatch = path.match(/(?:aula|curso|info|material)[-_]?([^\/\?\.]+)/);
-            if (pathMatch && pathMatch[1]) courseId = pathMatch[1];
-        }
-
-        // 3. Si aún no hay, usar el título de la página sanitizado
-        if (courseId === 'general' && document.title) {
-            courseId = document.title.toLowerCase()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/\s+/g, '-')
-                .substring(0, 50);
-        }
-
-        // --- DETECTAR TIPO DE PÁGINA ---
         let type = null;
-        const details = { 
-            url: window.location.href, 
+        let pageId = 'general';
+
+        // ============================================================
+        // 1) AULA VIRTUAL
+        // Ajusta la palabra clave si tu archivo se llama diferente.
+        // Ejemplos válidos: /aula.html, /aula-plc-basico.html, /aula?id=123
+        // ============================================================
+        if (path.includes('aula')) {
+            type = 'aula';
+            const idParam = urlParams.get('id') || urlParams.get('curso') || urlParams.get('course');
+            if (idParam) {
+                pageId = idParam;
+            } else {
+                // Extrae del nombre de archivo: aula-plc-basico → plc-basico
+                const match = path.match(/aula[-_]?([^\/\?\.]+)/);
+                if (match && match[1]) pageId = match[1];
+            }
+        }
+
+        // ============================================================
+        // 2) PÁGINA INFO DEL CURSO
+        // Ajusta la palabra clave si tu archivo se llama diferente.
+        // Ejemplos válidos: /info.html, /info-plc.html, /detalle.html, /detalle?id=123
+        // ============================================================
+        else if (path.includes('info') || path.includes('detalle')) {
+            type = 'info';
+            const idParam = urlParams.get('id') || urlParams.get('curso') || urlParams.get('course');
+            if (idParam) {
+                pageId = idParam;
+            } else {
+                const match = path.match(/(?:info|detalle)[-_]?([^\/\?\.]+)/);
+                if (match && match[1]) pageId = match[1];
+            }
+        }
+
+        // ============================================================
+        // 3) PÁGINA DE MATERIALES / DESCARGAS
+        // Ajusta la palabra clave si tu archivo se llama diferente.
+        // Ejemplos válidos: /materiales.html, /material.html, /descargas.html
+        // ============================================================
+        else if (path.includes('material') || path.includes('descarga') || path.includes('recurso')) {
+            type = 'material';
+            const idParam = urlParams.get('id') || urlParams.get('curso') || urlParams.get('course');
+            if (idParam) {
+                pageId = idParam;
+            } else {
+                const match = path.match(/(?:material|descarga|recurso)[s]?[-_]?([^\/\?\.]+)/);
+                if (match && match[1]) pageId = match[1];
+            }
+        }
+
+        // ============================================================
+        // Si no coincide con ninguna de las 3 páginas, NO HACER NADA.
+        // Esto evita que la landing, dashboard, home, etc. se registren.
+        // ============================================================
+        if (!type) {
+            console.log('[AutoTrack] Página ignorada (no es aula, info ni material):', path);
+            return;
+        }
+
+        // Registrar la visita
+        AuthLogic.recordVisit(type, pageId, {
+            url: url,
             title: document.title || 'Sin título',
             path: path
-        };
+        });
 
-        // AULA VIRTUAL: URL contiene "aula" o el body tiene "aula virtual"
-        if (
-            url.includes('aula') || 
-            path.includes('aula') || 
-            document.body.innerText.toLowerCase().includes('aula virtual')
-        ) {
-            type = 'aula';
-        }
-        // MATERIALES / MANUALES / DESCARGAS
-        else if (
-            url.includes('material') || 
-            url.includes('manual') || 
-            url.includes('descarga') || 
-            url.includes('recurso') || 
-            path.includes('materiales')
-        ) {
-            type = 'material';
-        }
-        // INFO DE CURSO: tiene parámetro de curso y no es home
-        else if (
-            courseId !== 'general' && 
-            !url.includes('index') && 
-            !url.includes('home') &&
-            (url.includes('info') || url.includes('curso') || url.includes('detalle') || url.includes('detalles'))
-        ) {
-            type = 'info';
-        }
-        // PÁGINA MIS CURSOS (dashboard)
-        else if (
-            url.includes('mis-cursos') || 
-            url.includes('mycourses') || 
-            url.includes('micuenta')
-        ) {
-            type = 'curso';
-            courseId = 'dashboard';
-        }
-
-        // --- REGISTRAR ---
-        if (type) {
-            AuthLogic.recordVisit(type, courseId, details);
-            console.log(`[AutoTrack] ✅ ${type.toUpperCase()} registrado | ID: ${courseId}`);
-        } else {
-            console.log('[AutoTrack] ℹ️ Página no clasificada para tracking:', path);
-        }
+        console.log(`[AutoTrack] ✅ ${type.toUpperCase()} registrado | ID: ${pageId}`);
     }
 
-    // Ejecutar cuando el DOM y AuthLogic estén listos
+    // Ejecutar cuando AuthLogic haya terminado de inicializar
     function initTracking() {
-        // Esperar un momento a que AuthLogic.init() termine
-        setTimeout(detectAndTrack, 1200);
+        setTimeout(detectAndTrack, 1500);
     }
 
     if (document.readyState === 'loading') {
