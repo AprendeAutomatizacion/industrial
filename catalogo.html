@@ -391,6 +391,7 @@
 
 
 
+
 </head>
 <body class="custom-scrollbar">
 <div class="particles-bg" aria-hidden="true">
@@ -701,7 +702,7 @@
 
 
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzNk3MlpXGcrLEMYgB-2rX2CdvldAEJ9p1MoZOIshtcUunf31Xuq4mvWDCGXAFaAkFC/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxPCtofr1QkXWA2sB9AMxcaZRrGBf6mJEPagY4MTggLz9GAmAR57K3rMpSEy3oDJXaS/exec';
 
 
 
@@ -1213,13 +1214,6 @@ function registerViewAndGo(url, courseId, courseName = '') {
         });
     }
     if (currentUser && currentUser.email) {
-        if (!currentUser.accessedCursos) currentUser.accessedCursos = [];
-        const courseIdNum = parseInt(courseId);
-        if (!currentUser.accessedCursos.includes(courseIdNum)) {
-            currentUser.accessedCursos.push(courseIdNum);
-            localStorage.setItem('user', JSON.stringify(currentUser));
-            syncUserProgressToExcel();
-        }
         recordVisit('curso', courseId, courseName || `Curso ${courseId}`, 'Vista al catálogo del curso');
     }
     if (url && url !== '#') window.open(url, '_self');
