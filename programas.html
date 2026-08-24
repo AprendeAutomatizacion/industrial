@@ -669,7 +669,6 @@
             if (existingCheck) existingCheck.remove();
             toast.style.opacity = '1';
             toast.style.transform = 'translateX(0)';
-            // Animación según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             } else {
@@ -696,7 +695,6 @@
             toast.appendChild(checkDiv);
             toast.style.opacity = '1';
             toast.style.transform = 'translateX(0)';
-            // Animación según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             } else {
@@ -710,7 +708,6 @@
         const toast = document.getElementById('loadingToast');
         if (toast) {
             toast.classList.add('hiding');
-            // Animación de salida según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.transform = 'translateY(150%)';
             } else {
@@ -764,7 +761,7 @@
     // CONFIGURACIÓN Y CONEXIÓN A GOOGLE SHEETS
     // ==========================================
 
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxPCtofr1QkXWA2sB9AMxcaZRrGBf6mJEPagY4MTggLz9GAmAR57K3rMpSEy3oDJXaS/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxg-sFC_XOHWd6CMxvcclYXIUFXrOjl4crGPv7JXF0WPwL0aAN0Y8h3Dd8A1sYpSHGz/exec';
 
     let currentUser = JSON.parse(localStorage.getItem('user')) || null;
     let dbUsers = {}, globalStats = {}, dbUserCourses = {}, dbUserDetails = {};
@@ -820,7 +817,7 @@
     }
 
     // ==========================================
-    // CARGAR PROGRAMAS DESDE LA HOJA "Programas"
+    // ✅ FUNCIÓN MEJORADA: CARGAR PROGRAMAS DESDE LA HOJA "Programas"
     // ==========================================
     async function loadProgramsFromSheet() {
         showLoadingToast();
@@ -832,6 +829,11 @@
             if (result.status === 'success' && result.data && Array.isArray(result.data)) {
                 PROGRAMS_DATA = result.data;
                 console.log(`✅ ${PROGRAMS_DATA.length} programas cargados desde la hoja "Programas"`);
+                
+                // ✅ Cargar datos del usuario si está logueado
+                if (currentUser && currentUser.email) {
+                    await loadUserDataFromExcel();
+                }
                 
                 renderPrograms(PROGRAMS_DATA);
                 
@@ -880,6 +882,63 @@
         }
     }
 
+    // ✅ FUNCIÓN MEJORADA: Cargar datos del usuario desde el Excel
+    async function loadUserDataFromExcel() {
+        if (!currentUser || !currentUser.email) return;
+        
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=get_user&email=${encodeURIComponent(currentUser.email)}&nocache=${new Date().getTime()}`);
+            const result = await response.json();
+            
+            if (result.status === 'success' && result.user) {
+                const userData = result.user;
+                
+                // ✅ Cargar downloadedFiles desde el Excel (formato JSON con conteos)
+                if (userData.downloadedFiles) {
+                    if (typeof userData.downloadedFiles === 'string') {
+                        try {
+                            currentUser.downloadedFiles = JSON.parse(userData.downloadedFiles);
+                        } catch(e) {
+                            currentUser.downloadedFiles = {};
+                        }
+                    } else if (typeof userData.downloadedFiles === 'object' && !Array.isArray(userData.downloadedFiles)) {
+                        currentUser.downloadedFiles = userData.downloadedFiles;
+                    }
+                }
+                
+                // ✅ También cargar historial_descargas si existe
+                if (userData.historial_descargas) {
+                    currentUser.historial_descargas = userData.historial_descargas;
+                }
+                
+                // ✅ Cargar downloadedPrograms (array de IDs)
+                if (userData.downloadedPrograms) {
+                    if (typeof userData.downloadedPrograms === 'string') {
+                        try {
+                            currentUser.downloadedPrograms = JSON.parse(userData.downloadedPrograms);
+                        } catch(e) {
+                            currentUser.downloadedPrograms = [];
+                        }
+                    } else if (Array.isArray(userData.downloadedPrograms)) {
+                        currentUser.downloadedPrograms = userData.downloadedPrograms;
+                    }
+                }
+                
+                // ✅ Si no hay downloadedPrograms pero hay downloadedFiles, generarlo
+                if ((!currentUser.downloadedPrograms || currentUser.downloadedPrograms.length === 0) && currentUser.downloadedFiles) {
+                    currentUser.downloadedPrograms = Object.keys(currentUser.downloadedFiles).map(id => parseInt(id));
+                }
+                
+                // Guardar en localStorage
+                localStorage.setItem('user', JSON.stringify(currentUser));
+                
+                console.log('✅ Datos de usuario cargados desde Excel:', currentUser.downloadedFiles);
+            }
+        } catch (e) {
+            console.error('Error cargando datos del usuario:', e);
+        }
+    }
+
     function renderPrograms(data) {
         const programsGrid = document.getElementById('programsGrid');
         const noResults = document.getElementById('noResultsProgramas');
@@ -911,12 +970,13 @@
             const softwareKey = `${prog.name} ${prog.version}`;
             const displayCount = programCounts[softwareKey] !== undefined ? programCounts[softwareKey] : 0;
 
-            // ✅ MEJORA: Verificar si el usuario ya ha descargado este programa
-            const isDownloaded = currentUser && currentUser.downloadedPrograms && currentUser.downloadedPrograms.includes(parseInt(prog.id));
+            // ✅ Verificar si el usuario ya ha descargado este programa
+            const progIdNum = parseInt(prog.id);
+            const isDownloaded = currentUser && currentUser.downloadedPrograms && currentUser.downloadedPrograms.includes(progIdNum);
             const userStatusTag = isDownloaded ? `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Ya has descargado este programa"><i data-lucide="check-circle" class="w-3 h-3"></i> Descargado</span>` : '';
             
-            // ✅ MEJORA: Obtener el conteo personal de descargas del usuario
-            const userDownloadCount = currentUser && currentUser.downloadedFiles && currentUser.downloadedFiles[prog.id] ? currentUser.downloadedFiles[prog.id] : 0;
+            // ✅ Obtener el conteo personal de descargas del usuario desde downloadedFiles
+            const userDownloadCount = currentUser && currentUser.downloadedFiles && currentUser.downloadedFiles[progIdNum] ? currentUser.downloadedFiles[progIdNum] : 0;
             const userCountTag = userDownloadCount > 0 ? `<span class="bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Tus descargas"><i data-lucide="download" class="w-3 h-3"></i> ${userDownloadCount}</span>` : '';
 
             card.innerHTML = `
@@ -941,24 +1001,30 @@
         if(window.lucide) lucide.createIcons();
     }
 
+    // ✅ FUNCIÓN CORREGIDA: startDownload con guardado de conteos JSON
     function startDownload(softwareName, url, progId) {
         if (!currentUser) { 
             showNotif('Acceso Restringido', 'Debes iniciar sesión para descargar.', 'error'); 
-            AuthUI.openModal('login'); 
+            if (typeof AuthUI !== 'undefined' && AuthUI.openModal) {
+                AuthUI.openModal('login'); 
+            }
             return; 
         }
         
-        // ✅ MEJORA: Inicializar arrays/objetos si no existen
+        // ✅ Inicializar objetos correctamente
         if (!currentUser.downloadedPrograms) currentUser.downloadedPrograms = [];
-        if (!currentUser.downloadedPrograms.includes(progId)) { 
-            currentUser.downloadedPrograms.push(progId); 
+        const progIdNum = parseInt(progId);
+        if (!currentUser.downloadedPrograms.includes(progIdNum)) { 
+            currentUser.downloadedPrograms.push(progIdNum); 
         }
 
+        // ✅ Asegurarse de que downloadedFiles es un objeto JSON
         if (!currentUser.downloadedFiles || Array.isArray(currentUser.downloadedFiles)) {
             currentUser.downloadedFiles = {};
         }
-        currentUser.downloadedFiles[progId] = (currentUser.downloadedFiles[progId] || 0) + 1;
+        currentUser.downloadedFiles[progIdNum] = (parseInt(currentUser.downloadedFiles[progIdNum]) || 0) + 1;
 
+        // ✅ Guardar en localStorage
         localStorage.setItem('user', JSON.stringify(currentUser)); 
         
         if (!url || url.trim() === "") {
@@ -966,47 +1032,66 @@
             return;
         }
 
+        // ✅ Abrir enlace de descarga
         window.open(url, '_blank');
         showToastDownload(softwareName);
         
+        // ✅ Actualizar contador global
         programCounts[softwareName] = (parseInt(programCounts[softwareName]) || 0) + 1;
         
         const countEl = document.getElementById(`progCount-${progId}`);
         if (countEl) countEl.innerText = programCounts[softwareName];
         
-        fetch(`${SCRIPT_URL}?action=record_download&programa=${encodeURIComponent(softwareName)}&pais=${encodeURIComponent(userCountry)}&email=${encodeURIComponent(currentUser.email)}`, { 
+        // ✅ Registrar descarga en el Excel (hoja Descargas)
+        fetch(`${SCRIPT_URL}?action=record_download&programa=${encodeURIComponent(softwareName)}&pais=${encodeURIComponent(userCountry)}&email=${encodeURIComponent(currentUser.email)}&fecha=${encodeURIComponent(new Date().toISOString())}`, { 
             method: 'GET', 
             mode: 'no-cors' 
         }).catch(err => console.error('Error registrando descarga:', err));
         
+        // ✅ Sincronizar progreso del usuario con el Excel
         syncUserProgressToExcel();
         
-        // ✅ MEJORA: Re-renderizar las tarjetas para actualizar las pastillas
+        // ✅ Re-renderizar las tarjetas para actualizar las pastillas
         renderPrograms(PROGRAMS_DATA);
     }
 
+    // ✅ FUNCIÓN CORREGIDA: syncUserProgressToExcel - Guarda JSON de conteos
     async function syncUserProgressToExcel() {
         if(!currentUser) return;
         
-        let nombresDescargados = [];
-        if (currentUser.downloadedPrograms && currentUser.downloadedPrograms.length > 0) {
-            nombresDescargados = currentUser.downloadedPrograms.map(id => {
-                const prog = PROGRAMS_DATA.find(p => parseInt(p.id) === id);
-                return prog ? prog.name : 'Desconocido';
-            });
+        // ✅ Asegurarse de que downloadedFiles es un objeto JSON
+        if (!currentUser.downloadedFiles || Array.isArray(currentUser.downloadedFiles)) {
+            currentUser.downloadedFiles = {};
         }
-        const historialNombresStr = nombresDescargados.join(', ');
         
-        const userPayload = { ...currentUser, historial_descargas: historialNombresStr };
+        // ✅ Crear JSON de conteos: {"1":14,"2":3,...}
+        const downloadedFilesJSON = JSON.stringify(currentUser.downloadedFiles);
+        
+        // ✅ Preparar datos completos del usuario
+        const userPayload = { 
+            ...currentUser, 
+            downloadedFiles: currentUser.downloadedFiles,
+            historial_descargas: downloadedFilesJSON,
+            archivos_descargados: downloadedFilesJSON,
+            ultima_descarga: new Date().toISOString()
+        };
+        
         const email = encodeURIComponent(currentUser.email.toLowerCase());
         const userData = encodeURIComponent(JSON.stringify(userPayload));
+        const historialParam = encodeURIComponent(downloadedFilesJSON);
         
-        await fetch(SCRIPT_URL, { 
-            method: 'POST', 
-            mode: 'no-cors', 
-            body: `action=update_user&email=${email}&userData=${userData}`, 
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' } 
-        });
+        // ✅ Enviar al Google Sheets
+        try {
+            await fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                body: `action=update_user&email=${email}&userData=${userData}&historial=${historialParam}`, 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' } 
+            });
+            console.log('✅ Progreso sincronizado con Excel:', downloadedFilesJSON);
+        } catch(e) {
+            console.error('Error sincronizando con Excel:', e);
+        }
     }
 
     async function initVisitorInfo() {
@@ -1033,48 +1118,8 @@
     }
 
     // ==========================================
-    // CARGAR DATOS DEL USUARIO DESDE EL EXCEL
+    // INICIALIZACIÓN
     // ==========================================
-    async function loadUserDataFromExcel() {
-        if (!currentUser || !currentUser.email) return;
-        
-        try {
-            const response = await fetch(`${SCRIPT_URL}?action=get_user_data&email=${encodeURIComponent(currentUser.email)}`);
-            const result = await response.json();
-            
-            if (result.status === 'success' && result.user) {
-                const userData = result.user;
-                
-                // ✅ MEJORA: Cargar downloadedPrograms desde el Excel
-                if (userData.downloadedPrograms) {
-                    currentUser.downloadedPrograms = userData.downloadedPrograms;
-                }
-                
-                // ✅ MEJORA: Cargar downloadedFiles desde el Excel
-                if (userData.downloadedFiles) {
-                    if (typeof userData.downloadedFiles === 'string') {
-                        try {
-                            currentUser.downloadedFiles = JSON.parse(userData.downloadedFiles);
-                        } catch(e) {
-                            currentUser.downloadedFiles = {};
-                        }
-                    } else {
-                        currentUser.downloadedFiles = userData.downloadedFiles;
-                    }
-                }
-                
-                localStorage.setItem('user', JSON.stringify(currentUser));
-                
-                // Re-renderizar para mostrar las pastillas actualizadas
-                if (PROGRAMS_DATA.length > 0) {
-                    renderPrograms(PROGRAMS_DATA);
-                }
-            }
-        } catch (e) {
-            console.error('Error cargando datos del usuario:', e);
-        }
-    }
-
     document.addEventListener("DOMContentLoaded", async () => {
         currentUser = JSON.parse(localStorage.getItem('user')) || null;
         
@@ -1086,11 +1131,6 @@
         
         // Cargar programas desde la hoja "Programas" del Excel
         await loadProgramsFromSheet();
-        
-        // ✅ MEJORA: Cargar datos del usuario si está logueado
-        if (currentUser) {
-            await loadUserDataFromExcel();
-        }
         
         if(window.lucide) lucide.createIcons();
     });
