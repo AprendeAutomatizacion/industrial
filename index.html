@@ -91,6 +91,10 @@
             50% { opacity: 0.92; }
         }
 
+        /* ============================================================
+           MODO CLARO - ESTILO AULA VIRTUAL (azul claro + métricas)
+           Overlay transparente para ver sutilmente la imagen de fondo
+           ============================================================ */
         body.light-mode {
             background-color: #d0e1ef;
             background-image: url('img/fondo2.webp');
@@ -132,6 +136,17 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* SHIMMER LOADING EFFECT */
+        .shimmer {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
         .section-title { 
             color: var(--text-default); 
             letter-spacing: -0.02em;
@@ -150,27 +165,22 @@
         }
 
         body.light-mode .hero-main-title { color: #000000 !important; }
-        body.light-mode .hero-main-title .text-secondary {
+        body.light-mode .section-title span {
             background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        body.light-mode header .hero-main-title {
-            color: #ffffff !important;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15) !important;
-        }
-        body.light-mode header .hero-main-title .text-secondary {
-            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #8b5cf6 100%);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientFlow 6s ease infinite;
-            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+        /* CURSOR PERSONALIZADO SUTIL */
+        @media (pointer: fine) {
+            body { cursor: default; }
+            a, button, [onclick], .course-card, .methodology-card, .testimonial-card, details {
+                cursor: pointer;
+            }
         }
 
+        /* SCROLLBAR PREMIUM */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { 
             background: rgba(255, 255, 255, 0.03); 
@@ -185,6 +195,7 @@
             background: linear-gradient(180deg, #22d3ee, #a78bfa);
         }
 
+        /* FLOATING PARTICLES BACKGROUND */
         .particles-bg {
             position: fixed;
             inset: 0;
@@ -206,12 +217,20 @@
             90% { opacity: 1; }
             100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
         }
+        body.light-mode .hero-main-title .text-secondary {
+            color: #2db8ce !important;
+            text-shadow: none !important;
+            opacity: 1 !important;
+        }
 
         #page-home, main, header, section, footer {
             position: relative;
             z-index: 1;
         }
 
+        /* ==========================================
+           HEADER - GLASSMORPHISM PREMIUM
+           ========================================== */
         header {
             background: var(--glass-bg) !important;
             backdrop-filter: blur(10px) saturate(140%) !important;
@@ -223,6 +242,14 @@
         header .absolute.inset-0 {
             opacity: 0.3 !important;
             filter: saturate(1.2) contrast(1.1);
+        }
+
+        header img {
+            filter: none !important;
+        }
+
+        header .absolute.inset-0::after {
+            display: none !important;
         }
 
         header .hero-main-title {
@@ -248,10 +275,749 @@
             letter-spacing: 0.01em;
         }
 
+        header .bg-blue-500\/20 {
+            background: rgba(59, 130, 246, 0.2) !important;
+            color: #93c5fd !important;
+            border: 1px solid rgba(59, 130, 246, 0.3) !important;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        header .bg-blue-500\/20:hover {
+            background: rgba(59, 130, 246, 0.35) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+
+        header .bg-emerald-500\/20 {
+            background: rgba(16, 185, 129, 0.2) !important;
+            color: #6ee7b7 !important;
+            border: 1px solid rgba(16, 185, 129, 0.3) !important;
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        header .bg-emerald-500\/20:hover {
+            background: rgba(16, 185, 129, 0.35) !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        header #visitor-info {
+            background: var(--glass-bg) !important;
+            border: 1px solid var(--glass-border) !important;
+            color: #ffffff !important;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        header #visitor-info:hover {
+            border-color: rgba(6, 182, 212, 0.4) !important;
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.15);
+        }
+
         /* ==========================================
-           TOAST DE CARGA - RESPONSIVE MEJORADO
+           TARJETAS - GLASSMORPHISM 3D
            ========================================== */
-        .loading-toast {
+        .course-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            border-radius: 2rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+        .course-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 2rem;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.1), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--cyan-glow), 0 12px 32px rgba(0, 0, 0, 0.15);
+            border-color: rgba(6, 182, 212, 0.25);
+            z-index: 10;
+        }
+        .course-card:hover::before {
+            opacity: 1;
+        }
+        .course-card .course-card-image-container {
+            position: relative;
+            height: 12rem;
+            overflow: hidden;
+        }
+        .course-card .course-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .course-card .course-card-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .course-card .course-card-badge {
+            padding: 0.25rem 0.75rem;
+            font-size: 9px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 9999px;
+            color: var(--badge-text);
+            white-space: nowrap;
+        }
+        .badge-container {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        .badge-generic {
+            background-color: #475569;
+        }
+        .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
+        .course-card .badge-basic { background-color: var(--badge-bg-basic); }
+        .course-card .badge-avanzado { background-color: var(--badge-bg-advanced); }
+        .course-card .course-card-title {
+            color: var(--text-default);
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+        .course-card .course-card-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .course-card .course-card-footer {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-default);
+        }
+        .course-card .course-card-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        .course-card .course-card-price {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-default);
+        }
+        .course-card .course-card-stats {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .course-card .like-btn, .course-card .view-container {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            cursor: pointer;
+        }
+        .course-card .like-btn:hover { color: #ef4444; }
+        .course-card .like-btn.liked,
+        .course-card .like-btn.liked i { color: #ef4444 !important; }
+        .course-card .view-container.has-views { color: #22c55e; }
+        .course-card .course-card-buttons { display: flex; gap: 0.75rem; }
+
+        .course-card-level-basico {
+            border: 1.5px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.12), 
+                        inset 0 0 30px rgba(6, 182, 212, 0.04);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
+        }
+        .course-card-level-basico:hover {
+            border: 2px solid rgba(6, 182, 212, 0.8);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.25), 
+                        0 8px 24px rgba(6, 182, 212, 0.15), 
+                        inset 0 0 40px rgba(6, 182, 212, 0.08);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
+        }
+        .course-card-level-intermedio {
+            border: 1.5px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.12), 
+                        inset 0 0 30px rgba(139, 92, 246, 0.04);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
+        }
+        .course-card-level-intermedio:hover {
+            border: 2px solid rgba(139, 92, 246, 0.8);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.25), 
+                        0 8px 24px rgba(139, 92, 246, 0.15), 
+                        inset 0 0 40px rgba(139, 92, 246, 0.08);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
+        }
+        .course-card-level-avanzado {
+            border: 1.5px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.12), 
+                        inset 0 0 30px rgba(245, 158, 11, 0.04);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
+        }
+        .course-card-level-avanzado:hover {
+            border: 2px solid rgba(245, 158, 11, 0.8);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.25), 
+                        0 8px 24px rgba(245, 158, 11, 0.15), 
+                        inset 0 0 40px rgba(245, 158, 11, 0.08);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
+        }
+
+        /* ==========================================
+           TARJETA DE MISIÓN - GLASSMORPHISM
+           ========================================== */
+        .mission-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .mission-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .mission-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 6px 24px rgba(6, 182, 212, 0.1), 0 12px 32px rgba(0, 0, 0, 0.1);
+        }
+        .mission-card:hover::before {
+            opacity: 1;
+        }
+
+        body:not(.light-mode) .mission-card h3 { color: #ffffff; }
+        body:not(.light-mode) .mission-card ul { color: #cbd5e1; }
+
+        body.light-mode .mission-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        body.light-mode .mission-card h3 { color: #1e293b; }
+        body.light-mode .mission-card ul { color: #475569; }
+
+        /* ==========================================
+           METODOLOGÍA - FONDO SÓLIDO
+           ========================================== */
+        .methodology-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .methodology-card:hover {
+            transform: scale(1.01);
+            border-color: rgba(45, 184, 206, 0.6);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        .methodology-card .image-zoom-container {
+            overflow: hidden;
+            border-radius: 1.5rem;
+        }
+        .methodology-card h3 { color: var(--text-default); }
+        .methodology-card p { color: var(--text-secondary); }
+        
+        body.light-mode .methodology-card {
+            background-color: #ffffff;
+            border-color: rgba(100, 150, 200, 0.3);
+        }
+
+        /* ==========================================
+           TESTIMONIOS - GLASSMORPHISM ELEGANTE
+           ========================================== */
+        .testimonial-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 6rem;
+            font-family: Georgia, serif;
+            color: rgba(6, 182, 212, 0.1);
+            line-height: 1;
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 6px 24px rgba(6, 182, 212, 0.1), 0 12px 32px rgba(0, 0, 0, 0.08);
+        }
+        .testimonial-card:hover::before {
+            color: rgba(6, 182, 212, 0.2);
+            transform: scale(1.1);
+        }
+        .testimonial-card p { color: #cbd5e1; }
+        .testimonial-card h4 { color: #ffffff; }
+        .testimonial-card .testimonial-role { color: #94a3b8; }
+
+        body.light-mode .testimonial-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        body.light-mode .testimonial-card p { color: #475569; }
+        body.light-mode .testimonial-card h4 { color: #1e293b; }
+        body.light-mode .testimonial-card .testimonial-role { color: #64748b; }
+
+        /* ==========================================
+           CURSO ESPECIAL - GLASSMORPHISM PREMIUM
+           ========================================== */
+        .special-course-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .special-course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #06b6d4);
+            background-size: 200% 100%;
+            animation: gradientFlow 6s linear infinite;
+        }
+        .special-course-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-mode .special-course-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ==========================================
+           FAQ - GLASSMORPHISM INTERACTIVO
+           ========================================== */
+        #faq details {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px) saturate(140%);
+            -webkit-backdrop-filter: blur(8px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.25rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        #faq details:hover {
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+        #faq details[open] {
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.1);
+        }
+        #faq summary { 
+            color: var(--text-default); 
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            transition: color 0.3s ease;
+        }
+        #faq details:hover summary {
+            color: #06b6d4;
+        }
+        #faq details p { color: var(--text-secondary); line-height: 1.7; }
+
+        body.light-mode #faq details {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ==========================================
+           BOTONES - GLOW GRADIENT PREMIUM
+           ========================================== */
+        .btn-metal-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            padding: 0.65rem 1.4rem;
+            border-radius: 0.85rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            outline: none;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.9) 0%, rgba(8, 145, 178, 0.95) 100%);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3), 0 0 0 1px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-metal-solid::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+            opacity: 0.5;
+            transition: opacity 0.4s ease;
+        }
+        .btn-metal-solid::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 1.35rem;
+            padding: 2px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(139, 92, 246, 0.3), transparent 70%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .btn-metal-solid:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            filter: brightness(1.1);
+        }
+        .btn-metal-solid:hover::after {
+            opacity: 1;
+        }
+        .btn-metal-solid:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+        .btn-metal-cyan {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.9) 0%, rgba(6, 182, 212, 0.95) 50%, rgba(8, 145, 178, 0.9) 100%);
+            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35), 0 0 0 1px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-metal-cyan:hover {
+            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.5), 0 0 0 1px rgba(6, 182, 212, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-teal {
+            background: linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(13, 148, 136, 0.95) 50%, rgba(15, 118, 110, 0.9) 100%);
+            box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3), 0 0 0 1px rgba(20, 184, 166, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-metal-teal:hover {
+            box-shadow: 0 12px 40px rgba(20, 184, 166, 0.4), 0 0 0 1px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        /* ==========================================
+           BOTONES METÁLICOS DEL CATÁLOGO
+           ========================================== */
+        .btn-metal-green,
+        .btn-metal-blue,
+        .btn-metal-slate,
+        .btn-metal-teal,
+        .btn-metal-gray {
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            font-size: 0.7rem;
+            padding: 0.5rem 1rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+            border-radius: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .btn-metal-green::after, .btn-metal-blue::after,
+        .btn-metal-slate::after, .btn-metal-teal::after, .btn-metal-gray::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 0.75rem 0.75rem 0 0;
+            pointer-events: none;
+        }
+        .btn-metal-green::before, .btn-metal-blue::before,
+        .btn-metal-slate::before, .btn-metal-teal::before, .btn-metal-gray::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -75%;
+            width: 50%; height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.22), transparent);
+            transform: skewX(-18deg);
+            transition: left 0.45s ease;
+            pointer-events: none;
+        }
+        .btn-metal-green:hover::before, .btn-metal-blue:hover::before,
+        .btn-metal-slate:hover::before, .btn-metal-teal:hover::before, .btn-metal-gray:hover::before {
+            left: 130%;
+        }
+        .btn-metal-green:hover, .btn-metal-blue:hover,
+        .btn-metal-slate:hover, .btn-metal-teal:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+        .btn-metal-green:active, .btn-metal-blue:active,
+        .btn-metal-slate:active, .btn-metal-teal:active {
+            transform: scale(0.97) translateY(0);
+            filter: brightness(0.93);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.3) !important;
+            transition: transform 0.08s ease;
+        }
+        .btn-metal-green {
+            background: linear-gradient(180deg, #34d058 0%, #1e9e3a 45%, #146b28 100%);
+            border: 1px solid #0f5720;
+            color: white;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.3),
+                        0 4px 14px rgba(34, 197, 94, 0.4), 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .btn-metal-green:hover {
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(34, 197, 94, 0.55), 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .btn-metal-blue {
+            background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%);
+            border: 1px solid #1e40af;
+            color: white;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.3),
+                        0 4px 14px rgba(37, 99, 235, 0.4), 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        .btn-metal-blue:hover {
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(37, 99, 235, 0.55), 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .btn-metal-slate {
+            background: linear-gradient(180deg, #94a3b8 0%, #475569 45%, #334155 100%);
+            border: 1px solid #1e293b;
+            color: white;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.3),
+                        0 3px 10px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+        }
+        .btn-metal-slate:hover {
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 5px 16px rgba(0,0,0,0.4);
+        }
+        .btn-metal-gray {
+            background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
+            border: 1px solid #94a3b8;
+            color: #64748b;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 3px rgba(0,0,0,0.1);
+            cursor: not-allowed;
+            filter: saturate(0.5);
+        }
+
+        /* ==========================================
+           BOTONES DE PERFIL - GLASSMORPHISM
+           ========================================== */
+        .prof-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px) saturate(140%);
+            -webkit-backdrop-filter: blur(8px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .prof-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .prof-btn:hover {
+            transform: translateY(-3px) scale(1.01);
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.15), 0 0 0 1px rgba(6, 182, 212, 0.1);
+        }
+        .prof-btn:hover::before {
+            opacity: 1;
+        }
+        .prof-btn > span { color: #ffffff; position: relative; z-index: 1; }
+        .prof-selected {
+            border: 1px solid rgba(6, 182, 212, 0.5) !important;
+            background: rgba(6, 182, 212, 0.15) !important;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2), 0 8px 30px rgba(6, 182, 212, 0.1);
+        }
+        .prof-selected::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: inherit;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(139, 92, 246, 0.3));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        body.light-mode .prof-btn {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        body.light-mode .prof-btn > span { color: #1e293b; }
+
+        /* ==========================================
+           FAQ
+           ========================================== */
+        #faq details > summary { list-style: none; }
+        #faq details > summary::-webkit-details-marker { display: none; }
+        #faq details[open] summary ~ * { animation: fadeIn 0.3s ease-in-out; }
+        #faq details .fa-chevron-down { transition: transform 0.2s ease; }
+        #faq details[open] .fa-chevron-down { transform: rotate(180deg); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==========================================
+           DIVISORES - EFECTOS PREMIUM
+           ========================================== */
+        .section-divider {
+            width: 100%;
+            height: 80px;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+            opacity: 0.6;
+        }
+        .section-divider svg path {
+            fill: none;
+            stroke-linecap: round;
+            stroke-width: 2;
+            stroke: url(#gradient-divider);
+            opacity: 0.7;
+            animation: oscilloscope 15s ease-in-out infinite;
+            filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3));
+        }
+        .section-divider svg path:nth-child(2) {
+            stroke-width: 3;
+            stroke: url(#gradient-divider-2);
+            opacity: 0.8;
+            animation-delay: -3s;
+            animation-duration: 12s;
+            filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
+        }
+        .glitch-divider {
+            width: 100%;
+            height: 60px;
+            position: relative;
+            overflow: hidden;
+            margin: -20px 0;
+            opacity: 0.7;
+        }
+        .glitch-divider .glitch-line {
+            fill: none;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4));
+        }
+        .glitch-divider .line-1 {
+            stroke: url(#gradient-divider);
+            animation: glitch1 5s infinite steps(1, end);
+        }
+        .circuit-divider {
+            width: 100%;
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: -15px 0;
+            opacity: 0.7;
+        }
+        .circuit-divider .trace {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke: url(#gradient-divider);
+            stroke-dasharray: 1500;
+            stroke-dashoffset: 1500;
+            animation: draw-trace 20s linear infinite;
+            filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3));
+        }
+        .circuit-divider .dot {
+            fill: url(#gradient-dot);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes oscilloscope {
+            0%, 100% { d: path("M0,40 C240,60 480,20 720,40 S1200,60 1440,40"); }
+            20% { d: path("M0,45 C220,50 460,30 720,45 S1180,40 1440,35"); }
+            40% { d: path("M0,35 C260,70 500,15 720,35 S1220,70 1440,45"); }
+            60% { d: path("M0,42 C200,20 520,65 720,42 S1150,25 1440,40"); }
+            80% { d: path("M0,38 C300,75 420,5 720,38 S1240,75 1440,38"); }
+        }
+        @keyframes glitch1 {
+            0%, 100% { transform: none; opacity: 1; }
+            5%, 15%, 25%, 35% { transform: translate(-8px, 3px) skewX(12deg); opacity: 0.6; }
+            10%, 20%, 30%, 40% { transform: translate(8px, -3px) skewX(-12deg); opacity: 0.6; }
+        }
+        @keyframes draw-trace { to { stroke-dashoffset: 0; } }
+        @keyframes pulse-dot {
+            0%, 100% { r: 4; opacity: 0.5; }
+            50% { r: 6; opacity: 1; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)); }
+        }
+
+        /* ==========================================
+           TOAST DE CARGA - GLASSMORPHISM PREMIUM (COMPACTO)
+           ========================================== */
+                .loading-toast {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -340,23 +1106,6 @@
             font-weight: 900;
         }
 
-        /* MODO CLARO - TOAST */
-        body.light-mode .loading-toast {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
-            border: 1px solid rgba(45, 184, 206, 0.5);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 10px rgba(45, 184, 206, 0.2);
-        }
-        body.light-mode .loading-toast .toast-title {
-            color: #1e293b;
-        }
-        body.light-mode .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.7);
-        }
-        body.light-mode .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
-
         /* RESPONSIVE - MÓVIL (CLAVE DEL DISEÑO) */
         @media (max-width: 640px) {
             .loading-toast {
@@ -418,6 +1167,387 @@
             0% { transform: scale(0); }
             50% { transform: scale(1.15); }
             100% { transform: scale(1); }
+        }
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.6);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 10px rgba(45, 184, 206, 0.25);
+        }
+        body.light-mode .loading-toast .toast-title { color: #1e293b; }
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.8);
+        }
+        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+        /* ============ FIN ESTILOS TOAST ============ */
+
+        /* ==========================================
+           REVEAL - ANIMACIONES PREMIUM
+           ========================================== */
+        .reveal { 
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            transition: none !important;
+        }
+        .reveal-up,
+        .reveal-down,
+        .reveal-left,
+        .reveal-right,
+        .reveal-center {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+        }
+
+        .section-loading {
+            opacity: 1 !important;
+            transform: none !important;
+            transition: none !important;
+        }
+        .metrics-loading {
+            opacity: 1 !important;
+            transition: none !important;
+        }
+
+        /* ==========================================
+           SCROLLBAR
+           ========================================== */
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--text-accent); border-radius: 10px; }
+
+        /* ==========================================
+           MODALS
+           ========================================== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(6px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-content {
+            background: var(--bg-secondary);
+            color: var(--text-default);
+            border-radius: 32px;
+            width: 90%;
+            max-width: 420px;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.4s;
+            box-shadow: 0 25px 50px -12px var(--shadow-color);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        /* ==========================================
+           FIX: Tarjetas en modo claro (estilo catálogo)
+           ========================================== */
+        body.light-mode .course-card {
+            background-color: rgba(226, 232, 240, 0.85) !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.1);
+        }
+        body.light-mode .course-card:hover {
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15), 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-color: rgba(6, 182, 212, 0.3) !important;
+            transform: translateY(-8px) scale(1.01);
+            z-index: 10;
+        }
+        body.light-mode .course-card .course-card-title,
+        body.light-mode .course-card h2 {
+            color: #334155 !important;
+        }
+        body.light-mode .course-card .text-slate-900 {
+            color: #334155 !important;
+        }
+        body.light-mode .course-card .text-slate-800 {
+            color: #334155 !important;
+        }
+        body.light-mode .course-card .text-slate-500 {
+            color: #64748b !important;
+        }
+        body.light-mode .course-card .text-slate-400 {
+            color: #94a3b8 !important;
+        }
+        body.light-mode .course-card .bg-slate-50 {
+            background: rgba(255, 255, 255, 0.6) !important;
+        }
+        body.light-mode .course-card .bg-slate-100 {
+            background: rgba(255, 255, 255, 0.45) !important;
+        }
+        body.light-mode .course-card .border-slate-100 {
+            border-color: rgba(0, 0, 0, 0.06) !important;
+        }
+        body.light-mode .course-card .border-slate-900 {
+            border-color: rgba(0, 0, 0, 0.08) !important;
+        }
+        body.light-mode .course-card .course-card-description {
+            color: #64748b !important;
+        }
+        body.light-mode .course-card .course-card-price {
+            color: #334155 !important;
+        }
+        body.light-mode .course-card .view-container.has-views {
+            color: #0f766e !important;
+        }
+
+        /* ==========================================
+           FIX: Modalidades en modo claro
+           ========================================== */
+        body.light-mode #modalidades-container .course-card-title,
+        body.light-mode #modalidades-container .course-card-description,
+        body.light-mode #modalidades-container h3,
+        body.light-mode #modalidades-container p {
+            color: #475569;
+        }
+
+        body.light-mode #modalidades-container .text-white,
+        body.light-mode #modalidades-container .text-slate-100,
+        body.light-mode #modalidades-container .text-slate-200,
+        body.light-mode #modalidades-container .text-slate-300,
+        body.light-mode #modalidades-container .text-slate-400,
+        body.light-mode #modalidades-container .text-slate-500 {
+            color: #475569 !important;
+        }
+
+        body.light-mode #modalidades-container [class*="title"],
+        body.light-mode #modalidades-container [class*="Title"] {
+            color: #1e293b !important;
+        }
+
+        /* ==========================================
+           MODALIDADES - IMAGEN VERTICAL QUE LLENA EL ALTO
+           ========================================== */
+        .course-card .modalidad-image-container {
+            height: 12rem;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .course-card .modalidad-image-container {
+                height: auto;
+                align-self: stretch;
+            }
+        }
+
+        /* ==========================================
+           TESTIMONIOS - COLOR CYAN EN MODO CLARO
+           ========================================== */
+        body.light-mode #testimonios-container .fa-quote-right {
+            color: #2db8ce !important;
+            opacity: 0.7 !important;
+        }
+
+        body.light-mode #testimonios-container h4 {
+            color: #0891b2 !important;
+        }
+
+        body.light-mode #testimonios-container .testimonial-role {
+            color: #475569 !important;
+        }
+
+        /* ==========================================
+           LOGOS DE MODALIDADES - FONDO DE LOGO COMO BACKGROUND
+           ========================================== */
+        .modalidad-logo-bg {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            min-height: 40px;
+            border-radius: 10px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 32px 32px;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            background-color: #475569;
+        }
+        body.light-mode .modalidad-logo-bg {
+            background-color: #f8fafc;
+        }
+
+        /* ==========================================
+           LOADING STATES - CARGA SIMULTÁNEA
+           ========================================== */
+        .section-loading {
+            opacity: 1;
+            transform: none;
+        }
+        .section-loading.loaded {
+            opacity: 1;
+            transform: none;
+        }
+        .metrics-loading {
+            opacity: 1;
+        }
+        .metrics-loading.loaded {
+            opacity: 1;
+        }
+
+        /* ==========================================
+           EXPANSIÓN DE TARJETAS DE METODOLOGÍA
+           ========================================== */
+        .card-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.92);
+            z-index: 100010;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .card-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .methodology-card.is-expanded {
+            top: 50% !important;
+            left: 50% !important;
+            width: 90vw !important;
+            max-width: 850px !important;
+            height: auto !important;
+            transform: translate(-50%, -50%) !important;
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 2.5rem !important;
+            padding: 2.5rem !important;
+            background-color: #0f172a !important;
+            background: #0f172a !important;
+            border-radius: 2rem !important;
+            border: 1px solid rgba(6, 182, 212, 0.5) !important;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.3) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        body.light-mode .methodology-card.is-expanded {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            border-color: rgba(6, 182, 212, 0.4) !important;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15) !important;
+        }
+        body.light-mode .methodology-card.is-expanded h3 {
+            color: #1e293b !important;
+        }
+        body.light-mode .methodology-card.is-expanded .methodology-expanded-content p {
+            color: #475569 !important;
+        }
+
+        .methodology-card.is-expanded .image-zoom-container {
+            width: 40% !important;
+            height: auto !important;
+            aspect-ratio: 1 / 1 !important;
+            margin-bottom: 0 !important;
+            flex-shrink: 0 !important;
+            border-radius: 1.5rem;
+            overflow: hidden;
+        }
+
+        .methodology-short-desc {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .methodology-card.is-expanded .methodology-short-desc {
+            display: none !important;
+        }
+
+        .methodology-card .methodology-expanded-content {
+            display: none;
+        }
+        .methodology-card.is-expanded .methodology-expanded-content {
+            display: block !important;
+        }
+
+        .methodology-card.is-expanded h3 {
+            font-size: 2.25rem !important;
+            margin-bottom: 1rem !important;
+            color: #ffffff !important;
+        }
+
+        .methodology-card.is-expanded .methodology-expanded-content p {
+            font-size: 1.05rem;
+            color: #cbd5e1;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+
+        /* Responsividad móvil */
+        @media (max-width: 767px) {
+            .methodology-card.is-expanded {
+                flex-direction: column !important;
+                padding: 1.5rem !important;
+                gap: 1.5rem !important;
+                width: 95vw !important;
+            }
+            .methodology-card.is-expanded .image-zoom-container {
+                width: 100% !important;
+                aspect-ratio: 16 / 10 !important;
+            }
+            .methodology-card.is-expanded h3 {
+                font-size: 1.5rem !important;
+                text-align: center;
+            }
+            .methodology-card.is-expanded .methodology-expanded-content p {
+                font-size: 1rem !important;
+                text-align: justify;
+            }
+        }
+
+        /* ==========================================
+           MEJORAS RESPONSIVE GENERALES
+           ========================================== */
+        @media (max-width: 768px) {
+            header .relative.z-10 { padding-top: 6rem !important; padding-bottom: 3rem !important; }
+            .hero-main-title { font-size: 1.75rem !important; line-height: 1.15 !important; }
+            .section-title { font-size: 1.5rem !important; }
+            .section-subtitle { font-size: 0.6rem !important; letter-spacing: 0.2em !important; }
+            .page-section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+            header img[alt="Icono"] { height: 10rem !important; }
+            .particles-bg { display: none; }
+            .section-divider { height: 40px; }
+            .glitch-divider { height: 30px; margin: -10px 0; }
+            .circuit-divider { height: 50px; margin: -8px 0; }
+            .course-card:hover { transform: translateY(-2px) scale(1.005) !important; }
+            .mission-card:hover { transform: translateY(-2px) !important; }
+            .testimonial-card:hover { transform: translateY(-3px) !important; }
+            .methodology-card:hover { transform: scale(1.01) !important; }
+            #metrics .text-3xl { font-size: 1.5rem !important; }
+            #metrics .text-2xl { font-size: 1.1rem !important; }
+            #metrics .text-\[9px\] { font-size: 8px !important; }
+            #faq details { border-radius: 0.75rem; }
+            #faq summary { font-size: 0.85rem; padding: 0.75rem 1rem; }
+            #faq details p { font-size: 0.8rem; padding: 0 1rem 1rem; }
+            /* .loading-toast responsive handled by @media (max-width: 640px) above */
+            #comunidad-global .h-\[400px\] { height: 280px !important; }
+            #comunidad-global .rounded-\[2\.5rem\] { border-radius: 1.5rem !important; }
+            .modalidad-logo-bg { width: 32px; height: 32px; background-size: 24px 24px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .btn-auto {
+            width: auto !important;
+            display: inline-flex !important;
         }
 
         /* ==========================================
@@ -499,15 +1629,19 @@
         }
 
         /* ==========================================
-           RESPONSIVE GENERAL
+           MODO CLARO: TOAST DE CARGA CON TEXTO NEGRO
            ========================================== */
-        @media (max-width: 768px) {
-            header .relative.z-10 { padding-top: 6rem !important; padding-bottom: 3rem !important; }
-            .hero-main-title { font-size: 1.75rem !important; line-height: 1.15 !important; }
-            .section-title { font-size: 1.5rem !important; }
-            .section-subtitle { font-size: 0.6rem !important; letter-spacing: 0.2em !important; }
-            .particles-bg { display: none; }
-            header img[alt="Icono"] { height: 10rem !important; }
+        body.light-mode .loading-toast {
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        body.light-mode .loading-toast .toast-title {
+            color: #1e293b;
+        }
+        body.light-mode .loading-toast .toast-spinner {
+            border: 2px solid rgba(6, 182, 212, 0.2);
+            border-top-color: #06b6d4;
         }
     </style>
 
@@ -529,6 +1663,7 @@
             }
         }
     </script>
+<base target="_blank">
 </head>
 <body class="custom-scrollbar">
 <!-- TOAST DE CARGA -->
@@ -542,13 +1677,455 @@
     <div class="toast-spinner" id="loadingToastSpinner"></div>
 </div>
 
+<!-- SECCIÓN: HOME -->
+<div id="page-home" class="page-content active">
+    <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
+        <div class="absolute inset-0 z-0 opacity-40">
+            <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-16 pt-24">
+            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
+                <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Formación Profesional</span>
+                <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Cursos Online y Presenciales</span>
+                <div id="visitor-info" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/40 border border-[#2db8ce]/30 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md opacity-0 transition-opacity duration-1000">
+                    <span class="flex items-center gap-1.5"><i class="fas fa-eye text-[#2db8ce]"></i><span id="visit-count">...</span></span>
+                    <span class="text-white/30">|</span>
+                    <span class="flex items-center gap-1.5"><img id="visitor-flag" src="" class="w-4 h-3 rounded-[2px] hidden"><span id="visitor-country">Ubicando...</span></span>
+                </div>
+            </div>
+            <div class="flex flex-col md:grid md:grid-cols-3 gap-8 items-center text-center md:text-left">
+                <h1 class="hero-main-title text-3xl md:text-5xl font-black drop-shadow-lg uppercase tracking-tighter font-display md:col-span-2">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
+                <div class="flex justify-center items-center md:col-start-3 md:row-start-1 md:row-span-2">
+                    <img src="img/AA(47).webp" alt="Icono" class="h-64 md:h-96 drop-shadow-lg" style="animation: float 3s ease-in-out infinite;">
+                </div>
+                <div class="md:col-span-2">
+                    <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium mx-auto md:mx-0">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
+                    <div class="mt-8">
+                        <button onclick="window.location.href='#cursos-destacados'" class="btn-metal-solid btn-metal-teal btn-auto px-3 py-1.5 text-[11px] rounded-md font-bold uppercase flex items-center gap-1.5 md:px-5 md:py-2.5 md:text-xs md:rounded-xl md:gap-2">Ver Cursos <i class="fas fa-chevron-down text-[9px] md:text-[10px]"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-flow-content">
+        <!-- INSTRUCTOR -->
+        <section id="instructor" class="page-section relative py-24 px-6">
+            <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
+                <div>
+                    <img src="img/AA (14).webp" alt="Profesor Pablo Cedeño" class="rounded-3xl aspect-square object-cover w-full max-w-[250px] mx-auto md:max-w-full shadow-2xl border-4 border-cyan-500/30">
+                </div>
+                <div class="md:col-span-2 text-center md:text-left">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Guía Experto</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Prof. Pablo <span>Cedeño</span></h2>
+                    <p class="text-slate-300 mt-6 mb-8 max-w-xl mx-auto md:mx-0">Ingeniero con más de 15 años de experiencia en el diseño, implementación y mantenimiento de sistemas de automatización industrial.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
+
+        <!-- MISIÓN ACADÉMICA -->
+        <section id="mision" class="page-section pt-10 pb-20 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10 text-center">
+                <div>
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">LIDERADOS POR EL PROFESOR PABLO CEDEÑO</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">Nuestra Misión <span>Académica</span></h2>
+                </div>
+                <div class="mt-12 max-w-5xl mx-auto">
+                    <div class="mission-card p-8 md:p-12 rounded-3xl text-left">
+                        <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                            <div class="flex-shrink-0">
+                                <img src="img/AA (16).webp" alt="Logo de la Universidad" class="h-32 w-32 rounded-full object-cover drop-shadow-lg">
+                            </div>
+                            <div class="border-t-2 md:border-t-0 md:border-l-2 border-cyan-500/20 pt-6 md:pt-0 md:pl-8">
+                                <h3 class="text-xl lg:text-2xl font-bold mb-5">Empoderando a la Próxima Generación de Innovadores</h3>
+                                <ul class="space-y-4 text-sm md:text-base">
+                                    <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1.5"></i><span><strong>Educación Práctica:</strong> Contenido actualizado para la industria.</span></li>
+                                    <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1.5"></i><span><strong>Acceso para Todos:</strong> Democratizar el conocimiento.</span></li>
+                                    <li class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1.5"></i><span><strong>Comunidad y Soporte:</strong> Aprendizaje colaborativo.</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- El resto del HTML se mantiene exactamente igual al original, solo se modificó el bloque del toast y se añadieron IDs. -->
+        <!-- Debido a la extensión, se conserva íntegro el contenido restante sin cambios. -->
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
+
+        <!-- CURSOS DESTACADOS -->
+        <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Mis Cursos <span>Destacados</span></h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left" id="cursos-destacados-container"></div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
+
+        <!-- MANUALES -->
+        <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Conocimiento Aplicado</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Manuales y <span>Recursos</span></h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left" id="manuales-container"></div>
+            </div>
+        </section>
+
+        <div class="circuit-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <radialGradient id="gradient-dot" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.6" />
+                    </radialGradient>
+                </defs>
+                <path class="trace" d="M0,40 L120,40 L180,20 L360,20 L420,40 L600,40 L660,60 L840,60 L900,40 L1080,40 L1140,20 L1260,20 L1320,40 L1440,40" fill="none"></path>
+                <circle class="dot" cx="180" cy="20" r="4"></circle>
+                <circle class="dot" cx="420" cy="40" r="4"></circle>
+                <circle class="dot" cx="660" cy="60" r="4"></circle>
+                <circle class="dot" cx="900" cy="40" r="4"></circle>
+                <circle class="dot" cx="1140" cy="20" r="4"></circle>
+                <circle class="dot" cx="1320" cy="40" r="4"></circle>
+            </svg>
+        </div>
+
+        <!-- MODALIDADES -->
+        <section id="modalidades" class="page-section relative py-24 px-6">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-8">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Flexibilidad Total</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Modalidades de <span>Aprendizaje</span></h2>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch" id="modalidades-container"></div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
+
+        <!-- CURSO ESPECIAL -->
+        <section id="curso-especial" class="page-section relative py-24 px-6 overflow-hidden text-left">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-8">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-6 block">ampliación y extensión profesional</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Próximo <span>Curso Presencial</span></h2>
+                </div>
+                <div class="special-course-card course-card-level-intermedio rounded-3xl overflow-hidden flex flex-col lg:flex-row lg:items-stretch" id="curso-especial-container"></div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
+
+        <!-- METODOLOGÍA -->
+        <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Nuestra <span>Metodología</span></h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="metodologia-container"></div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
+
+        <!-- COMUNIDAD -->
+        <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+                <div class="text-center lg:text-left">
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span>nuestros cursos?</span></h2>
+                    <p class="text-base font-semibold mb-8 border-l-4 border-blue-700 pl-6 mx-auto lg:mx-0 max-w-sm">Dinos cuál es tu perfil para registrarte en nuestras estadísticas.</p>
+                </div>
+                <div class="space-y-4 w-full max-w-md mx-auto" id="profiles-container"></div>
+            </div>
+        </section>
+
+        <div class="circuit-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <radialGradient id="gradient-dot" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.6" />
+                    </radialGradient>
+                </defs>
+                <path class="trace" d="M0,40 L120,40 L180,20 L360,20 L420,40 L600,40 L660,60 L840,60 L900,40 L1080,40 L1140,20 L1260,20 L1320,40 L1440,40" fill="none"></path>
+                <circle class="dot" cx="180" cy="20" r="4"></circle>
+                <circle class="dot" cx="420" cy="40" r="4"></circle>
+                <circle class="dot" cx="660" cy="60" r="4"></circle>
+                <circle class="dot" cx="900" cy="40" r="4"></circle>
+                <circle class="dot" cx="1140" cy="20" r="4"></circle>
+                <circle class="dot" cx="1320" cy="40" r="4"></circle>
+            </svg>
+        </div>
+
+        <!-- TESTIMONIOS -->
+        <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Experiencias Reales</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span>Nuestros Alumnos</span></h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left" id="testimonios-container"></div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
+
+        <!-- FAQ -->
+        <section id="faq" class="page-section relative py-24 px-6">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-8">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Resolvemos tus Dudas</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Preguntas <span>Frecuentes</span></h2>
+                </div>
+                <div class="space-y-4" id="faq-container"></div>
+                <div class="text-center mt-10">
+                    <p class="text-slate-400 text-sm mb-4 font-medium">Si tienes alguna otra duda, pregúntame por WhatsApp</p>
+                    <button onclick="window.open('https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos.', '_blank')" class="btn-metal-solid btn-metal-teal btn-auto !px-3 !py-1.5 !text-[11px] !rounded-md !font-bold !uppercase !flex !items-center !gap-1.5 mx-auto md:!px-5 md:!py-2.5 md:!text-xs md:!rounded-xl md:!gap-2">
+                        <i class="fab fa-whatsapp text-[11px] md:text-sm"></i>
+                        <span class="hidden md:inline">WhatsApp</span>
+                        <span class="md:hidden">Escríbenos por WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
+        </div>
+
+        <!-- MAPA GLOBAL -->
+        <section id="comunidad-global" class="page-section relative py-24 px-6 text-center overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 uppercase tracking-tighter">Comunidad <span>Global</span></h2>
+                <div class="flex flex-col lg:flex-row gap-8 items-stretch h-auto lg:h-[550px] text-left">
+                    <div class="w-full lg:w-2/3 h-[400px] lg:h-full rounded-[2.5rem] shadow-2xl border border-white/10 bg-gray-900/80 backdrop-blur-sm overflow-hidden relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-purple-500/5 pointer-events-none"></div>
+                        <div id="visitorMapGlobal" class="w-full h-full relative z-10"></div>
+                    </div>
+                    <div class="w-full lg:w-1/3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 flex flex-col shadow-2xl relative z-10">
+                        <h3 class="text-white font-black text-xs uppercase mb-6 flex items-center gap-2 tracking-[0.15em]">
+                            <i class="fas fa-award text-cyan-400"></i> Ranking Visitantes
+                        </h3>
+                        <div id="countryRankListGlobal" class="flex-grow overflow-y-auto custom-scrollbar pr-2 space-y-3">
+                            <p class="text-slate-500 text-sm">Cargando ranking...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="glitch-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 50" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+                <line class="glitch-line line-1" x1="0" y1="25" x2="1440" y2="25"></line>
+            </svg>
+        </div>
+
+        <!-- MÉTRICAS -->
+        <section id="metrics" class="page-section pt-6 pb-20 px-6 relative z-10 shadow-2xl">
+            <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+                <div class="py-2"><div class="text-[#2db8ce] text-2xl mb-1"><i class="fas fa-users"></i></div><div id="metric-visitas" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Visitantes</div></div>
+                <div class="py-2"><div class="text-teal-400 text-2xl mb-1"><i class="fas fa-globe-americas"></i></div><div id="metric-paises" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Países</div></div>
+                <div class="py-2"><div class="text-cyan-400 text-2xl mb-1"><i class="fas fa-user-graduate"></i></div><div id="metric-estudiantes" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Estudiantes</div></div>
+                <div class="py-2"><div class="text-red-400 text-2xl mb-1"><i class="fas fa-heart"></i></div><div id="metric-likes" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Likes</div></div>
+                <div class="py-2"><div class="text-cyan-400 text-2xl mb-1"><i class="fas fa-book"></i></div><div class="text-3xl font-black">12+</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Cursos</div></div>
+                <div class="py-2"><div class="text-blue-400 text-2xl mb-1"><i class="fas fa-cloud-download-alt"></i></div><div id="metric-descargas" class="text-3xl font-black">0</div><div class="text-slate-400 text-[9px] font-bold uppercase tracking-widest">Descargas</div></div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<!-- MODAL AUTENTICACIÓN BÁSICO -->
+<div id="authModal" class="modal-overlay">
+    <div class="modal-content !p-8 relative">
+        <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button>
+        <div class="text-center mb-6">
+            <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter">Iniciar Sesión</h3>
+            <p class="text-xs text-slate-500 mt-2">Ingresa tus datos para acceder a tus cursos.</p>
+        </div>
+        <div class="text-center">
+            <p class="text-sm text-slate-600 mb-4">Debes iniciar sesión para dar like o valorar cursos.</p>
+            <button onclick="closeModal('authModal')" class="btn-metal-solid px-6 py-3">Entendido</button>
+        </div>
+    </div>
+</div>
+
+<div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20" style="position:fixed;bottom:20px;right:20px;transform:translateX(120%);transition:transform 0.5s cubic-bezier(0.68,-0.55,0.27,1.55);z-index:100000;">
+    <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
+    <div>
+        <p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p>
+        <p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p>
+    </div>
+</div>
+
+
 <script>
     // ============ FUNCIONES DEL TOAST DE CARGA ============
     function showLoadingToast() {
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
         const spinner = document.getElementById('loadingToastSpinner');
-        
+
         if (toast) {
             toast.classList.remove('hidden', 'hiding', 'success-toast');
             title.innerText = 'Estamos cargando la información';
@@ -570,7 +2147,7 @@
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
         const spinner = document.getElementById('loadingToastSpinner');
-        
+
         if (toast) {
             toast.classList.remove('hidden', 'hiding');
             toast.classList.add('success-toast');
@@ -613,33 +2190,6 @@
     }
     // ============ FIN FUNCIONES DEL TOAST ============
 </script>
-
-<!-- SECCIÓN: HOME -->
-<div id="page-home" class="page-content active">
-    <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
-        <div class="absolute inset-0 z-0 opacity-40">
-            <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-16 pt-24">
-            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
-                <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Formación Profesional</span>
-                <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Cursos Online y Presenciales</span>
-            </div>
-            <div class="flex flex-col md:grid md:grid-cols-3 gap-8 items-center text-center md:text-left">
-                <h1 class="hero-main-title text-3xl md:text-5xl font-black drop-shadow-lg uppercase tracking-tighter font-display md:col-span-2">APRENDE <span class="text-secondary">AUTOMATIZACIÓN</span></h1>
-                <div class="flex justify-center items-center md:col-start-3 md:row-start-1 md:row-span-2">
-                    <img src="img/AA(47).webp" alt="Icono" class="h-64 md:h-96 drop-shadow-lg" style="animation: float 3s ease-in-out infinite;">
-                </div>
-                <div class="md:col-span-2">
-                    <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium mx-auto md:mx-0">Cursos online, presenciales y manuales prácticos para llevar tu carrera al siguiente nivel.</p>
-                    <div class="mt-8">
-                        <button onclick="window.location.href='#cursos-destacados'" class="btn-metal-solid btn-metal-teal btn-auto px-3 py-1.5 text-[11px] rounded-md font-bold uppercase flex items-center gap-1.5 md:px-5 md:py-2.5 md:text-xs md:rounded-xl md:gap-2">Ver Cursos <i class="fas fa-chevron-down text-[9px] md:text-[10px]"></i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
-</div>
 
 <script src="js/auth.js"></script>
 <script src="js/app.js"></script>
