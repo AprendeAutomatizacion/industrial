@@ -738,7 +738,6 @@
             if (existingCheck) existingCheck.remove();
             toast.style.opacity = '1';
             toast.style.transform = 'translateX(0)';
-            // Animación según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             } else {
@@ -764,7 +763,6 @@
             toast.appendChild(checkDiv);
             toast.style.opacity = '1';
             toast.style.transform = 'translateX(0)';
-            // Animación según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             } else {
@@ -778,7 +776,6 @@
         const toast = document.getElementById('loadingToast');
         if (toast) {
             toast.classList.add('hiding');
-            // Animación de salida según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.transform = 'translateY(150%)';
             } else {
@@ -842,16 +839,11 @@
                 throw new Error(result.message || 'El script de Google devolvió un error.');
             }
             
-            // PRIMERO asignar COURSES_DATA
             window.COURSES_DATA = result.data;
             COURSES_DATA = result.data;
             console.log('✅ Catálogo cargado:', COURSES_DATA.length, 'cursos');
-            console.log('📋 Cursos:', COURSES_DATA.map(c => ({id: c.ID, nombre: c.Nombre, tipo: c.Tipo})));
             
-            // LUEGO cargar datos del usuario
             await loadData();
-
-            // Mostrar toast de éxito
             showSuccessToast();
 
         } catch (error) {
@@ -892,7 +884,6 @@
                 calculateCourseRatings(); 
                 updateStudentCounts();
                 
-                // ========== SINCRONIZAR CURSOS DEL USUARIO ==========
                 if(window.currentUser && window.currentUser.email){
                     const email = window.currentUser.email.toLowerCase();
                     
@@ -926,16 +917,13 @@
                     
                     let details = dbUserDetails[email] || {};
                     
-                    // Obtener IDs existentes de ambas fuentes
                     let existingIds = Array.isArray(globalUser.accessedCursos) ? globalUser.accessedCursos : [];
                     let localIds = Array.isArray(window.currentUser.accessedCursos) ? window.currentUser.accessedCursos : [];
                     
-                    // Combinar todos los IDs sin duplicados
                     window.currentUser.accessedCursos = [...new Set([...existingIds, ...localIds, ...myCourseIds])];
                     
                     console.log('📊 IDs de cursos accedidos:', window.currentUser.accessedCursos);
                     
-                    // Actualizar datos del usuario
                     if(details.name && details.name !== "No provisto" && details.name !== "N/A") 
                         window.currentUser.name = details.name;
                     window.currentUser.cedula = details.cedula || window.currentUser.cedula || "N/A";
@@ -952,7 +940,6 @@
                         aulas: {}
                     };
                     
-                    // Sincronizar currentUser local con window.currentUser
                     currentUser = window.currentUser;
                     
                     const backendDatesForEmail = enrollmentDatesBackend[email] || {};
@@ -960,7 +947,6 @@
                     latestEnrollmentDates = backendDatesForEmail;
                     latestCompletionDates = backendCompDatesForEmail;
                     
-                    // Guardar en localStorage
                     localStorage.setItem('user', JSON.stringify(window.currentUser));
                     
                     console.log('👤 Usuario sincronizado:', {
@@ -1041,34 +1027,113 @@
         }
     }
 
+    // ==========================================
+    // FUNCIÓN parseProgressString CORREGIDA
+    // ==========================================
+    function parseProgressString(raw, totalLessons) {
+        if(!raw || raw.trim()==="") return {completed:0, total:totalLessons, percent:0, scores:[], avgScore:0, progress:[]};
+        
+        let safe = String(raw).trim().replace(/'/g,'"');
+        let scores = new Array(totalLessons).fill(null);
+        let completed = 0;
+        let progressIndices = [];
+        
+        try {
+            const p = JSON.parse(safe);
+            if(p && typeof p === 'object') {
+                if(p.progress && Array.isArray(p.progress)) {
+                    progressIndices = p.progress.map(v => parseInt(v)).filter(v => !isNaN(v));
+                    completed = progressIndices.length;
+                } else if(typeof p.completed === 'number') {
+                    completed = p.completed;
+                    for(let i=0; i<completed; i++) progressIndices.push(i);
+                }
+                
+                const src = p.scores || p;
+                if(Array.isArray(src)) {
+                    for(let i=0; i<src.length && i<totalLessons; i++) {
+                        scores[i] = Number(src[i]);
+                    }
+                } else if(typeof src === 'object') {
+                    for(let k in src) {
+                        let idx = parseInt(k);
+                        if(!isNaN(idx) && idx >= 0 && idx < totalLessons) {
+                            scores[idx] = Number(src[k]);
+                        }
+                    }
+                }
+            }
+        } catch(e) {
+            if(safe.includes(',')) {
+                let parts = safe.split(',');
+                parts.forEach((p, i) => {
+                    if(i < totalLessons) scores[i] = Number(p.trim());
+                });
+            } else {
+                let n = parseFloat(safe);
+                if(!isNaN(n)) {
+                    if(safe.includes('%') || n <= 100) {
+                        completed = Math.round((n/100) * totalLessons);
+                    } else {
+                        completed = n;
+                    }
+                    scores[0] = n;
+                }
+            }
+        }
+        
+        let valid = scores.filter(n => n !== null && !isNaN(n));
+        if(completed === 0 && valid.length > 0) {
+            completed = valid.length;
+            progressIndices = valid.map((_, i) => i);
+        }
+        completed = Math.min(Math.max(0, completed), totalLessons);
+        
+        const avg = valid.length > 0 ? Math.round(valid.reduce((a,b) => a+b, 0) / valid.length) : 0;
+        let percent = totalLessons > 0 ? Math.round((completed/totalLessons) * 100) : 0;
+        
+        return {
+            completed: completed,
+            total: totalLessons,
+            percent: percent,
+            scores: scores,
+            avgScore: avg,
+            progress: progressIndices
+        };
+    }
+
+    // ==========================================
+    // FUNCIÓN fetchProgressForAllCourses CORREGIDA
+    // ==========================================
     function fetchProgressForAllCourses(){
         if(!window.currentUser||!window.currentUser.accessedCursos) return;
         const email=window.currentUser.email.toLowerCase();
         if(!userProgress[email]) userProgress[email]={};
         const progresos=dbUserProgress[email]||{};
         const accessed=Array.isArray(window.currentUser.accessedCursos)?window.currentUser.accessedCursos:[];
+        
         accessed.forEach(courseId=>{
             const course=COURSES_DATA.find(c=>c.ID===courseId);
             if(!course) return;
+            
             let progStr="";
             const nc = normalizeName(course.Nombre);
+            
             for(let key in progresos) {
                 if (normalizeName(key) === nc) {
                     progStr = progresos[key];
                     break;
                 }
             }
+            
             const total=course.TotalLecciones||5;
-            userProgress[email][String(courseId)]=parseProgressString(progStr,total);
+            const parsedProgress = parseProgressString(progStr, total);
+            userProgress[email][String(courseId)] = parsedProgress;
+            
+            console.log(`📊 Progreso ${course.Nombre}: ${parsedProgress.percent}% (${parsedProgress.completed}/${total})`);
         });
+        
         renderMisCourses();
-    }
-
-    function parseProgressString(raw,totalLessons){
-        if(!raw||raw.trim()==="") return {completed:0,total:totalLessons,percent:0,scores:[],avgScore:0};
-        let completed=0;
-        let percent=totalLessons>0?Math.round((completed/totalLessons)*100):0;
-        return {completed,total:totalLessons,percent,scores:[],avgScore:0};
     }
 
     function updateAllUI(){
@@ -1149,7 +1214,7 @@
             const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.ID}`))?'liked text-red-500':'text-slate-400';
             const viewsClass=vistas>0?'text-green-500':'text-slate-400';
             const displayCount=studentCountsPerCourse[course.ID]!==undefined?studentCountsPerCourse[course.ID]:'...';
-            const progressData=myProgress[String(course.ID)]||{completed:0,total:course.TotalLecciones||5,percent:0,avgScore:0};
+            const progressData=myProgress[String(course.ID)]||{completed:0,total:course.TotalLecciones||5,percent:0,scores:[],avgScore:0,progress:[]};
             const completed = progressData.completed;
             const total = progressData.total;
             const percent = progressData.percent;
@@ -1157,7 +1222,7 @@
             let starsHTML='';
             for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.ID},${i},false)"></i>`; }
             
-            console.log(`📊 Curso ${course.ID} (${course.Nombre}): likes=${likes}, vistas=${vistas}`);
+            console.log(`📊 Curso ${course.ID} (${course.Nombre}): likes=${likes}, vistas=${vistas}, progreso=${percent}%`);
             
             let buttonsHTML = '';
             if (isManual) {
