@@ -3,7 +3,7 @@
 // (ACTUALIZADO - MISIÓN Y COMUNIDAD EDITABLES DESDE EXCEL - USANDO BADGE)
 // ==========================================
 
-const API_URL = 'https://script.google.com/macros/s/AKfycby96uXpi4RhkMI0_TkNQmVeWRtMhueW3ORaz1ZDcA49qcrumXQEy6kA5ZUEUB7NiQNZ/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxPCtofr1QkXWA2sB9AMxcaZRrGBf6mJEPagY4MTggLz9GAmAR57K3rMpSEy3oDJXaS/exec';
 
 const countryToISO = { "venezuela": "ve", "colombia": "co", "méxico": "mx", "mexico": "mx", "españa": "es", "spain": "es", "argentina": "ar", "perú": "pe", "peru": "pe", "chile": "cl", "ecuador": "ec", "bolivia": "bo", "paraguay": "py", "uruguay": "uy", "costa rica": "cr", "panamá": "pa", "panama": "pa", "república dominicana": "do", "guatemala": "gt", "honduras": "hn", "el salvador": "sv", "nicaragua": "ni", "cuba": "cu", "puerto rico": "pr", "estados unidos": "us", "francia": "fr", "brasil": "br", "italia": "it", "alemania": "de", "canadá": "ca", "reino unido": "gb", "portugal": "pt", "haití": "ht", "japon": "jp", "china": "cn", "rusia": "ru", "bélgica": "be", "suiza": "ch", "jamaica": "jm" };
 
