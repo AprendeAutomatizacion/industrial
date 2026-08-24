@@ -10,7 +10,7 @@ const AuthLogic = {
     pendingAction: null,
 
     // Usar SCRIPT_URL global si existe (de mis cursos), o el valor por defecto
-    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbzNk3MlpXGcrLEMYgB-2rX2CdvldAEJ9p1MoZOIshtcUunf31Xuq4mvWDCGXAFaAkFC/exec',
+    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbx_lXVQi0dFWU3Z_RQcTS9I6JdHGs7OVWXQljBgRVQHnI-JyzgAaQyxB2mhTOf8bpzn/exec',
 
     // Inicializar: Revisar si hay sesión guardada en localStorage
     init: async function() {
@@ -86,8 +86,7 @@ const AuthLogic = {
                     cedula: details.cedula || this.currentUser.cedula || "N/A",
                     telefono: details.telefono || this.currentUser.telefono || "N/A",
                     pais: details.pais || this.currentUser.pais || "N/A",
-                    estado: details.estado || this.currentUser.estado || "N/A",
-                    visitRegistro: globalUser.visitRegistro || this.currentUser.visitRegistro || { cursos: {}, infoPaginas: {}, aulas: {}, materiales: {} }
+                    estado: details.estado || this.currentUser.estado || "N/A"
                 };
 
                 // Sincronizar cursos adquiridos desde la hoja 'userCourses' del backend
@@ -117,6 +116,14 @@ const AuthLogic = {
 
     handleLogin: async function(e) {
         e.preventDefault();
+
+        // DEBUG: Verificar si estamos en file://
+        if (window.location.protocol === 'file:') {
+            console.error('ERROR CRÍTICO: Estás abriendo el HTML como archivo local (file://). El fetch no funcionará. Usa Live Server o súbelo a hosting.');
+            this.showNotification('No se puede conectar', 'Abre esta página con un servidor local (Live Server) o súbela a internet. No funciona al abrir el archivo directamente.', 'error');
+            return;
+        }
+
         const email = document.getElementById('login-email').value.trim().toLowerCase();
         const pass = document.getElementById('login-pass').value.trim();
 
@@ -128,8 +135,29 @@ const AuthLogic = {
             btn.disabled = true;
 
             try {
+                console.log('[Auth] Intentando conectar a:', `${this.API_URL}?action=get_data&nocache=${Date.now()}`);
+
                 const response = await fetch(`${this.API_URL}?action=get_data&nocache=${Date.now()}`);
-                const data = await response.json();
+
+                console.log('[Auth] Respuesta recibida. Status:', response.status, 'OK:', response.ok);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const text = await response.text();
+                console.log('[Auth] Texto crudo recibido (primeros 200 chars):', text.substring(0, 200));
+
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (parseErr) {
+                    console.error('[Auth] Error parseando JSON:', parseErr);
+                    console.error('[Auth] Texto recibido:', text);
+                    throw new Error('El servidor no devolvió JSON válido. Revisa la consola (F12) para ver qué devolvió.');
+                }
+
+                console.log('[Auth] Datos parseados. Status:', data.status);
 
                 if(data.status === 'success') {
                     // Datos del backend
@@ -175,8 +203,7 @@ const AuthLogic = {
                         cedula: details.cedula || "N/A",
                         telefono: details.telefono || "N/A",
                         pais: details.pais || "N/A",
-                        estado: details.estado || "N/A",
-                        visitRegistro: globalUser.visitRegistro || { cursos: {}, infoPaginas: {}, aulas: {}, materiales: {} }
+                        estado: details.estado || "N/A"
                     };
 
                     // Sincronizar cursos adquiridos si COURSES_DATA existe (ej. en la página de Mis Cursos)
@@ -223,8 +250,21 @@ const AuthLogic = {
                     this.showNotification('Error al obtener datos del servidor', 'error');
                 }
             } catch (error) {
-                console.error("Error en login remoto:", error);
-                this.showNotification('Error conectando al servidor. Inténtalo de nuevo más tarde.', 'error');
+                console.error('[Auth] Error COMPLETO en login:', error);
+                console.error('[Auth] Nombre del error:', error.name);
+                console.error('[Auth] Mensaje:', error.message);
+
+                let userMsg = 'Error conectando al servidor. Inténtalo de nuevo más tarde.';
+
+                if (error.message && error.message.includes('Failed to fetch')) {
+                    userMsg = 'No se pudo conectar al servidor. Si estás abriendo este archivo desde tu computadora (file://), usa Live Server en VS Code o súbelo a un hosting.';
+                } else if (error.message && error.message.includes('CORS')) {
+                    userMsg = 'Error de seguridad (CORS). El navegador bloqueó la conexión. Verifica que la URL del script sea correcta.';
+                } else if (error.message && error.message.includes('JSON')) {
+                    userMsg = error.message;
+                }
+
+                this.showNotification(userMsg, 'error');
             } finally {
                 btn.innerHTML = originalText;
                 btn.disabled = false;
@@ -275,7 +315,17 @@ const AuthLogic = {
         btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registrando...';
         btn.disabled = true;
 
+        // DEBUG: Verificar si estamos en file://
+        if (window.location.protocol === 'file:') {
+            console.error('ERROR CRÍTICO: Estás abriendo el HTML como archivo local (file://). El fetch no funcionará. Usa Live Server o súbelo a hosting.');
+            this.showNotification('No se puede conectar', 'Abre esta página con un servidor local (Live Server) o súbela a internet. No funciona al abrir el archivo directamente.', 'error');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+            return;
+        }
+
         try {
+            console.log('[Auth] Intentando registrar usuario:', email);
             const formData = new URLSearchParams();
             formData.append('action', 'register');
             formData.append('name', name);
@@ -310,8 +360,7 @@ const AuthLogic = {
                     downloadedFiles: [],
                     ratings: {},
                     completionDates: {},
-                    enrollmentDates: {},
-                    visitRegistro: { cursos: {}, infoPaginas: {}, aulas: {}, materiales: {} }
+                    enrollmentDates: {}
                 };
 
                 localStorage.setItem('user', JSON.stringify(this.currentUser));
@@ -331,8 +380,15 @@ const AuthLogic = {
                 this.showNotification(data.message || 'Error: El correo ya existe o hubo un fallo', 'error');
             }
         } catch (error) {
-            console.error("Error en registro remoto:", error);
-            this.showNotification('Error conectando al servidor.', 'error');
+            console.error('[Auth] Error COMPLETO en registro:', error);
+            console.error('[Auth] Nombre:', error.name, '| Mensaje:', error.message);
+
+            let userMsg = 'Error conectando al servidor.';
+            if (error.message && error.message.includes('Failed to fetch')) {
+                userMsg = 'No se pudo conectar. Si abriste este archivo directamente desde tu PC, usa Live Server o súbelo a hosting.';
+            }
+
+            this.showNotification(userMsg, 'error');
         } finally {
             btn.innerHTML = originalText;
             btn.disabled = false;
@@ -350,41 +406,6 @@ const AuthLogic = {
 
         // Forzar recarga para refrescar todo el estado de la UI de forma consistente
         setTimeout(() => window.location.reload(), 700);
-    },
-
-    /**
-     * Registra una visita en visitRegistro (solo fecha + ID del curso)
-     */
-    recordVisit: function(type, cursoId) {
-        if (!this.currentUser) return;
-
-        if (!this.currentUser.visitRegistro) {
-            this.currentUser.visitRegistro = { cursos: {}, infoPaginas: {}, aulas: {}, materiales: {} };
-        }
-
-        const fecha = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-        const entry = { fecha: fecha, cursoId: cursoId };
-
-        switch(type) {
-            case 'aula':
-                this.currentUser.visitRegistro.aulas[cursoId] = entry;
-                break;
-            case 'info':
-                this.currentUser.visitRegistro.infoPaginas[cursoId] = entry;
-                break;
-            case 'material':
-                this.currentUser.visitRegistro.materiales[cursoId] = entry;
-                break;
-            default:
-                console.warn('[AuthLogic] Tipo de visita desconocido:', type);
-                return;
-        }
-
-        localStorage.setItem('user', JSON.stringify(this.currentUser));
-        window.currentUser = this.currentUser;
-        this.syncUserData(true); // silencioso
-
-        console.log(`[AuthLogic] Visita registrada: ${type} | ${cursoId} | ${fecha}`);
     },
 
     syncUserData: async function(silent = false) {
@@ -444,7 +465,7 @@ const AuthUI = {
         <div id="auth-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100000] hidden flex items-center justify-center transition-opacity opacity-0" style="transition: opacity 0.3s ease;">
             <div class="bg-slate-800 border border-white/10 rounded-3xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all relative" style="max-height: 90vh; overflow-y: auto;">
 
-                <button onclick="AuthUI.closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition bg-slate-700/50 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center z-10">
+                <button onclick="AuthUI.closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition bg-slate-700/50 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center z-50 cursor-pointer">
                     <i class="fas fa-times"></i>
                 </button>
 
@@ -472,6 +493,9 @@ const AuthUI = {
                         </div>
                         <button type="submit" class="w-full bg-gradient-to-r from-cyan-600 to-teal-500 text-white py-3 rounded-xl font-black uppercase tracking-widest hover:from-cyan-500 hover:to-teal-400 transition shadow-lg shadow-cyan-500/20 mt-6 flex items-center justify-center gap-2">
                             <i class="fas fa-sign-in-alt"></i> Acceder
+                        </button>
+                        <button type="button" onclick="AuthUI.closeModal()" class="w-full bg-slate-700/50 hover:bg-slate-700 text-slate-300 py-2.5 rounded-xl font-bold uppercase tracking-widest transition border border-white/10 mt-3 flex items-center justify-center gap-2 cursor-pointer">
+                            <i class="fas fa-times"></i> Cerrar
                         </button>
                     </form>
 
@@ -775,102 +799,3 @@ window.logoutUser = function() {
 document.addEventListener('DOMContentLoaded', () => {
     AuthLogic.init();
 });
-
-// ==========================================
-// AUTO-TRACKING DE VISITAS — VERSIÓN RESTRICTIVA
-// Solo registra: aula virtual, página info, página de materiales.
-// Todo lo demás (landing, dashboard, home, etc.) se ignora.
-// ==========================================
-(function setupAutoTracking() {
-
-    function detectAndTrack() {
-        // Solo si hay usuario logueado
-        if (typeof AuthLogic === 'undefined' || !AuthLogic.currentUser) {
-            console.log('[AutoTrack] Sin sesión activa.');
-            return;
-        }
-
-        const url = window.location.href;
-        const lowerUrl = url.toLowerCase();
-        const path = window.location.pathname.toLowerCase();
-        const urlParams = new URLSearchParams(window.location.search);
-
-        let type = null;
-        let pageId = 'general';
-
-        // ============================================================
-        // 1) AULA VIRTUAL
-        // Ajusta la palabra clave si tu archivo se llama diferente.
-        // Ejemplos válidos: /aula.html, /aula-plc-basico.html, /aula?id=123
-        // ============================================================
-        if (path.includes('aula')) {
-            type = 'aula';
-            const idParam = urlParams.get('id') || urlParams.get('curso') || urlParams.get('course');
-            if (idParam) {
-                pageId = idParam;
-            } else {
-                // Extrae del nombre de archivo: aula-plc-basico → plc-basico
-                const match = path.match(/aula[-_]?([^\/\?\.]+)/);
-                if (match && match[1]) pageId = match[1];
-            }
-        }
-
-        // ============================================================
-        // 2) PÁGINA INFO DEL CURSO
-        // Ajusta la palabra clave si tu archivo se llama diferente.
-        // Ejemplos válidos: /info.html, /info-plc.html, /detalle.html, /detalle?id=123
-        // ============================================================
-        else if (path.includes('info') || path.includes('detalle')) {
-            type = 'info';
-            const idParam = urlParams.get('id') || urlParams.get('curso') || urlParams.get('course');
-            if (idParam) {
-                pageId = idParam;
-            } else {
-                const match = path.match(/(?:info|detalle)[-_]?([^\/\?\.]+)/);
-                if (match && match[1]) pageId = match[1];
-            }
-        }
-
-        // ============================================================
-        // 3) PÁGINA DE MATERIALES / DESCARGAS
-        // Ajusta la palabra clave si tu archivo se llama diferente.
-        // Ejemplos válidos: /materiales.html, /material.html, /descargas.html
-        // ============================================================
-        else if (path.includes('material') || path.includes('descarga') || path.includes('recurso')) {
-            type = 'material';
-            const idParam = urlParams.get('id') || urlParams.get('curso') || urlParams.get('course');
-            if (idParam) {
-                pageId = idParam;
-            } else {
-                const match = path.match(/(?:material|descarga|recurso)[s]?[-_]?([^\/\?\.]+)/);
-                if (match && match[1]) pageId = match[1];
-            }
-        }
-
-        // ============================================================
-        // Si no coincide con ninguna de las 3 páginas, NO HACER NADA.
-        // Esto evita que la landing, dashboard, home, etc. se registren.
-        // ============================================================
-        if (!type) {
-            console.log('[AutoTrack] Página ignorada (no es aula, info ni material):', path);
-            return;
-        }
-
-        // Registrar la visita (solo fecha + cursoId)
-        AuthLogic.recordVisit(type, pageId);
-
-        console.log(`[AutoTrack] ✅ ${type.toUpperCase()} registrado | ID: ${pageId}`);
-    }
-
-    // Ejecutar cuando AuthLogic haya terminado de inicializar
-    function initTracking() {
-        setTimeout(detectAndTrack, 1500);
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initTracking);
-    } else {
-        initTracking();
-    }
-
-})();
