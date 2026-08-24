@@ -767,7 +767,7 @@
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxPCtofr1QkXWA2sB9AMxcaZRrGBf6mJEPagY4MTggLz9GAmAR57K3rMpSEy3oDJXaS/exec';
 
     let currentUser = JSON.parse(localStorage.getItem('user')) || null;
-    let dbUsers = {}, globalStats = {};
+    let dbUsers = {}, globalStats = {}, dbUserCourses = {}, dbUserDetails = {};
     let programCounts = {}; 
     let userCountry = "Desconocido";
     let PROGRAMS_DATA = [];
@@ -911,8 +911,13 @@
             const softwareKey = `${prog.name} ${prog.version}`;
             const displayCount = programCounts[softwareKey] !== undefined ? programCounts[softwareKey] : 0;
 
+            // ✅ MEJORA: Verificar si el usuario ya ha descargado este programa
             const isDownloaded = currentUser && currentUser.downloadedPrograms && currentUser.downloadedPrograms.includes(parseInt(prog.id));
             const userStatusTag = isDownloaded ? `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Ya has descargado este programa"><i data-lucide="check-circle" class="w-3 h-3"></i> Descargado</span>` : '';
+            
+            // ✅ MEJORA: Obtener el conteo personal de descargas del usuario
+            const userDownloadCount = currentUser && currentUser.downloadedFiles && currentUser.downloadedFiles[prog.id] ? currentUser.downloadedFiles[prog.id] : 0;
+            const userCountTag = userDownloadCount > 0 ? `<span class="bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Tus descargas"><i data-lucide="download" class="w-3 h-3"></i> ${userDownloadCount}</span>` : '';
 
             card.innerHTML = `
                 <div class="aspect-video w-full overflow-hidden bg-slate-900/50 border-b border-white/10">
@@ -924,7 +929,7 @@
                         <span class="bg-white/10 text-slate-300 px-2 py-0.5 rounded-full border border-white/10">${prog.version || 'N/A'}</span>
                         <span class="bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full border border-blue-500/30">${prog.size || 'N/A'}</span>
                         <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Descargas totales"><i data-lucide="bar-chart-2" class="w-3 h-3"></i><span id="progCount-${prog.id}">${displayCount}</span></span>
-                        ${userStatusTag}
+                        ${userStatusTag} ${userCountTag}
                     </div>
                     <p class="text-slate-300 text-sm line-clamp-3 leading-relaxed">${prog.desc || 'Sin descripción'}</p>
                 </div>
@@ -943,6 +948,7 @@
             return; 
         }
         
+        // ✅ MEJORA: Inicializar arrays/objetos si no existen
         if (!currentUser.downloadedPrograms) currentUser.downloadedPrograms = [];
         if (!currentUser.downloadedPrograms.includes(progId)) { 
             currentUser.downloadedPrograms.push(progId); 
@@ -973,7 +979,10 @@
             mode: 'no-cors' 
         }).catch(err => console.error('Error registrando descarga:', err));
         
-        syncUserProgressToExcel(); 
+        syncUserProgressToExcel();
+        
+        // ✅ MEJORA: Re-renderizar las tarjetas para actualizar las pastillas
+        renderPrograms(PROGRAMS_DATA);
     }
 
     async function syncUserProgressToExcel() {
@@ -1023,6 +1032,49 @@
         }
     }
 
+    // ==========================================
+    // CARGAR DATOS DEL USUARIO DESDE EL EXCEL
+    // ==========================================
+    async function loadUserDataFromExcel() {
+        if (!currentUser || !currentUser.email) return;
+        
+        try {
+            const response = await fetch(`${SCRIPT_URL}?action=get_user_data&email=${encodeURIComponent(currentUser.email)}`);
+            const result = await response.json();
+            
+            if (result.status === 'success' && result.user) {
+                const userData = result.user;
+                
+                // ✅ MEJORA: Cargar downloadedPrograms desde el Excel
+                if (userData.downloadedPrograms) {
+                    currentUser.downloadedPrograms = userData.downloadedPrograms;
+                }
+                
+                // ✅ MEJORA: Cargar downloadedFiles desde el Excel
+                if (userData.downloadedFiles) {
+                    if (typeof userData.downloadedFiles === 'string') {
+                        try {
+                            currentUser.downloadedFiles = JSON.parse(userData.downloadedFiles);
+                        } catch(e) {
+                            currentUser.downloadedFiles = {};
+                        }
+                    } else {
+                        currentUser.downloadedFiles = userData.downloadedFiles;
+                    }
+                }
+                
+                localStorage.setItem('user', JSON.stringify(currentUser));
+                
+                // Re-renderizar para mostrar las pastillas actualizadas
+                if (PROGRAMS_DATA.length > 0) {
+                    renderPrograms(PROGRAMS_DATA);
+                }
+            }
+        } catch (e) {
+            console.error('Error cargando datos del usuario:', e);
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", async () => {
         currentUser = JSON.parse(localStorage.getItem('user')) || null;
         
@@ -1034,6 +1086,11 @@
         
         // Cargar programas desde la hoja "Programas" del Excel
         await loadProgramsFromSheet();
+        
+        // ✅ MEJORA: Cargar datos del usuario si está logueado
+        if (currentUser) {
+            await loadUserDataFromExcel();
+        }
         
         if(window.lucide) lucide.createIcons();
     });
