@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificación de Certificado - Aprende Automatización</title>
+  <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    
+    /* Fondo decorativo */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 60% 40% at 20% 30%, rgba(45, 184, 206, 0.15) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 80% 70%, rgba(139, 92, 246, 0.10) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1);
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2db8ce;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+    
+    .logo img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+    
+    .status-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
+    }
+    
+    @keyframes bounceIn {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
+    .valido .status-icon { background: #d1fae5; color: #059669; box-shadow: 0 0 30px rgba(5, 150, 105, 0.3); }
+    .invalido .status-icon { background: #fee2e2; color: #dc2626; box-shadow: 0 0 30px rgba(220, 38, 38, 0.2); }
+    
+    h1 { 
+      font-size: 24px; 
+      margin-bottom: 8px; 
+      color: #111827; 
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 25px;
+    }
+    
+    .valido .badge { 
+      background: #d1fae5; 
+      color: #059669; 
+    }
+    
+    .invalido .badge { 
+      background: #fee2e2; 
+      color: #dc2626; 
+    }
+    
+    .dato {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #f3f4f6;
+      text-align: left;
+      gap: 20px;
+    }
+    
+    .dato:last-child { border-bottom: none; }
+    
+    .dato label { 
+      color: #6b7280; 
+      font-size: 13px; 
+      font-weight: 500; 
+      flex-shrink: 0;
+    }
+    
+    .dato span { 
+      color: #111827; 
+      font-weight: 700; 
+      font-size: 14px; 
+      text-align: right;
+      word-break: break-word;
+    }
+    
+    .dato .id-mono { 
+      font-family: 'Courier New', monospace; 
+      font-size: 12px; 
+      color: #0891b2; 
+      background: #f0f9ff;
+      padding: 4px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+    
+    .footer {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 1px solid #f3f4f6;
+      color: #9ca3af;
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    
+    .sello {
+      width: 90px;
+      height: 90px;
+      border: 3px solid #2db8ce;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 20px auto 0;
+      color: #2db8ce;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transform: rotate(-12deg);
+      opacity: 0.6;
+    }
+    
+    .error-msg {
+      color: #6b7280;
+      margin: 15px 0 25px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    
+    /* Estado de carga */
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #e5e7eb;
+      border-top: 4px solid #2db8ce;
+      border-radius: 50%;
+      margin: 30px auto;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .hidden { display: none !important; }
+    
+    /* Botón de volver */
+    .btn-volver {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: #0f172a;
+      color: white;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-volver:hover {
+      background: #1e293b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <!-- Estado de carga -->
+  <div id="loadingState" class="card" style="text-align: center;">
+    <div class="logo">
+      <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA">
+    </div>
+    <div class="loading-spinner"></div>
+    <p style="color: #6b7280; font-weight: 600;">Verificando certificado...</p>
+  </div>
+  
+  <!-- Certificado Válido -->
+  <div id="certificadoValido" class="card valido hidden">
+    <div class="logo">
+      <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA">
+    </div>
+    <div class="status-icon">✓</div>
+    <h1>Certificado Válido</h1>
+    <div class="badge">✓ Verificado Oficialmente</div>
+    
+    <div class="dato"><label>Academia</label><span>Aprende Automatización</span></div>
+    <div class="dato"><label>Estudiante</label><span id="certNombre">-</span></div>
+    <div class="dato"><label>Curso</label><span id="certCurso">-</span></div>
+    <div class="dato"><label>Fecha de emisión</label><span id="certFechaEmision">-</span></div>
+    <div class="dato"><label>Fecha de culminación</label><span id="certFechaCulminacion">-</span></div>
+    <div class="dato"><label>ID del certificado</label><span class="id-mono" id="certId">-</span></div>
+    
+    <div class="sello">Validado</div>
+    <div class="footer">
+      Este certificado fue emitido y verificado electrónicamente por<br>
+      <strong>Aprende Automatización</strong><br>
+      Ing. Pablo Cedeño - Instructor Principal
+    </div>
+    
+    <a href="https://tudominio.com" class="btn-volver">
+      <i class="fas fa-arrow-left"></i> Volver a la plataforma
+    </a>
+  </div>
+  
+  <!-- Certificado Inválido -->
+  <div id="certificadoInvalido" class="card invalido hidden">
+    <div class="logo">
+      <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA">
+    </div>
+    <div class="status-icon">✕</div>
+    <h1>Certificado No Encontrado</h1>
+    <div class="badge">✕ No Válido</div>
+    <p class="error-msg" id="errorMessage">
+      El ID de certificado proporcionado no corresponde a ningún certificado 
+      emitido oficialmente por <strong>Aprende Automatización</strong>.
+    </p>
+    <p style="color: #9ca3af; font-size: 12px;">
+      Si crees que esto es un error, contacta a la academia.
+    </p>
+    
+    <a href="https://aprendeautomatizacion.xyz/progreso.html" class="btn-volver">
+      <i class="fas fa-arrow-left"></i> Volver a la plataforma
+    </a>
+  </div>
+
+  <script>
+    // ==========================================
+    // CONFIGURACIÓN
+    // ==========================================
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrTAA7BeXNyZOLDSms3YDNtHY95YDQL-PYgkjzyIojn_GIprtQ7zKgLEhPgJ001dXe/exec';
+    
+    // ==========================================
+    // OBTENER ID DEL CERTIFICADO DE LA URL
+    // ==========================================
+    function getCertIdFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id') || params.get('cert') || params.get('certificado') || '';
+    }
+    
+    // ==========================================
+    // VERIFICAR CERTIFICADO
+    // ==========================================
+    async function verifyCertificate(certId) {
+      const loadingState = document.getElementById('loadingState');
+      const certificadoValido = document.getElementById('certificadoValido');
+      const certificadoInvalido = document.getElementById('certificadoInvalido');
+      
+      loadingState.classList.remove('hidden');
+      certificadoValido.classList.add('hidden');
+      certificadoInvalido.classList.add('hidden');
+      
+      try {
+        const response = await fetch(`${SCRIPT_URL}?action=verify_certificate&certId=${encodeURIComponent(certId)}`);
+        const data = await response.json();
+        
+        loadingState.classList.add('hidden');
+        
+        if (data.status === 'success' && data.certificate) {
+          // Mostrar certificado válido
+          const cert = data.certificate;
+          
+          document.getElementById('certNombre').textContent = cert.nombre || 'N/A';
+          document.getElementById('certCurso').textContent = cert.curso || 'N/A';
+          document.getElementById('certFechaEmision').textContent = cert.fechaEmision || 'N/A';
+          document.getElementById('certFechaCulminacion').textContent = cert.fechaCulminacion || 'N/A';
+          document.getElementById('certId').textContent = cert.id || certId;
+          
+          certificadoValido.classList.remove('hidden');
+        } else {
+          // Mostrar certificado inválido
+          document.getElementById('errorMessage').innerHTML = 
+            data.message || 'El ID de certificado proporcionado no corresponde a ningún certificado emitido oficialmente.';
+          
+          certificadoInvalido.classList.remove('hidden');
+        }
+      } catch (error) {
+        console.error('Error verificando certificado:', error);
+        
+        loadingState.classList.add('hidden');
+        document.getElementById('errorMessage').innerHTML = 
+          'Error de conexión al verificar el certificado. Intenta nuevamente.';
+        certificadoInvalido.classList.remove('hidden');
+      }
+    }
+    
+    // ==========================================
+    // INICIALIZAR
+    // ==========================================
+    document.addEventListener('DOMContentLoaded', () => {
+      const certId = getCertIdFromURL();
+      
+      if (certId) {
+        verifyCertificate(certId);
+      } else {
+        // No hay ID en la URL
+        document.getElementById('loadingState').classList.add('hidden');
+        document.getElementById('errorMessage').innerHTML = 
+          'No se proporcionó un ID de certificado para verificar.';
+        document.getElementById('certificadoInvalido').classList.remove('hidden');
+      }
+    });
+  </script>
+</body>
+</html>
