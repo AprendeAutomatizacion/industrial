@@ -16,9 +16,6 @@
     <!-- CONFETTI PARA CELEBRACIÓN -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
-    <!-- QR CODE GENERATOR -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
-    
     <style>
         :root {
             --bg-dark: #0f172a;
@@ -276,7 +273,6 @@
             align-items: center;
             justify-content: center;
             gap: 12px;
-            position: relative;
         }
 
         .cert-logo {
@@ -420,7 +416,6 @@
             padding: 0 20px;
             gap: 20px;
             flex-wrap: wrap;
-            position: relative;
         }
 
         .cert-signature {
@@ -458,46 +453,6 @@
             font-weight: 900;
         }
 
-        /* 🆕 ESTILOS PARA EL QR CODE */
-        .cert-qr-section {
-            text-align: center;
-            margin-top: 10px;
-            padding: 10px;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .cert-qr-container {
-            display: inline-block;
-            background: white;
-            padding: 8px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        .cert-qr-container img,
-        .cert-qr-container canvas {
-            display: block;
-            width: 80px;
-            height: 80px;
-        }
-        
-        .cert-qr-text {
-            font-size: 8px;
-            color: #9ca3af;
-            margin-top: 4px;
-            font-weight: 600;
-            max-width: 120px;
-            word-break: break-all;
-        }
-        
-        .cert-qr-verify-text {
-            font-size: 7px;
-            color: #6b7280;
-            margin-top: 2px;
-        }
-
         /* Loading overlay con LOGO */
         .loading-overlay {
             position: fixed;
@@ -516,6 +471,7 @@
             pointer-events: none;
         }
         
+        /* Logo animado en el overlay */
         .loading-logo {
             width: 100px;
             height: 100px;
@@ -539,6 +495,7 @@
             }
         }
         
+        /* Texto de carga debajo del logo */
         .loading-text {
             color: #2db8ce;
             font-size: 14px;
@@ -594,11 +551,6 @@
                 grid-template-columns: 1fr;
                 grid-auto-flow: row;
                 grid-template-rows: none !important;
-            }
-            .cert-qr-container img,
-            .cert-qr-container canvas {
-                width: 60px;
-                height: 60px;
             }
             .loading-logo {
                 width: 70px;
@@ -677,12 +629,6 @@
                 grid-auto-flow: column !important;
             }
             
-            .cert-qr-container {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
-            
             @page {
                 size: letter landscape;
                 margin: 0 !important;
@@ -759,16 +705,9 @@
                         <p class="cert-signature-name">MSc. Ing. Pablo Cedeño</p>
                         <p class="cert-signature-title">Instructor</p>
                     </div>
-                    
-                    <!-- 🆕 QR CODE DE VERIFICACIÓN -->
-                    <div class="cert-qr-section">
-                        <div class="cert-qr-container" id="certQrContainer">
-                            <div id="certQrCode"></div>
-                        </div>
-                        <p class="cert-qr-text" id="certQrLink">Verificar certificado</p>
-                        <p class="cert-qr-verify-text">Escanea para verificar autenticidad</p>
+                    <div id="certIdBadge" class="cert-id-badge">
+                        ID de Certificado: <strong>-</strong>
                     </div>
-                    
                     <div class="cert-signature">
                         <div class="cert-signature-line"></div>
                         <p class="cert-signature-name">Aprende Automatización</p>
@@ -784,7 +723,6 @@
         // CONFIGURACIÓN
         // ==========================================
         const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrTAA7BeXNyZOLDSms3YDNtHY95YDQL-PYgkjzyIojn_GIprtQ7zKgLEhPgJ001dXe/exec';
-        const VERIFY_BASE_URL = 'https://aprendeautomatizacion.xyz/verify_page.html'; // 🔧 CAMBIA POR TU DOMINIO REAL
         
         const urlParams = new URLSearchParams(window.location.search);
         const courseId = urlParams.get('courseId');
@@ -902,38 +840,6 @@
                     }
                 }, 1000);
             }
-        }
-        
-        // ==========================================
-        // FUNCIÓN PARA GENERAR QR CODE
-        // ==========================================
-        function generateQRCode(certId) {
-            const verificationUrl = `${VERIFY_BASE_URL}?id=${encodeURIComponent(certId)}`;
-            
-            // Actualizar el texto del link
-            document.getElementById('certQrLink').textContent = `Verificar: ${certId}`;
-            
-            // Limpiar contenedor
-            const qrContainer = document.getElementById('certQrCode');
-            qrContainer.innerHTML = '';
-            
-            // Generar QR Code
-            try {
-                new QRCode(qrContainer, {
-                    text: verificationUrl,
-                    width: 80,
-                    height: 80,
-                    colorDark: "#000000",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
-            } catch (e) {
-                console.error('Error generando QR:', e);
-                // Fallback: mostrar link como texto
-                qrContainer.innerHTML = `<span style="font-size: 10px; color: #333;">${certId}</span>`;
-            }
-            
-            console.log('🔗 QR generado para:', verificationUrl);
         }
         
         // ==========================================
@@ -1091,12 +997,7 @@
                 const ciNum = parseInt(String(cedula).replace(/\D/g, '')) || 0;
                 const idCalculado = 13018822 + ciNum;
                 const siglas = course.Nombre.split(' ').filter(p => p.length > 0).map(p => p[0].toUpperCase()).join('') || 'CURSO';
-                const certId = `${siglas}-${idCalculado}`;
-                
-                document.getElementById('certIdBadge').innerHTML = `ID de Certificado: <strong>${certId}</strong>`;
-                
-                // 🆕 GENERAR QR CODE CON EL ID DEL CERTIFICADO
-                generateQRCode(certId);
+                document.getElementById('certIdBadge').innerHTML = `ID de Certificado: <strong>${siglas}</strong>-<strong>${idCalculado}</strong>`;
                 
                 let moduleNames = [];
                 if (course.NombresModulos && typeof course.NombresModulos === 'string') {
