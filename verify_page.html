@@ -167,10 +167,10 @@
       font-weight: 800;
       font-size: 14px;
     }
-    .calificacion-trofeo { background: #d1fae5; color: #059669; }      /* 🏆 100 - Verde */
-    .calificacion-oro { background: #dbeafe; color: #2563eb; }         /* 🥇 90-99 - Azul */
-    .calificacion-plata { background: #dbeafe; color: #2563eb; }       /* 🥈 80-89 - Azul */
-    .calificacion-bronce { background: #fef3c7; color: #d97706; }      /* 🥉 70-79 - Amarillo */
+    .calificacion-trofeo { background: #d1fae5; color: #059669; }
+    .calificacion-oro { background: #dbeafe; color: #2563eb; }
+    .calificacion-plata { background: #dbeafe; color: #2563eb; }
+    .calificacion-bronce { background: #fef3c7; color: #d97706; }
     
     .footer {
       margin-top: 25px;
@@ -319,6 +319,45 @@
     }
     
     // ==========================================
+    // FORMATEAR FECHA EN ESPAÑOL
+    // ==========================================
+    function formatearFecha(fecha) {
+      if (!fecha || fecha === 'N/A' || fecha === '') return 'N/A';
+      
+      const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+      
+      // Intentar parsear la fecha
+      let date;
+      
+      // Si es un objeto Date de Google Sheets (formato ISO con GMT)
+      if (typeof fecha === 'string' && fecha.includes('GMT')) {
+        date = new Date(fecha);
+      }
+      // Si es formato YYYY-MM-DD HH:mm:ss
+      else if (typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}/.test(fecha)) {
+        const partes = fecha.split(' ')[0].split('-');
+        date = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+      }
+      // Si es formato DD/MM/YYYY
+      else if (typeof fecha === 'string' && /^\d{2}\/\d{2}\/\d{4}/.test(fecha)) {
+        const partes = fecha.split('/');
+        date = new Date(parseInt(partes[2]), parseInt(partes[1]) - 1, parseInt(partes[0]));
+      }
+      // Intentar parsear genérico
+      else {
+        date = new Date(fecha);
+      }
+      
+      if (isNaN(date.getTime())) return fecha;
+      
+      const dia = date.getDate();
+      const mes = meses[date.getMonth()];
+      const anio = date.getFullYear();
+      
+      return `${dia} de ${mes} de ${anio}`;
+    }
+    
+    // ==========================================
     // FORMATEAR CALIFICACIÓN
     // ==========================================
     function getCalificacionBadge(calificacion) {
@@ -367,8 +406,8 @@
           document.getElementById('certCedula').textContent = cert.cedula || 'N/A';
           document.getElementById('certCurso').textContent = cert.curso || 'N/A';
           document.getElementById('certCalificacion').innerHTML = getCalificacionBadge(cert.calificacion);
-          document.getElementById('certFechaEmision').textContent = cert.fechaEmision || 'N/A';
-          document.getElementById('certFechaCulminacion').textContent = cert.fechaCulminacion || 'N/A';
+          document.getElementById('certFechaEmision').textContent = formatearFecha(cert.fechaEmision);
+          document.getElementById('certFechaCulminacion').textContent = formatearFecha(cert.fechaCulminacion);
           document.getElementById('certId').textContent = cert.id || certId;
           
           certificadoValido.classList.remove('hidden');
