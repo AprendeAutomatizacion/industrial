@@ -21,7 +21,6 @@
       overflow-x: hidden;
     }
     
-    /* Fondo decorativo */
     body::before {
       content: '';
       position: fixed;
@@ -160,7 +159,7 @@
       letter-spacing: 0.05em;
     }
     
-    /* 🆕 Estilo para la calificación */
+    /* Estilo para la calificación */
     .calificacion-badge {
       display: inline-block;
       padding: 4px 12px;
@@ -168,9 +167,10 @@
       font-weight: 800;
       font-size: 14px;
     }
-    .calificacion-excelente { background: #d1fae5; color: #059669; }
-    .calificacion-buena { background: #dbeafe; color: #2563eb; }
-    .calificacion-regular { background: #fef3c7; color: #d97706; }
+    .calificacion-trofeo { background: #d1fae5; color: #059669; }      /* 🏆 100 - Verde */
+    .calificacion-oro { background: #dbeafe; color: #2563eb; }         /* 🥇 90-99 - Azul */
+    .calificacion-plata { background: #dbeafe; color: #2563eb; }       /* 🥈 80-89 - Azul */
+    .calificacion-bronce { background: #fef3c7; color: #d97706; }      /* 🥉 70-79 - Amarillo */
     
     .footer {
       margin-top: 25px;
@@ -206,7 +206,6 @@
       font-size: 14px;
     }
     
-    /* Estado de carga */
     .loading-spinner {
       width: 50px;
       height: 50px;
@@ -224,7 +223,6 @@
     
     .hidden { display: none !important; }
     
-    /* Botón de volver */
     .btn-volver {
       display: inline-block;
       margin-top: 20px;
@@ -324,21 +322,23 @@
     // FORMATEAR CALIFICACIÓN
     // ==========================================
     function getCalificacionBadge(calificacion) {
-      if (!calificacion || calificacion === 'N/A') {
-        return '<span class="calificacion-badge calificacion-regular">N/A</span>';
+      if (!calificacion || calificacion === 'N/A' || calificacion === '') {
+        return '<span class="calificacion-badge calificacion-bronce">N/A</span>';
       }
-      const nota = parseFloat(calificacion);
+      const nota = parseInt(calificacion);
       if (isNaN(nota)) {
-        return '<span class="calificacion-badge calificacion-regular">' + calificacion + '</span>';
+        return '<span class="calificacion-badge calificacion-bronce">' + calificacion + '</span>';
       }
-      if (nota >= 90) {
-        return '<span class="calificacion-badge calificacion-excelente">🏆 ' + calificacion + '/100</span>';
-      } else if (nota >= 80) {
-        return '<span class="calificacion-badge calificacion-buena">🥇 ' + calificacion + '/100</span>';
-      } else if (nota >= 70) {
-        return '<span class="calificacion-badge calificacion-buena">🥈 ' + calificacion + '/100</span>';
+      if (nota === 100) {
+        return '<span class="calificacion-badge calificacion-trofeo">🏆 ' + calificacion + '/100 - Excelente</span>';
+      } else if (nota >= 90 && nota <= 99) {
+        return '<span class="calificacion-badge calificacion-oro">🥇 ' + calificacion + '/100 - Buena</span>';
+      } else if (nota >= 80 && nota <= 89) {
+        return '<span class="calificacion-badge calificacion-plata">🥈 ' + calificacion + '/100 - Buena</span>';
+      } else if (nota >= 70 && nota <= 79) {
+        return '<span class="calificacion-badge calificacion-bronce">🥉 ' + calificacion + '/100 - Regular</span>';
       } else {
-        return '<span class="calificacion-badge calificacion-regular">🥉 ' + calificacion + '/100</span>';
+        return '<span class="calificacion-badge calificacion-bronce">' + calificacion + '/100</span>';
       }
     }
     
@@ -361,7 +361,6 @@
         loadingState.classList.add('hidden');
         
         if (data.status === 'success' && data.certificate) {
-          // Mostrar certificado válido
           const cert = data.certificate;
           
           document.getElementById('certNombre').textContent = cert.nombre || 'N/A';
@@ -374,7 +373,6 @@
           
           certificadoValido.classList.remove('hidden');
         } else {
-          // Mostrar certificado inválido
           document.getElementById('errorMessage').innerHTML = 
             data.message || 'El ID de certificado proporcionado no corresponde a ningún certificado emitido oficialmente.';
           
@@ -399,7 +397,6 @@
       if (certId) {
         verifyCertificate(certId);
       } else {
-        // No hay ID en la URL
         document.getElementById('loadingState').classList.add('hidden');
         document.getElementById('errorMessage').innerHTML = 
           'No se proporcionó un ID de certificado para verificar.';
