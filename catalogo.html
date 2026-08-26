@@ -156,9 +156,7 @@
         header .hero-main-title .text-secondary { background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-shadow: none !important; filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4)); }
         header p { color: rgba(255, 255, 255, 0.85) !important; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important; font-weight: 500; letter-spacing: 0.01em; }
         header .bg-blue-500\/20 { background: rgba(59, 130, 246, 0.2) !important; color: #93c5fd !important; border: 1px solid rgba(59, 130, 246, 0.3) !important; backdrop-filter: blur(8px); transition: all 0.3s ease; }
-        header .bg-blue-500\/20:hover { background: rgba(59, 130, 246, 0.35) !important; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2); }
         header .bg-emerald-500\/20 { background: rgba(16, 185, 129, 0.2) !important; color: #6ee7b7 !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; backdrop-filter: blur(8px); transition: all 0.3s ease; }
-        header .bg-emerald-500\/20:hover { background: rgba(16, 185, 129, 0.35) !important; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
         .course-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -190,32 +188,9 @@
         }
         .course-card:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--cyan-glow), 0 12px 32px rgba(0, 0, 0, 0.15); border-color: rgba(6, 182, 212, 0.25); z-index: 10; }
         .course-card:hover::before { opacity: 1; }
-        .course-card .course-card-image-container { position: relative; height: 12rem; overflow: hidden; }
-        .course-card .course-card-image { width: 100%; height: 100%; object-fit: cover; }
-        .course-card .course-card-content { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
-        .course-card .course-card-badge { padding: 0.25rem 0.75rem; font-size: 9px; font-weight: 900; text-transform: uppercase; border-radius: 9999px; color: var(--badge-text); white-space: nowrap; }
-        .badge-container { position: absolute; top: 1rem; left: 1rem; z-index: 1; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-        .badge-generic { background-color: #475569; }
-        .course-card .badge-intermediate { background-color: var(--badge-bg-intermediate); }
-        .course-card .badge-basic { background-color: var(--badge-bg-basic); }
-        .course-card .badge-avanzado { background-color: var(--badge-bg-advanced); }
-        .course-card .course-card-title { color: var(--text-default); font-size: 1.125rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.5rem; }
-        .course-card .course-card-description { color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 1rem; flex-grow: 1; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-        .course-card .course-card-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border-default); }
-        .course-card .course-card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-        .course-card .course-card-price { font-size: 1.25rem; font-weight: 800; color: var(--text-default); }
-        .course-card .course-card-stats { display: flex; align-items: center; gap: 1rem; }
-        .course-card .like-btn, .course-card .view-container { color: var(--text-secondary); font-size: 0.875rem; font-weight: 500; transition: color 0.3s; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; }
-        .course-card .like-btn:hover { color: #ef4444; }
-        .course-card .like-btn.liked, .course-card .like-btn.liked i { color: #ef4444 !important; }
-        .course-card .view-container.has-views { color: #22c55e; }
-        .course-card .course-card-buttons { display: flex; gap: 0.75rem; }
         .course-card-level-basico { border: 1.5px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 12px rgba(6, 182, 212, 0.12), inset 0 0 30px rgba(6, 182, 212, 0.04); background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%); }
-        .course-card-level-basico:hover { border: 2px solid rgba(6, 182, 212, 0.8); box-shadow: 0 0 20px rgba(6, 182, 212, 0.25), 0 8px 24px rgba(6, 182, 212, 0.15), inset 0 0 40px rgba(6, 182, 212, 0.08); background: linear-gradient(180deg, rgba(6, 182, 212, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%); }
         .course-card-level-intermedio { border: 1.5px solid rgba(139, 92, 246, 0.5); box-shadow: 0 0 12px rgba(139, 92, 246, 0.12), inset 0 0 30px rgba(139, 92, 246, 0.04); background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%); }
-        .course-card-level-intermedio:hover { border: 2px solid rgba(139, 92, 246, 0.8); box-shadow: 0 0 20px rgba(139, 92, 246, 0.25), 0 8px 24px rgba(139, 92, 246, 0.15), inset 0 0 40px rgba(139, 92, 246, 0.08); background: linear-gradient(180deg, rgba(139, 92, 246, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%); }
         .course-card-level-avanzado { border: 1.5px solid rgba(245, 158, 11, 0.5); box-shadow: 0 0 12px rgba(245, 158, 11, 0.12), inset 0 0 30px rgba(245, 158, 11, 0.04); background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%); }
-        .course-card-level-avanzado:hover { border: 2px solid rgba(245, 158, 11, 0.8); box-shadow: 0 0 20px rgba(245, 158, 11, 0.25), 0 8px 24px rgba(245, 158, 11, 0.15), inset 0 0 40px rgba(245, 158, 11, 0.08); background: linear-gradient(180deg, rgba(245, 158, 11, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%); }
         .learning-step {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -243,762 +218,430 @@
         }
         .learning-step:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 6px 24px rgba(6, 182, 212, 0.1), 0 12px 32px rgba(0, 0, 0, 0.1); border-color: rgba(6, 182, 212, 0.2); }
         .learning-step:hover::before { opacity: 1; }
-        body.light-mode .learning-step { background: rgba(226, 232, 240, 0.72) !important; backdrop-filter: blur(12px) saturate(140%) !important; border-color: rgba(255, 255, 255, 0.5) !important; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
-        body.light-mode .learning-step:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 6px 24px rgba(6, 182, 212, 0.15), 0 12px 32px rgba(0, 0, 0, 0.1); border-color: rgba(6, 182, 212, 0.3) !important; z-index: 10; }
+        body.light-mode .learning-step { background: rgba(226, 232, 240, 0.72) !important; border-color: rgba(255, 255, 255, 0.5) !important; }
         body.light-mode .learning-step h3 { color: #334155 !important; }
         body.light-mode .learning-step p { color: #64748b !important; }
-        .btn-metal-solid {
-            display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
-            font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.06em;
-            padding: 0.65rem 1.4rem; border-radius: 0.85rem; cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative; overflow: hidden; text-decoration: none;
-            color: #ffffff !important; border: 1px solid rgba(255, 255, 255, 0.15) !important; outline: none;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.9) 0%, rgba(8, 145, 178, 0.95) 100%);
-            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.3), 0 0 0 1px rgba(6, 182, 212, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        }
-        .btn-metal-solid::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%); opacity: 0.5; transition: opacity 0.4s ease; }
-        .btn-metal-solid::after { content: ''; position: absolute; inset: -2px; border-radius: 1.35rem; padding: 2px; background: linear-gradient(135deg, rgba(6, 182, 212, 0.6), rgba(139, 92, 246, 0.3), transparent 70%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
-        .btn-metal-solid:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(6, 182, 212, 0.4), 0 0 0 1px rgba(6, 182, 212, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25); filter: brightness(1.1); }
-        .btn-metal-solid:hover::after { opacity: 1; }
-        .btn-metal-solid:active { transform: translateY(-1px) scale(0.98); box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3); }
-        .btn-metal-cyan { background: linear-gradient(135deg, rgba(34, 211, 238, 0.9) 0%, rgba(6, 182, 212, 0.95) 50%, rgba(8, 145, 178, 0.9) 100%); box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35), 0 0 0 1px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
-        .btn-metal-cyan:hover { box-shadow: 0 12px 40px rgba(6, 182, 212, 0.5), 0 0 0 1px rgba(6, 182, 212, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
-        .btn-metal-teal { background: linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(13, 148, 136, 0.95) 50%, rgba(15, 118, 110, 0.9) 100%); box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3), 0 0 0 1px rgba(20, 184, 166, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2); }
-        .btn-metal-teal:hover { box-shadow: 0 12px 40px rgba(20, 184, 166, 0.4), 0 0 0 1px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25); }
-        .btn-metal-green, .btn-metal-blue, .btn-metal-slate, .btn-metal-teal, .btn-metal-gray {
+        .btn-metal-green, .btn-metal-blue {
             font-weight: 700; letter-spacing: 0.04em; font-size: 0.7rem; padding: 0.5rem 1rem;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25), 0 1px 3px rgba(0,0,0,0.15);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25);
             transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
             border-radius: 0.75rem; position: relative; overflow: hidden; cursor: pointer;
         }
-        .btn-metal-green::after, .btn-metal-blue::after, .btn-metal-slate::after, .btn-metal-teal::after, .btn-metal-gray::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: rgba(255,255,255,0.4); border-radius: 0.75rem 0.75rem 0 0; pointer-events: none; }
-        .btn-metal-green::before, .btn-metal-blue::before, .btn-metal-slate::before, .btn-metal-teal::before, .btn-metal-gray::before { content: ''; position: absolute; top: 0; left: -75%; width: 50%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,0.22), transparent); transform: skewX(-18deg); transition: left 0.45s ease; pointer-events: none; }
-        .btn-metal-green:hover::before, .btn-metal-blue:hover::before, .btn-metal-slate:hover::before, .btn-metal-teal:hover::before, .btn-metal-gray:hover::before { left: 130%; }
-        .btn-metal-green:hover, .btn-metal-blue:hover, .btn-metal-slate:hover, .btn-metal-teal:hover { transform: translateY(-2px); filter: brightness(1.08); }
-        .btn-metal-green:active, .btn-metal-blue:active, .btn-metal-slate:active, .btn-metal-teal:active { transform: scale(0.97) translateY(0); filter: brightness(0.93); box-shadow: inset 0 2px 5px rgba(0,0,0,0.3) !important; transition: transform 0.08s ease; }
-        .btn-metal-green { background: linear-gradient(180deg, #34d058 0%, #1e9e3a 45%, #146b28 100%); border: 1px solid #0f5720; color: white; box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.3), 0 4px 14px rgba(34, 197, 94, 0.4), 0 1px 3px rgba(0,0,0,0.2); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        .btn-metal-green:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(34, 197, 94, 0.55), 0 2px 5px rgba(0,0,0,0.2); }
-        .btn-metal-blue { background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%); border: 1px solid #1e40af; color: white; box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.3), 0 4px 14px rgba(37, 99, 235, 0.4), 0 1px 3px rgba(0,0,0,0.2); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        .btn-metal-blue:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(37, 99, 235, 0.55), 0 2px 5px rgba(0,0,0,0.2); }
-        .btn-metal-slate { background: linear-gradient(180deg, #94a3b8 0%, #475569 45%, #334155 100%); border: 1px solid #1e293b; color: white; box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.3), 0 3px 10px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2); text-shadow: 0 1px 2px rgba(0,0,0,0.4); }
-        .btn-metal-slate:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 5px 16px rgba(0,0,0,0.4); }
-        .btn-metal-teal { background: linear-gradient(180deg, #2dd4bf 0%, #0d9488 45%, #0f766e 100%); border: 1px solid #0f766e; color: white; box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.3), 0 4px 14px rgba(20, 184, 166, 0.4), 0 1px 3px rgba(0,0,0,0.2); text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
-        .btn-metal-teal:hover { box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(20, 184, 166, 0.55); }
-        .btn-metal-gray { background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%); border: 1px solid #94a3b8; color: #64748b; box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 1px 3px rgba(0,0,0,0.1); cursor: not-allowed; filter: saturate(0.5); }
+        .btn-metal-green { background: linear-gradient(180deg, #34d058 0%, #1e9e3a 45%, #146b28 100%); border: 1px solid #0f5720; color: white; }
+        .btn-metal-blue { background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%); border: 1px solid #1e40af; color: white; }
         .section-divider { width: 100%; height: 80px; margin: 0; position: relative; overflow: hidden; opacity: 0.6; }
-        .section-divider svg path { fill: none; stroke-linecap: round; stroke-width: 2; stroke: url(#gradient-divider); opacity: 0.7; animation: oscilloscope 15s ease-in-out infinite; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3)); }
-        .section-divider svg path:nth-child(2) { stroke-width: 3; stroke: url(#gradient-divider-2); opacity: 0.8; animation-delay: -3s; animation-duration: 12s; filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4)); }
-        .glitch-divider { width: 100%; height: 60px; position: relative; overflow: hidden; margin: -20px 0; opacity: 0.7; }
-        .glitch-divider .glitch-line { fill: none; stroke-width: 2.5; stroke-linecap: round; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4)); }
-        .glitch-divider .line-1 { stroke: url(#gradient-divider); animation: glitch1 5s infinite steps(1, end); }
-        .circuit-divider { width: 100%; height: 100px; position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; margin: -15px 0; opacity: 0.7; }
-        .circuit-divider .trace { fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke: url(#gradient-divider); stroke-dasharray: 1500; stroke-dashoffset: 1500; animation: draw-trace 20s linear infinite; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3)); }
-        .circuit-divider .dot { fill: url(#gradient-dot); animation: pulse-dot 2s ease-in-out infinite; }
-        @keyframes oscilloscope { 0%, 100% { d: path("M0,40 C240,60 480,20 720,40 S1200,60 1440,40"); } 20% { d: path("M0,45 C220,50 460,30 720,45 S1180,40 1440,35"); } 40% { d: path("M0,35 C260,70 500,15 720,35 S1220,70 1440,45"); } 60% { d: path("M0,42 C200,20 520,65 720,42 S1150,25 1440,40"); } 80% { d: path("M0,38 C300,75 420,5 720,38 S1240,75 1440,38"); } }
-        @keyframes glitch1 { 0%, 100% { transform: none; opacity: 1; } 5%, 15%, 25%, 35% { transform: translate(-8px, 3px) skewX(12deg); opacity: 0.6; } 10%, 20%, 30%, 40% { transform: translate(8px, -3px) skewX(-12deg); opacity: 0.6; } }
-        @keyframes draw-trace { to { stroke-dashoffset: 0; } }
-        @keyframes pulse-dot { 0%, 100% { r: 4; opacity: 0.5; } 50% { r: 6; opacity: 1; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)); } }
-        
-        /* ==========================================
-           TOAST DE CARGA - RESPONSIVE MEJORADO
-           ========================================== */
         .loading-toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 100002;
+            position: fixed; bottom: 20px; right: 20px; z-index: 100002;
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(45, 184, 206, 0.35);
-            border-radius: 12px;
-            padding: 8px 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(45, 184, 206, 0.15);
-            pointer-events: none;
-            min-width: 200px;
-            max-width: 240px;
-            animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transition: opacity 0.35s ease, transform 0.35s ease;
+            backdrop-filter: blur(16px); border: 1px solid rgba(45, 184, 206, 0.35);
+            border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; gap: 8px;
+            pointer-events: none; min-width: 200px; max-width: 240px;
         }
-        .loading-toast.hiding {
-            opacity: 0;
-            transform: translateX(120px);
-        }
-        .loading-toast .toast-logo {
-            width: 25px;
-            height: 25px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulseLogo 2.5s infinite ease-in-out;
-        }
-        .loading-toast .toast-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
-        }
-        .loading-toast .toast-content {
-            flex: 1;
-            min-width: 0;
-        }
-        .loading-toast .toast-title {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 10px;
-            line-height: 1.3;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 150px;
-        }
-        .loading-toast .toast-spinner {
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(45, 184, 206, 0.2);
-            border-top: 2px solid #2db8ce;
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-            flex-shrink: 0;
-        }
-        .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.96) 0%, rgba(5, 150, 105, 0.96) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.7);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(16, 185, 129, 0.35);
-        }
-        .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
-        .loading-toast.success-toast .toast-check {
-            width: 20px;
-            height: 20px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .loading-toast.success-toast .toast-check i {
-            color: #10b981;
-            font-size: 10px;
-            font-weight: 900;
-        }
-
-        /* MODO CLARO - TOAST */
-        body.light-mode .loading-toast {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
-            border: 1px solid rgba(45, 184, 206, 0.5);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 10px rgba(45, 184, 206, 0.2);
-        }
-        body.light-mode .loading-toast .toast-title {
-            color: #1e293b;
-        }
-        body.light-mode .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.7);
-        }
-        body.light-mode .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
-
-        /* RESPONSIVE - MÓVIL (CLAVE DEL DISEÑO) */
-        @media (max-width: 640px) {
-            .loading-toast {
-                bottom: 16px;
-                right: 16px;
-                left: 16px;
-                min-width: auto;
-                max-width: none;
-                padding: 10px 14px;
-                border-radius: 14px;
-            }
-            .loading-toast .toast-logo {
-                width: 28px;
-                height: 28px;
-            }
-            .loading-toast .toast-title {
-                font-size: 11px;
-                max-width: none;
-                flex: 1;
-            }
-            .loading-toast .toast-spinner {
-                width: 16px;
-                height: 16px;
-            }
-            .loading-toast.success-toast .toast-check {
-                width: 24px;
-                height: 24px;
-            }
-        }
-
-        /* TABLETS PEQUEÑAS */
-        @media (min-width: 641px) and (max-width: 768px) {
-            .loading-toast {
-                bottom: 20px;
-                right: 20px;
-                left: auto;
-                min-width: 220px;
-                max-width: 280px;
-            }
-        }
-
-        @keyframes slideInRight { from { transform: translateX(150%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes slideInUp { from { transform: translateY(150%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes pulseLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); } 50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); } }
-        @keyframes bounceIn { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
-        
-        .reveal { opacity: 1 !important; transition: none !important; filter: none !important; }
-        .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-center { opacity: 1 !important; transform: none !important; filter: none !important; }
-        .section-loading { opacity: 1 !important; transform: none !important; transition: none !important; }
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 99999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: all 0.3s; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
-        .modal-content { background: var(--bg-secondary); color: var(--text-default); border-radius: 32px; width: 90%; max-width: 420px; transform: translateY(30px) scale(0.95); transition: all 0.4s; box-shadow: 0 25px 50px -12px var(--shadow-color); max-height: 90vh; overflow-y: auto; }
+        .modal-content { background: var(--bg-secondary); border-radius: 32px; width: 90%; max-width: 420px; transform: translateY(30px) scale(0.95); transition: all 0.4s; }
         .modal-overlay.active .modal-content { transform: translateY(0) scale(1); }
-        #notification { position: fixed; bottom: 20px; right: 20px; transform: translateX(120%); transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 100000; }
+        #notification { position: fixed; bottom: 20px; right: 20px; transform: translateX(120%); transition: transform 0.5s; z-index: 100000; }
         #notification.show { transform: translateX(0); }
-        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .loading-pulse { animation: pulse 1.5s ease-in-out infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-        body.light-mode #catalog-grid .course-card { background-color: rgba(226, 232, 240, 0.85) !important; border-color: #cbd5e1 !important; box-shadow: 0 8px 32px 0 rgba(0,0,0,0.1); }
-        body.light-mode #catalog-grid .course-card:hover { box-shadow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15), 0 20px 60px rgba(0, 0, 0, 0.2); border-color: rgba(6, 182, 212, 0.3) !important; transform: translateY(-8px) scale(1.01); z-index: 10; }
+        .whatsapp-float { position: fixed; bottom: 24px; right: 24px; width: 52px; height: 52px; background: linear-gradient(135deg, #25D366, #128C7E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 26px; z-index: 99998; transition: all 0.3s; }
+        .whatsapp-float:hover { transform: scale(1.12) translateY(-3px); }
+        body.light-mode #catalog-grid .course-card { background-color: rgba(226, 232, 240, 0.85) !important; border-color: #cbd5e1 !important; }
         body.light-mode #catalog-grid .course-card h2 { color: #334155 !important; }
         body.light-mode #catalog-grid .course-card .text-slate-900 { color: #334155 !important; }
         body.light-mode #catalog-grid .course-card .text-slate-800 { color: #334155 !important; }
         body.light-mode #catalog-grid .course-card .text-slate-500 { color: #64748b !important; }
         body.light-mode #catalog-grid .course-card .text-slate-400 { color: #94a3b8 !important; }
-        body.light-mode #catalog-grid .course-card .bg-slate-50 { background: rgba(255, 255, 255, 0.6) !important; }
-        body.light-mode #catalog-grid .course-card .bg-slate-100 { background: rgba(255, 255, 255, 0.45) !important; }
-        body.light-mode #catalog-grid .course-card .border-slate-100 { border-color: rgba(0, 0, 0, 0.06) !important; }
-        body.light-mode #catalog-grid .course-card .border-slate-900 { border-color: rgba(0, 0, 0, 0.08) !important; }
-        body.light-mode .learning-step { background: rgba(226, 232, 240, 0.72) !important; backdrop-filter: blur(12px) saturate(140%) !important; border-color: rgba(255, 255, 255, 0.5) !important; box-shadow: 0 8px 32px rgba(0,0,0,0.08); transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
-        body.light-mode .learning-step:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 6px 24px rgba(6, 182, 212, 0.15), 0 12px 32px rgba(0, 0, 0, 0.1); border-color: rgba(6, 182, 212, 0.3) !important; z-index: 10; }
-        body.light-mode .learning-step h3 { color: #334155 !important; }
-        body.light-mode .learning-step p { color: #64748b !important; }
-        body.light-mode #catalog-loading p { color: #64748b; }
-        body.light-mode #catalog-error p { color: #64748b; }
-        body.light-mode .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0,0,0,0.03); }
-        body.light-mode .custom-scrollbar::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #0891b2, #6366f1); }
-        body.light-mode main .text-slate-50, body.light-mode main .text-slate-100, body.light-mode main .text-slate-200, body.light-mode main .text-slate-300, body.light-mode main .text-slate-400, body.light-mode main .text-slate-500, body.light-mode main .text-slate-600, body.light-mode main .text-slate-700, body.light-mode main .text-slate-800, body.light-mode main .text-slate-900 { color: #0f172a !important; }
-        body.light-mode main .text-white { color: #0f172a !important; }
-        body.light-mode main .text-blue-50 { color: #0f172a !important; }
-        body.light-mode main .course-card .text-white { color: #ffffff !important; }
+        
+        /* 🆕 ESTILOS PARA EL PANEL DE ADMINISTRADOR */
+        .admin-btn {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 22px;
+            z-index: 99997;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+        }
+        .admin-btn:hover { transform: scale(1.12) translateY(-3px); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5); }
+        .admin-modal .modal-content { max-width: 500px !important; }
         @media (max-width: 768px) {
-            header .relative.z-10 { padding-top: 6rem !important; padding-bottom: 3rem !important; }
-            .hero-main-title { font-size: 1.75rem !important; line-height: 1.15 !important; }
-            .section-title { font-size: 1.5rem !important; }
-            .section-subtitle { font-size: 0.6rem !important; letter-spacing: 0.2em !important; }
-            .page-section, section { padding-top: 3rem !important; padding-bottom: 3rem !important; }
-            .reveal { transition-duration: 0.5s !important; }
-            .reveal-up { transform: translateY(30px) scale(0.97) !important; }
-            .reveal-down { transform: translateY(-30px) scale(0.97) !important; }
+            .whatsapp-float { width: 48px; height: 48px; font-size: 24px; bottom: 16px; right: 16px; }
+            .admin-btn { width: 48px; height: 48px; font-size: 20px; bottom: 80px; right: 16px; }
             .particles-bg { display: none; }
-            .section-divider { height: 40px; }
-            .glitch-divider { height: 30px; margin: -10px 0; }
-            .circuit-divider { height: 50px; margin: -8px 0; }
-            .course-card:hover { transform: translateY(-2px) scale(1.005) !important; }
-            .learning-step:hover { transform: translateY(-2px) scale(1.005) !important; }
-            .custom-scrollbar::-webkit-scrollbar { width: 3px; }
         }
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-            .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
-        }
-        .whatsapp-float { position: fixed; bottom: 24px; right: 24px; width: 52px; height: 52px; background: linear-gradient(135deg, #25D366, #128C7E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 26px; box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35), 0 0 0 1px rgba(255,255,255,0.1); z-index: 99998; transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1); text-decoration: none; border: none; cursor: pointer; }
-        .whatsapp-float:hover { transform: scale(1.12) translateY(-3px); box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5); }
-        .whatsapp-float::before { content: ''; position: absolute; inset: -5px; border-radius: 50%; border: 2px solid rgba(37, 211, 102, 0.35); animation: whatsappPulse 2.5s ease-in-out infinite; pointer-events: none; }
-        @keyframes whatsappPulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.2); opacity: 0; } }
-        .whatsapp-float::after { content: '¿Dudas? Escríbenos'; position: absolute; right: calc(100% + 12px); top: 50%; transform: translateY(-50%) scale(0.9); background: rgba(15, 23, 42, 0.9); color: #fff; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; white-space: nowrap; opacity: 0; pointer-events: none; transition: all 0.3s ease; letter-spacing: 0.02em; }
-        .whatsapp-float:hover::after { opacity: 1; transform: translateY(-50%) scale(1); }
-        body.light-mode .whatsapp-float::after { background: rgba(255, 255, 255, 0.95); color: #0f172a; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        @media (max-width: 768px) { .whatsapp-float { width: 48px; height: 48px; font-size: 24px; bottom: 16px; right: 16px; } .whatsapp-float::after { display: none; } }
     </style>
-
-
-
-
-
 </head>
 <body class="custom-scrollbar">
 <div class="particles-bg" aria-hidden="true">
-    <div class="particle" style="left:10%;top:95%;animation-delay:0s;animation-duration:28s;"></div>
-    <div class="particle" style="left:30%;top:90%;animation-delay:8s;animation-duration:32s;width:4px;height:4px;"></div>
-    <div class="particle" style="left:55%;top:92%;animation-delay:4s;animation-duration:26s;"></div>
-    <div class="particle" style="left:75%;top:88%;animation-delay:12s;animation-duration:30s;width:4px;height:4px;"></div>
-    <div class="particle" style="left:90%;top:94%;animation-delay:6s;animation-duration:24s;"></div>
-    <div class="particle" style="left:20%;top:85%;animation-delay:16s;animation-duration:35s;width:3px;height:3px;background:rgba(139,92,246,0.25);"></div>
+    <div class="particle" style="left:10%;top:95%;"></div>
+    <div class="particle" style="left:30%;top:90%;"></div>
+    <div class="particle" style="left:55%;top:92%;"></div>
+    <div class="particle" style="left:75%;top:88%;"></div>
+    <div class="particle" style="left:90%;top:94%;"></div>
 </div>
 
 <div id="loadingToast" class="loading-toast hidden">
-    <div class="toast-logo">
-        <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
-    </div>
-    <div class="toast-content">
-        <div class="toast-title" id="loadingToastTitle">Estamos cargando los cursos</div>
-    </div>
-    <div class="toast-spinner" id="loadingToastSpinner"></div>
+    <div class="toast-logo"><img src="img/AA (38).webp" alt="Logo" style="width:25px;height:25px;object-fit:contain;"></div>
+    <div class="toast-content"><div class="toast-title" id="loadingToastTitle" style="color:#fff;font-weight:700;font-size:10px;">Cargando...</div></div>
+    <div class="toast-spinner" id="loadingToastSpinner" style="width:14px;height:14px;border:2px solid rgba(45,184,206,0.2);border-top:2px solid #2db8ce;border-radius:50%;animation:spin 0.9s linear infinite;"></div>
 </div>
+<style>@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}</style>
 
-<div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20">
+<div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
     <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
-    <div>
-        <p id="notifTitle" class="font-bold text-sm leading-none mb-1">Notificación</p>
-        <p id="notifMsg" class="text-[10px] opacity-90">Mensaje informativo.</p>
-    </div>
-</div>
-
-<div id="userProfileModal" class="modal-overlay">
-    <div class="modal-content !max-w-[480px] overflow-hidden border-none shadow-2xl">
-        <div class="bg-gradient-to-br from-[#0f172a] to-[#1e293b] p-8 text-center relative">
-            <button onclick="closeModal('userProfileModal')" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
-                <i class="fas fa-times text-xl"></i>
-            </button>
-            <div class="w-20 h-20 bg-[#2db8ce] rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black shadow-xl border-4 border-white/10" id="profileInitials">U</div>
-            <h3 class="text-white text-2xl font-black uppercase tracking-tight" id="profileFullName">Usuario</h3>
-            <p class="text-[#2db8ce] text-[10px] font-bold uppercase tracking-widest mt-1" id="profileEmail">correo@ejemplo.com</p>
-            <div class="mt-4 flex flex-wrap items-center justify-center gap-2">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                    <i class="fas fa-id-card text-[#2db8ce] text-[10px]"></i>
-                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileCedula">...</span>
-                </div>
-                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                    <i class="fas fa-phone text-[#2db8ce] text-[10px]"></i>
-                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profilePhone">...</span>
-                </div>
-                <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                    <img id="profileFlag" src="" class="w-3.5 h-auto hidden rounded-[2px] shadow-sm" alt="Bandera">
-                    <i class="fas fa-globe text-[#2db8ce] text-[10px]" id="profileGlobeIcon"></i>
-                    <span class="text-white text-[9px] font-black uppercase tracking-widest" id="profileLocation">...</span>
-                </div>
-            </div>
-            <div class="mt-3 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                <i class="fas fa-briefcase text-[#2db8ce] text-[10px]"></i>
-                <span class="text-white text-[10px] font-black uppercase tracking-widest" id="profileProfession">Sin Perfil</span>
-            </div>
-        </div>
-        <div class="p-6 bg-[#1e293b] text-left">
-            <button id="profileAdminBtn" onclick="openAdminPanel(); closeModal('userProfileModal')" class="hidden mb-3 w-full py-4 bg-slate-900 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl border border-slate-800 hover:bg-[#2db8ce] transition-all shadow-sm items-center justify-center gap-3">
-                <i class="fas fa-shield-alt text-[#2db8ce]"></i> Panel de Administración
-            </button>
-            <button onclick="logoutUser()" class="w-full py-4 bg-red-500/10 text-red-400 font-black uppercase tracking-widest text-[10px] rounded-2xl border border-red-500/20 hover:bg-red-500/20 hover:border-red-500/40 transition-all shadow-sm flex items-center justify-center gap-3">
-                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-            </button>
-        </div>
-    </div>
+    <div><p id="notifTitle" class="font-bold text-sm">Notificación</p><p id="notifMsg" class="text-[10px]">Mensaje</p></div>
 </div>
 
 <div id="authModal" class="modal-overlay">
     <div class="modal-content !p-8 relative">
-        <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400 hover:text-red-500 transition-colors"><i class="fas fa-times text-xl"></i></button>
+        <button onclick="closeModal('authModal')" class="absolute top-5 right-5 text-slate-400"><i class="fas fa-times"></i></button>
         <div class="text-center mb-6">
-            <img src="img/AA (38).webp" alt="Logo" class="h-10 mx-auto mb-3" onerror="this.src='https://placehold.co/100x40/0f172a/2db8ce?text=AA'">
-            <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tighter" id="authModalTitle">Iniciar Sesión</h3>
-            <p class="text-xs text-slate-500 mt-2" id="authSubText">Ingresa tus datos para acceder o verificar tus cursos.</p>
+            <h3 class="text-2xl font-black text-slate-900 uppercase" id="authModalTitle">Iniciar Sesión</h3>
         </div>
-        <div id="authErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm text-left">
-            <i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i>
-            <span id="authErrorText" class="leading-tight">Mensaje de error</span>
-        </div>
-        <div class="flex bg-slate-100 rounded-xl p-1 mb-6">
-            <button onclick="switchAuthTab('login')" id="tabLogin" class="flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Ingresar</button>
-            <button onclick="switchAuthTab('register')" id="tabRegister" class="flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all">Crear Cuenta</button>
-        </div>
-        <form id="authForm" class="space-y-4 text-left">
-            <div id="nameField" class="space-y-1 hidden">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo</label>
-                <div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="authName" placeholder="Tu Nombre y Apellido" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+        <form id="authForm" class="space-y-4">
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-500">Correo</label>
+                <input type="email" id="authEmail" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
             </div>
             <div class="space-y-1">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo</label>
-                <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="authEmail" required placeholder="tu@email.com" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+                <label class="text-xs font-bold text-slate-500">Contraseña</label>
+                <input type="password" id="authPassword" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
             </div>
-            <div class="space-y-1" id="passwordFieldContainer">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Contraseña</label>
-                <div class="relative"><i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium"></div>
+            <button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] text-white py-4 rounded-2xl font-black uppercase text-xs">Entrar</button>
+        </form>
+    </div>
+</div>
+
+<!-- 🆕 MODAL DE ADMINISTRADOR PARA INSCRIPCIÓN MANUAL -->
+<div id="adminModal" class="modal-overlay admin-modal">
+    <div class="modal-content !p-8 relative">
+        <button onclick="closeModal('adminModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+        <div class="text-center mb-6">
+            <h3 class="text-2xl font-black text-slate-900 uppercase">Panel Admin</h3>
+            <p class="text-xs text-slate-500 mt-2">Inscripción manual de estudiantes</p>
+        </div>
+        <form id="adminForm" class="space-y-4">
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-500">Nombre del Estudiante *</label>
+                <input type="text" id="adminName" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
             </div>
-            <div id="countryField" class="space-y-1 hidden">
-                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">País</label>
-                <div class="relative">
-                    <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    <select id="authCountry" class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none">
-                        <option value="" disabled selected>Selecciona tu país...</option>
-                        <option value="Venezuela">Venezuela</option><option value="Colombia">Colombia</option><option value="México">México</option><option value="Argentina">Argentina</option><option value="Perú">Perú</option><option value="Chile">Chile</option><option value="Ecuador">Ecuador</option><option value="España">España</option><option value="Estados Unidos">Estados Unidos</option><option value="Otro">Otro</option>
-                    </select>
-                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-500">Email *</label>
+                <input type="email" id="adminEmail" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-500">Curso *</label>
+                <select id="adminCourse" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
+                    <option value="">Selecciona un curso...</option>
+                </select>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-500">Cédula</label>
+                    <input type="text" id="adminCedula" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-500">Teléfono</label>
+                    <input type="text" id="adminTelefono" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
                 </div>
             </div>
-            <button type="submit" id="authSubmitBtn" class="w-full bg-[#0f172a] hover:bg-[#2db8ce] text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-4 transition-all shadow-lg flex items-center justify-center gap-2">
-                <i class="fas fa-sign-in-alt" id="authBtnIcon"></i> <span id="authBtnLabel">Entrar</span>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="space-y-1">
+                    <label class="text-xs font-bold text-slate-500">País *</label>
+                    <select id="adminPais" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm" onchange="toggleEstadoField()">
+                        <option value="">Selecciona país...</option>
+                        <option value="Venezuela">Venezuela</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Ecuador">Ecuador</option>
+                        <option value="Perú">Perú</option>
+                        <option value="Chile">Chile</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="México">México</option>
+                        <option value="España">España</option>
+                        <option value="Estados Unidos">Estados Unidos</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                <div class="space-y-1" id="estadoContainer">
+                    <label class="text-xs font-bold text-slate-500">Estado</label>
+                    <select id="adminEstado" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
+                        <option value="">Selecciona estado...</option>
+                        <option value="Amazonas">Amazonas</option>
+                        <option value="Anzoátegui">Anzoátegui</option>
+                        <option value="Apure">Apure</option>
+                        <option value="Aragua">Aragua</option>
+                        <option value="Barinas">Barinas</option>
+                        <option value="Bolívar">Bolívar</option>
+                        <option value="Carabobo">Carabobo</option>
+                        <option value="Cojedes">Cojedes</option>
+                        <option value="Delta Amacuro">Delta Amacuro</option>
+                        <option value="Distrito Capital">Distrito Capital</option>
+                        <option value="Falcón">Falcón</option>
+                        <option value="Guárico">Guárico</option>
+                        <option value="La Guaira">La Guaira</option>
+                        <option value="Lara">Lara</option>
+                        <option value="Mérida">Mérida</option>
+                        <option value="Miranda">Miranda</option>
+                        <option value="Monagas">Monagas</option>
+                        <option value="Nueva Esparta">Nueva Esparta</option>
+                        <option value="Portuguesa">Portuguesa</option>
+                        <option value="Sucre">Sucre</option>
+                        <option value="Táchira">Táchira</option>
+                        <option value="Trujillo">Trujillo</option>
+                        <option value="Yaracuy">Yaracuy</option>
+                        <option value="Zulia">Zulia</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-2xl font-black uppercase text-xs hover:from-purple-700 hover:to-blue-700 transition-all">
+                <i class="fas fa-user-plus mr-2"></i> Inscribir Estudiante
             </button>
         </form>
     </div>
 </div>
 
-<div id="adminModal" class="modal-overlay">
-    <div class="modal-content !max-w-[800px] !w-[95%] h-[85vh] flex flex-col relative overflow-hidden bg-slate-50 border-none">
-        <div class="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5 flex justify-between items-center z-10 shadow-lg">
-            <h3 class="font-black uppercase tracking-wide flex items-center gap-3 text-lg"><i class="fas fa-shield-alt text-[#2db8ce] text-2xl"></i> Panel de Administración</h3>
-            <button onclick="closeModal('adminModal')" class="text-slate-400 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button>
-        </div>
-        <div class="flex flex-col md:flex-row flex-grow overflow-hidden">
-            <div class="w-full md:w-1/3 bg-white border-r border-slate-200 overflow-y-auto custom-scrollbar flex flex-col p-3 gap-2 shadow-inner" id="adminTabsContainer"></div>
-            <div class="w-full md:w-2/3 p-6 md:p-8 overflow-y-auto custom-scrollbar bg-slate-50">
-                <div id="adminFormContainer" class="hidden">
-                    <div class="mb-6 border-b border-slate-200 pb-4">
-                        <h4 class="text-xl font-black text-slate-800 leading-tight" id="adminSelectedCourseTitle">Selecciona un curso</h4>
-                        <p class="text-xs text-slate-500 mt-2 font-medium">Ingresa los datos del estudiante para registrarlo <span class="text-[#2db8ce] font-bold">manualmente</span> en la pestaña de este curso en Excel.</p>
-                    </div>
-                    <div id="adminErrorMessage" class="hidden mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl flex items-center gap-3 text-xs font-bold shadow-sm text-left">
-                        <i class="fas fa-exclamation-circle text-lg flex-shrink-0"></i>
-                        <span id="adminErrorText" class="leading-tight">Ese usuario ya existe en este curso.</span>
-                    </div>
-                    <form id="adminManualForm" class="space-y-4 text-left">
-                        <input type="hidden" id="adminCourseId">
-                        <input type="hidden" id="adminCourseName">
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Nombre Completo *</label>
-                            <div class="relative"><i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminName" required placeholder="Nombre del estudiante" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
-                        </div>
-                        <div class="space-y-1">
-                            <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Correo Electrónico *</label>
-                            <div class="relative"><i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="email" id="adminEmail" required placeholder="correo@estudiante.com" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Cédula / ID (Opcional)</label>
-                                <div class="relative"><i class="fas fa-id-card absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminCedula" placeholder="Ej: V-12345678" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
-                            </div>
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Teléfono (Opcional)</label>
-                                <div class="relative"><i class="fas fa-phone absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i><input type="text" id="adminPhone" placeholder="+58..." class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium shadow-sm focus:border-[#2db8ce]"></div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="space-y-1">
-                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">País (Opcional)</label>
-                                <div class="relative">
-                                    <i class="fas fa-globe absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                    <select id="adminCountry" onchange="toggleAdminState()" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none shadow-sm focus:border-[#2db8ce]">
-                                        <option value="" disabled selected>Selecciona país...</option>
-                                        <option value="Venezuela">Venezuela</option><option value="Colombia">Colombia</option><option value="México">México</option><option value="Argentina">Argentina</option><option value="Perú">Perú</option><option value="Chile">Chile</option><option value="Ecuador">Ecuador</option><option value="España">España</option><option value="Otro">Otro</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
-                                </div>
-                            </div>
-                            <div id="adminStateContainer" class="space-y-1 hidden">
-                                <label class="text-[10px] font-bold uppercase tracking-widest text-slate-500 ml-2">Estado (Venezuela)</label>
-                                <div class="relative">
-                                    <i class="fas fa-map-marker-alt absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                    <select id="adminState" class="w-full bg-white border border-slate-200 rounded-2xl pl-10 pr-4 py-3 outline-none text-sm font-medium appearance-none shadow-sm focus:border-[#2db8ce]">
-                                        <option value="" disabled selected>Selecciona estado...</option>
-                                        <option value="Amazonas">Amazonas</option><option value="Anzoátegui">Anzoátegui</option><option value="Apure">Apure</option><option value="Aragua">Aragua</option><option value="Barinas">Barinas</option><option value="Bolívar">Bolívar</option><option value="Carabobo">Carabobo</option><option value="Cojedes">Cojedes</option><option value="Delta Amacuro">Delta Amacuro</option><option value="Distrito Capital">Distrito Capital</option><option value="Falcón">Falcón</option><option value="Guárico">Guárico</option><option value="Lara">Lara</option><option value="La Guaira">La Guaira</option><option value="Mérida">Mérida</option><option value="Miranda">Miranda</option><option value="Monagas">Monagas</option><option value="Nueva Esparta">Nueva Esparta</option><option value="Portuguesa">Portuguesa</option><option value="Sucre">Sucre</option><option value="Táchira">Táchira</option><option value="Trujillo">Trujillo</option><option value="Yaracuy">Yaracuy</option><option value="Zulia">Zulia</option>
-                                    </select>
-                                    <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-xs"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" id="adminSubmitBtn" class="w-full bg-teal-600 hover:bg-teal-500 text-white py-4 rounded-2xl font-black uppercase tracking-widest text-xs mt-6 transition-all shadow-lg flex items-center justify-center gap-2">
-                            <i class="fas fa-save text-lg"></i> Registrar Estudiante Manualmente
-                        </button>
-                    </form>
-                </div>
-                <div id="adminNoSelection" class="h-full flex flex-col items-center justify-center text-slate-400 pb-10">
-                    <i class="fas fa-hand-pointer text-5xl mb-4 opacity-30"></i>
-                    <p class="text-sm font-bold uppercase tracking-widest text-center">Selecciona un curso<br>en el menú lateral</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- 🆕 BOTÓN DE ADMINISTRADOR -->
+<button onclick="openAdminPanel()" class="admin-btn" title="Panel de Administrador">
+    <i class="fas fa-user-shield"></i>
+</button>
 
 <div id="page-cursos" class="min-h-screen">
     <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
-        <div class="absolute inset-0 z-0 opacity-40">
-            <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
-        </div>
-        <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] md:text-[220px] pointer-events-none z-0 hidden md:block">
-            <i class="fas fa-th-large"></i>
-        </div>
-        <div class="absolute right-4 top-4 text-white/5 text-8xl pointer-events-none z-0 md:hidden">
-            <i class="fas fa-th-large"></i>
-        </div>
-        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
-            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
-                <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Automatización</span>
-                <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Contactores</span>
-                <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Arranques</span>
+        <div class="absolute inset-0 z-0 opacity-40"><img src="img/AA (7).gif" alt="Fondo" class="w-full h-full object-cover"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 py-24 pt-40">
+            <div class="flex gap-2 mb-6 text-[10px] font-black uppercase">
+                <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30">Automatización</span>
+                <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30">Contactores</span>
+                <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30">Arranques</span>
             </div>
-            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">CURSOS Y MANUALES <span class="text-secondary">OFERTADOS</span></h1>
-            <p class="text-lg md:text-xl text-blue-50 max-w-3xl drop-shadow-md font-medium">
-                Explora nuestra oferta académica y descubre el contenido técnico diseñado para impulsar tu futuro profesional en la automatización.
-            </p>
+            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 uppercase">CURSOS Y MANUALES <span class="text-secondary">OFERTADOS</span></h1>
+            <p class="text-lg text-blue-50 max-w-3xl">Explora nuestra oferta académica y descubre el contenido técnico diseñado para impulsar tu futuro profesional.</p>
         </div>
     </header>
 
     <div class="max-w-7xl mx-auto px-6 py-12">
-        <main class="relative z-10 w-full">
-            <section id="learning-path" class="mb-16 text-center">
-                <div>
-                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Camino</span>
-                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">Elige tu <span>Ruta de Aprendizaje</span></h2>
-                    <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
+        <section id="learning-path" class="mb-16 text-center">
+            <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Camino</span>
+            <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase mb-4">Elige tu <span>Ruta de Aprendizaje</span></h2>
+            <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
+            <div class="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-6xl mx-auto">
+                <div onclick="filterByLevel('Básico', this)" class="learning-step p-4 md:p-6 text-center">
+                    <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-seedling text-2xl text-cyan-400"></i></div>
+                    <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
+                    <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
                 </div>
-                <div class="relative flex justify-center items-center">
-                    <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-700/50 -translate-y-1/2 hidden md:block"></div>
-                    <div class="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full max-w-6xl">
-                        <div onclick="filterByLevel('Básico', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-cyan-500 hover:scale-105">
-                            <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-cyan-500 group-hover:text-white">
-                                <i class="fas fa-seedling text-lg md:text-2xl text-cyan-400 group-hover:text-white transition-colors"></i>
-                            </div>
-                            <h3 class="text-sm md:text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
-                            <p class="text-[10px] md:text-xs text-slate-400 leading-tight md:leading-normal">Para principiantes que inician en el mundo de la automatización.</p>
-                        </div>
-                        <div onclick="filterByLevel('Manual', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-blue-500 hover:scale-105" style="transition-delay: 100ms;">
-                            <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-blue-500 group-hover:text-white">
-                                <i class="fas fa-book-open text-lg md:text-2xl text-blue-400 group-hover:text-white transition-colors"></i>
-                            </div>
-                            <h3 class="text-sm md:text-lg font-black text-white uppercase mb-1">Manuales</h3>
-                            <p class="text-[10px] md:text-xs text-slate-400 leading-tight md:leading-normal">Guías prácticas y recursos para consulta rápida.</p>
-                        </div>
-                        <div onclick="filterByLevel('Intermedio', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-purple-500 hover:scale-105" style="transition-delay: 200ms;">
-                            <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-purple-500 group-hover:text-white">
-                                <i class="fas fa-cogs text-lg md:text-2xl text-purple-400 group-hover:text-white transition-colors"></i>
-                            </div>
-                            <h3 class="text-sm md:text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
-                            <p class="text-[10px] md:text-xs text-slate-400 leading-tight md:leading-normal">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
-                        </div>
-                        <div onclick="filterByLevel('Avanzado', this)" class="learning-step group cursor-pointer p-4 md:p-6 text-center transition-all duration-300 hover:border-amber-500 hover:scale-105" style="transition-delay: 300ms;">
-                            <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-white">
-                                <i class="fas fa-rocket text-lg md:text-2xl text-amber-400 group-hover:text-white transition-colors"></i>
-                            </div>
-                            <h3 class="text-sm md:text-lg font-black text-white uppercase mb-1">Especialización</h3>
-                            <p class="text-[10px] md:text-xs text-slate-400 leading-tight md:leading-normal">Para profesionales que buscan dominar temas complejos y diplomados.</p>
-                        </div>
-                    </div>
+                <div onclick="filterByLevel('Manual', this)" class="learning-step p-4 md:p-6 text-center">
+                    <div class="w-16 h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-book-open text-2xl text-blue-400"></i></div>
+                    <h3 class="text-lg font-black text-white uppercase mb-1">Manuales</h3>
+                    <p class="text-xs text-slate-400">Guías prácticas y recursos para consulta rápida.</p>
                 </div>
-            </section>
-        </main>
-    </div>
-
-    <div class="section-divider" aria-hidden="true">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-            <defs>
-                <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                    <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                    <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                </linearGradient>
-                <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                    <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
-                    <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                </linearGradient>
-            </defs>
-            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-            <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
-        </svg>
+                <div onclick="filterByLevel('Intermedio', this)" class="learning-step p-4 md:p-6 text-center">
+                    <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-cogs text-2xl text-purple-400"></i></div>
+                    <h3 class="text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
+                    <p class="text-xs text-slate-400">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
+                </div>
+                <div onclick="filterByLevel('Avanzado', this)" class="learning-step p-4 md:p-6 text-center">
+                    <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-rocket text-2xl text-amber-400"></i></div>
+                    <h3 class="text-lg font-black text-white uppercase mb-1">Especialización</h3>
+                    <p class="text-xs text-slate-400">Para profesionales que buscan dominar temas complejos y diplomados.</p>
+                </div>
+            </div>
+        </section>
     </div>
 
     <div class="max-w-7xl mx-auto px-6 py-12">
-        <main class="relative z-10 w-full">
-            <section id="catalog-section" class="py-12">
-                <div class="text-center mb-10">
-                    <span id="catalog-subtitle" class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Nuestra Oferta</span>
-                    <h2 id="catalog-title" class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Catálogo <span>Completo</span></h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="catalog-grid"></div>
-                <div id="catalog-loading" class="col-span-full text-center py-10 hidden">
-                    <i class="fas fa-spinner fa-spin text-3xl text-[#2db8ce] mb-3"></i>
-                    <p class="text-slate-500 font-bold text-sm uppercase tracking-widest">Cargando datos desde el servidor...</p>
-                </div>
-                <div id="catalog-error" class="col-span-full text-center py-10 hidden">
-                    <i class="fas fa-exclamation-triangle text-3xl text-red-400 mb-3"></i>
-                    <p class="text-red-400 font-bold text-sm uppercase tracking-widest mb-4">Error al cargar el catálogo</p>
-                    <p id="catalog-error-detail" class="text-slate-400 text-xs mb-4"></p>
-                    <button onclick="loadCoursesFromSheet()" class="px-6 py-3 bg-[#2db8ce] text-white font-bold rounded-xl hover:bg-[#1877f2] transition-all">
-                        <i class="fas fa-sync-alt mr-2"></i> Reintentar
-                    </button>
-                </div>
-            </section>
-        </main>
+        <section id="catalog-section" class="py-12">
+            <div class="text-center mb-10">
+                <span id="catalog-subtitle" class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Nuestra Oferta</span>
+                <h2 id="catalog-title" class="section-title text-2xl md:text-5xl font-extrabold uppercase">Catálogo <span>Completo</span></h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="catalog-grid"></div>
+            <div id="catalog-loading" class="col-span-full text-center py-10 hidden"><i class="fas fa-spinner fa-spin text-3xl text-[#2db8ce]"></i></div>
+            <div id="catalog-error" class="col-span-full text-center py-10 hidden"><p class="text-red-400 font-bold">Error al cargar</p><button onclick="loadCoursesFromSheet()" class="px-6 py-3 bg-[#2db8ce] text-white rounded-xl mt-4">Reintentar</button></div>
+        </section>
     </div>
 </div>
+
 <script>
-
-
-
-
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxg-sFC_XOHWd6CMxvcclYXIUFXrOjl4crGPv7JXF0WPwL0aAN0Y8h3Dd8A1sYpSHGz/exec';
-
-
-
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6IEeVFreHp7rdtF5aAgRJ_r-eSFuzv8lHGRjof0PeJrqx9nf33C5aHKwMSfBmfnE/exec';
 
 let currentUser = JSON.parse(localStorage.getItem('user')) || null;
-let dbUsers = {}, globalStats = {}, userCountry = "Desconocido";
+let dbUsers = {}, globalStats = {};
 let dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {};
 let studentCountsPerCourse = {};
 let courseRatings = {};
-let dataLoaded = false;
-let dataLoadAttempts = 0;
-const MAX_DATA_ATTEMPTS = 3;
-
 let COURSES_DATA = [];
-const CATALOG_SCRIPT_URL = SCRIPT_URL;
-
-const countryToISO = {
-    "venezuela": "ve", "colombia": "co", "méxico": "mx", "mexico": "mx", "españa": "es", "spain": "es",
-    "argentina": "ar", "perú": "pe", "peru": "pe", "chile": "cl", "ecuador": "ec", "estados unidos": "us",
-    "united states": "us", "usa": "us", "francia": "fr", "france": "fr", "brasil": "br", "brazil": "br",
-    "italy": "it", "italia": "it", "alemania": "de", "germany": "de", "canadá": "ca", "canada": "ca"
-};
-
-const countryToSpanish = {
-    "venezuela": "Venezuela", "colombia": "Colombia", "mexico": "México", "méxico": "México",
-    "spain": "España", "españa": "España", "argentina": "Argentina", "peru": "Perú", "perú": "Perú",
-    "chile": "Chile", "ecuador": "Ecuador", "united states": "Estados Unidos", "usa": "Estados Unidos",
-    "estados unidos": "Estados Unidos", "france": "Francia", "francia": "Francia", "brazil": "Brasil",
-    "brasil": "Brasil", "italy": "Italia", "italia": "Italia", "germany": "Alemania", "alemania": "Alemania",
-    "canada": "Canadá", "canadá": "Canadá"
-};
 
 function showLoadingToast() {
     const toast = document.getElementById('loadingToast');
-    const title = document.getElementById('loadingToastTitle');
-    const spinner = document.getElementById('loadingToastSpinner');
-    if (toast) {
-        toast.classList.remove('hidden', 'hiding', 'success-toast');
-        title.innerText = 'Estamos cargando los cursos';
-        if (spinner) spinner.style.display = 'block';
-        const existingCheck = toast.querySelector('.toast-check');
-        if (existingCheck) existingCheck.remove();
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(0)';
-        // Animación según dispositivo
-        if (window.innerWidth <= 640) {
-            toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        } else {
-            toast.style.animation = 'slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        }
-    }
+    if (toast) { toast.classList.remove('hidden'); document.getElementById('loadingToastTitle').innerText = 'Cargando cursos...'; }
 }
-
 function showSuccessToast() {
     const toast = document.getElementById('loadingToast');
-    const title = document.getElementById('loadingToastTitle');
-    const spinner = document.getElementById('loadingToastSpinner');
-    if (toast) {
-        toast.classList.remove('hidden', 'hiding');
-        toast.classList.add('success-toast');
-        title.innerText = '¡Listo!';
-        if (spinner) spinner.style.display = 'none';
-        const existingCheck = toast.querySelector('.toast-check');
-        if (existingCheck) existingCheck.remove();
-        const checkDiv = document.createElement('div');
-        checkDiv.className = 'toast-check';
-        checkDiv.innerHTML = '<i class="fas fa-check"></i>';
-        toast.appendChild(checkDiv);
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateX(0)';
-        // Animación según dispositivo
-        if (window.innerWidth <= 640) {
-            toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        } else {
-            toast.style.animation = 'slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        }
-        setTimeout(() => { hideLoadingToast(); }, 3000);
-    }
+    if (toast) { document.getElementById('loadingToastTitle').innerText = '¡Listo!'; setTimeout(() => toast.classList.add('hidden'), 2000); }
 }
-
-function hideLoadingToast() {
-    const toast = document.getElementById('loadingToast');
-    if (toast) {
-        toast.classList.add('hiding');
-        // Animación de salida según dispositivo
-        if (window.innerWidth <= 640) {
-            toast.style.transform = 'translateY(150%)';
-        } else {
-            toast.style.transform = 'translateX(120px)';
-        }
-        setTimeout(() => {
-            toast.classList.add('hidden');
-            toast.classList.remove('hiding', 'success-toast');
-            toast.style.transform = '';
-        }, 350);
-    }
-}
-
+function hideLoadingToast() { document.getElementById('loadingToast')?.classList.add('hidden'); }
 function normalizeName(str) { return (str || '').trim().toLowerCase().replace(/\s+/g, ' '); }
-
 function splitCourseNames(raw) {
     if (!raw) return [];
     if (Array.isArray(raw)) return raw.map(n => n.trim()).filter(Boolean);
-    if (typeof raw === 'string') {
-        try { const parsed = JSON.parse(raw); if (Array.isArray(parsed)) return parsed.map(n => n.trim()).filter(Boolean); } catch (e) {}
-        return raw.split(',').map(n => n.trim()).filter(Boolean);
-    }
+    if (typeof raw === 'string') { try { const p = JSON.parse(raw); if (Array.isArray(p)) return p; } catch(e) {} return raw.split(',').map(n => n.trim()).filter(Boolean); }
     return [];
 }
-
 function showNotif(title, msg, type = 'success') {
     const n = document.getElementById('notification');
-    const icon = document.getElementById('notifIcon');
     document.getElementById('notifTitle').innerText = title;
     document.getElementById('notifMsg').innerText = msg;
-    n.classList.remove('bg-teal-600', 'bg-blue-600', 'bg-red-600');
-    if (type === 'error') { n.classList.add('bg-red-600'); icon.className = 'fas fa-exclamation-circle text-2xl'; }
-    else if (type === 'info') { n.classList.add('bg-blue-600'); icon.className = 'fas fa-info-circle text-2xl'; }
-    else { n.classList.add('bg-teal-600'); icon.className = 'fas fa-check-circle text-2xl'; }
     n.classList.add('show');
     setTimeout(() => n.classList.remove('show'), 4000);
 }
-
 function openModal(id) { document.getElementById(id).classList.add('active'); }
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-function capitalize(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function ping(action, key) { try { fetch(SCRIPT_URL, { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: `action=${action}&key=${key}` }); } catch(e) {} }
 
-function ping(action, key) {
-    try {
-        if (navigator.sendBeacon) {
-            navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({ action, key }));
-        } else {
-            fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` });
-        }
-    } catch (e) { console.error('Ping error:', e); }
+// 🆕 FUNCIÓN PARA ABRIR EL PANEL DE ADMINISTRADOR
+function openAdminPanel() {
+    // Poblar el select de cursos
+    const select = document.getElementById('adminCourse');
+    if (select && COURSES_DATA.length > 0) {
+        select.innerHTML = '<option value="">Selecciona un curso...</option>' + 
+            COURSES_DATA.map(c => `<option value="${c.Nombre}">${c.Nombre}</option>`).join('');
+    }
+    
+    // Resetear campos
+    document.getElementById('adminForm').reset();
+    document.getElementById('adminPais').value = 'Venezuela';
+    toggleEstadoField();
+    
+    openModal('adminModal');
 }
 
-async function fetchWithRetry(url, maxRetries = 3) {
-    let delay = 1000;
-    for (let i = 0; i < maxRetries; i++) {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 8000);
-            const response = await fetch(url, { signal: controller.signal });
-            clearTimeout(timeoutId);
-            if (response.ok) return response;
-            throw new Error(`Error HTTP: ${response.status}`);
-        } catch (err) {
-            if (i === maxRetries - 1) throw err;
-            await new Promise(res => setTimeout(res, delay));
-            delay *= 2;
-        }
+// 🆕 FUNCIÓN PARA MOSTRAR/OCULTAR CAMPO DE ESTADO SEGÚN PAÍS
+function toggleEstadoField() {
+    const paisSelect = document.getElementById('adminPais');
+    const estadoContainer = document.getElementById('estadoContainer');
+    const estadoSelect = document.getElementById('adminEstado');
+    
+    if (paisSelect.value === 'Venezuela') {
+        // Mostrar selector de estados de Venezuela
+        estadoContainer.innerHTML = `
+            <label class="text-xs font-bold text-slate-500">Estado *</label>
+            <select id="adminEstado" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
+                <option value="">Selecciona estado...</option>
+                <option value="Amazonas">Amazonas</option>
+                <option value="Anzoátegui">Anzoátegui</option>
+                <option value="Apure">Apure</option>
+                <option value="Aragua">Aragua</option>
+                <option value="Barinas">Barinas</option>
+                <option value="Bolívar">Bolívar</option>
+                <option value="Carabobo">Carabobo</option>
+                <option value="Cojedes">Cojedes</option>
+                <option value="Delta Amacuro">Delta Amacuro</option>
+                <option value="Distrito Capital">Distrito Capital</option>
+                <option value="Falcón">Falcón</option>
+                <option value="Guárico">Guárico</option>
+                <option value="La Guaira">La Guaira</option>
+                <option value="Lara">Lara</option>
+                <option value="Mérida">Mérida</option>
+                <option value="Miranda">Miranda</option>
+                <option value="Monagas">Monagas</option>
+                <option value="Nueva Esparta">Nueva Esparta</option>
+                <option value="Portuguesa">Portuguesa</option>
+                <option value="Sucre">Sucre</option>
+                <option value="Táchira">Táchira</option>
+                <option value="Trujillo">Trujillo</option>
+                <option value="Yaracuy">Yaracuy</option>
+                <option value="Zulia">Zulia</option>
+            </select>
+        `;
+    } else {
+        // Ocultar selector de estados para otros países
+        estadoContainer.innerHTML = `
+            <label class="text-xs font-bold text-slate-500">Estado/Provincia</label>
+            <input type="text" id="adminEstado" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm" placeholder="Opcional">
+        `;
     }
 }
 
-async function loadData(showIndicator = true) {
-    dataLoadAttempts++;
+// 🆕 FUNCIÓN PARA INSCRIPCIÓN MANUAL DESDE EL PANEL ADMIN
+async function manualEnrollStudent(event) {
+    event.preventDefault();
+    
+    const name = document.getElementById('adminName').value.trim();
+    const email = document.getElementById('adminEmail').value.trim();
+    const courseName = document.getElementById('adminCourse').value;
+    const cedula = document.getElementById('adminCedula').value.trim();
+    const telefono = document.getElementById('adminTelefono').value.trim();
+    const pais = document.getElementById('adminPais').value;
+    const estado = document.getElementById('adminEstado').value.trim();
+    
+    if (!name || !email || !courseName || !pais) {
+        showNotif('Error', 'Nombre, Email, Curso y País son obligatorios.', 'error');
+        return;
+    }
+    
+    // Validar estado si es Venezuela
+    if (pais === 'Venezuela' && !estado) {
+        showNotif('Error', 'Debes seleccionar un estado de Venezuela.', 'error');
+        return;
+    }
+    
+    showLoadingToast();
+    
     try {
-        const res = await fetchWithRetry(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`, MAX_DATA_ATTEMPTS);
+        const params = new URLSearchParams();
+        params.append('action', 'register_course_access');
+        params.append('courseName', courseName);
+        params.append('name', name);
+        params.append('email', email);
+        params.append('cedula', cedula || '');
+        params.append('telefono', telefono || '');
+        params.append('pais', pais);
+        params.append('estado', estado || '');
+        
+        const response = await fetch(SCRIPT_URL, { 
+            method: 'POST', 
+            body: params 
+        });
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            hideLoadingToast();
+            showNotif('Éxito', `Estudiante inscrito correctamente en "${courseName}"`, 'success');
+            
+            // Limpiar formulario
+            document.getElementById('adminForm').reset();
+            document.getElementById('adminPais').value = 'Venezuela';
+            toggleEstadoField();
+            
+            // Recargar datos
+            await loadCoursesFromSheet();
+            
+            // Cerrar modal
+            closeModal('adminModal');
+        } else {
+            hideLoadingToast();
+            showNotif('Error', result.message || 'No se pudo completar la inscripción.', 'error');
+        }
+    } catch (e) {
+        hideLoadingToast();
+        console.error('Error en inscripción manual:', e);
+        showNotif('Error de conexión', 'Intenta de nuevo.', 'error');
+    }
+}
+
+async function loadData() {
+    try {
+        const res = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
         const data = await res.json();
         if (data.status === 'success') {
             dbUsers = data.users || {};
@@ -1006,47 +649,29 @@ async function loadData(showIndicator = true) {
             dbUserCourses = data.userCourses || {};
             dbUserDetails = data.userDetails || {};
             dbUserProgress = data.userProgress || {};
+            console.log('📊 Métricas cargadas - Stats:', Object.keys(globalStats).length);
+            if (currentUser && currentUser.email) syncCurrentUserFromCloud();
             calculateCourseRatings();
             updateStudentCounts();
-            dataLoaded = true;
-            dataLoadAttempts = 0;
-            if (currentUser && currentUser.email) syncCurrentUserFromCloud();
             applyFilters();
-            updateAllUI();
-        } else throw new Error('Respuesta del servidor sin estado success');
-    } catch (e) {
-        console.error('Error al cargar datos:', e.message);
-        if (dataLoadAttempts < MAX_DATA_ATTEMPTS * 2) setTimeout(() => loadData(false), 5000);
-    }
+        }
+    } catch (e) { console.error('Error loadData:', e); }
 }
 
 function syncCurrentUserFromCloud() {
     if (!currentUser || !currentUser.email) return;
     const email = currentUser.email.toLowerCase();
-    let myCourseNamesRaw = dbUserCourses[email] || [];
-    let myCourseNames = splitCourseNames(myCourseNamesRaw);
-    let myCourseIds = [];
+    const myCourseNames = splitCourseNames(dbUserCourses[email] || []);
+    const myCourseIds = [];
     myCourseNames.forEach(cName => {
-        let nn = normalizeName(cName);
-        let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
-        if (!found) found = COURSES_DATA.find(x => normalizeName(x.Nombre).includes(nn) || nn.includes(normalizeName(x.Nombre)));
+        const found = COURSES_DATA.find(x => normalizeName(x.Nombre) === normalizeName(cName));
         if (found) myCourseIds.push(found.ID);
     });
     let globalUser = dbUsers[email] || {};
-    if (typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch (e) { globalUser = {}; } }
-    let details = dbUserDetails[email] || {};
-    const existingIds = Array.isArray(globalUser.accessedCursos) ? globalUser.accessedCursos : (currentUser.accessedCursos || []);
-    currentUser.accessedCursos = [...new Set([...existingIds, ...myCourseIds])];
-    if (details.name && details.name !== "No provisto" && details.name !== "N/A") currentUser.name = details.name;
-    currentUser.cedula = details.cedula || currentUser.cedula || "N/A";
-    currentUser.telefono = details.telefono || currentUser.telefono || "N/A";
-    currentUser.pais = details.pais || currentUser.pais || "N/A";
-    currentUser.estado = details.estado || currentUser.estado || "N/A";
-    currentUser.downloadedFiles = globalUser.downloadedFiles || currentUser.downloadedFiles || [];
-    currentUser.ratings = globalUser.ratings || currentUser.ratings || {};
-    currentUser.profession = globalUser.profession || currentUser.profession || "";
-    currentUser.likedCourses = globalUser.likedCourses || currentUser.likedCourses || [];
-    currentUser.visitRegistro = globalUser.visitRegistro || currentUser.visitRegistro || { cursos: {}, infoPaginas: {}, aulas: {} };
+    if (typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; } }
+    currentUser.accessedCursos = [...new Set([...(globalUser.accessedCursos || []), ...myCourseIds])];
+    currentUser.likedCourses = globalUser.likedCourses || [];
+    currentUser.ratings = globalUser.ratings || {};
     localStorage.setItem('user', JSON.stringify(currentUser));
 }
 
@@ -1055,28 +680,22 @@ function calculateCourseRatings() {
     COURSES_DATA.forEach(c => courseRatings[c.ID] = { sum: 0, count: 0, avg: "5.0" });
     for (const email in dbUsers) {
         let u = dbUsers[email];
-        if (typeof u === 'string') { try { u = JSON.parse(u); } catch (e) { u = {}; } }
+        if (typeof u === 'string') { try { u = JSON.parse(u); } catch(e) { u = {}; } }
         if (u && u.ratings) {
             for (const cid in u.ratings) {
-                if (courseRatings[cid]) {
-                    courseRatings[cid].sum += Number(u.ratings[cid]) || 0;
-                    courseRatings[cid].count += 1;
-                }
+                if (courseRatings[cid]) { courseRatings[cid].sum += Number(u.ratings[cid]) || 0; courseRatings[cid].count++; }
             }
         }
     }
-    for (const cid in courseRatings) {
-        if (courseRatings[cid].count > 0) courseRatings[cid].avg = (courseRatings[cid].sum / courseRatings[cid].count).toFixed(1);
-    }
+    for (const cid in courseRatings) { if (courseRatings[cid].count > 0) courseRatings[cid].avg = (courseRatings[cid].sum / courseRatings[cid].count).toFixed(1); }
 }
 
 function updateStudentCounts() {
     COURSES_DATA.forEach(c => studentCountsPerCourse[c.ID] = 0);
     for (const email in dbUserCourses) {
-        const courses = splitCourseNames(dbUserCourses[email]);
-        courses.forEach(courseName => {
-            let found = COURSES_DATA.find(c => normalizeName(c.Nombre) === normalizeName(courseName));
-            if (found) studentCountsPerCourse[found.ID] += 1;
+        splitCourseNames(dbUserCourses[email]).forEach(courseName => {
+            const found = COURSES_DATA.find(c => normalizeName(c.Nombre) === normalizeName(courseName));
+            if (found) studentCountsPerCourse[found.ID]++;
         });
     }
 }
@@ -1095,7 +714,7 @@ function generateCourseCard(course) {
     const courseLink = course.EnlaceInfo || '#';
     const courseBuyLink = course.EnlaceCompra || '';
     const courseBadges = course.Badges || '';
-    const courseDescription = course.Descripcion || course['Descripción'] || course.descripcion || course['descripción'] || '';
+    const courseDescription = course.Descripcion || course['Descripción'] || '';
 
     let badgesHTML = '';
     if (courseBadges) {
@@ -1109,11 +728,12 @@ function generateCourseCard(course) {
     const priceTag = coursePrice === 0 ? '<span class="text-[#2db8ce] font-extrabold italic text-lg">GRATIS</span>' : `<span class="text-lg font-black text-slate-800">${courseCurrency}${coursePrice.toFixed(2)}</span>`;
     const likes = globalStats[`curso-${courseId}_likes`] || 0;
     const vistas = globalStats[`curso-${courseId}_vistas`] || 0;
-    const isLikedClass = (currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(`curso-${courseId}`)) ? 'liked' : '';
+    const isLikedClass = (currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(`curso-${courseId}`)) ? 'liked text-red-500' : 'text-slate-400';
     const viewsClass = vistas > 0 ? 'text-green-500' : 'text-slate-400';
+    const avgRating = courseRatings[courseId] ? courseRatings[courseId].avg : "5.0";
+    const displayCount = studentCountsPerCourse[courseId] !== undefined ? studentCountsPerCourse[courseId] : '...';
     const isLogged = currentUser !== null;
     const hasAccess = isLogged && currentUser.accessedCursos && currentUser.accessedCursos.includes(parseInt(courseId));
-    const imageOpacityClass = hasAccess ? 'opacity-100' : 'opacity-30';
     const isManual = (courseType || '').toLowerCase() === 'manual';
     const isFree = coursePrice === 0;
 
@@ -1129,19 +749,8 @@ function generateCourseCard(course) {
         }
         buttonsHTML = `<div class="flex flex-col gap-2 w-full">${freeBtn}<button onclick="event.stopPropagation(); registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del ${isManual ? 'Manual' : 'Curso'}</button></div>`;
     } else {
-        let freeBtn = '';
-        if (isFree && !hasAccess) {
-            if (isLogged) {
-                freeBtn = `<button onclick="event.stopPropagation(); enrollFreeCourse('${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="w-full btn-metal-green py-3 text-[10px] uppercase flex items-center justify-center gap-2 mb-2"><i class="fas fa-user-plus"></i> Inscribirse Gratis</button>`;
-            } else {
-                freeBtn = `<button onclick="event.stopPropagation(); openModal('authModal')" class="w-full btn-metal-green py-3 text-[10px] uppercase flex items-center justify-center gap-2 mb-2"><i class="fas fa-user-plus"></i> Inscribirse Gratis</button>`;
-            }
-        }
-        buttonsHTML = `<div class="flex flex-col gap-2 w-full">${freeBtn}<button onclick="event.stopPropagation(); showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')" class="w-full bg-slate-300 text-slate-500 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest cursor-not-allowed text-center shadow-sm">PRÓXIMAMENTE</button></div>`;
+        buttonsHTML = `<div class="flex flex-col gap-2 w-full"><button onclick="event.stopPropagation(); showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')" class="w-full bg-slate-300 text-slate-500 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest cursor-not-allowed text-center shadow-sm">PRÓXIMAMENTE</button></div>`;
     }
-
-    const avgRating = courseRatings[courseId] ? courseRatings[courseId].avg : "5.0";
-    const displayCount = studentCountsPerCourse[courseId] !== undefined ? studentCountsPerCourse[courseId] : '...';
 
     let buyActionHTML = '';
     if (hasAccess) {
@@ -1164,88 +773,69 @@ function generateCourseCard(course) {
     const normalizedLevel = (courseLevel || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     let levelBorderClass = '';
     let levelBadgeStyle = '';
-    let levelIconBg = 'bg-slate-500/10 border-slate-500/30';
-    let levelIconColor = 'text-slate-400';
-
     if (normalizedLevel === 'basico' || normalizedLevel === 'básico') {
         levelBorderClass = 'course-card-level-basico';
         levelBadgeStyle = 'background-color: rgba(6,182,212,0.1); color: rgb(8,145,178); border: 1px solid rgba(6,182,212,0.3);';
-        levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
-        levelIconColor = 'text-cyan-400';
     } else if (normalizedLevel === 'intermedio') {
         levelBorderClass = 'course-card-level-intermedio';
         levelBadgeStyle = 'background-color: rgba(168,85,247,0.1); color: rgb(126,34,206); border: 1px solid rgba(168,85,247,0.3);';
-        levelIconBg = 'bg-purple-500/10 border-purple-500/30';
-        levelIconColor = 'text-purple-400';
     } else if (normalizedLevel === 'avanzado') {
         levelBorderClass = 'course-card-level-avanzado';
         levelBadgeStyle = 'background-color: rgba(245,158,11,0.1); color: rgb(180,83,9); border: 1px solid rgba(245,158,11,0.3);';
-        levelIconBg = 'bg-amber-500/10 border-amber-500/30';
-        levelIconColor = 'text-amber-400';
-    }
-
-    let iconsContainerHTML = '';
-    if (isManual) {
-        let levelIconClass = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket';
-        let levelIconColorManual = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'text-cyan-400' : normalizedLevel === 'intermedio' ? 'text-purple-400' : 'text-amber-400';
-        let levelIconBgManual = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'bg-cyan-500/10 border-cyan-500/30' : normalizedLevel === 'intermedio' ? 'bg-purple-500/10 border-purple-500/30' : 'bg-amber-500/10 border-amber-500/30';
-        let levelTitle = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'Fundamentos (Básico)' : normalizedLevel === 'intermedio' ? 'Aplicaciones (Intermedio)' : 'Especialización (Avanzado)';
-
-        iconsContainerHTML = `
-        <div class="absolute bottom-3 left-3 flex items-center gap-2">
-            <div class="flex items-center justify-center ${levelIconBgManual} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${levelTitle}">
-                <i class="fas ${levelIconClass} text-lg ${levelIconColorManual}"></i>
-            </div>
-            <div class="flex items-center justify-center bg-blue-500/10 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="Manual">
-                <i class="fas fa-book-open text-lg text-blue-400"></i>
-            </div>
-        </div>`;
-    } else {
-        const iconClass = normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'fa-seedling' : normalizedLevel === 'intermedio' ? 'fa-cogs' : 'fa-rocket';
-        iconsContainerHTML = `
-        <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${courseLevel}">
-            <i class="fas ${iconClass} text-lg ${levelIconColor}"></i>
-        </div>`;
     }
 
     return `
-    <div class="course-card bg-white rounded-[24px] overflow-hidden flex flex-col group fade-in text-left cursor-pointer ${levelBorderClass}" onclick="registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')">
-        <div class="aspect-video w-full overflow-hidden bg-[#0f172a] border-b border-slate-100 relative text-left">
-            <img src="${courseImage}" alt="${courseName}" class="w-full h-full object-cover ${imageOpacityClass} group-hover:scale-105 transition-all duration-500" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Curso'">
-            <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
-                <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${courseType}</span>
-                ${courseCategory ? `<span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-sm bg-slate-900/70 text-white backdrop-blur-md border border-white/20">${courseCategory}</span>` : ''}
+    <div class="course-card ${levelBorderClass}" onclick="registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')">
+        <div class="aspect-video w-full overflow-hidden bg-[#0f172a] relative">
+            <img src="${courseImage}" alt="${courseName}" class="w-full h-full object-cover ${hasAccess ? 'opacity-100' : 'opacity-30'}" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Curso'">
+            <div class="absolute top-3 left-3 flex flex-col gap-1.5">
+                <span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md bg-slate-900/70 text-white">${courseType}</span>
+                ${courseCategory ? `<span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md bg-slate-900/70 text-white">${courseCategory}</span>` : ''}
                 ${badgesHTML}
             </div>
-            <div class="absolute top-3 right-3 bg-slate-900/70 backdrop-blur-md text-[#2db8ce] text-[10px] font-black px-2 py-1 rounded-md border border-white/20 shadow-lg flex items-center gap-1">
+            <div class="absolute top-3 right-3 bg-slate-900/70 text-[#2db8ce] text-[10px] font-black px-2 py-1 rounded-md flex items-center gap-1">
                 <i class="fas fa-star text-yellow-400"></i> ${avgRating}
             </div>
-            ${iconsContainerHTML}
         </div>
-        <div class="p-5 md:p-6 flex-grow flex flex-col text-left">
-            <h2 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${courseName}</h2>
-            <div class="flex items-center justify-between mb-4 text-xs font-bold text-slate-500">
+        <div class="p-5 md:p-6 flex-grow flex flex-col">
+            ${course.ProfesorNombre || course.ProfesorFoto ? `
+            <div class="flex items-center gap-3 mb-4 cursor-pointer hover:bg-slate-50 rounded-xl p-2 -mt-1 transition-all" onclick="event.stopPropagation(); window.location.href='profesor.html?nombre=${encodeURIComponent(course.ProfesorNombre || '')}&foto=${encodeURIComponent(course.ProfesorFoto || '')}&resena=${encodeURIComponent(course.ProfesorResena || '')}&especialidad=${encodeURIComponent(course.ProfesorEspecialidad || '')}'">
+                <div class="w-12 h-12 rounded-full overflow-hidden bg-slate-200 border-2 border-cyan-500/50 shadow-md">
+                    ${course.ProfesorFoto ? `<img src="${course.ProfesorFoto}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(course.ProfesorNombre || 'P')}&background=06b6d4&color=fff'">` : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 text-white font-bold">${(course.ProfesorNombre || 'P').charAt(0).toUpperCase()}</div>`}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-[9px] font-bold uppercase text-slate-400">Profesor</p>
+                    <p class="text-sm font-bold text-slate-800">${course.ProfesorNombre || 'Por asignar'}</p>
+                    ${course.ProfesorEspecialidad ? `<p class="text-[10px] text-slate-500">${course.ProfesorEspecialidad}</p>` : ''}
+                </div>
+                <i class="fas fa-chevron-right text-slate-400 text-xs"></i>
+            </div>` : ''}
+            
+            <h2 class="text-lg font-bold text-slate-900 mb-3">${courseName}</h2>
+            
+            <div class="flex items-center justify-between mb-4 text-xs font-bold">
                 <div class="flex items-center gap-2">
-                    <span class="px-2 py-1 rounded-md flex items-center gap-1" style="${levelBadgeStyle}" title="Nivel del curso"><i class="fas fa-book-open w-3 h-3"></i> ${courseLevel}</span>
-                    <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md flex items-center gap-1" title="Alumnos en el curso"><i class="fas fa-users w-3 h-3"></i><span id="count-${courseId}">${displayCount}</span></span>
+                    <span class="px-2 py-1 rounded-md flex items-center gap-1" style="${levelBadgeStyle}"><i class="fas fa-book-open w-3 h-3"></i> ${courseLevel}</span>
+                    <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md"><i class="fas fa-users w-3 h-3"></i> ${displayCount}</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${courseId}" onclick="event.stopPropagation(); toggleLike(this)">
+                    <button class="like-btn flex items-center gap-1 ${isLikedClass}" data-id="curso-${courseId}" onclick="event.stopPropagation(); toggleLike(this)">
                         <i class="fas fa-heart"></i><span class="like-count">${likes}</span>
                     </button>
-                    <span class="flex items-center gap-1 ${viewsClass} transition-colors duration-300">
-                        <i class="fas fa-eye"></i><span class="view-count" data-id="curso-${courseId}">${vistas}</span>
-                    </span>
+                    <span class="flex items-center gap-1 ${viewsClass}"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-${courseId}">${vistas}</span></span>
                 </div>
             </div>
-            ${courseDescription ? `<p class="course-card-description">${courseDescription}</p>` : ''}
+            
+            ${courseDescription ? `<p class="text-slate-500 text-sm mb-4">${courseDescription}</p>` : ''}
+            
             ${ratingStarsHTML}
+            
             <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
                 ${priceTag}
                 ${buyActionHTML}
             </div>
         </div>
-        <div class="px-5 md:px-6 py-4 bg-slate-50 border-t border-slate-100 text-left mt-auto" onclick="event.stopPropagation();">
+        <div class="px-5 md:px-6 py-4 bg-slate-50 border-t border-slate-100" onclick="event.stopPropagation();">
             ${buttonsHTML}
         </div>
     </div>`;
@@ -1254,287 +844,67 @@ function generateCourseCard(course) {
 function applyFilters() {
     const grid = document.getElementById('catalog-grid');
     if (!grid) return;
-    updateCatalogTitle(currentLevel);
     let filtered = COURSES_DATA;
     if (currentLevel !== 'Todos') {
         filtered = COURSES_DATA.filter(c => {
-            const tipo = (c.Tipo || '').toLowerCase();
-            const nivel = (c.Nivel || '').toLowerCase();
-            if (currentLevel === 'Manual') return tipo === 'manual';
-            else return nivel === currentLevel.toLowerCase();
+            if (currentLevel === 'Manual') return (c.Tipo || '').toLowerCase() === 'manual';
+            return (c.Nivel || '').toLowerCase() === currentLevel.toLowerCase();
         });
     }
-    console.log(`📊 Mostrando ${filtered.length} cursos de ${COURSES_DATA.length} totales. Filtro: ${currentLevel}`);
-    if (filtered.length === 0) {
-        grid.innerHTML = '<div class="col-span-full text-center py-20 text-slate-400 font-bold uppercase tracking-widest text-[10px]">No se encontraron cursos que coincidan con tu búsqueda.</div>';
-        return;
-    }
+    if (filtered.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-20">No se encontraron cursos.</div>'; return; }
     grid.innerHTML = filtered.map(c => generateCourseCard(c)).join('');
-    if (window.lucide) lucide.createIcons();
 }
 
 async function loadCoursesFromSheet() {
-    const loadingEl = document.getElementById('catalog-loading');
-    const grid = document.getElementById('catalog-grid');
-    const errorEl = document.getElementById('catalog-error');
-    const errorDetail = document.getElementById('catalog-error-detail');
     showLoadingToast();
-    if (loadingEl) loadingEl.classList.remove('hidden');
-    if (errorEl) errorEl.classList.add('hidden');
-    if (grid) grid.innerHTML = '';
     try {
-        const url = `${CATALOG_SCRIPT_URL}?action=get_courses&nocache=${new Date().getTime()}`;
-        console.log('🔄 Cargando cursos desde:', url);
-        const response = await fetch(url);
-        console.log('📡 Respuesta HTTP:', response.status, response.statusText);
-        if (!response.ok) throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+        const response = await fetch(`${SCRIPT_URL}?action=get_courses&nocache=${Date.now()}`);
         const result = await response.json();
-        console.log('📦 Datos recibidos:', result);
-        if (result.status !== 'success') throw new Error(result.message || 'El script devolvió un estado de error');
-        if (!result.data || !Array.isArray(result.data)) throw new Error('Los datos recibidos no tienen el formato esperado');
-        COURSES_DATA = result.data;
-        console.log(`✅ ${COURSES_DATA.length} cursos cargados exitosamente`);
-        COURSES_DATA.forEach((c, i) => {
-            console.log(`  Curso ${i + 1}: ID=${c.ID}, Nombre="${c.Nombre}", Tipo="${c.Tipo}", Nivel="${c.Nivel}", Activo="${c.Activo}"`);
-        });
-        calculateCourseRatings();
-        updateStudentCounts();
-        applyFilters();
-        if (loadingEl) loadingEl.classList.add('hidden');
-        showSuccessToast();
-    } catch (error) {
-        console.error('❌ Error al cargar cursos:', error);
-        if (loadingEl) loadingEl.classList.add('hidden');
-        if (errorEl) errorEl.classList.remove('hidden');
-        if (errorDetail) errorDetail.innerText = error.message;
-        hideLoadingToast();
-        if (grid) {
-            grid.innerHTML = `
-                <div class="col-span-full text-center p-8 bg-red-900/20 border border-red-500/30 rounded-2xl">
-                    <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
-                    <h3 class="font-bold text-red-400 text-lg mb-2">Error al Cargar el Catálogo</h3>
-                    <p class="text-slate-300 mb-4">No se pudo conectar con la base de datos de cursos.</p>
-                    <p class="text-xs text-slate-500 mb-4">Detalle: ${error.message}</p>
-                    <button onclick="loadCoursesFromSheet()" class="px-6 py-3 bg-[#2db8ce] text-white font-bold rounded-xl hover:bg-[#1877f2] transition-all">
-                        <i class="fas fa-sync-alt mr-2"></i> Reintentar Carga
-                    </button>
-                </div>`;
+        if (result.status === 'success' && Array.isArray(result.data)) {
+            COURSES_DATA = result.data;
+            await loadData();
+            showSuccessToast();
         }
-    }
+    } catch (e) { console.error('Error:', e); hideLoadingToast(); }
 }
 
 function filterByLevel(level, element) {
     currentLevel = level;
-    document.querySelectorAll('.learning-step').forEach(step => {
-        step.classList.remove('border-cyan-500', 'border-blue-500', 'border-purple-500', 'border-amber-500');
-        step.classList.add('border-slate-700');
-    });
-    if (level === 'Básico') element.classList.add('border-cyan-500');
-    else if (level === 'Manual') element.classList.add('border-blue-500');
-    else if (level === 'Intermedio') element.classList.add('border-purple-500');
-    else if (level === 'Avanzado') element.classList.add('border-amber-500');
-    element.classList.remove('border-slate-700');
-    updateCatalogTitle(level);
     applyFilters();
-    setTimeout(() => {
-        const catalogSection = document.getElementById('catalog-section');
-        if (catalogSection) {
-            catalogSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }, 150);
-}
-
-function updateCatalogTitle(level) {
-    const subtitle = document.getElementById('catalog-subtitle');
-    const title = document.getElementById('catalog-title');
-    if (!subtitle || !title) return;
-    const titles = {
-        'Todos': { sub: 'Nuestra Oferta', title: 'Catálogo <span>Completo</span>' },
-        'Básico': { sub: 'Nivel Fundamentos', title: 'Catálogo de <span>Fundamentos</span>' },
-        'Manual': { sub: 'Recursos Prácticos', title: 'Catálogo de <span>Manuales</span>' },
-        'Intermedio': { sub: 'Nivel Aplicaciones', title: 'Catálogo de <span>Aplicaciones</span>' },
-        'Avanzado': { sub: 'Nivel Especialización', title: 'Catálogo de <span>Especialización</span>' }
-    };
-    const t = titles[level] || titles['Todos'];
-    subtitle.innerText = t.sub;
-    title.innerHTML = t.title;
 }
 
 function registerViewAndGo(url, courseId, courseName = '') {
-    const idKey = `curso-${courseId}`;
-    ping('update_stat', `${idKey}_vistas`);
-    if (globalStats) {
-        globalStats[`${idKey}_vistas`] = (parseInt(globalStats[`${idKey}_vistas`]) || 0) + 1;
-        document.querySelectorAll(`.view-count[data-id="${idKey}"]`).forEach(span => {
-            span.innerText = globalStats[`${idKey}_vistas`];
-        });
-    }
-    if (currentUser && currentUser.email) {
-        recordVisit('curso', courseId, courseName || `Curso ${courseId}`, 'Vista al catálogo del curso');
-    }
+    ping('update_stat', `curso-${courseId}_vistas`);
+    if (globalStats) globalStats[`curso-${courseId}_vistas`] = (parseInt(globalStats[`curso-${courseId}_vistas`]) || 0) + 1;
     if (url && url !== '#') window.open(url, '_self');
 }
 
-// ===== NUEVA FUNCIÓN: INSCRIPCIÓN GRATUITA =====
 async function enrollFreeCourse(courseId, courseName) {
-    if (!currentUser || !currentUser.email) {
-        openModal('authModal');
-        return;
-    }
-    const course = COURSES_DATA.find(c => c.ID == courseId);
-    if (!course) return;
+    if (!currentUser || !currentUser.email) { openModal('authModal'); return; }
     const email = currentUser.email.toLowerCase();
     const userCourses = dbUserCourses[email] || [];
     const alreadyEnrolled = userCourses.some(c => normalizeName(c) === normalizeName(courseName));
-    if (alreadyEnrolled || (currentUser.accessedCursos && currentUser.accessedCursos.includes(parseInt(courseId)))) {
-        showNotif('Ya inscrito', 'Ya te encuentras inscrito en este curso.', 'info');
-        return;
-    }
+    if (alreadyEnrolled) { showNotif('Ya inscrito', 'Ya te encuentras inscrito.', 'info'); return; }
     showLoadingToast();
-    const toastTitle = document.getElementById('loadingToastTitle');
-    if (toastTitle) toastTitle.innerText = 'Inscribiendo en el curso...';
     try {
         const params = new URLSearchParams();
         params.append('action', 'register_course_access');
         params.append('courseName', courseName);
-        params.append('name', currentUser.name || currentUser.email.split('@')[0]);
+        params.append('name', currentUser.name || email.split('@')[0]);
         params.append('email', email);
-        params.append('cedula', currentUser.cedula || '');
-        params.append('telefono', currentUser.telefono || '');
-        params.append('pais', currentUser.pais || '');
-        params.append('estado', currentUser.estado || '');
-        const response = await fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: params,
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: params });
         const result = await response.json();
         if (result.status === 'success') {
-            if (!dbUserCourses[email]) dbUserCourses[email] = [];
-            dbUserCourses[email].push(courseName);
             if (!currentUser.accessedCursos) currentUser.accessedCursos = [];
-            if (!currentUser.accessedCursos.includes(parseInt(courseId))) {
-                currentUser.accessedCursos.push(parseInt(courseId));
-            }
+            if (!currentUser.accessedCursos.includes(parseInt(courseId))) currentUser.accessedCursos.push(parseInt(courseId));
             localStorage.setItem('user', JSON.stringify(currentUser));
-            updateStudentCounts();
             applyFilters();
-            updateAllUI();
             showSuccessToast();
-            setTimeout(() => showNotif('¡Inscripción exitosa!', `Te has inscrito en ${courseName}.`, 'success'), 600);
         } else {
             hideLoadingToast();
-            showNotif('Error', result.message || 'No se pudo completar la inscripción.', 'error');
+            showNotif('Error', result.message || 'No se pudo completar.', 'error');
         }
-    } catch (e) {
-        hideLoadingToast();
-        console.error('Error en inscripción gratuita:', e);
-        showNotif('Error de conexión', 'No se pudo conectar con el servidor. Intenta de nuevo.', 'error');
-    }
-}
-// ===== FIN NUEVA FUNCIÓN =====
-
-async function recordVisit(visitType, itemId, itemName, details = '') {
-    if (!currentUser || !currentUser.email) return;
-    const email = currentUser.email.toLowerCase();
-    try {
-        const params = new URLSearchParams();
-        params.append('action', 'record_visit');
-        params.append('email', email);
-        params.append('visitType', visitType);
-        params.append('itemId', itemId);
-        params.append('itemName', itemName);
-        params.append('details', details);
-        const response = await fetch(SCRIPT_URL, {
-            method: 'POST',
-            body: params,
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-        const result = await response.json();
-        if (result.status === 'success') {
-            if (!currentUser.visitRegistro) {
-                currentUser.visitRegistro = { cursos: {}, infoPaginas: {}, aulas: {} };
-            }
-            const typeKey = visitType === 'curso' ? 'cursos' : visitType === 'info' ? 'infoPaginas' : visitType === 'aula' ? 'aulas' : null;
-            if (typeKey) {
-                if (!currentUser.visitRegistro[typeKey]) currentUser.visitRegistro[typeKey] = {};
-                if (!currentUser.visitRegistro[typeKey][itemId]) currentUser.visitRegistro[typeKey][itemId] = { visitas: 0, fechas: [] };
-                currentUser.visitRegistro[typeKey][itemId].visitas++;
-                currentUser.visitRegistro[typeKey][itemId].fechas.push(result.fecha);
-                localStorage.setItem('user', JSON.stringify(currentUser));
-            }
-            console.log('✅ Visita registrada:', visitType, itemName);
-        }
-    } catch (e) {
-        console.error('Error al registrar visita:', e);
-    }
-}
-
-function registerInfoVisit(pageId, pageName) {
-    if (!currentUser || !currentUser.email) return;
-    recordVisit('info', pageId, pageName, 'Visita a página de información');
-}
-
-function registerAulaVisit(aulaId, aulaName, cursoName) {
-    if (!currentUser || !currentUser.email) return;
-    recordVisit('aula', aulaId, aulaName, `Aula del curso: ${cursoName}`);
-}
-
-function rateCourse(courseId, rating) {
-    if (!currentUser) { openModal('authModal'); return; }
-    if (!currentUser.ratings) currentUser.ratings = {};
-    currentUser.ratings[courseId] = rating;
-    const email = currentUser.email.toLowerCase();
-    if (dbUsers[email]) {
-        let userObj = dbUsers[email];
-        if (typeof userObj === 'string') userObj = JSON.parse(userObj);
-        userObj.ratings = currentUser.ratings;
-        dbUsers[email] = JSON.stringify(userObj);
-    }
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    calculateCourseRatings();
-    applyFilters();
-    syncUserProgressToExcel();
-    showNotif('Valoración guardada', `Has puntuado con ${rating} estrellas.`);
-}
-
-function toggleLike(btn) {
-    if (!currentUser) { openModal('authModal'); return; }
-    const id = btn.dataset.id;
-    if (!currentUser.likedCourses) currentUser.likedCourses = [];
-    const span = btn.querySelector('.like-count');
-    let currentLikes = parseInt(span.innerText) || 0;
-    if (currentUser.likedCourses.includes(id)) {
-        currentUser.likedCourses = currentUser.likedCourses.filter(c => c !== id);
-        ping('decrement_stat', `${id}_likes`);
-        btn.classList.remove('liked', 'text-red-500');
-        btn.classList.add('text-slate-400');
-        span.innerText = Math.max(0, currentLikes - 1);
-        if (globalStats) globalStats[`${id}_likes`] = Math.max(0, currentLikes - 1);
-    } else {
-        currentUser.likedCourses.push(id);
-        ping('update_stat', `${id}_likes`);
-        btn.classList.add('liked', 'text-red-500');
-        btn.classList.remove('text-slate-400');
-        span.innerText = currentLikes + 1;
-        if (globalStats) globalStats[`${id}_likes`] = currentLikes + 1;
-    }
-    if (currentUser.email) { dbUsers[currentUser.email.toLowerCase()] = JSON.stringify(currentUser); }
-    localStorage.setItem('user', JSON.stringify(currentUser));
-    syncUserProgressToExcel();
-    document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn => {
-        if (otherBtn !== btn) {
-            if (currentUser.likedCourses.includes(id)) {
-                otherBtn.classList.add('liked', 'text-red-500');
-                otherBtn.classList.remove('text-slate-400');
-            } else {
-                otherBtn.classList.remove('liked', 'text-red-500');
-                otherBtn.classList.add('text-slate-400');
-            }
-            const otherSpan = otherBtn.querySelector('.like-count');
-            if (otherSpan) otherSpan.innerText = span.innerText;
-        }
-    });
+    } catch (e) { hideLoadingToast(); showNotif('Error de conexión', 'Intenta de nuevo.', 'error'); }
 }
 
 async function syncUserProgressToExcel() {
@@ -1554,372 +924,68 @@ async function syncUserProgressToExcel() {
         });
         const result = await response.json();
         console.log('📤 Sincronización completada:', result);
-    } catch (e) { 
-        console.error('Sync error:', e); 
-    }
+    } catch (e) { console.error('Sync error:', e); }
 }
 
-function updateAllUI() {
-    const adminBtnContainer = document.getElementById('adminButtonContainer');
-    const profileAdminBtn = document.getElementById('profileAdminBtn');
-    if (!currentUser) {
-        if (adminBtnContainer) { adminBtnContainer.classList.add('hidden'); adminBtnContainer.classList.remove('flex'); }
-        if (profileAdminBtn) { profileAdminBtn.classList.add('hidden'); profileAdminBtn.classList.remove('flex'); }
-        return;
+function rateCourse(courseId, rating) {
+    if (!currentUser) { openModal('authModal'); return; }
+    if (!currentUser.ratings) currentUser.ratings = {};
+    currentUser.ratings[courseId] = rating;
+    const email = currentUser.email.toLowerCase();
+    if (dbUsers[email]) {
+        let userObj = dbUsers[email];
+        if (typeof userObj === 'string') { try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } }
+        userObj = userObj || {};
+        userObj.ratings = currentUser.ratings;
+        dbUsers[email] = JSON.stringify(userObj);
     }
-    const displayName = currentUser.name || "Usuario";
-    document.querySelectorAll('#authBtnText').forEach(el => { el.innerText = displayName; });
-    const initialsEl = document.getElementById('profileInitials');
-    if (currentUser.name || currentUser.email) {
-        const str = currentUser.name || currentUser.email;
-        const parts = str.trim().split(' ');
-        const inits = parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0][0].toUpperCase();
-        if (initialsEl) initialsEl.innerText = inits;
-    }
-    document.getElementById('profileFullName').innerText = currentUser.name || "Estudiante";
-    document.getElementById('profileEmail').innerText = currentUser.email;
-    document.getElementById('profileProfession').innerText = currentUser.profession ? capitalize(currentUser.profession) : "Sin Perfil";
-    document.getElementById('profileCedula').innerText = currentUser.cedula && currentUser.cedula !== "N/A" ? currentUser.cedula : "Sin Cédula";
-    document.getElementById('profilePhone').innerText = currentUser.telefono && currentUser.telefono !== "N/A" ? currentUser.telefono : "Sin Teléfono";
-    let locText = currentUser.pais && currentUser.pais !== "N/A" ? currentUser.pais : "País Desconocido";
-    if (currentUser.pais === "Venezuela" && currentUser.estado && currentUser.estado !== "N/A") locText += ` (${currentUser.estado})`;
-    document.getElementById('profileLocation').innerText = locText;
-    const flagImg = document.getElementById('profileFlag');
-    const globeIcon = document.getElementById('profileGlobeIcon');
-    let isoCode = null;
-    if (currentUser.pais && currentUser.pais !== "N/A") {
-        const cleanPais = currentUser.pais.trim().toLowerCase();
-        isoCode = countryToISO[cleanPais] || countryToISO[cleanPais.replace(/\s/g, '')];
-    }
-    if (isoCode) { flagImg.src = `https://flagcdn.com/w20/${isoCode}.png`; flagImg.classList.remove('hidden'); globeIcon.classList.add('hidden'); }
-    else { flagImg.classList.add('hidden'); globeIcon.classList.remove('hidden'); }
-    document.querySelectorAll('.like-btn').forEach(btn => {
-        if (currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(btn.dataset.id)) {
-            btn.classList.add('text-red-500'); btn.classList.remove('text-slate-400');
-        } else {
-            btn.classList.remove('text-red-500'); btn.classList.add('text-slate-400');
-        }
-    });
-    const adminEmails = ['pablocdno@gmail.com'];
-    const isAdmin = currentUser.email && adminEmails.includes(currentUser.email.trim().toLowerCase());
-    if (isAdmin) {
-        if (adminBtnContainer) { adminBtnContainer.classList.remove('hidden'); adminBtnContainer.classList.add('flex'); }
-        if (profileAdminBtn) { profileAdminBtn.classList.remove('hidden'); profileAdminBtn.classList.add('flex'); }
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    calculateCourseRatings();
+    applyFilters();
+    syncUserProgressToExcel();
+    showNotif('Valoración guardada', `Has puntuado con ${rating} estrellas.`);
+}
+
+function toggleLike(btn) {
+    if (!currentUser) { openModal('authModal'); return; }
+    const id = btn.dataset.id;
+    if (!currentUser.likedCourses) currentUser.likedCourses = [];
+    const span = btn.querySelector('.like-count');
+    let currentLikes = parseInt(span.innerText) || 0;
+    if (currentUser.likedCourses.includes(id)) {
+        currentUser.likedCourses = currentUser.likedCourses.filter(c => c !== id);
+        ping('decrement_stat', `${id}_likes`);
+        btn.classList.remove('text-red-500'); btn.classList.add('text-slate-400');
+        span.innerText = Math.max(0, currentLikes - 1);
+        if (globalStats) globalStats[`${id}_likes`] = Math.max(0, currentLikes - 1);
     } else {
-        if (adminBtnContainer) { adminBtnContainer.classList.add('hidden'); adminBtnContainer.classList.remove('flex'); }
-        if (profileAdminBtn) { profileAdminBtn.classList.add('hidden'); profileAdminBtn.classList.remove('flex'); }
+        currentUser.likedCourses.push(id);
+        ping('update_stat', `${id}_likes`);
+        btn.classList.add('text-red-500'); btn.classList.remove('text-slate-400');
+        span.innerText = currentLikes + 1;
+        if (globalStats) globalStats[`${id}_likes`] = currentLikes + 1;
     }
+    if (currentUser.email) { dbUsers[currentUser.email.toLowerCase()] = JSON.stringify(currentUser); }
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    syncUserProgressToExcel();
 }
 
-function toggleAdminState() {
-    const countrySelect = document.getElementById('adminCountry');
-    const stateContainer = document.getElementById('adminStateContainer');
-    if (countrySelect.value === 'Venezuela') { stateContainer.classList.remove('hidden'); }
-    else { stateContainer.classList.add('hidden'); document.getElementById('adminState').value = ''; }
-}
+function logoutUser() { localStorage.removeItem('user'); window.location.reload(); }
 
-function selectAdminCourse(course, activeBtn) {
-    document.querySelectorAll('#adminTabsContainer button').forEach(btn => {
-        btn.className = 'w-full text-left p-4 rounded-xl border transition-all duration-200 flex flex-col gap-1 bg-slate-50 border-transparent hover:bg-slate-100 border-l-4 hover:border-slate-300 text-slate-600';
-    });
-    activeBtn.className = 'w-full text-left p-4 rounded-xl border transition-all duration-200 flex flex-col gap-1 bg-white border-y-[#2db8ce]/20 border-r-[#2db8ce]/20 shadow-md border-l-4 border-l-[#2db8ce] text-slate-900';
-    document.getElementById('adminNoSelection').classList.add('hidden');
-    document.getElementById('adminFormContainer').classList.remove('hidden');
-    document.getElementById('adminErrorMessage').classList.add('hidden');
-    document.getElementById('adminSelectedCourseTitle').innerText = course.Nombre;
-    document.getElementById('adminCourseId').value = course.ID;
-    document.getElementById('adminCourseName').value = course.Nombre;
-    document.getElementById('adminManualForm').reset();
-    document.getElementById('adminStateContainer').classList.add('hidden');
-}
-
-function openAdminPanel() {
-    const adminEmails = ['pablocdno@gmail.com'];
-    if (!currentUser || !adminEmails.includes(currentUser.email.trim().toLowerCase())) {
-        showNotif('Acceso Denegado', 'Solo el administrador puede ver esto.', 'error');
-        return;
-    }
-    const tabsContainer = document.getElementById('adminTabsContainer');
-    tabsContainer.innerHTML = '';
-    const coursesData = COURSES_DATA || [];
-    coursesData.forEach((course) => {
-        const btn = document.createElement('button');
-        btn.className = 'w-full text-left p-4 rounded-xl border transition-all duration-200 flex flex-col gap-1 bg-slate-50 border-transparent hover:bg-slate-100 border-l-4 hover:border-slate-300 text-slate-600';
-        btn.innerHTML = `<span class="font-bold text-slate-800 text-sm leading-tight">${course.Nombre || 'Curso sin nombre'}</span><span class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">${course.Tipo || 'Sin tipo'}</span>`;
-        btn.onclick = () => selectAdminCourse(course, btn);
-        tabsContainer.appendChild(btn);
-    });
-    if (coursesData.length > 0) {
-        selectAdminCourse(coursesData[0], tabsContainer.querySelector('button'));
-    }
-    openModal('adminModal');
-}
-
-function switchAuthTab(tab) {
-    document.getElementById('authErrorMessage').classList.add('hidden');
-    const loginTab = document.getElementById('tabLogin');
-    const regTab = document.getElementById('tabRegister');
-    const nameField = document.getElementById('nameField');
-    const countryField = document.getElementById('countryField');
-    const title = document.getElementById('authModalTitle');
-    const sub = document.getElementById('authSubText');
-    const btnIcon = document.getElementById('authBtnIcon');
-    const btnLabel = document.getElementById('authBtnLabel');
-    if (tab === 'login') {
-        loginTab.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
-        regTab.className = "flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
-        nameField.classList.add('hidden');
-        countryField.classList.add('hidden');
-        title.innerText = "Iniciar Sesión";
-        sub.innerText = "Ingresa tus datos para acceder a tus cursos.";
-        btnIcon.className = "fas fa-sign-in-alt";
-        btnLabel.innerText = "Entrar";
-    } else {
-        regTab.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
-        loginTab.className = "flex-1 py-2 text-sm font-bold rounded-lg text-slate-500 hover:text-slate-700 transition-all";
-        nameField.classList.remove('hidden');
-        countryField.classList.remove('hidden');
-        title.innerText = "Crear Cuenta";
-        sub.innerText = "Regístrate para adquirir cursos.";
-        btnIcon.className = "fas fa-user-plus";
-        btnLabel.innerText = "Registrarse";
-    }
-}
-
-
-document.getElementById('authForm').onsubmit = async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('authSubmitBtn');
-    const label = document.getElementById('authBtnLabel');
-    const icon = document.getElementById('authBtnIcon');
-    const errBox = document.getElementById('authErrorMessage');
-    const errText = document.getElementById('authErrorText');
-    const originalText = label.innerText;
-    errBox.classList.add('hidden');
-    btn.disabled = true;
-    icon.className = "fas fa-spinner fa-spin";
-    label.innerText = "PROCESANDO...";
-    const email = document.getElementById('authEmail').value.trim().toLowerCase();
-    let inputName = document.getElementById('authName').value.trim();
-    const inputPassword = document.getElementById('authPassword').value;
-    const inputCountry = document.getElementById('authCountry').value;
-    const isRegistration = !document.getElementById('nameField').classList.contains('hidden');
-    try {
-        if (isRegistration) {
-            if (!inputPassword) {
-                errText.innerText = "ACCESO DENEGADO: Debes crear una contraseña.";
-                errBox.classList.remove('hidden');
-                showNotif('Falta contraseña', 'Crea una contraseña.', 'error');
-                btn.disabled = false; icon.className = "fas fa-user-plus"; label.innerText = originalText;
-                return;
-            }
-            if (!inputCountry) {
-                errText.innerText = "Por favor selecciona tu país.";
-                errBox.classList.remove('hidden');
-                showNotif('Falta país', 'Selecciona tu país.', 'error');
-                btn.disabled = false; icon.className = "fas fa-user-plus"; label.innerText = originalText;
-                return;
-            }
-            currentUser = { 
-                name: inputName, 
-                email: email, 
-                password: inputPassword, 
-                pais: inputCountry, 
-                cedula: "", 
-                telefono: "", 
-                profession: "", 
-                likedCourses: [], 
-                accessedCursos: [], 
-                downloadedFiles: [], 
-                ratings: {},
-                visitRegistro: { cursos: {}, infoPaginas: {}, aulas: {} }
-            };
-            await fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=register&name=${encodeURIComponent(currentUser.name)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(inputPassword)}&pais=${encodeURIComponent(inputCountry)}` });
-            localStorage.setItem('user', JSON.stringify(currentUser));
-            closeModal('authModal');
-            showNotif('¡Bienvenido!', `Hola ${inputName}, registro exitoso.`);
-            setTimeout(() => window.location.reload(), 700);
-        } else {
-            if (!inputPassword) {
-                errText.innerText = "ACCESO DENEGADO: Debes ingresar tu contraseña.";
-                errBox.classList.remove('hidden');
-                showNotif('Falta contraseña', 'Ingresa tu contraseña.', 'error');
-                btn.disabled = false; icon.className = "fas fa-sign-in-alt"; label.innerText = originalText;
-                return;
-            }
-            let globalUser = dbUsers[email];
-            if (typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch (e) { globalUser = null; } }
-            globalUser = globalUser || {};
-            let details = dbUserDetails[email] || {};
-            const hasGlobal = Object.keys(globalUser).length > 0;
-            const hasDetails = details.name && details.name !== "No provisto" && details.name !== "N/A";
-            if (!hasGlobal && !hasDetails) {
-                errText.innerText = "ACCESO DENEGADO: El correo ingresado no se encuentra registrado.";
-                errBox.classList.remove('hidden');
-                showNotif('Acceso Denegado', 'Correo no encontrado.', 'error');
-                btn.disabled = false; icon.className = "fas fa-sign-in-alt"; label.innerText = originalText;
-                return;
-            }
-            if (hasGlobal && globalUser.password && globalUser.password !== inputPassword) {
-                errText.innerText = "ACCESO DENEGADO: Contraseña incorrecta.";
-                errBox.classList.remove('hidden');
-                showNotif('Error', 'Contraseña incorrecta.', 'error');
-                btn.disabled = false; icon.className = "fas fa-sign-in-alt"; label.innerText = originalText;
-                return;
-            }
-            currentUser = {
-                name: details.name && details.name !== "No provisto" && details.name !== "N/A" ? details.name : (globalUser.name || email.split('@')[0]),
-                email: email, 
-                password: inputPassword, 
-                profession: globalUser.profession || "",
-                likedCourses: globalUser.likedCourses || [], 
-                accessedCursos: globalUser.accessedCursos || [],
-                downloadedFiles: globalUser.downloadedFiles || [], 
-                ratings: globalUser.ratings || {},
-                visitRegistro: globalUser.visitRegistro || { cursos: {}, infoPaginas: {}, aulas: {} },
-                cedula: details.cedula || "N/A", 
-                telefono: details.telefono || "N/A",
-                pais: details.pais || "N/A", 
-                estado: details.estado || "N/A"
-            };
-            let myCourseNames = dbUserCourses[email] || [];
-            myCourseNames.forEach(cName => {
-                let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === normalizeName(cName));
-                if (found && !currentUser.accessedCursos.includes(found.ID)) currentUser.accessedCursos.push(found.ID);
-            });
-            localStorage.setItem('user', JSON.stringify(currentUser));
-            closeModal('authModal');
-            showNotif('¡Bienvenido de nuevo!', `Hola ${currentUser.name}.`);
-            setTimeout(() => window.location.reload(), 700);
-        }
-    } catch (e) {
-        errText.innerText = "Error de conexión. Intenta de nuevo.";
-        errBox.classList.remove('hidden');
-    } finally {
-        btn.disabled = false;
-        icon.className = isRegistration ? "fas fa-user-plus" : "fas fa-sign-in-alt";
-        label.innerText = originalText;
-    }
-};
-
-document.getElementById('adminManualForm').onsubmit = async (e) => {
-    e.preventDefault();
-    const courseName = document.getElementById('adminCourseName')?.value || '';
-    const studentEmail = (document.getElementById('adminEmail')?.value || '').toLowerCase().trim();
-    const errBox = document.getElementById('adminErrorMessage');
-    const errText = document.getElementById('adminErrorText');
-    errBox.classList.add('hidden');
-    if (!dbUsers[studentEmail]) {
-        errText.innerText = "El estudiante no tiene un usuario creado en la plataforma.";
-        errBox.classList.remove('hidden');
-        showNotif('Usuario no encontrado', 'El estudiante no tiene un usuario creado en la plataforma.', 'error');
-        return;
-    }
-    let isDuplicate = false;
-    if (dbUserCourses[studentEmail]) {
-        isDuplicate = dbUserCourses[studentEmail].some(c => normalizeName(c) === normalizeName(courseName));
-    }
-    if (isDuplicate) {
-        errText.innerText = "ACCESO DENEGADO: Este usuario ya se encuentra registrado en el curso de " + courseName + ".";
-        errBox.classList.remove('hidden');
-        showNotif('Usuario Existente', 'Este usuario ya está en el curso.', 'error');
-        return;
-    }
-    const btn = document.getElementById('adminSubmitBtn');
-    const originalText = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = `<i class="fas fa-spinner fa-spin text-lg"></i> Registrando...`;
-    const studentName = document.getElementById('adminName')?.value || '';
-    const studentCedula = document.getElementById('adminCedula')?.value || '';
-    const studentPhone = document.getElementById('adminPhone')?.value || '';
-    const studentCountry = document.getElementById('adminCountry')?.value || '';
-    const studentState = document.getElementById('adminState')?.value || '';
-    try {
-        const params = new URLSearchParams();
-        params.append('action', 'register_course_access');
-        params.append('courseName', courseName);
-        params.append('name', studentName);
-        params.append('email', studentEmail);
-        params.append('cedula', studentCedula);
-        params.append('telefono', studentPhone);
-        params.append('pais', studentCountry);
-        params.append('estado', studentState);
-        const response = await fetch(SCRIPT_URL, { method: 'POST', body: params, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
-        const result = await response.json();
-        if (result.status !== 'success') throw new Error(result.message || 'El servidor devolvió un error al procesar la inscripción.');
-        if (!dbUserCourses[studentEmail]) dbUserCourses[studentEmail] = [];
-        dbUserCourses[studentEmail].push(courseName);
-        if (currentUser && studentEmail === currentUser.email.toLowerCase()) {
-            currentUser.name = studentName;
-            const foundCourse = COURSES_DATA.find(c => normalizeName(c.Nombre) === normalizeName(courseName));
-            if (foundCourse && !currentUser.accessedCursos.includes(parseInt(foundCourse.ID))) currentUser.accessedCursos.push(parseInt(foundCourse.ID));
-            localStorage.setItem('user', JSON.stringify(currentUser));
-            updateAllUI();
-        }
-        showNotif('Registro Exitoso', `${studentName} añadido a ${courseName}`);
-        document.getElementById('adminManualForm').reset();
-        document.getElementById('adminStateContainer').classList.add('hidden');
-        loadData(false);
-    } catch (error) {
-        errText.innerText = error.message;
-        errBox.classList.remove('hidden');
-        showNotif('Error de Inscripción', error.message, 'error');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = originalText;
-    }
-};
-
+// 🆕 INICIALIZAR EVENTO DEL FORMULARIO ADMIN
 document.addEventListener("DOMContentLoaded", () => {
-    console.log('🚀 Inicializando Aprende Automatización...');
-    document.querySelectorAll('.learning-step').forEach(step => {
-        step.classList.add('border-slate-700');
-    });
     loadCoursesFromSheet();
-    updateAllUI();
-    if (window.lucide) lucide.createIcons();
-    setTimeout(() => { initVisitorInfo(); loadData(true); }, 300);
-    setInterval(() => {
-        if (!dataLoaded && dataLoadAttempts > 0 && dataLoadAttempts < MAX_DATA_ATTEMPTS * 3) loadData(false);
-    }, 15000);
-});
-
-async function initVisitorInfo() {
-    const services = ['https://get.geojs.io/v1/ip/geo.json', 'https://api.country.is', 'https://ipapi.co/json/'];
-    for (const service of services) {
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 4000);
-            const res = await fetch(service, { signal: controller.signal });
-            clearTimeout(timeoutId);
-            if (!res.ok) continue;
-            const data = await res.json();
-            let rawCountryName = data.country || data.countryName || data.country_name || "";
-            let countryCode = data.country_code || data.countryCode || data.country || "";
-            let region = data.region || data.regionName || data.stateProv || data.city || "";
-            if (rawCountryName && rawCountryName !== "Desconocido") {
-                let baseName = countryToSpanish[rawCountryName.toLowerCase()] || rawCountryName;
-                if (baseName === "Venezuela" || (countryCode && countryCode.toLowerCase() === "ve")) {
-                    userCountry = region ? `Venezuela (${region})` : "Venezuela";
-                } else { userCountry = baseName; }
-                ping('update_stat', 'visitas_totales');
-                ping('update_stat', 'visita_pais_' + baseName);
-                return;
-            }
-        } catch (e) { console.warn(`Fallo geoip ${service}:`, e.message); }
+    
+    // Asignar evento al formulario de admin
+    const adminForm = document.getElementById('adminForm');
+    if (adminForm) {
+        adminForm.addEventListener('submit', manualEnrollStudent);
     }
-}
-
-function logoutUser() {
-    localStorage.removeItem('user');
-    window.location.reload();
-}
+});
 </script>
 <script src="js/auth.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
-<a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
-    <i class="fab fa-whatsapp"></i>
-</a>
+<a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
 </body>
 </html>

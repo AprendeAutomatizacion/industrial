@@ -711,7 +711,7 @@
 <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
 <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxg-sFC_XOHWd6CMxvcclYXIUFXrOjl4crGPv7JXF0WPwL0aAN0Y8h3Dd8A1sYpSHGz/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6IEeVFreHp7rdtF5aAgRJ_r-eSFuzv8lHGRjof0PeJrqx9nf33C5aHKwMSfBmfnE/exec';
 
     let currentUser = JSON.parse(localStorage.getItem('user')) || null;
     window.currentUser = currentUser;
@@ -725,6 +725,75 @@
     let latestEnrollmentDates = {};
     let latestCompletionDates = {};
     let COURSES_DATA = [];
+
+    // ==========================================
+    // FUNCIÓN AUXILIAR PARA OBTENER TOTAL DE LECCIONES
+    // ==========================================
+    function getTotalLecciones(course) {
+        if (!course) return 5;
+        
+        let total = 5; // valor por defecto
+        
+        // 1. Intentar con TotalLecciones (con mayúscula)
+        if (course.TotalLecciones !== undefined && course.TotalLecciones !== null && course.TotalLecciones !== '') {
+            total = parseInt(course.TotalLecciones) || 5;
+            console.log(`📚 [${course.Nombre}] TotalLecciones: ${course.TotalLecciones} -> ${total}`);
+            return total;
+        }
+        
+        // 2. Intentar con totalLecciones (con minúscula)
+        if (course.totalLecciones !== undefined && course.totalLecciones !== null && course.totalLecciones !== '') {
+            total = parseInt(course.totalLecciones) || 5;
+            console.log(`📚 [${course.Nombre}] totalLecciones: ${course.totalLecciones} -> ${total}`);
+            return total;
+        }
+        
+        // 3. Intentar con Modulos (JSON array)
+        if (course.Modulos) {
+            try {
+                const modulos = JSON.parse(course.Modulos);
+                if (Array.isArray(modulos) && modulos.length > 0) {
+                    total = modulos.length;
+                    console.log(`📚 [${course.Nombre}] Módulos JSON: ${modulos.length} módulos`);
+                    return total;
+                }
+            } catch(e) {
+                // Si no es JSON, intentar contar por comas
+                if (typeof course.Modulos === 'string' && course.Modulos.includes(',')) {
+                    const modulosArray = course.Modulos.split(',').filter(m => m.trim() !== '');
+                    if (modulosArray.length > 0) {
+                        total = modulosArray.length;
+                        console.log(`📚 [${course.Nombre}] Módulos CSV: ${modulosArray.length} módulos`);
+                        return total;
+                    }
+                }
+            }
+        }
+        
+        // 4. Intentar con NombresModulos
+        if (course.NombresModulos) {
+            try {
+                const nombresModulos = JSON.parse(course.NombresModulos);
+                if (Array.isArray(nombresModulos) && nombresModulos.length > 0) {
+                    total = nombresModulos.length;
+                    console.log(`📚 [${course.Nombre}] NombresModulos JSON: ${nombresModulos.length} módulos`);
+                    return total;
+                }
+            } catch(e) {
+                if (typeof course.NombresModulos === 'string' && course.NombresModulos.includes(',')) {
+                    const nombresArray = course.NombresModulos.split(',').filter(m => m.trim() !== '');
+                    if (nombresArray.length > 0) {
+                        total = nombresArray.length;
+                        console.log(`📚 [${course.Nombre}] NombresModulos CSV: ${nombresArray.length} módulos`);
+                        return total;
+                    }
+                }
+            }
+        }
+        
+        console.log(`📚 [${course.Nombre}] Usando valor por defecto: ${total} lecciones`);
+        return total;
+    }
 
     function showLoadingToast() {
         const toast = document.getElementById('loadingToast');
@@ -822,7 +891,7 @@
     function ping(action, key) { try { if (navigator.sendBeacon) { navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key})); } else { fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` }).catch(err => console.error('Ping fallback failed:', err)); } } catch (e) { console.error('Error al intentar enviar ping:', e); } }
 
     // ==========================================
-    // FUNCIÓN loadCoursesFromSheet CORREGIDA
+    // FUNCIÓN loadCoursesFromSheet
     // ==========================================
     async function loadCoursesFromSheet() {
         try {
@@ -843,6 +912,11 @@
             COURSES_DATA = result.data;
             console.log('✅ Catálogo cargado:', COURSES_DATA.length, 'cursos');
             
+            // Log para verificar TotalLecciones de cada curso
+            COURSES_DATA.forEach(c => {
+                console.log(`📚 Curso ID=${c.ID}, Nombre=${c.Nombre}, TotalLecciones=${c.TotalLecciones}, Modulos=${c.Modulos ? c.Modulos.substring(0, 50) + '...' : 'N/A'}`);
+            });
+            
             await loadData();
             showSuccessToast();
 
@@ -857,7 +931,7 @@
     }
 
     // ==========================================
-    // FUNCIÓN loadData CORREGIDA
+    // FUNCIÓN loadData
     // ==========================================
     async function loadData(){
         try{
@@ -1028,7 +1102,7 @@
     }
 
     // ==========================================
-    // FUNCIÓN parseProgressString CORREGIDA
+    // FUNCIÓN parseProgressString
     // ==========================================
     function parseProgressString(raw, totalLessons) {
         if(!raw || raw.trim()==="") return {completed:0, total:totalLessons, percent:0, scores:[], avgScore:0, progress:[]};
@@ -1126,7 +1200,9 @@
                 }
             }
             
-            const total=course.TotalLecciones||5;
+            // 🔧 USAR getTotalLecciones para obtener el número correcto
+            const total = getTotalLecciones(course);
+            
             const parsedProgress = parseProgressString(progStr, total);
             userProgress[email][String(courseId)] = parsedProgress;
             
@@ -1179,6 +1255,9 @@
         setTxt('mcStatManuales', countManuales);
     }
 
+    // ==========================================
+    // FUNCIÓN renderMisCourses CORREGIDA
+    // ==========================================
     function renderMisCourses(){
         const grid=document.getElementById('coursesGrid'), noResults=document.getElementById('noResultsMisCursos');
         grid.innerHTML='';
@@ -1204,7 +1283,8 @@
         }
         
         grid.classList.remove('hidden'); noResults.classList.add('hidden');
-        const emailKey=window.currentUser.email.toLowerCase(); const myProgress=userProgress[emailKey]||{};
+        const emailKey=window.currentUser.email.toLowerCase(); 
+        const myProgress=userProgress[emailKey]||{};
         
         grid.innerHTML=accessedCourses.map((course,index)=>{
             const isManual = course.Tipo === 'Manual';
@@ -1214,15 +1294,19 @@
             const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.ID}`))?'liked text-red-500':'text-slate-400';
             const viewsClass=vistas>0?'text-green-500':'text-slate-400';
             const displayCount=studentCountsPerCourse[course.ID]!==undefined?studentCountsPerCourse[course.ID]:'...';
-            const progressData=myProgress[String(course.ID)]||{completed:0,total:course.TotalLecciones||5,percent:0,scores:[],avgScore:0,progress:[]};
-            const completed = progressData.completed;
-            const total = progressData.total;
-            const percent = progressData.percent;
+            
+            // 🔧 USAR getTotalLecciones para obtener el número correcto
+            const totalLecciones = getTotalLecciones(course);
+            
+            console.log(`📚 Curso ${course.Nombre}: TotalLecciones calculado = ${totalLecciones}`);
+            
+            const progressData=myProgress[String(course.ID)]||{completed:0,total:totalLecciones,percent:0,scores:[],avgScore:0,progress:[]};
+            const completed = progressData.completed || 0;
+            const total = progressData.total || totalLecciones;
+            const percent = progressData.percent || 0;
             const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[course.ID])||0;
             let starsHTML='';
             for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.ID},${i},false)"></i>`; }
-            
-            console.log(`📊 Curso ${course.ID} (${course.Nombre}): likes=${likes}, vistas=${vistas}, progreso=${percent}%`);
             
             let buttonsHTML = '';
             if (isManual) {
@@ -1352,7 +1436,7 @@
     }
 
     // ==========================================
-    // FUNCIÓN toggleLike CORREGIDA
+    // FUNCIÓN toggleLike
     // ==========================================
     function toggleLike(btn){
         const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || JSON.parse(localStorage.getItem('user') || 'null');

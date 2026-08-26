@@ -156,13 +156,8 @@
         .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
         .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 3px; }
-        /* ============================================================
-           FONDO CONFIGURABLE
-           Cambia --aula-bg-image por la URL del fondo de tus otras páginas.
-           Ejemplo: url('img/mi-fondo.webp') o url('../assets/bg.jpg')
-           ============================================================ */
         :root {
-            --aula-bg-image: url('img/fondo2.webp');   /* <-- CAMBIA AQUÍ EL FONDO */
+            --aula-bg-image: url('img/fondo2.webp');
             --aula-bg-brightness: 0.85;
             --aula-bg-blur: 1px;
         }
@@ -177,7 +172,6 @@
             z-index: -2;
             transition: background-image 0.6s ease;
         }
-        /* Ajuste sutil para modo claro: menos oscurecimiento del fondo */
         body.light-mode .bg-optimized {
             filter: brightness(0.75) blur(var(--aula-bg-blur));
         }
@@ -235,7 +229,6 @@
         body:not(.light-mode) header button:hover, body:not(.light-mode) header div[title="Usuario"]:hover { background: linear-gradient(to bottom, #5a6578, #3d4758) !important; }
         body:not(.light-mode) header button i, body:not(.light-mode) header div[title="Usuario"] i { color: #2db8ce !important; text-shadow: 0 0 10px rgba(45, 184, 206, 0.8); }
         
-        /* ============ REGLAS PARA TODOS LOS CURSOS EN MODO CLARO ============ */
         body.light-mode, 
         body.light-mode :not(svg):not(path):not(circle):not(rect):not(line):not(polyline):not(polygon)) { 
             color: #000000 !important; 
@@ -267,7 +260,6 @@
         
         #sidebar.collapsed { width: 0; padding: 0; overflow: hidden; border: none; opacity: 0; }
         
-        /* ============ ESTILOS TOAST DE CARGA (RESPONSIVE) ============ */
         .loading-toast {
             position: fixed;
             bottom: 20px;
@@ -289,150 +281,38 @@
             animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transition: opacity 0.35s ease, transform 0.35s ease;
         }
-        .loading-toast.hiding {
-            opacity: 0;
-            transform: translateX(120px);
-        }
-        .loading-toast .toast-logo {
-            width: 25px;
-            height: 25px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulseLogo 2.5s infinite ease-in-out;
-        }
-        .loading-toast .toast-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
-        }
-        .loading-toast .toast-content {
-            flex: 1;
-            min-width: 0;
-        }
-        .loading-toast .toast-title {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 10px;
-            line-height: 1.3;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 150px;
-        }
-        .loading-toast .toast-spinner {
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(45, 184, 206, 0.2);
-            border-top: 2px solid #2db8ce;
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-            flex-shrink: 0;
-        }
-        .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.96) 0%, rgba(5, 150, 105, 0.96) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.7);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(16, 185, 129, 0.35);
-        }
-        .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
-        .loading-toast.success-toast .toast-check {
-            width: 20px;
-            height: 20px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .loading-toast.success-toast .toast-check i {
-            color: #10b981;
-            font-size: 10px;
-            font-weight: 900;
-        }
+        .loading-toast.hiding { opacity: 0; transform: translateX(120px); }
+        .loading-toast .toast-logo { width: 25px; height: 25px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; animation: pulseLogo 2.5s infinite ease-in-out; }
+        .loading-toast .toast-logo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4)); }
+        .loading-toast .toast-content { flex: 1; min-width: 0; }
+        .loading-toast .toast-title { color: #ffffff; font-weight: 700; font-size: 10px; line-height: 1.3; letter-spacing: 0.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+        .loading-toast .toast-spinner { width: 14px; height: 14px; border: 2px solid rgba(45, 184, 206, 0.2); border-top: 2px solid #2db8ce; border-radius: 50%; animation: spin 0.9s linear infinite; flex-shrink: 0; }
+        .loading-toast.success-toast { background: linear-gradient(135deg, rgba(16, 185, 129, 0.96) 0%, rgba(5, 150, 105, 0.96) 100%); border: 1px solid rgba(16, 185, 129, 0.7); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(16, 185, 129, 0.35); }
+        .loading-toast.success-toast .toast-title { color: #ffffff; }
+        .loading-toast.success-toast .toast-check { width: 20px; height: 20px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .loading-toast.success-toast .toast-check i { color: #10b981; font-size: 10px; font-weight: 900; }
 
-        /* RESPONSIVE - MÓVIL */
         @media (max-width: 640px) {
-            .loading-toast {
-                bottom: 16px;
-                right: 16px;
-                left: 16px;
-                min-width: auto;
-                max-width: none;
-                padding: 10px 14px;
-                border-radius: 14px;
-            }
-            .loading-toast .toast-logo {
-                width: 28px;
-                height: 28px;
-            }
-            .loading-toast .toast-title {
-                font-size: 11px;
-                max-width: none;
-                flex: 1;
-            }
-            .loading-toast .toast-spinner {
-                width: 16px;
-                height: 16px;
-            }
-            .loading-toast.success-toast .toast-check {
-                width: 24px;
-                height: 24px;
-            }
+            .loading-toast { bottom: 16px; right: 16px; left: 16px; min-width: auto; max-width: none; padding: 10px 14px; border-radius: 14px; }
+            .loading-toast .toast-logo { width: 28px; height: 28px; }
+            .loading-toast .toast-title { font-size: 11px; max-width: none; flex: 1; }
+            .loading-toast .toast-spinner { width: 16px; height: 16px; }
+            .loading-toast.success-toast .toast-check { width: 24px; height: 24px; }
         }
-
-        /* TABLETS PEQUEÑAS */
         @media (min-width: 641px) and (max-width: 768px) {
-            .loading-toast {
-                bottom: 20px;
-                right: 20px;
-                left: auto;
-                min-width: 220px;
-                max-width: 280px;
-            }
+            .loading-toast { bottom: 20px; right: 20px; left: auto; min-width: 220px; max-width: 280px; }
         }
 
-        @keyframes slideInRight {
-            from { transform: translateX(150%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideInUp {
-            from { transform: translateY(150%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes pulseLogo {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); }
-        }
-        @keyframes bounceIn {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
+        @keyframes slideInRight { from { transform: translateX(150%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideInUp { from { transform: translateY(150%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulseLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); } 50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); } }
+        @keyframes bounceIn { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
-        body.light-mode .loading-toast {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
-            border: 1px solid rgba(45, 184, 206, 0.6);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 10px rgba(45, 184, 206, 0.2);
-        }
+        body.light-mode .loading-toast { background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%); border: 1px solid rgba(45, 184, 206, 0.6); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 10px rgba(45, 184, 206, 0.2); }
         body.light-mode .loading-toast .toast-title { color: #1e293b; }
-        body.light-mode .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.8);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 15px rgba(16, 185, 129, 0.4);
-        }
+        body.light-mode .loading-toast.success-toast { background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%); border: 1px solid rgba(16, 185, 129, 0.8); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 15px rgba(16, 185, 129, 0.4); }
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
-        /* ============ FIN ESTILOS TOAST ============ */
     </style>
     <style id="force-lesson-tabs-white-final">
         body.light-mode #lesson-title, body:not(.light-mode) #lesson-title,
@@ -440,16 +320,14 @@
             color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
         }
     </style>
-
-
-
-
+<base target="_blank">
+<base target="_blank">
 </head>
 <body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
     <div class="bg-optimized"></div>
     <div class="overlay-dark"></div>
 
-    <!-- TOAST DE CARGA (TAMAÑO REDUCIDO) -->
+    <!-- TOAST DE CARGA -->
     <div id="loadingToast" class="loading-toast hidden" style="display: none;">
         <div class="toast-logo">
             <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
@@ -461,19 +339,12 @@
     </div>
 
     <script>
-                // ============ FUNCIONES DEL TOAST DE CARGA ============
         let toastSafetyTimeout = null;
-
         function showLoadingToast() {
             const toast = document.getElementById('loadingToast');
             const title = document.getElementById('loadingToastTitle');
             const spinner = document.getElementById('loadingToastSpinner');
-
-            if (toastSafetyTimeout) {
-                clearTimeout(toastSafetyTimeout);
-                toastSafetyTimeout = null;
-            }
-
+            if (toastSafetyTimeout) { clearTimeout(toastSafetyTimeout); toastSafetyTimeout = null; }
             if (toast) {
                 toast.classList.remove('hidden', 'hiding', 'success-toast');
                 toast.style.display = 'flex';
@@ -483,28 +354,14 @@
                 if (existingCheck) existingCheck.remove();
                 toast.style.opacity = '1';
                 toast.style.transform = 'translateX(0)';
-                if (window.innerWidth <= 640) {
-                    toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                } else {
-                    toast.style.animation = 'slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                }
-
-                toastSafetyTimeout = setTimeout(() => {
-                    hideLoadingToast();
-                }, 5000);
+                toastSafetyTimeout = setTimeout(() => { hideLoadingToast(); }, 5000);
             }
         }
-
         function showSuccessToast() {
             const toast = document.getElementById('loadingToast');
             const title = document.getElementById('loadingToastTitle');
             const spinner = document.getElementById('loadingToastSpinner');
-
-            if (toastSafetyTimeout) {
-                clearTimeout(toastSafetyTimeout);
-                toastSafetyTimeout = null;
-            }
-
+            if (toastSafetyTimeout) { clearTimeout(toastSafetyTimeout); toastSafetyTimeout = null; }
             if (toast) {
                 toast.classList.remove('hidden', 'hiding');
                 toast.classList.add('success-toast');
@@ -517,64 +374,22 @@
                 checkDiv.className = 'toast-check';
                 checkDiv.innerHTML = '<i class="fas fa-check"></i>';
                 toast.appendChild(checkDiv);
-                toast.style.opacity = '1';
-                toast.style.transform = 'translateX(0)';
-                if (window.innerWidth <= 640) {
-                    toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                } else {
-                    toast.style.animation = 'slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                }
-
-                setTimeout(() => {
-                    hideLoadingToast();
-                }, 2000);
-
-                setTimeout(() => {
-                    const toastEl = document.getElementById('loadingToast');
-                    if (toastEl && !toastEl.classList.contains('hidden')) {
-                        toastEl.classList.add('hidden');
-                        toastEl.style.display = 'none';
-                    }
-                }, 3500);
+                setTimeout(() => { hideLoadingToast(); }, 2000);
             }
         }
-
         function hideLoadingToast() {
             const toast = document.getElementById('loadingToast');
-
-            if (toastSafetyTimeout) {
-                clearTimeout(toastSafetyTimeout);
-                toastSafetyTimeout = null;
-            }
-
+            if (toastSafetyTimeout) { clearTimeout(toastSafetyTimeout); toastSafetyTimeout = null; }
             if (toast) {
                 toast.classList.add('hiding');
                 toast.style.opacity = '0';
-                if (window.innerWidth <= 640) {
-                    toast.style.transform = 'translateY(150%)';
-                } else {
-                    toast.style.transform = 'translateX(120px)';
-                }
-
-                setTimeout(() => {
-                    toast.classList.add('hidden');
-                    toast.classList.remove('hiding', 'success-toast');
-                    toast.style.display = 'none';
-                    toast.style.transform = '';
-                }, 350);
-
-                setTimeout(() => {
-                    const toastEl = document.getElementById('loadingToast');
-                    if (toastEl && !toastEl.classList.contains('hidden')) {
-                        toastEl.classList.add('hidden');
-                        toastEl.style.display = 'none';
-                    }
-                }, 1000);
+                toast.style.transform = 'translateX(120px)';
+                setTimeout(() => { toast.classList.add('hidden'); toast.style.display = 'none'; }, 350);
             }
         }
-        // ============ FIN FUNCIONES DEL TOAST ============
     </script>
 
+    <!-- LOGIN SCREEN -->
     <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity backdrop-blur-sm bg-slate-900/40">
         <div id="initial-loader" class="text-center text-white">
             <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="Logo Aprende Automatización" class="w-24 h-24 mx-auto mb-6 animate-pulse">
@@ -597,6 +412,7 @@
         </div>
     </div>
 
+    <!-- MODAL FEEDBACK -->
     <div id="modal-feedback" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[110] flex items-center justify-center p-4">
         <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-2xl max-w-sm w-full text-center shadow-[0_8px_32px_0_rgba(0,0,0,0.5)]">
             <div id="modal-icon" class="text-5xl mb-4 drop-shadow-lg"></div>
@@ -606,6 +422,7 @@
         </div>
     </div>
 
+    <!-- HEADER -->
     <header class="bg-slate-900/40 backdrop-blur-lg h-16 flex-none flex items-center justify-between px-4 md:px-6 shadow-md z-20 border-b border-white/10 relative">
         <div class="flex items-center gap-3 md:gap-4 overflow-hidden">
             <button onclick="app.toggleSidebar()" class="text-slate-300 text-xl hover:text-white transition focus:outline-none flex-none w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10"><i class="fas fa-bars"></i></button>
@@ -620,6 +437,7 @@
         </div>
     </header>
 
+    <!-- CONTENEDOR PRINCIPAL -->
     <div id="app-container" class="flex flex-1 overflow-hidden relative">
         <div id="sidebar-overlay" onclick="app.toggleSidebar()" class="fixed inset-0 bg-black/60 z-30 hidden backdrop-blur-sm transition-opacity"></div>
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-72 bg-slate-800/60 backdrop-blur-xl border-r border-white/20 flex flex-col p-4 space-y-4 transform -translate-x-full transition-all duration-300 md:relative md:translate-x-0 md:flex flex-none shadow-2xl md:shadow-none h-full md:h-auto">
@@ -663,7 +481,7 @@
 
     <script>
         const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRAuJGPzw0lArQF1WN5dEUY1nB7tB-JfUtjxYoVllk2D5oGXs4Ly4X-5UUD7WLbH7r/exec';
-        const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxg-sFC_XOHWd6CMxvcclYXIUFXrOjl4crGPv7JXF0WPwL0aAN0Y8h3Dd8A1sYpSHGz/exec';
+        const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6IEeVFreHp7rdtF5aAgRJ_r-eSFuzv8lHGRjof0PeJrqx9nf33C5aHKwMSfBmfnE/exec';
 
         const SHARED_PRACTICE_VIDEO_URL = '';
         const query = new URLSearchParams(window.location.search);
@@ -701,11 +519,7 @@
             if (type === 'success') icon.className = 'fas fa-check-circle text-green-300';
             else if (type === 'error') icon.className = 'fas fa-exclamation-circle text-red-300';
             else icon.className = 'fas fa-sync-alt fa-spin text-[#2db8ce]';
-            
-            // Ocultar automáticamente después de 1 segundo
-            setTimeout(() => {
-                el.classList.remove('visible');
-            }, 1000);
+            setTimeout(() => { el.classList.remove('visible'); }, 1000);
         }
 
         function getDirectDownloadUrl(url) {
@@ -815,58 +629,25 @@
             const opts = toArray(item.opts || item.options || item.opciones || []); 
             if (!opts.length) return null; 
             const ans = Number(item.ans ?? item.correctAnswerIndex ?? item.respuesta ?? 0); 
-            
-            // Imagen opcional
             const rawImage = item.image || item.imagen || item.img || item.foto || '';
             let image = '';
             if (typeof rawImage === 'string' && rawImage.trim()) {
                 image = rawImage.trim();
-                if (!/^(http|\/|data:)/.test(image)) {
-                    image = 'img/' + image;
-                }
+                if (!/^(http|\/|data:)/.test(image)) { image = 'img/' + image; }
             }
-            
-            return { 
-                q: String(item.q || item.question || item.pregunta || 'Pregunta').trim(), 
-                opts, 
-                ans: Number.isFinite(ans) ? ans : 0,
-                image: image
-            }; 
+            return { q: String(item.q || item.question || item.pregunta || 'Pregunta').trim(), opts, ans: Number.isFinite(ans) ? ans : 0, image: image }; 
         }
         function normalizeModule(item, index) { 
             const rawQuiz = item.quiz || item.quizzes || item.evaluacion || item.evaluaciones || []; 
             const quizList = toArray(rawQuiz).map(normalizeQuizItem).filter(Boolean); 
-            return { 
-                moduleId: Number(item.moduleId || item.idModulo || item.id || index + 1), 
-                title: String(item.title || item.titulo || item.nombre || `Módulo ${index + 1}`), 
-                summary: String(item.summary || item.resumen || item.descripcion || ''), 
-                content: String(item.content || item.contenido || item.html || ''), 
-                video: String(item.video || item.videoUrl || item.linkVideo || ''), 
-                resources: toArray(item.resources || item.recursos || []), 
-                quiz: quizList 
-            }; 
+            return { moduleId: Number(item.moduleId || item.idModulo || item.id || index + 1), title: String(item.title || item.titulo || item.nombre || `Módulo ${index + 1}`), summary: String(item.summary || item.resumen || item.descripcion || ''), content: String(item.content || item.contenido || item.html || ''), video: String(item.video || item.videoUrl || item.linkVideo || ''), resources: toArray(item.resources || item.recursos || []), quiz: quizList }; 
         }
         function normalizeCoursePayload(payload, requestedCourseId) { 
             const source = payload || {}; 
             const moduleListRaw = source.modules || source.modulos || source.lessons || source.lecciones || []; 
             const modules = toArray(moduleListRaw).map(normalizeModule).sort((a, b) => a.moduleId - b.moduleId); 
             const intro = source.intro || {}; 
-            return { 
-                id: Number(source.id || source.courseId || source.cursoId || requestedCourseId || 1), 
-                name: String(source.name || source.title || source.nombre || 'Aula Virtual'), 
-                title: String(source.title || source.name || source.titulo || source.nombre || 'Aula Virtual'), 
-                type: String(source.type || source.tipo || 'Online'), 
-                materialPage: String(source.materialPage || source.materialFile || source.archivoMaterial || ''), 
-                introImage: String(source.introImage || source.imagenIntro || source.image || 'img/AA (2).gif'), 
-                sharedResources: toArray(source.sharedResources || source.recursosCompartidos || []), 
-                intro: { 
-                    summary: String(intro.summary || intro.resumen || source.introSummary || ''), 
-                    objective: String(intro.objective || intro.objetivo || source.introObjective || ''), 
-                    goals: toArray(intro.goals || intro.objetivos || source.introGoals || []) 
-                }, 
-                introVideo: String(source.introVideo || source.videoIntro || ''), 
-                modules 
-            }; 
+            return { id: Number(source.id || source.courseId || source.cursoId || requestedCourseId || 1), name: String(source.name || source.title || source.nombre || 'Aula Virtual'), title: String(source.title || source.name || source.titulo || source.nombre || 'Aula Virtual'), type: String(source.type || source.tipo || 'Online'), materialPage: String(source.materialPage || source.materialFile || source.archivoMaterial || ''), introImage: String(source.introImage || source.imagenIntro || source.image || 'img/AA (2).gif'), sharedResources: toArray(source.sharedResources || source.recursosCompartidos || []), intro: { summary: String(intro.summary || intro.resumen || source.introSummary || ''), objective: String(intro.objective || intro.objetivo || source.introObjective || ''), goals: toArray(intro.goals || intro.objetivos || source.introGoals || []) }, introVideo: String(source.introVideo || source.videoIntro || ''), modules }; 
         }
         function unwrapApiResponse(data) { 
             const parsed = parseMaybeJson(data) || data; 
@@ -894,79 +675,46 @@
                 this.progress = JSON.parse(localStorage.getItem(STORAGE_KEYS.progress) || '[]');
                 this.quizScores = JSON.parse(localStorage.getItem(STORAGE_KEYS.scores) || '{}');
                 showLoadingToast();
-                
                 try {
                     const courseContent = await this.fetchCourseContent(resolvedCourseId);
-                    if (!courseContent) { 
-                        const reason = this.lastLoadErrorMessage || 'No se pudo cargar el contenido de este curso. Contacta al administrador.'; 
-                        hideLoadingToast();
-                        this.showAccessBlocked("Contenido no disponible", reason); 
-                        return; 
-                    }
-                    const loadingCourseNameEl = document.getElementById('loading-course-name');
-                    if (loadingCourseNameEl) loadingCourseNameEl.innerText = courseContent.name;
+                    if (!courseContent) { hideLoadingToast(); this.showAccessBlocked("Contenido no disponible", this.lastLoadErrorMessage); return; }
                     CURRENT_COURSE = courseContent;
                     COURSE_DATA = buildCourseData(CURRENT_COURSE);
                     document.title = `Aula Virtual - ${CURRENT_COURSE.name}`;
                     document.getElementById('login-course-subtitle').innerText = CURRENT_COURSE.name;
                     document.getElementById('header-course-title').innerText = CURRENT_COURSE.name;
                     const globalUser = JSON.parse(localStorage.getItem('user') || 'null');
-                    const classroomAuth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
-                    if (classroomAuth && globalUser && classroomAuth.correo && globalUser.email) { if (String(classroomAuth.correo).toLowerCase() !== String(globalUser.email).toLowerCase()) { this.clearLocalData(); } }
-                    if (localStorage.getItem(STORAGE_KEYS.auth)) { 
-                        showSuccessToast(); 
-                        this.proceedToAula(); 
-                        return; 
-                    }
-                    if (globalUser && globalUser.email) { 
-                        hideLoadingToast();
-                        this.autoVerify(globalUser); 
-                        return; 
-                    }
-                    showSuccessToast();
-                    this.showLoginScreen();
-                } catch (error) { 
-                    console.error("Error en la inicialización del aula:", error); 
-                    hideLoadingToast(); 
-                    this.showAccessBlocked("Error de Carga", "Hubo un problema al cargar el curso. Intenta de nuevo más tarde."); 
-                }
+                    if (localStorage.getItem(STORAGE_KEYS.auth)) { showSuccessToast(); this.proceedToAula(); return; }
+                    if (globalUser && globalUser.email) { hideLoadingToast(); this.autoVerify(globalUser); return; }
+                    showSuccessToast(); this.showLoginScreen();
+                } catch (error) { console.error("Error:", error); hideLoadingToast(); }
             },
             
-            showLoginScreen: function() {
-                const loader = document.getElementById('initial-loader');
-                const formContainer = document.getElementById('login-form-container');
-                if (loader) loader.classList.add('hidden');
-                if (formContainer) formContainer.classList.remove('hidden');
-            },
-            
+            showLoginScreen: function() { document.getElementById('initial-loader').classList.add('hidden'); document.getElementById('login-form-container').classList.remove('hidden'); },
             autoVerify: function(user) { 
-                showSyncIndicator('Verificando sesión...', 'loading'); 
-                if (document.getElementById('login-nombre')) document.getElementById('login-nombre').value = user.name || ''; 
-                if (document.getElementById('login-cedula')) document.getElementById('login-cedula').value = user.cedula || 'N/A'; 
-                if (document.getElementById('login-correo')) document.getElementById('login-correo').value = user.email || ''; 
-                this.executeVerification(user.name || '', user.cedula || 'N/A', user.email || '', true); 
-            },
-            
+    // 🔧 FIX: No autoverificar si no hay cédula válida
+    if (!user || !user.cedula || user.cedula === 'N/A' || user.cedula === '') {
+        this.showLoginScreen();
+        return;
+    }
+    document.getElementById('login-nombre').value = user.name || ''; 
+    document.getElementById('login-cedula').value = user.cedula; 
+    document.getElementById('login-correo').value = user.email || ''; 
+    this.executeVerification(user.name || '', user.cedula, user.email || '', true); 
+},
             clearLocalData: function() { localStorage.removeItem(STORAGE_KEYS.auth); localStorage.removeItem(STORAGE_KEYS.progress); localStorage.removeItem(STORAGE_KEYS.scores); this.progress = []; this.quizScores = {}; },
             
             fetchCourseContent: async function(courseId) {
                 this.lastLoadErrorMessage = '';
                 try {
-                    const attempts = [`${this.scriptUrl}?action=get_course_content&courseId=${courseId}&t=${Date.now()}`, `${this.scriptUrl}?action=get_course_content&id=${courseId}&t=${Date.now()}`];
-                    let lastMessage = 'No hubo respuesta válida del script.';
-                    for (let i = 0; i < attempts.length; i += 1) {
-                        const response = await fetch(attempts[i]);
-                        if (!response.ok) { lastMessage = `HTTP ${response.status}`; continue; }
-                        const raw = await response.text();
-                        const parsed = parseMaybeJson(raw);
-                        const unwrapped = unwrapApiResponse(parsed || raw);
-                        if (!unwrapped.ok) { lastMessage = unwrapped.message; continue; }
-                        const normalized = normalizeCoursePayload(unwrapped.content, courseId);
-                        if (!normalized.modules.length && !normalized.intro.summary) { lastMessage = 'El curso llegó sin módulos ni contenido de introducción.'; continue; }
-                        return normalized;
-                    }
-                    throw new Error(lastMessage);
-                } catch (error) { console.error("Error al obtener el contenido del curso:", error); this.lastLoadErrorMessage = error && error.message ? error.message : 'Error desconocido al cargar el contenido.'; return null; }
+                    const response = await fetch(`${this.scriptUrl}?action=get_course_content&courseId=${courseId}&t=${Date.now()}`);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const raw = await response.text();
+                    const parsed = parseMaybeJson(raw);
+                    const unwrapped = unwrapApiResponse(parsed || raw);
+                    if (!unwrapped.ok) throw new Error(unwrapped.message);
+                    return normalizeCoursePayload(unwrapped.content, courseId);
+                } catch (error) { this.lastLoadErrorMessage = error.message; return null; }
             },
             
             showDashboard: function() {
@@ -983,28 +731,27 @@
                     let pillClass = 'bg-slate-600 text-slate-200';
                     if (score !== undefined) pillClass = score >= 70 ? 'bg-teal-500 text-white' : 'bg-red-500 text-white';
                     else if (this.progress.includes(lesson.id)) pillClass = 'bg-teal-500 text-white';
-                    let simpleTitle; let abbreviatedTitle; const isIntro = lesson.id === 0;
-                    if (isIntro) { simpleTitle = 'Intro'; abbreviatedTitle = 'Intro'; } else { simpleTitle = `Lección ${lesson.id}`; abbreviatedTitle = `Lec${lesson.id}`; }
+                    const isIntro = lesson.id === 0;
+                    const simpleTitle = isIntro ? 'Intro' : `Lec ${lesson.id}`;
                     const finalIcon = isIntro ? '<i class="fas fa-book text-slate-400"></i>' : this.getMedalIcon(score);
-                    return `<div class="flex flex-col items-center gap-1" title="${lesson.title}"><div class="progress-pill-label w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider"><span class="hidden sm:inline">${simpleTitle}</span><span class="sm:hidden">${abbreviatedTitle}</span></div><span class="text-lg medal-icon" style="min-height: 1.5rem;">${finalIcon}</span></div>`;
+                    return `<div class="flex flex-col items-center gap-1" title="${lesson.title}"><div class="progress-pill-label w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider">${simpleTitle}</div><span class="text-lg medal-icon">${finalIcon}</span></div>`;
                 }).join('');
-                const modulesHtml = COURSE_DATA.map((lesson, index) => {
+                const modulesHtml = COURSE_DATA.map((lesson) => {
                     const score = this.quizScores[lesson.id];
-                    let stateClass = 'border-yellow-400/50 bg-yellow-500/20 backdrop-blur-md text-white';
+                    let stateClass = 'border-yellow-400/50 bg-yellow-500/20 text-white';
                     let stateText = '⏳ Falta por evaluar';
-                    if (score !== undefined && !isNaN(score)) { if (score >= 70) { stateClass = 'border-blue-400/50 bg-blue-500/20 backdrop-blur-md text-white'; stateText = `✅ Completado (${score}%)`; } else { stateClass = 'border-red-500/60 bg-red-600/20 backdrop-blur-md text-white'; stateText = `❌ No aprobado ${score}%`; } }
-                    else if (this.progress.includes(lesson.id)) { stateClass = 'border-blue-400/50 bg-blue-500/20 backdrop-blur-md text-white'; stateText = '✅ Completado'; }
+                    if (score !== undefined && score >= 70) { stateClass = 'border-blue-400/50 bg-blue-500/20 text-white'; stateText = `✅ Completado (${score}%)`; }
+                    else if (score !== undefined && score < 70) { stateClass = 'border-red-500/60 bg-red-600/20 text-white'; stateText = `❌ No aprobado ${score}%`; }
+                    else if (this.progress.includes(lesson.id)) { stateClass = 'border-blue-400/50 bg-blue-500/20 text-white'; stateText = '✅ Completado'; }
                     const displayModuleName = lesson.title.includes(':') ? lesson.title.split(':')[1].trim() : lesson.title;
-                    return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} transition-all hover:scale-[1.01] cursor-pointer" onclick="app.loadLesson(${lesson.id})"><span class="font-bold tracking-wide drop-shadow-md text-sm sm:text-base">${displayModuleName}</span><span class="text-xs sm:text-sm font-bold drop-shadow-md bg-black/20 px-3 py-1.5 rounded-lg text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
+                    return `<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass} cursor-pointer" onclick="app.loadLesson(${lesson.id})"><span class="font-bold text-sm sm:text-base">${displayModuleName}</span><span class="text-xs sm:text-sm font-bold bg-black/20 px-3 py-1.5 rounded-lg">${stateText}</span></div>`;
                 }).join('');
-                dash.innerHTML = `<div class="w-full dashboard-container rounded-[32px] shadow-xl overflow-hidden text-left"><div class="p-6 sm:p-8 border-b border-white/10"><div class="grid grid-cols-1 gap-6"><div class="student-card bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl relative flex flex-col h-full"><div class="absolute right-0 top-0 text-white/5 text-8xl"><i class="fas fa-id-card"></i></div><div class="relative z-10 flex flex-col gap-3 h-full"><div><h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2><p class="text-white text-xl font-bold">${auth.nombre || '-'}</p></div><p class="text-slate-300 text-sm font-medium">${auth.correo || '-'}</p><div class="grid grid-cols-1 gap-3 mt-auto pt-4 border-t border-white/10"><div><p class="text-slate-400 text-[10px] uppercase font-black tracking-widest flex items-center gap-1"><i class="fas fa-id-card text-slate-400 text-xs"></i> Cédula</p><p class="text-white font-bold">${auth.cedula || '-'}</p></div></div></div></div><div class="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]"><div class="flex flex-col h-full"><div class="flex-1"><h4 class="progress-current-title font-black uppercase tracking-widest text-xs"><i class="fas fa-chart-simple mr-1 text-secondary"></i> Mi progreso actual</h4><div class="grid grid-cols-4 gap-x-2 gap-y-4 mt-2" title="${done} de ${total} lecciones completadas">${lessonPillsHtml}</div></div><div class="flex items-center justify-center w-24 h-24 relative self-center md:self-auto flex-shrink-0"><svg class="w-full h-full" viewBox="0 0 100 100"><circle class="progress-track-ring text-white/10" stroke-width="8" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" /><circle class="text-teal-500 transform -rotate-90 origin-center" stroke-width="8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="42" cx="50" cy="50" style="stroke-dasharray: 264; stroke-dashoffset: calc(264 - (264 * ${percent}) / 100); transition: stroke-dashoffset 0.7s ease-out;" /></svg><span class="absolute text-xl font-black text-teal-500">${percent}%</span></div></div><div class="mt-auto pt-4 flex flex-col sm:flex-row gap-2"><button onclick="app.continueCourse()" class="continue-learning-btn flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm border border-white/5"><i class="fas fa-play text-secondary"></i> Continuar Aprendizaje</button></div></div></div></div><div class="p-6 sm:p-10 lg:p-14"><div><h4 class="text-slate-400 font-black uppercase tracking-widest text-[10px] mb-4">Módulos del Curso</h4><div class="space-y-3">${modulesHtml}</div></div></div></div>`;
+                dash.innerHTML = `<div class="w-full dashboard-container rounded-[32px] shadow-xl overflow-hidden"><div class="p-6 sm:p-8 border-b border-white/10"><div class="grid grid-cols-1 gap-6"><div class="bg-white/10 border border-white/20 p-6 rounded-2xl"><h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2><p class="text-white text-xl font-bold mt-1">${auth.nombre || '-'}</p><p class="text-slate-300 text-sm mt-1">${auth.correo || '-'}</p><p class="text-white font-bold mt-3">CI: ${auth.cedula || '-'}</p></div><div class="bg-white/5 rounded-2xl p-6 border border-white/10"><h4 class="font-black uppercase tracking-widest text-xs text-slate-400">Mi progreso actual</h4><div class="grid grid-cols-4 gap-2 mt-3">${lessonPillsHtml}</div><div class="flex items-center justify-center mt-4"><span class="text-4xl font-black text-teal-500">${percent}%</span></div><div class="flex flex-col sm:flex-row gap-2 mt-4"><button onclick="app.continueCourse()" class="continue-learning-btn flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2"><i class="fas fa-play text-secondary"></i> Continuar</button><button onclick="app.generateCertificate()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2"><i class="fas fa-certificate"></i> Generar Certificado</button></div></div></div></div><div class="p-6"><h4 class="text-slate-400 font-black uppercase tracking-widest text-[10px] mb-4">Módulos del Curso</h4><div class="space-y-3">${modulesHtml}</div></div></div>`;
                 if (window.lucide) lucide.createIcons();
             },
             
-            continueCourse: function() { const next = COURSE_DATA.find(l => !this.progress.includes(l.id)); if (next) this.loadLesson(next.id); else this.loadLesson(COURSE_DATA[COURSE_DATA.length - 1].id); },
-            
+            continueCourse: function() { const next = COURSE_DATA.find(l => !this.progress.includes(l.id)); if (next) this.loadLesson(next.id); },
             toggleSidebar: function() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('sidebar-overlay'); if (window.innerWidth < 768) { sidebar.classList.toggle('-translate-x-full'); overlay.classList.toggle('hidden'); } else { sidebar.classList.toggle('collapsed'); } },
-            
             closeSidebarOnMobile: function() { if (window.innerWidth < 768) { const s = document.getElementById('sidebar'); if (!s.classList.contains('-translate-x-full')) { s.classList.add('-translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); } } },
             
             renderSidebar: function() {
@@ -1012,10 +759,10 @@
                 cont.innerHTML = COURSE_DATA.map(lesson => {
                     const locked = lesson.id > 0 && !this.progress.includes(lesson.id - 1);
                     const isCurr = this.currentId === lesson.id;
-                    const isIntro = lesson.id === 0;
-                    const lessonLabel = isIntro ? 'INTRODUCCIÓN' : `LECCIÓN ${lesson.id}`;
+                    const lessonLabel = lesson.id === 0 ? 'INTRODUCCIÓN' : `LECCIÓN ${lesson.id}`;
                     const topicText = lesson.title.includes(':') ? lesson.title.split(':')[1].trim() : lesson.title;
-                    return `<button onclick="${locked ? '' : `app.loadLesson(${lesson.id})`}" class="w-full text-left rounded-lg transition ${isCurr ? 'bg-secondary/40 border-l-4 border-secondary text-white shadow-inner' : 'text-slate-200'} ${locked ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10 hover:text-white'}"><i class="${this.progress.includes(lesson.id) ? 'fas fa-check-circle text-secondary' : 'far fa-circle text-slate-400'} mr-2" style="float: left; margin-top: 3px;"></i><span class="lesson-number">${lessonLabel}</span><span class="lesson-topic">${topicText}</span></button>`;
+                    const checkIcon = this.progress.includes(lesson.id) ? '<i class="fas fa-check-circle text-secondary ml-1.5" style="font-size:0.7rem;vertical-align:middle;"></i>' : '<i class="far fa-circle text-slate-400 ml-1.5" style="font-size:0.7rem;vertical-align:middle;"></i>';
+                    return `<button onclick="${locked ? '' : `app.loadLesson(${lesson.id})`}" class="w-full text-left rounded-lg transition ${isCurr ? 'bg-secondary/40 border-l-4 border-secondary text-white' : 'text-slate-200'} ${locked ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10 hover:text-white'}"><span class="lesson-number">${lessonLabel}${checkIcon}</span><span class="lesson-topic">${topicText}</span></button>`;
                 }).join('');
             },
             
@@ -1030,7 +777,7 @@
                 document.getElementById('lesson-title').innerText = lesson.title;
                 document.getElementById('lesson-content-text').innerHTML = lesson.content;
                 const videoContainer = document.getElementById('lesson-video-container');
-                if (lesson.video) { const isEmbedUrl = lesson.video.includes('youtube.com') || lesson.video.includes('youtu.be') || lesson.video.includes('player.mediadelivery.net') || lesson.video.includes('/play/'); videoContainer.innerHTML = isEmbedUrl ? `<iframe class="w-full h-full rounded-xl shadow-lg border border-white/10" src="${lesson.video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>` : `<video class="w-full h-full rounded-xl shadow-lg border border-white/10" controls src="${lesson.video}" playsinline></video>`; videoContainer.classList.remove('hidden'); } else { videoContainer.innerHTML = ''; videoContainer.classList.add('hidden'); }
+                if (lesson.video) { videoContainer.innerHTML = lesson.video.includes('youtube.com') || lesson.video.includes('youtu.be') ? `<iframe class="w-full h-full rounded-xl" src="${lesson.video}" frameborder="0" allowfullscreen></iframe>` : `<video class="w-full h-full rounded-xl" controls src="${lesson.video}"></video>`; videoContainer.classList.remove('hidden'); } else { videoContainer.innerHTML = ''; videoContainer.classList.add('hidden'); }
                 document.getElementById('panel-resources').innerHTML = renderResourceCards(lesson.resources, lesson.title);
                 this.renderQuiz(lesson.quiz);
                 this.updateCompleteButton();
@@ -1038,33 +785,18 @@
                 this.renderSidebar();
                 if (window.lucide) lucide.createIcons();
                 initializeResourceCards();
+                setTimeout(() => {
+                    const header = document.getElementById('lesson-header');
+                    if (header) header.scrollIntoView({ behavior: 'instant', block: 'start' });
+                }, 100);
             },
             
             renderQuiz: function(quiz) { 
                 const cont = document.getElementById('quiz-questions'); 
-                if (!quiz || quiz.length === 0) { 
-                    cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; 
-                    return; 
-                } 
+                if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; } 
                 cont.innerHTML = quiz.map((q, i) => {
-                    const imageHtml = q.image ? 
-                        `<figure style="display:flex;flex-direction:column;align-items:center;margin:1rem 0;">
-                            <img src="${q.image}" alt="Imagen de la pregunta" style="max-width:100%;max-height:300px;object-fit:contain;border-radius:8px;border:1px solid #d3e0e8;">
-                        </figure>` : '';
-                    return `
-                        <div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}">
-                            <p class="font-bold text-white mb-3">${q.q}</p>
-                            ${imageHtml}
-                            <div class="space-y-2">
-                                ${q.opts.map((opt, oi) => `
-                                    <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option transition" data-opt-index="${oi}">
-                                        <input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}
-                                    </label>
-                                `).join('')}
-                            </div>
-                            <div class="correct-feedback hidden text-green-400 text-sm mt-2"></div>
-                        </div>
-                    `;
+                    const imageHtml = q.image ? `<figure style="display:flex;flex-direction:column;align-items:center;margin:1rem 0;"><img src="${q.image}" alt="Pregunta" style="max-width:100%;max-height:300px;object-fit:contain;border-radius:8px;"></figure>` : '';
+                    return `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}"><p class="font-bold text-white mb-3">${q.q}</p>${imageHtml}<div class="space-y-2">${q.opts.map((opt, oi) => `<label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option" data-opt-index="${oi}"><input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}</label>`).join('')}</div><div class="correct-feedback hidden text-green-400 text-sm mt-2"></div></div>`;
                 }).join(''); 
             },
             
@@ -1074,20 +806,20 @@
                 let score = 0, all = true, answers = [];
                 lesson.quiz.forEach((q, i) => { const sel = document.querySelector(`input[name="q_${i}"]:checked`); if (sel) { answers[i] = parseInt(sel.value, 10); if (answers[i] === q.ans) score += Math.round(100 / lesson.quiz.length); } else { all = false; answers[i] = -1; } });
                 if (!all) { this.showModal('Atención', 'Debes responder todas las preguntas antes de enviar.', 'error'); return; }
-                lesson.quiz.forEach((q, i) => {
-                    const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
-                    const opts = qDiv.querySelectorAll('.quiz-option');
-                    const fb = qDiv.querySelector('.correct-feedback');
-                    opts.forEach(opt => { opt.classList.remove('correct', 'incorrect'); const idx = parseInt(opt.dataset.optIndex, 10); if (idx === q.ans) opt.classList.add('correct'); else if (answers[i] === idx) opt.classList.add('incorrect'); });
-                    fb.innerHTML = `✅ ${q.opts[q.ans]}`; fb.classList.remove('hidden');
-                });
                 score = Math.min(score, 100);
                 const best = this.quizScores[this.currentId] || 0;
                 if (score > best) { this.quizScores[this.currentId] = score; localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores)); }
                 const resDiv = document.getElementById('quiz-result');
                 resDiv.classList.remove('hidden');
                 if (score >= 70) { 
-                    resDiv.innerHTML = `<span class="text-green-400 text-xl">Aprobado con ${score}%. Tu mejor nota quedó guardada.</span>`; 
+                    lesson.quiz.forEach((q, i) => {
+                        const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
+                        const opts = qDiv.querySelectorAll('.quiz-option');
+                        const fb = qDiv.querySelector('.correct-feedback');
+                        opts.forEach(opt => { const idx = parseInt(opt.dataset.optIndex, 10); if (idx === q.ans) opt.classList.add('correct'); else if (answers[i] === idx) opt.classList.add('incorrect'); });
+                        fb.innerHTML = `✅ ${q.opts[q.ans]}`; fb.classList.remove('hidden');
+                    });
+                    resDiv.innerHTML = `<span class="text-green-400 text-xl">Aprobado con ${score}%.</span>`; 
                     if (!this.progress.includes(this.currentId)) { 
                         this.progress.push(this.currentId); 
                         this.progress.sort((a, b) => a - b); 
@@ -1095,11 +827,9 @@
                         this.syncProgress(); 
                         this.renderSidebar(); 
                         this.updateCompleteButton();
-                        
-                        const totalModulos = COURSE_DATA.filter(l => l.id > 0).length;
-                        const modulosCompletados = this.progress.filter(id => id > 0).length;
-                        
-                        if (modulosCompletados >= totalModulos) {
+                        const moduleIds = COURSE_DATA.filter(l => l.id > 0).map(l => l.id);
+                        const completedModules = moduleIds.filter(id => this.progress.includes(id));
+                        if (completedModules.length >= moduleIds.length && moduleIds.length > 0) {
                             this.saveCourseCompletionDate();
                             this.showCourseCompletionCelebration();
                         } else {
@@ -1107,18 +837,148 @@
                         }
                     }
                 } else { 
-                    resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span>`; 
-                    this.showEncouragementOverlay(this.currentId, score); 
+                    this.playElectricitySound();
+                    const motivaciones = [
+                        '¡No te rindas! Cada intento te acerca más al éxito. 💪',
+                        'Casi lo logras. Repasa el material y vuelve a intentarlo. 📚',
+                        'El aprendizaje es un proceso. ¡Tú puedes conseguirlo! 🚀',
+                        'No es un fracaso, es una oportunidad para aprender más. 🎯',
+                        '¡Sigue adelante! La práctica hace al maestro. ⚡'
+                    ];
+                    const msg = motivaciones[Math.floor(Math.random() * motivaciones.length)];
+                    resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span><p class="text-slate-300 mt-2 text-sm">${msg}</p>`; 
                 }
             },
             
             resetQuiz: function() { document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(input => input.checked = false); document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect')); document.querySelectorAll('.correct-feedback').forEach(fb => fb.classList.add('hidden')); document.getElementById('quiz-result').classList.add('hidden'); },
-            
             syncProgress: function() { const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); if (!auth) return; const data = JSON.stringify({ progress: this.progress, scores: this.quizScores }); const courseName = CURRENT_COURSE ? CURRENT_COURSE.name : 'Aula Virtual'; fetch(`${this.accessScriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&curso=${encodeURIComponent(courseName)}&data=${encodeURIComponent(data)}`, { method: 'GET', mode: 'no-cors' }).catch(e => console.error('Sync Error:', e)); },
-            
             getMedalIcon: function(score) { if (score === undefined || score < 70) return ''; if (score === 100) return '🏆'; if (score >= 90) return '🥇'; if (score >= 80) return '🥈'; return '🥉'; },
             
-            playApplauseSound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 12; i += 1) { const bufferSize = ctx.sampleRate * 0.05; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j += 1) output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 900 + (Math.random() * 800); const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.09); gain.gain.exponentialRampToValueAtTime(0.35, now + i * 0.09 + 0.01); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.05); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.09); source.stop(now + i * 0.09 + 0.06); } } catch (e) { console.warn('No se pudo reproducir aplausos:', e); } },
+            // 🆕 FUNCIÓN PARA GENERAR CERTIFICADO CON ID: SIGLAS-(13018822+CÉDULA)
+            generateCertificate: function() {
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                if (!auth || !CURRENT_COURSE) { this.showModal('Error', 'No hay sesión activa.', 'error'); return; }
+
+                const moduleIds = COURSE_DATA.filter(l => l.id > 0).map(l => l.id);
+                const completed = moduleIds.filter(id => this.progress.includes(id)).length;
+                const percent = moduleIds.length > 0 ? Math.round((completed / moduleIds.length) * 100) : 0;
+
+                if (percent < 100) { this.showModal('Curso Incompleto', `Tu progreso es ${percent}%. Completa el 100% para generar el certificado.`, 'error'); return; }
+
+                const scores = Object.values(this.quizScores).filter(s => typeof s === 'number');
+                const promedio = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 100;
+
+                // 🔧 FIX: Recuperar cédula de múltiples fuentes
+                let cedulaRaw = auth.cedula || '';
+                if (!cedulaRaw || cedulaRaw === 'N/A') {
+                    if (typeof AuthLogic !== 'undefined' && AuthLogic.currentUser && AuthLogic.currentUser.cedula) {
+                        cedulaRaw = AuthLogic.currentUser.cedula;
+                    }
+                }
+                const cedulaLimpia = cedulaRaw.toString().replace(/\D/g, '');
+                const ciNum = parseInt(cedulaLimpia) || 0;
+                if (ciNum === 0) {
+                    this.showModal('Error de Cédula', 'No se pudo obtener tu cédula válida. Por favor cierra sesión e inicia de nuevo ingresando tu cédula correctamente.', 'error');
+                    return;
+                }
+
+                // Calcular ID: SIGLAS-(13018822+CÉDULA)
+                const idCalculado = 13018822 + ciNum;
+                const siglas = CURRENT_COURSE.name.split(' ').filter(p => p.length > 0).map(p => p[0].toUpperCase()).join('') || 'CURSO';
+                const certId = siglas + '-' + idCalculado;
+                const verificationLink = 'https://aprendeautomatizacion.xyz/verify_page.html?id=' + certId;
+
+                // 🔧 FIX: Datos adicionales para el Excel
+                const now = new Date();
+                const fechaEmision = now.toISOString();
+                const fechaCulminacion = now.toISOString();
+                const codigoVerificacion = certId;
+                const estado = 'Activo';
+                const nota = promedio;
+
+                console.log('🎓 ID calculado:', certId);
+                console.log('🎓 Cédula usada:', cedulaRaw, '→', ciNum);
+
+                showSyncIndicator('Generando certificado...', 'loading');
+
+                const url = this.accessScriptUrl + '?action=complete_course' +
+                    '&email=' + encodeURIComponent(auth.correo) +
+                    '&courseName=' + encodeURIComponent(CURRENT_COURSE.name) +
+                    '&studentName=' + encodeURIComponent(auth.nombre || '') +
+                    '&cedula=' + encodeURIComponent(cedulaRaw) +
+                    '&promedio=' + encodeURIComponent(promedio.toString()) +
+                    '&certId=' + encodeURIComponent(certId) +
+                    '&verificationLink=' + encodeURIComponent(verificationLink) +
+                    '&fechaEmision=' + encodeURIComponent(fechaEmision) +
+                    '&fechaCulminacion=' + encodeURIComponent(fechaCulminacion) +
+                    '&codigoVerificacion=' + encodeURIComponent(codigoVerificacion) +
+                    '&estado=' + encodeURIComponent(estado) +
+                    '&nota=' + encodeURIComponent(nota.toString());
+
+                fetch(url)
+                .then(r => r.json())
+                .then(result => {
+                    console.log('📋 Resultado:', result);
+                    if (result.status === 'success') {
+                        showSyncIndicator('✅ Certificado: ' + result.certId, 'success');
+                        this.showModal('¡Certificado Generado!', `ID: <strong>${result.certId}</strong><br><br>Link de verificación:<br><code style="font-size:11px;word-break:break-all;">${result.verificationLink}</code>`, 'success');
+                    } else if (result.status === 'exists') {
+                        this.showModal('Ya Existente', `ID: <strong>${certId}</strong><br><br>Link:<br><code style="font-size:11px;word-break:break-all;">${verificationLink}</code>`, 'info');
+                    } else {
+                        this.showModal('Error', result.message || 'No se pudo generar.', 'error');
+                    }
+                })
+                .catch(e => { console.error(e); this.showModal('Error', 'Error de conexión.', 'error'); });
+            },
+            
+            saveCourseCompletionDate: function() {
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                if (!auth || !CURRENT_COURSE) return;
+                const params = new URLSearchParams();
+                params.append('action', 'save_course_completion');
+                params.append('email', auth.correo);
+                params.append('courseName', CURRENT_COURSE.name);
+                params.append('completionDate', new Date().toISOString());
+                fetch(this.accessScriptUrl, { method: 'POST', body: params, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } })
+                .then(r => r.json()).then(result => { if (result.status === 'success') showSyncIndicator('Curso completado', 'success'); })
+                .catch(e => console.error(e));
+            },
+            
+            showCourseCompletionCelebration: function() {
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                const overlay = document.createElement('div');
+                overlay.id = 'course-completion-overlay';
+                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.85);backdrop-filter:blur(8px);z-index:1400;display:flex;align-items:center;justify-content:center;';
+                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:2px solid rgba(34,211,238,.5);border-radius:24px;padding:40px 30px;max-width:480px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 60px rgba(15,23,42,.6), 0 0 40px rgba(34,211,238,.2);animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"><div style="font-size:80px;line-height:1;margin-bottom:20px;animation:bounce 1s ease infinite;">🏆</div><h2 style="font-size:32px;font-weight:900;margin-bottom:10px;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">¡FELICITACIONES!</h2><p style="font-size:18px;color:#e2e8f0;margin-bottom:15px;font-weight:600;">${auth.nombre || 'Estudiante'}</p><p style="font-size:15px;color:#94a3b8;margin-bottom:20px;line-height:1.6;">Has completado exitosamente el curso<br><strong style="color:#22d3ee;">${CURRENT_COURSE.name}</strong></p><div style="display:flex;flex-direction:column;gap:12px;"><button onclick="document.getElementById('course-completion-overlay').remove(); app.generateCertificate();" style="background:linear-gradient(135deg,#06b6d4,#3b82f6);color:white;border:none;border-radius:12px;padding:14px 28px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(6,182,212,0.3);">🎓 Generar mi Certificado</button><button onclick="document.getElementById('course-completion-overlay').remove(); app.showDashboard();" style="background:rgba(255,255,255,0.1);color:#e2e8f0;border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;">📊 Volver a panel de métricas</button></div></div>`;
+                document.body.appendChild(overlay);
+                this.playApplauseSound();
+                this.launchConfetti();
+                this.launchFireworks();
+            },
+            
+            showAchievementOverlay: function(moduleId, score) { 
+                const old = document.getElementById('subject-achievement-overlay'); if (old) old.remove(); 
+                const overlay = document.createElement('div'); overlay.id = 'subject-achievement-overlay'; 
+                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(4px);z-index:1300;display:flex;align-items:center;justify-content:center;'; 
+                const medalIcon = score >= 100 ? '🏆' : score >= 90 ? '🥇' : score >= 80 ? '🥈' : '🥉';
+                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:1px solid rgba(34,211,238,.4);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45);animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"><div style="font-size:60px;line-height:1;animation:bounce 1s ease infinite;">${medalIcon}</div><h4 style="margin:10px 0 6px;font-size:20px;font-weight:900">Felicitaciones</h4><p style="margin:0 0 6px;color:#bae6fd;font-weight:700">Logro desbloqueado: Quiz ${moduleId} aprobado</p><p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Obtuviste ${score}%. Sigue así.</p><button id="subject-achievement-close" style="padding:10px 16px;border:0;border-radius:10px;background:#06b6d4;color:#082f49;font-weight:900;cursor:pointer">Siguiente lección</button></div>`; 
+                document.body.appendChild(overlay); 
+                const nextId = moduleId + 1;
+                const closeAndNext = () => { 
+                    overlay.remove(); 
+                    if (nextId < COURSE_DATA.length) app.loadLesson(nextId); 
+                    else app.showDashboard(); 
+                };
+                document.getElementById('subject-achievement-close').addEventListener('click', closeAndNext); 
+                overlay.addEventListener('click', (ev) => { if (ev.target === overlay) closeAndNext(); }); 
+                this.playApplauseSound(); 
+                this.launchConfetti(); 
+                this.launchFireworks(); 
+                setTimeout(() => { if (document.getElementById('subject-achievement-overlay')) closeAndNext(); }, 3500);
+            },
+            
+            playApplauseSound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 12; i++) { const bufferSize = ctx.sampleRate * 0.05; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 900 + (Math.random() * 800); const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.09); gain.gain.exponentialRampToValueAtTime(0.35, now + i * 0.09 + 0.01); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.05); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.09); source.stop(now + i * 0.09 + 0.06); } } catch (e) {} },
+            playElectricitySound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 8; i++) { const bufferSize = ctx.sampleRate * 0.08; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'highpass'; filter.frequency.value = 3000 + Math.random() * 4000; const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.12); gain.gain.exponentialRampToValueAtTime(0.25, now + i * 0.12 + 0.005); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.12 + 0.08); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.12); source.stop(now + i * 0.12 + 0.08); } } catch (e) {} },
             
             launchConfetti: function() {
                 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff1493', '#22d3ee', '#818cf8'];
@@ -1133,7 +993,7 @@
                 if (!document.getElementById('confetti-keyframe')) {
                     const style = document.createElement('style');
                     style.id = 'confetti-keyframe';
-                    style.textContent = `@keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } } @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } } @keyframes popIn { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }`;
+                    style.textContent = `@keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } } @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }`;
                     document.head.appendChild(style);
                 }
             },
@@ -1143,9 +1003,7 @@
                 for (let i = 0; i < 40; i++) {
                     setTimeout(() => {
                         const firework = document.createElement('div');
-                        const x = Math.random() * 100;
-                        const y = Math.random() * 50;
-                        firework.style.cssText = `position: fixed; left: ${x}vw; top: ${y}vh; width: 6px; height: 6px; border-radius: 50%; background-color: ${colors[Math.floor(Math.random() * colors.length)]}; box-shadow: 0 0 10px currentColor; z-index: 1499; pointer-events: none; animation: fireworkExplode 1s ease-out forwards;`;
+                        firework.style.cssText = `position: fixed; left: ${Math.random() * 100}vw; top: ${Math.random() * 50}vh; width: 6px; height: 6px; border-radius: 50%; background-color: ${colors[Math.floor(Math.random() * colors.length)]}; box-shadow: 0 0 10px currentColor; z-index: 1499; pointer-events: none; animation: fireworkExplode 1s ease-out forwards;`;
                         document.body.appendChild(firework);
                         setTimeout(() => firework.remove(), 1000);
                     }, i * 30);
@@ -1158,151 +1016,34 @@
                 }
             },
             
-            saveCourseCompletionDate: function() {
-                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
-                if (!auth || !CURRENT_COURSE) return;
-                
-                const completionDate = new Date().toISOString();
-                const params = new URLSearchParams();
-                params.append('action', 'save_course_completion');
-                params.append('email', auth.correo);
-                params.append('courseName', CURRENT_COURSE.name);
-                params.append('completionDate', completionDate);
-                
-                fetch(this.accessScriptUrl || this.scriptUrl, {
-                    method: 'POST',
-                    body: params,
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                }).then(response => response.json())
-                  .then(result => {
-                      if (result.status === 'success') {
-                          console.log('✅ Culminación guardada correctamente');
-                          showSyncIndicator('Curso completado y registrado', 'success');
-                      }
-                  })
-                  .catch(e => console.error('Error al guardar culminación:', e));
-            },
-            
-            showCourseCompletionCelebration: function() {
-                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
-                const overlay = document.createElement('div');
-                overlay.id = 'course-completion-overlay';
-                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.85);backdrop-filter:blur(8px);z-index:1400;display:flex;align-items:center;justify-content:center;';
-                overlay.innerHTML = `
-                    <div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:2px solid rgba(34,211,238,.5);border-radius:24px;padding:40px 30px;max-width:480px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 60px rgba(15,23,42,.6), 0 0 40px rgba(34,211,238,.2);animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);">
-                        <div style="font-size:80px;line-height:1;margin-bottom:20px;animation:bounce 1s ease infinite;">🏆</div>
-                        <h2 style="font-size:32px;font-weight:900;margin-bottom:10px;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">¡FELICITACIONES!</h2>
-                        <p style="font-size:18px;color:#e2e8f0;margin-bottom:15px;font-weight:600;">${auth.nombre || 'Estudiante'}</p>
-                        <p style="font-size:15px;color:#94a3b8;margin-bottom:20px;line-height:1.6;">Has completado exitosamente el curso<br><strong style="color:#22d3ee;">${CURRENT_COURSE.name}</strong></p>
-                        <div style="display:inline-block;background:rgba(34,211,238,0.15);border:1px solid rgba(34,211,238,0.3);border-radius:12px;padding:10px 24px;font-size:18px;font-weight:700;color:#22d3ee;margin-bottom:25px;">🎓 ¡Logro Desbloqueado!</div>
-                        <div style="display:flex;flex-direction:column;gap:12px;">
-                            <button onclick="document.getElementById('course-completion-overlay').remove(); window.location.href='progreso.html?courseId=${CURRENT_COURSE.id}';" style="background:linear-gradient(135deg,#06b6d4,#3b82f6);color:white;border:none;border-radius:12px;padding:14px 28px;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.3s;box-shadow:0 8px 20px rgba(6,182,212,0.3);">🎓 Descargar mi Certificado</button>
-                            <button onclick="document.getElementById('course-completion-overlay').remove();" style="background:rgba(255,255,255,0.1);color:#e2e8f0;border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.3s;">Continuar en el Aula</button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(overlay);
-                this.playApplauseSound();
-                this.launchConfetti();
-                this.launchFireworks();
-            },
-            
-            showAchievementOverlay: function(moduleId, score) { 
-                const old = document.getElementById('subject-achievement-overlay'); 
-                if (old) old.remove(); 
-                const overlay = document.createElement('div'); 
-                overlay.id = 'subject-achievement-overlay'; 
-                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(4px);z-index:1300;display:flex;align-items:center;justify-content:center;'; 
-                const medalIcon = score >= 100 ? '🏆' : score >= 90 ? '🥇' : score >= 80 ? '🥈' : '🥉';
-                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:1px solid rgba(34,211,238,.4);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45)"><div style="font-size:60px;line-height:1;animation:bounce 1s ease infinite;">${medalIcon}</div><h4 style="margin:10px 0 6px;font-size:20px;font-weight:900">Felicitaciones</h4><p style="margin:0 0 6px;color:#bae6fd;font-weight:700">Logro desbloqueado: Quiz ${moduleId} aprobado</p><p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Obtuviste ${score}%. Sigue así.</p><button id="subject-achievement-close" style="padding:10px 16px;border:0;border-radius:10px;background:#06b6d4;color:#082f49;font-weight:900;cursor:pointer">Continuar</button></div>`; 
-                document.body.appendChild(overlay); 
-                const close = () => overlay.remove(); 
-                document.getElementById('subject-achievement-close').addEventListener('click', close); 
-                overlay.addEventListener('click', (ev) => { if (ev.target === overlay) close(); }); 
-                this.playApplauseSound(); 
-                this.launchConfetti(); 
-                this.launchFireworks(); 
-            },
-            
-            showEncouragementOverlay: function(moduleId, score) { 
-                const old = document.getElementById('subject-encouragement-overlay'); 
-                if (old) old.remove(); 
-                const overlay = document.createElement('div'); 
-                overlay.id = 'subject-encouragement-overlay'; 
-                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(4px);z-index:1300;display:flex;align-items:center;justify-content:center;'; 
-                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#1e293b,#0f172a);border:1px solid rgba(245,158,11,.4);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45)"><div style="font-size:50px;line-height:1;margin-bottom:10px;">💪</div><h4 style="margin:10px 0 6px;font-size:20px;font-weight:900">¡Casi lo logras!</h4><p style="margin:0 0 6px;color:#fbbf24;font-weight:700">Obtuviste ${score}%</p><p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Necesitas 70% para aprobar. ¡Repasa el material e inténtalo de nuevo!</p><button id="subject-encouragement-close" style="padding:10px 16px;border:0;border-radius:10px;background:#f59e0b;color:#1e293b;font-weight:900;cursor:pointer">Reintentar</button></div>`; 
-                document.body.appendChild(overlay); 
-                const close = () => overlay.remove(); 
-                document.getElementById('subject-encouragement-close').addEventListener('click', close); 
-                overlay.addEventListener('click', (ev) => { if (ev.target === overlay) close(); }); 
-            },
-            
             updateCompleteButton: function() { const lesson = COURSE_DATA.find(l => l.id === this.currentId); const hasQuiz = lesson?.quiz && lesson.quiz.length > 0; document.getElementById('btn-complete').disabled = hasQuiz && !this.progress.includes(this.currentId); },
-            
             completeLesson: function() { if (this.currentId === 0) { if (!this.progress.includes(0)) { this.progress.push(0); localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress)); this.syncProgress(); } this.loadLesson(1); } else { const nextId = this.currentId + 1; if (nextId < COURSE_DATA.length) this.loadLesson(nextId); else this.showDashboard(); } },
-            
-            switchTab: function(tabId) { ['content', 'resources', 'quiz'].forEach(tab => { document.getElementById(`panel-${tab}`).classList.toggle('hidden', tab !== tabId); document.getElementById(`tab-${tab}`).className = tab === tabId ? 'pb-2 font-bold border-b-2 border-secondary text-secondary px-2' : 'pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2'; }); document.getElementById('btn-complete').parentElement.classList.toggle('hidden', tabId !== 'content'); },
-            
-            showModal: function(title, msg, type) { document.getElementById('modal-title').innerText = title; document.getElementById('modal-msg').innerText = msg; let icon = '✅'; if (type === 'error') icon = '❌'; else if (type === 'medal') icon = '<i class="fas fa-trophy text-yellow-400 animate-bounce"></i>'; document.getElementById('modal-icon').innerHTML = icon; document.getElementById('modal-feedback').classList.remove('hidden'); },
-            
-            showAccessBlocked: function(title = "ACCESO RESTRINGIDO", message) { const container = document.querySelector('#login-screen > div'); if (!container) return; const loginScreen = document.getElementById('login-screen'); if (loginScreen) loginScreen.classList.remove('hidden'); const defaultMessage = `No estás inscrito en ${CURRENT_COURSE ? CURRENT_COURSE.name : 'este curso'}. Para acceder a esta aula virtual debes adquirir el curso primero en nuestro catálogo.`; container.innerHTML = `<div class="text-center"><div class="text-6xl text-red-500 mb-6"><i class="fas fa-lock"></i></div><h2 class="text-2xl font-bold text-white mb-4">${title}</h2><p class="text-slate-300 text-sm mb-8 leading-relaxed">${message || defaultMessage}</p><div class="space-y-4"><button onclick="window.location.href='catalogo.html'" class="w-full bg-primary text-white py-3 rounded-lg font-bold shadow-lg hover:brightness-110 transition">Ver Catálogo de Cursos</button><button onclick="localStorage.removeItem('user'); location.reload();" class="w-full bg-white/10 text-slate-300 py-2 rounded-lg text-xs font-bold hover:bg-white/20 transition">Ingresar con otra cuenta</button></div></div>`; },
-            
-            verifyLogin: function(event) { event.preventDefault(); const n = document.getElementById('login-nombre').value || ''; const c = document.getElementById('login-cedula').value || 'N/A'; const em = document.getElementById('login-correo').value || ''; this.executeVerification(n, c, em, false); },
-            
+            switchTab: function(tabId) { ['content', 'resources', 'quiz'].forEach(tab => { document.getElementById(`panel-${tab}`).classList.toggle('hidden', tab !== tabId); document.getElementById(`tab-${tab}`).className = tab === tabId ? 'pb-2 font-bold border-b-2 border-secondary text-secondary px-2' : 'pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2'; }); const header = document.getElementById('lesson-header'); if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
+            showModal: function(title, msg, type) { document.getElementById('modal-title').innerText = title; document.getElementById('modal-msg').innerHTML = msg; document.getElementById('modal-icon').innerHTML = type === 'error' ? '❌' : type === 'info' ? 'ℹ️' : '✅'; document.getElementById('modal-feedback').classList.remove('hidden'); },
+            showAccessBlocked: function(title, message) { const loginScreen = document.getElementById('login-screen'); loginScreen.classList.remove('hidden'); const container = loginScreen.querySelector('div'); container.innerHTML = `<div class="text-center"><div class="text-6xl text-red-500 mb-6"><i class="fas fa-lock"></i></div><h2 class="text-2xl font-bold text-white mb-4">${title}</h2><p class="text-slate-300 text-sm mb-8">${message || 'No estás inscrito.'}</p><button onclick="window.location.href='catalogo.html'" class="w-full bg-primary text-white py-3 rounded-lg font-bold">Ver Catálogo</button></div>`; },
+            verifyLogin: function(event) { event.preventDefault(); const n = document.getElementById('login-nombre').value; const c = document.getElementById('login-cedula').value; const em = document.getElementById('login-correo').value; this.executeVerification(n, c, em, false); },
             executeVerification: async function(n, c, em, isAuto) {
                 const btn = document.getElementById('login-btn');
                 const err = document.getElementById('login-error');
-                if (!btn || !err) return;
-                const spin = btn.querySelector('.fa-spinner');
-                const txt = btn.querySelector('span');
-                btn.disabled = true;
-                spin.classList.remove('hidden');
-                txt.innerText = ' Verificando...';
-                err.classList.add('hidden');
+                btn.disabled = true; btn.querySelector('.fa-spinner').classList.remove('hidden'); btn.querySelector('span').innerText = ' Verificando...'; err.classList.add('hidden');
                 try {
-                    const url = `${this.accessScriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent(CURRENT_COURSE.name)}&t=${Date.now()}`;
-                    const resp = await fetch(url);
-                    const data = await resp.json();
+                    const url = `${this.accessScriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent(CURRENT_COURSE.name)}`;
+                    const resp = await fetch(url); const data = await resp.json();
                     if (data.success) {
                         localStorage.setItem(STORAGE_KEYS.auth, JSON.stringify({ nombre: n, cedula: c, correo: em }));
-                        if (data.progressData) {
-                            try {
-                                const p = JSON.parse(data.progressData);
-                                this.progress = Array.isArray(p.progress) ? p.progress : [];
-                                this.quizScores = p.scores || {};
-                                localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
-                                localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
-                            } catch (e) {}
-                        }
+                        if (data.progressData) { try { const p = JSON.parse(data.progressData); this.progress = Array.isArray(p.progress) ? p.progress : []; this.quizScores = p.scores || {}; } catch(e) {} }
                         this.proceedToAula();
-                    } else {
-                        err.innerText = data.message || 'No estás inscrito.';
-                        err.classList.remove('hidden');
-                        if (isAuto) this.showAccessBlocked("ACCESO RESTRINGIDO");
-                    }
-                } catch (error) {
-                    err.innerText = 'Error de conexión.';
-                    err.classList.remove('hidden');
-                } finally {
-                    btn.disabled = false;
-                    spin.classList.add('hidden');
-                    txt.innerText = ' Verificar Inscripción';
-                }
+                    } else { err.innerText = data.message || 'No estás inscrito.'; err.classList.remove('hidden'); }
+                } catch (error) { err.innerText = 'Error de conexión.'; err.classList.remove('hidden'); }
+                finally { btn.disabled = false; btn.querySelector('.fa-spinner').classList.add('hidden'); btn.querySelector('span').innerText = ' Verificar Inscripción'; }
             },
-            
             proceedToAula: function() { document.getElementById('login-screen').classList.add('hidden'); this.updateHeaderName(); this.renderSidebar(); this.showDashboard(); },
-            
             updateHeaderName: function() { const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); const nameEl = document.getElementById('header-student-name'); if (nameEl && auth?.nombre) { nameEl.innerText = auth.nombre; nameEl.classList.remove('hidden'); } },
-            
-            initTheme: function() { const savedTheme = localStorage.getItem('theme') || 'dark'; document.body.classList.toggle('light-mode', savedTheme === 'light'); const icon = document.getElementById('theme-icon'); if (icon) icon.className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun'; },
-            
-            toggleTheme: function() { const isLight = document.body.classList.toggle('light-mode'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); const icon = document.getElementById('theme-icon'); if (icon) icon.className = isLight ? 'fas fa-moon' : 'fas fa-sun'; },
-            
-            toggleFullScreen: function() { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.().catch(() => {}); else document.exitFullscreen?.(); },
-            
-            updateFullScreenIcon: function() { const icon = document.getElementById('fullscreen-icon'); if (icon) icon.className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand'; },
-            
-            logout: function() { if (confirm('¿Deseas cerrar sesión y salir del aula virtual?')) { this.clearLocalData(); window.location.href = 'mis-cursos.html'; } }
+            initTheme: function() { const savedTheme = localStorage.getItem('theme') || 'dark'; document.body.classList.toggle('light-mode', savedTheme === 'light'); document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun'; },
+            toggleTheme: function() { const isLight = document.body.classList.toggle('light-mode'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('theme-icon').className = isLight ? 'fas fa-moon' : 'fas fa-sun'; },
+            toggleFullScreen: function() { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); },
+            updateFullScreenIcon: function() { document.getElementById('fullscreen-icon').className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand'; },
+            logout: function() { if (confirm('¿Cerrar sesión?')) { this.clearLocalData(); window.location.href = 'mis-cursos.html'; } }
         };
 
         window.onload = () => { app.init(); if (window.lucide) lucide.createIcons(); };

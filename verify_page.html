@@ -20,7 +20,6 @@
       position: relative;
       overflow-x: hidden;
     }
-    
     body::before {
       content: '';
       position: fixed;
@@ -31,7 +30,6 @@
       pointer-events: none;
       z-index: 0;
     }
-    
     .card {
       background: white;
       border-radius: 24px;
@@ -44,12 +42,10 @@
       z-index: 1;
       animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-    
     @keyframes slideUp {
       from { transform: translateY(30px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
     }
-    
     .logo {
       width: 80px;
       height: 80px;
@@ -65,13 +61,7 @@
       letter-spacing: 0.05em;
       box-shadow: 0 8px 24px rgba(0,0,0,0.2);
     }
-    
-    .logo img {
-      width: 50px;
-      height: 50px;
-      object-fit: contain;
-    }
-    
+    .logo img { width: 50px; height: 50px; object-fit: contain; }
     .status-icon {
       width: 70px;
       height: 70px;
@@ -83,24 +73,14 @@
       font-size: 32px;
       animation: bounceIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s both;
     }
-    
     @keyframes bounceIn {
       0% { transform: scale(0); }
       50% { transform: scale(1.2); }
       100% { transform: scale(1); }
     }
-    
     .valido .status-icon { background: #d1fae5; color: #059669; box-shadow: 0 0 30px rgba(5, 150, 105, 0.3); }
     .invalido .status-icon { background: #fee2e2; color: #dc2626; box-shadow: 0 0 30px rgba(220, 38, 38, 0.2); }
-    
-    h1 { 
-      font-size: 24px; 
-      margin-bottom: 8px; 
-      color: #111827; 
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-    
+    h1 { font-size: 24px; margin-bottom: 8px; color: #111827; font-weight: 800; letter-spacing: -0.02em; }
     .badge {
       display: inline-block;
       padding: 6px 16px;
@@ -111,17 +91,8 @@
       letter-spacing: 0.05em;
       margin-bottom: 25px;
     }
-    
-    .valido .badge { 
-      background: #d1fae5; 
-      color: #059669; 
-    }
-    
-    .invalido .badge { 
-      background: #fee2e2; 
-      color: #dc2626; 
-    }
-    
+    .valido .badge { background: #d1fae5; color: #059669; }
+    .invalido .badge { background: #fee2e2; color: #dc2626; }
     .dato {
       display: flex;
       justify-content: space-between;
@@ -131,24 +102,9 @@
       text-align: left;
       gap: 20px;
     }
-    
     .dato:last-child { border-bottom: none; }
-    
-    .dato label { 
-      color: #6b7280; 
-      font-size: 13px; 
-      font-weight: 500; 
-      flex-shrink: 0;
-    }
-    
-    .dato span { 
-      color: #111827; 
-      font-weight: 700; 
-      font-size: 14px; 
-      text-align: right;
-      word-break: break-word;
-    }
-    
+    .dato label { color: #6b7280; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+    .dato span { color: #111827; font-weight: 700; font-size: 14px; text-align: right; word-break: break-word; }
     .dato .id-mono { 
       font-family: 'Courier New', monospace; 
       font-size: 12px; 
@@ -158,8 +114,6 @@
       border-radius: 6px;
       letter-spacing: 0.05em;
     }
-    
-    /* Estilo para la calificación */
     .calificacion-badge {
       display: inline-block;
       padding: 4px 12px;
@@ -171,7 +125,6 @@
     .calificacion-oro { background: #dbeafe; color: #2563eb; }
     .calificacion-plata { background: #dbeafe; color: #2563eb; }
     .calificacion-bronce { background: #fef3c7; color: #d97706; }
-    
     .footer {
       margin-top: 25px;
       padding-top: 20px;
@@ -180,7 +133,6 @@
       font-size: 12px;
       line-height: 1.6;
     }
-    
     .sello {
       width: 90px;
       height: 90px;
@@ -198,14 +150,7 @@
       transform: rotate(-12deg);
       opacity: 0.6;
     }
-    
-    .error-msg {
-      color: #6b7280;
-      margin: 15px 0 25px;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-    
+    .error-msg { color: #6b7280; margin: 15px 0 25px; line-height: 1.6; font-size: 14px; }
     .loading-spinner {
       width: 50px;
       height: 50px;
@@ -215,14 +160,8 @@
       margin: 30px auto;
       animation: spin 0.8s linear infinite;
     }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .hidden { display: none !important; }
-    
     .btn-volver {
       display: inline-block;
       margin-top: 20px;
@@ -235,7 +174,6 @@
       font-size: 14px;
       transition: all 0.3s ease;
     }
-    
     .btn-volver:hover {
       background: #1e293b;
       transform: translateY(-2px);
@@ -244,20 +182,14 @@
   </style>
 </head>
 <body>
-  <!-- Estado de carga -->
   <div id="loadingState" class="card" style="text-align: center;">
-    <div class="logo">
-      <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA">
-    </div>
+    <div class="logo"><img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA"></div>
     <div class="loading-spinner"></div>
     <p style="color: #6b7280; font-weight: 600;">Verificando certificado...</p>
   </div>
   
-  <!-- Certificado Válido -->
   <div id="certificadoValido" class="card valido hidden">
-    <div class="logo">
-      <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA">
-    </div>
+    <div class="logo"><img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA"></div>
     <div class="status-icon">✓</div>
     <h1>Certificado Válido</h1>
     <div class="badge">✓ Verificado Oficialmente</div>
@@ -267,27 +199,24 @@
     <div class="dato"><label>Cédula</label><span id="certCedula">-</span></div>
     <div class="dato"><label>Curso</label><span id="certCurso">-</span></div>
     <div class="dato"><label>Calificación</label><span id="certCalificacion">-</span></div>
-    <div class="dato"><label>Fecha de emisión</label><span id="certFechaEmision">-</span></div>
+    <!-- ✅ CAMBIO 1: "Fecha de emisión" → "Fecha de inicio" -->
+    <div class="dato"><label>Fecha de inicio</label><span id="certFechaEmision">-</span></div>
     <div class="dato"><label>Fecha de culminación</label><span id="certFechaCulminacion">-</span></div>
     <div class="dato"><label>ID del certificado</label><span class="id-mono" id="certId">-</span></div>
     
     <div class="sello">Validado</div>
-    <div class="footer">
-      Este certificado fue emitido y verificado electrónicamente por<br>
-      <strong>Aprende Automatización</strong><br>
-      Ing. Pablo Cedeño - Instructor Principal
-    </div>
+    <!-- ✅ CAMBIO 2: "Ing. Pablo Cedeño" → "Msc. Ing. Pablo Cedeño" -->
     
-    <a href="https://aprendeautomatizacion.xyz" class="btn-volver">
-      <i class="fas fa-arrow-left"></i> Volver a la plataforma
-    </a>
-  </div>
+
+<div class="footer">
+    Este certificado fue emitido y verificado electrónicamente por<br>
+    <strong>Aprende Automatización</strong><br>
+    Msc. Ing. Pablo Cedeño - Coordinador Académico
+</div>
+
   
-  <!-- Certificado Inválido -->
   <div id="certificadoInvalido" class="card invalido hidden">
-    <div class="logo">
-      <img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA">
-    </div>
+    <div class="logo"><img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA"></div>
     <div class="status-icon">✕</div>
     <h1>Certificado No Encontrado</h1>
     <div class="badge">✕ No Válido</div>
@@ -298,68 +227,83 @@
     <p style="color: #9ca3af; font-size: 12px;">
       Si crees que esto es un error, contacta a la academia.
     </p>
-    
     <a href="https://aprendeautomatizacion.xyz/progreso.html" class="btn-volver">
       <i class="fas fa-arrow-left"></i> Volver a la plataforma
     </a>
   </div>
 
   <script>
-    // ==========================================
-    // CONFIGURACIÓN
-    // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzX5ckqBXM-QD-dHKZum5nYiGBwN7mT-UUzKUzLRv0w-JrH0Ro7yxCENMRTqpt62IbA/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6IEeVFreHp7rdtF5aAgRJ_r-eSFuzv8lHGRjof0PeJrqx9nf33C5aHKwMSfBmfnE/exec';
     
-    // ==========================================
-    // OBTENER ID DEL CERTIFICADO DE LA URL
-    // ==========================================
     function getCertIdFromURL() {
       const params = new URLSearchParams(window.location.search);
       return params.get('id') || params.get('cert') || params.get('certificado') || '';
     }
     
-    // ==========================================
-    // FORMATEAR FECHA EN ESPAÑOL
-    // ==========================================
-    function formatearFecha(fecha) {
+    function formatearFechaSimple(fecha) {
       if (!fecha || fecha === 'N/A' || fecha === '') return 'N/A';
-      
-      const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-      
-      // Intentar parsear la fecha
-      let date;
-      
-      // Si es un objeto Date de Google Sheets (formato ISO con GMT)
-      if (typeof fecha === 'string' && fecha.includes('GMT')) {
-        date = new Date(fecha);
+      if (typeof fecha === 'string' && /^\d{2}\/\d{2}\/\d{4}/.test(fecha)) {
+        const partes = fecha.split(' ')[0].split('/');
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const dia = parseInt(partes[0]);
+        const mes = meses[parseInt(partes[1]) - 1];
+        const anio = parseInt(partes[2]);
+        return `${dia} de ${mes} de ${anio}`;
       }
-      // Si es formato YYYY-MM-DD HH:mm:ss
-      else if (typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}/.test(fecha)) {
+      if (typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}/.test(fecha)) {
         const partes = fecha.split(' ')[0].split('-');
-        date = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const dia = parseInt(partes[2]);
+        const mes = meses[parseInt(partes[1]) - 1];
+        const anio = parseInt(partes[0]);
+        return `${dia} de ${mes} de ${anio}`;
       }
-      // Si es formato DD/MM/YYYY
-      else if (typeof fecha === 'string' && /^\d{2}\/\d{2}\/\d{4}/.test(fecha)) {
-        const partes = fecha.split('/');
-        date = new Date(parseInt(partes[2]), parseInt(partes[1]) - 1, parseInt(partes[0]));
+      if (typeof fecha === 'string' && fecha.includes('GMT')) {
+        const date = new Date(fecha);
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const dia = date.getDate();
+        const mes = meses[date.getMonth()];
+        const anio = date.getFullYear();
+        return `${dia} de ${mes} de ${anio}`;
       }
-      // Intentar parsear genérico
-      else {
-        date = new Date(fecha);
-      }
-      
-      if (isNaN(date.getTime())) return fecha;
-      
-      const dia = date.getDate();
-      const mes = meses[date.getMonth()];
-      const anio = date.getFullYear();
-      
-      return `${dia} de ${mes} de ${anio}`;
+      return fecha;
     }
     
-    // ==========================================
-    // FORMATEAR CALIFICACIÓN
-    // ==========================================
+    function formatearFechaHoraSimple(fecha) {
+      if (!fecha || fecha === 'N/A' || fecha === '') return 'N/A';
+      if (typeof fecha === 'string' && /^\d{2}\/\d{2}\/\d{4}/.test(fecha)) {
+        const partesFecha = fecha.split(' ')[0].split('/');
+        const hora = fecha.split(' ')[1] || '';
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const dia = parseInt(partesFecha[0]);
+        const mes = meses[parseInt(partesFecha[1]) - 1];
+        const anio = parseInt(partesFecha[2]);
+        if (hora) return `${dia} de ${mes} de ${anio} a las ${hora}`;
+        return `${dia} de ${mes} de ${anio}`;
+      }
+      if (typeof fecha === 'string' && /^\d{4}-\d{2}-\d{2}/.test(fecha)) {
+        const partesFecha = fecha.split(' ')[0].split('-');
+        const hora = fecha.split(' ')[1] || '';
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const dia = parseInt(partesFecha[2]);
+        const mes = meses[parseInt(partesFecha[1]) - 1];
+        const anio = parseInt(partesFecha[0]);
+        if (hora) return `${dia} de ${mes} de ${anio} a las ${hora}`;
+        return `${dia} de ${mes} de ${anio}`;
+      }
+      if (typeof fecha === 'string' && fecha.includes('GMT')) {
+        const date = new Date(fecha);
+        const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+        const dia = date.getDate();
+        const mes = meses[date.getMonth()];
+        const anio = date.getFullYear();
+        const horas = String(date.getHours()).padStart(2, '0');
+        const minutos = String(date.getMinutes()).padStart(2, '0');
+        return `${dia} de ${mes} de ${anio} a las ${horas}:${minutos}`;
+      }
+      return fecha;
+    }
+    
     function getCalificacionBadge(calificacion) {
       if (!calificacion || calificacion === 'N/A' || calificacion === '') {
         return '<span class="calificacion-badge calificacion-bronce">N/A</span>';
@@ -381,9 +325,6 @@
       }
     }
     
-    // ==========================================
-    // VERIFICAR CERTIFICADO
-    // ==========================================
     async function verifyCertificate(certId) {
       const loadingState = document.getElementById('loadingState');
       const certificadoValido = document.getElementById('certificadoValido');
@@ -406,39 +347,32 @@
           document.getElementById('certCedula').textContent = cert.cedula || 'N/A';
           document.getElementById('certCurso').textContent = cert.curso || 'N/A';
           document.getElementById('certCalificacion').innerHTML = getCalificacionBadge(cert.calificacion);
-          document.getElementById('certFechaEmision').textContent = formatearFecha(cert.fechaEmision);
-          document.getElementById('certFechaCulminacion').textContent = formatearFecha(cert.fechaCulminacion);
+          
+          document.getElementById('certFechaEmision').textContent = formatearFechaHoraSimple(cert.fechaEmision || '');
+          document.getElementById('certFechaCulminacion').textContent = formatearFechaSimple(cert.fechaCulminacion || '');
           document.getElementById('certId').textContent = cert.id || certId;
           
           certificadoValido.classList.remove('hidden');
         } else {
           document.getElementById('errorMessage').innerHTML = 
             data.message || 'El ID de certificado proporcionado no corresponde a ningún certificado emitido oficialmente.';
-          
           certificadoInvalido.classList.remove('hidden');
         }
       } catch (error) {
         console.error('Error verificando certificado:', error);
-        
         loadingState.classList.add('hidden');
-        document.getElementById('errorMessage').innerHTML = 
-          'Error de conexión al verificar el certificado. Intenta nuevamente.';
+        document.getElementById('errorMessage').innerHTML = 'Error de conexión al verificar el certificado. Intenta nuevamente.';
         certificadoInvalido.classList.remove('hidden');
       }
     }
     
-    // ==========================================
-    // INICIALIZAR
-    // ==========================================
     document.addEventListener('DOMContentLoaded', () => {
       const certId = getCertIdFromURL();
-      
       if (certId) {
         verifyCertificate(certId);
       } else {
         document.getElementById('loadingState').classList.add('hidden');
-        document.getElementById('errorMessage').innerHTML = 
-          'No se proporcionó un ID de certificado para verificar.';
+        document.getElementById('errorMessage').innerHTML = 'No se proporcionó un ID de certificado para verificar.';
         document.getElementById('certificadoInvalido').classList.remove('hidden');
       }
     });

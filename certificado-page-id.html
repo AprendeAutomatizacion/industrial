@@ -437,19 +437,19 @@
 
         .cert-signature-title {
             font-size: 12px;
-            color: var(--text-muted);
+            color: #111827;
             font-weight: 600;
             margin: 0;
         }
 
         .cert-id-badge {
             text-align: center;
-            color: #9ca3af;
+            color: #111827;
             font-size: 10px;
         }
 
         .cert-id-badge strong {
-            color: var(--text-muted);
+            color: #111827;
             font-weight: 900;
         }
 
@@ -623,6 +623,19 @@
                 color-adjust: exact !important;
                 background-color: rgba(248, 250, 252, 0.9) !important;
             }
+
+            .cert-qr-img {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                border: 1px solid #cbd5e1 !important;
+                background: white !important;
+                display: block !important;
+            }
+            .cert-qr-section {
+                display: flex !important;
+                visibility: visible !important;
+            }
             
             .cert-temario {
                 grid-template-columns: repeat(3, 1fr) !important;
@@ -634,7 +647,45 @@
                 margin: 0 !important;
             }
         }
-    </style>
+    
+        /* ============ SECCIÓN QR ============ */
+        .cert-qr-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .cert-qr-img {
+            width: 130px;
+            height: 130px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 4px;
+            background: white;
+            object-fit: contain;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .cert-qr-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #111827;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .cert-qr-link {
+            font-size: 8px;
+            color: #111827;
+            margin-top: 2px;
+            max-width: 140px;
+            word-break: break-all;
+            line-height: 1.3;
+            font-family: monospace;
+        }
+        /* ============ FIN SECCIÓN QR ============ */
+</style>
+<base target="_blank">
 </head>
 <body>
 
@@ -708,10 +759,10 @@
                     <div id="certIdBadge" class="cert-id-badge">
                         ID de Certificado: <strong>-</strong>
                     </div>
-                    <div class="cert-signature">
-                        <div class="cert-signature-line"></div>
-                        <p class="cert-signature-name">Aprende Automatización</p>
-                        <p class="cert-signature-title">Dirección Académica</p>
+                    <div class="cert-qr-section">
+                        <img id="certQrCode" class="cert-qr-img" src="" alt="Verificación" style="display:none;">
+                        <p class="cert-qr-label">Verificar autenticidad</p>
+                        <p class="cert-qr-link" id="certQrLink"></p>
                     </div>
                 </div>
             </div>
@@ -722,7 +773,7 @@
         // ==========================================
         // CONFIGURACIÓN
         // ==========================================
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrTAA7BeXNyZOLDSms3YDNtHY95YDQL-PYgkjzyIojn_GIprtQ7zKgLEhPgJ001dXe/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6IEeVFreHp7rdtF5aAgRJ_r-eSFuzv8lHGRjof0PeJrqx9nf33C5aHKwMSfBmfnE/exec';
         
         const urlParams = new URLSearchParams(window.location.search);
         const courseId = urlParams.get('courseId');
@@ -986,18 +1037,44 @@
                 
                 document.getElementById('certStudentName').textContent = currentUser.name || 'Estudiante';
                 
-                const cedula = currentUser.cedula && currentUser.cedula !== 'N/A' ? currentUser.cedula : '00000000';
+                // 🔧 FIX: Recuperar cédula de múltiples fuentes
+                let cedulaRaw = currentUser.cedula || '';
+                if (!cedulaRaw || cedulaRaw === 'N/A') {
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key && key.startsWith('curso_auth_')) {
+                            try {
+                                const authData = JSON.parse(localStorage.getItem(key));
+                                if (authData && authData.cedula && authData.cedula !== 'N/A') {
+                                    cedulaRaw = authData.cedula;
+                                    break;
+                                }
+                            } catch(e) {}
+                        }
+                    }
+                }
+                const cedula = cedulaRaw || '00000000';
                 document.getElementById('certStudentId').textContent = `Cédula de Identidad: ${cedula}`;
-                
+
                 document.getElementById('certCourseName').textContent = `"${course.Nombre}"`;
-                
+
                 const fechaFormateada = formatCertDate(completionDate);
                 document.getElementById('certDate').textContent = `Con una estructura de ${totalLessons} módulos, culminado el día ${fechaFormateada}.`;
-                
-                const ciNum = parseInt(String(cedula).replace(/\D/g, '')) || 0;
+
+                const cedulaLimpia = String(cedula).replace(/\D/g, '');
+                const ciNum = parseInt(cedulaLimpia) || 0;
                 const idCalculado = 13018822 + ciNum;
                 const siglas = course.Nombre.split(' ').filter(p => p.length > 0).map(p => p[0].toUpperCase()).join('') || 'CURSO';
-                document.getElementById('certIdBadge').innerHTML = `ID de Certificado: <strong>${siglas}</strong>-<strong>${idCalculado}</strong>`;
+                const certId = siglas + '-' + idCalculado;
+                const verificationLink = 'https://aprendeautomatizacion.xyz/verify_page.html?id=' + certId;
+
+                document.getElementById('certIdBadge').innerHTML = `ID de Certificado: <strong>${certId}</strong>`;
+
+                const qrApiUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=' + encodeURIComponent(verificationLink);
+                const qrImg = document.getElementById('certQrCode');
+                qrImg.src = qrApiUrl;
+                qrImg.style.display = 'block';
+                document.getElementById('certQrLink').textContent = verificationLink;
                 
                 let moduleNames = [];
                 if (course.NombresModulos && typeof course.NombresModulos === 'string') {
