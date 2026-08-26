@@ -409,8 +409,8 @@
     </div>
 </div>
 
-<!-- 🆕 BOTÓN DE ADMINISTRADOR -->
-<button onclick="openAdminPanel()" class="admin-btn" title="Panel de Administrador">
+<!-- 🔒 BOTÓN DE ADMINISTRADOR (SOLO VISIBLE PARA ADMIN) -->
+<button onclick="openAdminPanel()" id="adminBtn" class="admin-btn" title="Panel de Administrador" style="display: none;">
     <i class="fas fa-user-shield"></i>
 </button>
 
@@ -481,6 +481,9 @@ let studentCountsPerCourse = {};
 let courseRatings = {};
 let COURSES_DATA = [];
 
+// 🔒 LISTA DE ADMINISTRADORES
+const ADMIN_EMAILS = ['pablocdno@gmail.com', 'pablocedeno@gmail.com'];
+
 function showLoadingToast() {
     const toast = document.getElementById('loadingToast');
     if (toast) { toast.classList.remove('hidden'); document.getElementById('loadingToastTitle').innerText = 'Cargando cursos...'; }
@@ -508,8 +511,32 @@ function openModal(id) { document.getElementById(id).classList.add('active'); }
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 function ping(action, key) { try { fetch(SCRIPT_URL, { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: `action=${action}&key=${key}` }); } catch(e) {} }
 
-// 🆕 FUNCIÓN PARA ABRIR EL PANEL DE ADMINISTRADOR
+// 🔒 FUNCIÓN PARA VERIFICAR SI ES ADMINISTRADOR
+function checkAdminAccess() {
+    const adminBtn = document.getElementById('adminBtn');
+    if (!adminBtn) return;
+    
+    if (currentUser && currentUser.email) {
+        const userEmail = currentUser.email.toLowerCase().trim();
+        if (ADMIN_EMAILS.includes(userEmail)) {
+            adminBtn.style.display = 'flex';
+            console.log('✅ Acceso de administrador concedido');
+        } else {
+            adminBtn.style.display = 'none';
+        }
+    } else {
+        adminBtn.style.display = 'none';
+    }
+}
+
+// 🔒 FUNCIÓN PARA ABRIR EL PANEL DE ADMINISTRADOR (CON VERIFICACIÓN)
 function openAdminPanel() {
+    // Verificar si es administrador
+    if (!currentUser || !currentUser.email || !ADMIN_EMAILS.includes(currentUser.email.toLowerCase().trim())) {
+        showNotif('Acceso denegado', 'Solo el administrador puede acceder a este panel.', 'error');
+        return;
+    }
+    
     // Poblar el select de cursos
     const select = document.getElementById('adminCourse');
     if (select && COURSES_DATA.length > 0) {
@@ -529,10 +556,8 @@ function openAdminPanel() {
 function toggleEstadoField() {
     const paisSelect = document.getElementById('adminPais');
     const estadoContainer = document.getElementById('estadoContainer');
-    const estadoSelect = document.getElementById('adminEstado');
     
     if (paisSelect.value === 'Venezuela') {
-        // Mostrar selector de estados de Venezuela
         estadoContainer.innerHTML = `
             <label class="text-xs font-bold text-slate-500">Estado *</label>
             <select id="adminEstado" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
@@ -564,7 +589,6 @@ function toggleEstadoField() {
             </select>
         `;
     } else {
-        // Ocultar selector de estados para otros países
         estadoContainer.innerHTML = `
             <label class="text-xs font-bold text-slate-500">Estado/Provincia</label>
             <input type="text" id="adminEstado" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm" placeholder="Opcional">
@@ -589,7 +613,6 @@ async function manualEnrollStudent(event) {
         return;
     }
     
-    // Validar estado si es Venezuela
     if (pais === 'Venezuela' && !estado) {
         showNotif('Error', 'Debes seleccionar un estado de Venezuela.', 'error');
         return;
@@ -618,15 +641,12 @@ async function manualEnrollStudent(event) {
             hideLoadingToast();
             showNotif('Éxito', `Estudiante inscrito correctamente en "${courseName}"`, 'success');
             
-            // Limpiar formulario
             document.getElementById('adminForm').reset();
             document.getElementById('adminPais').value = 'Venezuela';
             toggleEstadoField();
             
-            // Recargar datos
             await loadCoursesFromSheet();
             
-            // Cerrar modal
             closeModal('adminModal');
         } else {
             hideLoadingToast();
@@ -972,9 +992,12 @@ function toggleLike(btn) {
 
 function logoutUser() { localStorage.removeItem('user'); window.location.reload(); }
 
-// 🆕 INICIALIZAR EVENTO DEL FORMULARIO ADMIN
+// 🔒 INICIALIZAR EVENTO DEL FORMULARIO ADMIN Y VERIFICAR ACCESO
 document.addEventListener("DOMContentLoaded", () => {
     loadCoursesFromSheet();
+    
+    // Verificar acceso de administrador
+    checkAdminAccess();
     
     // Asignar evento al formulario de admin
     const adminForm = document.getElementById('adminForm');
