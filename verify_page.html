@@ -160,6 +160,18 @@
       letter-spacing: 0.05em;
     }
     
+    /* 🆕 Estilo para la calificación */
+    .calificacion-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+    .calificacion-excelente { background: #d1fae5; color: #059669; }
+    .calificacion-buena { background: #dbeafe; color: #2563eb; }
+    .calificacion-regular { background: #fef3c7; color: #d97706; }
+    
     .footer {
       margin-top: 25px;
       padding-top: 20px;
@@ -254,7 +266,9 @@
     
     <div class="dato"><label>Academia</label><span>Aprende Automatización</span></div>
     <div class="dato"><label>Estudiante</label><span id="certNombre">-</span></div>
+    <div class="dato"><label>Cédula</label><span id="certCedula">-</span></div>
     <div class="dato"><label>Curso</label><span id="certCurso">-</span></div>
+    <div class="dato"><label>Calificación</label><span id="certCalificacion">-</span></div>
     <div class="dato"><label>Fecha de emisión</label><span id="certFechaEmision">-</span></div>
     <div class="dato"><label>Fecha de culminación</label><span id="certFechaCulminacion">-</span></div>
     <div class="dato"><label>ID del certificado</label><span class="id-mono" id="certId">-</span></div>
@@ -266,7 +280,7 @@
       Ing. Pablo Cedeño - Instructor Principal
     </div>
     
-    <a href="https://tudominio.com" class="btn-volver">
+    <a href="https://aprendeautomatizacion.xyz" class="btn-volver">
       <i class="fas fa-arrow-left"></i> Volver a la plataforma
     </a>
   </div>
@@ -296,7 +310,7 @@
     // ==========================================
     // CONFIGURACIÓN
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzrTAA7BeXNyZOLDSms3YDNtHY95YDQL-PYgkjzyIojn_GIprtQ7zKgLEhPgJ001dXe/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzX5ckqBXM-QD-dHKZum5nYiGBwN7mT-UUzKUzLRv0w-JrH0Ro7yxCENMRTqpt62IbA/exec';
     
     // ==========================================
     // OBTENER ID DEL CERTIFICADO DE LA URL
@@ -304,6 +318,28 @@
     function getCertIdFromURL() {
       const params = new URLSearchParams(window.location.search);
       return params.get('id') || params.get('cert') || params.get('certificado') || '';
+    }
+    
+    // ==========================================
+    // FORMATEAR CALIFICACIÓN
+    // ==========================================
+    function getCalificacionBadge(calificacion) {
+      if (!calificacion || calificacion === 'N/A') {
+        return '<span class="calificacion-badge calificacion-regular">N/A</span>';
+      }
+      const nota = parseFloat(calificacion);
+      if (isNaN(nota)) {
+        return '<span class="calificacion-badge calificacion-regular">' + calificacion + '</span>';
+      }
+      if (nota >= 90) {
+        return '<span class="calificacion-badge calificacion-excelente">🏆 ' + calificacion + '/100</span>';
+      } else if (nota >= 80) {
+        return '<span class="calificacion-badge calificacion-buena">🥇 ' + calificacion + '/100</span>';
+      } else if (nota >= 70) {
+        return '<span class="calificacion-badge calificacion-buena">🥈 ' + calificacion + '/100</span>';
+      } else {
+        return '<span class="calificacion-badge calificacion-regular">🥉 ' + calificacion + '/100</span>';
+      }
     }
     
     // ==========================================
@@ -329,7 +365,9 @@
           const cert = data.certificate;
           
           document.getElementById('certNombre').textContent = cert.nombre || 'N/A';
+          document.getElementById('certCedula').textContent = cert.cedula || 'N/A';
           document.getElementById('certCurso').textContent = cert.curso || 'N/A';
+          document.getElementById('certCalificacion').innerHTML = getCalificacionBadge(cert.calificacion);
           document.getElementById('certFechaEmision').textContent = cert.fechaEmision || 'N/A';
           document.getElementById('certFechaCulminacion').textContent = cert.fechaCulminacion || 'N/A';
           document.getElementById('certId').textContent = cert.id || certId;
