@@ -711,13 +711,15 @@
 <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
 <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6IEeVFreHp7rdtF5aAgRJ_r-eSFuzv8lHGRjof0PeJrqx9nf33C5aHKwMSfBmfnE/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJxx0nLzxv3nPygbvlVz4y6gqTWQyZDCKw-xxxgPHXzVUyd4n5I7G3p87jxWPj3jx/exec';
 
     let currentUser = JSON.parse(localStorage.getItem('user')) || null;
     window.currentUser = currentUser;
 
     let dbUsers = {}, globalStats = {};
     let dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {};
+    let dbUserPaymentStatus = {};
+    let dbUserAccessStatus = {};
     let studentCountsPerCourse = {};
     let courseRatings = {};
     let userProgress = {};
@@ -732,66 +734,36 @@
     function getTotalLecciones(course) {
         if (!course) return 5;
         
-        let total = 5; // valor por defecto
+        let total = 5;
         
-        // 1. Intentar con TotalLecciones (con mayúscula)
         if (course.TotalLecciones !== undefined && course.TotalLecciones !== null && course.TotalLecciones !== '') {
             total = parseInt(course.TotalLecciones) || 5;
-            console.log(`📚 [${course.Nombre}] TotalLecciones: ${course.TotalLecciones} -> ${total}`);
             return total;
         }
         
-        // 2. Intentar con totalLecciones (con minúscula)
         if (course.totalLecciones !== undefined && course.totalLecciones !== null && course.totalLecciones !== '') {
             total = parseInt(course.totalLecciones) || 5;
-            console.log(`📚 [${course.Nombre}] totalLecciones: ${course.totalLecciones} -> ${total}`);
             return total;
         }
         
-        // 3. Intentar con Modulos (JSON array)
         if (course.Modulos) {
             try {
                 const modulos = JSON.parse(course.Modulos);
                 if (Array.isArray(modulos) && modulos.length > 0) {
                     total = modulos.length;
-                    console.log(`📚 [${course.Nombre}] Módulos JSON: ${modulos.length} módulos`);
                     return total;
                 }
             } catch(e) {
-                // Si no es JSON, intentar contar por comas
                 if (typeof course.Modulos === 'string' && course.Modulos.includes(',')) {
                     const modulosArray = course.Modulos.split(',').filter(m => m.trim() !== '');
                     if (modulosArray.length > 0) {
                         total = modulosArray.length;
-                        console.log(`📚 [${course.Nombre}] Módulos CSV: ${modulosArray.length} módulos`);
                         return total;
                     }
                 }
             }
         }
         
-        // 4. Intentar con NombresModulos
-        if (course.NombresModulos) {
-            try {
-                const nombresModulos = JSON.parse(course.NombresModulos);
-                if (Array.isArray(nombresModulos) && nombresModulos.length > 0) {
-                    total = nombresModulos.length;
-                    console.log(`📚 [${course.Nombre}] NombresModulos JSON: ${nombresModulos.length} módulos`);
-                    return total;
-                }
-            } catch(e) {
-                if (typeof course.NombresModulos === 'string' && course.NombresModulos.includes(',')) {
-                    const nombresArray = course.NombresModulos.split(',').filter(m => m.trim() !== '');
-                    if (nombresArray.length > 0) {
-                        total = nombresArray.length;
-                        console.log(`📚 [${course.Nombre}] NombresModulos CSV: ${nombresArray.length} módulos`);
-                        return total;
-                    }
-                }
-            }
-        }
-        
-        console.log(`📚 [${course.Nombre}] Usando valor por defecto: ${total} lecciones`);
         return total;
     }
 
@@ -912,11 +884,6 @@
             COURSES_DATA = result.data;
             console.log('✅ Catálogo cargado:', COURSES_DATA.length, 'cursos');
             
-            // Log para verificar TotalLecciones de cada curso
-            COURSES_DATA.forEach(c => {
-                console.log(`📚 Curso ID=${c.ID}, Nombre=${c.Nombre}, TotalLecciones=${c.TotalLecciones}, Modulos=${c.Modulos ? c.Modulos.substring(0, 50) + '...' : 'N/A'}`);
-            });
-            
             await loadData();
             showSuccessToast();
 
@@ -931,7 +898,7 @@
     }
 
     // ==========================================
-    // FUNCIÓN loadData
+    // FUNCIÓN loadData (CON FILTRO DE ACCESO SÍ)
     // ==========================================
     async function loadData(){
         try{
@@ -943,6 +910,8 @@
                 dbUserCourses=data.userCourses||{}; 
                 dbUserDetails=data.userDetails||{}; 
                 dbUserProgress=data.userProgress||{};
+                dbUserPaymentStatus = data.userPaymentStatus || {};
+                dbUserAccessStatus = data.userAccessStatus || {};
                 
                 let enrollmentDatesBackend = data.userCourseEnrollmentDates || {};
                 let completionDatesBackend = data.userCourseCompletionDates || {};
@@ -952,7 +921,9 @@
                     stats: Object.keys(globalStats).length,
                     userCourses: Object.keys(dbUserCourses).length,
                     userDetails: Object.keys(dbUserDetails).length,
-                    userProgress: Object.keys(dbUserProgress).length
+                    userProgress: Object.keys(dbUserProgress).length,
+                    paymentStatus: Object.keys(dbUserPaymentStatus).length,
+                    accessStatus: Object.keys(dbUserAccessStatus).length
                 });
                 
                 calculateCourseRatings(); 
@@ -966,23 +937,32 @@
                     
                     console.log('📋 Cursos encontrados en Mis Cursos para', email, ':', myCourseNames);
                     
+                    // 🔒 FILTRAR: SOLO cursos con Acceso = SÍ
                     let myCourseIds = [];
                     myCourseNames.forEach(cName => {
-                        let nn = normalizeName(cName);
-                        let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
-                        if(!found) {
-                            found = COURSES_DATA.find(x => 
-                                normalizeName(x.Nombre).includes(nn) || 
-                                nn.includes(normalizeName(x.Nombre))
-                            );
-                        }
-                        if(found) {
-                            myCourseIds.push(found.ID);
-                            console.log('  ✅ Curso encontrado:', cName, '-> ID:', found.ID);
+                        const key = email + '|' + cName;
+                        const acceso = dbUserAccessStatus[key] || 'NO';
+                        // Solo agregar si Acceso es SÍ
+                        if (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true) {
+                            let nn = normalizeName(cName);
+                            let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
+                            if(!found) {
+                                found = COURSES_DATA.find(x => 
+                                    normalizeName(x.Nombre).includes(nn) || 
+                                    nn.includes(normalizeName(x.Nombre))
+                                );
+                            }
+                            if(found) {
+                                myCourseIds.push(found.ID);
+                                console.log('  ✅ Curso habilitado:', cName, '-> ID:', found.ID);
+                            }
                         } else {
-                            console.warn('  ❌ Curso NO encontrado:', cName);
+                            console.log('  ⏳ Curso pendiente (no se muestra):', cName, 'Acceso:', acceso);
                         }
                     });
+                    
+                    // 🔒 IMPORTANTE: Reemplazar accessedCursos completamente
+                    window.currentUser.accessedCursos = [...myCourseIds];
                     
                     let globalUser = dbUsers[email] || {};
                     if(typeof globalUser === 'string'){ 
@@ -990,13 +970,6 @@
                     }
                     
                     let details = dbUserDetails[email] || {};
-                    
-                    let existingIds = Array.isArray(globalUser.accessedCursos) ? globalUser.accessedCursos : [];
-                    let localIds = Array.isArray(window.currentUser.accessedCursos) ? window.currentUser.accessedCursos : [];
-                    
-                    window.currentUser.accessedCursos = [...new Set([...existingIds, ...localIds, ...myCourseIds])];
-                    
-                    console.log('📊 IDs de cursos accedidos:', window.currentUser.accessedCursos);
                     
                     if(details.name && details.name !== "No provisto" && details.name !== "N/A") 
                         window.currentUser.name = details.name;
@@ -1023,7 +996,7 @@
                     
                     localStorage.setItem('user', JSON.stringify(window.currentUser));
                     
-                    console.log('👤 Usuario sincronizado:', {
+                    console.log('👤 Usuario sincronizado (solo cursos habilitados):', {
                         name: window.currentUser.name,
                         email: window.currentUser.email,
                         accessedCursos: window.currentUser.accessedCursos.length,
@@ -1177,7 +1150,7 @@
     }
 
     // ==========================================
-    // FUNCIÓN fetchProgressForAllCourses CORREGIDA
+    // FUNCIÓN fetchProgressForAllCourses
     // ==========================================
     function fetchProgressForAllCourses(){
         if(!window.currentUser||!window.currentUser.accessedCursos) return;
@@ -1200,9 +1173,7 @@
                 }
             }
             
-            // 🔧 USAR getTotalLecciones para obtener el número correcto
             const total = getTotalLecciones(course);
-            
             const parsedProgress = parseProgressString(progStr, total);
             userProgress[email][String(courseId)] = parsedProgress;
             
@@ -1256,7 +1227,7 @@
     }
 
     // ==========================================
-    // FUNCIÓN renderMisCourses CORREGIDA
+    // FUNCIÓN renderMisCourses (SOLO CURSOS CON ACCESO = SÍ)
     // ==========================================
     function renderMisCourses(){
         const grid=document.getElementById('coursesGrid'), noResults=document.getElementById('noResultsMisCursos');
@@ -1269,16 +1240,19 @@
         }
         
         console.log('📊 Renderizando cursos para:', window.currentUser.email);
-        console.log('📊 IDs accedidos:', window.currentUser.accessedCursos);
-        console.log('📊 COURSES_DATA:', COURSES_DATA.length, 'cursos');
+        console.log('📊 IDs accedidos (solo habilitados):', window.currentUser.accessedCursos);
         
-        const accessedCourses=COURSES_DATA.filter(c=>window.currentUser.accessedCursos&&window.currentUser.accessedCursos.includes(parseInt(c.ID)));
+        // 🔒 FILTRAR: SOLO cursos que están en accessedCursos
+        const accessedCourses = COURSES_DATA.filter(c => 
+            window.currentUser.accessedCursos && 
+            window.currentUser.accessedCursos.includes(parseInt(c.ID))
+        );
         
-        console.log('📊 Cursos encontrados:', accessedCourses.length, accessedCourses.map(c => c.Nombre));
+        console.log('📊 Cursos encontrados (habilitados):', accessedCourses.length, accessedCourses.map(c => c.Nombre));
         
         if(accessedCourses.length===0){
             grid.classList.add('hidden'); noResults.classList.remove('hidden');
-            noResults.innerHTML=`<div class="p-8 rounded-2xl bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] shadow-xl"><i data-lucide="library" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-[var(--text-default)]">Aún no tienes cursos</h3><p class="text-[var(--text-secondary)] text-sm mt-2 mb-6">Explora nuestro catálogo y adquiere tu primer curso.</p><button onclick="window.open('https://wa.me/584121414196?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20cursos', '_blank')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-th"></i> Ver Catálogo</button></div>`;
+            noResults.innerHTML=`<div class="p-8 rounded-2xl bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] shadow-xl"><i data-lucide="library" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-[var(--text-default)]">Aún no tienes cursos habilitados</h3><p class="text-[var(--text-secondary)] text-sm mt-2 mb-6">Si ya compraste un curso, espera la verificación de pago para que aparezca aquí.</p><button onclick="window.open('https://wa.me/584121414196?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20cursos', '_blank')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-th"></i> Ver Catálogo</button></div>`;
             if(window.lucide) lucide.createIcons(); return;
         }
         
@@ -1295,7 +1269,6 @@
             const viewsClass=vistas>0?'text-green-500':'text-slate-400';
             const displayCount=studentCountsPerCourse[course.ID]!==undefined?studentCountsPerCourse[course.ID]:'...';
             
-            // 🔧 USAR getTotalLecciones para obtener el número correcto
             const totalLecciones = getTotalLecciones(course);
             
             console.log(`📚 Curso ${course.Nombre}: TotalLecciones calculado = ${totalLecciones}`);
@@ -1526,7 +1499,7 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        console.log('🚀 Inicializando Mis Cursos...');
+        console.log('🚀 Inicializando Mis Cursos (solo cursos con Acceso = SÍ)...');
         if(window.currentUser) {
             console.log('👤 Usuario detectado:', window.currentUser.email);
         } else {

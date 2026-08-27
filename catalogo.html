@@ -26,6 +26,7 @@
         }
     </script>
     <style>
+        /* ====== ESTILOS COMPLETOS ====== */
         :root {
             --bg-default: #f7f9fb;
             --bg-secondary: rgba(255, 255, 255, 0.85);
@@ -191,6 +192,114 @@
         .course-card-level-basico { border: 1.5px solid rgba(6, 182, 212, 0.5); box-shadow: 0 0 12px rgba(6, 182, 212, 0.12), inset 0 0 30px rgba(6, 182, 212, 0.04); background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%); }
         .course-card-level-intermedio { border: 1.5px solid rgba(139, 92, 246, 0.5); box-shadow: 0 0 12px rgba(139, 92, 246, 0.12), inset 0 0 30px rgba(139, 92, 246, 0.04); background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%); }
         .course-card-level-avanzado { border: 1.5px solid rgba(245, 158, 11, 0.5); box-shadow: 0 0 12px rgba(245, 158, 11, 0.12), inset 0 0 30px rgba(245, 158, 11, 0.04); background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%); }
+        
+        /* 🔒 ESTADOS DE COMPRA */
+        .course-card.estado-pendiente {
+            border-color: #fbbf24 !important;
+            opacity: 0.85;
+        }
+        .course-card.estado-pendiente:hover {
+            border-color: #fbbf24 !important;
+            opacity: 0.95;
+        }
+        .course-card.estado-inscrito {
+            border-color: #34d399 !important;
+        }
+        .course-card.estado-inscrito:hover {
+            border-color: #34d399 !important;
+        }
+        
+        .badge-estado {
+            padding: 0.2rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(8px);
+        }
+        .badge-pendiente {
+            background: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            animation: pulse-badge 1.5s ease-in-out infinite;
+        }
+        .badge-revision {
+            background: rgba(96, 165, 250, 0.2);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.3);
+            animation: pulse-badge 1.5s ease-in-out infinite;
+        }
+        .badge-rechazado {
+            background: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+        .badge-inscrito {
+            background: rgba(52, 211, 153, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+        @keyframes pulse-badge {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        .btn-comprar {
+            background: linear-gradient(135deg, #2db8ce, #06b6d4);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-comprar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4);
+        }
+        .btn-comprar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-pendiente {
+            background: #fbbf24;
+            color: #0a0f1e;
+            padding: 0.6rem 1.5rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            border: none;
+            cursor: default;
+        }
+        .btn-inscrito-pastilla {
+            background: rgba(52, 211, 153, 0.15);
+            color: #34d399;
+            padding: 0.6rem 1.5rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            cursor: default;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-rechazado {
+            background: #f87171;
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-rechazado:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(248, 113, 113, 0.4);
+        }
+
         .learning-step {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -252,47 +361,19 @@
         body.light-mode #catalog-grid .course-card .text-slate-500 { color: #64748b !important; }
         body.light-mode #catalog-grid .course-card .text-slate-400 { color: #94a3b8 !important; }
         
-        /* 🔒 ESTILOS DEL BLOQUE DEL PROFESOR - MODO OSCURO */
-        body:not(.light-mode) .professor-block .professor-label {
-            color: #94a3b8 !important;
-        }
-        body:not(.light-mode) .professor-block .professor-name {
-            color: #ffffff !important;
-        }
-        body:not(.light-mode) .professor-block .professor-specialty {
-            color: #cbd5e1 !important;
-        }
-        body:not(.light-mode) .professor-block .professor-arrow {
-            color: #94a3b8 !important;
-        }
-        body:not(.light-mode) .professor-block:hover .professor-label {
-            color: #475569 !important;
-        }
-        body:not(.light-mode) .professor-block:hover .professor-name {
-            color: #1e293b !important;
-        }
-        body:not(.light-mode) .professor-block:hover .professor-specialty {
-            color: #475569 !important;
-        }
-        body:not(.light-mode) .professor-block:hover .professor-arrow {
-            color: #475569 !important;
-        }
+        body:not(.light-mode) .professor-block .professor-label { color: #94a3b8 !important; }
+        body:not(.light-mode) .professor-block .professor-name { color: #ffffff !important; }
+        body:not(.light-mode) .professor-block .professor-specialty { color: #cbd5e1 !important; }
+        body:not(.light-mode) .professor-block .professor-arrow { color: #94a3b8 !important; }
+        body:not(.light-mode) .professor-block:hover .professor-label { color: #475569 !important; }
+        body:not(.light-mode) .professor-block:hover .professor-name { color: #1e293b !important; }
+        body:not(.light-mode) .professor-block:hover .professor-specialty { color: #475569 !important; }
+        body:not(.light-mode) .professor-block:hover .professor-arrow { color: #475569 !important; }
+        body.light-mode .professor-block .professor-label { color: #64748b !important; }
+        body.light-mode .professor-block .professor-name { color: #1e293b !important; }
+        body.light-mode .professor-block .professor-specialty { color: #475569 !important; }
+        body.light-mode .professor-block .professor-arrow { color: #64748b !important; }
         
-        /* 🔒 ESTILOS DEL BLOQUE DEL PROFESOR - MODO CLARO */
-        body.light-mode .professor-block .professor-label {
-            color: #64748b !important;
-        }
-        body.light-mode .professor-block .professor-name {
-            color: #1e293b !important;
-        }
-        body.light-mode .professor-block .professor-specialty {
-            color: #475569 !important;
-        }
-        body.light-mode .professor-block .professor-arrow {
-            color: #64748b !important;
-        }
-        
-        /* 🔒 ESTILOS PARA EL PANEL DE ADMINISTRADOR */
         .admin-btn {
             position: fixed;
             bottom: 100px;
@@ -361,7 +442,7 @@
     </div>
 </div>
 
-<!-- 🔒 MODAL DE ADMINISTRADOR PARA INSCRIPCIÓN MANUAL -->
+<!-- MODAL ADMIN -->
 <div id="adminModal" class="modal-overlay admin-modal">
     <div class="modal-content !p-8 relative" id="adminModalContent" style="background: #1e293b !important;">
         <button onclick="closeModal('adminModal')" class="absolute top-5 right-5" id="adminCloseBtn" style="color: #ffffff !important;"><i class="fas fa-times"></i></button>
@@ -376,19 +457,16 @@
                     <option value="">Selecciona un estudiante...</option>
                 </select>
             </div>
-            
             <div id="userInfoPreview" class="hidden rounded-2xl p-4 border" style="background: #ffffff !important; border-color: #cbd5e1 !important;">
                 <p class="text-xs font-bold mb-2" style="color: #000000 !important;">Información del estudiante:</p>
                 <div id="userInfoContent" class="text-sm space-y-1" style="color: #000000 !important;"></div>
             </div>
-            
             <div class="space-y-1">
                 <label class="text-xs font-bold" id="adminLabelCourse" style="color: #ffffff !important; font-weight: 700 !important;">Curso Comprado *</label>
                 <select id="adminCourse" required class="w-full rounded-2xl px-4 py-3 text-sm" style="background: #ffffff !important; color: #000000 !important; border: 1px solid #cbd5e1 !important;">
                     <option value="">Selecciona un curso...</option>
                 </select>
             </div>
-            
             <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-2xl font-black uppercase text-xs hover:from-purple-700 hover:to-blue-700 transition-all">
                 <i class="fas fa-user-plus mr-2"></i> Inscribir Estudiante
             </button>
@@ -396,7 +474,91 @@
     </div>
 </div>
 
-<!-- 🔒 BOTÓN DE ADMINISTRADOR (SOLO VISIBLE PARA ADMIN) -->
+<!-- 🔒 MODAL COMPRA - HORIZONTAL CON BOTÓN WHATSAPP -->
+<div id="modalCompra" class="modal-overlay">
+    <div class="modal-content !p-0 relative" style="background: #1e293b !important; max-width: 820px !important; width: 95% !important; overflow: hidden; border-radius: 2rem;">
+        <button onclick="cerrarModalCompra()" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white transition text-xl" style="background: rgba(0,0,0,0.3); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none;"><i class="fas fa-times"></i></button>
+        
+        <div class="flex flex-col md:flex-row">
+            <!-- LADO IZQUIERDO: INFORMACIÓN DEL CURSO + TASA BCV -->
+            <div class="flex-1 p-6 md:p-8" style="background: #0f172a;">
+                <div class="mb-4">
+                    <h3 class="text-xl font-black uppercase text-white" id="modalCursoTitulo">Curso</h3>
+                    <p class="text-slate-400 text-sm mt-1" id="modalCursoDescripcion">Descripción del curso</p>
+                </div>
+                
+                <div class="mb-4">
+                    <span class="text-3xl font-bold text-cyan-400" id="modalCursoPrecio">$0.00</span>
+                    <p class="text-xs text-slate-500 mt-1 flex items-center gap-2 flex-wrap">
+                        <i class="fas fa-info-circle text-slate-600"></i> 
+                        Precio en <strong class="text-white">Dólares</strong> · Se calcula a la <strong class="text-cyan-400">tasa BCV del día</strong>
+                        <button onclick="verTasaBCV()" class="text-xs bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 px-2 py-1 rounded transition border border-cyan-500/30 flex items-center gap-1">
+                            <i class="fas fa-eye"></i> Ver tasa
+                        </button>
+                    </p>
+                </div>
+
+                <!-- 🔒 APLICACIÓN DE TASA BCV -->
+                <div id="tasaBCVContainer" class="hidden p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 transition-all">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Tasa BCV (Dólar USA)</p>
+                            <p class="text-white text-xl font-bold" id="tasaBCVValor">$ 1 = Bs. <span id="tasaBCVNumero">--</span></p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-slate-400 text-[10px] uppercase font-bold tracking-wider">Total en Bolívares</p>
+                            <p class="text-green-400 text-xl font-bold" id="totalBs">Bs. --</p>
+                        </div>
+                    </div>
+                    <div class="mt-2 pt-2 border-t border-slate-700/50 flex justify-between text-xs">
+                        <span class="text-slate-500">Actualizado: <span id="tasaBCVActualizado">--</span></span>
+                        <button onclick="obtenerTasaBCV()" class="text-cyan-400 hover:text-cyan-300 transition flex items-center gap-1">
+                            <i class="fas fa-sync-alt"></i> Actualizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LADO DERECHO: INSTRUCCIONES DE PAGO -->
+            <div class="flex-1 p-6 md:p-8" style="background: #1e293b; border-left: 1px solid #334155;">
+                <div class="p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 h-full flex flex-col">
+                    <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">📋 Instrucciones de pago</p>
+                    <div class="mt-3 space-y-2 flex-1">
+                        <p class="text-white text-sm">Realiza el pago por <strong>Pago Móvil</strong> al número:</p>
+                        <p class="text-cyan-400 text-lg font-bold">0416-1486794</p>
+                        <p class="text-white text-sm">Banco: <strong class="text-cyan-400">Mercantil - 0105</strong></p>
+                        <p class="text-white text-sm">Cédula: <strong class="text-cyan-400">13018822</strong></p>
+                        <p class="text-amber-400 text-sm mt-2 font-bold">💰 Monto en Bolívares: <span class="text-white" id="montoEnBs">Bs. --</span></p>
+                        <p class="text-white text-sm mt-3">📤 Luego de pagar, confirma tu pago:</p>
+                    </div>
+                    
+                    <!-- 🔒 EXPLICACIÓN DEL BOTÓN WHATSAPP -->
+                    <div class="mt-2 p-2 bg-slate-700/30 rounded-lg border border-slate-600/50">
+                        <p class="text-xs text-slate-300 flex items-start gap-2">
+                            <i class="fas fa-info-circle text-cyan-400 mt-0.5"></i>
+                            <span>Haz clic en <strong class="text-green-400">"Enviar comprobante"</strong> para abrir WhatsApp con el mensaje pre-llenado. Adjunta la captura del pago y envíalo.</span>
+                        </p>
+                    </div>
+
+                    <!-- 🔒 BOTÓN WHATSAPP (entre explicación y botones) -->
+                    <button onclick="enviarWhatsApp()" class="w-full text-center flex items-center justify-center gap-2 text-sm py-3 rounded-xl font-bold transition mt-2" style="background: #25D366; color: white; border: none;">
+                        <i class="fab fa-whatsapp"></i> Enviar comprobante por WhatsApp
+                    </button>
+
+                    <!-- 🔒 BOTONES: Confirmar compra | Cancelar -->
+                    <div class="flex flex-col sm:flex-row gap-2 mt-3 pt-3 border-t border-slate-700/50">
+                        <button class="btn-comprar flex-1 text-center flex items-center justify-center gap-2 text-sm py-3" id="btnConfirmarCompra" onclick="confirmarCompra()">
+                            <i class="fas fa-shopping-cart"></i> Confirmar
+                        </button>
+                        <button class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-3 rounded-xl font-semibold transition text-sm flex-1" onclick="cerrarModalCompra()">Cancelar</button>
+                    </div>
+                    <div id="mensajeCompra" class="mt-3 text-center text-sm hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <button onclick="openAdminPanel()" id="adminBtn" class="admin-btn" title="Panel de Administrador" style="display: none;">
     <i class="fas fa-user-shield"></i>
 </button>
@@ -459,16 +621,20 @@
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6IEeVFreHp7rdtF5aAgRJ_r-eSFuzv8lHGRjof0PeJrqx9nf33C5aHKwMSfBmfnE/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJxx0nLzxv3nPygbvlVz4y6gqTWQyZDCKw-xxxgPHXzVUyd4n5I7G3p87jxWPj3jx/exec';
 
 let currentUser = JSON.parse(localStorage.getItem('user')) || null;
 let dbUsers = {}, globalStats = {};
 let dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {};
+let dbUserPaymentStatus = {};
+let dbUserAccessStatus = {};
 let studentCountsPerCourse = {};
 let courseRatings = {};
 let COURSES_DATA = [];
+let cursoSeleccionado = null;
+let tasaBCV = 0;
+let cursoPrecioUSD = 0;
 
-// 🔒 LISTA DE ADMINISTRADORES
 const ADMIN_EMAILS = ['pablocdno@gmail.com', 'pablocedeno@gmail.com'];
 
 function showLoadingToast() {
@@ -498,7 +664,105 @@ function openModal(id) { document.getElementById(id).classList.add('active'); }
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 function ping(action, key) { try { fetch(SCRIPT_URL, { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: `action=${action}&key=${key}` }); } catch(e) {} }
 
-// 🔒 FUNCIÓN PARA APLICAR ESTILOS AL PANEL ADMIN SEGÚN EL MODO
+// ==========================================
+// 🔒 TASA BCV - OBTENER DÓLAR OFICIAL
+// ==========================================
+async function obtenerTasaBCV() {
+    try {
+        const container = document.getElementById('tasaBCVContainer');
+        const tasaValor = document.getElementById('tasaBCVNumero');
+        const tasaActualizado = document.getElementById('tasaBCVActualizado');
+        const totalBs = document.getElementById('totalBs');
+        const montoBs = document.getElementById('montoEnBs');
+        
+        // Mostrar loading
+        tasaValor.textContent = '...';
+        totalBs.textContent = 'Bs. ...';
+        if (montoBs) montoBs.textContent = 'Bs. ...';
+        
+        // Obtener tasa del BCV desde la API de DolarAPI
+        const response = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
+        const data = await response.json();
+        
+        if (data && data.promedio) {
+            tasaBCV = data.promedio;
+            const fecha = data.fechaActualizacion ? new Date(data.fechaActualizacion) : new Date();
+            const fechaStr = fecha.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            
+            tasaValor.textContent = tasaBCV.toFixed(2);
+            tasaActualizado.textContent = fechaStr;
+            
+            // Calcular total en bolívares
+            const precioUSD = cursoSeleccionado ? parseFloat(cursoSeleccionado.Precio || 0) : 0;
+            const total = precioUSD * tasaBCV;
+            totalBs.textContent = `Bs. ${total.toFixed(2)}`;
+            if (montoBs) montoBs.textContent = `Bs. ${total.toFixed(2)}`;
+            
+            container.classList.remove('hidden');
+            container.style.display = 'block';
+        } else {
+            throw new Error('No se pudo obtener la tasa');
+        }
+    } catch (error) {
+        console.error('Error al obtener tasa BCV:', error);
+        // Fallback: usar una tasa estimada
+        const fallbackTasa = 49.50;
+        tasaBCV = fallbackTasa;
+        document.getElementById('tasaBCVNumero').textContent = fallbackTasa.toFixed(2);
+        document.getElementById('tasaBCVActualizado').textContent = 'Estimado (fallback)';
+        
+        const precioUSD = cursoSeleccionado ? parseFloat(cursoSeleccionado.Precio || 0) : 0;
+        const total = precioUSD * fallbackTasa;
+        document.getElementById('totalBs').textContent = `Bs. ${total.toFixed(2)}`;
+        const montoBs = document.getElementById('montoEnBs');
+        if (montoBs) montoBs.textContent = `Bs. ${total.toFixed(2)}`;
+        
+        document.getElementById('tasaBCVContainer').classList.remove('hidden');
+        document.getElementById('tasaBCVContainer').style.display = 'block';
+        
+        showNotif('⚠️ Tasa estimada', 'No se pudo obtener la tasa oficial. Usando tasa de referencia.', 'warning');
+    }
+}
+
+function verTasaBCV() {
+    const container = document.getElementById('tasaBCVContainer');
+    if (container.classList.contains('hidden')) {
+        obtenerTasaBCV();
+    } else {
+        container.classList.toggle('hidden');
+    }
+}
+
+// ==========================================
+// 🔒 ENVIAR MENSAJE DE CONFIRMACIÓN POR WHATSAPP
+// ==========================================
+function enviarWhatsApp() {
+    if (!cursoSeleccionado || !currentUser) {
+        showNotif('Error', 'No hay curso seleccionado o usuario no identificado.', 'error');
+        return;
+    }
+    
+    // Obtener datos
+    const nombreUsuario = currentUser.name || currentUser.email || 'Usuario';
+    const nombreCurso = cursoSeleccionado.Nombre || 'Curso';
+    const precioUSD = parseFloat(cursoSeleccionado.Precio || 0);
+    const montoTotal = precioUSD * tasaBCV;
+    
+    // Construir mensaje
+    const mensaje = `Saludos, mi nombre es ${nombreUsuario}, les comparto la captura por la compra del curso "${nombreCurso}" por Bs. ${montoTotal.toFixed(2)} (Tasa BCV: Bs. ${tasaBCV.toFixed(2)}), espero confirmación.`;
+    
+    // Codificar para URL
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const numeroWhatsApp = '584121414196';
+    
+    // Abrir WhatsApp
+    const url = `https://wa.me/${numeroWhatsApp}?text=${mensajeCodificado}`;
+    window.open(url, '_blank');
+}
+
+// ==========================================
+// ADMIN FUNCTIONS
+// ==========================================
 function applyAdminPanelStyles() {
     const isLightMode = document.body.classList.contains('light-mode');
     const modalContent = document.getElementById('adminModalContent');
@@ -509,7 +773,6 @@ function applyAdminPanelStyles() {
     const closeBtn = document.getElementById('adminCloseBtn');
     
     if (isLightMode) {
-        // MODO CLARO
         if (modalContent) modalContent.style.cssText = 'background: #b0bec5 !important;';
         if (modalTitle) modalTitle.style.cssText = 'color: #1e293b !important; font-weight: 900;';
         if (modalSubtitle) modalSubtitle.style.cssText = 'color: #334155 !important;';
@@ -517,7 +780,6 @@ function applyAdminPanelStyles() {
         if (labelCourse) labelCourse.style.cssText = 'color: #334155 !important; font-weight: 700;';
         if (closeBtn) closeBtn.style.cssText = 'color: #334155 !important;';
     } else {
-        // MODO OSCURO
         if (modalContent) modalContent.style.cssText = 'background: #1e293b !important;';
         if (modalTitle) modalTitle.style.cssText = 'color: #ffffff !important; font-weight: 900;';
         if (modalSubtitle) modalSubtitle.style.cssText = 'color: #ffffff !important;';
@@ -527,16 +789,13 @@ function applyAdminPanelStyles() {
     }
 }
 
-// 🔒 FUNCIÓN PARA VERIFICAR SI ES ADMINISTRADOR
 function checkAdminAccess() {
     const adminBtn = document.getElementById('adminBtn');
     if (!adminBtn) return;
-    
     if (currentUser && currentUser.email) {
         const userEmail = currentUser.email.toLowerCase().trim();
         if (ADMIN_EMAILS.includes(userEmail)) {
             adminBtn.style.display = 'flex';
-            console.log('✅ Acceso de administrador concedido');
         } else {
             adminBtn.style.display = 'none';
         }
@@ -545,91 +804,57 @@ function checkAdminAccess() {
     }
 }
 
-// 🔒 FUNCIÓN PARA ABRIR EL PANEL DE ADMINISTRADOR
 function openAdminPanel() {
     if (!currentUser || !currentUser.email || !ADMIN_EMAILS.includes(currentUser.email.toLowerCase().trim())) {
         showNotif('Acceso denegado', 'Solo el administrador puede acceder a este panel.', 'error');
         return;
     }
-    
     populateStudentSelect();
     populatePaidCoursesSelect();
-    
     document.getElementById('adminForm').reset();
     document.getElementById('userInfoPreview').classList.add('hidden');
-    
     openModal('adminModal');
-    
-    setTimeout(function() {
-        applyAdminPanelStyles();
-    }, 50);
+    setTimeout(function() { applyAdminPanelStyles(); }, 50);
 }
 
-// 🔒 FUNCIÓN PARA POBLAR SELECT DE ESTUDIANTES REGISTRADOS
 function populateStudentSelect() {
     const select = document.getElementById('adminEmail');
     if (!select) return;
-    
     let studentsHTML = '<option value="">Selecciona un estudiante...</option>';
-    
     const sortedEmails = Object.keys(dbUsers).sort();
-    
     sortedEmails.forEach(email => {
         let userData = dbUsers[email];
         let userObj = userData;
-        
-        if (typeof userObj === 'string') {
-            try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; }
-        }
-        
+        if (typeof userObj === 'string') { try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } }
         const userName = userObj.name || email.split('@')[0];
-        
         studentsHTML += `<option value="${email}">${userName} (${email})</option>`;
     });
-    
     select.innerHTML = studentsHTML;
 }
 
-// 🔒 FUNCIÓN PARA POBLAR SELECT DE CURSOS PAGOS
 function populatePaidCoursesSelect() {
     const select = document.getElementById('adminCourse');
     if (!select) return;
-    
     let coursesHTML = '<option value="">Selecciona un curso...</option>';
-    
     const paidCourses = COURSES_DATA.filter(c => parseFloat(c.Precio || 0) > 0);
-    
     paidCourses.forEach(course => {
         const price = parseFloat(course.Precio || 0).toFixed(2);
         coursesHTML += `<option value="${course.Nombre}">${course.Nombre} - $${price}</option>`;
     });
-    
     select.innerHTML = coursesHTML;
 }
 
-// 🔒 FUNCIÓN PARA BUSCAR USUARIO Y MOSTRAR PREVIEW
 function searchUserForEnrollment() {
     const emailSelect = document.getElementById('adminEmail');
     const userInfoPreview = document.getElementById('userInfoPreview');
     const userInfoContent = document.getElementById('userInfoContent');
-    
     const email = emailSelect.value.trim().toLowerCase();
-    
-    if (!email) {
-        userInfoPreview.classList.add('hidden');
-        return;
-    }
-    
+    if (!email) { userInfoPreview.classList.add('hidden'); return; }
     const userData = dbUsers[email];
-    
     if (userData) {
         let userObj = userData;
-        if (typeof userObj === 'string') {
-            try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; }
-        }
-        
+        if (typeof userObj === 'string') { try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } }
         const userCourses = dbUserCourses[email] || [];
-        
         userInfoPreview.classList.remove('hidden');
         userInfoContent.innerHTML = `
             <p style="color: #000000 !important;"><strong style="color: #000000 !important;">Nombre:</strong> ${userObj.name || 'N/A'}</p>
@@ -650,38 +875,19 @@ function searchUserForEnrollment() {
     }
 }
 
-// 🔒 FUNCIÓN PARA INSCRIPCIÓN MANUAL DESDE EL PANEL ADMIN
 async function manualEnrollStudent(event) {
     event.preventDefault();
-    
     const email = document.getElementById('adminEmail').value.trim();
     const courseName = document.getElementById('adminCourse').value;
-    
-    if (!email || !courseName) {
-        showNotif('Error', 'Debes seleccionar un estudiante y un curso.', 'error');
-        return;
-    }
-    
+    if (!email || !courseName) { showNotif('Error', 'Debes seleccionar un estudiante y un curso.', 'error'); return; }
     const userData = dbUsers[email.toLowerCase()];
-    if (!userData) {
-        showNotif('Error', 'El estudiante no está registrado en la plataforma.', 'error');
-        return;
-    }
-    
+    if (!userData) { showNotif('Error', 'El estudiante no está registrado en la plataforma.', 'error'); return; }
     const userCourses = dbUserCourses[email.toLowerCase()] || [];
     const alreadyEnrolled = userCourses.some(c => normalizeName(c) === normalizeName(courseName));
-    if (alreadyEnrolled) {
-        showNotif('Error', 'El estudiante ya está inscrito en este curso.', 'error');
-        return;
-    }
-    
+    if (alreadyEnrolled) { showNotif('Error', 'El estudiante ya está inscrito en este curso.', 'error'); return; }
     let userObj = userData;
-    if (typeof userObj === 'string') {
-        try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; }
-    }
-    
+    if (typeof userObj === 'string') { try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } }
     showLoadingToast();
-    
     try {
         const params = new URLSearchParams();
         params.append('action', 'register_course_access');
@@ -692,24 +898,16 @@ async function manualEnrollStudent(event) {
         params.append('telefono', '');
         params.append('pais', '');
         params.append('estado', '');
-        
-        const response = await fetch(SCRIPT_URL, { 
-            method: 'POST', 
-            body: params 
-        });
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: params });
         const result = await response.json();
-        
         if (result.status === 'success') {
             hideLoadingToast();
             showNotif('Éxito', `Estudiante inscrito correctamente en "${courseName}"`, 'success');
-            
             document.getElementById('adminForm').reset();
             document.getElementById('userInfoPreview').classList.add('hidden');
-            
-            await loadCoursesFromSheet();
-            
+            await loadData();
+            applyFilters();
             populateStudentSelect();
-            
             closeModal('adminModal');
         } else {
             hideLoadingToast();
@@ -722,6 +920,163 @@ async function manualEnrollStudent(event) {
     }
 }
 
+// ==========================================
+// MODAL COMPRA (con tasa BCV y WhatsApp)
+// ==========================================
+function abrirModalCompra(courseId) {
+    if (!currentUser) {
+        showNotif('Acceso requerido', 'Debes iniciar sesión para comprar un curso.', 'info');
+        if (typeof AuthUI !== 'undefined') AuthUI.openModal('login');
+        return;
+    }
+    const curso = COURSES_DATA.find(c => c.ID === courseId);
+    if (!curso) return;
+    
+    const email = currentUser.email.toLowerCase();
+    const key = email + '|' + curso.Nombre;
+    const acceso = dbUserAccessStatus[key] || 'NO';
+    if (acceso === 'SÍ') {
+        showNotif('Ya inscrito', 'Ya estás inscrito en este curso.', 'info');
+        return;
+    }
+    
+    cursoSeleccionado = curso;
+    cursoPrecioUSD = parseFloat(curso.Precio || 0);
+    
+    document.getElementById('modalCursoTitulo').textContent = curso.Nombre;
+    document.getElementById('modalCursoDescripcion').textContent = curso.Descripcion || 'Curso de automatización industrial';
+    document.getElementById('modalCursoPrecio').textContent = `${curso.Moneda || '$'} ${cursoPrecioUSD.toFixed(2)}`;
+    document.getElementById('mensajeCompra').classList.add('hidden');
+    document.getElementById('mensajeCompra').textContent = '';
+    document.getElementById('btnConfirmarCompra').disabled = false;
+    document.getElementById('btnConfirmarCompra').innerHTML = '<i class="fas fa-shopping-cart"></i> Confirmar';
+    document.getElementById('btnConfirmarCompra').className = 'btn-comprar flex-1 text-center flex items-center justify-center gap-2 text-sm py-3';
+    
+    // Ocultar contenedor de tasa y obtenerla automáticamente
+    const tasaContainer = document.getElementById('tasaBCVContainer');
+    tasaContainer.classList.add('hidden');
+    tasaContainer.style.display = 'none';
+    
+    // Obtener tasa en segundo plano
+    setTimeout(() => {
+        obtenerTasaBCV();
+    }, 300);
+    
+    openModal('modalCompra');
+}
+
+function cerrarModalCompra() {
+    closeModal('modalCompra');
+    cursoSeleccionado = null;
+    document.getElementById('tasaBCVContainer').classList.add('hidden');
+    document.getElementById('tasaBCVContainer').style.display = 'none';
+}
+
+async function confirmarCompra() {
+    if (!cursoSeleccionado || !currentUser) return;
+    const btn = document.getElementById('btnConfirmarCompra');
+    const mensaje = document.getElementById('mensajeCompra');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+    mensaje.classList.add('hidden');
+    try {
+        const formData = new URLSearchParams();
+        formData.append('action', 'register_course_with_payment');
+        formData.append('courseName', cursoSeleccionado.Nombre);
+        formData.append('name', currentUser.name || '');
+        formData.append('email', currentUser.email);
+        formData.append('cedula', currentUser.cedula || '');
+        formData.append('telefono', currentUser.telefono || '');
+        formData.append('pais', currentUser.pais || '');
+        formData.append('estado', currentUser.estado || '');
+        formData.append('estadoPago', 'Pendiente');
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+        const result = await response.json();
+        if (result.status === 'success') {
+            mensaje.classList.remove('hidden');
+            mensaje.className = 'mt-3 text-center text-sm text-green-400';
+            mensaje.innerHTML = `
+                <i class="fas fa-check-circle"></i> 
+                ¡Inscripción registrada!<br>
+                <span class="text-amber-400">⏳ El curso está pendiente de verificación de pago.</span><br>
+                <span class="text-slate-400 text-xs">Aparecerá en "Mis Cursos" cuando sea verificado.</span>
+            `;
+            btn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
+            btn.className = 'bg-green-500 text-white px-6 py-3 rounded-xl font-semibold flex-1 text-center';
+            const key = currentUser.email.toLowerCase() + '|' + cursoSeleccionado.Nombre;
+            dbUserPaymentStatus[key] = 'Pendiente';
+            setTimeout(() => {
+                cerrarModalCompra();
+                loadData();
+                applyFilters();
+                showNotif('✅ Compra registrada', 'El curso está pendiente de verificación de pago.', 'success');
+            }, 2000);
+        } else {
+            mensaje.classList.remove('hidden');
+            mensaje.className = 'mt-3 text-center text-sm text-red-400';
+            mensaje.textContent = '❌ ' + (result.message || 'Error al inscribirse. Intenta nuevamente.');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Confirmar';
+        }
+    } catch (error) {
+        console.error('Error en compra:', error);
+        mensaje.classList.remove('hidden');
+        mensaje.className = 'mt-3 text-center text-sm text-red-400';
+        mensaje.textContent = '❌ Error de conexión. Intenta nuevamente.';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Confirmar';
+    }
+}
+
+// ==========================================
+// CURSOS GRATIS
+// ==========================================
+async function enrollFreeCourse(courseId, courseName) {
+    if (!currentUser || !currentUser.email) { openModal('authModal'); return; }
+    const email = currentUser.email.toLowerCase();
+    const key = email + '|' + courseName;
+    const acceso = dbUserAccessStatus[key] || 'NO';
+    if (acceso === 'SÍ') { showNotif('Ya inscrito', 'Ya te encuentras inscrito en este curso.', 'info'); return; }
+    showLoadingToast();
+    try {
+        const formData = new URLSearchParams();
+        formData.append('action', 'register_course_with_payment');
+        formData.append('courseName', courseName);
+        formData.append('name', currentUser.name || email.split('@')[0]);
+        formData.append('email', email);
+        formData.append('cedula', currentUser.cedula || '');
+        formData.append('telefono', currentUser.telefono || '');
+        formData.append('pais', currentUser.pais || '');
+        formData.append('estado', currentUser.estado || '');
+        formData.append('estadoPago', 'Verificado');
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
+        const result = await response.json();
+        if (result.status === 'success') {
+            if (!currentUser.accessedCursos) currentUser.accessedCursos = [];
+            if (!currentUser.accessedCursos.includes(parseInt(courseId))) {
+                currentUser.accessedCursos.push(parseInt(courseId));
+            }
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            dbUserPaymentStatus[key] = 'Verificado';
+            dbUserAccessStatus[key] = 'SÍ';
+            await loadData();
+            applyFilters();
+            showSuccessToast();
+            showNotif('✅ Inscripción exitosa', `Te has inscrito en "${courseName}"`, 'success');
+        } else {
+            hideLoadingToast();
+            showNotif('Error', result.message || 'No se pudo completar la inscripción.', 'error');
+        }
+    } catch (e) { 
+        hideLoadingToast(); 
+        console.error('Error en inscripción gratuita:', e);
+        showNotif('Error de conexión', 'Intenta de nuevo.', 'error'); 
+    }
+}
+
+// ==========================================
+// DATOS Y FILTROS
+// ==========================================
 async function loadData() {
     try {
         const res = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
@@ -732,7 +1087,10 @@ async function loadData() {
             dbUserCourses = data.userCourses || {};
             dbUserDetails = data.userDetails || {};
             dbUserProgress = data.userProgress || {};
-            console.log('📊 Métricas cargadas - Stats:', Object.keys(globalStats).length);
+            dbUserPaymentStatus = data.userPaymentStatus || {};
+            dbUserAccessStatus = data.userAccessStatus || {};
+            console.log('📊 Estados de pago:', Object.keys(dbUserPaymentStatus).length);
+            console.log('📊 Accesos:', Object.keys(dbUserAccessStatus).length);
             if (currentUser && currentUser.email) syncCurrentUserFromCloud();
             calculateCourseRatings();
             updateStudentCounts();
@@ -785,6 +1143,9 @@ function updateStudentCounts() {
 
 let currentLevel = 'Todos';
 
+// ==========================================
+// GENERAR TARJETA DE CURSO
+// ==========================================
 function generateCourseCard(course) {
     const courseId = course.ID || '';
     const courseName = course.Nombre || 'Sin nombre';
@@ -795,9 +1156,66 @@ function generateCourseCard(course) {
     const courseCurrency = course.Moneda || '$';
     const courseImage = course.ImagenURL || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso';
     const courseLink = course.EnlaceInfo || '#';
-    const courseBuyLink = course.EnlaceCompra || '';
     const courseBadges = course.Badges || '';
     const courseDescription = course.Descripcion || course['Descripción'] || '';
+    const email = currentUser ? currentUser.email.toLowerCase() : '';
+    
+    const key = email + '|' + courseName;
+    const estadoPago = dbUserPaymentStatus[key] || null;
+    const acceso = dbUserAccessStatus[key] || 'NO';
+    const isAccessGranted = (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true);
+    
+    let estadoClase = '';
+    let badgeEstadoHTML = '';
+    let botonHTML = '';
+    let estadoTexto = '';
+    let mensajeEstado = '';
+    let showOverlay = false;
+    let overlayText = '';
+    
+    if (isAccessGranted) {
+        estadoClase = 'estado-inscrito';
+        badgeEstadoHTML = `<span class="badge-estado badge-inscrito"><i class="fas fa-check-circle"></i> ✅ Inscrito</span>`;
+        botonHTML = `<span class="btn-inscrito-pastilla"><i class="fas fa-check-circle"></i> Inscrito</span>`;
+        estadoTexto = 'inscrito';
+        mensajeEstado = `<div class="mt-1 text-[10px] text-green-400 text-center">✅ Acceso habilitado en "Mis Cursos"</div>`;
+        showOverlay = false;
+    } else if (estadoPago === 'Pendiente') {
+        estadoClase = 'estado-pendiente';
+        badgeEstadoHTML = `<span class="badge-estado badge-pendiente"><i class="fas fa-clock"></i> ⏳ Pendiente</span>`;
+        botonHTML = `<button class="btn-pendiente" disabled><i class="fas fa-clock"></i> Pendiente</button>`;
+        estadoTexto = 'pendiente';
+        mensajeEstado = `<div class="mt-1 text-[10px] text-amber-400 text-center">⏳ Esperando verificación de pago</div>`;
+        showOverlay = true;
+        overlayText = 'Pago pendiente de verificación';
+    } else if (estadoPago === 'Revisión' || estadoPago === 'REVISIÓN' || estadoPago === 'REVISION') {
+        estadoClase = 'estado-pendiente';
+        badgeEstadoHTML = `<span class="badge-estado badge-revision"><i class="fas fa-spinner fa-spin"></i> 🔄 Revisión</span>`;
+        botonHTML = `<button class="btn-pendiente" disabled><i class="fas fa-spinner fa-spin"></i> Revisando</button>`;
+        estadoTexto = 'revision';
+        mensajeEstado = `<div class="mt-1 text-[10px] text-blue-400 text-center">🔄 Tu pago está en revisión</div>`;
+        showOverlay = true;
+        overlayText = 'Pago en revisión';
+    } else if (estadoPago === 'Rechazado' || estadoPago === 'RECHAZADO') {
+        estadoClase = 'estado-rechazado';
+        badgeEstadoHTML = `<span class="badge-estado badge-rechazado"><i class="fas fa-times-circle"></i> ❌ Rechazado</span>`;
+        botonHTML = `<button onclick="event.stopPropagation(); abrirModalCompra(${courseId})" class="btn-rechazado"><i class="fas fa-redo"></i> Reintentar</button>`;
+        estadoTexto = 'rechazado';
+        mensajeEstado = `<div class="mt-1 text-[10px] text-red-400 text-center">❌ Pago rechazado. Reintenta la compra.</div>`;
+        showOverlay = true;
+        overlayText = 'Pago rechazado';
+    } else {
+        estadoClase = '';
+        badgeEstadoHTML = `<span class="badge-estado" style="background:rgba(148,163,184,0.2);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);">Disponible</span>`;
+        if (coursePrice === 0) {
+            botonHTML = `<button onclick="event.stopPropagation(); enrollFreeCourse('${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="btn-comprar"><i class="fas fa-gift"></i> Inscribirse Gratis</button>`;
+        } else {
+            botonHTML = `<button onclick="event.stopPropagation(); abrirModalCompra(${courseId})" class="btn-comprar"><i class="fas fa-shopping-cart"></i> Comprar</button>`;
+        }
+        estadoTexto = 'disponible';
+        mensajeEstado = '';
+        showOverlay = false;
+    }
 
     let badgesHTML = '';
     if (courseBadges) {
@@ -816,33 +1234,6 @@ function generateCourseCard(course) {
     const avgRating = courseRatings[courseId] ? courseRatings[courseId].avg : "5.0";
     const displayCount = studentCountsPerCourse[courseId] !== undefined ? studentCountsPerCourse[courseId] : '...';
     const isLogged = currentUser !== null;
-    const hasAccess = isLogged && currentUser.accessedCursos && currentUser.accessedCursos.includes(parseInt(courseId));
-    const isManual = (courseType || '').toLowerCase() === 'manual';
-    const isFree = coursePrice === 0;
-
-    let buttonsHTML = '';
-    if (courseLink && courseLink !== '#' && courseLink !== '') {
-        let freeBtn = '';
-        if (isFree && !hasAccess) {
-            if (isLogged) {
-                freeBtn = `<button onclick="event.stopPropagation(); enrollFreeCourse('${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="w-full btn-metal-green py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-user-plus"></i> Inscribirse Gratis</button>`;
-            } else {
-                freeBtn = `<button onclick="event.stopPropagation(); openModal('authModal')" class="w-full btn-metal-green py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-lock"></i> Iniciar Sesión para Inscribirse Gratis</button>`;
-            }
-        }
-        buttonsHTML = `<div class="flex flex-col gap-2 w-full">${freeBtn}<button onclick="event.stopPropagation(); registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del ${isManual ? 'Manual' : 'Curso'}</button></div>`;
-    } else {
-        buttonsHTML = `<div class="flex flex-col gap-2 w-full"><button onclick="event.stopPropagation(); showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')" class="w-full bg-slate-300 text-slate-500 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest cursor-not-allowed text-center shadow-sm">PRÓXIMAMENTE</button></div>`;
-    }
-
-    let buyActionHTML = '';
-    if (hasAccess) {
-        buyActionHTML = `<span class="text-teal-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 bg-teal-50 px-3 py-1.5 rounded-lg border border-teal-100"><i class="fas fa-check-circle text-sm"></i> ${isManual ? 'Adquirido' : 'Inscrito'}</span>`;
-    } else if (isFree) {
-        buyActionHTML = `<span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5"><i class="fas fa-gift text-sm"></i> Gratis</span>`;
-    } else {
-        buyActionHTML = `<span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5"><i class="fas fa-info-circle text-sm"></i> Inscripción vía administrador</span>`;
-    }
 
     let userRating = 0;
     if (currentUser && currentUser.ratings && currentUser.ratings[courseId]) userRating = currentUser.ratings[courseId];
@@ -867,10 +1258,28 @@ function generateCourseCard(course) {
         levelBadgeStyle = 'background-color: rgba(245,158,11,0.1); color: rgb(180,83,9); border: 1px solid rgba(245,158,11,0.3);';
     }
 
+    let infoButton = '';
+    if (courseLink && courseLink !== '#' && courseLink !== '') {
+        infoButton = `<button onclick="event.stopPropagation(); registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del ${courseType.toLowerCase() === 'manual' ? 'Manual' : 'Curso'}</button>`;
+    } else {
+        infoButton = `<button onclick="event.stopPropagation(); showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')" class="w-full bg-slate-300 text-slate-500 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest cursor-not-allowed text-center shadow-sm">PRÓXIMAMENTE</button>`;
+    }
+
+    let overlayHTML = '';
+    if (showOverlay) {
+        overlayHTML = `<div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-10 pointer-events-none">
+            <div class="text-center p-4">
+                <i class="fas fa-lock text-4xl text-amber-400/80 mb-2"></i>
+                <p class="text-white text-xs font-bold uppercase tracking-wider">Acceso Restringido</p>
+                <p class="text-white/60 text-[10px] mt-1">${overlayText}</p>
+            </div>
+        </div>`;
+    }
+
     return `
-    <div class="course-card ${levelBorderClass}" onclick="registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')">
+    <div class="course-card ${levelBorderClass} ${estadoClase}">
         <div class="aspect-video w-full overflow-hidden bg-[#0f172a] relative">
-            <img src="${courseImage}" alt="${courseName}" class="w-full h-full object-cover ${hasAccess ? 'opacity-100' : 'opacity-30'}" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Curso'">
+            <img src="${courseImage}" alt="${courseName}" class="w-full h-full object-cover ${isAccessGranted ? 'opacity-100' : 'opacity-30'}" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Curso'">
             <div class="absolute top-3 left-3 flex flex-col gap-1.5">
                 <span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md bg-slate-900/70 text-white">${courseType}</span>
                 ${courseCategory ? `<span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md bg-slate-900/70 text-white">${courseCategory}</span>` : ''}
@@ -879,6 +1288,10 @@ function generateCourseCard(course) {
             <div class="absolute top-3 right-3 bg-slate-900/70 text-[#2db8ce] text-[10px] font-black px-2 py-1 rounded-md flex items-center gap-1">
                 <i class="fas fa-star text-yellow-400"></i> ${avgRating}
             </div>
+            <div class="absolute top-3 right-3 mt-6">
+                ${badgeEstadoHTML}
+            </div>
+            ${overlayHTML}
         </div>
         <div class="p-5 md:p-6 flex-grow flex flex-col">
             ${course.ProfesorNombre || course.ProfesorFoto ? `
@@ -915,11 +1328,12 @@ function generateCourseCard(course) {
             
             <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
                 ${priceTag}
-                ${buyActionHTML}
+                ${botonHTML}
             </div>
+            ${mensajeEstado}
         </div>
         <div class="px-5 md:px-6 py-4 bg-slate-50 border-t border-slate-100" onclick="event.stopPropagation();">
-            ${buttonsHTML}
+            ${infoButton}
         </div>
     </div>`;
 }
@@ -934,8 +1348,18 @@ function applyFilters() {
             return (c.Nivel || '').toLowerCase() === currentLevel.toLowerCase();
         });
     }
-    if (filtered.length === 0) { grid.innerHTML = '<div class="col-span-full text-center py-20">No se encontraron cursos.</div>'; return; }
-    grid.innerHTML = filtered.map(c => generateCourseCard(c)).join('');
+    const email = currentUser ? currentUser.email.toLowerCase() : '';
+    const visibleCourses = filtered.map(c => {
+        const key = email + '|' + c.Nombre;
+        const acceso = dbUserAccessStatus[key] || 'NO';
+        return { ...c, tieneAcceso: (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true) };
+    });
+    
+    if (visibleCourses.length === 0) { 
+        grid.innerHTML = `<div class="col-span-full text-center py-20 text-slate-400">No se encontraron cursos.</div>`;
+        return; 
+    }
+    grid.innerHTML = visibleCourses.map(c => generateCourseCard(c)).join('');
 }
 
 async function loadCoursesFromSheet() {
@@ -960,34 +1384,6 @@ function registerViewAndGo(url, courseId, courseName = '') {
     ping('update_stat', `curso-${courseId}_vistas`);
     if (globalStats) globalStats[`curso-${courseId}_vistas`] = (parseInt(globalStats[`curso-${courseId}_vistas`]) || 0) + 1;
     if (url && url !== '#') window.open(url, '_self');
-}
-
-async function enrollFreeCourse(courseId, courseName) {
-    if (!currentUser || !currentUser.email) { openModal('authModal'); return; }
-    const email = currentUser.email.toLowerCase();
-    const userCourses = dbUserCourses[email] || [];
-    const alreadyEnrolled = userCourses.some(c => normalizeName(c) === normalizeName(courseName));
-    if (alreadyEnrolled) { showNotif('Ya inscrito', 'Ya te encuentras inscrito.', 'info'); return; }
-    showLoadingToast();
-    try {
-        const params = new URLSearchParams();
-        params.append('action', 'register_course_access');
-        params.append('courseName', courseName);
-        params.append('name', currentUser.name || email.split('@')[0]);
-        params.append('email', email);
-        const response = await fetch(SCRIPT_URL, { method: 'POST', body: params });
-        const result = await response.json();
-        if (result.status === 'success') {
-            if (!currentUser.accessedCursos) currentUser.accessedCursos = [];
-            if (!currentUser.accessedCursos.includes(parseInt(courseId))) currentUser.accessedCursos.push(parseInt(courseId));
-            localStorage.setItem('user', JSON.stringify(currentUser));
-            applyFilters();
-            showSuccessToast();
-        } else {
-            hideLoadingToast();
-            showNotif('Error', result.message || 'No se pudo completar.', 'error');
-        }
-    } catch (e) { hideLoadingToast(); showNotif('Error de conexión', 'Intenta de nuevo.', 'error'); }
 }
 
 async function syncUserProgressToExcel() {
@@ -1053,12 +1449,11 @@ function toggleLike(btn) {
     syncUserProgressToExcel();
 }
 
-function logoutUser() { localStorage.removeItem('user'); window.location.reload(); }
-
-// 🔒 INICIALIZAR EVENTO DEL FORMULARIO ADMIN Y VERIFICAR ACCESO
+// ==========================================
+// INICIALIZAR
+// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     loadCoursesFromSheet();
-    
     checkAdminAccess();
     
     const adminForm = document.getElementById('adminForm');
@@ -1066,7 +1461,6 @@ document.addEventListener("DOMContentLoaded", () => {
         adminForm.addEventListener('submit', manualEnrollStudent);
     }
     
-    // Observar cambios en el body para detectar cambio de modo
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
             if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
@@ -1078,7 +1472,6 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-    
     observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 });
 </script>

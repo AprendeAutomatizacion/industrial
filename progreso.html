@@ -24,6 +24,7 @@
         }
     </script>
     <style>
+        /* ===== TODOS TUS ESTILOS EXISTENTES (MANTENER) ===== */
         /* ============================================================
            PREVENCION FLASH BLANCO + RESET BASE
            ============================================================ */
@@ -400,6 +401,10 @@
             object-fit: contain;
             filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
         }
+        .loading-toast .toast-content {
+            flex: 1;
+            min-width: 0;
+        }
         .loading-toast .toast-title {
             color: #ffffff;
             font-weight: 700;
@@ -766,7 +771,7 @@
 
 
     // ===================== CONFIGURACION =====================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwg6IEeVFreHp7rdtF5aAgRJ_r-eSFuzv8lHGRjof0PeJrqx9nf33C5aHKwMSfBmfnE/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJxx0nLzxv3nPygbvlVz4y6gqTWQyZDCKw-xxxgPHXzVUyd4n5I7G3p87jxWPj3jx/exec';
 
 
 
@@ -776,6 +781,7 @@
     let currentUser = JSON.parse(localStorage.getItem('user')) || null;
     window.currentUser = currentUser;
     let dbUsers = {}, dbUserCourses = {}, dbUserDetails = {}, dbUserProgress = {};
+    let dbUserAccessStatus = {};
     let userProgress = {};
     let latestEnrollmentDates = {};
     let latestCompletionDates = {};
@@ -931,6 +937,9 @@
         return {completed, total: totalLessons, percent, scores, avgScore: avg, progress: progressIndices};
     }
 
+    // ============================================================
+    // FUNCIÓN loadData CORREGIDA - SOLO CURSOS CON ACCESO = SÍ
+    // ============================================================
     async function loadData() {
         if(!currentUser) return;
         try {
@@ -941,39 +950,83 @@
                 dbUserCourses = data.userCourses || {};
                 dbUserDetails = data.userDetails || {};
                 dbUserProgress = data.userProgress || {};
+                dbUserAccessStatus = data.userAccessStatus || {};
                 const enrollmentDatesBackend = data.userCourseEnrollmentDates || {};
                 const completionDatesBackend = data.userCourseCompletionDates || {};
                 const email = currentUser.email.toLowerCase();
+                
+                // Obtener todos los cursos del usuario desde el servidor
                 let myCourseNamesRaw = dbUserCourses[email] || [];
                 let myCourseNames = splitCourseNames(myCourseNamesRaw);
+                
+                console.log('📋 Cursos del usuario en servidor:', myCourseNames);
+                
+                // 🔒 FILTRAR: SOLO cursos con Acceso = SÍ (desde el servidor)
                 let myCourseIds = [];
                 myCourseNames.forEach(cName => {
-                    let nn = normalizeName(cName);
-                    let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
-                    if(!found) found = COURSES_DATA.find(x => normalizeName(x.Nombre).includes(nn) || nn.includes(normalizeName(x.Nombre)));
-                    if(found) myCourseIds.push(found.ID);
+                    const key = email + '|' + cName;
+                    const acceso = dbUserAccessStatus[key] || 'NO';
+                    console.log(`🔐 ${cName} -> Acceso: ${acceso}`);
+                    
+                    // Solo agregar si Acceso es SÍ
+                    if (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true) {
+                        let nn = normalizeName(cName);
+                        let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
+                        if(!found) {
+                            found = COURSES_DATA.find(x => normalizeName(x.Nombre).includes(nn) || nn.includes(normalizeName(x.Nombre)));
+                        }
+                        if(found) {
+                            myCourseIds.push(found.ID);
+                            console.log('  ✅ Curso habilitado (progreso):', cName, '-> ID:', found.ID);
+                        }
+                    } else {
+                        console.log('  ⏳ Curso pendiente (NO se muestra en progreso):', cName);
+                    }
                 });
-                let globalUser = dbUsers[email] || {};
-                if(typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; } }
-                let existingIds = Array.isArray(globalUser.accessedCursos) ? globalUser.accessedCursos : (currentUser.accessedCursos || []);
-                currentUser.accessedCursos = [...new Set([...existingIds, ...myCourseIds])];
+                
+                // 🔒 IMPORTANTE: Reemplazar accessedCursos completamente, SIN mezclar con datos antiguos
+                // Esto es lo que estaba causando el problema: se mezclaban datos antiguos
+                currentUser.accessedCursos = [...myCourseIds];
+                
+                // Actualizar otros datos del usuario
                 let details = dbUserDetails[email] || {};
-                if(details.name && details.name !== "No provisto" && details.name !== "N/A") currentUser.name = details.name;
+                if(details.name && details.name !== "No provisto" && details.name !== "N/A") {
+                    currentUser.name = details.name;
+                }
                 currentUser.cedula = details.cedula || currentUser.cedula || "N/A";
                 currentUser.telefono = details.telefono || currentUser.telefono || "N/A";
                 currentUser.pais = details.pais || currentUser.pais || "N/A";
                 currentUser.estado = details.estado || currentUser.estado || "N/A";
+                
+                let globalUser = dbUsers[email] || {};
+                if(typeof globalUser === 'string') { 
+                    try { globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; } 
+                }
+                
                 currentUser.downloadedFiles = globalUser.downloadedFiles || currentUser.downloadedFiles || [];
                 currentUser.likedCourses = globalUser.likedCourses || currentUser.likedCourses || [];
                 currentUser.profession = globalUser.profession || currentUser.profession || "";
+                
                 latestEnrollmentDates = enrollmentDatesBackend[email] || {};
                 latestCompletionDates = completionDatesBackend[email] || {};
+                
+                // Guardar en localStorage SOLO los cursos habilitados
                 localStorage.setItem('user', JSON.stringify(currentUser));
                 window.currentUser = currentUser;
+                
+                console.log('👤 Usuario sincronizado (solo cursos habilitados):', {
+                    name: currentUser.name,
+                    email: currentUser.email,
+                    accessedCursos: currentUser.accessedCursos.length,
+                    cursos: currentUser.accessedCursos
+                });
+                
                 fetchProgressForAllCourses();
                 updateDashboard();
             }
-        } catch(e) { console.error("Error al cargar datos:", e); }
+        } catch(e) { 
+            console.error("Error al cargar datos:", e); 
+        }
     }
 
     async function loadCoursesFromSheet() {
@@ -1072,8 +1125,8 @@
         const accessedIds = user?.accessedCursos || []; 
         const email = user?.email?.toLowerCase();
         if (!email || accessedIds.length === 0) {
-            coursesContainer.innerHTML = '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos para mostrar. Inscribete en el catalogo.</div>';
-            subjectsContainer.innerHTML = '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias para mostrar.</div>';
+            coursesContainer.innerHTML = '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos habilitados para mostrar. Si ya compraste, espera la verificación de pago.</div>';
+            subjectsContainer.innerHTML = '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias habilitadas para mostrar.</div>';
             return;
         }
         let coursesHtml = '';
@@ -1199,10 +1252,8 @@
                 </div>`;
             if (course.Tipo === 'Materia') { subjectsHtml += cardHtml; } else { coursesHtml += cardHtml; }
         });
-        coursesContainer.innerHTML = coursesHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos (Online/Presencial) para mostrar.</div>';
-        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias (Ingeniería/Diplomados/Maestrias) para mostrar.</div>';
-
-
+        coursesContainer.innerHTML = coursesHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos (Online/Presencial) habilitados.</div>';
+        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias (Ingeniería/Diplomados/Maestrias) habilitadas.</div>';
     }
 
     function updateDashboard() {
