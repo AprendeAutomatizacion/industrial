@@ -252,7 +252,47 @@
         body.light-mode #catalog-grid .course-card .text-slate-500 { color: #64748b !important; }
         body.light-mode #catalog-grid .course-card .text-slate-400 { color: #94a3b8 !important; }
         
-        /* 🆕 ESTILOS PARA EL PANEL DE ADMINISTRADOR */
+        /* 🔒 ESTILOS DEL BLOQUE DEL PROFESOR - MODO OSCURO */
+        body:not(.light-mode) .professor-block .professor-label {
+            color: #94a3b8 !important;
+        }
+        body:not(.light-mode) .professor-block .professor-name {
+            color: #ffffff !important;
+        }
+        body:not(.light-mode) .professor-block .professor-specialty {
+            color: #cbd5e1 !important;
+        }
+        body:not(.light-mode) .professor-block .professor-arrow {
+            color: #94a3b8 !important;
+        }
+        body:not(.light-mode) .professor-block:hover .professor-label {
+            color: #475569 !important;
+        }
+        body:not(.light-mode) .professor-block:hover .professor-name {
+            color: #1e293b !important;
+        }
+        body:not(.light-mode) .professor-block:hover .professor-specialty {
+            color: #475569 !important;
+        }
+        body:not(.light-mode) .professor-block:hover .professor-arrow {
+            color: #475569 !important;
+        }
+        
+        /* 🔒 ESTILOS DEL BLOQUE DEL PROFESOR - MODO CLARO */
+        body.light-mode .professor-block .professor-label {
+            color: #64748b !important;
+        }
+        body.light-mode .professor-block .professor-name {
+            color: #1e293b !important;
+        }
+        body.light-mode .professor-block .professor-specialty {
+            color: #475569 !important;
+        }
+        body.light-mode .professor-block .professor-arrow {
+            color: #64748b !important;
+        }
+        
+        /* 🔒 ESTILOS PARA EL PANEL DE ADMINISTRADOR */
         .admin-btn {
             position: fixed;
             bottom: 100px;
@@ -321,87 +361,34 @@
     </div>
 </div>
 
-<!-- 🆕 MODAL DE ADMINISTRADOR PARA INSCRIPCIÓN MANUAL -->
+<!-- 🔒 MODAL DE ADMINISTRADOR PARA INSCRIPCIÓN MANUAL -->
 <div id="adminModal" class="modal-overlay admin-modal">
-    <div class="modal-content !p-8 relative">
-        <button onclick="closeModal('adminModal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600"><i class="fas fa-times"></i></button>
+    <div class="modal-content !p-8 relative" id="adminModalContent" style="background: #1e293b !important;">
+        <button onclick="closeModal('adminModal')" class="absolute top-5 right-5" id="adminCloseBtn" style="color: #ffffff !important;"><i class="fas fa-times"></i></button>
         <div class="text-center mb-6">
-            <h3 class="text-2xl font-black text-slate-900 uppercase">Panel Admin</h3>
-            <p class="text-xs text-slate-500 mt-2">Inscripción manual de estudiantes</p>
+            <h3 class="text-2xl font-black uppercase" id="adminModalTitle" style="color: #ffffff !important;">Panel Admin</h3>
+            <p class="text-xs mt-2" id="adminModalSubtitle" style="color: #ffffff !important;">Inscripción de estudiantes a cursos pagos</p>
         </div>
         <form id="adminForm" class="space-y-4">
             <div class="space-y-1">
-                <label class="text-xs font-bold text-slate-500">Nombre del Estudiante *</label>
-                <input type="text" id="adminName" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
+                <label class="text-xs font-bold" id="adminLabelStudent" style="color: #ffffff !important; font-weight: 700 !important;">Estudiante Registrado *</label>
+                <select id="adminEmail" required class="w-full rounded-2xl px-4 py-3 text-sm" onchange="searchUserForEnrollment()" style="background: #ffffff !important; color: #000000 !important; border: 1px solid #cbd5e1 !important;">
+                    <option value="">Selecciona un estudiante...</option>
+                </select>
             </div>
-            <div class="space-y-1">
-                <label class="text-xs font-bold text-slate-500">Email *</label>
-                <input type="email" id="adminEmail" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
+            
+            <div id="userInfoPreview" class="hidden rounded-2xl p-4 border" style="background: #ffffff !important; border-color: #cbd5e1 !important;">
+                <p class="text-xs font-bold mb-2" style="color: #000000 !important;">Información del estudiante:</p>
+                <div id="userInfoContent" class="text-sm space-y-1" style="color: #000000 !important;"></div>
             </div>
+            
             <div class="space-y-1">
-                <label class="text-xs font-bold text-slate-500">Curso *</label>
-                <select id="adminCourse" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
+                <label class="text-xs font-bold" id="adminLabelCourse" style="color: #ffffff !important; font-weight: 700 !important;">Curso Comprado *</label>
+                <select id="adminCourse" required class="w-full rounded-2xl px-4 py-3 text-sm" style="background: #ffffff !important; color: #000000 !important; border: 1px solid #cbd5e1 !important;">
                     <option value="">Selecciona un curso...</option>
                 </select>
             </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-slate-500">Cédula</label>
-                    <input type="text" id="adminCedula" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
-                </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-slate-500">Teléfono</label>
-                    <input type="text" id="adminTelefono" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-3">
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-slate-500">País *</label>
-                    <select id="adminPais" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm" onchange="toggleEstadoField()">
-                        <option value="">Selecciona país...</option>
-                        <option value="Venezuela">Venezuela</option>
-                        <option value="Colombia">Colombia</option>
-                        <option value="Ecuador">Ecuador</option>
-                        <option value="Perú">Perú</option>
-                        <option value="Chile">Chile</option>
-                        <option value="Argentina">Argentina</option>
-                        <option value="México">México</option>
-                        <option value="España">España</option>
-                        <option value="Estados Unidos">Estados Unidos</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                </div>
-                <div class="space-y-1" id="estadoContainer">
-                    <label class="text-xs font-bold text-slate-500">Estado</label>
-                    <select id="adminEstado" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
-                        <option value="">Selecciona estado...</option>
-                        <option value="Amazonas">Amazonas</option>
-                        <option value="Anzoátegui">Anzoátegui</option>
-                        <option value="Apure">Apure</option>
-                        <option value="Aragua">Aragua</option>
-                        <option value="Barinas">Barinas</option>
-                        <option value="Bolívar">Bolívar</option>
-                        <option value="Carabobo">Carabobo</option>
-                        <option value="Cojedes">Cojedes</option>
-                        <option value="Delta Amacuro">Delta Amacuro</option>
-                        <option value="Distrito Capital">Distrito Capital</option>
-                        <option value="Falcón">Falcón</option>
-                        <option value="Guárico">Guárico</option>
-                        <option value="La Guaira">La Guaira</option>
-                        <option value="Lara">Lara</option>
-                        <option value="Mérida">Mérida</option>
-                        <option value="Miranda">Miranda</option>
-                        <option value="Monagas">Monagas</option>
-                        <option value="Nueva Esparta">Nueva Esparta</option>
-                        <option value="Portuguesa">Portuguesa</option>
-                        <option value="Sucre">Sucre</option>
-                        <option value="Táchira">Táchira</option>
-                        <option value="Trujillo">Trujillo</option>
-                        <option value="Yaracuy">Yaracuy</option>
-                        <option value="Zulia">Zulia</option>
-                    </select>
-                </div>
-            </div>
+            
             <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white py-4 rounded-2xl font-black uppercase text-xs hover:from-purple-700 hover:to-blue-700 transition-all">
                 <i class="fas fa-user-plus mr-2"></i> Inscribir Estudiante
             </button>
@@ -511,6 +498,35 @@ function openModal(id) { document.getElementById(id).classList.add('active'); }
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 function ping(action, key) { try { fetch(SCRIPT_URL, { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: `action=${action}&key=${key}` }); } catch(e) {} }
 
+// 🔒 FUNCIÓN PARA APLICAR ESTILOS AL PANEL ADMIN SEGÚN EL MODO
+function applyAdminPanelStyles() {
+    const isLightMode = document.body.classList.contains('light-mode');
+    const modalContent = document.getElementById('adminModalContent');
+    const modalTitle = document.getElementById('adminModalTitle');
+    const modalSubtitle = document.getElementById('adminModalSubtitle');
+    const labelStudent = document.getElementById('adminLabelStudent');
+    const labelCourse = document.getElementById('adminLabelCourse');
+    const closeBtn = document.getElementById('adminCloseBtn');
+    
+    if (isLightMode) {
+        // MODO CLARO
+        if (modalContent) modalContent.style.cssText = 'background: #b0bec5 !important;';
+        if (modalTitle) modalTitle.style.cssText = 'color: #1e293b !important; font-weight: 900;';
+        if (modalSubtitle) modalSubtitle.style.cssText = 'color: #334155 !important;';
+        if (labelStudent) labelStudent.style.cssText = 'color: #334155 !important; font-weight: 700;';
+        if (labelCourse) labelCourse.style.cssText = 'color: #334155 !important; font-weight: 700;';
+        if (closeBtn) closeBtn.style.cssText = 'color: #334155 !important;';
+    } else {
+        // MODO OSCURO
+        if (modalContent) modalContent.style.cssText = 'background: #1e293b !important;';
+        if (modalTitle) modalTitle.style.cssText = 'color: #ffffff !important; font-weight: 900;';
+        if (modalSubtitle) modalSubtitle.style.cssText = 'color: #ffffff !important;';
+        if (labelStudent) labelStudent.style.cssText = 'color: #ffffff !important; font-weight: 700;';
+        if (labelCourse) labelCourse.style.cssText = 'color: #ffffff !important; font-weight: 700;';
+        if (closeBtn) closeBtn.style.cssText = 'color: #ffffff !important;';
+    }
+}
+
 // 🔒 FUNCIÓN PARA VERIFICAR SI ES ADMINISTRADOR
 function checkAdminAccess() {
     const adminBtn = document.getElementById('adminBtn');
@@ -529,93 +545,139 @@ function checkAdminAccess() {
     }
 }
 
-// 🔒 FUNCIÓN PARA ABRIR EL PANEL DE ADMINISTRADOR (CON VERIFICACIÓN)
+// 🔒 FUNCIÓN PARA ABRIR EL PANEL DE ADMINISTRADOR
 function openAdminPanel() {
-    // Verificar si es administrador
     if (!currentUser || !currentUser.email || !ADMIN_EMAILS.includes(currentUser.email.toLowerCase().trim())) {
         showNotif('Acceso denegado', 'Solo el administrador puede acceder a este panel.', 'error');
         return;
     }
     
-    // Poblar el select de cursos
-    const select = document.getElementById('adminCourse');
-    if (select && COURSES_DATA.length > 0) {
-        select.innerHTML = '<option value="">Selecciona un curso...</option>' + 
-            COURSES_DATA.map(c => `<option value="${c.Nombre}">${c.Nombre}</option>`).join('');
-    }
+    populateStudentSelect();
+    populatePaidCoursesSelect();
     
-    // Resetear campos
     document.getElementById('adminForm').reset();
-    document.getElementById('adminPais').value = 'Venezuela';
-    toggleEstadoField();
+    document.getElementById('userInfoPreview').classList.add('hidden');
     
     openModal('adminModal');
+    
+    setTimeout(function() {
+        applyAdminPanelStyles();
+    }, 50);
 }
 
-// 🆕 FUNCIÓN PARA MOSTRAR/OCULTAR CAMPO DE ESTADO SEGÚN PAÍS
-function toggleEstadoField() {
-    const paisSelect = document.getElementById('adminPais');
-    const estadoContainer = document.getElementById('estadoContainer');
+// 🔒 FUNCIÓN PARA POBLAR SELECT DE ESTUDIANTES REGISTRADOS
+function populateStudentSelect() {
+    const select = document.getElementById('adminEmail');
+    if (!select) return;
     
-    if (paisSelect.value === 'Venezuela') {
-        estadoContainer.innerHTML = `
-            <label class="text-xs font-bold text-slate-500">Estado *</label>
-            <select id="adminEstado" required class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm">
-                <option value="">Selecciona estado...</option>
-                <option value="Amazonas">Amazonas</option>
-                <option value="Anzoátegui">Anzoátegui</option>
-                <option value="Apure">Apure</option>
-                <option value="Aragua">Aragua</option>
-                <option value="Barinas">Barinas</option>
-                <option value="Bolívar">Bolívar</option>
-                <option value="Carabobo">Carabobo</option>
-                <option value="Cojedes">Cojedes</option>
-                <option value="Delta Amacuro">Delta Amacuro</option>
-                <option value="Distrito Capital">Distrito Capital</option>
-                <option value="Falcón">Falcón</option>
-                <option value="Guárico">Guárico</option>
-                <option value="La Guaira">La Guaira</option>
-                <option value="Lara">Lara</option>
-                <option value="Mérida">Mérida</option>
-                <option value="Miranda">Miranda</option>
-                <option value="Monagas">Monagas</option>
-                <option value="Nueva Esparta">Nueva Esparta</option>
-                <option value="Portuguesa">Portuguesa</option>
-                <option value="Sucre">Sucre</option>
-                <option value="Táchira">Táchira</option>
-                <option value="Trujillo">Trujillo</option>
-                <option value="Yaracuy">Yaracuy</option>
-                <option value="Zulia">Zulia</option>
-            </select>
+    let studentsHTML = '<option value="">Selecciona un estudiante...</option>';
+    
+    const sortedEmails = Object.keys(dbUsers).sort();
+    
+    sortedEmails.forEach(email => {
+        let userData = dbUsers[email];
+        let userObj = userData;
+        
+        if (typeof userObj === 'string') {
+            try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; }
+        }
+        
+        const userName = userObj.name || email.split('@')[0];
+        
+        studentsHTML += `<option value="${email}">${userName} (${email})</option>`;
+    });
+    
+    select.innerHTML = studentsHTML;
+}
+
+// 🔒 FUNCIÓN PARA POBLAR SELECT DE CURSOS PAGOS
+function populatePaidCoursesSelect() {
+    const select = document.getElementById('adminCourse');
+    if (!select) return;
+    
+    let coursesHTML = '<option value="">Selecciona un curso...</option>';
+    
+    const paidCourses = COURSES_DATA.filter(c => parseFloat(c.Precio || 0) > 0);
+    
+    paidCourses.forEach(course => {
+        const price = parseFloat(course.Precio || 0).toFixed(2);
+        coursesHTML += `<option value="${course.Nombre}">${course.Nombre} - $${price}</option>`;
+    });
+    
+    select.innerHTML = coursesHTML;
+}
+
+// 🔒 FUNCIÓN PARA BUSCAR USUARIO Y MOSTRAR PREVIEW
+function searchUserForEnrollment() {
+    const emailSelect = document.getElementById('adminEmail');
+    const userInfoPreview = document.getElementById('userInfoPreview');
+    const userInfoContent = document.getElementById('userInfoContent');
+    
+    const email = emailSelect.value.trim().toLowerCase();
+    
+    if (!email) {
+        userInfoPreview.classList.add('hidden');
+        return;
+    }
+    
+    const userData = dbUsers[email];
+    
+    if (userData) {
+        let userObj = userData;
+        if (typeof userObj === 'string') {
+            try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; }
+        }
+        
+        const userCourses = dbUserCourses[email] || [];
+        
+        userInfoPreview.classList.remove('hidden');
+        userInfoContent.innerHTML = `
+            <p style="color: #000000 !important;"><strong style="color: #000000 !important;">Nombre:</strong> ${userObj.name || 'N/A'}</p>
+            <p style="color: #000000 !important;"><strong style="color: #000000 !important;">Cédula:</strong> ${userObj.cedula || 'N/A'}</p>
+            <p style="color: #000000 !important;"><strong style="color: #000000 !important;">Teléfono:</strong> ${userObj.telefono || 'N/A'}</p>
+            <p style="color: #000000 !important;"><strong style="color: #000000 !important;">País:</strong> ${userObj.pais || 'N/A'}</p>
+            ${userObj.estado ? `<p style="color: #000000 !important;"><strong style="color: #000000 !important;">Estado:</strong> ${userObj.estado}</p>` : ''}
+            ${userCourses.length > 0 ? `
+                <div class="mt-2 pt-2 border-t border-slate-200">
+                    <p class="text-xs font-bold mb-1" style="color: #000000 !important;">Cursos inscritos:</p>
+                    ${userCourses.map(c => `<span class="inline-block bg-slate-200 text-slate-700 px-2 py-1 rounded-md text-[10px] font-bold mr-1 mb-1">${c}</span>`).join('')}
+                </div>
+            ` : ''}
         `;
     } else {
-        estadoContainer.innerHTML = `
-            <label class="text-xs font-bold text-slate-500">Estado/Provincia</label>
-            <input type="text" id="adminEstado" class="w-full bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-sm" placeholder="Opcional">
-        `;
+        userInfoPreview.classList.remove('hidden');
+        userInfoContent.innerHTML = `<p class="text-red-500 font-bold">⚠️ Usuario no encontrado.</p>`;
     }
 }
 
-// 🆕 FUNCIÓN PARA INSCRIPCIÓN MANUAL DESDE EL PANEL ADMIN
+// 🔒 FUNCIÓN PARA INSCRIPCIÓN MANUAL DESDE EL PANEL ADMIN
 async function manualEnrollStudent(event) {
     event.preventDefault();
     
-    const name = document.getElementById('adminName').value.trim();
     const email = document.getElementById('adminEmail').value.trim();
     const courseName = document.getElementById('adminCourse').value;
-    const cedula = document.getElementById('adminCedula').value.trim();
-    const telefono = document.getElementById('adminTelefono').value.trim();
-    const pais = document.getElementById('adminPais').value;
-    const estado = document.getElementById('adminEstado').value.trim();
     
-    if (!name || !email || !courseName || !pais) {
-        showNotif('Error', 'Nombre, Email, Curso y País son obligatorios.', 'error');
+    if (!email || !courseName) {
+        showNotif('Error', 'Debes seleccionar un estudiante y un curso.', 'error');
         return;
     }
     
-    if (pais === 'Venezuela' && !estado) {
-        showNotif('Error', 'Debes seleccionar un estado de Venezuela.', 'error');
+    const userData = dbUsers[email.toLowerCase()];
+    if (!userData) {
+        showNotif('Error', 'El estudiante no está registrado en la plataforma.', 'error');
         return;
+    }
+    
+    const userCourses = dbUserCourses[email.toLowerCase()] || [];
+    const alreadyEnrolled = userCourses.some(c => normalizeName(c) === normalizeName(courseName));
+    if (alreadyEnrolled) {
+        showNotif('Error', 'El estudiante ya está inscrito en este curso.', 'error');
+        return;
+    }
+    
+    let userObj = userData;
+    if (typeof userObj === 'string') {
+        try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; }
     }
     
     showLoadingToast();
@@ -624,12 +686,12 @@ async function manualEnrollStudent(event) {
         const params = new URLSearchParams();
         params.append('action', 'register_course_access');
         params.append('courseName', courseName);
-        params.append('name', name);
+        params.append('name', userObj.name || email.split('@')[0]);
         params.append('email', email);
-        params.append('cedula', cedula || '');
-        params.append('telefono', telefono || '');
-        params.append('pais', pais);
-        params.append('estado', estado || '');
+        params.append('cedula', '');
+        params.append('telefono', '');
+        params.append('pais', '');
+        params.append('estado', '');
         
         const response = await fetch(SCRIPT_URL, { 
             method: 'POST', 
@@ -642,10 +704,11 @@ async function manualEnrollStudent(event) {
             showNotif('Éxito', `Estudiante inscrito correctamente en "${courseName}"`, 'success');
             
             document.getElementById('adminForm').reset();
-            document.getElementById('adminPais').value = 'Venezuela';
-            toggleEstadoField();
+            document.getElementById('userInfoPreview').classList.add('hidden');
             
             await loadCoursesFromSheet();
+            
+            populateStudentSelect();
             
             closeModal('adminModal');
         } else {
@@ -764,7 +827,7 @@ function generateCourseCard(course) {
             if (isLogged) {
                 freeBtn = `<button onclick="event.stopPropagation(); enrollFreeCourse('${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="w-full btn-metal-green py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-user-plus"></i> Inscribirse Gratis</button>`;
             } else {
-                freeBtn = `<button onclick="event.stopPropagation(); openModal('authModal')" class="w-full btn-metal-green py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-user-plus"></i> Inscribirse Gratis</button>`;
+                freeBtn = `<button onclick="event.stopPropagation(); openModal('authModal')" class="w-full btn-metal-green py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-lock"></i> Iniciar Sesión para Inscribirse Gratis</button>`;
             }
         }
         buttonsHTML = `<div class="flex flex-col gap-2 w-full">${freeBtn}<button onclick="event.stopPropagation(); registerViewAndGo('${courseLink}', '${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del ${isManual ? 'Manual' : 'Curso'}</button></div>`;
@@ -775,10 +838,10 @@ function generateCourseCard(course) {
     let buyActionHTML = '';
     if (hasAccess) {
         buyActionHTML = `<span class="text-teal-500 text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5 bg-teal-50 px-3 py-1.5 rounded-lg border border-teal-100"><i class="fas fa-check-circle text-sm"></i> ${isManual ? 'Adquirido' : 'Inscrito'}</span>`;
-    } else if (courseBuyLink) {
-        buyActionHTML = `<button onclick="event.stopPropagation(); window.open('${courseBuyLink}', '_blank')" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-cyan-500/30 transition-all active:scale-95 flex items-center justify-center gap-2"><i class="fas fa-shopping-cart text-[11px]"></i> ${isManual ? 'Comprar' : 'Inscribirse'}</button>`;
+    } else if (isFree) {
+        buyActionHTML = `<span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5"><i class="fas fa-gift text-sm"></i> Gratis</span>`;
     } else {
-        buyActionHTML = `<button onclick="event.stopPropagation(); showNotif('Inscripción', 'Para inscribirte, por favor contactar con el profesor Pablo Cedeño.', 'info')" class="bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600 text-white px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-cyan-500/30 transition-all active:scale-95 flex items-center gap-2"><i class="fas fa-plus-circle text-[11px]"></i> Inscribirse</button>`;
+        buyActionHTML = `<span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5"><i class="fas fa-info-circle text-sm"></i> Inscripción vía administrador</span>`;
     }
 
     let userRating = 0;
@@ -819,16 +882,16 @@ function generateCourseCard(course) {
         </div>
         <div class="p-5 md:p-6 flex-grow flex flex-col">
             ${course.ProfesorNombre || course.ProfesorFoto ? `
-            <div class="flex items-center gap-3 mb-4 cursor-pointer hover:bg-slate-50 rounded-xl p-2 -mt-1 transition-all" onclick="event.stopPropagation(); window.location.href='profesor.html?nombre=${encodeURIComponent(course.ProfesorNombre || '')}&foto=${encodeURIComponent(course.ProfesorFoto || '')}&resena=${encodeURIComponent(course.ProfesorResena || '')}&especialidad=${encodeURIComponent(course.ProfesorEspecialidad || '')}'">
+            <div class="professor-block flex items-center gap-3 mb-4 cursor-pointer hover:bg-slate-100 rounded-xl p-2 -mt-1 transition-all" onclick="event.stopPropagation(); window.location.href='profesor.html?nombre=${encodeURIComponent(course.ProfesorNombre || '')}&foto=${encodeURIComponent(course.ProfesorFoto || '')}&resena=${encodeURIComponent(course.ProfesorResena || '')}&especialidad=${encodeURIComponent(course.ProfesorEspecialidad || '')}'">
                 <div class="w-12 h-12 rounded-full overflow-hidden bg-slate-200 border-2 border-cyan-500/50 shadow-md">
                     ${course.ProfesorFoto ? `<img src="${course.ProfesorFoto}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(course.ProfesorNombre || 'P')}&background=06b6d4&color=fff'">` : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 text-white font-bold">${(course.ProfesorNombre || 'P').charAt(0).toUpperCase()}</div>`}
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="text-[9px] font-bold uppercase text-slate-400">Profesor</p>
-                    <p class="text-sm font-bold text-slate-800">${course.ProfesorNombre || 'Por asignar'}</p>
-                    ${course.ProfesorEspecialidad ? `<p class="text-[10px] text-slate-500">${course.ProfesorEspecialidad}</p>` : ''}
+                    <p class="professor-label text-[9px] font-bold uppercase">Profesor</p>
+                    <p class="professor-name text-sm font-bold">${course.ProfesorNombre || 'Por asignar'}</p>
+                    ${course.ProfesorEspecialidad ? `<p class="professor-specialty text-[10px]">${course.ProfesorEspecialidad}</p>` : ''}
                 </div>
-                <i class="fas fa-chevron-right text-slate-400 text-xs"></i>
+                <i class="professor-arrow fas fa-chevron-right text-xs"></i>
             </div>` : ''}
             
             <h2 class="text-lg font-bold text-slate-900 mb-3">${courseName}</h2>
@@ -996,14 +1059,27 @@ function logoutUser() { localStorage.removeItem('user'); window.location.reload(
 document.addEventListener("DOMContentLoaded", () => {
     loadCoursesFromSheet();
     
-    // Verificar acceso de administrador
     checkAdminAccess();
     
-    // Asignar evento al formulario de admin
     const adminForm = document.getElementById('adminForm');
     if (adminForm) {
         adminForm.addEventListener('submit', manualEnrollStudent);
     }
+    
+    // Observar cambios en el body para detectar cambio de modo
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                setTimeout(function() {
+                    if (document.getElementById('adminModal').classList.contains('active')) {
+                        applyAdminPanelStyles();
+                    }
+                }, 50);
+            }
+        });
+    });
+    
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 });
 </script>
 <script src="js/auth.js"></script>

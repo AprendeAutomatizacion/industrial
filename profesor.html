@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
@@ -67,14 +68,87 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(6, 182, 212, 0.2);
         }
+        /* 🔧 ESTILOS PARA EL CONTENIDO HTML DE LA RESEÑA */
+        .professor-resena {
+            text-align: left;
+        }
+        .professor-resena p {
+            color: #cbd5e1 !important;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+        .professor-resena ul, .professor-resena ol {
+            color: #cbd5e1 !important;
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        .professor-resena li {
+            color: #cbd5e1 !important;
+            margin-bottom: 0.5rem;
+        }
+        .professor-resena strong {
+            color: #ffffff !important;
+        }
+        .professor-resena h3, .professor-resena h4 {
+            color: #22d3ee !important;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+        .professor-resena a {
+            color: #22d3ee !important;
+            text-decoration: underline;
+        }
+        .professor-resena blockquote {
+            border-left: 3px solid #06b6d4;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #94a3b8;
+        }
+        #main-footer {
+            position: relative;
+            z-index: 1;
+            background: rgba(15, 23, 42, 0.95);
+            border-top: 1px solid rgba(6, 182, 212, 0.2);
+        }
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #94a3b8;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        .social-btn:hover {
+            color: #2db8ce;
+            border-color: #2db8ce;
+            background: rgba(6, 182, 212, 0.1);
+        }
+        .footer-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+        .footer-link:hover {
+            color: #2db8ce;
+        }
     </style>
 </head>
 <body>
-    <main class="max-w-3xl mx-auto px-6 py-12">
-        <a href="catalogo.html" class="back-btn mb-8">
-            <i class="fas fa-arrow-left"></i> Volver al Catálogo
-        </a>
+    <main class="max-w-4xl mx-auto px-6 py-16 md:py-24">
+        <!-- Botón justificado a la izquierda -->
+        <div class="w-full mb-6">
+            <a href="catalogo.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Volver al Catálogo
+            </a>
+        </div>
         
+        <!-- Contenedor del profesor -->
         <div class="professor-card p-8 md:p-12 text-center">
             <div id="professorContent">
                 <!-- Se llena dinámicamente -->
@@ -96,12 +170,15 @@
                 `<img src="${foto}" alt="${nombre}" class="professor-photo mx-auto mb-6 object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(nombre)}&background=06b6d4&color=fff&size=150'">` :
                 `<div class="professor-photo mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 text-white text-5xl font-black">${nombre.charAt(0).toUpperCase()}</div>`;
             
+            // 🔧 USAR decodeURIComponent PARA MANEJAR HTML CODIFICADO
+            const resenaDecodificada = resena ? decodeURIComponent(resena) : '';
+            
             content.innerHTML = `
                 ${fotoHTML}
                 <h1 class="text-3xl md:text-4xl font-black text-white mb-2">${nombre}</h1>
                 ${especialidad ? `<p class="text-[#22d3ee] font-bold uppercase tracking-widest text-sm mb-6">${especialidad}</p>` : ''}
                 <div class="w-20 h-1 bg-gradient-to-r from-cyan-500 to-purple-500 mx-auto mb-6 rounded-full"></div>
-                ${resena ? `<p class="text-slate-300 text-lg leading-relaxed max-w-2xl mx-auto">${resena}</p>` : '<p class="text-slate-400">No hay reseña disponible para este profesor.</p>'}
+                ${resenaDecodificada ? `<div class="professor-resena text-slate-300 text-base leading-relaxed max-w-2xl mx-auto">${resenaDecodificada}</div>` : '<p class="text-slate-400">No hay reseña disponible para este profesor.</p>'}
             `;
         });
     </script>
