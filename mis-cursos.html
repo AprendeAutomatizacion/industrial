@@ -443,7 +443,7 @@
             color: #ffffff;
         }
 
-        /* RESPONSIVE - MÓVIL (CLAVE DEL DISEÑO) */
+        /* RESPONSIVE - MÓVIL */
         @media (max-width: 640px) {
             .loading-toast {
                 bottom: 16px;
@@ -473,7 +473,6 @@
             }
         }
 
-        /* TABLETS PEQUEÑAS */
         @media (min-width: 641px) and (max-width: 768px) {
             .loading-toast {
                 bottom: 20px;
@@ -628,6 +627,9 @@
         <div class="absolute inset-0 z-0 opacity-20">
             <img src="img/AA (7).gif" alt="Fondo decorativo" class="w-full h-full object-cover" loading="lazy">
         </div>
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] pointer-events-none z-0 hidden md:block">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
         <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
             <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">PLC</span>
@@ -728,24 +730,17 @@
     let latestCompletionDates = {};
     let COURSES_DATA = [];
 
-    // ==========================================
-    // FUNCIÓN AUXILIAR PARA OBTENER TOTAL DE LECCIONES
-    // ==========================================
     function getTotalLecciones(course) {
         if (!course) return 5;
-        
         let total = 5;
-        
         if (course.TotalLecciones !== undefined && course.TotalLecciones !== null && course.TotalLecciones !== '') {
             total = parseInt(course.TotalLecciones) || 5;
             return total;
         }
-        
         if (course.totalLecciones !== undefined && course.totalLecciones !== null && course.totalLecciones !== '') {
             total = parseInt(course.totalLecciones) || 5;
             return total;
         }
-        
         if (course.Modulos) {
             try {
                 const modulos = JSON.parse(course.Modulos);
@@ -763,7 +758,6 @@
                 }
             }
         }
-        
         return total;
     }
 
@@ -862,44 +856,32 @@
     function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
     function ping(action, key) { try { if (navigator.sendBeacon) { navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key})); } else { fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` }).catch(err => console.error('Ping fallback failed:', err)); } } catch (e) { console.error('Error al intentar enviar ping:', e); } }
 
-    // ==========================================
-    // FUNCIÓN loadCoursesFromSheet
-    // ==========================================
     async function loadCoursesFromSheet() {
         try {
             console.log('🔄 Cargando catálogo de cursos...');
             showLoadingToast();
-            
             const response = await fetch(`${SCRIPT_URL}?action=get_courses&nocache=${new Date().getTime()}`);
             if (!response.ok) {
                 throw new Error(`Error en la red: ${response.statusText}`);
             }
             const result = await response.json();
-
             if (result.status !== 'success') {
                 throw new Error(result.message || 'El script de Google devolvió un error.');
             }
-            
             window.COURSES_DATA = result.data;
             COURSES_DATA = result.data;
             console.log('✅ Catálogo cargado:', COURSES_DATA.length, 'cursos');
-            
             await loadData();
             showSuccessToast();
-
         } catch (error) {
             console.error('Error al cargar los cursos:', error);
             hideLoadingToast();
-            
             const grid = document.getElementById('coursesGrid');
             if (grid) grid.innerHTML = `<div class="col-span-full text-center p-8 bg-red-100 border border-red-300 rounded-2xl text-red-800">
                 <h3 class="font-bold">Error al Cargar Catálogo</h3><p class="mt-2">No se pudo conectar con la base de datos de cursos.</p></div>`;
         }
     }
 
-    // ==========================================
-    // FUNCIÓN loadData (CON FILTRO DE ACCESO SÍ)
-    // ==========================================
     async function loadData(){
         try{
             const res=await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
@@ -931,18 +913,14 @@
                 
                 if(window.currentUser && window.currentUser.email){
                     const email = window.currentUser.email.toLowerCase();
-                    
                     let myCourseNamesRaw = dbUserCourses[email] || [];
                     let myCourseNames = splitCourseNames(myCourseNamesRaw);
-                    
                     console.log('📋 Cursos encontrados en Mis Cursos para', email, ':', myCourseNames);
                     
-                    // 🔒 FILTRAR: SOLO cursos con Acceso = SÍ
                     let myCourseIds = [];
                     myCourseNames.forEach(cName => {
                         const key = email + '|' + cName;
                         const acceso = dbUserAccessStatus[key] || 'NO';
-                        // Solo agregar si Acceso es SÍ
                         if (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true) {
                             let nn = normalizeName(cName);
                             let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
@@ -961,16 +939,12 @@
                         }
                     });
                     
-                    // 🔒 IMPORTANTE: Reemplazar accessedCursos completamente
                     window.currentUser.accessedCursos = [...myCourseIds];
-                    
                     let globalUser = dbUsers[email] || {};
                     if(typeof globalUser === 'string'){ 
                         try{ globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; } 
                     }
-                    
                     let details = dbUserDetails[email] || {};
-                    
                     if(details.name && details.name !== "No provisto" && details.name !== "N/A") 
                         window.currentUser.name = details.name;
                     window.currentUser.cedula = details.cedula || window.currentUser.cedula || "N/A";
@@ -981,21 +955,15 @@
                     window.currentUser.ratings = globalUser.ratings || window.currentUser.ratings || {};
                     window.currentUser.profession = globalUser.profession || window.currentUser.profession || "";
                     window.currentUser.likedCourses = globalUser.likedCourses || window.currentUser.likedCourses || [];
-                    window.currentUser.visitRegistro = globalUser.visitRegistro || window.currentUser.visitRegistro || {
-                        cursos: {},
-                        infoPaginas: {},
-                        aulas: {}
-                    };
+                    window.currentUser.visitRegistro = globalUser.visitRegistro || window.currentUser.visitRegistro || { cursos: {}, infoPaginas: {}, aulas: {} };
                     
                     currentUser = window.currentUser;
-                    
                     const backendDatesForEmail = enrollmentDatesBackend[email] || {};
                     const backendCompDatesForEmail = completionDatesBackend[email] || {};
                     latestEnrollmentDates = backendDatesForEmail;
                     latestCompletionDates = backendCompDatesForEmail;
                     
                     localStorage.setItem('user', JSON.stringify(window.currentUser));
-                    
                     console.log('👤 Usuario sincronizado (solo cursos habilitados):', {
                         name: window.currentUser.name,
                         email: window.currentUser.email,
@@ -1050,13 +1018,11 @@
         window.currentUser = activeUser;
         if (typeof currentUser !== 'undefined') currentUser = activeUser;
         const email=activeUser.email.toLowerCase();
-        
         if (!activeUser.likedCourses) activeUser.likedCourses = [];
         if (!activeUser.accessedCursos) activeUser.accessedCursos = [];
         if (!activeUser.downloadedFiles) activeUser.downloadedFiles = [];
         if (!activeUser.ratings) activeUser.ratings = {};
         if (!activeUser.visitRegistro) activeUser.visitRegistro = { cursos: {}, infoPaginas: {}, aulas: {} };
-        
         const userData=JSON.stringify(activeUser);
         try {
             const response = await fetch(SCRIPT_URL, {
@@ -1074,17 +1040,12 @@
         }
     }
 
-    // ==========================================
-    // FUNCIÓN parseProgressString
-    // ==========================================
     function parseProgressString(raw, totalLessons) {
         if(!raw || raw.trim()==="") return {completed:0, total:totalLessons, percent:0, scores:[], avgScore:0, progress:[]};
-        
         let safe = String(raw).trim().replace(/'/g,'"');
         let scores = new Array(totalLessons).fill(null);
         let completed = 0;
         let progressIndices = [];
-        
         try {
             const p = JSON.parse(safe);
             if(p && typeof p === 'object') {
@@ -1095,7 +1056,6 @@
                     completed = p.completed;
                     for(let i=0; i<completed; i++) progressIndices.push(i);
                 }
-                
                 const src = p.scores || p;
                 if(Array.isArray(src)) {
                     for(let i=0; i<src.length && i<totalLessons; i++) {
@@ -1128,58 +1088,39 @@
                 }
             }
         }
-        
         let valid = scores.filter(n => n !== null && !isNaN(n));
         if(completed === 0 && valid.length > 0) {
             completed = valid.length;
             progressIndices = valid.map((_, i) => i);
         }
         completed = Math.min(Math.max(0, completed), totalLessons);
-        
         const avg = valid.length > 0 ? Math.round(valid.reduce((a,b) => a+b, 0) / valid.length) : 0;
         let percent = totalLessons > 0 ? Math.round((completed/totalLessons) * 100) : 0;
-        
-        return {
-            completed: completed,
-            total: totalLessons,
-            percent: percent,
-            scores: scores,
-            avgScore: avg,
-            progress: progressIndices
-        };
+        return { completed: completed, total: totalLessons, percent: percent, scores: scores, avgScore: avg, progress: progressIndices };
     }
 
-    // ==========================================
-    // FUNCIÓN fetchProgressForAllCourses
-    // ==========================================
     function fetchProgressForAllCourses(){
         if(!window.currentUser||!window.currentUser.accessedCursos) return;
         const email=window.currentUser.email.toLowerCase();
         if(!userProgress[email]) userProgress[email]={};
         const progresos=dbUserProgress[email]||{};
         const accessed=Array.isArray(window.currentUser.accessedCursos)?window.currentUser.accessedCursos:[];
-        
         accessed.forEach(courseId=>{
             const course=COURSES_DATA.find(c=>c.ID===courseId);
             if(!course) return;
-            
             let progStr="";
             const nc = normalizeName(course.Nombre);
-            
             for(let key in progresos) {
                 if (normalizeName(key) === nc) {
                     progStr = progresos[key];
                     break;
                 }
             }
-            
             const total = getTotalLecciones(course);
             const parsedProgress = parseProgressString(progStr, total);
             userProgress[email][String(courseId)] = parsedProgress;
-            
             console.log(`📊 Progreso ${course.Nombre}: ${parsedProgress.percent}% (${parsedProgress.completed}/${total})`);
         });
-        
         renderMisCourses();
     }
 
@@ -1187,17 +1128,14 @@
         if(!window.currentUser){ document.getElementById('misCursosUserInfo').classList.add('hidden'); return; }
         document.getElementById('misCursosUserInfo').classList.remove('hidden');
         const setTxt=(id,txt)=>{ const el=document.getElementById(id); if(el) el.innerText=txt; };
-        
         setTxt('mcProfileName',window.currentUser.name||"Estudiante");
         setTxt('mcProfileEmail',window.currentUser.email);
         setTxt('mcProfileCedula',window.currentUser.cedula&&window.currentUser.cedula!=="N/A"?window.currentUser.cedula:"Sin Cédula");
         setTxt('mcProfilePhone',window.currentUser.telefono&&window.currentUser.telefono!=="N/A"?window.currentUser.telefono:"Sin Teléfono");
         setTxt('mcProfileProfession',window.currentUser.profession?capitalize(window.currentUser.profession):"Sin Perfil");
-        
         let locText=window.currentUser.pais&&window.currentUser.pais!=="N/A"?window.currentUser.pais:"País Desconocido";
         if(window.currentUser.pais==="Venezuela"&&window.currentUser.estado&&window.currentUser.estado!=="N/A") locText+=` (${window.currentUser.estado})`;
         setTxt('mcProfileLocation',locText);
-        
         const mcFlag=document.getElementById('mcProfileFlag'); const mcGlobe=document.getElementById('mcProfileGlobeIcon');
         let isoCode=null; 
         if(window.currentUser.pais&&window.currentUser.pais!=="N/A"){ 
@@ -1208,7 +1146,6 @@
             if(isoCode){ mcFlag.src=`https://flagcdn.com/w20/${isoCode}.png`; mcFlag.classList.remove('hidden'); mcGlobe.classList.add('hidden'); } 
             else { mcFlag.classList.add('hidden'); mcGlobe.classList.remove('hidden'); } 
         }
-
         const accessed=Array.isArray(window.currentUser.accessedCursos)?window.currentUser.accessedCursos:[];
         let countOnline=0, countPresencial=0, countMaterias=0, countManuales=0;
         accessed.forEach(cId=>{
@@ -1226,40 +1163,29 @@
         setTxt('mcStatManuales', countManuales);
     }
 
-    // ==========================================
-    // FUNCIÓN renderMisCourses (SOLO CURSOS CON ACCESO = SÍ)
-    // ==========================================
     function renderMisCourses(){
         const grid=document.getElementById('coursesGrid'), noResults=document.getElementById('noResultsMisCursos');
         grid.innerHTML='';
-        
         if(!window.currentUser){
             grid.classList.add('hidden'); noResults.classList.remove('hidden');
             noResults.innerHTML=`<div class="p-8 rounded-2xl bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] shadow-xl"><i data-lucide="lock" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-[var(--text-default)]">Acceso Restringido</h3><p class="text-[var(--text-secondary)] text-sm mt-2 mb-6">Debes iniciar sesión para ver tus cursos adquiridos.</p><button onclick="openModal('authModal')" class="bg-[#0f172a] hover:bg-[#2db8ce] text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button></div>`;
             if(window.lucide) lucide.createIcons(); return;
         }
-        
         console.log('📊 Renderizando cursos para:', window.currentUser.email);
         console.log('📊 IDs accedidos (solo habilitados):', window.currentUser.accessedCursos);
-        
-        // 🔒 FILTRAR: SOLO cursos que están en accessedCursos
         const accessedCourses = COURSES_DATA.filter(c => 
             window.currentUser.accessedCursos && 
             window.currentUser.accessedCursos.includes(parseInt(c.ID))
         );
-        
         console.log('📊 Cursos encontrados (habilitados):', accessedCourses.length, accessedCourses.map(c => c.Nombre));
-        
         if(accessedCourses.length===0){
             grid.classList.add('hidden'); noResults.classList.remove('hidden');
             noResults.innerHTML=`<div class="p-8 rounded-2xl bg-[var(--glass-bg)] backdrop-blur-xl border border-[var(--glass-border)] shadow-xl"><i data-lucide="library" class="mx-auto w-16 h-16 text-slate-300 mb-4"></i><h3 class="text-xl font-bold text-[var(--text-default)]">Aún no tienes cursos habilitados</h3><p class="text-[var(--text-secondary)] text-sm mt-2 mb-6">Si ya compraste un curso, espera la verificación de pago para que aparezca aquí.</p><button onclick="window.open('https://wa.me/584121414196?text=Hola,%20quiero%20ver%20el%20catálogo%20de%20cursos', '_blank')" class="bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-xl transition-all shadow-lg inline-flex items-center gap-2"><i class="fas fa-th"></i> Ver Catálogo</button></div>`;
             if(window.lucide) lucide.createIcons(); return;
         }
-        
         grid.classList.remove('hidden'); noResults.classList.add('hidden');
         const emailKey=window.currentUser.email.toLowerCase(); 
         const myProgress=userProgress[emailKey]||{};
-        
         grid.innerHTML=accessedCourses.map((course,index)=>{
             const isManual = course.Tipo === 'Manual';
             const likes=globalStats[`curso-${course.ID}_likes`]||0;
@@ -1268,11 +1194,8 @@
             const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.ID}`))?'liked text-red-500':'text-slate-400';
             const viewsClass=vistas>0?'text-green-500':'text-slate-400';
             const displayCount=studentCountsPerCourse[course.ID]!==undefined?studentCountsPerCourse[course.ID]:'...';
-            
             const totalLecciones = getTotalLecciones(course);
-            
             console.log(`📚 Curso ${course.Nombre}: TotalLecciones calculado = ${totalLecciones}`);
-            
             const progressData=myProgress[String(course.ID)]||{completed:0,total:totalLecciones,percent:0,scores:[],avgScore:0,progress:[]};
             const completed = progressData.completed || 0;
             const total = progressData.total || totalLecciones;
@@ -1280,7 +1203,6 @@
             const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[course.ID])||0;
             let starsHTML='';
             for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.ID},${i},false)"></i>`; }
-            
             let buttonsHTML = '';
             if (isManual) {
                 buttonsHTML = `<button type="button" onclick="openCourseMaterial(${course.ID}); event.stopPropagation();" class="w-full course-btn-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
@@ -1291,14 +1213,12 @@
                 buttonsHTML = `<button type="button" onclick="openCourseMaterial(${course.ID}); event.stopPropagation();" class="w-full course-btn-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
                 ${course.EnlaceAula && course.EnlaceAula.trim() !== '' && course.EnlaceAula.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.EnlaceAula}'; event.stopPropagation();" class="w-full course-btn-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
             }
-
             const progressBarHTML =`
             <div class="mt-4 mb-3 bg-[#0f172a]/80 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-inner">
                 <div class="flex justify-between items-center mb-2"><span class="text-[10px] font-bold uppercase tracking-widest text-white">Progreso</span><span class="text-xs font-black text-green-400">${percent}%</span></div>
                 <div class="w-full bg-white/10 rounded-full h-1.5 mb-2 overflow-hidden"><div class="bg-green-400 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div></div>
                 <p class="progress-lessons-completed text-[10px] font-bold text-white">${completed} de ${total} lecciones completadas</p>
             </div>`;
-            
             const normalizedLevel = (course.Nivel || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
             let levelBorderClass = '';
             let levelIconClass = 'fa-question-circle';
@@ -1320,7 +1240,6 @@
                 levelIconColor = 'text-amber-400';
                 levelIconClass = 'fa-rocket';
             }
-
             let iconsHTML = '';
             if (isManual) {
                 iconsHTML = `
@@ -1335,7 +1254,6 @@
             } else {
                 iconsHTML = `<div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.Nivel}"><i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i></div>`;
             }
-
             return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group ${levelBorderClass}" onclick="grantAccess(${course.ID})">
                 <div class="relative aspect-video w-full overflow-hidden bg-[#0f172a]">
                     <img src="${course.ImagenURL}" class="w-full h-full object-cover opacity-100 transition-transform duration-500 group-hover:scale-105">
@@ -1381,11 +1299,7 @@
             if (window.currentUser && window.currentUser.email) {
                 recordVisit('curso', courseId, 'Curso ' + courseId, 'Acceso desde Mis Cursos');
             }
-            const materialPage = `material-page-id.html?id=${courseId}`;
-            if (materialPage) {
-                window.location.href = materialPage;
-                return;
-            }
+            window.location.href = `material-page-id.html?id=${courseId}`;
         } catch(e) {
             console.error("Error intentando acceder al curso:", e);
             showNotif("Error al cargar", "No se pudo preparar el curso, intente nuevamente.", "error");
@@ -1408,29 +1322,15 @@
         } catch (e) { console.error('Error al registrar visita:', e); }
     }
 
-    // ==========================================
-    // FUNCIÓN toggleLike
-    // ==========================================
     function toggleLike(btn){
         const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || JSON.parse(localStorage.getItem('user') || 'null');
-        
-        if(!activeUser){ 
-            openModal('authModal'); 
-            return; 
-        }
-        
+        if(!activeUser){ openModal('authModal'); return; }
         window.currentUser = activeUser;
         if (typeof currentUser !== 'undefined') currentUser = activeUser;
-        
         const id = btn.dataset.id;
-        
-        if(!Array.isArray(activeUser.likedCourses)) {
-            activeUser.likedCourses = [];
-        }
-        
+        if(!Array.isArray(activeUser.likedCourses)) { activeUser.likedCourses = []; }
         const span = btn.querySelector('.like-count');
         let currentLikes = parseInt(span.innerText) || 0;
-        
         if(activeUser.likedCourses.includes(id)){
             activeUser.likedCourses = activeUser.likedCourses.filter(c => c !== id);
             ping('decrement_stat', `${id}_likes`);
@@ -1446,21 +1346,10 @@
             span.innerText = currentLikes + 1;
             if(globalStats) globalStats[`${id}_likes`] = currentLikes + 1;
         }
-        
-        if(activeUser.email) {
-            const emailKey = activeUser.email.toLowerCase();
-            dbUsers[emailKey] = JSON.stringify(activeUser);
-        }
-        
+        if(activeUser.email) { dbUsers[activeUser.email.toLowerCase()] = JSON.stringify(activeUser); }
         localStorage.setItem('user', JSON.stringify(activeUser));
         updateAllUI();
-        
-        syncUserProgressToExcel().then(() => {
-            console.log('✅ Like sincronizado correctamente');
-        }).catch(err => {
-            console.error('❌ Error al sincronizar like:', err);
-        });
-        
+        syncUserProgressToExcel().then(() => { console.log('✅ Like sincronizado correctamente'); }).catch(err => { console.error('❌ Error al sincronizar like:', err); });
         document.querySelectorAll(`.like-btn[data-id="${id}"]`).forEach(otherBtn => {
             if(otherBtn !== btn){
                 if(activeUser.likedCourses.includes(id)){
@@ -1500,17 +1389,11 @@
 
     document.addEventListener("DOMContentLoaded", () => {
         console.log('🚀 Inicializando Mis Cursos (solo cursos con Acceso = SÍ)...');
-        if(window.currentUser) {
-            console.log('👤 Usuario detectado:', window.currentUser.email);
-        } else {
-            console.log('⚠️ No hay usuario logueado');
-        }
-        
+        if(window.currentUser) { console.log('👤 Usuario detectado:', window.currentUser.email); } else { console.log('⚠️ No hay usuario logueado'); }
         setTimeout(async () => {
             await loadCoursesFromSheet();
             ping('update_stat', 'visitas_mis_cursos');
         }, 200);
-        
         if(window.lucide) lucide.createIcons();
         hideFloatingBackBtn();
     });
