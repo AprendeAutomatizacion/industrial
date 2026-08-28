@@ -415,6 +415,8 @@
             }
         }
     </style>
+<base target="_blank">
+<base target="_blank">
 </head>
 <body class="custom-scrollbar">
 <div class="particles-bg" aria-hidden="true">
@@ -486,6 +488,38 @@
                 <i class="fas fa-user-plus mr-2"></i> Inscribir Estudiante
             </button>
         </form>
+    </div>
+</div>
+
+<!-- MODAL GESTIONAR INSCRIPCIONES DEL CURSO (ADMIN) -->
+<div id="manageCourseEnrollmentsModal" class="modal-overlay admin-modal">
+    <div class="modal-content !p-0 relative" id="manageCourseEnrollmentsContent" style="background: #1e293b !important; max-width: 1100px !important; width: 96% !important; overflow: hidden; border-radius: 2rem; max-height: 92vh; overflow-y: auto;">
+        <button onclick="closeModal('manageCourseEnrollmentsModal')" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white transition text-xl" style="background: rgba(0,0,0,0.3); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none;"><i class="fas fa-times"></i></button>
+
+        <div class="p-5 md:p-8">
+            <div class="text-center mb-6 md:mb-8">
+                <h3 class="text-xl md:text-2xl font-black uppercase" style="color: #ffffff !important;">Gestionar Inscripciones</h3>
+                <p class="text-xs md:text-sm mt-2 text-cyan-400 font-bold" id="manageCourseTitle">Curso</p>
+                <p class="text-[10px] md:text-xs mt-1 text-slate-400">Estudiantes inscritos en este curso</p>
+            </div>
+
+            <!-- Header de columnas (solo desktop) -->
+            <div class="hidden md:grid md:grid-cols-12 gap-4 px-4 pb-3 mb-2 border-b border-slate-700/50">
+                <div class="col-span-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">Estudiante</div>
+                <div class="col-span-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-center">Estado de Pago</div>
+                <div class="col-span-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-center">Acceso</div>
+                <div class="col-span-4 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-right">Acciones</div>
+            </div>
+
+            <div id="enrollmentsListContainer" class="space-y-3 md:space-y-2">
+                <!-- Se renderiza dinámicamente -->
+            </div>
+
+            <div id="enrollmentsEmpty" class="hidden text-center py-8 md:py-12">
+                <i class="fas fa-inbox text-4xl md:text-5xl text-slate-600 mb-3"></i>
+                <p class="text-slate-400 text-sm md:text-base">No hay estudiantes inscritos en este curso aún.</p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -636,7 +670,7 @@
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykJxx0nLzxv3nPygbvlVz4y6gqTWQyZDCKw-xxxgPHXzVUyd4n5I7G3p87jxWPj3jx/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2P8CSqI9uWk0aip010Hauh21KCkIsxi4_BKozAEFjjL9wGqo39C6OU-pKQSuZXdZF/exec';
 
 let currentUser = JSON.parse(localStorage.getItem('user')) || null;
 let dbUsers = {}, globalStats = {};
@@ -796,6 +830,10 @@ function applyAdminPanelStyles() {
     }
 }
 
+function isAdmin() {
+    return currentUser && currentUser.email && ADMIN_EMAILS.includes(currentUser.email.toLowerCase().trim());
+}
+
 function checkAdminAccess() {
     const adminBtn = document.getElementById('adminBtn');
     if (!adminBtn) return;
@@ -901,10 +939,12 @@ async function manualEnrollStudent(event) {
         params.append('courseName', courseName);
         params.append('name', userObj.name || email.split('@')[0]);
         params.append('email', email);
-        params.append('cedula', '');
-        params.append('telefono', '');
-        params.append('pais', '');
-        params.append('estado', '');
+        params.append('cedula', userObj.cedula || '');
+        params.append('telefono', userObj.telefono || '');
+        params.append('pais', userObj.pais || '');
+        params.append('estado', userObj.estado || '');
+        params.append('estadoPago', 'Verificado');
+        params.append('accesoHabilitado', 'SI');
         const response = await fetch(SCRIPT_URL, { method: 'POST', body: params });
         const result = await response.json();
         if (result.status === 'success') {
@@ -1183,7 +1223,7 @@ function generateCourseCard(course) {
         badgeEstadoHTML = `<span class="badge-estado badge-inscrito"><i class="fas fa-check-circle"></i> ✅ Inscrito</span>`;
         botonHTML = `<span class="btn-inscrito-pastilla"><i class="fas fa-check-circle"></i> Inscrito</span>`;
         estadoTexto = 'inscrito';
-        mensajeEstado = `<div class="mt-1 text-[10px] text-green-400 text-center">✅ Acceso habilitado en "Mis Cursos"</div>`;
+        mensajeEstado = ``;
         showOverlay = false;
     } else if (estadoPago === 'Pendiente') {
         estadoClase = 'estado-pendiente';
@@ -1286,7 +1326,7 @@ function generateCourseCard(course) {
         <div class="aspect-video w-full overflow-hidden bg-[#0f172a] relative">
             <img src="${courseImage}" alt="${courseName}" class="w-full h-full object-cover ${isAccessGranted ? 'opacity-100' : 'opacity-30'}" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Curso'">
             <div class="absolute top-3 left-3 flex flex-col gap-1.5">
-                <span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md bg-slate-900/70 text-white">${courseType}</span>
+                <span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md ${courseType.toLowerCase() === 'manual' ? 'bg-blue-600/90 text-white border border-blue-400/60 shadow-lg shadow-blue-500/20' : 'bg-slate-900/70 text-white'}">${courseType}</span>
                 ${courseCategory ? `<span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md bg-slate-900/70 text-white">${courseCategory}</span>` : ''}
                 ${badgesHTML}
             </div>
@@ -1295,6 +1335,12 @@ function generateCourseCard(course) {
             </div>
             <div class="absolute top-3 right-3 mt-6">
                 ${badgeEstadoHTML}
+            </div>
+            <!-- Badge de Nivel sobre imagen -->
+            <div class="absolute bottom-3 left-3 z-10">
+                <span class="px-3 py-1.5 text-[10px] font-black uppercase tracking-wider rounded-lg shadow-lg border backdrop-blur-sm" style="background: ${normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'linear-gradient(135deg, rgba(6,182,212,0.95), rgba(8,145,178,0.95))' : normalizedLevel === 'intermedio' ? 'linear-gradient(135deg, rgba(139,92,246,0.95), rgba(124,58,237,0.95))' : 'linear-gradient(135deg, rgba(245,158,11,0.95), rgba(217,119,6,0.95))'}; color: white; border-color: rgba(255,255,255,0.3); text-shadow: 0 1px 2px rgba(0,0,0,0.3);">
+                    <i class="fas fa-layer-group mr-1"></i> ${courseLevel}
+                </span>
             </div>
             ${overlayHTML}
         </div>
@@ -1339,6 +1385,7 @@ function generateCourseCard(course) {
         </div>
         <div class="px-5 md:px-6 py-4 bg-slate-50 border-t border-slate-100" onclick="event.stopPropagation();">
             ${infoButton}
+            ${isAdmin() ? `<button onclick="event.stopPropagation(); openManageEnrollment('${courseId}', '${courseName.replace(/'/g, "\'")}')" class="w-full mt-2 btn-metal-green py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-cog"></i> Gestionar Inscripciones</button>` : ''}
         </div>
     </div>`;
 }
@@ -1454,6 +1501,225 @@ function toggleLike(btn) {
     syncUserProgressToExcel();
 }
 
+function openManageEnrollment(courseId, courseName) {
+    if (!isAdmin()) {
+        showNotif('Acceso denegado', 'Solo administradores pueden gestionar inscripciones.', 'error');
+        return;
+    }
+    document.getElementById('manageCourseTitle').textContent = courseName;
+    renderEnrollmentsList(courseId, courseName);
+    openModal('manageCourseEnrollmentsModal');
+    setTimeout(applyManageEnrollmentStyles, 50);
+}
+
+function getStudentsForCourse(courseName) {
+    const students = [];
+    const normalizedCourse = normalizeName(courseName);
+
+    for (const email in dbUsers) {
+        const key = email + '|' + courseName;
+        const hasPaymentStatus = dbUserPaymentStatus[key] !== undefined;
+        const hasAccessStatus = dbUserAccessStatus[key] !== undefined;
+        const userCourses = dbUserCourses[email] || [];
+        const isEnrolled = userCourses.some(c => normalizeName(c) === normalizedCourse);
+
+        if (hasPaymentStatus || hasAccessStatus || isEnrolled) {
+            let userObj = dbUsers[email];
+            if (typeof userObj === 'string') { try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } }
+            students.push({
+                email: email,
+                name: userObj.name || email.split('@')[0],
+                cedula: userObj.cedula || 'N/A',
+                telefono: userObj.telefono || 'N/A',
+                estadoPago: dbUserPaymentStatus[key] || 'Pendiente',
+                acceso: dbUserAccessStatus[key] || 'NO',
+                isEnrolled: isEnrolled
+            });
+        }
+    }
+    return students.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function renderEnrollmentsList(courseId, courseName) {
+    const container = document.getElementById('enrollmentsListContainer');
+    const emptyMsg = document.getElementById('enrollmentsEmpty');
+    const students = getStudentsForCourse(courseName);
+
+    if (students.length === 0) {
+        container.innerHTML = '';
+        emptyMsg.classList.remove('hidden');
+        return;
+    }
+    emptyMsg.classList.add('hidden');
+
+    const estadoOptions = ['Pendiente','Verificado','Revisión','Rechazado'];
+
+    container.innerHTML = students.map((s, idx) => {
+        const estadoBadgeColor = {
+            'Pendiente': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+            'Verificado': 'bg-green-500/20 text-green-400 border-green-500/30',
+            'Revisión': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+            'Rechazado': 'bg-red-500/20 text-red-400 border-red-500/30'
+        }[s.estadoPago] || 'bg-slate-500/20 text-slate-400 border-slate-500/30';
+
+        return `
+        <div class="rounded-xl p-4 md:px-4 md:py-3 border border-slate-700/50" style="background: rgba(15,23,42,0.6);">
+            <!-- MÓVIL: Layout vertical -->
+            <div class="md:hidden">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-sm shrink-0">
+                        ${s.name.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="min-w-0 flex-1">
+                        <p class="text-sm font-bold text-white truncate">${s.name}</p>
+                        <p class="text-[10px] text-slate-400 truncate">${s.email}</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mb-3 text-[10px] text-slate-400">
+                    <span><i class="fas fa-id-card mr-1 text-slate-500"></i>${s.cedula}</span>
+                    <span><i class="fas fa-phone mr-1 text-slate-500"></i>${s.telefono}</span>
+                </div>
+                <div class="flex items-center gap-2 mb-3 flex-wrap">
+                    <span class="px-2 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${estadoBadgeColor}">${s.estadoPago}</span>
+                    <span class="px-2 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${s.acceso === 'SI' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'}">Acceso: ${s.acceso}</span>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-[9px] font-bold uppercase text-slate-500 block mb-1">Estado Pago</label>
+                        <select id="estado-mob-${idx}" class="rounded-lg px-3 py-2.5 text-xs font-bold w-full" style="background: #ffffff; color: #000000; border: 1px solid #cbd5e1;">
+                            ${estadoOptions.map(opt => `<option value="${opt}" ${s.estadoPago === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-bold uppercase text-slate-500 block mb-1">Acceso</label>
+                        <select id="acceso-mob-${idx}" class="rounded-lg px-3 py-2.5 text-xs font-bold w-full" style="background: #ffffff; color: #000000; border: 1px solid #cbd5e1;">
+                            <option value="NO" ${s.acceso !== 'SI' ? 'selected' : ''}>NO</option>
+                            <option value="SI" ${s.acceso === 'SI' ? 'selected' : ''}>SI</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="saveEnrollmentStatus('${s.email.replace(/'/g, "\\'")}', '${courseName.replace(/'/g, "\\'")}', ${idx})" class="w-full mt-3 px-4 py-2.5 rounded-lg text-xs font-black uppercase tracking-wider transition-all active:scale-95" style="background: linear-gradient(135deg, #06b6d4, #2563eb); color: white; border: none;">
+                    <i class="fas fa-save mr-1"></i> Guardar Cambios
+                </button>
+            </div>
+
+            <!-- DESKTOP: Layout en grid -->
+            <div class="hidden md:grid md:grid-cols-12 md:items-center gap-4">
+                <div class="col-span-4 min-w-0">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-xs shrink-0">
+                            ${s.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="min-w-0">
+                            <p class="text-sm font-bold text-white truncate">${s.name}</p>
+                            <p class="text-[10px] text-slate-400 truncate">${s.email}</p>
+                            <p class="text-[9px] text-slate-500"><i class="fas fa-id-card mr-1"></i>${s.cedula} · <i class="fas fa-phone mr-1"></i>${s.telefono}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-2 text-center">
+                    <span class="inline-block px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${estadoBadgeColor}">${s.estadoPago}</span>
+                </div>
+
+                <div class="col-span-2 text-center">
+                    <span class="inline-block px-2.5 py-1 rounded-full border text-[10px] font-bold uppercase tracking-wider ${s.acceso === 'SI' ? 'bg-green-500/20 text-green-400 border-green-500/30' : 'bg-red-500/20 text-red-400 border-red-500/30'}">${s.acceso === 'SI' ? '✅ SÍ' : '❌ NO'}</span>
+                </div>
+
+                <div class="col-span-4 flex items-center justify-end gap-2">
+                    <select id="estado-desk-${idx}" class="rounded-lg px-3 py-2 text-xs font-bold" style="background: #ffffff; color: #000000; border: 1px solid #cbd5e1; min-width: 110px;">
+                        ${estadoOptions.map(opt => `<option value="${opt}" ${s.estadoPago === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                    </select>
+                    <select id="acceso-desk-${idx}" class="rounded-lg px-3 py-2 text-xs font-bold" style="background: #ffffff; color: #000000; border: 1px solid #cbd5e1; min-width: 70px;">
+                        <option value="NO" ${s.acceso !== 'SI' ? 'selected' : ''}>NO</option>
+                        <option value="SI" ${s.acceso === 'SI' ? 'selected' : ''}>SI</option>
+                    </select>
+                    <button onclick="saveEnrollmentStatus('${s.email.replace(/'/g, "\\'")}', '${courseName.replace(/'/g, "\\'")}', ${idx})" class="px-4 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all hover:scale-105 active:scale-95 shrink-0" style="background: linear-gradient(135deg, #06b6d4, #2563eb); color: white; border: none;">
+                        <i class="fas fa-save"></i>
+                    </button>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+
+async function saveEnrollmentStatus(email, courseName, idx) {
+    const mobEstado = document.getElementById(`estado-mob-${idx}`);
+    const deskEstado = document.getElementById(`estado-desk-${idx}`);
+    const mobAcceso = document.getElementById(`acceso-mob-${idx}`);
+    const deskAcceso = document.getElementById(`acceso-desk-${idx}`);
+
+    const estadoPago = (deskEstado && deskEstado.offsetParent !== null) ? deskEstado.value : (mobEstado ? mobEstado.value : 'Pendiente');
+    const acceso = (deskAcceso && deskAcceso.offsetParent !== null) ? deskAcceso.value : (mobAcceso ? mobAcceso.value : 'NO');
+
+    const userData = dbUsers[email];
+    if (!userData) {
+        showNotif('Error', 'El estudiante no esta registrado.', 'error');
+        return;
+    }
+
+    let userObj = userData;
+    if (typeof userObj === 'string') { try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } }
+
+    showLoadingToast();
+    try {
+        const params = new URLSearchParams();
+        params.append('action', 'update_course_access_state');
+        params.append('courseName', courseName);
+        params.append('email', email);
+        params.append('name', userObj.name || email.split('@')[0]);
+        params.append('cedula', userObj.cedula || '');
+        params.append('telefono', userObj.telefono || '');
+        params.append('pais', userObj.pais || '');
+        params.append('estado', userObj.estado || '');
+        params.append('estadoPago', estadoPago);
+        params.append('accesoHabilitado', acceso);
+
+        const response = await fetch(SCRIPT_URL, { method: 'POST', body: params });
+        const result = await response.json();
+
+        if (result.status === 'success') {
+            hideLoadingToast();
+            showNotif('Exito', (userObj.name || email) + ' -> ' + estadoPago + ' / Acceso: ' + acceso, 'success');
+
+            const key = email + '|' + courseName;
+            dbUserPaymentStatus[key] = estadoPago;
+            dbUserAccessStatus[key] = acceso;
+
+            if (acceso === 'SI') {
+                if (!dbUserCourses[email]) dbUserCourses[email] = [];
+                if (!dbUserCourses[email].includes(courseName)) dbUserCourses[email].push(courseName);
+            } else {
+                if (dbUserCourses[email]) {
+                    dbUserCourses[email] = dbUserCourses[email].filter(c => normalizeName(c) !== normalizeName(courseName));
+                }
+            }
+
+            applyFilters();
+            renderEnrollmentsList(null, courseName);
+        } else {
+            hideLoadingToast();
+            showNotif('Error', result.message || 'No se pudo actualizar.', 'error');
+        }
+    } catch (e) {
+        hideLoadingToast();
+        console.error('Error:', e);
+        showNotif('Error de conexion', 'Intenta de nuevo.', 'error');
+    }
+}
+
+function applyManageEnrollmentStyles() {
+    const isLight = document.body.classList.contains('light-mode');
+    const modal = document.getElementById('manageCourseEnrollmentsContent');
+    if (!modal) return;
+    if (isLight) {
+        modal.style.cssText = 'background: #b0bec5 !important; max-width: 1100px !important; width: 96% !important; overflow: hidden; border-radius: 2rem; max-height: 92vh; overflow-y: auto;';
+    } else {
+        modal.style.cssText = 'background: #1e293b !important; max-width: 1100px !important; width: 96% !important; overflow: hidden; border-radius: 2rem; max-height: 92vh; overflow-y: auto;';
+    }
+}
+
 // ==========================================
 // INICIALIZAR
 // ==========================================
@@ -1465,6 +1731,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (adminForm) {
         adminForm.addEventListener('submit', manualEnrollStudent);
     }
+
+
     
     const observer = new MutationObserver(function(mutations) {
         mutations.forEach(function(mutation) {
