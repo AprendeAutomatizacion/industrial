@@ -1,6 +1,6 @@
 // ==========================================
 // SCRIPT DE APRENDE AUTOMATIZACIÓN - PÁGINA DE INICIO
-// (ACTUALIZADO - CURSOS DESTACADOS CON VALORACIONES)
+// (ACTUALIZADO - CURSOS DESTACADOS CON VALORACIONES Y COMPRA DIRECTA)
 // ==========================================
 
 const API_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
@@ -31,6 +31,11 @@ let tasaBCVGlobal = null;
 
 let googleChartsLoaded = false;
 let googleChartsLoading = false;
+
+// Variables para el modal de compra
+let cursoSeleccionadoHome = null;
+let cursoPrecioUSDHome = 0;
+let tasaBCVHome = 0;
 
 // ==========================================
 // CARGAR USUARIO
@@ -864,28 +869,259 @@ function generateCourseCardHTML(course) {
 }
 
 // ==========================================
-// FUNCIONES DE COMPRA DESDE LA HOME
+// FUNCIONES DE COMPRA DESDE LA HOME (MISMO MODAL QUE CATÁLOGO)
 // ==========================================
 function abrirModalCompraFromHome(courseId) {
     if (!currentUser) {
         showNotif('Acceso requerido', 'Debes iniciar sesión para comprar un curso.', 'info');
         return;
     }
-    showNotif('Redirigiendo', 'Serás redirigido al catálogo para completar tu compra.', 'info');
-    setTimeout(() => {
-        window.location.href = 'catalogo.html?curso=' + courseId;
-    }, 1000);
+    
+    const curso = catalogoCursos.find(c => String(c.ID || c.id || '') === String(courseId));
+    if (!curso) {
+        console.error('Curso no encontrado:', courseId);
+        showNotif('Error', 'Curso no encontrado.', 'error');
+        return;
+    }
+    
+    const email = currentUser.email.toLowerCase();
+    const cursoNombre = curso.Nombre || curso.nombre || '';
+    const key = email + '|' + cursoNombre;
+    const acceso = dbUserAccessStatus[key] || 'NO';
+    
+    if (acceso === 'SÍ' || acceso === 'SI') {
+        showNotif('Ya inscrito', 'Ya estás inscrito en este curso.', 'info');
+        return;
+    }
+    
+    cursoSeleccionadoHome = curso;
+    cursoPrecioUSDHome = parseFloat(curso.Precio || curso.precio || 0);
+    tasaBCVHome = tasaBCVGlobal || 49.50;
+    
+    document.getElementById('modalCursoTituloHome').textContent = cursoNombre;
+    document.getElementById('modalCursoDescripcionHome').textContent = curso.Descripcion || curso.descripcion || 'Curso de automatización industrial';
+    document.getElementById('modalCursoPrecioHome').textContent = `${curso.Moneda || curso.moneda || '$'} ${cursoPrecioUSDHome.toFixed(2)}`;
+    
+    document.getElementById('mensajeCompraHome').classList.add('hidden');
+    document.getElementById('mensajeCompraHome').textContent = '';
+    document.getElementById('btnConfirmarCompraHome').disabled = false;
+    document.getElementById('btnConfirmarCompraHome').innerHTML = '<i class="fas fa-shopping-cart"></i> Confirmar';
+    document.getElementById('btnConfirmarCompraHome').className = 'btn-comprar flex-1 text-center flex items-center justify-center gap-2 text-xs md:text-sm py-2.5 md:py-3';
+    
+    const tasaContainer = document.getElementById('tasaBCVContainerHome');
+    tasaContainer.classList.add('hidden');
+    tasaContainer.style.display = 'none';
+    
+    setTimeout(() => { obtenerTasaBCVHome(); }, 300);
+    openModal('modalCompra');
 }
 
-function enrollFreeCourseFromHome(courseId, courseName) {
-    if (!currentUser) {
+function cerrarModalCompraHome() {
+    closeModal('modalCompra');
+    cursoSeleccionadoHome = null;
+    document.getElementById('tasaBCVContainerHome').classList.add('hidden');
+    document.getElementById('tasaBCVContainerHome').style.display = 'none';
+}
+
+async function obtenerTasaBCVHome() {
+    try {
+        const container = document.getElementById('tasaBCVContainerHome');
+        const tasaValor = document.getElementById('tasaBCVNumeroHome');
+        const tasaActualizado = document.getElementById('tasaBCVActualizadoHome');
+        const totalBs = document.getElementById('totalBsHome');
+        const montoBs = document.getElementById('montoEnBsHome');
+        
+        tasaValor.textContent = '...';
+        totalBs.textContent = 'Bs. ...';
+        if (montoBs) montoBs.textContent = 'Bs. ...';
+        
+        const response = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
+        const data = await response.json();
+        
+        if (data && data.promedio) {
+            tasaBCVHome = data.promedio;
+            tasaBCVGlobal = data.promedio;
+            
+            const fecha = data.fechaActualizacion ? new Date(data.fechaActualizacion) : new Date();
+            const fechaStr = fecha.toLocaleDateString('es-VE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            
+            tasaValor.textContent = tasaBCVHome.toFixed(2);
+            tasaActualizado.textContent = fechaStr;
+            
+            const total = cursoPrecioUSDHome * tasaBCVHome;
+            totalBs.innerHTML = `<img src="${VENEZUELA_FLAG_URL}" alt="🇻🇪" style="width:18px;height:13px;object-fit:cover;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:4px;box-shadow:0 1px 2px rgba(0,0,0,0.2);"> Bs. ${total.toFixed(2)}`;
+            if (montoBs) montoBs.innerHTML = `<img src="${VENEZUELA_FLAG_URL}" alt="🇻🇪" style="width:14px;height:10px;object-fit:cover;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:3px;box-shadow:0 1px 2px rgba(0,0,0,0.2);"> Bs. ${total.toFixed(2)}`;
+            
+            container.classList.remove('hidden');
+            container.style.display = 'block';
+        } else {
+            throw new Error('No se pudo obtener la tasa');
+        }
+    } catch (error) {
+        console.error('Error al obtener tasa BCV:', error);
+        tasaBCVHome = 49.50;
+        tasaBCVGlobal = 49.50;
+        document.getElementById('tasaBCVNumeroHome').textContent = '49.50';
+        document.getElementById('tasaBCVActualizadoHome').textContent = 'Estimado (fallback)';
+        
+        const total = cursoPrecioUSDHome * tasaBCVHome;
+        document.getElementById('totalBsHome').innerHTML = `<img src="${VENEZUELA_FLAG_URL}" alt="🇻🇪" style="width:18px;height:13px;object-fit:cover;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:4px;box-shadow:0 1px 2px rgba(0,0,0,0.2);"> Bs. ${total.toFixed(2)}`;
+        document.getElementById('montoEnBsHome').innerHTML = `<img src="${VENEZUELA_FLAG_URL}" alt="🇻🇪" style="width:14px;height:10px;object-fit:cover;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:3px;box-shadow:0 1px 2px rgba(0,0,0,0.2);"> Bs. ${total.toFixed(2)}`;
+        
+        document.getElementById('tasaBCVContainerHome').classList.remove('hidden');
+        document.getElementById('tasaBCVContainerHome').style.display = 'block';
+    }
+}
+
+function verTasaBCVHome() {
+    const container = document.getElementById('tasaBCVContainerHome');
+    if (container.classList.contains('hidden')) {
+        obtenerTasaBCVHome();
+    } else {
+        container.classList.toggle('hidden');
+        container.style.display = container.classList.contains('hidden') ? 'none' : 'block';
+    }
+}
+
+function enviarWhatsAppHome() {
+    if (!cursoSeleccionadoHome || !currentUser) {
+        showNotif('Error', 'No hay curso seleccionado o usuario no identificado.', 'error');
+        return;
+    }
+    const nombreUsuario = currentUser.name || currentUser.email || 'Usuario';
+    const nombreCurso = cursoSeleccionadoHome.Nombre || cursoSeleccionadoHome.nombre || 'Curso';
+    const montoTotal = cursoPrecioUSDHome * tasaBCVHome;
+    const mensaje = `Saludos, mi nombre es ${nombreUsuario}, les comparto la captura por la compra del curso "${nombreCurso}" por Bs. ${montoTotal.toFixed(2)} (Tasa BCV: Bs. ${tasaBCVHome.toFixed(2)}), espero confirmación.`;
+    const mensajeCodificado = encodeURIComponent(mensaje);
+    const url = `https://wa.me/584121414196?text=${mensajeCodificado}`;
+    window.open(url, '_blank');
+}
+
+async function confirmarCompraHome() {
+    if (!cursoSeleccionadoHome || !currentUser) return;
+    
+    const btn = document.getElementById('btnConfirmarCompraHome');
+    const mensaje = document.getElementById('mensajeCompraHome');
+    
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+    mensaje.classList.add('hidden');
+    
+    try {
+        const cursoNombre = cursoSeleccionadoHome.Nombre || cursoSeleccionadoHome.nombre || '';
+        const formData = new URLSearchParams();
+        formData.append('action', 'register_course_with_payment');
+        formData.append('courseName', cursoNombre);
+        formData.append('name', currentUser.name || '');
+        formData.append('email', currentUser.email);
+        formData.append('cedula', currentUser.cedula || '');
+        formData.append('telefono', currentUser.telefono || '');
+        formData.append('pais', currentUser.pais || '');
+        formData.append('estado', currentUser.estado || '');
+        formData.append('estadoPago', 'Pendiente');
+        formData.append('accesoHabilitado', 'NO');
+        
+        const response = await fetch(API_URL, { method: 'POST', body: formData });
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            mensaje.classList.remove('hidden');
+            mensaje.className = 'mt-3 text-center text-sm text-green-400';
+            mensaje.innerHTML = `
+                <i class="fas fa-check-circle"></i> 
+                ¡Inscripción registrada!<br>
+                <span class="text-amber-400">⏳ El curso está pendiente de verificación de pago.</span><br>
+                <span class="text-slate-400 text-xs">Aparecerá en "Mis Cursos" cuando sea verificado.</span>
+            `;
+            btn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
+            btn.className = 'bg-green-500 text-white px-6 py-3 rounded-xl font-semibold flex-1 text-center';
+            
+            const key = currentUser.email.toLowerCase() + '|' + cursoNombre;
+            dbUserPaymentStatus[key] = 'Pendiente';
+            
+            setTimeout(() => {
+                cerrarModalCompraHome();
+                loadData();
+                rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b();
+                showNotif('✅ Compra registrada', 'El curso está pendiente de verificación de pago.', 'success');
+            }, 2000);
+        } else {
+            mensaje.classList.remove('hidden');
+            mensaje.className = 'mt-3 text-center text-sm text-red-400';
+            mensaje.textContent = '❌ ' + (result.message || 'Error al inscribirse. Intenta nuevamente.');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Confirmar';
+        }
+    } catch (error) {
+        console.error('Error en compra:', error);
+        mensaje.classList.remove('hidden');
+        mensaje.className = 'mt-3 text-center text-sm text-red-400';
+        mensaje.textContent = '❌ Error de conexión. Intenta nuevamente.';
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-shopping-cart"></i> Confirmar';
+    }
+}
+
+// ==========================================
+// INSCRIPCIÓN GRATUITA DESDE LA HOME
+// ==========================================
+async function enrollFreeCourseFromHome(courseId, courseName) {
+    if (!currentUser || !currentUser.email) {
         showNotif('Acceso requerido', 'Debes iniciar sesión para inscribirte.', 'info');
         return;
     }
-    showNotif('Redirigiendo', 'Serás redirigido al catálogo para completar tu inscripción.', 'info');
-    setTimeout(() => {
-        window.location.href = 'catalogo.html?curso=' + courseId;
-    }, 1000);
+    
+    const email = currentUser.email.toLowerCase();
+    const key = email + '|' + courseName;
+    const acceso = dbUserAccessStatus[key] || 'NO';
+    
+    if (acceso === 'SÍ' || acceso === 'SI') {
+        showNotif('Ya inscrito', 'Ya te encuentras inscrito en este curso.', 'info');
+        return;
+    }
+    
+    showLoadingToast();
+    
+    try {
+        const formData = new URLSearchParams();
+        formData.append('action', 'register_course_with_payment');
+        formData.append('courseName', courseName);
+        formData.append('name', currentUser.name || email.split('@')[0]);
+        formData.append('email', email);
+        formData.append('cedula', currentUser.cedula || '');
+        formData.append('telefono', currentUser.telefono || '');
+        formData.append('pais', currentUser.pais || '');
+        formData.append('estado', currentUser.estado || '');
+        formData.append('estadoPago', 'Verificado');
+        formData.append('accesoHabilitado', 'SI');
+        
+        const response = await fetch(API_URL, { method: 'POST', body: formData });
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            if (!currentUser.accessedCursos) currentUser.accessedCursos = [];
+            if (!currentUser.accessedCursos.includes(parseInt(courseId))) {
+                currentUser.accessedCursos.push(parseInt(courseId));
+            }
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            
+            dbUserPaymentStatus[key] = 'Verificado';
+            dbUserAccessStatus[key] = 'SÍ';
+            
+            await loadData();
+            rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b();
+            
+            showSuccessToast();
+            showNotif('✅ Inscripción exitosa', `Te has inscrito en "${courseName}"`, 'success');
+        } else {
+            hideLoadingToast();
+            showNotif('Error', result.message || 'No se pudo completar la inscripción.', 'error');
+        }
+    } catch (e) {
+        hideLoadingToast();
+        console.error('Error en inscripción gratuita:', e);
+        showNotif('Error de conexión', 'Intenta de nuevo.', 'error');
+    }
 }
 
 // ==========================================
