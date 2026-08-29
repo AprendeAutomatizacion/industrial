@@ -68,7 +68,6 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* AURORA BACKGROUND EFFECT */
         body::before {
             content: '';
             position: fixed;
@@ -91,10 +90,6 @@
             50% { opacity: 0.92; }
         }
 
-        /* ============================================================
-           MODO CLARO - ESTILO AULA VIRTUAL (azul claro + métricas)
-           Overlay transparente para ver sutilmente la imagen de fondo
-           ============================================================ */
         body.light-mode {
             background-color: #d0e1ef;
             background-image: url('img/fondo2.webp');
@@ -121,7 +116,6 @@
             animation: none !important;
         }
 
-        /* GRADIENT TEXT UTILITY */
         .gradient-text {
             background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #06b6d4 100%);
             -webkit-background-clip: text;
@@ -134,17 +128,6 @@
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
-        }
-
-        /* SHIMMER LOADING EFFECT */
-        .shimmer {
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
         }
 
         .section-title { 
@@ -172,15 +155,6 @@
             background-clip: text;
         }
 
-        /* CURSOR PERSONALIZADO SUTIL */
-        @media (pointer: fine) {
-            body { cursor: default; }
-            a, button, [onclick], .course-card, .methodology-card, .testimonial-card, details {
-                cursor: pointer;
-            }
-        }
-
-        /* SCROLLBAR PREMIUM */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { 
             background: rgba(255, 255, 255, 0.03); 
@@ -195,7 +169,6 @@
             background: linear-gradient(180deg, #22d3ee, #a78bfa);
         }
 
-        /* FLOATING PARTICLES BACKGROUND */
         .particles-bg {
             position: fixed;
             inset: 0;
@@ -217,20 +190,12 @@
             90% { opacity: 1; }
             100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
         }
-        body.light-mode .hero-main-title .text-secondary {
-            color: #2db8ce !important;
-            text-shadow: none !important;
-            opacity: 1 !important;
-        }
 
         #page-home, main, header, section, footer {
             position: relative;
             z-index: 1;
         }
 
-        /* ==========================================
-           HEADER - GLASSMORPHISM PREMIUM
-           ========================================== */
         header {
             background: var(--glass-bg) !important;
             backdrop-filter: blur(10px) saturate(140%) !important;
@@ -242,14 +207,6 @@
         header .absolute.inset-0 {
             opacity: 0.3 !important;
             filter: saturate(1.2) contrast(1.1);
-        }
-
-        header img {
-            filter: none !important;
-        }
-
-        header .absolute.inset-0::after {
-            display: none !important;
         }
 
         header .hero-main-title {
@@ -282,11 +239,6 @@
             backdrop-filter: blur(8px);
             transition: all 0.3s ease;
         }
-        header .bg-blue-500\/20:hover {
-            background: rgba(59, 130, 246, 0.35) !important;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-        }
 
         header .bg-emerald-500\/20 {
             background: rgba(16, 185, 129, 0.2) !important;
@@ -294,11 +246,6 @@
             border: 1px solid rgba(16, 185, 129, 0.3) !important;
             backdrop-filter: blur(8px);
             transition: all 0.3s ease;
-        }
-        header .bg-emerald-500\/20:hover {
-            background: rgba(16, 185, 129, 0.35) !important;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
         }
 
         header #visitor-info {
@@ -309,14 +256,7 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        header #visitor-info:hover {
-            border-color: rgba(6, 182, 212, 0.4) !important;
-            box-shadow: 0 4px 20px rgba(6, 182, 212, 0.15);
-        }
 
-        /* ==========================================
-           TARJETAS - GLASSMORPHISM 3D
-           ========================================== */
         .course-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -491,9 +431,6 @@
             background: linear-gradient(180deg, rgba(245, 158, 11, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
         }
 
-        /* ==========================================
-           TARJETA DE MISIÓN - GLASSMORPHISM
-           ========================================== */
         .mission-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -504,25 +441,10 @@
             position: relative;
             overflow: hidden;
         }
-        .mission-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(6, 182, 212, 0.08) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-        }
         .mission-card:hover {
             transform: translateY(-3px);
             border-color: rgba(6, 182, 212, 0.2);
             box-shadow: 0 6px 24px rgba(6, 182, 212, 0.1), 0 12px 32px rgba(0, 0, 0, 0.1);
-        }
-        .mission-card:hover::before {
-            opacity: 1;
         }
 
         body:not(.light-mode) .mission-card h3 { color: #ffffff; }
@@ -535,9 +457,6 @@
         body.light-mode .mission-card h3 { color: #1e293b; }
         body.light-mode .mission-card ul { color: #475569; }
 
-        /* ==========================================
-           METODOLOGÍA - FONDO SÓLIDO
-           ========================================== */
         .methodology-card {
             background-color: var(--bg-secondary);
             border: 1px solid rgba(6, 182, 212, 0.5);
@@ -564,9 +483,6 @@
             border-color: rgba(100, 150, 200, 0.3);
         }
 
-        /* ==========================================
-           TESTIMONIOS - GLASSMORPHISM ELEGANTE
-           ========================================== */
         .testimonial-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -578,26 +494,10 @@
             position: relative;
             overflow: hidden;
         }
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 6rem;
-            font-family: Georgia, serif;
-            color: rgba(6, 182, 212, 0.1);
-            line-height: 1;
-            pointer-events: none;
-            transition: all 0.5s ease;
-        }
         .testimonial-card:hover {
             transform: translateY(-4px);
             border-color: rgba(6, 182, 212, 0.2);
             box-shadow: 0 6px 24px rgba(6, 182, 212, 0.1), 0 12px 32px rgba(0, 0, 0, 0.08);
-        }
-        .testimonial-card:hover::before {
-            color: rgba(6, 182, 212, 0.2);
-            transform: scale(1.1);
         }
         .testimonial-card p { color: #cbd5e1; }
         .testimonial-card h4 { color: #ffffff; }
@@ -611,9 +511,6 @@
         body.light-mode .testimonial-card h4 { color: #1e293b; }
         body.light-mode .testimonial-card .testimonial-role { color: #64748b; }
 
-        /* ==========================================
-           CURSO ESPECIAL - GLASSMORPHISM PREMIUM
-           ========================================== */
         .special-course-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -641,14 +538,6 @@
             box-shadow: var(--cyan-glow), 0 20px 60px rgba(0, 0, 0, 0.15);
         }
 
-        body.light-mode .special-course-card {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* ==========================================
-           FAQ - GLASSMORPHISM INTERACTIVO
-           ========================================== */
         #faq details {
             background: var(--glass-bg);
             backdrop-filter: blur(8px) saturate(140%);
@@ -682,9 +571,6 @@
             border-color: rgba(255, 255, 255, 0.5);
         }
 
-        /* ==========================================
-           BOTONES - GLOW GRADIENT PREMIUM
-           ========================================== */
         .btn-metal-solid {
             display: inline-flex;
             align-items: center;
@@ -745,20 +631,11 @@
             background: linear-gradient(135deg, rgba(34, 211, 238, 0.9) 0%, rgba(6, 182, 212, 0.95) 50%, rgba(8, 145, 178, 0.9) 100%);
             box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35), 0 0 0 1px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
-        .btn-metal-cyan:hover {
-            box-shadow: 0 12px 40px rgba(6, 182, 212, 0.5), 0 0 0 1px rgba(6, 182, 212, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-        }
         .btn-metal-teal {
             background: linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(13, 148, 136, 0.95) 50%, rgba(15, 118, 110, 0.9) 100%);
             box-shadow: 0 4px 20px rgba(20, 184, 166, 0.3), 0 0 0 1px rgba(20, 184, 166, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
-        .btn-metal-teal:hover {
-            box-shadow: 0 12px 40px rgba(20, 184, 166, 0.4), 0 0 0 1px rgba(20, 184, 166, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-        }
 
-        /* ==========================================
-           BOTONES METÁLICOS DEL CATÁLOGO
-           ========================================== */
         .btn-metal-green,
         .btn-metal-blue,
         .btn-metal-slate,
@@ -820,9 +697,6 @@
                         0 4px 14px rgba(34, 197, 94, 0.4), 0 1px 3px rgba(0,0,0,0.2);
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
-        .btn-metal-green:hover {
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(34, 197, 94, 0.55), 0 2px 5px rgba(0,0,0,0.2);
-        }
         .btn-metal-blue {
             background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%);
             border: 1px solid #1e40af;
@@ -831,9 +705,6 @@
                         0 4px 14px rgba(37, 99, 235, 0.4), 0 1px 3px rgba(0,0,0,0.2);
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
-        .btn-metal-blue:hover {
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(37, 99, 235, 0.55), 0 2px 5px rgba(0,0,0,0.2);
-        }
         .btn-metal-slate {
             background: linear-gradient(180deg, #94a3b8 0%, #475569 45%, #334155 100%);
             border: 1px solid #1e293b;
@@ -841,9 +712,6 @@
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), inset 0 -1px 0 rgba(0,0,0,0.3),
                         0 3px 10px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2);
             text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-        }
-        .btn-metal-slate:hover {
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.25), 0 5px 16px rgba(0,0,0,0.4);
         }
         .btn-metal-gray {
             background: linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%);
@@ -854,9 +722,6 @@
             filter: saturate(0.5);
         }
 
-        /* ==========================================
-           BOTONES DE PERFIL - GLASSMORPHISM
-           ========================================== */
         .prof-btn {
             background: var(--glass-bg);
             backdrop-filter: blur(8px) saturate(140%);
@@ -909,9 +774,6 @@
         }
         body.light-mode .prof-btn > span { color: #1e293b; }
 
-        /* ==========================================
-           FAQ
-           ========================================== */
         #faq details > summary { list-style: none; }
         #faq details > summary::-webkit-details-marker { display: none; }
         #faq details[open] summary ~ * { animation: fadeIn 0.3s ease-in-out; }
@@ -923,9 +785,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ==========================================
-           DIVISORES - EFECTOS PREMIUM
-           ========================================== */
         .section-divider {
             width: 100%;
             height: 80px;
@@ -1014,10 +873,7 @@
             50% { r: 6; opacity: 1; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.6)); }
         }
 
-        /* ==========================================
-           TOAST DE CARGA - GLASSMORPHISM PREMIUM (COMPACTO)
-           ========================================== */
-                .loading-toast {
+        .loading-toast {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -1106,7 +962,6 @@
             font-weight: 900;
         }
 
-        /* RESPONSIVE - MÓVIL (CLAVE DEL DISEÑO) */
         @media (max-width: 640px) {
             .loading-toast {
                 bottom: 16px;
@@ -1136,7 +991,6 @@
             }
         }
 
-        /* TABLETS PEQUEÑAS */
         @media (min-width: 641px) and (max-width: 768px) {
             .loading-toast {
                 bottom: 20px;
@@ -1179,11 +1033,7 @@
             border: 1px solid rgba(16, 185, 129, 0.8);
         }
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
-        /* ============ FIN ESTILOS TOAST ============ */
 
-        /* ==========================================
-           REVEAL - ANIMACIONES PREMIUM
-           ========================================== */
         .reveal { 
             opacity: 1 !important;
             transform: none !important;
@@ -1210,16 +1060,10 @@
             transition: none !important;
         }
 
-        /* ==========================================
-           SCROLLBAR
-           ========================================== */
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: var(--text-accent); border-radius: 10px; }
 
-        /* ==========================================
-           MODALS
-           ========================================== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -1250,9 +1094,6 @@
             transform: translateY(0) scale(1);
         }
 
-        /* ==========================================
-           FIX: Tarjetas en modo claro (estilo catálogo)
-           ========================================== */
         body.light-mode .course-card {
             background-color: rgba(226, 232, 240, 0.85) !important;
             border-color: #cbd5e1 !important;
@@ -1289,9 +1130,6 @@
         body.light-mode .course-card .border-slate-100 {
             border-color: rgba(0, 0, 0, 0.06) !important;
         }
-        body.light-mode .course-card .border-slate-900 {
-            border-color: rgba(0, 0, 0, 0.08) !important;
-        }
         body.light-mode .course-card .course-card-description {
             color: #64748b !important;
         }
@@ -1302,9 +1140,6 @@
             color: #0f766e !important;
         }
 
-        /* ==========================================
-           FIX: Modalidades en modo claro
-           ========================================== */
         body.light-mode #modalidades-container .course-card-title,
         body.light-mode #modalidades-container .course-card-description,
         body.light-mode #modalidades-container h3,
@@ -1326,9 +1161,6 @@
             color: #1e293b !important;
         }
 
-        /* ==========================================
-           MODALIDADES - IMAGEN VERTICAL QUE LLENA EL ALTO
-           ========================================== */
         .course-card .modalidad-image-container {
             height: 12rem;
             overflow: hidden;
@@ -1341,9 +1173,6 @@
             }
         }
 
-        /* ==========================================
-           TESTIMONIOS - COLOR CYAN EN MODO CLARO
-           ========================================== */
         body.light-mode #testimonios-container .fa-quote-right {
             color: #2db8ce !important;
             opacity: 0.7 !important;
@@ -1357,9 +1186,6 @@
             color: #475569 !important;
         }
 
-        /* ==========================================
-           LOGOS DE MODALIDADES - FONDO DE LOGO COMO BACKGROUND
-           ========================================== */
         .modalidad-logo-bg {
             width: 40px;
             height: 40px;
@@ -1377,9 +1203,6 @@
             background-color: #f8fafc;
         }
 
-        /* ==========================================
-           LOADING STATES - CARGA SIMULTÁNEA
-           ========================================== */
         .section-loading {
             opacity: 1;
             transform: none;
@@ -1395,9 +1218,6 @@
             opacity: 1;
         }
 
-        /* ==========================================
-           EXPANSIÓN DE TARJETAS DE METODOLOGÍA
-           ========================================== */
         .card-overlay {
             position: fixed;
             inset: 0;
@@ -1485,7 +1305,6 @@
             line-height: 1.7;
         }
 
-        /* Responsividad móvil */
         @media (max-width: 767px) {
             .methodology-card.is-expanded {
                 flex-direction: column !important;
@@ -1507,9 +1326,6 @@
             }
         }
 
-        /* ==========================================
-           MEJORAS RESPONSIVE GENERALES
-           ========================================== */
         @media (max-width: 768px) {
             header .relative.z-10 { padding-top: 6rem !important; padding-bottom: 3rem !important; }
             .hero-main-title { font-size: 1.75rem !important; line-height: 1.15 !important; }
@@ -1531,7 +1347,6 @@
             #faq details { border-radius: 0.75rem; }
             #faq summary { font-size: 0.85rem; padding: 0.75rem 1rem; }
             #faq details p { font-size: 0.8rem; padding: 0 1rem 1rem; }
-            /* .loading-toast responsive handled by @media (max-width: 640px) above */
             #comunidad-global .h-\[400px\] { height: 280px !important; }
             #comunidad-global .rounded-\[2\.5rem\] { border-radius: 1.5rem !important; }
             .modalidad-logo-bg { width: 32px; height: 32px; background-size: 24px 24px; }
@@ -1550,9 +1365,6 @@
             display: inline-flex !important;
         }
 
-        /* ==========================================
-           BOTÓN WHATSAPP FLOTANTE
-           ========================================== */
         .whatsapp-float {
             position: fixed;
             bottom: 24px;
@@ -1628,9 +1440,6 @@
             .whatsapp-float::after { display: none; }
         }
 
-        /* ==========================================
-           MODO CLARO: TOAST DE CARGA CON TEXTO NEGRO
-           ========================================== */
         body.light-mode .loading-toast {
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(6, 182, 212, 0.3);
@@ -1644,200 +1453,365 @@
             border-top-color: #06b6d4;
         }
 
-/* ==========================================
-   ESTILOS ADICIONALES PARA CURSOS DESTACADOS
-   (MISMO FORMATO QUE CATÁLOGO)
-   ========================================== */
+        /* Estados de curso */
+        .course-card.estado-pendiente { border-color: #fbbf24 !important; opacity: 0.85; }
+        .course-card.estado-pendiente:hover { border-color: #fbbf24 !important; opacity: 0.95; }
+        .course-card.estado-inscrito { border-color: #34d399 !important; }
+        .course-card.estado-inscrito:hover { border-color: #34d399 !important; }
+        .course-card.estado-rechazado { border-color: #f87171 !important; }
 
-/* Estados de curso */
-.course-card.estado-pendiente { border-color: #fbbf24 !important; opacity: 0.85; }
-.course-card.estado-pendiente:hover { border-color: #fbbf24 !important; opacity: 0.95; }
-.course-card.estado-inscrito { border-color: #34d399 !important; }
-.course-card.estado-inscrito:hover { border-color: #34d399 !important; }
-.course-card.estado-rechazado { border-color: #f87171 !important; }
+        .badge-estado { 
+            padding: 0.2rem 0.75rem; 
+            border-radius: 9999px; 
+            font-size: 0.6rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.05em; 
+            backdrop-filter: blur(8px); 
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .badge-pendiente { 
+            background: rgba(251, 191, 36, 0.2); 
+            color: #fbbf24; 
+            border: 1px solid rgba(251, 191, 36, 0.3); 
+            animation: pulse-badge 1.5s ease-in-out infinite; 
+        }
+        .badge-revision { 
+            background: rgba(96, 165, 250, 0.2); 
+            color: #60a5fa; 
+            border: 1px solid rgba(96, 165, 250, 0.3); 
+            animation: pulse-badge 1.5s ease-in-out infinite; 
+        }
+        .badge-rechazado { 
+            background: rgba(248, 113, 113, 0.2); 
+            color: #f87171; 
+            border: 1px solid rgba(248, 113, 113, 0.3); 
+        }
+        .badge-inscrito { 
+            background: rgba(52, 211, 153, 0.2); 
+            color: #34d399; 
+            border: 1px solid rgba(52, 211, 153, 0.3); 
+        }
 
-.badge-estado { 
-    padding: 0.2rem 0.75rem; 
-    border-radius: 9999px; 
-    font-size: 0.6rem; 
-    font-weight: 700; 
-    text-transform: uppercase; 
-    letter-spacing: 0.05em; 
-    backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px);
-}
-.badge-pendiente { 
-    background: rgba(251, 191, 36, 0.2); 
-    color: #fbbf24; 
-    border: 1px solid rgba(251, 191, 36, 0.3); 
-    animation: pulse-badge 1.5s ease-in-out infinite; 
-}
-.badge-revision { 
-    background: rgba(96, 165, 250, 0.2); 
-    color: #60a5fa; 
-    border: 1px solid rgba(96, 165, 250, 0.3); 
-    animation: pulse-badge 1.5s ease-in-out infinite; 
-}
-.badge-rechazado { 
-    background: rgba(248, 113, 113, 0.2); 
-    color: #f87171; 
-    border: 1px solid rgba(248, 113, 113, 0.3); 
-}
-.badge-inscrito { 
-    background: rgba(52, 211, 153, 0.2); 
-    color: #34d399; 
-    border: 1px solid rgba(52, 211, 153, 0.3); 
-}
+        @keyframes pulse-badge { 
+            0%, 100% { opacity: 1; } 
+            50% { opacity: 0.6; } 
+        }
 
-@keyframes pulse-badge { 
-    0%, 100% { opacity: 1; } 
-    50% { opacity: 0.6; } 
-}
+        .btn-comprar {
+            background: linear-gradient(135deg, #2db8ce, #06b6d4);
+            color: white;
+            padding: 0.6rem 1.5rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .btn-comprar:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4); 
+        }
+        .btn-comprar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-/* Botones de compra */
-.btn-comprar {
-    background: linear-gradient(135deg, #2db8ce, #06b6d4);
-    color: white;
-    padding: 0.6rem 1.5rem;
-    border-radius: 1rem;
-    font-weight: 700;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-}
-.btn-comprar:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4); 
-}
-.btn-comprar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-pendiente { 
+            background: #fbbf24; 
+            color: #0a0f1e; 
+            padding: 0.6rem 1.5rem; 
+            border-radius: 1rem; 
+            font-weight: 700; 
+            border: none; 
+            cursor: default; 
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
 
-.btn-pendiente { 
-    background: #fbbf24; 
-    color: #0a0f1e; 
-    padding: 0.6rem 1.5rem; 
-    border-radius: 1rem; 
-    font-weight: 700; 
-    border: none; 
-    cursor: default; 
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-}
+        .btn-inscrito-pastilla { 
+            background: #064e3b; 
+            color: #34d399; 
+            padding: 0.6rem 1.5rem; 
+            border-radius: 1rem; 
+            font-weight: 700; 
+            border: 1px solid #059669; 
+            cursor: default; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 0.5rem; 
+            font-size: 0.8rem;
+        }
 
-.btn-inscrito-pastilla { 
-    background: #064e3b; 
-    color: #34d399; 
-    padding: 0.6rem 1.5rem; 
-    border-radius: 1rem; 
-    font-weight: 700; 
-    border: 1px solid #059669; 
-    cursor: default; 
-    display: inline-flex; 
-    align-items: center; 
-    gap: 0.5rem; 
-    font-size: 0.8rem;
-}
+        .btn-rechazado { 
+            background: #f87171; 
+            color: white; 
+            padding: 0.6rem 1.5rem; 
+            border-radius: 1rem; 
+            font-weight: 700; 
+            border: none; 
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        .btn-rechazado:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 30px rgba(248, 113, 113, 0.4); 
+        }
 
-.btn-rechazado { 
-    background: #f87171; 
-    color: white; 
-    padding: 0.6rem 1.5rem; 
-    border-radius: 1rem; 
-    font-weight: 700; 
-    border: none; 
-    cursor: pointer; 
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-}
-.btn-rechazado:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 8px 30px rgba(248, 113, 113, 0.4); 
-}
+        .precio-bs { 
+            color: #34d399 !important; 
+            font-weight: 800 !important; 
+            font-size: 0.7rem !important; 
+            letter-spacing: 0.02em; 
+            background: #064e3b; 
+            padding: 0.15rem 0.5rem; 
+            border-radius: 0.5rem; 
+            display: inline-block; 
+            border: 1px solid #059669; 
+        }
 
-/* Precio en Bolívares */
-.precio-bs { 
-    color: #34d399 !important; 
-    font-weight: 800 !important; 
-    font-size: 0.7rem !important; 
-    letter-spacing: 0.02em; 
-    background: #064e3b; 
-    padding: 0.15rem 0.5rem; 
-    border-radius: 0.5rem; 
-    display: inline-block; 
-    border: 1px solid #059669; 
-}
+        .btn-metal-blue {
+            background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%);
+            border: 1px solid #1e40af;
+            color: white;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            font-size: 0.7rem;
+            padding: 0.5rem 1rem;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25);
+            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-metal-blue:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(37, 99, 235, 0.55);
+        }
 
-/* Botón metálico azul (Info) */
-.btn-metal-blue {
-    background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%);
-    border: 1px solid #1e40af;
-    color: white;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    font-size: 0.7rem;
-    padding: 0.5rem 1rem;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25);
-    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-    border-radius: 0.75rem;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-}
-.btn-metal-blue:hover {
-    transform: translateY(-2px);
-    filter: brightness(1.08);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(37, 99, 235, 0.55);
-}
+        .course-card .overlay-restricted {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            pointer-events: none;
+        }
 
-/* Overlay de acceso restringido */
-.course-card .overlay-restricted {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    pointer-events: none;
-}
+        body.light-mode .btn-inscrito-pastilla {
+            background: #059669;
+            color: #ffffff;
+            border: 1px solid #047857;
+        }
+        body.light-mode .precio-bs {
+            color: #ffffff !important;
+            background: #059669;
+            border: 1px solid #047857;
+        }
 
-/* Modo claro */
-body.light-mode .btn-inscrito-pastilla {
-    background: #059669;
-    color: #ffffff;
-    border: 1px solid #047857;
-}
-body.light-mode .precio-bs {
-    color: #ffffff !important;
-    background: #059669;
-    border: 1px solid #047857;
-}
+        @media (max-width: 768px) {
+            .btn-comprar,
+            .btn-pendiente,
+            .btn-inscrito-pastilla,
+            .btn-rechazado {
+                padding: 0.5rem 1rem;
+                font-size: 0.7rem;
+                border-radius: 0.75rem;
+            }
+            .precio-bs {
+                font-size: 0.6rem !important;
+                padding: 0.1rem 0.4rem;
+            }
+        }
 
-/* Ajustes responsive */
-@media (max-width: 768px) {
-    .btn-comprar,
-    .btn-pendiente,
-    .btn-inscrito-pastilla,
-    .btn-rechazado {
-        padding: 0.5rem 1rem;
-        font-size: 0.7rem;
-        border-radius: 0.75rem;
-    }
-    .precio-bs {
-        font-size: 0.6rem !important;
-        padding: 0.1rem 0.4rem;
-    }
-}
+        /* ==========================================
+           MODAL DE COMPRA - ESTILOS
+           ========================================== */
+        #modalCompra .btn-comprar {
+            background: linear-gradient(135deg, #2db8ce, #06b6d4);
+            color: white;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        #modalCompra .btn-comprar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4);
+        }
+        #modalCompra .btn-comprar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #modalCompra .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #modalCompra .btn-whatsapp:hover {
+            background: #1fb954;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        #modalCompra .btn-cancelar {
+            background: #475569;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #modalCompra .btn-cancelar:hover {
+            background: #334155;
+            transform: translateY(-2px);
+        }
+
+        #modalCompra #tasaBCVContainerHome {
+            transition: all 0.3s ease;
+        }
+        #modalCompra #tasaBCVContainerHome.hidden {
+            display: none !important;
+        }
+        #modalCompra #tasaBCVContainerHome:not(.hidden) {
+            display: block !important;
+            animation: fadeInDown 0.3s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #modalCompra #mensajeCompraHome {
+            transition: all 0.3s ease;
+        }
+        #modalCompra #mensajeCompraHome.hidden {
+            display: none !important;
+        }
+        #modalCompra #mensajeCompraHome:not(.hidden) {
+            display: block !important;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        #modalCompra #btnConfirmarCompraHome:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 640px) {
+            #modalCompra .modal-content {
+                max-width: 98% !important;
+                width: 98% !important;
+                border-radius: 1.5rem !important;
+                max-height: 98vh !important;
+            }
+            #modalCompra .p-4 {
+                padding: 1rem !important;
+            }
+            #modalCompra .p-3 {
+                padding: 0.75rem !important;
+            }
+            #modalCompra .text-lg {
+                font-size: 1rem !important;
+            }
+            #modalCompra .text-2xl {
+                font-size: 1.25rem !important;
+            }
+            #modalCompra .text-base {
+                font-size: 0.875rem !important;
+            }
+            #modalCompra .py-2\.5 {
+                padding-top: 0.5rem !important;
+                padding-bottom: 0.5rem !important;
+            }
+        }
+
+        body.light-mode #modalCompra .bg-slate-800\/50 {
+            background: rgba(226, 232, 240, 0.8) !important;
+        }
+        body.light-mode #modalCompra .bg-slate-700\/30 {
+            background: rgba(226, 232, 240, 0.6) !important;
+        }
+        body.light-mode #modalCompra .border-slate-700\/50 {
+            border-color: rgba(100, 116, 139, 0.3) !important;
+        }
+        body.light-mode #modalCompra .border-slate-600\/50 {
+            border-color: rgba(100, 116, 139, 0.3) !important;
+        }
+        body.light-mode #modalCompra .text-slate-300 {
+            color: #475569 !important;
+        }
+        body.light-mode #modalCompra .text-slate-400 {
+            color: #64748b !important;
+        }
+        body.light-mode #modalCompra .text-slate-500 {
+            color: #64748b !important;
+        }
+        body.light-mode #modalCompra .text-slate-600 {
+            color: #475569 !important;
+        }
+        body.light-mode #modalCompra .bg-slate-700 {
+            background: #cbd5e1 !important;
+        }
+        body.light-mode #modalCompra .bg-slate-700:hover {
+            background: #94a3b8 !important;
+        }
+        body.light-mode #modalCompra .text-cyan-400 {
+            color: #0891b2 !important;
+        }
+        body.light-mode #modalCompra .bg-cyan-500\/20 {
+            background: rgba(8, 145, 178, 0.1) !important;
+        }
+        body.light-mode #modalCompra .bg-cyan-500\/30 {
+            background: rgba(8, 145, 178, 0.15) !important;
+        }
+        body.light-mode #modalCompra .border-cyan-500\/30 {
+            border-color: rgba(8, 145, 178, 0.2) !important;
+        }
+        body.light-mode #modalCompra .text-green-400 {
+            color: #059669 !important;
+        }
+        body.light-mode #modalCompra .text-amber-400 {
+            color: #d97706 !important;
+        }
+        body.light-mode #modalCompra .text-white {
+            color: #1e293b !important;
+        }
+        body.light-mode #modalCompra .text-green-400 {
+            color: #059669 !important;
+        }
     </style>
 
     <!-- GOOGLE CHARTS -->
@@ -1858,11 +1832,6 @@ body.light-mode .precio-bs {
             }
         }
     </script>
-
-
-
-
-
 </head>
 <body class="custom-scrollbar">
 <!-- TOAST DE CARGA -->
@@ -1968,9 +1937,6 @@ body.light-mode .precio-bs {
             </div>
         </section>
 
-        <!-- El resto del HTML se mantiene exactamente igual al original, solo se modificó el bloque del toast y se añadieron IDs. -->
-        <!-- Debido a la extensión, se conserva íntegro el contenido restante sin cambios. -->
-
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
                 <defs>
@@ -2019,10 +1985,6 @@ body.light-mode .precio-bs {
                 <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
             </svg>
         </div>
-
-
-
- 
 
         <!-- MODALIDADES -->
         <section id="modalidades" class="page-section relative py-24 px-6">
@@ -2279,6 +2241,78 @@ body.light-mode .precio-bs {
     </div>
 </div>
 
+<!-- MODAL COMPRA -->
+<div id="modalCompra" class="modal-overlay">
+    <div class="modal-content !p-0 relative" style="background: #1e293b !important; max-width: 820px !important; width: 95% !important; overflow: hidden; border-radius: 2rem; max-height: 95vh; overflow-y: auto;">
+        <button onclick="cerrarModalCompraHome()" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white transition text-xl" style="background: rgba(0,0,0,0.3); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none;"><i class="fas fa-times"></i></button>
+        <div class="flex flex-col md:flex-row">
+            <div class="flex-1 p-4 md:p-8" style="background: #0f172a;">
+                <div class="mb-3 md:mb-4">
+                    <h3 class="text-lg md:text-xl font-black uppercase text-white" id="modalCursoTituloHome">Curso</h3>
+                    <p class="text-slate-400 text-xs md:text-sm mt-1" id="modalCursoDescripcionHome">Descripción del curso</p>
+                </div>
+                <div class="mb-3 md:mb-4">
+                    <span class="text-2xl md:text-3xl font-bold text-cyan-400" id="modalCursoPrecioHome">$0.00</span>
+                    <p class="text-[10px] md:text-xs text-slate-500 mt-1 flex items-center gap-1 md:gap-2 flex-wrap">
+                        <i class="fas fa-info-circle text-slate-600"></i> 
+                        Precio en <strong class="text-white">Dólares</strong> · Se calcula a la <strong class="text-cyan-400">tasa BCV del día</strong>
+                        <button onclick="verTasaBCVHome()" class="text-[10px] md:text-xs bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 px-2 py-1 rounded transition border border-cyan-500/30 flex items-center gap-1">
+                            <i class="fas fa-eye"></i> Ver tasa
+                        </button>
+                    </p>
+                </div>
+                <div id="tasaBCVContainerHome" class="hidden p-3 md:p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 transition-all">
+                    <div class="grid grid-cols-2 gap-2 md:gap-4">
+                        <div>
+                            <p class="text-slate-400 text-[8px] md:text-[10px] uppercase font-bold tracking-wider">Tasa BCV</p>
+                            <p class="text-white text-sm md:text-xl font-bold">$ 1 = Bs. <span id="tasaBCVNumeroHome">--</span></p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-slate-400 text-[8px] md:text-[10px] uppercase font-bold tracking-wider">Total Bs.</p>
+                            <p class="text-green-400 text-sm md:text-xl font-bold" id="totalBsHome">Bs. --</p>
+                        </div>
+                    </div>
+                    <div class="mt-2 pt-2 border-t border-slate-700/50 flex justify-between text-[8px] md:text-xs">
+                        <span class="text-slate-500">Actualizado: <span id="tasaBCVActualizadoHome">--</span></span>
+                        <button onclick="obtenerTasaBCVHome()" class="text-cyan-400 hover:text-cyan-300 transition flex items-center gap-1">
+                            <i class="fas fa-sync-alt"></i> Actualizar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="flex-1 p-4 md:p-8" style="background: #1e293b; border-top: 1px solid #334155;">
+                <div class="p-3 md:p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 h-full flex flex-col">
+                    <p class="text-slate-400 text-[10px] md:text-xs font-medium uppercase tracking-wider">📋 Instrucciones de pago</p>
+                    <div class="mt-2 md:mt-3 space-y-1 md:space-y-2 flex-1">
+                        <p class="text-white text-xs md:text-sm">Realiza el pago por <strong>Pago Móvil</strong> al número:</p>
+                        <p class="text-cyan-400 text-base md:text-lg font-bold">0416-1486794</p>
+                        <p class="text-white text-xs md:text-sm">Banco: <strong class="text-cyan-400">Mercantil - 0105</strong></p>
+                        <p class="text-white text-xs md:text-sm">Cédula: <strong class="text-cyan-400">13018822</strong></p>
+                        <p class="text-amber-400 text-xs md:text-sm mt-1 md:mt-2 font-bold">💰 Monto en Bolívares: <span class="text-white" id="montoEnBsHome">Bs. --</span></p>
+                        <p class="text-white text-xs md:text-sm mt-2 md:mt-3">📤 Luego de pagar, confirma tu pago:</p>
+                    </div>
+                    <div class="mt-2 p-2 bg-slate-700/30 rounded-lg border border-slate-600/50">
+                        <p class="text-[10px] md:text-xs text-slate-300 flex items-start gap-1 md:gap-2">
+                            <i class="fas fa-info-circle text-cyan-400 mt-0.5 text-xs"></i>
+                            <span>Haz clic en <strong class="text-green-400">"Enviar comprobante"</strong> para abrir WhatsApp con el mensaje pre-llenado. Adjunta la captura del pago y envíalo.</span>
+                        </p>
+                    </div>
+                    <button onclick="enviarWhatsAppHome()" class="w-full text-center flex items-center justify-center gap-2 text-xs md:text-sm py-2.5 md:py-3 rounded-xl font-bold transition mt-2" style="background: #25D366; color: white; border: none;">
+                        <i class="fab fa-whatsapp"></i> Enviar comprobante por WhatsApp
+                    </button>
+                    <div class="flex flex-col sm:flex-row gap-2 mt-3 pt-3 border-t border-slate-700/50">
+                        <button class="btn-comprar flex-1 text-center flex items-center justify-center gap-2 text-xs md:text-sm py-2.5 md:py-3" id="btnConfirmarCompraHome" onclick="confirmarCompraHome()">
+                            <i class="fas fa-shopping-cart"></i> Confirmar
+                        </button>
+                        <button class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2.5 md:py-3 rounded-xl font-semibold transition text-xs md:text-sm flex-1" onclick="cerrarModalCompraHome()">Cancelar</button>
+                    </div>
+                    <div id="mensajeCompraHome" class="mt-2 md:mt-3 text-center text-xs md:text-sm hidden"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 border border-white/20" style="position:fixed;bottom:20px;right:20px;transform:translateX(120%);transition:transform 0.5s cubic-bezier(0.68,-0.55,0.27,1.55);z-index:100000;">
     <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
     <div>
@@ -2287,14 +2321,11 @@ body.light-mode .precio-bs {
     </div>
 </div>
 
-
 <script>
-    // ============ FUNCIONES DEL TOAST DE CARGA ============
     function showLoadingToast() {
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
         const spinner = document.getElementById('loadingToastSpinner');
-
         if (toast) {
             toast.classList.remove('hidden', 'hiding', 'success-toast');
             title.innerText = 'Estamos cargando la información';
@@ -2303,7 +2334,6 @@ body.light-mode .precio-bs {
             if (existingCheck) existingCheck.remove();
             toast.style.opacity = '1';
             toast.style.transform = 'translateX(0)';
-            // Animación según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             } else {
@@ -2311,12 +2341,10 @@ body.light-mode .precio-bs {
             }
         }
     }
-
     function showSuccessToast() {
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
         const spinner = document.getElementById('loadingToastSpinner');
-
         if (toast) {
             toast.classList.remove('hidden', 'hiding');
             toast.classList.add('success-toast');
@@ -2330,7 +2358,6 @@ body.light-mode .precio-bs {
             toast.appendChild(checkDiv);
             toast.style.opacity = '1';
             toast.style.transform = 'translateX(0)';
-            // Animación según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
             } else {
@@ -2339,12 +2366,10 @@ body.light-mode .precio-bs {
             setTimeout(() => { hideLoadingToast(); }, 3000);
         }
     }
-
     function hideLoadingToast() {
         const toast = document.getElementById('loadingToast');
         if (toast) {
             toast.classList.add('hiding');
-            // Animación de salida según dispositivo
             if (window.innerWidth <= 640) {
                 toast.style.transform = 'translateY(150%)';
             } else {
@@ -2357,11 +2382,7 @@ body.light-mode .precio-bs {
             }, 350);
         }
     }
-    // ============ FIN FUNCIONES DEL TOAST ============
 </script>
-
-
-
 
 <script src="js/auth.js"></script>
 <script src="js/app.js"></script>
