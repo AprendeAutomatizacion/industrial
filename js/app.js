@@ -1,6 +1,6 @@
 // ==========================================
 // SCRIPT DE APRENDE AUTOMATIZACIÓN - PÁGINA DE INICIO
-// (ACTUALIZADO - CURSOS DESTACADOS IDÉNTICOS AL CATÁLOGO)
+// (ACTUALIZADO - CURSOS DESTACADOS CON VALORACIONES)
 // ==========================================
 
 const API_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
@@ -158,6 +158,52 @@ function registerViewAndGo(url, courseId, target = '_blank') {
     ping('update_stat', `curso-${courseId}_vistas`);
     if (globalStats) globalStats[`curso-${courseId}_vistas`] = (parseInt(globalStats[`curso-${courseId}_vistas`]) || 0) + 1;
     if (url && url !== '#') window.open(url, target);
+}
+
+// ==========================================
+// ABRIR/CERRAR MODAL
+// ==========================================
+function openModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.add('active');
+}
+
+function closeModal(id) {
+    const modal = document.getElementById(id);
+    if (modal) modal.classList.remove('active');
+}
+
+// ==========================================
+// VALORAR CURSO (SISTEMA DE ESTRELLAS)
+// ==========================================
+function rateCourse(courseId, rating) {
+    if (!currentUser) {
+        showNotif('Acceso requerido', 'Debes iniciar sesión para valorar cursos.', 'info');
+        return;
+    }
+    
+    if (!currentUser.ratings) currentUser.ratings = {};
+    currentUser.ratings[courseId] = rating;
+    
+    const email = currentUser.email.toLowerCase();
+    if (dbUsers[email]) {
+        let userObj = dbUsers[email];
+        if (typeof userObj === 'string') { 
+            try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } 
+        }
+        userObj = userObj || {};
+        userObj.ratings = currentUser.ratings;
+        dbUsers[email] = JSON.stringify(userObj);
+    }
+    
+    localStorage.setItem('user', JSON.stringify(currentUser));
+    calculateCourseRatings();
+    
+    // Re-renderizar los cursos destacados para actualizar las estrellas
+    rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b();
+    
+    syncUserData();
+    showNotif('Valoración guardada', `Has puntuado con ${rating} estrellas.`, 'success');
 }
 
 // ==========================================
@@ -564,7 +610,7 @@ async function obtenerTasaBCVGlobal() {
 }
 
 // ==========================================
-// RENDERIZAR CURSOS DESTACADOS (IDÉNTICO AL CATÁLOGO)
+// RENDERIZAR CURSOS DESTACADOS (CON VALORACIONES)
 // ==========================================
 function rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b() {
     const container = document.getElementById('cursos-destacados-container');
@@ -586,11 +632,11 @@ function rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b() {
         document.querySelectorAll('#cursos-destacados-container .reveal').forEach(el => el.classList.add('active'));
     }, 100);
     
-    console.log('✅ Cursos destacados renderizados idénticos al catálogo');
+    console.log('✅ Cursos destacados renderizados con valoraciones');
 }
 
 // ==========================================
-// GENERAR TARJETA DE CURSO (MISMO FORMATO QUE CATÁLOGO)
+// GENERAR TARJETA DE CURSO (CON VALORACIONES)
 // ==========================================
 function generateCourseCardHTML(course) {
     const courseId = String(course.ID || course.id || '');
@@ -607,6 +653,13 @@ function generateCourseCardHTML(course) {
     const profesorNombre = course.ProfesorNombre || course.profesorNombre || '';
     const profesorFoto = course.ProfesorFoto || course.profesorFoto || '';
     const profesorEspecialidad = course.ProfesorEspecialidad || course.profesorEspecialidad || '';
+    
+    // Variables para el sistema de valoración
+    const isLogged = currentUser !== null;
+    let userRating = 0;
+    if (currentUser && currentUser.ratings && currentUser.ratings[courseId]) {
+        userRating = currentUser.ratings[courseId];
+    }
     
     const email = currentUser ? currentUser.email.toLowerCase() : '';
     const key = email + '|' + courseName;
@@ -715,6 +768,30 @@ function generateCourseCardHTML(course) {
         </div>`;
     }
 
+    // Sistema de valoración con estrellas
+    let ratingStarsHTML = '';
+    if (isLogged) {
+        ratingStarsHTML = `
+            <div class="flex items-center gap-2 mt-4">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tu valoración:</span>
+                <div class="flex gap-0.5">
+                    ${[1,2,3,4,5].map(star => `
+                        <i class="fas fa-star cursor-pointer text-sm ${userRating >= star ? 'text-yellow-400' : 'text-slate-300'}" 
+                           onclick="event.stopPropagation(); rateCourse('${courseId}', ${star})" 
+                           title="${star} estrella${star>1?'s':''}"></i>
+                    `).join('')}
+                </div>
+            </div>`;
+    } else {
+        ratingStarsHTML = `
+            <div class="mt-4">
+                <button onclick="event.stopPropagation(); openModal('authModal')" 
+                        class="text-[10px] font-bold text-slate-500 hover:text-[#2db8ce] transition-colors flex items-center gap-1">
+                    <i class="fas fa-star text-yellow-400"></i> Inicia sesión para valorar
+                </button>
+            </div>`;
+    }
+
     return `
     <div class="course-card ${levelBorderClass} ${estadoClase} reveal reveal-up">
         <div class="aspect-video w-full overflow-hidden bg-[#0f172a] relative">
@@ -771,6 +848,8 @@ function generateCourseCardHTML(course) {
             </div>
             
             ${courseDescription ? `<p class="text-slate-500 text-sm mb-4">${courseDescription}</p>` : ''}
+            
+            ${ratingStarsHTML}
             
             <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
                 ${priceTag}
