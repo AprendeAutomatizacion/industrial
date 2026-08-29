@@ -193,57 +193,17 @@
         .course-card-level-intermedio { border: 1.5px solid rgba(139, 92, 246, 0.5); box-shadow: 0 0 12px rgba(139, 92, 246, 0.12), inset 0 0 30px rgba(139, 92, 246, 0.04); background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%); }
         .course-card-level-avanzado { border: 1.5px solid rgba(245, 158, 11, 0.5); box-shadow: 0 0 12px rgba(245, 158, 11, 0.12), inset 0 0 30px rgba(245, 158, 11, 0.04); background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%); }
         
-        /* 🔒 ESTADOS DE COMPRA */
-        .course-card.estado-pendiente {
-            border-color: #fbbf24 !important;
-            opacity: 0.85;
-        }
-        .course-card.estado-pendiente:hover {
-            border-color: #fbbf24 !important;
-            opacity: 0.95;
-        }
-        .course-card.estado-inscrito {
-            border-color: #34d399 !important;
-        }
-        .course-card.estado-inscrito:hover {
-            border-color: #34d399 !important;
-        }
+        .course-card.estado-pendiente { border-color: #fbbf24 !important; opacity: 0.85; }
+        .course-card.estado-pendiente:hover { border-color: #fbbf24 !important; opacity: 0.95; }
+        .course-card.estado-inscrito { border-color: #34d399 !important; }
+        .course-card.estado-inscrito:hover { border-color: #34d399 !important; }
         
-        .badge-estado {
-            padding: 0.2rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            backdrop-filter: blur(8px);
-        }
-        .badge-pendiente {
-            background: rgba(251, 191, 36, 0.2);
-            color: #fbbf24;
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            animation: pulse-badge 1.5s ease-in-out infinite;
-        }
-        .badge-revision {
-            background: rgba(96, 165, 250, 0.2);
-            color: #60a5fa;
-            border: 1px solid rgba(96, 165, 250, 0.3);
-            animation: pulse-badge 1.5s ease-in-out infinite;
-        }
-        .badge-rechazado {
-            background: rgba(248, 113, 113, 0.2);
-            color: #f87171;
-            border: 1px solid rgba(248, 113, 113, 0.3);
-        }
-        .badge-inscrito {
-            background: rgba(52, 211, 153, 0.2);
-            color: #34d399;
-            border: 1px solid rgba(52, 211, 153, 0.3);
-        }
-        @keyframes pulse-badge {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
+        .badge-estado { padding: 0.2rem 0.75rem; border-radius: 9999px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; backdrop-filter: blur(8px); }
+        .badge-pendiente { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); animation: pulse-badge 1.5s ease-in-out infinite; }
+        .badge-revision { background: rgba(96, 165, 250, 0.2); color: #60a5fa; border: 1px solid rgba(96, 165, 250, 0.3); animation: pulse-badge 1.5s ease-in-out infinite; }
+        .badge-rechazado { background: rgba(248, 113, 113, 0.2); color: #f87171; border: 1px solid rgba(248, 113, 113, 0.3); }
+        .badge-inscrito { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid rgba(52, 211, 153, 0.3); }
+        @keyframes pulse-badge { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
         
         .btn-comprar {
             background: linear-gradient(135deg, #2db8ce, #06b6d4);
@@ -255,55 +215,13 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .btn-comprar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4);
-        }
-        .btn-comprar:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-        .btn-pendiente {
-            background: #fbbf24;
-            color: #0a0f1e;
-            padding: 0.6rem 1.5rem;
-            border-radius: 1rem;
-            font-weight: 700;
-            border: none;
-            cursor: default;
-        }
-        .btn-inscrito-pastilla {
-            background: #064e3b;
-            color: #34d399;
-            padding: 0.6rem 1.5rem;
-            border-radius: 1rem;
-            font-weight: 700;
-            border: 1px solid #059669;
-            cursor: default;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        body.light-mode .btn-inscrito-pastilla {
-            background: #059669;
-            color: #ffffff;
-            border: 1px solid #047857;
-        }
-        .btn-rechazado {
-            background: #f87171;
-            color: white;
-            padding: 0.6rem 1.5rem;
-            border-radius: 1rem;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .btn-rechazado:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(248, 113, 113, 0.4);
-        }
+        .btn-comprar:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4); }
+        .btn-comprar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .btn-pendiente { background: #fbbf24; color: #0a0f1e; padding: 0.6rem 1.5rem; border-radius: 1rem; font-weight: 700; border: none; cursor: default; }
+        .btn-inscrito-pastilla { background: #064e3b; color: #34d399; padding: 0.6rem 1.5rem; border-radius: 1rem; font-weight: 700; border: 1px solid #059669; cursor: default; display: inline-flex; align-items: center; gap: 0.5rem; }
+        body.light-mode .btn-inscrito-pastilla { background: #059669; color: #ffffff; border: 1px solid #047857; }
+        .btn-rechazado { background: #f87171; color: white; padding: 0.6rem 1.5rem; border-radius: 1rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s ease; }
+        .btn-rechazado:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(248, 113, 113, 0.4); }
 
         .learning-step {
             background: var(--glass-bg);
@@ -316,60 +234,16 @@
             overflow: hidden;
             cursor: pointer;
         }
-        .learning-step::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 2rem;
-            padding: 1.5px;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.2), transparent 60%);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
         .learning-step:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 6px 24px rgba(6, 182, 212, 0.1), 0 12px 32px rgba(0, 0, 0, 0.1); border-color: rgba(6, 182, 212, 0.2); }
-        .learning-step:hover::before { opacity: 1; }
         body.light-mode .learning-step { background: rgba(226, 232, 240, 0.72) !important; border-color: rgba(255, 255, 255, 0.5) !important; }
         body.light-mode .learning-step h3 { color: #334155 !important; }
         body.light-mode .learning-step p { color: #64748b !important; }
-        .btn-metal-green, .btn-metal-blue {
-            font-weight: 700; letter-spacing: 0.04em; font-size: 0.7rem; padding: 0.5rem 1rem;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25);
-            transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-            border-radius: 0.75rem; position: relative; overflow: hidden; cursor: pointer;
-        }
-        .btn-metal-green { background: linear-gradient(180deg, #34d058 0%, #1e9e3a 45%, #146b28 100%); border: 1px solid #0f5720; color: white; }
-        .btn-metal-blue { background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%); border: 1px solid #1e40af; color: white; }
+        .btn-metal-blue { font-weight: 700; letter-spacing: 0.04em; font-size: 0.7rem; padding: 0.5rem 1rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25); transition: transform 0.18s ease; border-radius: 0.75rem; position: relative; overflow: hidden; cursor: pointer; background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%); border: 1px solid #1e40af; color: white; }
+        .btn-metal-green { font-weight: 700; letter-spacing: 0.04em; font-size: 0.7rem; padding: 0.5rem 1rem; box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25); transition: transform 0.18s ease; border-radius: 0.75rem; position: relative; overflow: hidden; cursor: pointer; background: linear-gradient(180deg, #34d058 0%, #1e9e3a 45%, #146b28 100%); border: 1px solid #0f5720; color: white; }
         
-        /* 🔒 SECTION DIVIDER - OSCILOSCOPIO */
-        .section-divider { 
-            width: 100%; 
-            height: 80px; 
-            margin: 0; 
-            position: relative; 
-            overflow: hidden; 
-            opacity: 0.8; 
-        }
-        .section-divider svg path {
-            fill: none;
-            stroke-linecap: round;
-            stroke-width: 2;
-            stroke: url(#gradient-divider);
-            opacity: 0.7;
-            animation: oscilloscope 15s ease-in-out infinite;
-            filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3));
-        }
-        .section-divider svg path:nth-child(2) {
-            stroke-width: 3;
-            stroke: url(#gradient-divider-2);
-            opacity: 0.8;
-            animation-delay: -3s;
-            animation-duration: 12s;
-            filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4));
-        }
+        .section-divider { width: 100%; height: 80px; margin: 0; position: relative; overflow: hidden; opacity: 0.8; }
+        .section-divider svg path { fill: none; stroke-linecap: round; stroke-width: 2; stroke: url(#gradient-divider); opacity: 0.7; animation: oscilloscope 15s ease-in-out infinite; filter: drop-shadow(0 0 6px rgba(6, 182, 212, 0.3)); }
+        .section-divider svg path:nth-child(2) { stroke-width: 3; stroke: url(#gradient-divider-2); opacity: 0.8; animation-delay: -3s; animation-duration: 12s; filter: drop-shadow(0 0 8px rgba(139, 92, 246, 0.4)); }
         @keyframes oscilloscope {
             0%, 100% { d: path("M0,40 C240,60 480,20 720,40 S1200,60 1440,40"); }
             20% { d: path("M0,45 C220,50 460,30 720,45 S1180,40 1440,35"); }
@@ -379,13 +253,7 @@
         }
         body.light-mode .section-divider { opacity: 0.5; }
         
-        .loading-toast {
-            position: fixed; bottom: 20px; right: 20px; z-index: 100002;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%);
-            backdrop-filter: blur(16px); border: 1px solid rgba(45, 184, 206, 0.35);
-            border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; gap: 8px;
-            pointer-events: none; min-width: 200px; max-width: 240px;
-        }
+        .loading-toast { position: fixed; bottom: 20px; right: 20px; z-index: 100002; background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%); backdrop-filter: blur(16px); border: 1px solid rgba(45, 184, 206, 0.35); border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; pointer-events: none; min-width: 200px; max-width: 240px; }
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 99999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: all 0.3s; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-content { background: var(--bg-secondary); border-radius: 32px; width: 90%; max-width: 420px; transform: translateY(30px) scale(0.95); transition: all 0.4s; }
@@ -394,50 +262,15 @@
         #notification.show { transform: translateX(0); }
         .whatsapp-float { position: fixed; bottom: 24px; right: 24px; width: 52px; height: 52px; background: linear-gradient(135deg, #25D366, #128C7E); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 26px; z-index: 99998; transition: all 0.3s; }
         .whatsapp-float:hover { transform: scale(1.12) translateY(-3px); }
-        body.light-mode #catalog-grid .course-card {
-    background: #f8fafc !important;
-    border-color: #e2e8f0 !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
-}
+        body.light-mode #catalog-grid .course-card { background: #f8fafc !important; border-color: #e2e8f0 !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important; }
         body.light-mode #catalog-grid .course-card h2 { color: #1e293b !important; }
         body.light-mode #catalog-grid .course-card .text-slate-900 { color: #1e293b !important; }
         body.light-mode #catalog-grid .course-card .text-slate-800 { color: #334155 !important; }
         body.light-mode #catalog-grid .course-card .text-slate-500 { color: #64748b !important; }
         body.light-mode #catalog-grid .course-card .text-slate-400 { color: #94a3b8 !important; }
-        
-        body:not(.light-mode) .professor-block .professor-label { color: #94a3b8 !important; }
-        body:not(.light-mode) .professor-block .professor-name { color: #ffffff !important; }
-        body:not(.light-mode) .professor-block .professor-specialty { color: #cbd5e1 !important; }
-        body:not(.light-mode) .professor-block .professor-arrow { color: #94a3b8 !important; }
-        body:not(.light-mode) .professor-block:hover .professor-label { color: #475569 !important; }
-        body:not(.light-mode) .professor-block:hover .professor-name { color: #1e293b !important; }
-        body:not(.light-mode) .professor-block:hover .professor-specialty { color: #475569 !important; }
-        body:not(.light-mode) .professor-block:hover .professor-arrow { color: #475569 !important; }
-        body.light-mode .professor-block .professor-label { color: #64748b !important; }
-        body.light-mode .professor-block .professor-name { color: #1e293b !important; }
-        body.light-mode .professor-block .professor-specialty { color: #475569 !important; }
-        body.light-mode .professor-block .professor-arrow { color: #64748b !important; }
-        
-        .admin-btn {
-            position: fixed;
-            bottom: 100px;
-            right: 24px;
-            width: 52px;
-            height: 52px;
-            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 22px;
-            z-index: 99997;
-            transition: all 0.3s;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
-        }
+        .precio-bs { color: #34d399 !important; font-weight: 800 !important; font-size: 0.7rem !important; letter-spacing: 0.02em; background: #064e3b; padding: 0.15rem 0.5rem; border-radius: 0.5rem; display: inline-block; border: 1px solid #059669; }
+        body.light-mode .precio-bs { color: #ffffff !important; background: #059669; border: 1px solid #047857; }
+        .admin-btn { position: fixed; bottom: 100px; right: 24px; width: 52px; height: 52px; background: linear-gradient(135deg, #8b5cf6, #6d28d9); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 22px; z-index: 99997; transition: all 0.3s; cursor: pointer; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4); }
         .admin-btn:hover { transform: scale(1.12) translateY(-3px); box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5); }
         .admin-modal .modal-content { max-width: 500px !important; }
         @media (max-width: 768px) {
@@ -445,44 +278,12 @@
             .admin-btn { width: 48px; height: 48px; font-size: 20px; bottom: 80px; right: 16px; }
             .particles-bg { display: none; }
         }
-        /* 🔒 RESPONSIVE - MODAL DE COMPRA EN MÓVIL */
         @media (max-width: 640px) {
-            .modal-content {
-                max-width: 98% !important;
-                width: 98% !important;
-                border-radius: 1.5rem !important;
-                max-height: 98vh !important;
-            }
-            .modal-content .flex-1.p-4 {
-                padding: 1rem !important;
-            }
-            .modal-content .p-3 {
-                padding: 0.75rem !important;
-            }
-        }
-        /* 🔒 PRECIO EN BOLÍVARES */
-        .precio-bs {
-            color: #34d399 !important;
-            font-weight: 800 !important;
-            font-size: 0.7rem !important;
-            letter-spacing: 0.02em;
-            background: #064e3b;
-            padding: 0.15rem 0.5rem;
-            border-radius: 0.5rem;
-            display: inline-block;
-            border: 1px solid #059669;
-        }
-        
-        body.light-mode .precio-bs {
-            color: #ffffff !important;
-            background: #059669;
-            border: 1px solid #047857;
+            .modal-content { max-width: 98% !important; width: 98% !important; border-radius: 1.5rem !important; max-height: 98vh !important; }
+            .modal-content .flex-1.p-4 { padding: 1rem !important; }
+            .modal-content .p-3 { padding: 0.75rem !important; }
         }
     </style>
-
-
-
-
 </head>
 <body class="custom-scrollbar">
 <div class="particles-bg" aria-hidden="true">
@@ -561,23 +362,19 @@
 <div id="manageCourseEnrollmentsModal" class="modal-overlay admin-modal">
     <div class="modal-content !p-0 relative" id="manageCourseEnrollmentsContent" style="background: #1e293b !important; max-width: 1100px !important; width: 96% !important; overflow: hidden; border-radius: 2rem; max-height: 92vh; overflow-y: auto;">
         <button onclick="closeModal('manageCourseEnrollmentsModal')" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white transition text-xl" style="background: rgba(0,0,0,0.3); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none;"><i class="fas fa-times"></i></button>
-
         <div class="p-5 md:p-8">
             <div class="text-center mb-6 md:mb-8">
                 <h3 class="text-xl md:text-2xl font-black uppercase" style="color: #ffffff !important;">Gestionar Inscripciones</h3>
                 <p class="text-xs md:text-sm mt-2 text-cyan-400 font-bold" id="manageCourseTitle">Curso</p>
                 <p class="text-[10px] md:text-xs mt-1 text-slate-400">Estudiantes inscritos en este curso</p>
             </div>
-
             <div class="hidden md:grid md:grid-cols-12 gap-4 px-4 pb-3 mb-2 border-b border-slate-700/50">
                 <div class="col-span-4 text-[10px] font-bold uppercase tracking-wider text-slate-500">Estudiante</div>
                 <div class="col-span-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-center">Estado de Pago</div>
                 <div class="col-span-2 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-center">Acceso</div>
                 <div class="col-span-4 text-[10px] font-bold uppercase tracking-wider text-slate-500 text-right">Acciones</div>
             </div>
-
             <div id="enrollmentsListContainer" class="space-y-3 md:space-y-2"></div>
-
             <div id="enrollmentsEmpty" class="hidden text-center py-8 md:py-12">
                 <i class="fas fa-inbox text-4xl md:text-5xl text-slate-600 mb-3"></i>
                 <p class="text-slate-400 text-sm md:text-base">No hay estudiantes inscritos en este curso aún.</p>
@@ -586,18 +383,16 @@
     </div>
 </div>
 
-<!-- 🔒 MODAL COMPRA - RESPONSIVO -->
+<!-- MODAL COMPRA -->
 <div id="modalCompra" class="modal-overlay">
     <div class="modal-content !p-0 relative" style="background: #1e293b !important; max-width: 820px !important; width: 95% !important; overflow: hidden; border-radius: 2rem; max-height: 95vh; overflow-y: auto;">
         <button onclick="cerrarModalCompra()" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white transition text-xl" style="background: rgba(0,0,0,0.3); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none;"><i class="fas fa-times"></i></button>
-        
         <div class="flex flex-col md:flex-row">
             <div class="flex-1 p-4 md:p-8" style="background: #0f172a;">
                 <div class="mb-3 md:mb-4">
                     <h3 class="text-lg md:text-xl font-black uppercase text-white" id="modalCursoTitulo">Curso</h3>
                     <p class="text-slate-400 text-xs md:text-sm mt-1" id="modalCursoDescripcion">Descripción del curso</p>
                 </div>
-                
                 <div class="mb-3 md:mb-4">
                     <span class="text-2xl md:text-3xl font-bold text-cyan-400" id="modalCursoPrecio">$0.00</span>
                     <p class="text-[10px] md:text-xs text-slate-500 mt-1 flex items-center gap-1 md:gap-2 flex-wrap">
@@ -608,7 +403,6 @@
                         </button>
                     </p>
                 </div>
-
                 <div id="tasaBCVContainer" class="hidden p-3 md:p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 transition-all">
                     <div class="grid grid-cols-2 gap-2 md:gap-4">
                         <div>
@@ -628,8 +422,7 @@
                     </div>
                 </div>
             </div>
-
-            <div class="flex-1 p-4 md:p-8" style="background: #1e293b; border-top: 1px solid #334155; md:border-top-0">
+            <div class="flex-1 p-4 md:p-8" style="background: #1e293b; border-top: 1px solid #334155;">
                 <div class="p-3 md:p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 h-full flex flex-col">
                     <p class="text-slate-400 text-[10px] md:text-xs font-medium uppercase tracking-wider">📋 Instrucciones de pago</p>
                     <div class="mt-2 md:mt-3 space-y-1 md:space-y-2 flex-1">
@@ -640,18 +433,15 @@
                         <p class="text-amber-400 text-xs md:text-sm mt-1 md:mt-2 font-bold">💰 Monto en Bolívares: <span class="text-white" id="montoEnBs">Bs. --</span></p>
                         <p class="text-white text-xs md:text-sm mt-2 md:mt-3">📤 Luego de pagar, confirma tu pago:</p>
                     </div>
-                    
                     <div class="mt-2 p-2 bg-slate-700/30 rounded-lg border border-slate-600/50">
                         <p class="text-[10px] md:text-xs text-slate-300 flex items-start gap-1 md:gap-2">
                             <i class="fas fa-info-circle text-cyan-400 mt-0.5 text-xs"></i>
                             <span>Haz clic en <strong class="text-green-400">"Enviar comprobante"</strong> para abrir WhatsApp con el mensaje pre-llenado. Adjunta la captura del pago y envíalo.</span>
                         </p>
                     </div>
-
                     <button onclick="enviarWhatsApp()" class="w-full text-center flex items-center justify-center gap-2 text-xs md:text-sm py-2.5 md:py-3 rounded-xl font-bold transition mt-2" style="background: #25D366; color: white; border: none;">
                         <i class="fab fa-whatsapp"></i> Enviar comprobante por WhatsApp
                     </button>
-
                     <div class="flex flex-col sm:flex-row gap-2 mt-3 pt-3 border-t border-slate-700/50">
                         <button class="btn-comprar flex-1 text-center flex items-center justify-center gap-2 text-xs md:text-sm py-2.5 md:py-3" id="btnConfirmarCompra" onclick="confirmarCompra()">
                             <i class="fas fa-shopping-cart"></i> Confirmar
@@ -716,7 +506,6 @@
         </section>
     </div>
 
-    <!-- 🔒 DIVISOR TIPO OSCILOSCOPIO ENTRE "TU CAMINO" Y EL CATÁLOGO -->
     <div class="section-divider" aria-hidden="true">
         <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
             <defs>
@@ -750,7 +539,7 @@
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2P8CSqI9uWk0aip010Hauh21KCkIsxi4_BKozAEFjjL9wGqo39C6OU-pKQSuZXdZF/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
 
 let currentUser = JSON.parse(localStorage.getItem('user')) || null;
 let dbUsers = {}, globalStats = {};
@@ -796,7 +585,7 @@ function closeModal(id) { document.getElementById(id).classList.remove('active')
 function ping(action, key) { try { fetch(SCRIPT_URL, { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: `action=${action}&key=${key}` }); } catch(e) {} }
 
 // ==========================================
-// 🔒 TASA BCV - OBTENER DÓLAR OFICIAL (GLOBAL)
+// TASA BCV
 // ==========================================
 async function obtenerTasaBCVGlobal() {
     try {
@@ -816,9 +605,6 @@ async function obtenerTasaBCVGlobal() {
     }
 }
 
-// ==========================================
-// 🔒 TASA BCV - OBTENER DÓLAR OFICIAL (MODAL)
-// ==========================================
 async function obtenerTasaBCV() {
     try {
         const container = document.getElementById('tasaBCVContainer');
@@ -843,7 +629,7 @@ async function obtenerTasaBCV() {
             tasaValor.textContent = tasaBCV.toFixed(2);
             tasaActualizado.textContent = fechaStr;
             
-            const precioUSD = cursoSeleccionado ? parseFloat(cursoSeleccionado.Precio || 0) : 0;
+            const precioUSD = cursoSeleccionado ? parseFloat(cursoSeleccionado.Precio || cursoSeleccionado.precio || 0) : 0;
             const total = precioUSD * tasaBCV;
             totalBs.innerHTML = `<img src="${VENEZUELA_FLAG_URL}" alt="🇻🇪" style="width:18px;height:13px;object-fit:cover;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:4px;box-shadow:0 1px 2px rgba(0,0,0,0.2);"> Bs. ${total.toFixed(2)}`;
             if (montoBs) montoBs.innerHTML = `<img src="${VENEZUELA_FLAG_URL}" alt="🇻🇪" style="width:14px;height:10px;object-fit:cover;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:3px;box-shadow:0 1px 2px rgba(0,0,0,0.2);"> Bs. ${total.toFixed(2)}`;
@@ -862,7 +648,7 @@ async function obtenerTasaBCV() {
         document.getElementById('tasaBCVNumero').textContent = fallbackTasa.toFixed(2);
         document.getElementById('tasaBCVActualizado').textContent = 'Estimado (fallback)';
         
-        const precioUSD = cursoSeleccionado ? parseFloat(cursoSeleccionado.Precio || 0) : 0;
+        const precioUSD = cursoSeleccionado ? parseFloat(cursoSeleccionado.Precio || cursoSeleccionado.precio || 0) : 0;
         const total = precioUSD * fallbackTasa;
         document.getElementById('totalBs').innerHTML = `<img src="${VENEZUELA_FLAG_URL}" alt="🇻🇪" style="width:18px;height:13px;object-fit:cover;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:4px;box-shadow:0 1px 2px rgba(0,0,0,0.2);"> Bs. ${total.toFixed(2)}`;
         const montoBs = document.getElementById('montoEnBs');
@@ -870,7 +656,6 @@ async function obtenerTasaBCV() {
         
         document.getElementById('tasaBCVContainer').classList.remove('hidden');
         document.getElementById('tasaBCVContainer').style.display = 'block';
-        showNotif('⚠️ Tasa estimada', 'No se pudo obtener la tasa oficial. Usando tasa de referencia.', 'warning');
         applyFilters();
     }
 }
@@ -884,20 +669,15 @@ function verTasaBCV() {
     }
 }
 
-// ==========================================
-// 🔒 ENVIAR MENSAJE DE CONFIRMACIÓN POR WHATSAPP
-// ==========================================
 function enviarWhatsApp() {
     if (!cursoSeleccionado || !currentUser) {
         showNotif('Error', 'No hay curso seleccionado o usuario no identificado.', 'error');
         return;
     }
-    
     const nombreUsuario = currentUser.name || currentUser.email || 'Usuario';
-    const nombreCurso = cursoSeleccionado.Nombre || 'Curso';
-    const precioUSD = parseFloat(cursoSeleccionado.Precio || 0);
+    const nombreCurso = cursoSeleccionado.Nombre || cursoSeleccionado.nombre || 'Curso';
+    const precioUSD = parseFloat(cursoSeleccionado.Precio || cursoSeleccionado.precio || 0);
     const montoTotal = precioUSD * tasaBCV;
-    
     const mensaje = `Saludos, mi nombre es ${nombreUsuario}, les comparto la captura por la compra del curso "${nombreCurso}" por Bs. ${montoTotal.toFixed(2)} (Tasa BCV: Bs. ${tasaBCV.toFixed(2)}), espero confirmación.`;
     const mensajeCodificado = encodeURIComponent(mensaje);
     const url = `https://wa.me/584121414196?text=${mensajeCodificado}`;
@@ -984,10 +764,11 @@ function populatePaidCoursesSelect() {
     const select = document.getElementById('adminCourse');
     if (!select) return;
     let coursesHTML = '<option value="">Selecciona un curso...</option>';
-    const paidCourses = COURSES_DATA.filter(c => parseFloat(c.Precio || 0) > 0);
+    const paidCourses = COURSES_DATA.filter(c => parseFloat(c.Precio || c.precio || 0) > 0);
     paidCourses.forEach(course => {
-        const price = parseFloat(course.Precio || 0).toFixed(2);
-        coursesHTML += `<option value="${course.Nombre}">${course.Nombre} - $${price}</option>`;
+        const courseName = course.Nombre || course.nombre || 'Sin nombre';
+        const price = parseFloat(course.Precio || course.precio || 0).toFixed(2);
+        coursesHTML += `<option value="${courseName}">${courseName} - $${price}</option>`;
     });
     select.innerHTML = coursesHTML;
 }
@@ -1079,23 +860,29 @@ function abrirModalCompra(courseId) {
         if (typeof AuthUI !== 'undefined') AuthUI.openModal('login');
         return;
     }
-    const curso = COURSES_DATA.find(c => c.ID === courseId);
-    if (!curso) return;
+    
+    const curso = COURSES_DATA.find(c => String(c.ID || c.id || '') === String(courseId));
+    if (!curso) {
+        console.error('Curso no encontrado:', courseId);
+        showNotif('Error', 'Curso no encontrado.', 'error');
+        return;
+    }
     
     const email = currentUser.email.toLowerCase();
-    const key = email + '|' + curso.Nombre;
+    const cursoNombre = curso.Nombre || curso.nombre || '';
+    const key = email + '|' + cursoNombre;
     const acceso = dbUserAccessStatus[key] || 'NO';
-    if (acceso === 'SÍ') {
+    if (acceso === 'SÍ' || acceso === 'SI') {
         showNotif('Ya inscrito', 'Ya estás inscrito en este curso.', 'info');
         return;
     }
     
     cursoSeleccionado = curso;
-    cursoPrecioUSD = parseFloat(curso.Precio || 0);
+    cursoPrecioUSD = parseFloat(curso.Precio || curso.precio || 0);
     
-    document.getElementById('modalCursoTitulo').textContent = curso.Nombre;
-    document.getElementById('modalCursoDescripcion').textContent = curso.Descripcion || 'Curso de automatización industrial';
-    document.getElementById('modalCursoPrecio').textContent = `${curso.Moneda || '$'} ${cursoPrecioUSD.toFixed(2)}`;
+    document.getElementById('modalCursoTitulo').textContent = cursoNombre;
+    document.getElementById('modalCursoDescripcion').textContent = curso.Descripcion || curso.descripcion || 'Curso de automatización industrial';
+    document.getElementById('modalCursoPrecio').textContent = `${curso.Moneda || curso.moneda || '$'} ${cursoPrecioUSD.toFixed(2)}`;
     document.getElementById('mensajeCompra').classList.add('hidden');
     document.getElementById('mensajeCompra').textContent = '';
     document.getElementById('btnConfirmarCompra').disabled = false;
@@ -1125,9 +912,10 @@ async function confirmarCompra() {
     btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
     mensaje.classList.add('hidden');
     try {
+        const cursoNombre = cursoSeleccionado.Nombre || cursoSeleccionado.nombre || '';
         const formData = new URLSearchParams();
         formData.append('action', 'register_course_with_payment');
-        formData.append('courseName', cursoSeleccionado.Nombre);
+        formData.append('courseName', cursoNombre);
         formData.append('name', currentUser.name || '');
         formData.append('email', currentUser.email);
         formData.append('cedula', currentUser.cedula || '');
@@ -1149,7 +937,7 @@ async function confirmarCompra() {
             `;
             btn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
             btn.className = 'bg-green-500 text-white px-6 py-3 rounded-xl font-semibold flex-1 text-center';
-            const key = currentUser.email.toLowerCase() + '|' + cursoSeleccionado.Nombre;
+            const key = currentUser.email.toLowerCase() + '|' + cursoNombre;
             dbUserPaymentStatus[key] = 'Pendiente';
             setTimeout(() => {
                 cerrarModalCompra();
@@ -1182,7 +970,7 @@ async function enrollFreeCourse(courseId, courseName) {
     const email = currentUser.email.toLowerCase();
     const key = email + '|' + courseName;
     const acceso = dbUserAccessStatus[key] || 'NO';
-    if (acceso === 'SÍ') { showNotif('Ya inscrito', 'Ya te encuentras inscrito en este curso.', 'info'); return; }
+    if (acceso === 'SÍ' || acceso === 'SI') { showNotif('Ya inscrito', 'Ya te encuentras inscrito en este curso.', 'info'); return; }
     showLoadingToast();
     try {
         const formData = new URLSearchParams();
@@ -1251,8 +1039,8 @@ function syncCurrentUserFromCloud() {
     const myCourseNames = splitCourseNames(dbUserCourses[email] || []);
     const myCourseIds = [];
     myCourseNames.forEach(cName => {
-        const found = COURSES_DATA.find(x => normalizeName(x.Nombre) === normalizeName(cName));
-        if (found) myCourseIds.push(found.ID);
+        const found = COURSES_DATA.find(x => normalizeName(x.Nombre || x.nombre || '') === normalizeName(cName));
+        if (found) myCourseIds.push(found.ID || found.id);
     });
     let globalUser = dbUsers[email] || {};
     if (typeof globalUser === 'string') { try { globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; } }
@@ -1264,7 +1052,7 @@ function syncCurrentUserFromCloud() {
 
 function calculateCourseRatings() {
     courseRatings = {};
-    COURSES_DATA.forEach(c => courseRatings[c.ID] = { sum: 0, count: 0, avg: "5.0" });
+    COURSES_DATA.forEach(c => courseRatings[c.ID || c.id] = { sum: 0, count: 0, avg: "5.0" });
     for (const email in dbUsers) {
         let u = dbUsers[email];
         if (typeof u === 'string') { try { u = JSON.parse(u); } catch(e) { u = {}; } }
@@ -1278,11 +1066,11 @@ function calculateCourseRatings() {
 }
 
 function updateStudentCounts() {
-    COURSES_DATA.forEach(c => studentCountsPerCourse[c.ID] = 0);
+    COURSES_DATA.forEach(c => studentCountsPerCourse[c.ID || c.id] = 0);
     for (const email in dbUserCourses) {
         splitCourseNames(dbUserCourses[email]).forEach(courseName => {
-            const found = COURSES_DATA.find(c => normalizeName(c.Nombre) === normalizeName(courseName));
-            if (found) studentCountsPerCourse[found.ID]++;
+            const found = COURSES_DATA.find(c => normalizeName(c.Nombre || c.nombre || '') === normalizeName(courseName));
+            if (found) studentCountsPerCourse[found.ID || found.id]++;
         });
     }
 }
@@ -1293,19 +1081,23 @@ let currentLevel = 'Todos';
 // GENERAR TARJETA DE CURSO
 // ==========================================
 function generateCourseCard(course) {
-    const courseId = course.ID || '';
-    const courseName = course.Nombre || 'Sin nombre';
-    const courseType = course.Tipo || 'Curso';
-    const courseCategory = course.Categoria || '';
-    const courseLevel = course.Nivel || 'Básico';
-    const coursePrice = parseFloat(course.Precio || 0);
-    const courseCurrency = course.Moneda || '$';
-    const courseImage = course.ImagenURL || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso';
-    const courseLink = course.EnlaceInfo || '#';
-    const courseBadges = course.Badges || '';
-    const courseDescription = course.Descripcion || course['Descripción'] || '';
-    const email = currentUser ? currentUser.email.toLowerCase() : '';
+    const courseId = String(course.ID || course.id || '');
+    const courseName = course.Nombre || course.nombre || 'Sin nombre';
+    const courseType = course.Tipo || course.tipo || 'Curso';
+    const courseCategory = course.Categoria || course.categoria || '';
+    const courseLevel = course.Nivel || course.nivel || 'Básico';
+    const coursePrice = parseFloat(course.Precio || course.precio || 0);
+    const courseCurrency = course.Moneda || course.moneda || '$';
+    const courseImage = course.ImagenURL || course.imagen_url || course.imagen || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso';
+    const courseLink = course.EnlaceInfo || course.enlace_info || course.enlace || '#';
+    const courseBadges = course.Badges || course.badges || '';
+    const courseDescription = course.Descripcion || course.descripcion || '';
+    const profesorNombre = course.ProfesorNombre || course.profesorNombre || (course.profesor && course.profesor.nombre) || '';
+    const profesorFoto = course.ProfesorFoto || course.profesorFoto || (course.profesor && course.profesor.foto) || '';
+    const profesorResena = course.ProfesorResena || course.profesorResena || (course.profesor && course.profesor.resena) || '';
+    const profesorEspecialidad = course.ProfesorEspecialidad || course.profesorEspecialidad || (course.profesor && course.profesor.especialidad) || '';
     
+    const email = currentUser ? currentUser.email.toLowerCase() : '';
     const key = email + '|' + courseName;
     const estadoPago = dbUserPaymentStatus[key] || null;
     const acceso = dbUserAccessStatus[key] || 'NO';
@@ -1314,7 +1106,6 @@ function generateCourseCard(course) {
     let estadoClase = '';
     let badgeEstadoHTML = '';
     let botonHTML = '';
-    let estadoTexto = '';
     let mensajeEstado = '';
     let showOverlay = false;
     let overlayText = '';
@@ -1323,14 +1114,11 @@ function generateCourseCard(course) {
         estadoClase = 'estado-inscrito';
         badgeEstadoHTML = `<span class="badge-estado badge-inscrito"><i class="fas fa-check-circle"></i> ✅ Inscrito</span>`;
         botonHTML = `<span class="btn-inscrito-pastilla"><i class="fas fa-check-circle"></i> Inscrito</span>`;
-        estadoTexto = 'inscrito';
-        mensajeEstado = ``;
         showOverlay = false;
     } else if (estadoPago === 'Pendiente') {
         estadoClase = 'estado-pendiente';
         badgeEstadoHTML = `<span class="badge-estado badge-pendiente"><i class="fas fa-clock"></i> ⏳ Pendiente</span>`;
         botonHTML = `<button class="btn-pendiente" disabled><i class="fas fa-clock"></i> Pendiente</button>`;
-        estadoTexto = 'pendiente';
         mensajeEstado = `<div class="mt-1 text-[10px] text-amber-400 text-center">⏳ Esperando verificación de pago</div>`;
         showOverlay = true;
         overlayText = 'Pago pendiente de verificación';
@@ -1338,15 +1126,13 @@ function generateCourseCard(course) {
         estadoClase = 'estado-pendiente';
         badgeEstadoHTML = `<span class="badge-estado badge-revision"><i class="fas fa-spinner fa-spin"></i> 🔄 Revisión</span>`;
         botonHTML = `<button class="btn-pendiente" disabled><i class="fas fa-spinner fa-spin"></i> Revisando</button>`;
-        estadoTexto = 'revision';
         mensajeEstado = `<div class="mt-1 text-[10px] text-blue-400 text-center">🔄 Tu pago está en revisión</div>`;
         showOverlay = true;
         overlayText = 'Pago en revisión';
     } else if (estadoPago === 'Rechazado' || estadoPago === 'RECHAZADO') {
         estadoClase = 'estado-rechazado';
         badgeEstadoHTML = `<span class="badge-estado badge-rechazado"><i class="fas fa-times-circle"></i> ❌ Rechazado</span>`;
-        botonHTML = `<button onclick="event.stopPropagation(); abrirModalCompra(${courseId})" class="btn-rechazado"><i class="fas fa-redo"></i> Reintentar</button>`;
-        estadoTexto = 'rechazado';
+        botonHTML = `<button onclick="event.stopPropagation(); abrirModalCompra('${courseId}')" class="btn-rechazado"><i class="fas fa-redo"></i> Reintentar</button>`;
         mensajeEstado = `<div class="mt-1 text-[10px] text-red-400 text-center">❌ Pago rechazado. Reintenta la compra.</div>`;
         showOverlay = true;
         overlayText = 'Pago rechazado';
@@ -1356,10 +1142,8 @@ function generateCourseCard(course) {
         if (coursePrice === 0) {
             botonHTML = `<button onclick="event.stopPropagation(); enrollFreeCourse('${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="btn-comprar"><i class="fas fa-gift"></i> Inscribirse Gratis</button>`;
         } else {
-            botonHTML = `<button onclick="event.stopPropagation(); abrirModalCompra(${courseId})" class="btn-comprar"><i class="fas fa-shopping-cart"></i> Comprar</button>`;
+            botonHTML = `<button onclick="event.stopPropagation(); abrirModalCompra('${courseId}')" class="btn-comprar"><i class="fas fa-shopping-cart"></i> Comprar</button>`;
         }
-        estadoTexto = 'disponible';
-        mensajeEstado = '';
         showOverlay = false;
     }
 
@@ -1459,17 +1243,17 @@ function generateCourseCard(course) {
             ${overlayHTML}
         </div>
         <div class="p-5 md:p-6 flex-grow flex flex-col">
-            ${course.ProfesorNombre || course.ProfesorFoto ? `
-            <div class="professor-block flex items-center gap-3 mb-4 cursor-pointer hover:bg-slate-100 rounded-xl p-2 -mt-1 transition-all" onclick="event.stopPropagation(); window.location.href='profesor.html?nombre=${encodeURIComponent(course.ProfesorNombre || '')}&foto=${encodeURIComponent(course.ProfesorFoto || '')}&resena=${encodeURIComponent(course.ProfesorResena || '')}&especialidad=${encodeURIComponent(course.ProfesorEspecialidad || '')}'">
+            ${profesorNombre || profesorFoto ? `
+            <div class="professor-block flex items-center gap-3 mb-4 cursor-pointer hover:bg-slate-100 rounded-xl p-2 -mt-1 transition-all" onclick="event.stopPropagation(); window.location.href='profesor.html?nombre=${encodeURIComponent(profesorNombre || '')}&foto=${encodeURIComponent(profesorFoto || '')}&resena=${encodeURIComponent(profesorResena || '')}&especialidad=${encodeURIComponent(profesorEspecialidad || '')}'">
                 <div class="w-12 h-12 rounded-full overflow-hidden bg-slate-200 border-2 border-cyan-500/50 shadow-md">
-                    ${course.ProfesorFoto ? `<img src="${course.ProfesorFoto}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(course.ProfesorNombre || 'P')}&background=06b6d4&color=fff'">` : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 text-white font-bold">${(course.ProfesorNombre || 'P').charAt(0).toUpperCase()}</div>`}
+                    ${profesorFoto ? `<img src="${profesorFoto}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(profesorNombre || 'P')}&background=06b6d4&color=fff'">` : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 text-white font-bold">${(profesorNombre || 'P').charAt(0).toUpperCase()}</div>`}
                 </div>
                 <div class="flex-1 min-w-0">
-                    <p class="professor-label text-[9px] font-bold uppercase">Profesor</p>
-                    <p class="professor-name text-sm font-bold">${course.ProfesorNombre || 'Por asignar'}</p>
-                    ${course.ProfesorEspecialidad ? `<p class="professor-specialty text-[10px]">${course.ProfesorEspecialidad}</p>` : ''}
+                    <p class="professor-label text-[9px] font-bold uppercase" style="color: #64748b;">Profesor</p>
+                    <p class="professor-name text-sm font-bold" style="color: #1e293b;">${profesorNombre || 'Por asignar'}</p>
+                    ${profesorEspecialidad ? `<p class="professor-specialty text-[10px]" style="color: #475569;">${profesorEspecialidad}</p>` : ''}
                 </div>
-                <i class="professor-arrow fas fa-chevron-right text-xs"></i>
+                <i class="professor-arrow fas fa-chevron-right text-xs" style="color: #64748b;"></i>
             </div>` : ''}
             
             <h2 class="text-lg font-bold text-slate-900 mb-3">${courseName}</h2>
@@ -1510,13 +1294,14 @@ function applyFilters() {
     let filtered = COURSES_DATA;
     if (currentLevel !== 'Todos') {
         filtered = COURSES_DATA.filter(c => {
-            if (currentLevel === 'Manual') return (c.Tipo || '').toLowerCase() === 'manual';
-            return (c.Nivel || '').toLowerCase() === currentLevel.toLowerCase();
+            if (currentLevel === 'Manual') return (c.Tipo || c.tipo || '').toLowerCase() === 'manual';
+            return (c.Nivel || c.nivel || '').toLowerCase() === currentLevel.toLowerCase();
         });
     }
     const email = currentUser ? currentUser.email.toLowerCase() : '';
     const visibleCourses = filtered.map(c => {
-        const key = email + '|' + c.Nombre;
+        const cName = c.Nombre || c.nombre || '';
+        const key = email + '|' + cName;
         const acceso = dbUserAccessStatus[key] || 'NO';
         return { ...c, tieneAcceso: (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true) };
     });
@@ -1533,12 +1318,66 @@ async function loadCoursesFromSheet() {
     try {
         const response = await fetch(`${SCRIPT_URL}?action=get_courses&nocache=${Date.now()}`);
         const result = await response.json();
-        if (result.status === 'success' && Array.isArray(result.data)) {
-            COURSES_DATA = result.data;
-            await loadData();
-            showSuccessToast();
+        
+        console.log('📦 Respuesta del catálogo:', result);
+        
+        if (result.status === 'success') {
+            let coursesArray = [];
+            
+            if (Array.isArray(result.data)) {
+                coursesArray = result.data;
+            } else if (Array.isArray(result.cursos)) {
+                coursesArray = result.cursos;
+            } else if (Array.isArray(result)) {
+                coursesArray = result;
+            }
+            
+            if (coursesArray.length > 0) {
+                COURSES_DATA = coursesArray.map(course => {
+                    return {
+                        ID: course.ID || course.id || course.Id || '',
+                        Nombre: course.Nombre || course.nombre || course.titulo || 'Sin nombre',
+                        Tipo: course.Tipo || course.tipo || 'Curso',
+                        Categoria: course.Categoria || course.categoria || '',
+                        Nivel: course.Nivel || course.nivel || 'Básico',
+                        Descripcion: course.Descripcion || course.descripcion || course.descripción || '',
+                        ImagenURL: course.ImagenURL || course.imagenURL || course.imagen_url || course.imagen || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso',
+                        Precio: course.Precio || course.precio || '0',
+                        Moneda: course.Moneda || course.moneda || '$',
+                        EnlaceInfo: course.EnlaceInfo || course.enlaceInfo || course.enlace_info || course.enlace || '#',
+                        EnlaceAula: course.EnlaceAula || course.enlaceAula || course.enlace_aula || '',
+                        EnlaceCompra: course.EnlaceCompra || course.enlaceCompra || course.enlace_compra || '',
+                        EnlaceMaterial: course.EnlaceMaterial || course.enlaceMaterial || course.enlace_material || '',
+                        TotalLecciones: course.TotalLecciones || course.totalLecciones || course.total_lecciones || 0,
+                        NombresModulos: course.NombresModulos || course.nombresModulos || course.nombres_modulos || '',
+                        Badges: course.Badges || course.badges || '',
+                        Activo: course.Activo || course.activo || 'SI',
+                        ProfesorNombre: course.ProfesorNombre || course.profesorNombre || (course.profesor && course.profesor.nombre) || '',
+                        ProfesorFoto: course.ProfesorFoto || course.profesorFoto || (course.profesor && course.profesor.foto) || '',
+                        ProfesorResena: course.ProfesorResena || course.profesorResena || (course.profesor && course.profesor.resena) || '',
+                        ProfesorEspecialidad: course.ProfesorEspecialidad || course.profesorEspecialidad || (course.profesor && course.profesor.especialidad) || '',
+                        Destacado: course.Destacado || course.destacado || false
+                    };
+                });
+                
+                console.log('✅ Cursos cargados:', COURSES_DATA.length);
+                await loadData();
+                showSuccessToast();
+            } else {
+                console.warn('⚠️ No se encontraron cursos en la respuesta');
+                hideLoadingToast();
+                showNotif('Sin cursos', 'No hay cursos disponibles en este momento.', 'info');
+            }
+        } else {
+            console.error('❌ Error en respuesta:', result);
+            hideLoadingToast();
+            showNotif('Error', result.message || 'No se pudo cargar el catálogo.', 'error');
         }
-    } catch (e) { console.error('Error:', e); hideLoadingToast(); }
+    } catch (e) {
+        console.error('❌ Error de conexión:', e);
+        hideLoadingToast();
+        showNotif('Error de conexión', 'No se pudo conectar con el servidor.', 'error');
+    }
 }
 
 function filterByLevel(level, element) {
@@ -1633,14 +1472,12 @@ function openManageEnrollment(courseId, courseName) {
 function getStudentsForCourse(courseName) {
     const students = [];
     const normalizedCourse = normalizeName(courseName);
-
     for (const email in dbUsers) {
         const key = email + '|' + courseName;
         const hasPaymentStatus = dbUserPaymentStatus[key] !== undefined;
         const hasAccessStatus = dbUserAccessStatus[key] !== undefined;
         const userCourses = dbUserCourses[email] || [];
         const isEnrolled = userCourses.some(c => normalizeName(c) === normalizedCourse);
-
         if (hasPaymentStatus || hasAccessStatus || isEnrolled) {
             let userObj = dbUsers[email];
             if (typeof userObj === 'string') { try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } }
@@ -1662,16 +1499,13 @@ function renderEnrollmentsList(courseId, courseName) {
     const container = document.getElementById('enrollmentsListContainer');
     const emptyMsg = document.getElementById('enrollmentsEmpty');
     const students = getStudentsForCourse(courseName);
-
     if (students.length === 0) {
         container.innerHTML = '';
         emptyMsg.classList.remove('hidden');
         return;
     }
     emptyMsg.classList.add('hidden');
-
     const estadoOptions = ['Pendiente','Verificado','Revisión','Rechazado'];
-
     container.innerHTML = students.map((s, idx) => {
         const estadoBadgeColor = {
             'Pendiente': 'bg-amber-500/20 text-amber-400 border-amber-500/30',
@@ -1679,7 +1513,6 @@ function renderEnrollmentsList(courseId, courseName) {
             'Revisión': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
             'Rechazado': 'bg-red-500/20 text-red-400 border-red-500/30'
         }[s.estadoPago] || 'bg-slate-500/20 text-slate-400 border-slate-500/30';
-
         return `
         <div class="rounded-xl p-4 md:px-4 md:py-3 border border-slate-700/50" style="background: rgba(15,23,42,0.6);">
             <div class="md:hidden">
@@ -1717,7 +1550,6 @@ function renderEnrollmentsList(courseId, courseName) {
                     <i class="fas fa-save mr-1"></i> Guardar Cambios
                 </button>
             </div>
-
             <div class="hidden md:grid md:grid-cols-12 md:items-center gap-4">
                 <div class="col-span-4 min-w-0">
                     <div class="flex items-center gap-3">
@@ -1757,19 +1589,15 @@ async function saveEnrollmentStatus(email, courseName, idx) {
     const deskEstado = document.getElementById(`estado-desk-${idx}`);
     const mobAcceso = document.getElementById(`acceso-mob-${idx}`);
     const deskAcceso = document.getElementById(`acceso-desk-${idx}`);
-
     const estadoPago = (deskEstado && deskEstado.offsetParent !== null) ? deskEstado.value : (mobEstado ? mobEstado.value : 'Pendiente');
     const acceso = (deskAcceso && deskAcceso.offsetParent !== null) ? deskAcceso.value : (mobAcceso ? mobAcceso.value : 'NO');
-
     const userData = dbUsers[email];
     if (!userData) {
         showNotif('Error', 'El estudiante no esta registrado.', 'error');
         return;
     }
-
     let userObj = userData;
     if (typeof userObj === 'string') { try { userObj = JSON.parse(userObj); } catch(e) { userObj = {}; } }
-
     showLoadingToast();
     try {
         const params = new URLSearchParams();
@@ -1783,18 +1611,14 @@ async function saveEnrollmentStatus(email, courseName, idx) {
         params.append('estado', userObj.estado || '');
         params.append('estadoPago', estadoPago);
         params.append('accesoHabilitado', acceso);
-
         const response = await fetch(SCRIPT_URL, { method: 'POST', body: params });
         const result = await response.json();
-
         if (result.status === 'success') {
             hideLoadingToast();
             showNotif('Exito', (userObj.name || email) + ' -> ' + estadoPago + ' / Acceso: ' + acceso, 'success');
-
             const key = email + '|' + courseName;
             dbUserPaymentStatus[key] = estadoPago;
             dbUserAccessStatus[key] = acceso;
-
             if (acceso === 'SI') {
                 if (!dbUserCourses[email]) dbUserCourses[email] = [];
                 if (!dbUserCourses[email].includes(courseName)) dbUserCourses[email].push(courseName);
@@ -1803,7 +1627,6 @@ async function saveEnrollmentStatus(email, courseName, idx) {
                     dbUserCourses[email] = dbUserCourses[email].filter(c => normalizeName(c) !== normalizeName(courseName));
                 }
             }
-
             applyFilters();
             renderEnrollmentsList(null, courseName);
         } else {

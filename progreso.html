@@ -24,16 +24,9 @@
         }
     </script>
     <style>
-        /* ===== TODOS TUS ESTILOS EXISTENTES (MANTENER) ===== */
-        /* ============================================================
-           PREVENCION FLASH BLANCO + RESET BASE
-           ============================================================ */
         html { background-color: #0a0f1e; }
         html.light-mode { background-color: #f0f4f8; }
 
-        /* ============================================================
-           VARIABLES CSS - SISTEMA DE DISENO COHERENTE
-           ============================================================ */
         :root {
             --bg-body: #0a0f1e;
             --glass-bg: rgba(15, 23, 42, 0.55);
@@ -382,102 +375,34 @@
             animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transition: opacity 0.35s ease, transform 0.35s ease;
         }
-        .loading-toast.hiding {
-            opacity: 0;
-            transform: translateX(120px);
-        }
-        .loading-toast .toast-logo {
-            width: 25px;
-            height: 25px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulseLogo 2.5s infinite ease-in-out;
-        }
-        .loading-toast .toast-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
-        }
-        .loading-toast .toast-content {
-            flex: 1;
-            min-width: 0;
-        }
-        .loading-toast .toast-title {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 10px;
-            line-height: 1.3;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 150px;
-        }
-        .loading-toast .toast-spinner {
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(45, 184, 206, 0.2);
-            border-top: 2px solid #2db8ce;
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-            flex-shrink: 0;
-        }
-
+        .loading-toast.hiding { opacity: 0; transform: translateX(120px); }
+        .loading-toast .toast-logo { width: 25px; height: 25px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; animation: pulseLogo 2.5s infinite ease-in-out; }
+        .loading-toast .toast-logo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4)); }
+        .loading-toast .toast-content { flex: 1; min-width: 0; }
+        .loading-toast .toast-title { color: #ffffff; font-weight: 700; font-size: 10px; line-height: 1.3; letter-spacing: 0.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+        .loading-toast .toast-spinner { width: 14px; height: 14px; border: 2px solid rgba(45, 184, 206, 0.2); border-top: 2px solid #2db8ce; border-radius: 50%; animation: spin 0.9s linear infinite; flex-shrink: 0; }
         .loading-toast.success-toast {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.96) 0%, rgba(5, 150, 105, 0.96) 100%);
             border: 1px solid rgba(16, 185, 129, 0.7);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(16, 185, 129, 0.35);
         }
-        .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
-        .loading-toast.success-toast .toast-check {
-            width: 20px;
-            height: 20px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .loading-toast.success-toast .toast-check i {
-            color: #10b981;
-            font-size: 10px;
-            font-weight: 900;
-        }
+        .loading-toast.success-toast .toast-title { color: #ffffff; }
+        .loading-toast.success-toast .toast-check { width: 20px; height: 20px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .loading-toast.success-toast .toast-check i { color: #10b981; font-size: 10px; font-weight: 900; }
 
         body.light-mode .loading-toast {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
             border: 1px solid rgba(45, 184, 206, 0.5);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 10px rgba(45, 184, 206, 0.2);
         }
-        body.light-mode .loading-toast .toast-title {
-            color: #1e293b;
-        }
-        body.light-mode .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.7);
-        }
-        body.light-mode .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
+        body.light-mode .loading-toast .toast-title { color: #1e293b; }
+        body.light-mode .loading-toast.success-toast { background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%); border: 1px solid rgba(16, 185, 129, 0.7); }
+        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
 
         @media (max-width: 640px) {
-            .loading-toast {
-                bottom: 16px;
-                right: 16px;
-                left: 16px;
-                min-width: auto;
-                max-width: none;
-                padding: 8px 12px;
-            }
+            .loading-toast { bottom: 16px; right: 16px; left: 16px; min-width: auto; max-width: none; padding: 8px 12px; }
         }
-@keyframes slideInRight { from { transform: translateX(150%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideInRight { from { transform: translateX(150%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes pulseLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); } 50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); } }
         @keyframes bounceIn { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
@@ -505,9 +430,6 @@
             .particle { animation: none; opacity: 0.5; }
         }
 
-        /* ==========================================
-           BOTÓN WHATSAPP FLOTANTE
-           ========================================== */
         .whatsapp-float {
             position: fixed;
             bottom: 24px;
@@ -532,70 +454,17 @@
             transform: scale(1.12) translateY(-3px);
             box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
         }
-        .whatsapp-float::before {
-            content: '';
-            position: absolute;
-            inset: -5px;
-            border-radius: 50%;
-            border: 2px solid rgba(37, 211, 102, 0.35);
-            animation: whatsappPulse 2.5s ease-in-out infinite;
-            pointer-events: none;
-        }
-        @keyframes whatsappPulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0; }
-        }
-        .whatsapp-float::after {
-            content: '¿Dudas? Escríbenos';
-            position: absolute;
-            right: calc(100% + 12px);
-            top: 50%;
-            transform: translateY(-50%) scale(0.9);
-            background: rgba(15, 23, 42, 0.9);
-            color: #fff;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            letter-spacing: 0.02em;
-        }
-        .whatsapp-float:hover::after {
-            opacity: 1;
-            transform: translateY(-50%) scale(1);
-        }
-        body.light-mode .whatsapp-float::after {
-            background: rgba(255, 255, 255, 0.95);
-            color: #0f172a;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
         @media (max-width: 768px) {
-            .whatsapp-float {
-                width: 48px;
-                height: 48px;
-                font-size: 24px;
-                bottom: 16px;
-                right: 16px;
-            }
-            .whatsapp-float::after { display: none; }
+            .whatsapp-float { width: 48px; height: 48px; font-size: 24px; bottom: 16px; right: 16px; }
         }
     </style>
-
-
-
-
 </head>
 <body id="progreso-page-body" class="custom-scrollbar">
 
-<!-- BOTON WHATSAPP FLOTANTE -->
 <a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- PARTICULAS FLOTANTES -->
 <div class="particles-bg" aria-hidden="true">
     <div class="particle" style="left:10%;top:92%;animation-delay:0s;animation-duration:26s;"></div>
     <div class="particle" style="left:22%;top:82%;animation-delay:4s;animation-duration:32s;width:5px;height:5px;"></div>
@@ -604,12 +473,8 @@
     <div class="particle" style="left:66%;top:91%;animation-delay:7s;animation-duration:27s;"></div>
     <div class="particle" style="left:81%;top:89%;animation-delay:11s;animation-duration:33s;width:5px;height:5px;"></div>
     <div class="particle" style="left:91%;top:93%;animation-delay:5s;animation-duration:25s;"></div>
-    <div class="particle purple" style="left:16%;top:72%;animation-delay:14s;animation-duration:36s;width:3px;height:3px;"></div>
-    <div class="particle purple" style="left:46%;top:76%;animation-delay:17s;animation-duration:30s;width:4px;height:4px;"></div>
-    <div class="particle purple" style="left:76%;top:73%;animation-delay:6s;animation-duration:32s;width:3px;height:3px;"></div>
 </div>
 
-<!-- Toast de carga -->
 <div id="loadingToast" class="loading-toast hidden">
     <div class="toast-logo">
         <img src="img/AA (38).webp" alt="Aprende Automatizacion" onerror="this.style.display='none'">
@@ -621,8 +486,6 @@
 </div>
 
 <div id="progreso-page" class="min-h-screen">
-
-    <!-- HEADER -->
     <header class="relative overflow-hidden">
         <div class="absolute inset-0 z-0">
             <img src="img/AA (3).gif" alt="" class="w-full h-full object-cover" loading="lazy" aria-hidden="true">
@@ -647,11 +510,7 @@
 
     <div class="max-w-7xl mx-auto px-6 py-12">
         <main class="relative z-10 w-full">
-
-            <!-- ESTUDIANTE + LOGROS -->
             <div class="grid grid-cols-1 gap-6 mb-8">
-
-                <!-- Tarjeta del estudiante -->
                 <div class="glass-card student-card p-6 relative flex flex-col">
                     <div class="absolute right-4 top-4 text-white/5 text-7xl pointer-events-none" aria-hidden="true">
                         <i class="fas fa-id-card"></i>
@@ -662,7 +521,6 @@
                             <p class="card-value text-xl font-bold" id="dash-student-name">-</p>
                         </div>
                         <p class="text-sm font-medium" style="color: var(--text-secondary);" id="dash-student-email">-</p>
-
                         <div class="grid grid-cols-2 gap-3 mt-1">
                             <div class="stat-item">
                                 <p class="card-label text-[10px] uppercase font-black tracking-widest flex items-center gap-1.5 mb-0.5">
@@ -677,7 +535,6 @@
                                 <p class="card-value font-bold text-sm" id="dash-student-phone">-</p>
                             </div>
                         </div>
-
                         <div class="grid grid-cols-2 gap-3 mt-1">
                             <div class="stat-item">
                                 <p class="card-label text-[10px] uppercase font-black tracking-widest flex items-center gap-1.5 mb-0.5">
@@ -695,7 +552,6 @@
                                 <p class="card-value font-bold text-sm mt-0.5" id="dash-student-profession">-</p>
                             </div>
                         </div>
-
                         <div class="mt-3 pt-3 grid grid-cols-2 sm:grid-cols-4 gap-3" style="border-top: 1px solid var(--border-default);">
                             <div class="stat-item text-center p-2 rounded-lg" style="background: rgba(255,255,255,0.03);">
                                 <span class="card-label text-[10px] uppercase font-black tracking-widest flex items-center justify-center gap-1 mb-1">
@@ -724,8 +580,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- LOGROS -->
                 <div class="glass-card p-6 relative flex flex-col">
                     <div class="absolute right-4 top-4 text-white/5 text-7xl pointer-events-none" aria-hidden="true">
                         <i class="fas fa-trophy"></i>
@@ -734,16 +588,12 @@
                         <h2 class="card-label text-[10px] uppercase font-black tracking-widest mb-4 flex items-center gap-2">
                             <i class="fas fa-trophy text-yellow-400"></i> Logros
                         </h2>
-                        <div id="achievements-container" class="flex-grow grid grid-cols-2 sm:grid-cols-6 md:grid-cols-10 gap-2.5 md:overflow-y-auto custom-scrollbar md:max-h-[260px] md:pr-1">
-                        </div>
-                        <div id="no-achievements" class="card-label text-xs italic mt-3 hidden">
-                            Aun no has culminado ningun curso.
-                        </div>
+                        <div id="achievements-container" class="flex-grow grid grid-cols-2 sm:grid-cols-6 md:grid-cols-10 gap-2.5 md:overflow-y-auto custom-scrollbar md:max-h-[260px] md:pr-1"></div>
+                        <div id="no-achievements" class="card-label text-xs italic mt-3 hidden">Aun no has culminado ningun curso.</div>
                     </div>
                 </div>
             </div>
 
-            <!-- PROGRESO EN CURSOS -->
             <div class="flex items-center justify-between mb-6 pb-4 mt-20" style="border-bottom: 1px solid var(--border-default);">
                 <h3 class="card-value font-black uppercase tracking-widest text-xs flex items-center gap-2.5">
                     <i class="fas fa-laptop-code text-secondary"></i> Progreso en Cursos (Online/Presencial)
@@ -752,29 +602,20 @@
                     <i id="refresh-progress-icon" class="fas fa-sync-alt"></i> Actualizar
                 </button>
             </div>
-            <div id="individualCourseProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24">
-            </div>
+            <div id="individualCourseProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-24"></div>
 
-            <!-- PROGRESO EN MATERIAS -->
             <div class="flex items-center justify-between mb-6 pb-4 mt-8" style="border-bottom: 1px solid var(--border-default);">
                 <h3 class="card-value font-black uppercase tracking-widest text-xs flex items-center gap-2.5">
                     <i class="fas fa-book text-secondary"></i> Progreso en Materias (Ingeniería/Diplomados/Maestrias)
                 </h3>
             </div>
-            <div id="individualSubjectProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-            </div>
+            <div id="individualSubjectProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16"></div>
         </main>
     </div>
 </div>
 
 <script>
-
-
-    // ===================== CONFIGURACION =====================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2P8CSqI9uWk0aip010Hauh21KCkIsxi4_BKozAEFjjL9wGqo39C6OU-pKQSuZXdZF/exec';
-
-
-
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
 
     let COURSES_DATA = [];
     const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "espana": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
@@ -799,7 +640,6 @@
         return r; 
     };
 
-    // ============ FUNCIONES DEL TOAST ============
     function showLoadingToast() {
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
@@ -844,7 +684,6 @@
         }, 500);
     }
 
-    // ============ UTILIDADES DE FECHA ============
     function normalizeDateString(raw) {
         if (!raw || raw === "") return "";
         if (typeof raw === 'number') { 
@@ -937,9 +776,6 @@
         return {completed, total: totalLessons, percent, scores, avgScore: avg, progress: progressIndices};
     }
 
-    // ============================================================
-    // FUNCIÓN loadData CORREGIDA - SOLO CURSOS CON ACCESO = SÍ
-    // ============================================================
     async function loadData() {
         if(!currentUser) return;
         try {
@@ -955,40 +791,32 @@
                 const completionDatesBackend = data.userCourseCompletionDates || {};
                 const email = currentUser.email.toLowerCase();
                 
-                // Obtener todos los cursos del usuario desde el servidor
                 let myCourseNamesRaw = dbUserCourses[email] || [];
                 let myCourseNames = splitCourseNames(myCourseNamesRaw);
                 
                 console.log('📋 Cursos del usuario en servidor:', myCourseNames);
                 
-                // 🔒 FILTRAR: SOLO cursos con Acceso = SÍ (desde el servidor)
                 let myCourseIds = [];
                 myCourseNames.forEach(cName => {
                     const key = email + '|' + cName;
                     const acceso = dbUserAccessStatus[key] || 'NO';
                     console.log(`🔐 ${cName} -> Acceso: ${acceso}`);
                     
-                    // Solo agregar si Acceso es SÍ
                     if (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true) {
                         let nn = normalizeName(cName);
-                        let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
+                        let found = COURSES_DATA.find(x => normalizeName(x.Nombre || x.nombre || '') === nn);
                         if(!found) {
-                            found = COURSES_DATA.find(x => normalizeName(x.Nombre).includes(nn) || nn.includes(normalizeName(x.Nombre)));
+                            found = COURSES_DATA.find(x => normalizeName(x.Nombre || x.nombre || '').includes(nn) || nn.includes(normalizeName(x.Nombre || x.nombre || '')));
                         }
                         if(found) {
-                            myCourseIds.push(found.ID);
-                            console.log('  ✅ Curso habilitado (progreso):', cName, '-> ID:', found.ID);
+                            myCourseIds.push(found.ID || found.id);
+                            console.log('  ✅ Curso habilitado (progreso):', cName, '-> ID:', found.ID || found.id);
                         }
-                    } else {
-                        console.log('  ⏳ Curso pendiente (NO se muestra en progreso):', cName);
                     }
                 });
                 
-                // 🔒 IMPORTANTE: Reemplazar accessedCursos completamente, SIN mezclar con datos antiguos
-                // Esto es lo que estaba causando el problema: se mezclaban datos antiguos
                 currentUser.accessedCursos = [...myCourseIds];
                 
-                // Actualizar otros datos del usuario
                 let details = dbUserDetails[email] || {};
                 if(details.name && details.name !== "No provisto" && details.name !== "N/A") {
                     currentUser.name = details.name;
@@ -1010,15 +838,13 @@
                 latestEnrollmentDates = enrollmentDatesBackend[email] || {};
                 latestCompletionDates = completionDatesBackend[email] || {};
                 
-                // Guardar en localStorage SOLO los cursos habilitados
                 localStorage.setItem('user', JSON.stringify(currentUser));
                 window.currentUser = currentUser;
                 
-                console.log('👤 Usuario sincronizado (solo cursos habilitados):', {
+                console.log('👤 Usuario sincronizado:', {
                     name: currentUser.name,
                     email: currentUser.email,
-                    accessedCursos: currentUser.accessedCursos.length,
-                    cursos: currentUser.accessedCursos
+                    accessedCursos: currentUser.accessedCursos.length
                 });
                 
                 fetchProgressForAllCourses();
@@ -1036,11 +862,50 @@
             if (!response.ok) throw new Error(`Error: ${response.statusText}`);
             const result = await response.json();
             if (result.status !== 'success') throw new Error(result.message || 'Error del script');
-            window.COURSES_DATA = result.data;
-            COURSES_DATA = result.data;
+            
+            // 🆕 NORMALIZAR CAMPOS
+            let coursesArray = [];
+            if (Array.isArray(result.data)) {
+                coursesArray = result.data;
+            } else if (Array.isArray(result.cursos)) {
+                coursesArray = result.cursos;
+            } else if (Array.isArray(result)) {
+                coursesArray = result;
+            }
+            
+            COURSES_DATA = coursesArray.map(course => ({
+                ID: course.ID || course.id || course.Id || '',
+                Nombre: course.Nombre || course.nombre || course.titulo || 'Sin nombre',
+                Tipo: course.Tipo || course.tipo || 'Curso',
+                Categoria: course.Categoria || course.categoria || '',
+                Nivel: course.Nivel || course.nivel || 'Básico',
+                Descripcion: course.Descripcion || course.descripcion || '',
+                ImagenURL: course.ImagenURL || course.imagenURL || course.imagen_url || course.imagen || '',
+                TotalLecciones: course.TotalLecciones || course.totalLecciones || course.total_lecciones || 5,
+                NombresModulos: course.NombresModulos || course.nombresModulos || course.nombres_modulos || '',
+                Modulos: course.Modulos || course.modulos || '',
+                EnlaceAula: course.EnlaceAula || course.enlaceAula || course.enlace_aula || '',
+                EnlaceInfo: course.EnlaceInfo || course.enlaceInfo || course.enlace_info || '#',
+                EnlaceCompra: course.EnlaceCompra || course.enlaceCompra || course.enlace_compra || '',
+                Badges: course.Badges || course.badges || '',
+                Activo: course.Activo || course.activo || 'SI',
+                ProfesorNombre: course.ProfesorNombre || course.profesorNombre || (course.profesor && course.profesor.nombre) || '',
+                ProfesorFoto: course.ProfesorFoto || course.profesorFoto || (course.profesor && course.profesor.foto) || '',
+                ProfesorResena: course.ProfesorResena || course.profesorResena || (course.profesor && course.profesor.resena) || '',
+                ProfesorEspecialidad: course.ProfesorEspecialidad || course.profesorEspecialidad || (course.profesor && course.profesor.especialidad) || '',
+                Destacado: course.Destacado || course.destacado || false,
+                Precio: course.Precio || course.precio || '0',
+                Moneda: course.Moneda || course.moneda || '$'
+            }));
+            
+            window.COURSES_DATA = COURSES_DATA;
+            console.log('✅ Catálogo cargado:', COURSES_DATA.length, 'cursos');
             await loadData();
             showSuccessToast();
-        } catch (error) { console.error('Error al cargar cursos:', error); hideLoadingToast(); }
+        } catch (error) { 
+            console.error('Error al cargar cursos:', error); 
+            hideLoadingToast(); 
+        }
     }
 
     function fetchProgressForAllCourses() {
@@ -1050,23 +915,25 @@
         const progresos = dbUserProgress[email] || {};
         const accessed = currentUser.accessedCursos;
         accessed.forEach(courseId => {
-            const course = COURSES_DATA.find(c => c.ID === courseId);
+            const course = COURSES_DATA.find(c => String(c.ID) === String(courseId));
             if(!course) return;
             let progStr = "";
             const nc = normalizeName(course.Nombre);
             for(let key in progresos) { if (normalizeName(key) === nc) { progStr = progresos[key]; break; } }
-            const total = course.TotalLecciones || 5;
+            const total = getTotalLecciones(course);
             userProgress[email][String(courseId)] = parseProgressString(progStr, total);
-            const progressData = userProgress[email][String(courseId)];
-            const hasCompletionDate = findDateInObject(latestCompletionDates, course.Nombre);
-            if (progressData.percent === 100 && !hasCompletionDate) {
-                const today = new Date();
-                const dateString = today.getFullYear() + '-' + String(today.getMonth() + 1).padStart(2, '0') + '-' + String(today.getDate()).padStart(2, '0');
-                latestCompletionDates[course.Nombre] = dateString;
-            }
         });
         renderUserProgress();
         renderAchievements();
+    }
+
+    function getTotalLecciones(course) {
+        if (!course) return 5;
+        const totalLecciones = course.TotalLecciones || course.totalLecciones || course.total_lecciones;
+        if (totalLecciones !== undefined && totalLecciones !== null && totalLecciones !== '') {
+            return parseInt(totalLecciones) || 5;
+        }
+        return 5;
     }
 
     function renderAchievements() {
@@ -1078,7 +945,7 @@
         const email = user?.email?.toLowerCase();
         const completedCourses = [];
         accessedIds.forEach(courseId => {
-            const course = COURSES_DATA.find(c => c.ID === courseId);
+            const course = COURSES_DATA.find(c => String(c.ID) === String(courseId));
             if (!course) return;
             const progData = userProgress[email]?.[String(courseId)];
             if (progData && progData.percent === 100) { completedCourses.push({ course: course, avgScore: progData.avgScore || 0 }); }
@@ -1098,8 +965,8 @@
         noAchievements.classList.add('hidden');
         container.innerHTML = completedCourses.map(item => {
             const icon = getAchievementIcon(item.avgScore);
-            const achievementCourseName = item.course.Nombre.replace(/\bpresencial\b/gi, '').replace(/\(\s*\)/g, '').replace(/\s{2,}/g, ' ').trim();
-            return `<button type="button" class="achievement-card w-full text-inherit text-left" onclick="focusProgressCard(${item.course.ID})" aria-label="Ver progreso de ${achievementCourseName}">
+            const achievementCourseName = (item.course.Nombre || '').replace(/\bpresencial\b/gi, '').replace(/\(\s*\)/g, '').replace(/\s{2,}/g, ' ').trim();
+            return `<button type="button" class="achievement-card w-full text-inherit text-left" onclick="focusProgressCard('${item.course.ID}')" aria-label="Ver progreso de ${achievementCourseName}">
                 <div class="h-full flex flex-col items-center justify-between text-center gap-2">
                     <div class="achievement-icon">${icon}</div>
                     <p class="text-white text-[11px] font-bold leading-tight">${achievementCourseName}</p>
@@ -1125,28 +992,31 @@
         const accessedIds = user?.accessedCursos || []; 
         const email = user?.email?.toLowerCase();
         if (!email || accessedIds.length === 0) {
-            coursesContainer.innerHTML = '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos habilitados para mostrar. Si ya compraste, espera la verificación de pago.</div>';
+            coursesContainer.innerHTML = '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos habilitados para mostrar.</div>';
             subjectsContainer.innerHTML = '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias habilitadas para mostrar.</div>';
             return;
         }
         let coursesHtml = '';
         let subjectsHtml = '';
         accessedIds.forEach(courseId => {
-            const course = COURSES_DATA.find(c => c.ID === courseId);
+            const course = COURSES_DATA.find(c => String(c.ID) === String(courseId));
             if (!course) return;
-            const progData = userProgress[email]?.[String(courseId)] || { completed: 0, total: course.TotalLecciones || 5, percent: 0, scores: [], progress: []};
+            const courseNombre = course.Nombre || course.nombre || 'Sin nombre';
+            const courseTipo = (course.Tipo || course.tipo || 'Curso').toLowerCase();
+            const totalLecciones = getTotalLecciones(course);
+            const progData = userProgress[email]?.[String(courseId)] || { completed: 0, total: totalLecciones, percent: 0, scores: [], progress: []};
             const progressIndices = progData.progress || [];
             const done = progData.completed;
             const scores = progData.scores || [];
             const coursePercentage = progData.percent;
-            let enrollmentDate = findDateInObject(latestEnrollmentDates, course.Nombre) || '';
-            let completionDate = findDateInObject(latestCompletionDates, course.Nombre) || '';
+            let enrollmentDate = findDateInObject(latestEnrollmentDates, courseNombre) || '';
+            let completionDate = findDateInObject(latestCompletionDates, courseNombre) || '';
             let enrollmentDisplay = enrollmentDate ? formatCertDate(normalizeDateString(enrollmentDate)) : '---';
             let completionDisplay = completionDate ? formatCertDate(normalizeDateString(completionDate)) : '---';
             let certificateButton = '';
             if (coursePercentage === 100) {
                 certificateButton = `<div class="mt-4 pt-4" style="border-top: 1px solid var(--border-default);">
-                    <button onclick="reproducirAplausoYCertificado(${course.ID})" class="w-full btn-metal-solid btn-metal-cyan py-2.5 rounded-xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm">
+                    <button onclick="reproducirAplausoYCertificado('${courseId}')" class="w-full btn-metal-solid btn-metal-cyan py-2.5 rounded-xl text-xs font-black uppercase tracking-widest flex items-center justify-center gap-2 transition shadow-sm">
                         <i class="fas fa-certificate"></i> Ver Certificado
                     </button>
                 </div>`;
@@ -1212,7 +1082,6 @@
             else { moduleNames = Array.from({length: progData.total}, (_, i) => `Modulo ${i + 1}`); }
             moduleNames.forEach((moduleName, i) => {
                 let stateClass = "", stateText = "", score = scores[i], stateModifier = '';
-
                 if (score !== undefined && score !== null && !isNaN(score)) {
                     if (score >= 70) {
                         stateClass = "border-blue-400/50 bg-blue-500/20 text-white";
@@ -1234,15 +1103,14 @@
                         stateModifier = 'module-pending';
                     }
                 }
-
                 const displayModuleName = moduleName.includes(':') ? moduleName.split(':')[1].trim() : moduleName;
                 modulesHtml += `<div class="module-row ${stateModifier} flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass}"><span class="tracking-wide text-xs sm:text-sm">${displayModuleName}</span><span class="module-status text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
             });
             const cardHtml = `
-                <div class="course-progress-card" data-course-id="${course.ID}">
+                <div class="course-progress-card" data-course-id="${courseId}">
                     <div class="flex items-center justify-between mb-6 pb-4" style="border-bottom: 1px solid var(--border-default);">
                         <h3 class="course-title font-black uppercase tracking-tighter text-sm flex items-center gap-3">
-                            <i class="fas fa-book-open text-blue-200"></i> ${course.Nombre}
+                            <i class="fas fa-book-open text-blue-200"></i> ${courseNombre}
                         </h3>
                         <span class="text-xl">${getMedalIcon(progData.avgScore)}</span>
                     </div>
@@ -1250,10 +1118,10 @@
                     <h4 class="font-black uppercase tracking-widest text-[10px] mb-4" style="color: var(--text-secondary);">Desglose de Modulos</h4>
                     <div class="space-y-3">${modulesHtml}</div>
                 </div>`;
-            if (course.Tipo === 'Materia') { subjectsHtml += cardHtml; } else { coursesHtml += cardHtml; }
+            if (courseTipo === 'materia') { subjectsHtml += cardHtml; } else { coursesHtml += cardHtml; }
         });
         coursesContainer.innerHTML = coursesHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos (Online/Presencial) habilitados.</div>';
-        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias (Ingeniería/Diplomados/Maestrias) habilitadas.</div>';
+        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias habilitadas.</div>';
     }
 
     function updateDashboard() {
@@ -1277,8 +1145,12 @@
         const accessed = currentUser.accessedCursos || [];
         let onlineCount = 0, presencialCount = 0;
         accessed.forEach(cId => {
-            const course = COURSES_DATA.find(c => c.ID === cId);
-            if (course) { if (course.Tipo === 'Online') onlineCount++; else if (course.Tipo === 'Presencial') presencialCount++; }
+            const course = COURSES_DATA.find(c => String(c.ID) === String(cId));
+            if (course) { 
+                const tipo = (course.Tipo || course.tipo || '').toLowerCase();
+                if (tipo === 'online') onlineCount++; 
+                else if (tipo === 'presencial') presencialCount++; 
+            }
         });
         document.getElementById('dash-student-online').innerText = onlineCount;
         document.getElementById('dash-student-presencial').innerText = presencialCount;
@@ -1322,11 +1194,9 @@
         }
         console.log('Usuario:', currentUser.email);
         await loadCoursesFromSheet();
-
     });
 </script>
 <script src="js/auth.js"></script>
-<script src="js/app.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
 </body>

@@ -25,7 +25,6 @@
         }
     </script>
     <style>
-        /* PREVENIR FLASH BLANCO EN CARGA */
         html { background-color: #0a0f1e; }
         html.light-mode { background-color: #d0e1ef; }
 
@@ -94,14 +93,8 @@
             pointer-events: none;
         }
 
-        body:not(.light-mode)::before {
-            animation: auroraShift 20s ease-in-out infinite;
-        }
-
-        @keyframes auroraShift {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.85; }
-        }
+        body:not(.light-mode)::before { animation: auroraShift 20s ease-in-out infinite; }
+        @keyframes auroraShift { 0%, 100% { opacity: 1; } 50% { opacity: 0.85; } }
 
         body.light-mode {
             background-color: #d0e1ef;
@@ -116,12 +109,7 @@
             content: '';
             position: fixed;
             inset: 0;
-            background: linear-gradient(
-                180deg,
-                rgba(208, 225, 239, 0.78) 0%,
-                rgba(208, 225, 239, 0.72) 40%,
-                rgba(208, 225, 239, 0.68) 100%
-            );
+            background: linear-gradient(180deg, rgba(208, 225, 239, 0.78) 0%, rgba(208, 225, 239, 0.72) 40%, rgba(208, 225, 239, 0.68) 100%);
             backdrop-filter: blur(2px) saturate(110%);
             -webkit-backdrop-filter: blur(2px) saturate(110%);
             z-index: 0;
@@ -137,28 +125,11 @@
             background-size: 200% 200%;
             animation: gradientFlow 6s ease infinite;
         }
-        @keyframes gradientFlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
+        @keyframes gradientFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        .section-title { 
-            color: var(--text-default); 
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-        }
-        .section-title span {
-            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .section-subtitle {
-            color: var(--text-accent);
-            letter-spacing: 0.15em;
-            font-weight: 800;
-        }
+        .section-title { color: var(--text-default); letter-spacing: -0.02em; line-height: 1.1; }
+        .section-title span { background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .section-subtitle { color: var(--text-accent); letter-spacing: 0.15em; font-weight: 800; }
 
         body.light-mode .hero-main-title { color: #000000 !important; }
         body.light-mode .hero-main-title .text-secondary {
@@ -169,34 +140,12 @@
         }
 
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { 
-            background: rgba(255, 255, 255, 0.03); 
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb { 
-            background: linear-gradient(180deg, #06b6d4, #8b5cf6); 
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #22d3ee, #a78bfa);
-        }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.03); border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #06b6d4, #8b5cf6); border-radius: 10px; box-shadow: 0 0 10px rgba(6, 182, 212, 0.3); }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #22d3ee, #a78bfa); }
 
-        .particles-bg {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(6, 182, 212, 0.3);
-            border-radius: 50%;
-            animation: float-particle 20s infinite ease-in-out;
-        }
+        .particles-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .particle { position: absolute; width: 4px; height: 4px; background: rgba(6, 182, 212, 0.3); border-radius: 50%; animation: float-particle 20s infinite ease-in-out; }
         @keyframes float-particle {
             0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
             10% { opacity: 1; }
@@ -204,10 +153,7 @@
             100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
         }
 
-        #page-mis-cursos, #page-curso-detalle, main, header, section, footer {
-            position: relative;
-            z-index: 1;
-        }
+        #page-mis-cursos, #page-curso-detalle, main, header, section, footer { position: relative; z-index: 1; }
 
         header {
             background: var(--glass-bg) !important;
@@ -217,18 +163,13 @@
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
         }
 
-        header .absolute.inset-0 {
-            opacity: 0.3 !important;
-            filter: saturate(1.2) contrast(1.1);
-        }
-
+        header .absolute.inset-0 { opacity: 0.3 !important; filter: saturate(1.2) contrast(1.1); }
         header .hero-main-title {
             color: #ffffff !important;
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15) !important;
             letter-spacing: -0.03em;
             line-height: 1.1;
         }
-
         header .hero-main-title .text-secondary {
             background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #8b5cf6 100%);
             -webkit-background-clip: text;
@@ -237,7 +178,6 @@
             text-shadow: none !important;
             filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
         }
-
         header p {
             color: rgba(255, 255, 255, 0.85) !important;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
@@ -266,21 +206,9 @@
             border-color: rgba(6, 182, 212, 0.4);
             z-index: 10;
         }
-        .course-card-level-basico {
-            border: 2px solid rgba(6, 182, 212, 0.7);
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.25), inset 0 0 60px rgba(6, 182, 212, 0.08);
-            background: linear-gradient(180deg, rgba(6, 182, 212, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
-        }
-        .course-card-level-intermedio {
-            border: 2px solid rgba(139, 92, 246, 0.7);
-            box-shadow: 0 0 25px rgba(139, 92, 246, 0.25), inset 0 0 60px rgba(139, 92, 246, 0.08);
-            background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
-        }
-        .course-card-level-avanzado {
-            border: 2px solid rgba(245, 158, 11, 0.7);
-            box-shadow: 0 0 25px rgba(245, 158, 11, 0.25), inset 0 0 60px rgba(245, 158, 11, 0.08);
-            background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%);
-        }
+        .course-card-level-basico { border: 2px solid rgba(6, 182, 212, 0.7); box-shadow: 0 0 25px rgba(6, 182, 212, 0.25), inset 0 0 60px rgba(6, 182, 212, 0.08); background: linear-gradient(180deg, rgba(6, 182, 212, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%); }
+        .course-card-level-intermedio { border: 2px solid rgba(139, 92, 246, 0.7); box-shadow: 0 0 25px rgba(139, 92, 246, 0.25), inset 0 0 60px rgba(139, 92, 246, 0.08); background: linear-gradient(180deg, rgba(139, 92, 246, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%); }
+        .course-card-level-avanzado { border: 2px solid rgba(245, 158, 11, 0.7); box-shadow: 0 0 25px rgba(245, 158, 11, 0.25), inset 0 0 60px rgba(245, 158, 11, 0.08); background: linear-gradient(180deg, rgba(245, 158, 11, 0.08) 0%, rgba(8, 12, 33, 0.4) 100%); }
 
         .student-card {
             background: var(--glass-bg);
@@ -301,9 +229,7 @@
             -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
         }
-        .course-badge .text-secondary {
-            color: #2db8ce !important;
-        }
+        .course-badge .text-secondary { color: #2db8ce !important; }
 
         .course-btn-teal {
             background: linear-gradient(135deg, rgba(20, 184, 166, 0.9) 0%, rgba(13, 148, 136, 0.95) 50%, rgba(15, 118, 110, 0.9) 100%) !important;
@@ -314,11 +240,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .course-btn-teal:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.55), 0 2px 5px rgba(0,0,0,0.2) !important;
-            filter: brightness(1.08);
-        }
+        .course-btn-teal:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(20, 184, 166, 0.55), 0 2px 5px rgba(0,0,0,0.2) !important; filter: brightness(1.08); }
         .course-btn-cyan {
             background: linear-gradient(135deg, rgba(34, 211, 238, 0.9) 0%, rgba(6, 182, 212, 0.95) 50%, rgba(8, 145, 178, 0.9) 100%) !important;
             border: 1px solid #0891b2 !important;
@@ -328,15 +250,8 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .course-btn-cyan:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.55), 0 2px 5px rgba(0,0,0,0.2) !important;
-            filter: brightness(1.08);
-        }
+        .course-btn-cyan:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(6, 182, 212, 0.55), 0 2px 5px rgba(0,0,0,0.2) !important; filter: brightness(1.08); }
 
-        /* ==========================================
-           TOAST DE CARGA - RESPONSIVE MEJORADO
-           ========================================== */
         .loading-toast {
             position: fixed;
             bottom: 20px;
@@ -358,152 +273,47 @@
             animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transition: opacity 0.35s ease, transform 0.35s ease;
         }
-        .loading-toast.hiding {
-            opacity: 0;
-            transform: translateX(120px);
-        }
-        .loading-toast .toast-logo {
-            width: 25px;
-            height: 25px;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulseLogo 2.5s infinite ease-in-out;
-        }
-        .loading-toast .toast-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
-        }
-        .loading-toast .toast-content {
-            flex: 1;
-            min-width: 0;
-        }
-        .loading-toast .toast-title {
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 10px;
-            line-height: 1.3;
-            letter-spacing: 0.2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 150px;
-        }
-        .loading-toast .toast-spinner {
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(45, 184, 206, 0.2);
-            border-top: 2px solid #2db8ce;
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-            flex-shrink: 0;
-        }
+        .loading-toast.hiding { opacity: 0; transform: translateX(120px); }
+        .loading-toast .toast-logo { width: 25px; height: 25px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; animation: pulseLogo 2.5s infinite ease-in-out; }
+        .loading-toast .toast-logo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4)); }
+        .loading-toast .toast-content { flex: 1; min-width: 0; }
+        .loading-toast .toast-title { color: #ffffff; font-weight: 700; font-size: 10px; line-height: 1.3; letter-spacing: 0.2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+        .loading-toast .toast-spinner { width: 14px; height: 14px; border: 2px solid rgba(45, 184, 206, 0.2); border-top: 2px solid #2db8ce; border-radius: 50%; animation: spin 0.9s linear infinite; flex-shrink: 0; }
         .loading-toast.success-toast {
             background: linear-gradient(135deg, rgba(16, 185, 129, 0.96) 0%, rgba(5, 150, 105, 0.96) 100%);
             border: 1px solid rgba(16, 185, 129, 0.7);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(16, 185, 129, 0.35);
         }
-        .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
-        .loading-toast.success-toast .toast-check {
-            width: 20px;
-            height: 20px;
-            background-color: #ffffff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .loading-toast.success-toast .toast-check i {
-            color: #10b981;
-            font-size: 10px;
-            font-weight: 900;
-        }
+        .loading-toast.success-toast .toast-title { color: #ffffff; }
+        .loading-toast.success-toast .toast-check { width: 20px; height: 20px; background-color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .loading-toast.success-toast .toast-check i { color: #10b981; font-size: 10px; font-weight: 900; }
 
-        /* MODO CLARO - TOAST */
         body.light-mode .loading-toast {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
             border: 1px solid rgba(45, 184, 206, 0.5);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 10px rgba(45, 184, 206, 0.2);
         }
-        body.light-mode .loading-toast .toast-title {
-            color: #1e293b;
-        }
-        body.light-mode .loading-toast.success-toast {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
-            border: 1px solid rgba(16, 185, 129, 0.7);
-        }
-        body.light-mode .loading-toast.success-toast .toast-title {
-            color: #ffffff;
-        }
+        body.light-mode .loading-toast .toast-title { color: #1e293b; }
+        body.light-mode .loading-toast.success-toast { background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%); border: 1px solid rgba(16, 185, 129, 0.7); }
+        body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
 
-        /* RESPONSIVE - MÓVIL */
         @media (max-width: 640px) {
-            .loading-toast {
-                bottom: 16px;
-                right: 16px;
-                left: 16px;
-                min-width: auto;
-                max-width: none;
-                padding: 10px 14px;
-                border-radius: 14px;
-            }
-            .loading-toast .toast-logo {
-                width: 28px;
-                height: 28px;
-            }
-            .loading-toast .toast-title {
-                font-size: 11px;
-                max-width: none;
-                flex: 1;
-            }
-            .loading-toast .toast-spinner {
-                width: 16px;
-                height: 16px;
-            }
-            .loading-toast.success-toast .toast-check {
-                width: 24px;
-                height: 24px;
-            }
+            .loading-toast { bottom: 16px; right: 16px; left: 16px; min-width: auto; max-width: none; padding: 10px 14px; border-radius: 14px; }
+            .loading-toast .toast-logo { width: 28px; height: 28px; }
+            .loading-toast .toast-title { font-size: 11px; max-width: none; flex: 1; }
+            .loading-toast .toast-spinner { width: 16px; height: 16px; }
+            .loading-toast.success-toast .toast-check { width: 24px; height: 24px; }
         }
 
         @media (min-width: 641px) and (max-width: 768px) {
-            .loading-toast {
-                bottom: 20px;
-                right: 20px;
-                left: auto;
-                min-width: 220px;
-                max-width: 280px;
-            }
+            .loading-toast { bottom: 20px; right: 20px; left: auto; min-width: 220px; max-width: 280px; }
         }
 
-        @keyframes slideInRight {
-            from { transform: translateX(150%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideInUp {
-            from { transform: translateY(150%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        @keyframes pulseLogo {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); }
-            50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); }
-        }
-        @keyframes bounceIn {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
-        }
+        @keyframes slideInRight { from { transform: translateX(150%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes slideInUp { from { transform: translateY(150%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulseLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); } 50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); } }
+        @keyframes bounceIn { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
         #floatingBackBtn {
             position: fixed;
@@ -531,23 +341,11 @@
             transform: translateY(20px);
             pointer-events: none;
         }
-        #floatingBackBtn.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-        #floatingBackBtn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--cyan-glow);
-            border-color: rgba(6, 182, 212, 0.3);
-        }
+        #floatingBackBtn.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        #floatingBackBtn:hover { transform: translateY(-3px); box-shadow: var(--cyan-glow); border-color: rgba(6, 182, 212, 0.3); }
 
-        html.light-mode body .course-card {
-            background: rgba(255, 255, 255, 0.8);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-        html.light-mode body .course-card h3,
-        html.light-mode body .course-card .text-slate-900 { color: #1e293b !important; }
+        html.light-mode body .course-card { background: rgba(255, 255, 255, 0.8); border-color: rgba(255, 255, 255, 0.5); }
+        html.light-mode body .course-card h3, html.light-mode body .course-card .text-slate-900 { color: #1e293b !important; }
 
         body.light-mode header {
             background: rgba(227, 241, 248, 0.72) !important;
@@ -556,14 +354,8 @@
             border-bottom: 1px solid #d3e1e8 !important;
             box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
         }
-        body.light-mode header .hero-main-title {
-            color: #334155 !important;
-            text-shadow: none !important;
-        }
-        body.light-mode header p {
-            color: #64748b !important;
-            text-shadow: none !important;
-        }
+        body.light-mode header .hero-main-title { color: #334155 !important; text-shadow: none !important; }
+        body.light-mode header p { color: #64748b !important; text-shadow: none !important; }
 
         @media (max-width: 768px) {
             header .relative.z-10 { padding-top: 6rem !important; padding-bottom: 3rem !important; }
@@ -593,23 +385,13 @@
             border: none;
             cursor: pointer;
         }
-        .whatsapp-float:hover {
-            transform: scale(1.12) translateY(-3px);
-            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
-        }
+        .whatsapp-float:hover { transform: scale(1.12) translateY(-3px); box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5); }
         @media (max-width: 768px) {
-            .whatsapp-float {
-                width: 48px;
-                height: 48px;
-                font-size: 24px;
-                bottom: 16px;
-                right: 16px;
-            }
+            .whatsapp-float { width: 48px; height: 48px; font-size: 24px; bottom: 16px; right: 16px; }
         }
     </style>
 </head>
 <body id="mis-cursos-page" class="custom-scrollbar">
-<!-- PARTÍCULAS FLOTANTES -->
 <div class="particles-bg" aria-hidden="true">
     <div class="particle" style="left:10%;top:90%;animation-delay:0s;animation-duration:25s;"></div>
     <div class="particle" style="left:20%;top:80%;animation-delay:5s;animation-duration:30s;width:6px;height:6px;"></div>
@@ -713,7 +495,7 @@
 <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
 
 <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2P8CSqI9uWk0aip010Hauh21KCkIsxi4_BKozAEFjjL9wGqo39C6OU-pKQSuZXdZF/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
 
     let currentUser = JSON.parse(localStorage.getItem('user')) || null;
     window.currentUser = currentUser;
@@ -733,24 +515,23 @@
     function getTotalLecciones(course) {
         if (!course) return 5;
         let total = 5;
-        if (course.TotalLecciones !== undefined && course.TotalLecciones !== null && course.TotalLecciones !== '') {
-            total = parseInt(course.TotalLecciones) || 5;
+        const totalLecciones = course.TotalLecciones || course.totalLecciones || course.total_lecciones;
+        if (totalLecciones !== undefined && totalLecciones !== null && totalLecciones !== '') {
+            total = parseInt(totalLecciones) || 5;
             return total;
         }
-        if (course.totalLecciones !== undefined && course.totalLecciones !== null && course.totalLecciones !== '') {
-            total = parseInt(course.totalLecciones) || 5;
-            return total;
-        }
-        if (course.Modulos) {
+        if (course.Modulos || course.modulos) {
             try {
-                const modulos = JSON.parse(course.Modulos);
+                const modulosRaw = course.Modulos || course.modulos;
+                const modulos = JSON.parse(modulosRaw);
                 if (Array.isArray(modulos) && modulos.length > 0) {
                     total = modulos.length;
                     return total;
                 }
             } catch(e) {
-                if (typeof course.Modulos === 'string' && course.Modulos.includes(',')) {
-                    const modulosArray = course.Modulos.split(',').filter(m => m.trim() !== '');
+                const modulosStr = course.Modulos || course.modulos;
+                if (typeof modulosStr === 'string' && modulosStr.includes(',')) {
+                    const modulosArray = modulosStr.split(',').filter(m => m.trim() !== '');
                     if (modulosArray.length > 0) {
                         total = modulosArray.length;
                         return total;
@@ -868,8 +649,45 @@
             if (result.status !== 'success') {
                 throw new Error(result.message || 'El script de Google devolvió un error.');
             }
-            window.COURSES_DATA = result.data;
-            COURSES_DATA = result.data;
+            
+            // 🆕 NORMALIZAR CAMPOS PARA COMPATIBILIDAD
+            let coursesArray = [];
+            if (Array.isArray(result.data)) {
+                coursesArray = result.data;
+            } else if (Array.isArray(result.cursos)) {
+                coursesArray = result.cursos;
+            } else if (Array.isArray(result)) {
+                coursesArray = result;
+            }
+            
+            COURSES_DATA = coursesArray.map(course => ({
+                ID: course.ID || course.id || course.Id || '',
+                Nombre: course.Nombre || course.nombre || course.titulo || 'Sin nombre',
+                Tipo: course.Tipo || course.tipo || 'Curso',
+                Categoria: course.Categoria || course.categoria || '',
+                Nivel: course.Nivel || course.nivel || 'Básico',
+                Descripcion: course.Descripcion || course.descripcion || '',
+                ImagenURL: course.ImagenURL || course.imagenURL || course.imagen_url || course.imagen || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso',
+                Precio: course.Precio || course.precio || '0',
+                Moneda: course.Moneda || course.moneda || '$',
+                EnlaceInfo: course.EnlaceInfo || course.enlaceInfo || course.enlace_info || course.enlace || '#',
+                EnlaceAula: course.EnlaceAula || course.enlaceAula || course.enlace_aula || '',
+                EnlaceCompra: course.EnlaceCompra || course.enlaceCompra || course.enlace_compra || '',
+                EnlaceMaterial: course.EnlaceMaterial || course.enlaceMaterial || course.enlace_material || '',
+                TotalLecciones: course.TotalLecciones || course.totalLecciones || course.total_lecciones || 0,
+                NombresModulos: course.NombresModulos || course.nombresModulos || course.nombres_modulos || '',
+                Badges: course.Badges || course.badges || '',
+                Activo: course.Activo || course.activo || 'SI',
+                ProfesorNombre: course.ProfesorNombre || course.profesorNombre || (course.profesor && course.profesor.nombre) || '',
+                ProfesorFoto: course.ProfesorFoto || course.profesorFoto || (course.profesor && course.profesor.foto) || '',
+                ProfesorResena: course.ProfesorResena || course.profesorResena || (course.profesor && course.profesor.resena) || '',
+                ProfesorEspecialidad: course.ProfesorEspecialidad || course.profesorEspecialidad || (course.profesor && course.profesor.especialidad) || '',
+                Destacado: course.Destacado || course.destacado || false,
+                Modulos: course.Modulos || course.modulos || '',
+                Contenido: course.Contenido || course.contenido || ''
+            }));
+            
+            window.COURSES_DATA = COURSES_DATA;
             console.log('✅ Catálogo cargado:', COURSES_DATA.length, 'cursos');
             await loadData();
             showSuccessToast();
@@ -1149,12 +967,13 @@
         const accessed=Array.isArray(window.currentUser.accessedCursos)?window.currentUser.accessedCursos:[];
         let countOnline=0, countPresencial=0, countMaterias=0, countManuales=0;
         accessed.forEach(cId=>{
-            const course=COURSES_DATA.find(c=>c.ID===cId);
+            const course=COURSES_DATA.find(c=>String(c.ID)===String(cId));
             if(course){
-                if(course.Tipo === 'Online') countOnline++;
-                else if(course.Tipo === 'Presencial') countPresencial++;
-                else if(course.Tipo === 'Materia') countMaterias++;
-                else if(course.Tipo === 'Manual') countManuales++;
+                const tipo = (course.Tipo || course.tipo || '').toLowerCase();
+                if(tipo === 'online') countOnline++;
+                else if(tipo === 'presencial') countPresencial++;
+                else if(tipo === 'materia') countMaterias++;
+                else if(tipo === 'manual') countManuales++;
             }
         });
         setTxt('mcStatOnline', countOnline);
@@ -1175,7 +994,7 @@
         console.log('📊 IDs accedidos (solo habilitados):', window.currentUser.accessedCursos);
         const accessedCourses = COURSES_DATA.filter(c => 
             window.currentUser.accessedCursos && 
-            window.currentUser.accessedCursos.includes(parseInt(c.ID))
+            window.currentUser.accessedCursos.some(id => String(id) === String(c.ID))
         );
         console.log('📊 Cursos encontrados (habilitados):', accessedCourses.length, accessedCourses.map(c => c.Nombre));
         if(accessedCourses.length===0){
@@ -1187,31 +1006,37 @@
         const emailKey=window.currentUser.email.toLowerCase(); 
         const myProgress=userProgress[emailKey]||{};
         grid.innerHTML=accessedCourses.map((course,index)=>{
-            const isManual = course.Tipo === 'Manual';
-            const likes=globalStats[`curso-${course.ID}_likes`]||0;
-            const vistas=globalStats[`curso-${course.ID}_vistas`]||0;
-            const avgRating=courseRatings[course.ID]?courseRatings[course.ID].avg:"5.0";
-            const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${course.ID}`))?'liked text-red-500':'text-slate-400';
+            const courseId = String(course.ID);
+            const courseNombre = course.Nombre || course.nombre || 'Sin nombre';
+            const courseTipo = course.Tipo || course.tipo || 'Curso';
+            const courseCategoria = course.Categoria || course.categoria || '';
+            const courseNivel = course.Nivel || course.nivel || 'Básico';
+            const courseImagen = course.ImagenURL || course.imagen_url || course.imagen || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso';
+            const courseEnlaceAula = course.EnlaceAula || course.enlace_aula || course.enlaceAula || '';
+            const isManual = courseTipo.toLowerCase() === 'manual';
+            const likes=globalStats[`curso-${courseId}_likes`]||0;
+            const vistas=globalStats[`curso-${courseId}_vistas`]||0;
+            const avgRating=courseRatings[courseId]?courseRatings[courseId].avg:"5.0";
+            const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${courseId}`))?'liked text-red-500':'text-slate-400';
             const viewsClass=vistas>0?'text-green-500':'text-slate-400';
-            const displayCount=studentCountsPerCourse[course.ID]!==undefined?studentCountsPerCourse[course.ID]:'...';
+            const displayCount=studentCountsPerCourse[courseId]!==undefined?studentCountsPerCourse[courseId]:'...';
             const totalLecciones = getTotalLecciones(course);
-            console.log(`📚 Curso ${course.Nombre}: TotalLecciones calculado = ${totalLecciones}`);
-            const progressData=myProgress[String(course.ID)]||{completed:0,total:totalLecciones,percent:0,scores:[],avgScore:0,progress:[]};
+            const progressData=myProgress[String(courseId)]||{completed:0,total:totalLecciones,percent:0,scores:[],avgScore:0,progress:[]};
             const completed = progressData.completed || 0;
             const total = progressData.total || totalLecciones;
             const percent = progressData.percent || 0;
-            const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[course.ID])||0;
+            const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[courseId])||0;
             let starsHTML='';
-            for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse(${course.ID},${i},false)"></i>`; }
+            for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse('${courseId}',${i},false)"></i>`; }
             let buttonsHTML = '';
             if (isManual) {
-                buttonsHTML = `<button type="button" onclick="openCourseMaterial(${course.ID}); event.stopPropagation();" class="w-full course-btn-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
-                if (course.EnlaceAula && course.EnlaceAula.trim() !== '' && course.EnlaceAula.trim() !== '#') {
-                    buttonsHTML += `<button type="button" onclick="window.location.href='${course.EnlaceAula}'; event.stopPropagation();" class="w-full course-btn-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
+                buttonsHTML = `<button type="button" onclick="openCourseMaterial('${courseId}'); event.stopPropagation();" class="w-full course-btn-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-book-open"></i> Ver Materiales</button>`;
+                if (courseEnlaceAula && courseEnlaceAula.trim() !== '' && courseEnlaceAula.trim() !== '#') {
+                    buttonsHTML += `<button type="button" onclick="window.location.href='${courseEnlaceAula}'; event.stopPropagation();" class="w-full course-btn-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula</button>`;
                 }
             } else {
-                buttonsHTML = `<button type="button" onclick="openCourseMaterial(${course.ID}); event.stopPropagation();" class="w-full course-btn-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
-                ${course.EnlaceAula && course.EnlaceAula.trim() !== '' && course.EnlaceAula.trim() !== '#' ? `<button type="button" onclick="window.location.href='${course.EnlaceAula}'; event.stopPropagation();" class="w-full course-btn-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
+                buttonsHTML = `<button type="button" onclick="openCourseMaterial('${courseId}'); event.stopPropagation();" class="w-full course-btn-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-folder-open"></i> Materiales del Curso</button>
+                ${courseEnlaceAula && courseEnlaceAula.trim() !== '' && courseEnlaceAula.trim() !== '#' ? `<button type="button" onclick="window.location.href='${courseEnlaceAula}'; event.stopPropagation();" class="w-full course-btn-cyan py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md flex items-center justify-center gap-2"><i class="fas fa-chalkboard-teacher"></i> Entrar al Aula Virtual</button>` : ''}`;
             }
             const progressBarHTML =`
             <div class="mt-4 mb-3 bg-[#0f172a]/80 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-inner">
@@ -1219,12 +1044,12 @@
                 <div class="w-full bg-white/10 rounded-full h-1.5 mb-2 overflow-hidden"><div class="bg-green-400 h-1.5 rounded-full transition-all duration-500" style="width: ${percent}%"></div></div>
                 <p class="progress-lessons-completed text-[10px] font-bold text-white">${completed} de ${total} lecciones completadas</p>
             </div>`;
-            const normalizedLevel = (course.Nivel || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            const normalizedLevel = (courseNivel || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
             let levelBorderClass = '';
             let levelIconClass = 'fa-question-circle';
             let levelIconBg = 'bg-slate-500/10 border-slate-500/30';
             let levelIconColor = 'text-slate-400';
-            if (normalizedLevel === 'basico') {
+            if (normalizedLevel === 'basico' || normalizedLevel === 'básico') {
                 levelBorderClass = 'course-card-level-basico';
                 levelIconBg = 'bg-cyan-500/10 border-cyan-500/30';
                 levelIconColor = 'text-cyan-400';
@@ -1244,7 +1069,7 @@
             if (isManual) {
                 iconsHTML = `
                     <div class="absolute bottom-3 left-3 flex items-center gap-2">
-                        <div class="flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.Nivel}">
+                        <div class="flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${courseNivel}">
                             <i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i>
                         </div>
                         <div class="flex items-center justify-center bg-blue-500/10 border-2 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Manual">
@@ -1252,14 +1077,14 @@
                         </div>
                     </div>`;
             } else {
-                iconsHTML = `<div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${course.Nivel}"><i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i></div>`;
+                iconsHTML = `<div class="absolute bottom-3 left-3 flex items-center justify-center ${levelIconBg} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${courseNivel}"><i class="fas ${levelIconClass} text-lg ${levelIconColor}"></i></div>`;
             }
-            return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group ${levelBorderClass}" onclick="grantAccess(${course.ID})">
+            return `<div class="course-card bg-white rounded-[24px] shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col group ${levelBorderClass}" onclick="grantAccess('${courseId}')">
                 <div class="relative aspect-video w-full overflow-hidden bg-[#0f172a]">
-                    <img src="${course.ImagenURL}" class="w-full h-full object-cover opacity-100 transition-transform duration-500 group-hover:scale-105">
+                    <img src="${courseImagen}" class="w-full h-full object-cover opacity-100 transition-transform duration-500 group-hover:scale-105" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Curso'">
                     <div class="absolute top-3 left-3 flex flex-col gap-1.5 items-start">
-                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg course-badge">${course.Tipo}</span>
-                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg course-badge">${course.Categoria}</span>
+                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg course-badge">${courseTipo}</span>
+                        <span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-lg course-badge">${courseCategoria}</span>
                     </div>
                     <div class="absolute top-3 right-3 course-badge text-secondary text-[10px] font-black px-2 py-1 rounded-md shadow-lg flex items-center gap-1">
                         <i class="fas fa-star text-yellow-400"></i> ${avgRating}
@@ -1267,14 +1092,14 @@
                     ${iconsHTML}
                 </div>
                 <div class="p-5 md:p-6 flex-grow flex flex-col">
-                    <h3 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${course.Nombre}</h3>
+                    <h3 class="text-lg font-bold text-slate-900 mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${courseNombre}</h3>
                     <div class="flex items-center justify-between mb-4 text-xs font-bold text-slate-500">
                         <div class="flex items-center gap-2">
-                            <span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md flex items-center gap-1 border border-slate-200"><i data-lucide="book-open" class="w-3 h-3"></i> ${course.Nivel}</span>
+                            <span class="bg-slate-100 text-slate-600 px-2 py-1 rounded-md flex items-center gap-1 border border-slate-200"><i data-lucide="book-open" class="w-3 h-3"></i> ${courseNivel}</span>
                             <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md flex items-center gap-1"><i data-lucide="users" class="w-3 h-3"></i> ${displayCount}</span>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${course.ID}" onclick="event.stopPropagation(); toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">${likes}</span></button>
+                            <button class="like-btn flex items-center gap-1 ${isLikedClass} hover:text-red-500 transition-colors" data-id="curso-${courseId}" onclick="event.stopPropagation(); toggleLike(this)"><i class="fas fa-heart"></i><span class="like-count">${likes}</span></button>
                             <span class="flex items-center gap-1 ${viewsClass}"><i class="fas fa-eye"></i><span>${vistas}</span></span>
                         </div>
                     </div>
@@ -1399,7 +1224,6 @@
     });
 </script>
 <script src="js/auth.js"></script>
-<script src="js/app.js"></script>
 <script src="js/navbar.js"></script>
 <script src="js/footer.js"></script>
 <a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">

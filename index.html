@@ -1643,6 +1643,201 @@
             border: 2px solid rgba(6, 182, 212, 0.2);
             border-top-color: #06b6d4;
         }
+
+/* ==========================================
+   ESTILOS ADICIONALES PARA CURSOS DESTACADOS
+   (MISMO FORMATO QUE CATÁLOGO)
+   ========================================== */
+
+/* Estados de curso */
+.course-card.estado-pendiente { border-color: #fbbf24 !important; opacity: 0.85; }
+.course-card.estado-pendiente:hover { border-color: #fbbf24 !important; opacity: 0.95; }
+.course-card.estado-inscrito { border-color: #34d399 !important; }
+.course-card.estado-inscrito:hover { border-color: #34d399 !important; }
+.course-card.estado-rechazado { border-color: #f87171 !important; }
+
+.badge-estado { 
+    padding: 0.2rem 0.75rem; 
+    border-radius: 9999px; 
+    font-size: 0.6rem; 
+    font-weight: 700; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    backdrop-filter: blur(8px); 
+    -webkit-backdrop-filter: blur(8px);
+}
+.badge-pendiente { 
+    background: rgba(251, 191, 36, 0.2); 
+    color: #fbbf24; 
+    border: 1px solid rgba(251, 191, 36, 0.3); 
+    animation: pulse-badge 1.5s ease-in-out infinite; 
+}
+.badge-revision { 
+    background: rgba(96, 165, 250, 0.2); 
+    color: #60a5fa; 
+    border: 1px solid rgba(96, 165, 250, 0.3); 
+    animation: pulse-badge 1.5s ease-in-out infinite; 
+}
+.badge-rechazado { 
+    background: rgba(248, 113, 113, 0.2); 
+    color: #f87171; 
+    border: 1px solid rgba(248, 113, 113, 0.3); 
+}
+.badge-inscrito { 
+    background: rgba(52, 211, 153, 0.2); 
+    color: #34d399; 
+    border: 1px solid rgba(52, 211, 153, 0.3); 
+}
+
+@keyframes pulse-badge { 
+    0%, 100% { opacity: 1; } 
+    50% { opacity: 0.6; } 
+}
+
+/* Botones de compra */
+.btn-comprar {
+    background: linear-gradient(135deg, #2db8ce, #06b6d4);
+    color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 1rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+.btn-comprar:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4); 
+}
+.btn-comprar:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn-pendiente { 
+    background: #fbbf24; 
+    color: #0a0f1e; 
+    padding: 0.6rem 1.5rem; 
+    border-radius: 1rem; 
+    font-weight: 700; 
+    border: none; 
+    cursor: default; 
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+
+.btn-inscrito-pastilla { 
+    background: #064e3b; 
+    color: #34d399; 
+    padding: 0.6rem 1.5rem; 
+    border-radius: 1rem; 
+    font-weight: 700; 
+    border: 1px solid #059669; 
+    cursor: default; 
+    display: inline-flex; 
+    align-items: center; 
+    gap: 0.5rem; 
+    font-size: 0.8rem;
+}
+
+.btn-rechazado { 
+    background: #f87171; 
+    color: white; 
+    padding: 0.6rem 1.5rem; 
+    border-radius: 1rem; 
+    font-weight: 700; 
+    border: none; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+}
+.btn-rechazado:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 30px rgba(248, 113, 113, 0.4); 
+}
+
+/* Precio en Bolívares */
+.precio-bs { 
+    color: #34d399 !important; 
+    font-weight: 800 !important; 
+    font-size: 0.7rem !important; 
+    letter-spacing: 0.02em; 
+    background: #064e3b; 
+    padding: 0.15rem 0.5rem; 
+    border-radius: 0.5rem; 
+    display: inline-block; 
+    border: 1px solid #059669; 
+}
+
+/* Botón metálico azul (Info) */
+.btn-metal-blue {
+    background: linear-gradient(180deg, #60a5fa 0%, #2563eb 45%, #1d4ed8 100%);
+    border: 1px solid #1e40af;
+    color: white;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    font-size: 0.7rem;
+    padding: 0.5rem 1rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 -1px 0 rgba(0,0,0,0.25), 0 3px 10px rgba(0,0,0,0.25);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.btn-metal-blue:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 6px 20px rgba(37, 99, 235, 0.55);
+}
+
+/* Overlay de acceso restringido */
+.course-card .overlay-restricted {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Modo claro */
+body.light-mode .btn-inscrito-pastilla {
+    background: #059669;
+    color: #ffffff;
+    border: 1px solid #047857;
+}
+body.light-mode .precio-bs {
+    color: #ffffff !important;
+    background: #059669;
+    border: 1px solid #047857;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+    .btn-comprar,
+    .btn-pendiente,
+    .btn-inscrito-pastilla,
+    .btn-rechazado {
+        padding: 0.5rem 1rem;
+        font-size: 0.7rem;
+        border-radius: 0.75rem;
+    }
+    .precio-bs {
+        font-size: 0.6rem !important;
+        padding: 0.1rem 0.4rem;
+    }
+}
     </style>
 
     <!-- GOOGLE CHARTS -->
@@ -1800,7 +1995,7 @@
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-10">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
-                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Mis Cursos <span>Destacados</span></h2>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo más <span>Destacado</span></h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left" id="cursos-destacados-container"></div>
             </div>
@@ -1825,39 +2020,9 @@
             </svg>
         </div>
 
-        <!-- MANUALES -->
-        <section id="manuales" class="page-section relative py-24 px-6 overflow-hidden">
-            <div class="max-w-7xl mx-auto relative z-10">
-                <div class="text-center mb-10">
-                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Conocimiento Aplicado</span>
-                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Manuales y <span>Recursos</span></h2>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left" id="manuales-container"></div>
-            </div>
-        </section>
 
-        <div class="circuit-divider" aria-hidden="true">
-            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-                <defs>
-                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                    </linearGradient>
-                    <radialGradient id="gradient-dot" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" style="stop-color:#22d3ee;stop-opacity:1" />
-                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.6" />
-                    </radialGradient>
-                </defs>
-                <path class="trace" d="M0,40 L120,40 L180,20 L360,20 L420,40 L600,40 L660,60 L840,60 L900,40 L1080,40 L1140,20 L1260,20 L1320,40 L1440,40" fill="none"></path>
-                <circle class="dot" cx="180" cy="20" r="4"></circle>
-                <circle class="dot" cx="420" cy="40" r="4"></circle>
-                <circle class="dot" cx="660" cy="60" r="4"></circle>
-                <circle class="dot" cx="900" cy="40" r="4"></circle>
-                <circle class="dot" cx="1140" cy="20" r="4"></circle>
-                <circle class="dot" cx="1320" cy="40" r="4"></circle>
-            </svg>
-        </div>
+
+ 
 
         <!-- MODALIDADES -->
         <section id="modalidades" class="page-section relative py-24 px-6">
@@ -2194,6 +2359,9 @@
     }
     // ============ FIN FUNCIONES DEL TOAST ============
 </script>
+
+
+
 
 <script src="js/auth.js"></script>
 <script src="js/app.js"></script>
