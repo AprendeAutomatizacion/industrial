@@ -1,13 +1,15 @@
 // ==========================================
 // SCRIPT DE APRENDE AUTOMATIZACIÓN - PÁGINA DE INICIO
-// (ACTUALIZADO - MISIÓN Y COMUNIDAD EDITABLES DESDE EXCEL - USANDO BADGE)
+// (ACTUALIZADO - CURSOS DESTACADOS IDÉNTICOS AL CATÁLOGO)
 // ==========================================
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbz2P8CSqI9uWk0aip010Hauh21KCkIsxi4_BKozAEFjjL9wGqo39C6OU-pKQSuZXdZF/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
 
 const countryToISO = { "venezuela": "ve", "colombia": "co", "méxico": "mx", "mexico": "mx", "españa": "es", "spain": "es", "argentina": "ar", "perú": "pe", "peru": "pe", "chile": "cl", "ecuador": "ec", "bolivia": "bo", "paraguay": "py", "uruguay": "uy", "costa rica": "cr", "panamá": "pa", "panama": "pa", "república dominicana": "do", "guatemala": "gt", "honduras": "hn", "el salvador": "sv", "nicaragua": "ni", "cuba": "cu", "puerto rico": "pr", "estados unidos": "us", "francia": "fr", "brasil": "br", "italia": "it", "alemania": "de", "canadá": "ca", "reino unido": "gb", "portugal": "pt", "haití": "ht", "japon": "jp", "china": "cn", "rusia": "ru", "bélgica": "be", "suiza": "ch", "jamaica": "jm" };
 
 const countryAliases = { "ve": "Venezuela", "venezuela": "Venezuela", "co": "Colombia", "colombia": "Colombia", "mx": "México", "mexico": "México", "es": "España", "spain": "España", "ar": "Argentina", "argentina": "Argentina", "pe": "Perú", "peru": "Perú", "cl": "Chile", "chile": "Chile", "ec": "Ecuador", "ecuador": "Ecuador", "bo": "Bolivia", "bolivia": "Bolivia", "py": "Paraguay", "paraguay": "Paraguay", "uy": "Uruguay", "uruguay": "Uruguay", "cr": "Costa Rica", "costa rica": "Costa Rica", "pa": "Panamá", "panama": "Panamá", "do": "República Dominicana", "gt": "Guatemala", "hn": "Honduras", "sv": "El Salvador", "ni": "Nicaragua", "cu": "Cuba", "pr": "Puerto Rico", "us": "Estados Unidos", "fr": "Francia", "br": "Brasil", "it": "Italia", "de": "Alemania", "ca": "Canadá", "gb": "Reino Unido", "pt": "Portugal", "ht": "Haití", "jp": "Japón", "cn": "China", "ru": "Rusia", "be": "Bélgica", "ch": "Suiza", "jm": "Jamaica" };
+
+const VENEZUELA_FLAG_URL = 'https://kimi-web-img.kimi.ai/img/uxwing.com/f24e2335a62518177fba5ade4992594201597458.png';
 
 let dbUsers = {};
 let globalStats = {};
@@ -17,6 +19,15 @@ let homePageData = {
     modalidades: [], curso_especial: [], metodologia: [],
     testimonios: [], faq: [], cta: [], mision: [], comunidad: []
 };
+let catalogoCursos = [];
+let dbUserCourses = {};
+let dbUserDetails = {};
+let dbUserProgress = {};
+let dbUserPaymentStatus = {};
+let dbUserAccessStatus = {};
+let studentCountsPerCourse = {};
+let courseRatings = {};
+let tasaBCVGlobal = null;
 
 let googleChartsLoaded = false;
 let googleChartsLoading = false;
@@ -66,7 +77,7 @@ async function syncUserData() {
 }
 
 // ==========================================
-// REGISTRAR PROFESIÓN (ACTUALIZADO PARA PERFILES DINÁMICOS)
+// REGISTRAR PROFESIÓN
 // ==========================================
 function regCom(profile) {
     const previousProfile = localStorage.getItem('user_profile_selected');
@@ -114,8 +125,11 @@ function regCom(profile) {
 // TOGGLE LIKE
 // ==========================================
 function toggleLike(btn) {
+    if (!currentUser) { 
+        showNotif('Acceso requerido', 'Debes iniciar sesión para dar like.', 'info');
+        return; 
+    }
     const id = btn.dataset.id;
-    if (!currentUser) currentUser = JSON.parse(localStorage.getItem('user') || 'null') || { likedCourses: [], name: '', email: '' };
     if (!currentUser.likedCourses) currentUser.likedCourses = [];
     const span = btn.querySelector('.like-count');
     let currentLikes = parseInt(span.innerText) || 0;
@@ -123,12 +137,14 @@ function toggleLike(btn) {
     if (currentUser.likedCourses.includes(id)) {
         currentUser.likedCourses = currentUser.likedCourses.filter(c => c !== id);
         ping('decrement_stat', `${id}_likes`);
-        btn.classList.remove('liked');
+        btn.classList.remove('liked', 'text-red-500');
+        btn.classList.add('text-slate-400');
         span.innerText = Math.max(0, currentLikes - 1);
     } else {
         currentUser.likedCourses.push(id);
         ping('update_stat', `${id}_likes`);
-        btn.classList.add('liked');
+        btn.classList.add('liked', 'text-red-500');
+        btn.classList.remove('text-slate-400');
         span.innerText = currentLikes + 1;
     }
     localStorage.setItem('user', JSON.stringify(currentUser));
@@ -140,6 +156,7 @@ function toggleLike(btn) {
 // ==========================================
 function registerViewAndGo(url, courseId, target = '_blank') {
     ping('update_stat', `curso-${courseId}_vistas`);
+    if (globalStats) globalStats[`curso-${courseId}_vistas`] = (parseInt(globalStats[`curso-${courseId}_vistas`]) || 0) + 1;
     if (url && url !== '#') window.open(url, target);
 }
 
@@ -194,7 +211,7 @@ async function initVisitorInfo() {
 }
 
 // ==========================================
-// ACTUALIZAR MÉTRICAS (ACTUALIZADO PARA PERFILES DINÁMICOS)
+// ACTUALIZAR MÉTRICAS
 // ==========================================
 function updateIndexMetrics(stats) {
     const setStat = (id, value) => {
@@ -206,7 +223,6 @@ function updateIndexMetrics(stats) {
     setStat('metric-estudiantes', Object.keys(dbUsers).length);
     setStat('metric-paises', Object.keys(stats).filter(k => k.startsWith('visita_pais_')).length);
     
-    // Actualizar todos los contadores de perfil dinámicamente
     Object.keys(stats).forEach(key => {
         if (key.startsWith('perfil_')) {
             const perfilKey = key.replace('perfil_', '');
@@ -217,7 +233,6 @@ function updateIndexMetrics(stats) {
         }
     });
     
-    // Compatibilidad con IDs antiguos
     setStat('cntIng', stats.perfil_ingeniero || 0);
     setStat('cntTsu', stats.perfil_tsu || 0);
     setStat('cntEst', stats.perfil_estudiante || 0);
@@ -353,6 +368,11 @@ async function loadData(showIndicator = true) {
         if(data.status === 'success') {
             dbUsers = data.users || {}; 
             globalStats = data.stats || {};
+            dbUserCourses = data.userCourses || {};
+            dbUserDetails = data.userDetails || {};
+            dbUserProgress = data.userProgress || {};
+            dbUserPaymentStatus = data.userPaymentStatus || {};
+            dbUserAccessStatus = data.userAccessStatus || {};
 
             if (currentUser && currentUser.email) {
                 const serverUser = dbUsers[currentUser.email.toLowerCase()];
@@ -361,6 +381,9 @@ async function loadData(showIndicator = true) {
                     localStorage.setItem('user', JSON.stringify(currentUser));
                 }
             }
+            
+            calculateCourseRatings();
+            updateStudentCounts();
             return true;
         }
         return false;
@@ -398,9 +421,396 @@ async function loadHomePageData() {
     }
 }
 
+// ==========================================
+// CARGAR CATÁLOGO DE CURSOS
+// ==========================================
+async function loadCatalogoCursos() {
+    try {
+        const response = await fetch(`${API_URL}?action=get_courses&nocache=${Date.now()}`);
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            let coursesArray = [];
+            
+            if (Array.isArray(result.data)) {
+                coursesArray = result.data;
+            } else if (Array.isArray(result.cursos)) {
+                coursesArray = result.cursos;
+            } else if (Array.isArray(result)) {
+                coursesArray = result;
+            }
+            
+            if (coursesArray.length > 0) {
+                catalogoCursos = coursesArray.map(course => {
+                    return {
+                        ID: course.ID || course.id || course.Id || '',
+                        Nombre: course.Nombre || course.nombre || course.titulo || 'Sin nombre',
+                        Tipo: course.Tipo || course.tipo || 'Curso',
+                        Categoria: course.Categoria || course.categoria || '',
+                        Nivel: course.Nivel || course.nivel || 'Básico',
+                        Descripcion: course.Descripcion || course.descripcion || course.descripción || '',
+                        ImagenURL: course.ImagenURL || course.imagenURL || course.imagen_url || course.imagen || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso',
+                        Precio: course.Precio || course.precio || '0',
+                        Moneda: course.Moneda || course.moneda || '$',
+                        EnlaceInfo: course.EnlaceInfo || course.enlaceInfo || course.enlace_info || course.enlace || '#',
+                        EnlaceAula: course.EnlaceAula || course.enlaceAula || course.enlace_aula || '',
+                        EnlaceCompra: course.EnlaceCompra || course.enlaceCompra || course.enlace_compra || '',
+                        EnlaceMaterial: course.EnlaceMaterial || course.enlaceMaterial || course.enlace_material || '',
+                        TotalLecciones: course.TotalLecciones || course.totalLecciones || course.total_lecciones || 0,
+                        NombresModulos: course.NombresModulos || course.nombresModulos || course.nombres_modulos || '',
+                        Badges: course.Badges || course.badges || '',
+                        Activo: course.Activo || course.activo || 'SI',
+                        ProfesorNombre: course.ProfesorNombre || course.profesorNombre || (course.profesor && course.profesor.nombre) || '',
+                        ProfesorFoto: course.ProfesorFoto || course.profesorFoto || (course.profesor && course.profesor.foto) || '',
+                        ProfesorResena: course.ProfesorResena || course.profesorResena || (course.profesor && course.profesor.resena) || '',
+                        ProfesorEspecialidad: course.ProfesorEspecialidad || course.profesorEspecialidad || (course.profesor && course.profesor.especialidad) || '',
+                        Destacado: course.Destacado || course.destacado || false
+                    };
+                });
+                
+                console.log('📚 Catálogo cargado:', catalogoCursos.length, 'cursos');
+                const destacados = catalogoCursos.filter(c => {
+                    const dest = String(c.Destacado || '').toUpperCase().trim();
+                    return dest === 'TRUE' || dest === 'SI' || dest === 'YES' || dest === '1' || dest === 'SÍ';
+                });
+                console.log('⭐ Destacados:', destacados.length);
+                return catalogoCursos;
+            }
+        }
+        return [];
+    } catch (error) {
+        console.error('Error cargando catálogo:', error);
+        return [];
+    }
+}
 
 // ==========================================
-// EXPANSIÓN DE TARJETAS DE METODOLOGÍA (CLONE AL BODY)
+// OBTENER CURSOS DESTACADOS
+// ==========================================
+function getCursosDestacadosFromCatalogo() {
+    const destacados = catalogoCursos.filter(curso => {
+        const dest = String(curso.Destacado || '').toUpperCase().trim();
+        return dest === 'TRUE' || dest === 'SI' || dest === 'YES' || dest === '1' || dest === 'SÍ';
+    });
+    
+    const cursosFinales = destacados.length > 0 
+        ? destacados.slice(0, 3) 
+        : catalogoCursos.slice(0, 3);
+    
+    console.log('📚 Cursos destacados seleccionados:', cursosFinales.length);
+    return cursosFinales;
+}
+
+// ==========================================
+// CALCULAR RATINGS DE CURSOS
+// ==========================================
+function calculateCourseRatings() {
+    courseRatings = {};
+    catalogoCursos.forEach(c => courseRatings[c.ID || c.id] = { sum: 0, count: 0, avg: "5.0" });
+    for (const email in dbUsers) {
+        let u = dbUsers[email];
+        if (typeof u === 'string') { try { u = JSON.parse(u); } catch(e) { u = {}; } }
+        if (u && u.ratings) {
+            for (const cid in u.ratings) {
+                if (courseRatings[cid]) { 
+                    courseRatings[cid].sum += Number(u.ratings[cid]) || 0; 
+                    courseRatings[cid].count++; 
+                }
+            }
+        }
+    }
+    for (const cid in courseRatings) { 
+        if (courseRatings[cid].count > 0) {
+            courseRatings[cid].avg = (courseRatings[cid].sum / courseRatings[cid].count).toFixed(1); 
+        }
+    }
+}
+
+// ==========================================
+// ACTUALIZAR CONTEO DE ESTUDIANTES
+// ==========================================
+function updateStudentCounts() {
+    catalogoCursos.forEach(c => studentCountsPerCourse[c.ID || c.id] = 0);
+    for (const email in dbUserCourses) {
+        const courses = dbUserCourses[email] || [];
+        if (Array.isArray(courses)) {
+            courses.forEach(courseName => {
+                const found = catalogoCursos.find(c => 
+                    (c.Nombre || c.nombre || '').toLowerCase().trim() === String(courseName).toLowerCase().trim()
+                );
+                if (found) {
+                    studentCountsPerCourse[found.ID || found.id] = (studentCountsPerCourse[found.ID || found.id] || 0) + 1;
+                }
+            });
+        }
+    }
+}
+
+// ==========================================
+// OBTENER TASA BCV
+// ==========================================
+async function obtenerTasaBCVGlobal() {
+    try {
+        const response = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
+        const data = await response.json();
+        if (data && data.promedio) {
+            tasaBCVGlobal = data.promedio;
+            console.log('✅ Tasa BCV:', tasaBCVGlobal);
+        }
+    } catch (error) {
+        console.error('Error al obtener tasa BCV:', error);
+        tasaBCVGlobal = 49.50;
+    }
+}
+
+// ==========================================
+// RENDERIZAR CURSOS DESTACADOS (IDÉNTICO AL CATÁLOGO)
+// ==========================================
+function rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b() {
+    const container = document.getElementById('cursos-destacados-container');
+    if (!container) {
+        console.error('❌ Contenedor de cursos destacados no encontrado');
+        return;
+    }
+    
+    const cursosDestacados = getCursosDestacadosFromCatalogo();
+    
+    if (cursosDestacados.length === 0) {
+        container.innerHTML = '<p class="text-center text-slate-500 col-span-full">No hay cursos destacados disponibles.</p>';
+        return;
+    }
+    
+    container.innerHTML = cursosDestacados.map(course => generateCourseCardHTML(course)).join('');
+    
+    setTimeout(() => {
+        document.querySelectorAll('#cursos-destacados-container .reveal').forEach(el => el.classList.add('active'));
+    }, 100);
+    
+    console.log('✅ Cursos destacados renderizados idénticos al catálogo');
+}
+
+// ==========================================
+// GENERAR TARJETA DE CURSO (MISMO FORMATO QUE CATÁLOGO)
+// ==========================================
+function generateCourseCardHTML(course) {
+    const courseId = String(course.ID || course.id || '');
+    const courseName = course.Nombre || course.nombre || 'Sin nombre';
+    const courseType = course.Tipo || course.tipo || 'Curso';
+    const courseCategory = course.Categoria || course.categoria || '';
+    const courseLevel = course.Nivel || course.nivel || 'Básico';
+    const coursePrice = parseFloat(course.Precio || course.precio || 0);
+    const courseCurrency = course.Moneda || course.moneda || '$';
+    const courseImage = course.ImagenURL || course.imagen_url || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso';
+    const courseLink = course.EnlaceInfo || course.enlace_info || '#';
+    const courseBadges = course.Badges || course.badges || '';
+    const courseDescription = course.Descripcion || course.descripcion || '';
+    const profesorNombre = course.ProfesorNombre || course.profesorNombre || '';
+    const profesorFoto = course.ProfesorFoto || course.profesorFoto || '';
+    const profesorEspecialidad = course.ProfesorEspecialidad || course.profesorEspecialidad || '';
+    
+    const email = currentUser ? currentUser.email.toLowerCase() : '';
+    const key = email + '|' + courseName;
+    const estadoPago = dbUserPaymentStatus[key] || null;
+    const acceso = dbUserAccessStatus[key] || 'NO';
+    const isAccessGranted = (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true);
+    
+    let estadoClase = '';
+    let badgeEstadoHTML = '';
+    let botonHTML = '';
+    let mensajeEstado = '';
+    let showOverlay = false;
+    let overlayText = '';
+    
+    if (isAccessGranted) {
+        estadoClase = 'estado-inscrito';
+        badgeEstadoHTML = `<span class="badge-estado badge-inscrito"><i class="fas fa-check-circle"></i> ✅ Inscrito</span>`;
+        botonHTML = `<span class="btn-inscrito-pastilla"><i class="fas fa-check-circle"></i> Inscrito</span>`;
+    } else if (estadoPago === 'Pendiente') {
+        estadoClase = 'estado-pendiente';
+        badgeEstadoHTML = `<span class="badge-estado badge-pendiente"><i class="fas fa-clock"></i> ⏳ Pendiente</span>`;
+        botonHTML = `<button class="btn-pendiente" disabled><i class="fas fa-clock"></i> Pendiente</button>`;
+        mensajeEstado = `<div class="mt-1 text-[10px] text-amber-400 text-center">⏳ Esperando verificación de pago</div>`;
+        showOverlay = true;
+        overlayText = 'Pago pendiente de verificación';
+    } else if (estadoPago === 'Revisión' || estadoPago === 'REVISIÓN') {
+        estadoClase = 'estado-pendiente';
+        badgeEstadoHTML = `<span class="badge-estado badge-revision"><i class="fas fa-spinner fa-spin"></i> 🔄 Revisión</span>`;
+        botonHTML = `<button class="btn-pendiente" disabled><i class="fas fa-spinner fa-spin"></i> Revisando</button>`;
+        mensajeEstado = `<div class="mt-1 text-[10px] text-blue-400 text-center">🔄 Tu pago está en revisión</div>`;
+        showOverlay = true;
+        overlayText = 'Pago en revisión';
+    } else if (estadoPago === 'Rechazado' || estadoPago === 'RECHAZADO') {
+        estadoClase = 'estado-rechazado';
+        badgeEstadoHTML = `<span class="badge-estado badge-rechazado"><i class="fas fa-times-circle"></i> ❌ Rechazado</span>`;
+        botonHTML = `<button onclick="event.stopPropagation(); abrirModalCompraFromHome('${courseId}')" class="btn-rechazado"><i class="fas fa-redo"></i> Reintentar</button>`;
+        mensajeEstado = `<div class="mt-1 text-[10px] text-red-400 text-center">❌ Pago rechazado. Reintenta la compra.</div>`;
+        showOverlay = true;
+        overlayText = 'Pago rechazado';
+    } else {
+        estadoClase = '';
+        badgeEstadoHTML = `<span class="badge-estado" style="background:rgba(148,163,184,0.2);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);">Disponible</span>`;
+        if (coursePrice === 0) {
+            botonHTML = `<button onclick="event.stopPropagation(); enrollFreeCourseFromHome('${courseId}', '${courseName.replace(/'/g, "\\'")}')" class="btn-comprar"><i class="fas fa-gift"></i> Inscribirse Gratis</button>`;
+        } else {
+            botonHTML = `<button onclick="event.stopPropagation(); abrirModalCompraFromHome('${courseId}')" class="btn-comprar"><i class="fas fa-shopping-cart"></i> Comprar</button>`;
+        }
+    }
+
+    let badgesHTML = '';
+    if (courseBadges) {
+        badgesHTML = courseBadges.split('|').map(badge => {
+            const trimmedBadge = badge.trim();
+            if (trimmedBadge) return `<span class="px-2.5 py-1 text-[9px] font-black uppercase tracking-widest rounded-md shadow-sm bg-amber-500/20 text-amber-400 border border-amber-500/30 backdrop-blur-md">${trimmedBadge}</span>`;
+            return '';
+        }).join('');
+    }
+
+    const tasaActual = tasaBCVGlobal || 49.50;
+    const precioBs = coursePrice * tasaActual;
+    const precioBsFormateado = `Bs. ${precioBs.toFixed(2)}`;
+
+    const priceTag = coursePrice === 0 ? 
+        '<span class="text-[#2db8ce] font-extrabold italic text-lg">GRATIS</span>' : 
+        `<div class="flex flex-col items-end">
+            <span class="text-lg font-black text-slate-800">${courseCurrency}${coursePrice.toFixed(2)}</span>
+            <span class="precio-bs mt-0.5"><img src="${VENEZUELA_FLAG_URL}" alt="🇻🇪" style="width:16px;height:11px;object-fit:cover;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:4px;box-shadow:0 1px 2px rgba(0,0,0,0.2);">${precioBsFormateado}</span>
+        </div>`;
+
+    const likes = globalStats[`curso-${courseId}_likes`] || 0;
+    const vistas = globalStats[`curso-${courseId}_vistas`] || 0;
+    const isLikedClass = (currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(`curso-${courseId}`)) ? 'liked text-red-500' : 'text-slate-400';
+    const viewsClass = vistas > 0 ? 'text-green-500' : 'text-slate-400';
+    const avgRating = courseRatings[courseId] ? courseRatings[courseId].avg : "5.0";
+    const displayCount = studentCountsPerCourse[courseId] !== undefined ? studentCountsPerCourse[courseId] : '...';
+
+    const normalizedLevel = (courseLevel || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    let levelBorderClass = '';
+    let levelBadgeStyle = '';
+    if (normalizedLevel === 'basico' || normalizedLevel === 'básico') {
+        levelBorderClass = 'course-card-level-basico';
+        levelBadgeStyle = 'background-color: rgba(6,182,212,0.1); color: rgb(8,145,178); border: 1px solid rgba(6,182,212,0.3);';
+    } else if (normalizedLevel === 'intermedio') {
+        levelBorderClass = 'course-card-level-intermedio';
+        levelBadgeStyle = 'background-color: rgba(168,85,247,0.1); color: rgb(126,34,206); border: 1px solid rgba(168,85,247,0.3);';
+    } else if (normalizedLevel === 'avanzado') {
+        levelBorderClass = 'course-card-level-avanzado';
+        levelBadgeStyle = 'background-color: rgba(245,158,11,0.1); color: rgb(180,83,9); border: 1px solid rgba(245,158,11,0.3);';
+    }
+
+    let infoButton = '';
+    if (courseLink && courseLink !== '#' && courseLink !== '') {
+        infoButton = `<button onclick="event.stopPropagation(); registerViewAndGo('${courseLink}', '${courseId}', '_self')" class="w-full btn-metal-blue py-3 text-[10px] uppercase flex items-center justify-center gap-2"><i class="fas fa-info-circle"></i> Info del ${courseType.toLowerCase() === 'manual' ? 'Manual' : 'Curso'}</button>`;
+    } else {
+        infoButton = `<button onclick="event.stopPropagation(); showNotif('Próximamente', 'Este curso estará disponible pronto.', 'info')" class="w-full bg-slate-300 text-slate-500 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest cursor-not-allowed text-center shadow-sm">PRÓXIMAMENTE</button>`;
+    }
+
+    let overlayHTML = '';
+    if (showOverlay) {
+        overlayHTML = `<div class="absolute inset-0 bg-black/40 backdrop-blur-[2px] flex items-center justify-center z-10 pointer-events-none">
+            <div class="text-center p-4">
+                <i class="fas fa-lock text-4xl text-amber-400/80 mb-2"></i>
+                <p class="text-white text-xs font-bold uppercase tracking-wider">Acceso Restringido</p>
+                <p class="text-white/60 text-[10px] mt-1">${overlayText}</p>
+            </div>
+        </div>`;
+    }
+
+    return `
+    <div class="course-card ${levelBorderClass} ${estadoClase} reveal reveal-up">
+        <div class="aspect-video w-full overflow-hidden bg-[#0f172a] relative">
+            <img src="${courseImage}" alt="${courseName}" class="w-full h-full object-cover ${isAccessGranted ? 'opacity-100' : 'opacity-30'}" loading="lazy" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Curso'">
+            <div class="absolute top-3 left-3 flex flex-col gap-1.5">
+                <span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md ${courseType.toLowerCase() === 'manual' ? 'bg-blue-600/90 text-white border border-blue-400/60 shadow-lg shadow-blue-500/20' : 'bg-slate-900/70 text-white'}">${courseType}</span>
+                ${courseCategory ? `<span class="px-2.5 py-1 text-[9px] font-black uppercase rounded-md bg-slate-900/70 text-white">${courseCategory}</span>` : ''}
+                ${badgesHTML}
+            </div>
+            <div class="absolute top-3 right-3 bg-slate-900/70 text-[#2db8ce] text-[10px] font-black px-2 py-1 rounded-md flex items-center gap-1">
+                <i class="fas fa-star text-yellow-400"></i> ${avgRating}
+            </div>
+            <div class="absolute top-3 right-3 mt-6">
+                ${badgeEstadoHTML}
+            </div>
+            <div class="absolute bottom-3 left-3 z-10 flex items-center gap-2">
+                <div class="flex items-center justify-center ${normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'bg-cyan-500/10 border-cyan-500/30' : normalizedLevel === 'intermedio' ? 'bg-purple-500/10 border-purple-500/30' : normalizedLevel === 'avanzado' ? 'bg-amber-500/10 border-amber-500/30' : 'bg-slate-500/10 border-slate-500/30'} backdrop-blur-sm rounded-full w-10 h-10 shadow-lg border-2" title="${courseLevel}">
+                    <i class="fas ${normalizedLevel === 'basico' || normalizedLevel === 'básico' ? 'fa-seedling text-cyan-400' : normalizedLevel === 'intermedio' ? 'fa-cogs text-purple-400' : normalizedLevel === 'avanzado' ? 'fa-rocket text-amber-400' : 'fa-layer-group text-slate-400'} text-lg"></i>
+                </div>
+                ${courseType.toLowerCase() === 'manual' ? `
+                <div class="flex items-center justify-center bg-blue-500/10 border-2 border-blue-500/30 backdrop-blur-sm rounded-full w-10 h-10 shadow-lg" title="Manual">
+                    <i class="fas fa-book-open text-lg text-blue-400"></i>
+                </div>` : ''}
+            </div>
+            ${overlayHTML}
+        </div>
+        <div class="p-5 md:p-6 flex-grow flex flex-col">
+            ${profesorNombre || profesorFoto ? `
+            <div class="professor-block flex items-center gap-3 mb-4 rounded-xl p-2 -mt-1" style="cursor: default;">
+                <div class="w-12 h-12 rounded-full overflow-hidden bg-slate-200 border-2 border-cyan-500/50 shadow-md flex-shrink-0">
+                    ${profesorFoto ? `<img src="${profesorFoto}" class="w-full h-full object-cover" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(profesorNombre || 'P')}&background=06b6d4&color=fff'">` : `<div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-cyan-500 to-blue-600 text-white font-bold">${(profesorNombre || 'P').charAt(0).toUpperCase()}</div>`}
+                </div>
+                <div class="flex-1 min-w-0">
+                    <p class="professor-label text-[9px] font-bold uppercase" style="color: #64748b;">Profesor</p>
+                    <p class="professor-name text-sm font-bold" style="color: #1e293b;">${profesorNombre || 'Por asignar'}</p>
+                    ${profesorEspecialidad ? `<p class="professor-specialty text-[10px]" style="color: #475569;">${profesorEspecialidad}</p>` : ''}
+                </div>
+                ${profesorEspecialidad ? `<i class="fas fa-badge-check text-cyan-500 text-xs" title="Especialista certificado"></i>` : ''}
+            </div>` : ''}
+            
+            <h2 class="text-lg font-bold text-slate-900 mb-3">${courseName}</h2>
+            
+            <div class="flex items-center justify-between mb-4 text-xs font-bold">
+                <div class="flex items-center gap-2">
+                    <span class="px-2 py-1 rounded-md flex items-center gap-1" style="${levelBadgeStyle}"><i class="fas fa-book-open w-3 h-3"></i> ${courseLevel}</span>
+                    <span class="bg-green-50 text-green-600 border border-green-100 px-2 py-1 rounded-md"><i class="fas fa-users w-3 h-3"></i> ${displayCount}</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="like-btn flex items-center gap-1 ${isLikedClass}" data-id="curso-${courseId}" onclick="event.stopPropagation(); toggleLike(this)">
+                        <i class="fas fa-heart"></i><span class="like-count">${likes}</span>
+                    </button>
+                    <span class="flex items-center gap-1 ${viewsClass}"><i class="fas fa-eye"></i><span class="view-count" data-id="curso-${courseId}">${vistas}</span></span>
+                </div>
+            </div>
+            
+            ${courseDescription ? `<p class="text-slate-500 text-sm mb-4">${courseDescription}</p>` : ''}
+            
+            <div class="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center">
+                ${priceTag}
+                ${botonHTML}
+            </div>
+            ${mensajeEstado}
+        </div>
+        <div class="px-5 md:px-6 py-4 bg-slate-50 border-t border-slate-100" onclick="event.stopPropagation();">
+            ${infoButton}
+        </div>
+    </div>`;
+}
+
+// ==========================================
+// FUNCIONES DE COMPRA DESDE LA HOME
+// ==========================================
+function abrirModalCompraFromHome(courseId) {
+    if (!currentUser) {
+        showNotif('Acceso requerido', 'Debes iniciar sesión para comprar un curso.', 'info');
+        return;
+    }
+    showNotif('Redirigiendo', 'Serás redirigido al catálogo para completar tu compra.', 'info');
+    setTimeout(() => {
+        window.location.href = 'catalogo.html?curso=' + courseId;
+    }, 1000);
+}
+
+function enrollFreeCourseFromHome(courseId, courseName) {
+    if (!currentUser) {
+        showNotif('Acceso requerido', 'Debes iniciar sesión para inscribirte.', 'info');
+        return;
+    }
+    showNotif('Redirigiendo', 'Serás redirigido al catálogo para completar tu inscripción.', 'info');
+    setTimeout(() => {
+        window.location.href = 'catalogo.html?curso=' + courseId;
+    }, 1000);
+}
+
+// ==========================================
+// EXPANSIÓN DE TARJETAS DE METODOLOGÍA
 // ==========================================
 let methodologyClone = null;
 let methodologyOriginal = null;
@@ -409,7 +819,6 @@ function initMethodologyCards() {
     const cards = document.querySelectorAll('.methodology-card');
     if (!cards.length) return;
 
-    // Crear overlay si no existe
     let overlay = document.querySelector('.card-overlay');
     if (!overlay) {
         overlay = document.createElement('div');
@@ -419,7 +828,7 @@ function initMethodologyCards() {
 
     cards.forEach(card => {
         card.addEventListener('click', function(e) {
-            if (methodologyClone) return; // Ya hay una expandida
+            if (methodologyClone) return;
             expandMethodologyCard(card, overlay);
         });
     });
@@ -432,12 +841,9 @@ function initMethodologyCards() {
 
 function expandMethodologyCard(card, overlay) {
     const rect = card.getBoundingClientRect();
-
-    // Clonar la tarjeta y ponerla en el body (fuera de stacking contexts)
     methodologyOriginal = card;
     methodologyClone = card.cloneNode(true);
 
-    // Estilos iniciales del clon (posición exacta de la original)
     methodologyClone.style.position = 'fixed';
     methodologyClone.style.top = rect.top + 'px';
     methodologyClone.style.left = rect.left + 'px';
@@ -448,19 +854,11 @@ function expandMethodologyCard(card, overlay) {
     methodologyClone.style.transition = 'all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1)';
     methodologyClone.classList.remove('reveal', 'reveal-up', 'delay-100', 'delay-200', 'delay-300');
 
-    // Ocultar original
     card.style.visibility = 'hidden';
-
-    // Agregar clon al body
     document.body.appendChild(methodologyClone);
-
-    // Activar overlay
     overlay.classList.add('visible');
-
-    // Forzar reflow
     void methodologyClone.offsetWidth;
 
-    // Animar al centro
     requestAnimationFrame(() => {
         methodologyClone.classList.add('is-expanded');
     });
@@ -468,14 +866,10 @@ function expandMethodologyCard(card, overlay) {
 
 function closeExpandedMethodologyCard() {
     if (!methodologyClone) return;
-
     const overlay = document.querySelector('.card-overlay');
-
-    // Quitar clase expandida para animar de vuelta
     methodologyClone.classList.remove('is-expanded');
     if (overlay) overlay.classList.remove('visible');
 
-    // Esperar la transición y limpiar
     setTimeout(() => {
         if (methodologyClone && methodologyClone.parentNode) {
             methodologyClone.parentNode.removeChild(methodologyClone);
@@ -487,35 +881,31 @@ function closeExpandedMethodologyCard() {
         methodologyOriginal = null;
     }, 500);
 }
+
 // ==========================================
-// MOSTRAR TODAS LAS SECCIONES DE GOLPE
+// MOSTRAR TODAS LAS SECCIONES
 // ==========================================
 function revealAllSections() {
     document.querySelectorAll('.section-loading').forEach(el => {
         el.classList.add('loaded');
     });
-    // Reactivar animaciones reveal
     setTimeout(() => {
         document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
     }, 100);
 }
 
-// ==========================================
-// MOSTRAR MÉTRICAS
-// ==========================================
 function revealMetrics() {
     const metrics = document.getElementById('metrics');
     if (metrics) {
         metrics.classList.remove('section-loading');
         metrics.classList.add('metrics-loading');
-        // Forzar reflow
         void metrics.offsetWidth;
         metrics.classList.add('loaded');
     }
 }
 
 // ==========================================
-// FUNCIONES AUXILIARES PARA BADGES MÚLTIPLES
+// FUNCIONES AUXILIARES PARA BADGES
 // ==========================================
 function getBadgeTags(badge) {
     if (!badge || badge.trim() === '') return [];
@@ -570,7 +960,7 @@ function renderBadgeTags(tags) {
 }
 
 // ==========================================
-// RENDERIZAR TODAS LAS SECCIONES
+// RENDERIZAR HOME (SIN CURSOS DESTACADOS)
 // ==========================================
 function renderHomePage() {
     // Hero
@@ -732,52 +1122,6 @@ function renderHomePage() {
                     if (btn) btn.classList.add('prof-selected');
                 }
             }
-        }
-    }
-    
-    // Cursos Destacados
-    if (homePageData.cursos_destacados.length > 0) {
-        const container = document.querySelector('#cursos-destacados .grid');
-        if (container) {
-            container.innerHTML = homePageData.cursos_destacados.map((curso, index) => {
-                const courseNum = curso.id ? (curso.id.match(/\d+/) || [index + 1])[0] : (index + 1);
-                const dataId = `curso-${courseNum}`;
-                const isLiked = currentUser && currentUser.likedCourses && currentUser.likedCourses.includes(dataId);
-                const tags = getBadgeTags(curso.badge);
-                const levelInfo = getLevelInfoFromTags(tags);
-                const badgesHTML = renderBadgeTags(tags);
-                return `
-                <div class="course-card ${levelInfo.levelClass} reveal reveal-up">
-                    <div class="course-card-image-container">
-                        <img src="${curso.imagen_url || 'img/AA (1).gif'}" class="course-card-image" onerror="this.src='img/AA (1).gif'">
-                        ${badgesHTML}
-                        <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelInfo.iconBg} border-2 rounded-full w-10 h-10">
-                            <i class="fas ${levelInfo.iconClass} text-lg"></i>
-                        </div>
-                    </div>
-                    <div class="course-card-content">
-                        <h3 class="course-card-title">${curso.titulo}</h3>
-                        <p class="course-card-description">${curso.descripcion || ''}</p>
-                        <div class="course-card-footer">
-                            <div class="course-card-meta">
-                                <div class="course-card-price">${curso.precio || ''}</div>
-                                <div class="course-card-stats">
-                                    <button class="like-btn ${isLiked ? 'liked' : ''}" data-id="${dataId}" onclick="toggleLike(this)">
-                                        <i class="fas fa-heart"></i><span class="like-count">${globalStats[`${dataId}_likes`] || 0}</span>
-                                    </button>
-                                    <div class="view-container ${(globalStats[`${dataId}_vistas`] || 0) > 0 ? 'has-views' : ''}">
-                                        <i class="fas fa-eye"></i><span>${globalStats[`${dataId}_vistas`] || 0}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="course-card-buttons">
-                                ${curso.enlace_info ? `<button onclick="registerViewAndGo('${curso.enlace_info}', ${courseNum}, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl">Info</button>` : ''}
-                                ${curso.enlace_compra ? `<button onclick="window.open('${curso.enlace_compra}', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl">Comprar</button>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            }).join('');
         }
     }
     
@@ -1045,17 +1389,48 @@ function renderHomePage() {
 // ==========================================
 function showLoadingToast() {
     const toast = document.getElementById('loadingToast');
-    if (toast) { toast.classList.remove('hidden', 'hiding', 'success-toast'); toast.style.opacity = '1'; }
+    if (toast) { 
+        toast.classList.remove('hidden', 'hiding', 'success-toast'); 
+        toast.style.opacity = '1'; 
+        const title = document.getElementById('loadingToastTitle');
+        if (title) title.innerText = 'Estamos cargando la información';
+    }
 }
 function showSuccessToast() {
     const toast = document.getElementById('loadingToast');
-    if (toast) { toast.classList.remove('hidden', 'hiding'); toast.classList.add('success-toast'); setTimeout(() => hideLoadingToast(), 3000); }
+    if (toast) { 
+        toast.classList.remove('hidden', 'hiding'); 
+        toast.classList.add('success-toast'); 
+        const title = document.getElementById('loadingToastTitle');
+        if (title) title.innerText = '¡Listo!';
+        setTimeout(() => hideLoadingToast(), 3000); 
+    }
 }
 function hideLoadingToast() {
     const toast = document.getElementById('loadingToast');
-    if (toast) { toast.classList.add('hiding'); setTimeout(() => toast.classList.add('hidden'), 500); }
+    if (toast) { 
+        toast.classList.add('hiding'); 
+        setTimeout(() => toast.classList.add('hidden'), 500); 
+    }
 }
 function showNotif(title, msg, type = 'success') {
+    const notification = document.getElementById('notification');
+    if (notification) {
+        const notifTitle = document.getElementById('notifTitle');
+        const notifMsg = document.getElementById('notifMsg');
+        const notifIcon = document.getElementById('notifIcon');
+        if (notifTitle) notifTitle.innerText = title;
+        if (notifMsg) notifMsg.innerText = msg;
+        if (notifIcon) {
+            notifIcon.className = type === 'success' ? 'fas fa-check-circle text-2xl' : 
+                               type === 'error' ? 'fas fa-times-circle text-2xl' : 
+                               'fas fa-info-circle text-2xl';
+        }
+        notification.style.transform = 'translateX(0)';
+        setTimeout(() => {
+            notification.style.transform = 'translateX(120%)';
+        }, 4000);
+    }
     console.log(`📢 ${title}: ${msg}`);
 }
 
@@ -1069,23 +1444,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     initScrollReveal();
     initVisitorInfo();
 
-    // Cargar datos de página y stats en paralelo
-    const [pageLoaded, statsLoaded] = await Promise.all([
+    const [pageLoaded, statsLoaded, catalogoLoaded] = await Promise.all([
         loadHomePageData(),
-        loadData(false)
+        loadData(false),
+        loadCatalogoCursos()
     ]);
 
-    // Renderizar AHORA que globalStats ya está cargado
-    renderHomePage();
+    await obtenerTasaBCVGlobal();
 
-    // Inicializar tarjetas expandibles de metodología
+    renderHomePage();
+    rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b();
     initMethodologyCards();
 
-    // Una vez todo renderizado, mostrar todas las secciones de golpe
     revealAllSections();
     hideLoadingToast();
 
-    // Luego de mostrar el contenido, cargar métricas con delay
     setTimeout(() => {
         updateIndexMetrics(globalStats);
         revealMetrics();
@@ -1099,7 +1472,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (currentUser?.likedCourses) {
         currentUser.likedCourses.forEach(courseId => {
             const likeBtn = document.querySelector(`.like-btn[data-id="${courseId}"]`);
-            if (likeBtn) likeBtn.classList.add('liked');
+            if (likeBtn) likeBtn.classList.add('liked', 'text-red-500');
         });
     }
     document.querySelectorAll('.prof-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
