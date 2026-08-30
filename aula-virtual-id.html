@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== TODOS LOS ESTILOS EXISTENTES (sin cambios) ===== */
+        /* ===== TODOS LOS ESTILOS EXISTENTES ===== */
         body { font-family: 'Inter', sans-serif; background-color: var(--aula-bg); color: var(--aula-text-primary); }
         :root {
             --aula-bg: #0d1d31;
@@ -407,6 +407,242 @@
         body.light-mode .loading-toast .toast-title { color: #1e293b; }
         body.light-mode .loading-toast.success-toast { background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%); border: 1px solid rgba(16, 185, 129, 0.8); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 15px rgba(16, 185, 129, 0.4); }
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+
+        /* ============================================
+           🆕 ESTILOS PARA EFECTO LUPA
+           ============================================ */
+        .quiz-image-container {
+            position: relative;
+            display: inline-block;
+            cursor: zoom-in;
+            max-width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            border: 2px solid rgba(45, 184, 206, 0.2);
+            transition: border-color 0.3s ease;
+        }
+
+        .quiz-image-container:hover {
+            border-color: rgba(45, 184, 206, 0.6);
+        }
+
+        .quiz-image-container img {
+            display: block;
+            max-width: 100%;
+            max-height: 350px;
+            width: auto;
+            height: auto;
+            border-radius: 6px;
+            transition: transform 0.3s ease;
+        }
+
+        .zoom-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.8);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .quiz-image-container:hover .zoom-btn {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(45, 184, 206, 0.8);
+            transform: scale(1.1);
+        }
+
+        .lupa-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: zoom-out;
+            animation: lupaFadeIn 0.25s ease;
+        }
+
+        .lupa-overlay.active {
+            display: flex;
+        }
+
+        .lupa-overlay .lupa-content {
+            position: relative;
+            max-width: 95vw;
+            max-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: lupaZoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .lupa-overlay .lupa-content img {
+            max-width: 95vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.15s ease;
+        }
+
+        .lupa-overlay .lupa-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 2001;
+        }
+
+        .lupa-overlay .lupa-close:hover {
+            background: rgba(239, 68, 68, 0.6);
+            transform: scale(1.1);
+        }
+
+        .lupa-overlay .lupa-info {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.05em;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            padding: 8px 20px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: none;
+        }
+
+        .lupa-overlay .lupa-controls {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 2001;
+        }
+
+        .lupa-overlay .lupa-controls button {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lupa-overlay .lupa-controls button:hover {
+            background: rgba(45, 184, 206, 0.4);
+            transform: scale(1.08);
+        }
+
+        .lupa-overlay .lupa-controls .zoom-level {
+            display: flex;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 0 10px;
+            min-width: 50px;
+            justify-content: center;
+        }
+
+        @keyframes lupaFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes lupaZoomIn {
+            from { transform: scale(0.85); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        body.light-mode .lupa-overlay {
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        body.light-mode .lupa-overlay .lupa-close {
+            background: rgba(0, 0, 0, 0.05);
+            color: #1e293b;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .lupa-overlay .lupa-close:hover {
+            background: rgba(239, 68, 68, 0.6);
+            color: white;
+        }
+
+        body.light-mode .lupa-overlay .lupa-info {
+            color: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        body.light-mode .lupa-overlay .lupa-controls button {
+            background: rgba(0, 0, 0, 0.05);
+            color: #1e293b;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-mode .lupa-overlay .lupa-controls button:hover {
+            background: rgba(8, 145, 178, 0.2);
+        }
+
+        body.light-mode .lupa-overlay .lupa-controls .zoom-level {
+            color: #475569;
+        }
+        /* ============================================
+           FIN ESTILOS LUPA
+           ============================================ */
     </style>
     <style id="force-lesson-tabs-white-final">
         body.light-mode #lesson-title, body:not(.light-mode) #lesson-title,
@@ -481,6 +717,33 @@
             }
         }
     </script>
+
+    <!-- ============================================================
+    🆕 LUPA OVERLAY (Modal de Zoom)
+    ============================================================ -->
+    <div id="lupaOverlay" class="lupa-overlay" onclick="closeLupa(event)">
+        <button class="lupa-close" onclick="closeLupa(event)" title="Cerrar (ESC)">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lupa-content" onclick="event.stopPropagation()">
+            <img id="lupaImage" src="" alt="Vista ampliada">
+        </div>
+        <div class="lupa-controls">
+            <button onclick="lupaZoomOut()" title="Alejar">
+                <i class="fas fa-minus"></i>
+            </button>
+            <span class="zoom-level" id="lupaZoomLevel">100%</span>
+            <button onclick="lupaZoomIn()" title="Acercar">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button onclick="lupaResetZoom()" title="Restablecer">
+                <i class="fas fa-expand"></i>
+            </button>
+        </div>
+        <div class="lupa-info">
+            <i class="fas fa-search-plus"></i> Haz clic en la imagen o usa los controles
+        </div>
+    </div>
 
     <!-- LOGIN SCREEN -->
     <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center p-4 transition-opacity backdrop-blur-sm bg-slate-900/40">
@@ -796,6 +1059,103 @@
             return { ok: false, message: parsed.message || 'Formato no compatible en la respuesta del script.' }; 
         }
 
+        // ============================================================
+        // 🆕 FUNCIONES DEL EFECTO LUPA
+        // ============================================================
+        let lupaCurrentZoom = 1;
+        let lupaCurrentSrc = '';
+
+        function openLupa(imageSrc, event) {
+            if (event) event.stopPropagation();
+            const overlay = document.getElementById('lupaOverlay');
+            const img = document.getElementById('lupaImage');
+            if (!overlay || !img) return;
+            
+            lupaCurrentSrc = imageSrc;
+            lupaCurrentZoom = 1;
+            img.src = imageSrc;
+            img.style.transform = 'scale(1)';
+            img.style.transformOrigin = 'center center';
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateZoomLevelDisplay();
+            
+            document.addEventListener('keydown', lupaKeyHandler);
+        }
+
+        function closeLupa(event) {
+            if (event && event.target && !event.target.closest('.lupa-overlay')) return;
+            const overlay = document.getElementById('lupaOverlay');
+            if (!overlay) return;
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', lupaKeyHandler);
+        }
+
+        function lupaZoomIn() {
+            lupaCurrentZoom = Math.min(lupaCurrentZoom + 0.2, 5);
+            applyLupaZoom();
+        }
+
+        function lupaZoomOut() {
+            lupaCurrentZoom = Math.max(lupaCurrentZoom - 0.2, 0.5);
+            applyLupaZoom();
+        }
+
+        function lupaResetZoom() {
+            lupaCurrentZoom = 1;
+            applyLupaZoom();
+        }
+
+        function applyLupaZoom() {
+            const img = document.getElementById('lupaImage');
+            if (!img) return;
+            img.style.transform = `scale(${lupaCurrentZoom})`;
+            updateZoomLevelDisplay();
+        }
+
+        function updateZoomLevelDisplay() {
+            const display = document.getElementById('lupaZoomLevel');
+            if (display) {
+                display.textContent = Math.round(lupaCurrentZoom * 100) + '%';
+            }
+        }
+
+        function lupaKeyHandler(event) {
+            if (event.key === 'Escape') {
+                closeLupa(event);
+            } else if (event.key === '+' || event.key === '=') {
+                event.preventDefault();
+                lupaZoomIn();
+            } else if (event.key === '-') {
+                event.preventDefault();
+                lupaZoomOut();
+            } else if (event.key === '0') {
+                event.preventDefault();
+                lupaResetZoom();
+            }
+        }
+
+        // Soporte para rueda del mouse
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('lupaOverlay');
+            if (overlay) {
+                overlay.addEventListener('wheel', function(e) {
+                    if (!this.classList.contains('active')) return;
+                    e.preventDefault();
+                    if (e.deltaY < 0) {
+                        lupaZoomIn();
+                    } else {
+                        lupaZoomOut();
+                    }
+                }, { passive: false });
+            }
+        });
+
+        // ============================================================
+        // FIN FUNCIONES LUPA
+        // ============================================================
+
         const app = {
             scriptUrl: SCRIPT_URL,
             accessScriptUrl: ACCESS_SCRIPT_URL,
@@ -901,6 +1261,39 @@
                 }).join('');
             },
 
+            // ============================================================
+            // 🆕 renderQuiz MODIFICADA CON EFECTO LUPA
+            // ============================================================
+            renderQuiz: function(quiz) { 
+                const cont = document.getElementById('quiz-questions'); 
+                if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; } 
+                cont.innerHTML = quiz.map((q, i) => {
+                    let imageHtml = '';
+                    if (q.image) {
+                        imageHtml = `
+                            <div class="quiz-image-container" onclick="openLupa('${q.image}', event)">
+                                <img src="${q.image}" alt="Ampliar imagen" loading="lazy">
+                                <button class="zoom-btn" onclick="event.stopPropagation(); openLupa('${q.image}', event)" title="Ampliar imagen">
+                                    <i class="fas fa-search-plus"></i>
+                                </button>
+                            </div>
+                        `;
+                    }
+                    return `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}">
+                                <p class="font-bold text-white mb-3">${q.q}</p>
+                                ${imageHtml}
+                                <div class="space-y-2">
+                                    ${q.opts.map((opt, oi) => `
+                                        <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option" data-opt-index="${oi}">
+                                            <input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}
+                                        </label>
+                                    `).join('')}
+                                </div>
+                                <div class="correct-feedback hidden text-green-400 text-sm mt-2"></div>
+                            </div>`;
+                }).join(''); 
+            },
+
             loadLesson: function(id) {
                 // La introducción (id:0) no necesita lección anterior
                 if (id > 0 && !this.progress.includes(id - 1)) {
@@ -916,9 +1309,7 @@
                 document.getElementById('lesson-title').innerText = lesson.title;
                 document.getElementById('lesson-content-text').innerHTML = lesson.content;
 
-                // ============================================================
-                // REPRODUCTOR DE VIDEO MEJORADO (YouTube + Bunny.net iframe)
-                // ============================================================
+                // REPRODUCTOR DE VIDEO
                 const videoContainer = document.getElementById('lesson-video-container');
                 const videoUrl = lesson.video || '';
 
@@ -984,15 +1375,6 @@
                 }, 100);
             },
 
-            renderQuiz: function(quiz) { 
-                const cont = document.getElementById('quiz-questions'); 
-                if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; } 
-                cont.innerHTML = quiz.map((q, i) => {
-                    const imageHtml = q.image ? `<figure style="display:flex;flex-direction:column;align-items:center;margin:1rem 0;"><img src="${q.image}" alt="Pregunta" style="max-width:100%;max-height:300px;object-fit:contain;border-radius:8px;"></figure>` : '';
-                    return `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}"><p class="font-bold text-white mb-3">${q.q}</p>${imageHtml}<div class="space-y-2">${q.opts.map((opt, oi) => `<label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option" data-opt-index="${oi}"><input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}</label>`).join('')}</div><div class="correct-feedback hidden text-green-400 text-sm mt-2"></div></div>`;
-                }).join(''); 
-            },
-
             gradeQuiz: function() {
                 const lesson = COURSE_DATA.find(l => l.id === this.currentId);
                 if (!lesson.quiz || lesson.quiz.length === 0) return;
@@ -1048,7 +1430,6 @@
             getMedalIcon: function(score) { if (score === undefined || score < 70) return ''; if (score === 100) return '🏆'; if (score >= 90) return '🥇'; if (score >= 80) return '🥈'; return '🥉'; },
 
             generateCertificate: function() {
-                // ... (sin cambios, igual que antes)
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                 if (!auth || !CURRENT_COURSE) { this.showModal('Error', 'No hay sesión activa.', 'error'); return; }
 
