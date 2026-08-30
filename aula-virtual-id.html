@@ -409,7 +409,7 @@
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
 
         /* ============================================
-           🆕 ESTILOS PARA EFECTO LUPA
+           🆕 ESTILOS PARA EFECTO LUPA CON PAN (ARRASTRE)
            ============================================ */
         .quiz-image-container {
             position: relative;
@@ -435,6 +435,7 @@
             height: auto;
             border-radius: 6px;
             transition: transform 0.3s ease;
+            pointer-events: none;
         }
 
         .zoom-btn {
@@ -472,6 +473,7 @@
             transform: scale(1.1);
         }
 
+        /* ===== LUPA OVERLAY CON PAN ===== */
         .lupa-overlay {
             position: fixed;
             inset: 0;
@@ -483,7 +485,7 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            cursor: zoom-out;
+            cursor: default;
             animation: lupaFadeIn 0.25s ease;
         }
 
@@ -499,6 +501,15 @@
             align-items: center;
             justify-content: center;
             animation: lupaZoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            cursor: grab;
+            touch-action: none;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .lupa-overlay .lupa-content:active {
+            cursor: grabbing;
         }
 
         .lupa-overlay .lupa-content img {
@@ -508,7 +519,12 @@
             border-radius: 12px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.15s ease;
+            transition: transform 0.1s ease;
+            pointer-events: none;
+            transform-origin: center center;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .lupa-overlay .lupa-close {
@@ -597,6 +613,29 @@
             justify-content: center;
         }
 
+        .lupa-overlay .lupa-position-indicator {
+            position: fixed;
+            bottom: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 11px;
+            padding: 4px 14px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: none;
+            font-family: monospace;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 2001;
+        }
+
+        .lupa-overlay .lupa-position-indicator.visible {
+            opacity: 1;
+        }
+
         @keyframes lupaFadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -640,8 +679,13 @@
         body.light-mode .lupa-overlay .lupa-controls .zoom-level {
             color: #475569;
         }
+
+        body.light-mode .lupa-overlay .lupa-position-indicator {
+            color: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.7);
+        }
         /* ============================================
-           FIN ESTILOS LUPA
+           FIN ESTILOS LUPA CON PAN
            ============================================ */
     </style>
     <style id="force-lesson-tabs-white-final">
@@ -718,30 +762,29 @@
         }
     </script>
 
-    <!-- ============================================================
-    🆕 LUPA OVERLAY (Modal de Zoom)
-    ============================================================ -->
-    <div id="lupaOverlay" class="lupa-overlay" onclick="closeLupa(event)">
+    <!-- LUPA OVERLAY CON PAN (ARRASTRE) -->
+    <div id="lupaOverlay" class="lupa-overlay">
         <button class="lupa-close" onclick="closeLupa(event)" title="Cerrar (ESC)">
             <i class="fas fa-times"></i>
         </button>
-        <div class="lupa-content" onclick="event.stopPropagation()">
-            <img id="lupaImage" src="" alt="Vista ampliada">
+        <div class="lupa-content" id="lupaContent">
+            <img id="lupaImage" src="" alt="Vista ampliada - Arrastra para moverte">
         </div>
         <div class="lupa-controls">
-            <button onclick="lupaZoomOut()" title="Alejar">
+            <button onclick="lupaZoomOut(event)" title="Alejar (-)">
                 <i class="fas fa-minus"></i>
             </button>
             <span class="zoom-level" id="lupaZoomLevel">100%</span>
-            <button onclick="lupaZoomIn()" title="Acercar">
+            <button onclick="lupaZoomIn(event)" title="Acercar (+)">
                 <i class="fas fa-plus"></i>
             </button>
-            <button onclick="lupaResetZoom()" title="Restablecer">
+            <button onclick="lupaResetZoom(event)" title="Restablecer (0)">
                 <i class="fas fa-expand"></i>
             </button>
         </div>
+        <div class="lupa-position-indicator" id="lupaPositionIndicator">🔍 100% · 0%, 0%</div>
         <div class="lupa-info">
-            <i class="fas fa-search-plus"></i> Haz clic en la imagen o usa los controles
+            <i class="fas fa-arrows-alt"></i> Arrastra para moverte · Rueda para zoom · ESC para cerrar
         </div>
     </div>
 
@@ -958,11 +1001,7 @@
             return `<div class="space-y-6"><h2 class="text-2xl font-bold text-secondary">Bienvenido al Aula</h2><p class="text-slate-300">${config.intro.summary}</p><div class="bg-black/30 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3><p class="text-slate-300">${config.intro.objective}</p></div><div class="bg-white/5 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-white">Lo que aprenderás</h3><ul class="list-disc pl-5 space-y-2 text-slate-300">${config.intro.goals.map(goal => `<li>${goal}</li>`).join('')}</ul></div></div>`;
         }
 
-        // ============================================================
-        // 🆕 buildCourseData MODIFICADA PARA ACEPTAR QUIZ EN INTRO (id:0)
-        // ============================================================
         function buildCourseData(config) {
-            // Extraer quiz de la introducción
             const introQuiz = config.intro?.quiz || config.introQuiz || [];
             const introHasQuiz = Array.isArray(introQuiz) && introQuiz.length > 0;
 
@@ -1015,16 +1054,12 @@
             return { moduleId: Number(item.moduleId || item.idModulo || item.id || index + 1), title: String(item.title || item.titulo || item.nombre || `Módulo ${index + 1}`), summary: String(item.summary || item.resumen || item.descripcion || ''), content: String(item.content || item.contenido || item.html || ''), video: String(item.video || item.videoUrl || item.linkVideo || ''), resources: toArray(item.resources || item.recursos || []), quiz: quizList }; 
         }
 
-        // ============================================================
-        // 🆕 normalizeCoursePayload MODIFICADA PARA EXTRAER intro.quiz
-        // ============================================================
         function normalizeCoursePayload(payload, requestedCourseId) { 
             const source = payload || {}; 
             const moduleListRaw = source.modules || source.modulos || source.lessons || source.lecciones || []; 
             const modules = toArray(moduleListRaw).map(normalizeModule).sort((a, b) => a.moduleId - b.moduleId); 
             const intro = source.intro || {}; 
 
-            // Extraer quiz de la introducción
             const introQuizRaw = intro.quiz || intro.quizzes || source.introQuiz || [];
             const introQuiz = toArray(introQuizRaw).map(normalizeQuizItem).filter(Boolean);
 
@@ -1060,58 +1095,131 @@
         }
 
         // ============================================================
-        // 🆕 FUNCIONES DEL EFECTO LUPA
+        // 🆕 FUNCIONES DEL EFECTO LUPA CON PAN (ARRASTRE)
         // ============================================================
+
         let lupaCurrentZoom = 1;
         let lupaCurrentSrc = '';
+        let lupaIsDragging = false;
+        let lupaStartX = 0;
+        let lupaStartY = 0;
+        let lupaTranslateX = 0;
+        let lupaTranslateY = 0;
 
         function openLupa(imageSrc, event) {
-            if (event) event.stopPropagation();
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
             const overlay = document.getElementById('lupaOverlay');
             const img = document.getElementById('lupaImage');
             if (!overlay || !img) return;
             
             lupaCurrentSrc = imageSrc;
             lupaCurrentZoom = 1;
+            lupaTranslateX = 0;
+            lupaTranslateY = 0;
+            lupaIsDragging = false;
+            
             img.src = imageSrc;
-            img.style.transform = 'scale(1)';
+            img.style.transform = 'scale(1) translate(0px, 0px)';
             img.style.transformOrigin = 'center center';
             overlay.classList.add('active');
             document.body.style.overflow = 'hidden';
+            document.body.style.userSelect = 'none';
             updateZoomLevelDisplay();
+            updatePositionIndicator();
             
             document.addEventListener('keydown', lupaKeyHandler);
         }
 
         function closeLupa(event) {
-            if (event && event.target && !event.target.closest('.lupa-overlay')) return;
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
             const overlay = document.getElementById('lupaOverlay');
             if (!overlay) return;
             overlay.classList.remove('active');
             document.body.style.overflow = '';
+            document.body.style.userSelect = '';
             document.removeEventListener('keydown', lupaKeyHandler);
+            const content = document.getElementById('lupaContent');
+            if (content) content.style.cursor = 'grab';
         }
 
-        function lupaZoomIn() {
-            lupaCurrentZoom = Math.min(lupaCurrentZoom + 0.2, 5);
-            applyLupaZoom();
+        function lupaZoomIn(event) {
+            if (event) event.stopPropagation();
+            const newZoom = Math.min(lupaCurrentZoom + 0.25, 5);
+            applyLupaZoom(newZoom);
         }
 
-        function lupaZoomOut() {
-            lupaCurrentZoom = Math.max(lupaCurrentZoom - 0.2, 0.5);
-            applyLupaZoom();
+        function lupaZoomOut(event) {
+            if (event) event.stopPropagation();
+            const newZoom = Math.max(lupaCurrentZoom - 0.25, 0.5);
+            applyLupaZoom(newZoom);
         }
 
-        function lupaResetZoom() {
+        function lupaResetZoom(event) {
+            if (event) event.stopPropagation();
             lupaCurrentZoom = 1;
-            applyLupaZoom();
+            lupaTranslateX = 0;
+            lupaTranslateY = 0;
+            applyLupaZoom(1);
         }
 
-        function applyLupaZoom() {
+        function applyLupaZoom(newZoom) {
             const img = document.getElementById('lupaImage');
             if (!img) return;
-            img.style.transform = `scale(${lupaCurrentZoom})`;
+            
+            lupaCurrentZoom = newZoom;
+            clampPan();
+            img.style.transform = `scale(${lupaCurrentZoom}) translate(${lupaTranslateX}px, ${lupaTranslateY}px)`;
             updateZoomLevelDisplay();
+            updatePositionIndicator();
+        }
+
+        function clampPan() {
+            const img = document.getElementById('lupaImage');
+            if (!img) return;
+            
+            const imgWidth = img.naturalWidth || 800;
+            const imgHeight = img.naturalHeight || 600;
+            const zoomedWidth = imgWidth * lupaCurrentZoom;
+            const zoomedHeight = imgHeight * lupaCurrentZoom;
+            
+            const container = document.getElementById('lupaContent');
+            const containerWidth = container ? container.clientWidth : window.innerWidth * 0.85;
+            const containerHeight = container ? container.clientHeight : window.innerHeight * 0.85;
+            
+            const maxX = Math.max(0, (zoomedWidth - containerWidth) / 2);
+            const maxY = Math.max(0, (zoomedHeight - containerHeight) / 2);
+            
+            if (lupaCurrentZoom <= 1) {
+                lupaTranslateX = 0;
+                lupaTranslateY = 0;
+                return;
+            }
+            
+            lupaTranslateX = Math.max(-maxX, Math.min(maxX, lupaTranslateX));
+            lupaTranslateY = Math.max(-maxY, Math.min(maxY, lupaTranslateY));
+        }
+
+        function updatePositionIndicator() {
+            const indicator = document.getElementById('lupaPositionIndicator');
+            if (!indicator) return;
+            
+            if (lupaCurrentZoom > 1) {
+                indicator.classList.add('visible');
+                const container = document.getElementById('lupaContent');
+                const containerWidth = container ? container.clientWidth : window.innerWidth * 0.85;
+                const containerHeight = container ? container.clientHeight : window.innerHeight * 0.85;
+                const pctX = lupaTranslateX / (containerWidth / 2) * 50;
+                const pctY = lupaTranslateY / (containerHeight / 2) * 50;
+                indicator.textContent = `🔍 ${Math.round(lupaCurrentZoom * 100)}% · ${Math.round(pctX)}%, ${Math.round(pctY)}%`;
+            } else {
+                indicator.classList.remove('visible');
+            }
         }
 
         function updateZoomLevelDisplay() {
@@ -1120,6 +1228,48 @@
                 display.textContent = Math.round(lupaCurrentZoom * 100) + '%';
             }
         }
+
+        // ============================================================
+        // MANEJADORES DE ARRASTRE (PAN)
+        // ============================================================
+
+        function lupaStartDrag(e) {
+            if (lupaCurrentZoom <= 1) return;
+            
+            const event = e.touches ? e.touches[0] : e;
+            lupaIsDragging = true;
+            lupaStartX = event.clientX - lupaTranslateX;
+            lupaStartY = event.clientY - lupaTranslateY;
+            
+            const content = document.getElementById('lupaContent');
+            if (content) content.style.cursor = 'grabbing';
+            document.body.style.userSelect = 'none';
+        }
+
+        function lupaMoveDrag(e) {
+            if (!lupaIsDragging) return;
+            e.preventDefault();
+            
+            const event = e.touches ? e.touches[0] : e;
+            lupaTranslateX = event.clientX - lupaStartX;
+            lupaTranslateY = event.clientY - lupaStartY;
+            
+            clampPan();
+            applyLupaZoom(lupaCurrentZoom);
+        }
+
+        function lupaEndDrag(e) {
+            if (lupaIsDragging) {
+                lupaIsDragging = false;
+                const content = document.getElementById('lupaContent');
+                if (content) content.style.cursor = 'grab';
+                document.body.style.userSelect = '';
+            }
+        }
+
+        // ============================================================
+        // MANEJADORES DE EVENTOS
+        // ============================================================
 
         function lupaKeyHandler(event) {
             if (event.key === 'Escape') {
@@ -1133,16 +1283,32 @@
             } else if (event.key === '0') {
                 event.preventDefault();
                 lupaResetZoom();
+            } else if (event.key === 'r' || event.key === 'R') {
+                event.preventDefault();
+                lupaResetZoom();
             }
         }
 
-        // Soporte para rueda del mouse
+        // ============================================================
+        // INICIALIZACIÓN DE EVENTOS
+        // ============================================================
+
         document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.getElementById('lupaOverlay');
+            const content = document.getElementById('lupaContent');
+            const img = document.getElementById('lupaImage');
+            
             if (overlay) {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this || e.target.classList.contains('lupa-overlay')) {
+                        closeLupa(e);
+                    }
+                });
+                
                 overlay.addEventListener('wheel', function(e) {
                     if (!this.classList.contains('active')) return;
                     e.preventDefault();
+                    e.stopPropagation();
                     if (e.deltaY < 0) {
                         lupaZoomIn();
                     } else {
@@ -1150,10 +1316,22 @@
                     }
                 }, { passive: false });
             }
+            
+            if (content && img) {
+                content.addEventListener('mousedown', lupaStartDrag);
+                document.addEventListener('mousemove', lupaMoveDrag);
+                document.addEventListener('mouseup', lupaEndDrag);
+                
+                content.addEventListener('touchstart', lupaStartDrag, { passive: true });
+                document.addEventListener('touchmove', lupaMoveDrag, { passive: false });
+                document.addEventListener('touchend', lupaEndDrag, { passive: true });
+                
+                img.addEventListener('dragstart', function(e) { e.preventDefault(); });
+            }
         });
 
         // ============================================================
-        // FIN FUNCIONES LUPA
+        // FIN FUNCIONES LUPA CON PAN
         // ============================================================
 
         const app = {
@@ -1251,7 +1429,6 @@
             renderSidebar: function() {
                 const cont = document.getElementById('sidebar-content');
                 cont.innerHTML = COURSE_DATA.map(lesson => {
-                    // La introducción (id:0) nunca está bloqueada
                     const locked = lesson.id > 0 && !this.progress.includes(lesson.id - 1);
                     const isCurr = this.currentId === lesson.id;
                     const lessonLabel = lesson.id === 0 ? 'INTRODUCCIÓN' : `LECCIÓN ${lesson.id}`;
@@ -1261,9 +1438,6 @@
                 }).join('');
             },
 
-            // ============================================================
-            // 🆕 renderQuiz MODIFICADA CON EFECTO LUPA
-            // ============================================================
             renderQuiz: function(quiz) { 
                 const cont = document.getElementById('quiz-questions'); 
                 if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; } 
@@ -1295,7 +1469,6 @@
             },
 
             loadLesson: function(id) {
-                // La introducción (id:0) no necesita lección anterior
                 if (id > 0 && !this.progress.includes(id - 1)) {
                     this.showModal('Lección bloqueada', 'Completa la lección anterior para continuar.', 'error');
                     return;
@@ -1309,7 +1482,6 @@
                 document.getElementById('lesson-title').innerText = lesson.title;
                 document.getElementById('lesson-content-text').innerHTML = lesson.content;
 
-                // REPRODUCTOR DE VIDEO
                 const videoContainer = document.getElementById('lesson-video-container');
                 const videoUrl = lesson.video || '';
 
