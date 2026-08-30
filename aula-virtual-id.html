@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ===== TODOS LOS ESTILOS EXISTENTES (sin cambios) ===== */
         body { font-family: 'Inter', sans-serif; background-color: var(--aula-bg); color: var(--aula-text-primary); }
         :root {
             --aula-bg: #0d1d31;
@@ -69,13 +70,12 @@
         #lesson-video-container {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* Relación 16:9 */
+            padding-top: 56.25%;
             background: #000;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0,0,0,0.4);
         }
-
         #lesson-video-container iframe,
         #lesson-video-container video {
             position: absolute;
@@ -86,17 +86,14 @@
             border: none;
             border-radius: 12px;
         }
-
         #lesson-video-container iframe[src*="player.mediadelivery.net"] {
             background: #000;
             border-radius: 12px;
         }
-
         #lesson-video-container video {
             object-fit: contain;
             background: #0a0a0a;
         }
-
         #lesson-video-container .bunny-player-wrapper {
             position: absolute;
             top: 0;
@@ -107,14 +104,12 @@
             border-radius: 12px;
             overflow: hidden;
         }
-
         #lesson-video-container .bunny-player-wrapper video {
             position: relative;
             width: 100% !important;
             height: 100% !important;
             object-fit: contain;
         }
-
         #lesson-video-container .bunny-loading {
             position: absolute;
             top: 50%;
@@ -126,14 +121,11 @@
             text-align: center;
             pointer-events: none;
         }
-
         #lesson-video-container .bunny-loading i {
             display: block;
             font-size: 32px;
             margin-bottom: 10px;
         }
-
-        /* Para pantallas pequeñas */
         @media (max-width: 640px) {
             #lesson-video-container {
                 padding-top: 56.25%;
@@ -144,8 +136,6 @@
                 border-radius: 8px;
             }
         }
-
-        /* Estilo para cuando no hay video */
         #lesson-video-container .no-video-placeholder {
             display: flex;
             align-items: center;
@@ -158,7 +148,6 @@
             padding: 2rem;
             text-align: center;
         }
-
         body.light-mode #lesson-video-container .no-video-placeholder {
             background: #e2e8f0;
             color: #475569;
@@ -426,7 +415,6 @@
         }
     </style>
 <base target="_blank">
-<base target="_blank">
 </head>
 <body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
     <div class="bg-optimized"></div>
@@ -585,7 +573,7 @@
     <div id="toast" class="toast hidden"></div>
 
     <script>
-        const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyRAuJGPzw0lArQF1WN5dEUY1nB7tB-JfUtjxYoVllk2D5oGXs4Ly4X-5UUD7WLbH7r/exec';
+        const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzglbdIwF7oFlWn2ABZlG_ReWsuy2ESQ3Y83BcdtDspoI6-IHHAYyL6lxw28vkXrD_C/exec';
         const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
 
         const SHARED_PRACTICE_VIDEO_URL = '';
@@ -707,8 +695,24 @@
             return `<div class="space-y-6"><h2 class="text-2xl font-bold text-secondary">Bienvenido al Aula</h2><p class="text-slate-300">${config.intro.summary}</p><div class="bg-black/30 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3><p class="text-slate-300">${config.intro.objective}</p></div><div class="bg-white/5 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-white">Lo que aprenderás</h3><ul class="list-disc pl-5 space-y-2 text-slate-300">${config.intro.goals.map(goal => `<li>${goal}</li>`).join('')}</ul></div></div>`;
         }
 
+        // ============================================================
+        // 🆕 buildCourseData MODIFICADA PARA ACEPTAR QUIZ EN INTRO (id:0)
+        // ============================================================
         function buildCourseData(config) {
-            const introLesson = { id: 0, title: 'Contenido del Curso', video: config.introVideo || SHARED_PRACTICE_VIDEO_URL, resources: config.sharedResources || [{ type: 'manual', name: 'Materiales del curso', url: config.materialPage }], quiz: [], hasQuiz: false, content: buildIntroContent(config) };
+            // Extraer quiz de la introducción
+            const introQuiz = config.intro?.quiz || config.introQuiz || [];
+            const introHasQuiz = Array.isArray(introQuiz) && introQuiz.length > 0;
+
+            const introLesson = {
+                id: 0,
+                title: 'Contenido del Curso',
+                video: config.introVideo || SHARED_PRACTICE_VIDEO_URL,
+                resources: config.sharedResources || [{ type: 'manual', name: 'Materiales del curso', url: config.materialPage }],
+                quiz: introQuiz,
+                hasQuiz: introHasQuiz,
+                content: buildIntroContent(config)
+            };
+
             const modules = config.modules.map((module, index) => {
                 let mainContent = module.content;
                 if (!mainContent) {
@@ -747,13 +751,39 @@
             const quizList = toArray(rawQuiz).map(normalizeQuizItem).filter(Boolean); 
             return { moduleId: Number(item.moduleId || item.idModulo || item.id || index + 1), title: String(item.title || item.titulo || item.nombre || `Módulo ${index + 1}`), summary: String(item.summary || item.resumen || item.descripcion || ''), content: String(item.content || item.contenido || item.html || ''), video: String(item.video || item.videoUrl || item.linkVideo || ''), resources: toArray(item.resources || item.recursos || []), quiz: quizList }; 
         }
+
+        // ============================================================
+        // 🆕 normalizeCoursePayload MODIFICADA PARA EXTRAER intro.quiz
+        // ============================================================
         function normalizeCoursePayload(payload, requestedCourseId) { 
             const source = payload || {}; 
             const moduleListRaw = source.modules || source.modulos || source.lessons || source.lecciones || []; 
             const modules = toArray(moduleListRaw).map(normalizeModule).sort((a, b) => a.moduleId - b.moduleId); 
             const intro = source.intro || {}; 
-            return { id: Number(source.id || source.courseId || source.cursoId || requestedCourseId || 1), name: String(source.name || source.title || source.nombre || 'Aula Virtual'), title: String(source.title || source.name || source.titulo || source.nombre || 'Aula Virtual'), type: String(source.type || source.tipo || 'Online'), materialPage: String(source.materialPage || source.materialFile || source.archivoMaterial || ''), introImage: String(source.introImage || source.imagenIntro || source.image || 'img/AA (2).gif'), sharedResources: toArray(source.sharedResources || source.recursosCompartidos || []), intro: { summary: String(intro.summary || intro.resumen || source.introSummary || ''), objective: String(intro.objective || intro.objetivo || source.introObjective || ''), goals: toArray(intro.goals || intro.objetivos || source.introGoals || []) }, introVideo: String(source.introVideo || source.videoIntro || ''), modules }; 
+
+            // Extraer quiz de la introducción
+            const introQuizRaw = intro.quiz || intro.quizzes || source.introQuiz || [];
+            const introQuiz = toArray(introQuizRaw).map(normalizeQuizItem).filter(Boolean);
+
+            return {
+                id: Number(source.id || source.courseId || source.cursoId || requestedCourseId || 1),
+                name: String(source.name || source.title || source.nombre || 'Aula Virtual'),
+                title: String(source.title || source.name || source.titulo || source.nombre || 'Aula Virtual'),
+                type: String(source.type || source.tipo || 'Online'),
+                materialPage: String(source.materialPage || source.materialFile || source.archivoMaterial || ''),
+                introImage: String(source.introImage || source.imagenIntro || source.image || 'img/AA (2).gif'),
+                sharedResources: toArray(source.sharedResources || source.recursosCompartidos || []),
+                intro: {
+                    summary: String(intro.summary || intro.resumen || source.introSummary || ''),
+                    objective: String(intro.objective || intro.objetivo || source.introObjective || ''),
+                    goals: toArray(intro.goals || intro.objetivos || source.introGoals || []),
+                    quiz: introQuiz
+                },
+                introVideo: String(source.introVideo || source.videoIntro || ''),
+                modules: modules
+            };
         }
+
         function unwrapApiResponse(data) { 
             const parsed = parseMaybeJson(data) || data; 
             if (!parsed || typeof parsed !== 'object') return { ok: false, message: 'La respuesta del script no es JSON válido.' }; 
@@ -773,7 +803,7 @@
             progress: [],
             quizScores: {},
             currentId: 0,
-            
+
             init: async function() {
                 this.initTheme();
                 document.addEventListener('fullscreenchange', this.updateFullScreenIcon);
@@ -794,21 +824,20 @@
                     showSuccessToast(); this.showLoginScreen();
                 } catch (error) { console.error("Error:", error); hideLoadingToast(); }
             },
-            
+
             showLoginScreen: function() { document.getElementById('initial-loader').classList.add('hidden'); document.getElementById('login-form-container').classList.remove('hidden'); },
             autoVerify: function(user) { 
-    // 🔧 FIX: No autoverificar si no hay cédula válida
-    if (!user || !user.cedula || user.cedula === 'N/A' || user.cedula === '') {
-        this.showLoginScreen();
-        return;
-    }
-    document.getElementById('login-nombre').value = user.name || ''; 
-    document.getElementById('login-cedula').value = user.cedula; 
-    document.getElementById('login-correo').value = user.email || ''; 
-    this.executeVerification(user.name || '', user.cedula, user.email || '', true); 
-},
+                if (!user || !user.cedula || user.cedula === 'N/A' || user.cedula === '') {
+                    this.showLoginScreen();
+                    return;
+                }
+                document.getElementById('login-nombre').value = user.name || ''; 
+                document.getElementById('login-cedula').value = user.cedula; 
+                document.getElementById('login-correo').value = user.email || ''; 
+                this.executeVerification(user.name || '', user.cedula, user.email || '', true); 
+            },
             clearLocalData: function() { localStorage.removeItem(STORAGE_KEYS.auth); localStorage.removeItem(STORAGE_KEYS.progress); localStorage.removeItem(STORAGE_KEYS.scores); this.progress = []; this.quizScores = {}; },
-            
+
             fetchCourseContent: async function(courseId) {
                 this.lastLoadErrorMessage = '';
                 try {
@@ -821,7 +850,7 @@
                     return normalizeCoursePayload(unwrapped.content, courseId);
                 } catch (error) { this.lastLoadErrorMessage = error.message; return null; }
             },
-            
+
             showDashboard: function() {
                 this.closeSidebarOnMobile();
                 document.getElementById('view-lesson').classList.add('hidden');
@@ -854,14 +883,15 @@
                 dash.innerHTML = `<div class="w-full dashboard-container rounded-[32px] shadow-xl overflow-hidden"><div class="p-6 sm:p-8 border-b border-white/10"><div class="grid grid-cols-1 gap-6"><div class="bg-white/10 border border-white/20 p-6 rounded-2xl"><h2 class="text-slate-400 text-xs uppercase font-black tracking-widest">Estudiante</h2><p class="text-white text-xl font-bold mt-1">${auth.nombre || '-'}</p><p class="text-slate-300 text-sm mt-1">${auth.correo || '-'}</p><p class="text-white font-bold mt-3">CI: ${auth.cedula || '-'}</p></div><div class="bg-white/5 rounded-2xl p-6 border border-white/10"><h4 class="font-black uppercase tracking-widest text-xs text-slate-400">Mi progreso actual</h4><div class="grid grid-cols-4 gap-2 mt-3">${lessonPillsHtml}</div><div class="flex items-center justify-center mt-4"><span class="text-4xl font-black text-teal-500">${percent}%</span></div><div class="flex flex-col sm:flex-row gap-2 mt-4"><button onclick="app.continueCourse()" class="continue-learning-btn flex-1 bg-slate-800 hover:bg-slate-900 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2"><i class="fas fa-play text-secondary"></i> Continuar</button><button onclick="app.generateCertificate()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2"><i class="fas fa-certificate"></i> Generar Certificado</button></div></div></div></div><div class="p-6"><h4 class="text-slate-400 font-black uppercase tracking-widest text-[10px] mb-4">Módulos del Curso</h4><div class="space-y-3">${modulesHtml}</div></div></div>`;
                 if (window.lucide) lucide.createIcons();
             },
-            
+
             continueCourse: function() { const next = COURSE_DATA.find(l => !this.progress.includes(l.id)); if (next) this.loadLesson(next.id); },
             toggleSidebar: function() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('sidebar-overlay'); if (window.innerWidth < 768) { sidebar.classList.toggle('-translate-x-full'); overlay.classList.toggle('hidden'); } else { sidebar.classList.toggle('collapsed'); } },
             closeSidebarOnMobile: function() { if (window.innerWidth < 768) { const s = document.getElementById('sidebar'); if (!s.classList.contains('-translate-x-full')) { s.classList.add('-translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); } } },
-            
+
             renderSidebar: function() {
                 const cont = document.getElementById('sidebar-content');
                 cont.innerHTML = COURSE_DATA.map(lesson => {
+                    // La introducción (id:0) nunca está bloqueada
                     const locked = lesson.id > 0 && !this.progress.includes(lesson.id - 1);
                     const isCurr = this.currentId === lesson.id;
                     const lessonLabel = lesson.id === 0 ? 'INTRODUCCIÓN' : `LECCIÓN ${lesson.id}`;
@@ -870,11 +900,9 @@
                     return `<button onclick="${locked ? '' : `app.loadLesson(${lesson.id})`}" class="w-full text-left rounded-lg transition ${isCurr ? 'bg-secondary/40 border-l-4 border-secondary text-white' : 'text-slate-200'} ${locked ? 'opacity-50 cursor-not-allowed' : 'hover:bg-white/10 hover:text-white'}"><span class="lesson-number">${lessonLabel}${checkIcon}</span><span class="lesson-topic">${topicText}</span></button>`;
                 }).join('');
             },
-            
-            // ============================================================
-            // 🚀 FUNCIÓN LOADLESSON MEJORADA CON SOPORTE PARA YOUTUBE + BUNNY (iframe)
-            // ============================================================
+
             loadLesson: function(id) {
+                // La introducción (id:0) no necesita lección anterior
                 if (id > 0 && !this.progress.includes(id - 1)) {
                     this.showModal('Lección bloqueada', 'Completa la lección anterior para continuar.', 'error');
                     return;
@@ -900,148 +928,35 @@
                     let html = '';
                     let videoId = null;
 
-                    // ---------- YOUTUBE (watch?v=) ----------
                     if (videoUrl.includes('youtube.com/watch?v=')) {
                         videoId = videoUrl.split('v=')[1]?.split('&')[0];
                         if (videoId) {
-                            html = `<iframe class="w-full h-full rounded-xl" 
-                                            src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" 
-                                            frameborder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowfullscreen>
-                                    </iframe>`;
+                            html = `<iframe class="w-full h-full rounded-xl" src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
                         }
-                    }
-                    // ---------- YOUTUBE (youtu.be/) ----------
-                    else if (videoUrl.includes('youtu.be/')) {
+                    } else if (videoUrl.includes('youtu.be/')) {
                         videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0];
                         if (videoId) {
-                            html = `<iframe class="w-full h-full rounded-xl" 
-                                            src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" 
-                                            frameborder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowfullscreen>
-                                    </iframe>`;
+                            html = `<iframe class="w-full h-full rounded-xl" src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
                         }
-                    }
-                    // ---------- YOUTUBE SHORTS ----------
-                    else if (videoUrl.includes('youtube.com/shorts/')) {
+                    } else if (videoUrl.includes('youtube.com/shorts/')) {
                         videoId = videoUrl.split('shorts/')[1]?.split('?')[0];
                         if (videoId) {
-                            html = `<iframe class="w-full h-full rounded-xl" 
-                                            src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" 
-                                            frameborder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowfullscreen>
-                                    </iframe>`;
+                            html = `<iframe class="w-full h-full rounded-xl" src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
                         }
-                    }
-                    // ---------- BUNNY.NET (iframe embebido) ----------
-                    else if (videoUrl.includes('player.mediadelivery.net') || 
-                             videoUrl.includes('bunny.net') || 
-                             videoUrl.includes('b-cdn.net') || 
-                             videoUrl.includes('bunnycdn')) {
-                        
-                        // 🆕 Detectar si es URL de iframe de Bunny (contiene /play/)
+                    } else if (videoUrl.includes('player.mediadelivery.net') || videoUrl.includes('bunny.net') || videoUrl.includes('b-cdn.net') || videoUrl.includes('bunnycdn')) {
                         if (videoUrl.includes('/play/')) {
-                            // Usar la URL directamente como iframe
-                            html = `<iframe class="w-full h-full rounded-xl" 
-                                            src="${videoUrl}" 
-                                            frameborder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                            allowfullscreen
-                                            loading="lazy"
-                                            style="background:#000;">
-                                    </iframe>`;
-                        } 
-                        // Si es Bunny CDN directo (archivo MP4)
-                        else if (videoUrl.match(/\.(mp4|webm|ogg)$/i)) {
-                            html = `<video class="w-full h-full rounded-xl" 
-                                           controls 
-                                           playsinline 
-                                           preload="metadata"
-                                           style="background:#000;width:100%;height:100%;">
-                                        <source src="${videoUrl}" type="video/mp4">
-                                        <p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p>
-                                    </video>`;
+                            html = `<iframe class="w-full h-full rounded-xl" src="${videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="background:#000;"></iframe>`;
+                        } else if (videoUrl.match(/\.(mp4|webm|ogg)$/i)) {
+                            html = `<video class="w-full h-full rounded-xl" controls playsinline preload="metadata" style="background:#000;width:100%;height:100%;"><source src="${videoUrl}" type="video/mp4"><p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p></video>`;
+                        } else if (videoUrl.includes('.m3u8') || videoUrl.includes('video.bunnycdn.com')) {
+                            html = `<div class="bunny-player-wrapper"><video id="bunny-hls-video" controls playsinline style="width:100%;height:100%;background:#000;"></video><div class="bunny-loading" id="bunny-loading"><i class="fas fa-spinner fa-spin"></i>Cargando video...</div></div><script src="https://cdn.jsdelivr.net/npm/hls.js@latest"><\/script><script>(function(){const video=document.getElementById('bunny-hls-video');const loading=document.getElementById('bunny-loading');const videoSrc='${videoUrl}';if(Hls.isSupported()){const hls=new Hls({enableWorker:true,lowLatencyMode:true});hls.loadSource(videoSrc);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,function(){if(loading)loading.style.display='none';video.play().catch(()=>{});});hls.on(Hls.Events.ERROR,function(){if(loading)loading.style.display='none';});window.bunnyHlsInstance=hls;}else if(video.canPlayType('application/vnd.apple.mpegurl')){video.src=videoSrc;video.addEventListener('loadedmetadata',function(){if(loading)loading.style.display='none';video.play().catch(()=>{});});}else{if(loading)loading.innerHTML='⚠️ Tu navegador no soporta HLS.';video.innerHTML='<p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de este video.</p>';}})();<\/script>`;
+                        } else {
+                            html = `<div class="bg-black/40 p-6 rounded-xl text-center"><i class="fas fa-video text-4xl text-secondary mb-3"></i><p class="text-slate-300 mb-2">Video alojado en Bunny.net</p><a href="${videoUrl}" target="_blank" class="text-secondary hover:underline font-bold">🔗 Abrir video en nueva ventana</a></div>`;
                         }
-                        // Si es Bunny Stream (HLS) - usamos HLS.js
-                        else if (videoUrl.includes('.m3u8') || videoUrl.includes('video.bunnycdn.com')) {
-                            html = `
-                                <div class="bunny-player-wrapper">
-                                    <video id="bunny-hls-video" controls playsinline style="width:100%;height:100%;background:#000;"></video>
-                                    <div class="bunny-loading" id="bunny-loading">
-                                        <i class="fas fa-spinner fa-spin"></i>
-                                        Cargando video...
-                                    </div>
-                                </div>
-                                <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"><\/script>
-                                <script>
-                                    (function() {
-                                        const video = document.getElementById('bunny-hls-video');
-                                        const loading = document.getElementById('bunny-loading');
-                                        const videoSrc = '${videoUrl}';
-                                        
-                                        if (Hls.isSupported()) {
-                                            const hls = new Hls({
-                                                enableWorker: true,
-                                                lowLatencyMode: true,
-                                            });
-                                            hls.loadSource(videoSrc);
-                                            hls.attachMedia(video);
-                                            hls.on(Hls.Events.MANIFEST_PARSED, function() {
-                                                if (loading) loading.style.display = 'none';
-                                                video.play().catch(() => {});
-                                            });
-                                            hls.on(Hls.Events.ERROR, function(event, data) {
-                                                if (loading) loading.style.display = 'none';
-                                            });
-                                            window.bunnyHlsInstance = hls;
-                                        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                                            video.src = videoSrc;
-                                            video.addEventListener('loadedmetadata', function() {
-                                                if (loading) loading.style.display = 'none';
-                                                video.play().catch(() => {});
-                                            });
-                                        } else {
-                                            if (loading) loading.innerHTML = '⚠️ Tu navegador no soporta HLS.';
-                                            video.innerHTML = '<p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de este video.</p>';
-                                        }
-                                    })();
-                                <\/script>
-                            `;
-                        }
-                        // Fallback: mostrar enlace
-                        else {
-                            html = `<div class="bg-black/40 p-6 rounded-xl text-center">
-                                        <i class="fas fa-video text-4xl text-secondary mb-3"></i>
-                                        <p class="text-slate-300 mb-2">Video alojado en Bunny.net</p>
-                                        <a href="${videoUrl}" target="_blank" class="text-secondary hover:underline font-bold">
-                                            🔗 Abrir video en nueva ventana
-                                        </a>
-                                    </div>`;
-                        }
-                    }
-                    // ---------- OTROS VIDEOS (MP4 directo) ----------
-                    else if (videoUrl.match(/\.(mp4|webm|ogg|mov|avi|mkv)$/i)) {
-                        html = `<video class="w-full h-full rounded-xl" 
-                                       controls 
-                                       playsinline 
-                                       preload="metadata"
-                                       style="background:#000;width:100%;height:100%;">
-                                    <source src="${videoUrl}" type="video/mp4">
-                                    <p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p>
-                                </video>`;
-                    }
-                    // ---------- FALLBACK GENERAL ----------
-                    else {
-                        html = `<div class="bg-black/40 p-6 rounded-xl text-center">
-                                    <i class="fas fa-video text-4xl text-secondary mb-3"></i>
-                                    <p class="text-slate-300 mb-2">No se pudo detectar el formato del video.</p>
-                                    <a href="${videoUrl}" target="_blank" class="text-secondary hover:underline font-bold">
-                                        🔗 Abrir video en nueva ventana
-                                    </a>
-                                </div>`;
+                    } else if (videoUrl.match(/\.(mp4|webm|ogg|mov|avi|mkv)$/i)) {
+                        html = `<video class="w-full h-full rounded-xl" controls playsinline preload="metadata" style="background:#000;width:100%;height:100%;"><source src="${videoUrl}" type="video/mp4"><p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p></video>`;
+                    } else {
+                        html = `<div class="bg-black/40 p-6 rounded-xl text-center"><i class="fas fa-video text-4xl text-secondary mb-3"></i><p class="text-slate-300 mb-2">No se pudo detectar el formato del video.</p><a href="${videoUrl}" target="_blank" class="text-secondary hover:underline font-bold">🔗 Abrir video en nueva ventana</a></div>`;
                     }
 
                     if (html) {
@@ -1068,7 +983,7 @@
                     if (header) header.scrollIntoView({ behavior: 'instant', block: 'start' });
                 }, 100);
             },
-            
+
             renderQuiz: function(quiz) { 
                 const cont = document.getElementById('quiz-questions'); 
                 if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; } 
@@ -1077,7 +992,7 @@
                     return `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}"><p class="font-bold text-white mb-3">${q.q}</p>${imageHtml}<div class="space-y-2">${q.opts.map((opt, oi) => `<label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option" data-opt-index="${oi}"><input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}</label>`).join('')}</div><div class="correct-feedback hidden text-green-400 text-sm mt-2"></div></div>`;
                 }).join(''); 
             },
-            
+
             gradeQuiz: function() {
                 const lesson = COURSE_DATA.find(l => l.id === this.currentId);
                 if (!lesson.quiz || lesson.quiz.length === 0) return;
@@ -1127,12 +1042,13 @@
                     resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span><p class="text-slate-300 mt-2 text-sm">${msg}</p>`; 
                 }
             },
-            
+
             resetQuiz: function() { document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(input => input.checked = false); document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect')); document.querySelectorAll('.correct-feedback').forEach(fb => fb.classList.add('hidden')); document.getElementById('quiz-result').classList.add('hidden'); },
             syncProgress: function() { const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); if (!auth) return; const data = JSON.stringify({ progress: this.progress, scores: this.quizScores }); const courseName = CURRENT_COURSE ? CURRENT_COURSE.name : 'Aula Virtual'; fetch(`${this.accessScriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&curso=${encodeURIComponent(courseName)}&data=${encodeURIComponent(data)}`, { method: 'GET', mode: 'no-cors' }).catch(e => console.error('Sync Error:', e)); },
             getMedalIcon: function(score) { if (score === undefined || score < 70) return ''; if (score === 100) return '🏆'; if (score >= 90) return '🥇'; if (score >= 80) return '🥈'; return '🥉'; },
-            
+
             generateCertificate: function() {
+                // ... (sin cambios, igual que antes)
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                 if (!auth || !CURRENT_COURSE) { this.showModal('Error', 'No hay sesión activa.', 'error'); return; }
 
@@ -1204,7 +1120,7 @@
                 })
                 .catch(e => { console.error(e); this.showModal('Error', 'Error de conexión.', 'error'); });
             },
-            
+
             saveCourseCompletionDate: function() {
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                 if (!auth || !CURRENT_COURSE) return;
@@ -1217,7 +1133,7 @@
                 .then(r => r.json()).then(result => { if (result.status === 'success') showSyncIndicator('Curso completado', 'success'); })
                 .catch(e => console.error(e));
             },
-            
+
             showCourseCompletionCelebration: function() {
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                 const overlay = document.createElement('div');
@@ -1229,7 +1145,7 @@
                 this.launchConfetti();
                 this.launchFireworks();
             },
-            
+
             showAchievementOverlay: function(moduleId, score) { 
                 const old = document.getElementById('subject-achievement-overlay'); if (old) old.remove(); 
                 const overlay = document.createElement('div'); overlay.id = 'subject-achievement-overlay'; 
@@ -1250,10 +1166,10 @@
                 this.launchFireworks(); 
                 setTimeout(() => { if (document.getElementById('subject-achievement-overlay')) closeAndNext(); }, 3500);
             },
-            
+
             playApplauseSound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 12; i++) { const bufferSize = ctx.sampleRate * 0.05; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 900 + (Math.random() * 800); const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.09); gain.gain.exponentialRampToValueAtTime(0.35, now + i * 0.09 + 0.01); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.05); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.09); source.stop(now + i * 0.09 + 0.06); } } catch (e) {} },
             playElectricitySound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 8; i++) { const bufferSize = ctx.sampleRate * 0.08; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'highpass'; filter.frequency.value = 3000 + Math.random() * 4000; const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.12); gain.gain.exponentialRampToValueAtTime(0.25, now + i * 0.12 + 0.005); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.12 + 0.08); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.12); source.stop(now + i * 0.12 + 0.08); } } catch (e) {} },
-            
+
             launchConfetti: function() {
                 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff1493', '#22d3ee', '#818cf8'];
                 for (let i = 0; i < 80; i++) {
@@ -1271,7 +1187,7 @@
                     document.head.appendChild(style);
                 }
             },
-            
+
             launchFireworks: function() {
                 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#22d3ee'];
                 for (let i = 0; i < 40; i++) {
@@ -1289,7 +1205,7 @@
                     document.head.appendChild(style);
                 }
             },
-            
+
             updateCompleteButton: function() { const lesson = COURSE_DATA.find(l => l.id === this.currentId); const hasQuiz = lesson?.quiz && lesson.quiz.length > 0; document.getElementById('btn-complete').disabled = hasQuiz && !this.progress.includes(this.currentId); },
             completeLesson: function() { if (this.currentId === 0) { if (!this.progress.includes(0)) { this.progress.push(0); localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress)); this.syncProgress(); } this.loadLesson(1); } else { const nextId = this.currentId + 1; if (nextId < COURSE_DATA.length) this.loadLesson(nextId); else this.showDashboard(); } },
             switchTab: function(tabId) { ['content', 'resources', 'quiz'].forEach(tab => { document.getElementById(`panel-${tab}`).classList.toggle('hidden', tab !== tabId); document.getElementById(`tab-${tab}`).className = tab === tabId ? 'pb-2 font-bold border-b-2 border-secondary text-secondary px-2' : 'pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2'; }); const header = document.getElementById('lesson-header'); if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
