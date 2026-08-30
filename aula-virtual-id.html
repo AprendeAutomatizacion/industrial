@@ -63,6 +63,70 @@
             --card-text-accent: #2db8ce;
         }
 
+        /* ============================================
+           ESTILOS PARA REPRODUCTOR DE VIDEO (MEJORADO)
+           ============================================ */
+        #lesson-video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* Relación 16:9 */
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        #lesson-video-container iframe,
+        #lesson-video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            border: none;
+            border-radius: 12px;
+        }
+
+        #lesson-video-container video {
+            object-fit: contain;
+            background: #0a0a0a;
+        }
+
+        /* Para pantallas pequeñas */
+        @media (max-width: 640px) {
+            #lesson-video-container {
+                padding-top: 56.25%;
+                border-radius: 8px;
+            }
+            #lesson-video-container iframe,
+            #lesson-video-container video {
+                border-radius: 8px;
+            }
+        }
+
+        /* Estilo para cuando no hay video */
+        #lesson-video-container .no-video-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+            color: #94a3b8;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        body.light-mode #lesson-video-container .no-video-placeholder {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        /* ============================================
+           FIN ESTILOS DE VIDEO
+           ============================================ */
+
         body.light-mode header {
             background-color: rgba(226, 232, 240, 0.9) !important;
             border-bottom-color: #cbd5e1 !important;
@@ -766,8 +830,14 @@
                 }).join('');
             },
             
+            // ============================================================
+            // 🚀 FUNCIÓN LOADLESSON MEJORADA CON SOPORTE PARA YOUTUBE + BUNNY
+            // ============================================================
             loadLesson: function(id) {
-                if (id > 0 && !this.progress.includes(id - 1)) { this.showModal('Lección bloqueada', 'Completa la lección anterior para continuar.', 'error'); return; }
+                if (id > 0 && !this.progress.includes(id - 1)) {
+                    this.showModal('Lección bloqueada', 'Completa la lección anterior para continuar.', 'error');
+                    return;
+                }
                 this.closeSidebarOnMobile();
                 const lesson = COURSE_DATA.find(item => item.id === id);
                 if (!lesson) return;
@@ -776,8 +846,106 @@
                 document.getElementById('view-lesson').classList.remove('hidden');
                 document.getElementById('lesson-title').innerText = lesson.title;
                 document.getElementById('lesson-content-text').innerHTML = lesson.content;
+
+                // ============================================================
+                // REPRODUCTOR DE VIDEO MEJORADO (YouTube + Bunny.net + otros)
+                // ============================================================
                 const videoContainer = document.getElementById('lesson-video-container');
-                if (lesson.video) { videoContainer.innerHTML = lesson.video.includes('youtube.com') || lesson.video.includes('youtu.be') ? `<iframe class="w-full h-full rounded-xl" src="${lesson.video}" frameborder="0" allowfullscreen></iframe>` : `<video class="w-full h-full rounded-xl" controls src="${lesson.video}"></video>`; videoContainer.classList.remove('hidden'); } else { videoContainer.innerHTML = ''; videoContainer.classList.add('hidden'); }
+                const videoUrl = lesson.video || '';
+
+                // Depuración: ver en consola qué URL está llegando
+                console.log('📹 URL del video:', videoUrl);
+
+                if (videoUrl && videoUrl.trim() !== '') {
+                    let html = '';
+                    let videoId = null;
+
+                    // ---------- DETECTAR YOUTUBE (watch?v=) ----------
+                    if (videoUrl.includes('youtube.com/watch?v=')) {
+                        videoId = videoUrl.split('v=')[1]?.split('&')[0];
+                        if (videoId) {
+                            html = `<iframe class="w-full h-full rounded-xl" 
+                                            src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" 
+                                            frameborder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen>
+                                    </iframe>`;
+                        }
+                    }
+                    // ---------- DETECTAR YOUTUBE (youtu.be/) ----------
+                    else if (videoUrl.includes('youtu.be/')) {
+                        videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0];
+                        if (videoId) {
+                            html = `<iframe class="w-full h-full rounded-xl" 
+                                            src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" 
+                                            frameborder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen>
+                                    </iframe>`;
+                        }
+                    }
+                    // ---------- DETECTAR YOUTUBE SHORTS ----------
+                    else if (videoUrl.includes('youtube.com/shorts/')) {
+                        videoId = videoUrl.split('shorts/')[1]?.split('?')[0];
+                        if (videoId) {
+                            html = `<iframe class="w-full h-full rounded-xl" 
+                                            src="https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1&autoplay=0" 
+                                            frameborder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen>
+                                    </iframe>`;
+                        }
+                    }
+                    // ---------- DETECTAR BUNNY.NET ----------
+                    else if (videoUrl.includes('bunny.net') || videoUrl.includes('b-cdn.net') || videoUrl.includes('bunnycdn')) {
+                        // Bunny.net usa URLs directas al archivo .mp4
+                        html = `<video class="w-full h-full rounded-xl" 
+                                       controls 
+                                       playsinline 
+                                       preload="metadata"
+                                       style="background:#000;width:100%;height:100%;">
+                                    <source src="${videoUrl}" type="video/mp4">
+                                    <p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p>
+                                </video>`;
+                    }
+                    // ---------- OTROS VIDEOS (MP4 directo, etc) ----------
+                    else if (videoUrl.match(/\.(mp4|webm|ogg|mov|avi|mkv)$/i)) {
+                        html = `<video class="w-full h-full rounded-xl" 
+                                       controls 
+                                       playsinline 
+                                       preload="metadata"
+                                       style="background:#000;width:100%;height:100%;">
+                                    <source src="${videoUrl}" type="video/mp4">
+                                    <p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p>
+                                </video>`;
+                    }
+                    // ---------- SI NO SE DETECTA NINGÚN FORMATO ----------
+                    else {
+                        // Intentar mostrar como enlace
+                        html = `<div class="bg-black/40 p-6 rounded-xl text-center">
+                                    <i class="fas fa-video text-4xl text-secondary mb-3"></i>
+                                    <p class="text-slate-300 mb-2">No se pudo detectar el formato del video.</p>
+                                    <a href="${videoUrl}" target="_blank" class="text-secondary hover:underline font-bold">
+                                        🔗 Abrir video en nueva ventana
+                                    </a>
+                                </div>`;
+                    }
+
+                    // Si se generó HTML correctamente, mostrarlo
+                    if (html) {
+                        videoContainer.innerHTML = html;
+                        videoContainer.classList.remove('hidden');
+                    } else {
+                        videoContainer.innerHTML = `<p class="text-slate-300 p-4">⚠️ No se pudo cargar el video.</p>`;
+                        videoContainer.classList.remove('hidden');
+                    }
+                } else {
+                    // No hay URL de video
+                    videoContainer.innerHTML = '';
+                    videoContainer.classList.add('hidden');
+                }
+
+                // Resto de la función (recursos, quiz, etc.)
                 document.getElementById('panel-resources').innerHTML = renderResourceCards(lesson.resources, lesson.title);
                 this.renderQuiz(lesson.quiz);
                 this.updateCompleteButton();
@@ -854,7 +1022,6 @@
             syncProgress: function() { const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); if (!auth) return; const data = JSON.stringify({ progress: this.progress, scores: this.quizScores }); const courseName = CURRENT_COURSE ? CURRENT_COURSE.name : 'Aula Virtual'; fetch(`${this.accessScriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&curso=${encodeURIComponent(courseName)}&data=${encodeURIComponent(data)}`, { method: 'GET', mode: 'no-cors' }).catch(e => console.error('Sync Error:', e)); },
             getMedalIcon: function(score) { if (score === undefined || score < 70) return ''; if (score === 100) return '🏆'; if (score >= 90) return '🥇'; if (score >= 80) return '🥈'; return '🥉'; },
             
-            // 🆕 FUNCIÓN PARA GENERAR CERTIFICADO CON ID: SIGLAS-(13018822+CÉDULA)
             generateCertificate: function() {
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                 if (!auth || !CURRENT_COURSE) { this.showModal('Error', 'No hay sesión activa.', 'error'); return; }
@@ -868,7 +1035,6 @@
                 const scores = Object.values(this.quizScores).filter(s => typeof s === 'number');
                 const promedio = scores.length > 0 ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 100;
 
-                // 🔧 FIX: Recuperar cédula de múltiples fuentes
                 let cedulaRaw = auth.cedula || '';
                 if (!cedulaRaw || cedulaRaw === 'N/A') {
                     if (typeof AuthLogic !== 'undefined' && AuthLogic.currentUser && AuthLogic.currentUser.cedula) {
@@ -882,13 +1048,11 @@
                     return;
                 }
 
-                // Calcular ID: SIGLAS-(13018822+CÉDULA)
                 const idCalculado = 13018822 + ciNum;
                 const siglas = CURRENT_COURSE.name.split(' ').filter(p => p.length > 0).map(p => p[0].toUpperCase()).join('') || 'CURSO';
                 const certId = siglas + '-' + idCalculado;
                 const verificationLink = 'https://aprendeautomatizacion.xyz/verify_page.html?id=' + certId;
 
-                // 🔧 FIX: Datos adicionales para el Excel
                 const now = new Date();
                 const fechaEmision = now.toISOString();
                 const fechaCulminacion = now.toISOString();
