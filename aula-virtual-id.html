@@ -87,9 +87,50 @@
             border-radius: 12px;
         }
 
+        #lesson-video-container iframe[src*="player.mediadelivery.net"] {
+            background: #000;
+            border-radius: 12px;
+        }
+
         #lesson-video-container video {
             object-fit: contain;
             background: #0a0a0a;
+        }
+
+        #lesson-video-container .bunny-player-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        #lesson-video-container .bunny-player-wrapper video {
+            position: relative;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
+        }
+
+        #lesson-video-container .bunny-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 14px;
+            z-index: 10;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        #lesson-video-container .bunny-loading i {
+            display: block;
+            font-size: 32px;
+            margin-bottom: 10px;
         }
 
         /* Para pantallas pequeñas */
@@ -831,7 +872,7 @@
             },
             
             // ============================================================
-            // 🚀 FUNCIÓN LOADLESSON MEJORADA CON SOPORTE PARA YOUTUBE + BUNNY
+            // 🚀 FUNCIÓN LOADLESSON MEJORADA CON SOPORTE PARA YOUTUBE + BUNNY (iframe)
             // ============================================================
             loadLesson: function(id) {
                 if (id > 0 && !this.progress.includes(id - 1)) {
@@ -848,19 +889,18 @@
                 document.getElementById('lesson-content-text').innerHTML = lesson.content;
 
                 // ============================================================
-                // REPRODUCTOR DE VIDEO MEJORADO (YouTube + Bunny.net + otros)
+                // REPRODUCTOR DE VIDEO MEJORADO (YouTube + Bunny.net iframe)
                 // ============================================================
                 const videoContainer = document.getElementById('lesson-video-container');
                 const videoUrl = lesson.video || '';
 
-                // Depuración: ver en consola qué URL está llegando
                 console.log('📹 URL del video:', videoUrl);
 
                 if (videoUrl && videoUrl.trim() !== '') {
                     let html = '';
                     let videoId = null;
 
-                    // ---------- DETECTAR YOUTUBE (watch?v=) ----------
+                    // ---------- YOUTUBE (watch?v=) ----------
                     if (videoUrl.includes('youtube.com/watch?v=')) {
                         videoId = videoUrl.split('v=')[1]?.split('&')[0];
                         if (videoId) {
@@ -872,7 +912,7 @@
                                     </iframe>`;
                         }
                     }
-                    // ---------- DETECTAR YOUTUBE (youtu.be/) ----------
+                    // ---------- YOUTUBE (youtu.be/) ----------
                     else if (videoUrl.includes('youtu.be/')) {
                         videoId = videoUrl.split('youtu.be/')[1]?.split('?')[0];
                         if (videoId) {
@@ -884,7 +924,7 @@
                                     </iframe>`;
                         }
                     }
-                    // ---------- DETECTAR YOUTUBE SHORTS ----------
+                    // ---------- YOUTUBE SHORTS ----------
                     else if (videoUrl.includes('youtube.com/shorts/')) {
                         videoId = videoUrl.split('shorts/')[1]?.split('?')[0];
                         if (videoId) {
@@ -896,19 +936,93 @@
                                     </iframe>`;
                         }
                     }
-                    // ---------- DETECTAR BUNNY.NET ----------
-                    else if (videoUrl.includes('bunny.net') || videoUrl.includes('b-cdn.net') || videoUrl.includes('bunnycdn')) {
-                        // Bunny.net usa URLs directas al archivo .mp4
-                        html = `<video class="w-full h-full rounded-xl" 
-                                       controls 
-                                       playsinline 
-                                       preload="metadata"
-                                       style="background:#000;width:100%;height:100%;">
-                                    <source src="${videoUrl}" type="video/mp4">
-                                    <p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p>
-                                </video>`;
+                    // ---------- BUNNY.NET (iframe embebido) ----------
+                    else if (videoUrl.includes('player.mediadelivery.net') || 
+                             videoUrl.includes('bunny.net') || 
+                             videoUrl.includes('b-cdn.net') || 
+                             videoUrl.includes('bunnycdn')) {
+                        
+                        // 🆕 Detectar si es URL de iframe de Bunny (contiene /play/)
+                        if (videoUrl.includes('/play/')) {
+                            // Usar la URL directamente como iframe
+                            html = `<iframe class="w-full h-full rounded-xl" 
+                                            src="${videoUrl}" 
+                                            frameborder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                            allowfullscreen
+                                            loading="lazy"
+                                            style="background:#000;">
+                                    </iframe>`;
+                        } 
+                        // Si es Bunny CDN directo (archivo MP4)
+                        else if (videoUrl.match(/\.(mp4|webm|ogg)$/i)) {
+                            html = `<video class="w-full h-full rounded-xl" 
+                                           controls 
+                                           playsinline 
+                                           preload="metadata"
+                                           style="background:#000;width:100%;height:100%;">
+                                        <source src="${videoUrl}" type="video/mp4">
+                                        <p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p>
+                                    </video>`;
+                        }
+                        // Si es Bunny Stream (HLS) - usamos HLS.js
+                        else if (videoUrl.includes('.m3u8') || videoUrl.includes('video.bunnycdn.com')) {
+                            html = `
+                                <div class="bunny-player-wrapper">
+                                    <video id="bunny-hls-video" controls playsinline style="width:100%;height:100%;background:#000;"></video>
+                                    <div class="bunny-loading" id="bunny-loading">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                        Cargando video...
+                                    </div>
+                                </div>
+                                <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"><\/script>
+                                <script>
+                                    (function() {
+                                        const video = document.getElementById('bunny-hls-video');
+                                        const loading = document.getElementById('bunny-loading');
+                                        const videoSrc = '${videoUrl}';
+                                        
+                                        if (Hls.isSupported()) {
+                                            const hls = new Hls({
+                                                enableWorker: true,
+                                                lowLatencyMode: true,
+                                            });
+                                            hls.loadSource(videoSrc);
+                                            hls.attachMedia(video);
+                                            hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                                                if (loading) loading.style.display = 'none';
+                                                video.play().catch(() => {});
+                                            });
+                                            hls.on(Hls.Events.ERROR, function(event, data) {
+                                                if (loading) loading.style.display = 'none';
+                                            });
+                                            window.bunnyHlsInstance = hls;
+                                        } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                                            video.src = videoSrc;
+                                            video.addEventListener('loadedmetadata', function() {
+                                                if (loading) loading.style.display = 'none';
+                                                video.play().catch(() => {});
+                                            });
+                                        } else {
+                                            if (loading) loading.innerHTML = '⚠️ Tu navegador no soporta HLS.';
+                                            video.innerHTML = '<p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de este video.</p>';
+                                        }
+                                    })();
+                                <\/script>
+                            `;
+                        }
+                        // Fallback: mostrar enlace
+                        else {
+                            html = `<div class="bg-black/40 p-6 rounded-xl text-center">
+                                        <i class="fas fa-video text-4xl text-secondary mb-3"></i>
+                                        <p class="text-slate-300 mb-2">Video alojado en Bunny.net</p>
+                                        <a href="${videoUrl}" target="_blank" class="text-secondary hover:underline font-bold">
+                                            🔗 Abrir video en nueva ventana
+                                        </a>
+                                    </div>`;
+                        }
                     }
-                    // ---------- OTROS VIDEOS (MP4 directo, etc) ----------
+                    // ---------- OTROS VIDEOS (MP4 directo) ----------
                     else if (videoUrl.match(/\.(mp4|webm|ogg|mov|avi|mkv)$/i)) {
                         html = `<video class="w-full h-full rounded-xl" 
                                        controls 
@@ -919,9 +1033,8 @@
                                     <p class="text-slate-300 p-4 text-center">Tu navegador no soporta la reproducción de video HTML5.</p>
                                 </video>`;
                     }
-                    // ---------- SI NO SE DETECTA NINGÚN FORMATO ----------
+                    // ---------- FALLBACK GENERAL ----------
                     else {
-                        // Intentar mostrar como enlace
                         html = `<div class="bg-black/40 p-6 rounded-xl text-center">
                                     <i class="fas fa-video text-4xl text-secondary mb-3"></i>
                                     <p class="text-slate-300 mb-2">No se pudo detectar el formato del video.</p>
@@ -931,7 +1044,6 @@
                                 </div>`;
                     }
 
-                    // Si se generó HTML correctamente, mostrarlo
                     if (html) {
                         videoContainer.innerHTML = html;
                         videoContainer.classList.remove('hidden');
@@ -940,12 +1052,10 @@
                         videoContainer.classList.remove('hidden');
                     }
                 } else {
-                    // No hay URL de video
                     videoContainer.innerHTML = '';
                     videoContainer.classList.add('hidden');
                 }
 
-                // Resto de la función (recursos, quiz, etc.)
                 document.getElementById('panel-resources').innerHTML = renderResourceCards(lesson.resources, lesson.title);
                 this.renderQuiz(lesson.quiz);
                 this.updateCompleteButton();
