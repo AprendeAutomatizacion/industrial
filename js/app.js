@@ -1132,7 +1132,10 @@ let methodologyOriginal = null;
 
 function initMethodologyCards() {
     const cards = document.querySelectorAll('.methodology-card');
-    if (!cards.length) return;
+    if (!cards.length) {
+        console.warn('⚠️ No se encontraron tarjetas de metodología');
+        return;
+    }
 
     let overlay = document.querySelector('.card-overlay');
     if (!overlay) {
@@ -1365,80 +1368,7 @@ function renderHomePage() {
         }
     }
     
-    // Comunidad - Perfiles
-    if (homePageData.comunidad && homePageData.comunidad.length > 0) {
-        const comunidad = homePageData.comunidad[0];
-        const section = document.querySelector('#comunidad');
-        if (section) {
-            const tituloEl = section.querySelector('h2');
-            if (tituloEl && comunidad.titulo) {
-                if (comunidad.titulo.includes('realizan')) {
-                    tituloEl.innerHTML = '¿Quiénes realizan <br><span>nuestros cursos?</span>';
-                } else {
-                    tituloEl.innerHTML = comunidad.titulo;
-                }
-            }
-            const descEl = section.querySelector('p');
-            if (descEl && comunidad.descripcion) {
-                descEl.textContent = comunidad.descripcion;
-            }
-            const buttonsContainer = section.querySelector('.space-y-4');
-            if (buttonsContainer) {
-                let perfiles = [];
-                if (comunidad.badge && comunidad.badge.trim() !== '') {
-                    perfiles = comunidad.badge.split('|').map(s => s.trim()).filter(s => s);
-                }
-                if (perfiles.length === 0) {
-                    perfiles = ['Ingeniero', 'TSU', 'Estudiante'];
-                }
-                const iconMap = {
-                    'ingeniero': 'fa-user-tie text-blue-700',
-                    'tsu': 'fa-cogs text-cyan-700',
-                    'estudiante': 'fa-user-graduate text-teal-700',
-                    'bachiller': 'fa-user text-purple-700',
-                    'inces': 'fa-hard-hat text-orange-700',
-                    'técnico': 'fa-tools text-green-700',
-                    'tecnico': 'fa-tools text-green-700',
-                    'técnico superior': 'fa-tools text-green-700',
-                    'tecnico superior': 'fa-tools text-green-700',
-                    'licenciado': 'fa-user-tie text-indigo-700',
-                    'profesional': 'fa-briefcase text-red-700',
-                    'egresado': 'fa-graduation-cap text-emerald-700',
-                    'pregrado': 'fa-book text-pink-700',
-                    'postgrado': 'fa-book-open text-amber-700',
-                    'obrero': 'fa-hard-hat text-yellow-700',
-                    'supervisor': 'fa-clipboard-check text-sky-700',
-                    'gerente': 'fa-chart-line text-violet-700',
-                    'docente': 'fa-chalkboard-teacher text-rose-700',
-                    'investigador': 'fa-flask text-cyan-700',
-                    'empresario': 'fa-building text-blue-700',
-                    'tecnólogo': 'fa-microchip text-teal-700',
-                    'tecnologo': 'fa-microchip text-teal-700',
-                    'estudiante de pregrado': 'fa-book text-pink-700',
-                    'estudiante de postgrado': 'fa-book-open text-amber-700',
-                    'estudiante universitario': 'fa-user-graduate text-teal-700'
-                };
-                buttonsContainer.innerHTML = perfiles.map((perfil, index) => {
-                    const perfilNormalizado = perfil.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-                    const perfilKey = perfilNormalizado.replace(/\s+/g, '_');
-                    const iconClass = iconMap[perfilNormalizado] || iconMap[perfilKey] || 'fa-user text-slate-400';
-                    const count = globalStats[`perfil_${perfilKey}`] || 0;
-                    return `
-                    <button onclick="regCom('${perfilKey}')" id="btn-${perfilKey}" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
-                        <i class="fas ${iconClass} text-3xl"></i>
-                        <span class="text-base font-black uppercase">${perfil}</span>
-                        <div class="prof-count-bg ml-auto px-3 py-1 rounded-full"><span id="cnt-${perfilKey}" class="font-black">${count}</span></div>
-                    </button>`;
-                }).join('');
-                
-                const savedProfile = localStorage.getItem('user_profile_selected');
-                if (savedProfile) {
-                    const btn = document.getElementById(`btn-${savedProfile}`);
-                    if (btn) btn.classList.add('prof-selected');
-                }
-            }
-        }
-    }
+
     
     // Manuales y Recursos
     if (homePageData.manuales.length > 0) {
@@ -1474,60 +1404,19 @@ function renderHomePage() {
         }
     }
     
-    // Modalidades
+    // ==========================================
+    // MODALIDADES - COMENTADO PORQUE YA ESTÁ EN EL HTML
+    // ==========================================
+    /*
     if (homePageData.modalidades.length > 0) {
         const container = document.querySelector('#modalidades .grid');
         if (container) {
             container.innerHTML = homePageData.modalidades.map((modalidad, index) => {
-                const caracteristicas = modalidad.badge 
-                    ? modalidad.badge.split('|').map(s => s.trim()).filter(s => s) 
-                    : [];
-                const listaViñetas = caracteristicas.length > 0 
-                    ? `<ul class="modalidad-list mt-4 space-y-2">
-                        ${caracteristicas.map(item => `
-                            <li class="flex items-start gap-2 text-sm">
-                                <i class="fas fa-check-circle text-cyan-500 mt-1"></i>
-                                <span>${item}</span>
-                            </li>`).join('')}
-                       </ul>` 
-                    : '';
-                const botones = `
-                    <div class="course-card-buttons mt-6">
-                        ${modalidad.enlace_info ? `<button onclick="registerViewAndGo('${modalidad.enlace_info}', ${index + 30}, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-info-circle mr-1"></i> Más Información</button>` : ''}
-                        ${modalidad.enlace_compra ? `<button onclick="window.open('${modalidad.enlace_compra}', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl"><i class="fas fa-shopping-cart mr-1"></i> Comprar</button>` : ''}
-                    </div>`;
-                const tituloNormalizado = modalidad.titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                let logoUrl = '';
-                if (tituloNormalizado.includes('presencial')) {
-                    logoUrl = 'img/AA (40).webp';
-                } else if (tituloNormalizado.includes('online')) {
-                    logoUrl = 'img/AA (38).webp';
-                }
-                const logoHTML = logoUrl 
-                    ? `<div class="modalidad-logo-bg" style="background-image: url('${logoUrl}');" title="Logo ${modalidad.titulo}"></div>` 
-                    : '';
-                return `
-                    <div class="course-card course-card-level-basico reveal reveal-up flex flex-col md:flex-row overflow-hidden">
-                        <div class="course-card-content flex-1 p-6 md:p-8">
-                            <div class="flex items-center gap-2 mb-2">
-                                ${logoHTML}
-                                <h3 class="course-card-title !m-0">${modalidad.titulo}</h3>
-                            </div>
-                            <p class="course-card-description">${modalidad.descripcion || ''}</p>
-                            ${listaViñetas}
-                            ${botones}
-                        </div>
-                        <div class="course-card-image-container modalidad-image-container md:w-1/2 lg:w-2/5 shrink-0 bg-gradient-to-br from-slate-900 to-slate-800 relative overflow-hidden">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent z-10 pointer-events-none"></div>
-                            <img src="${modalidad.imagen_url || 'img/AA (1).gif'}" 
-                                 alt="${modalidad.titulo}" 
-                                 class="course-card-image w-full h-full object-cover transition-transform duration-700 hover:scale-105" 
-                                 onerror="this.src='img/AA (1).gif'">
-                        </div>
-                    </div>`;
+                // ... código ...
             }).join('');
         }
     }
+    */
     
     // Curso Especial
     if (homePageData.curso_especial.length > 0) {
@@ -1591,7 +1480,10 @@ function renderHomePage() {
         }
     }
     
-    // Metodología
+    // ==========================================
+    // METODOLOGÍA - COMENTADO PORQUE YA ESTÁ EN EL HTML
+    // ==========================================
+    /*
     if (homePageData.metodologia.length > 0) {
         const container = document.querySelector('#metodologia .grid');
         if (container) {
@@ -1613,60 +1505,8 @@ function renderHomePage() {
             }).join('');
         }
     }
+    */
     
-    // Testimonios
-    if (homePageData.testimonios.length > 0) {
-        const container = document.querySelector('#testimonios .grid');
-        if (container) {
-            container.innerHTML = homePageData.testimonios.map((test, index) => {
-                const initials = test.titulo ? test.titulo.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase() : '??';
-                let imageUrl = test.imagen_url || '';
-                if (imageUrl && !imageUrl.startsWith('http') && !imageUrl.startsWith('https') && !imageUrl.startsWith('data:')) {
-                    if (!imageUrl.startsWith('img/') && !imageUrl.startsWith('./img/') && !imageUrl.startsWith('/')) {
-                        imageUrl = 'img/' + imageUrl;
-                    }
-                }
-                let imageHTML = '';
-                if (imageUrl && imageUrl.trim() !== '') {
-                    imageHTML = `
-                        <img src="${imageUrl}" alt="${test.titulo}" 
-                             class="course-card-image w-full h-48 object-cover opacity-100" 
-                             style="opacity:1; mix-blend-mode:normal; image-rendering:auto;"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="w-full h-full hidden items-end justify-center bg-[#dfe5e7]">
-                            <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                        </div>`;
-                } else {
-                    imageHTML = `
-                        <div class="w-full h-full flex items-end justify-center bg-[#dfe5e7]">
-                            <svg class="w-[140px] h-[140px] text-white -mb-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-                        </div>`;
-                }
-                return `
-                <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
-                    <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
-                        ${imageHTML}
-                    </div>
-                    <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
-                        <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
-                        <div class="relative z-10">
-                            <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
-                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                            </div>
-                            <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"${test.descripcion || ''}"</p>
-                            <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-full bg-cyan-100 flex items-center justify-center text-cyan-700 font-black text-xl flex-shrink-0">${initials}</div>
-                                <div>
-                                    <h4 class="font-bold text-sm text-gray-800 dark:text-white">${test.titulo}</h4>
-                                    <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">${test.subtitulo || ''}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-    }
     
     // FAQ
     if (homePageData.faq.length > 0) {
@@ -1769,7 +1609,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     renderHomePage();
     rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b();
-    initMethodologyCards();
+    
+    // Inicializar metodología con un pequeño retraso para asegurar que las tarjetas estén en el DOM
+    setTimeout(() => {
+        initMethodologyCards();
+    }, 300);
 
     revealAllSections();
     hideLoadingToast();
