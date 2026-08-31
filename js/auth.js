@@ -3,17 +3,16 @@
  * Maneja el estado del usuario comunicándose con Google Apps Script y usando localStorage.
  * Adaptado para el sistema completo de Aprende Automatización (Integración con Mis Cursos/Progreso).
  * 
- * VERSIÓN ACTUALIZADA: Registro extendido con Cédula, Teléfono, Estado, Profesión y validación de contraseña.
- * CAMBIOS RECIENTES: handleLogin y refreshSessionData usan la nueva acción 'get_user' (optimizada).
+ * ✅ SEPARACIÓN DE DESCARGAS:
+ *    - archivosDescargados (Columna K) → Aula Virtual
+ *    - downloadedFiles (Columna N) → Página de Programas
  */
 const AuthLogic = {
     currentUser: null,
     pendingAction: null,
 
-    // Usar SCRIPT_URL global si existe (de mis cursos), o el valor por defecto
-    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec',
+    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbzvSa9yxQYuWtC-YSn4x1K6hzhdeujQfNEb1GoWkvJmFShA4kdhSWe_oOoBFqkKaagx/exec',
 
-    // Inicializar: Revisar si hay sesión guardada en localStorage
     init: async function() {
         const savedSession = localStorage.getItem('user') || localStorage.getItem('aa_user_session');
         if (savedSession) {
@@ -26,7 +25,6 @@ const AuthLogic = {
                 console.error("Error al leer sesión", e);
             }
         }
-
         AuthUI.injectModal();
         AuthUI.updateGlobalState();
     },
@@ -35,13 +33,14 @@ const AuthLogic = {
         return (s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ');
     },
 
+    // ============================================================
+    // ✅ REFRESH SESSION - Carga archivosDescargados y downloadedFiles
+    // ============================================================
     refreshSessionData: async function() {
         if (!this.currentUser || !this.currentUser.email) return;
 
         try {
             const email = this.currentUser.email.toLowerCase();
-
-            // NUEVA LLAMADA: get_user (solo un usuario)
             const response = await fetch(`${this.API_URL}?action=get_user&email=${encodeURIComponent(email)}&nocache=${Date.now()}`);
             const data = await response.json();
 
@@ -53,18 +52,50 @@ const AuthLogic = {
 
                 const originalUserJSON = JSON.stringify(this.currentUser);
 
-                // Consolidar fechas de culminación
+                // Consolidar fechas
                 const serverCompletionDates = (data.userCourseCompletionDates && typeof data.userCourseCompletionDates === 'object') ? data.userCourseCompletionDates : {};
                 const globalUserCompletionDates = (globalUser.completionDates && typeof globalUser.completionDates === 'object') ? globalUser.completionDates : {};
                 const localCompletionDates = this.currentUser.completionDates || {};
                 const mergedCompletionDates = {...localCompletionDates, ...globalUserCompletionDates, ...serverCompletionDates};
 
-                // Consolidar fechas de inscripción
                 const serverEnrollmentDates = (data.userCourseEnrollmentDates && typeof data.userCourseEnrollmentDates === 'object') ? data.userCourseEnrollmentDates : {};
                 const localEnrollmentDates = this.currentUser.enrollmentDates || {};
                 const mergedEnrollmentDates = {...localEnrollmentDates, ...serverEnrollmentDates};
 
-                // Reconstruimos el objeto de usuario, preservando la contraseña local
+                // ✅ archivosDescargados (Columna K) → Aula Virtual
+                let archivosDescargados = {};
+                if (globalUser.archivosDescargados) {
+                    if (typeof globalUser.archivosDescargados === 'string') {
+                        try { archivosDescargados = JSON.parse(globalUser.archivosDescargados); } catch(e) { archivosDescargados = {}; }
+                    } else if (typeof globalUser.archivosDescargados === 'object' && !Array.isArray(globalUser.archivosDescargados)) {
+                        archivosDescargados = globalUser.archivosDescargados;
+                    }
+                }
+                if (Array.isArray(archivosDescargados)) archivosDescargados = {};
+
+                // ✅ downloadedFiles (Columna N) → Página de Programas
+                let downloadedFiles = {};
+                if (globalUser.downloadedFiles) {
+                    if (typeof globalUser.downloadedFiles === 'string') {
+                        try { downloadedFiles = JSON.parse(globalUser.downloadedFiles); } catch(e) { downloadedFiles = {}; }
+                    } else if (typeof globalUser.downloadedFiles === 'object' && !Array.isArray(globalUser.downloadedFiles)) {
+                        downloadedFiles = globalUser.downloadedFiles;
+                    }
+                }
+                if (Array.isArray(downloadedFiles)) downloadedFiles = {};
+
+                // Si hay historial_descargas, combinarlo con archivosDescargados
+                if (globalUser.historial_descargas) {
+                    if (typeof globalUser.historial_descargas === 'string') {
+                        try {
+                            const parsed = JSON.parse(globalUser.historial_descargas);
+                            if (typeof parsed === 'object' && !Array.isArray(parsed)) {
+                                archivosDescargados = { ...parsed, ...archivosDescargados };
+                            }
+                        } catch(e) {}
+                    }
+                }
+
                 const refreshedUser = {
                     name: (details.name && details.name !== "No provisto" && details.name !== "N/A") ? details.name : (globalUser.name || email.split('@')[0]),
                     email: email,
@@ -72,8 +103,8 @@ const AuthLogic = {
                     profession: globalUser.profession || this.currentUser.profession || "",
                     likedCourses: Array.isArray(globalUser.likedCourses) ? globalUser.likedCourses : (this.currentUser.likedCourses || []),
                     accessedCursos: Array.isArray(this.currentUser.accessedCursos) ? [...this.currentUser.accessedCursos] : [],
-                    downloadedFiles: Array.isArray(globalUser.downloadedFiles) ? globalUser.downloadedFiles : (this.currentUser.downloadedFiles || []),
-                    downloadCounts: (globalUser.downloadCounts && typeof globalUser.downloadCounts === 'object') ? globalUser.downloadCounts : (this.currentUser.downloadCounts || {}),
+                    archivosDescargados: archivosDescargados,
+                    downloadedFiles: downloadedFiles,
                     ratings: globalUser.ratings || this.currentUser.ratings || {},
                     completionDates: mergedCompletionDates,
                     enrollmentDates: mergedEnrollmentDates,
@@ -97,7 +128,7 @@ const AuthLogic = {
                     this.currentUser = refreshedUser;
                     localStorage.setItem('user', JSON.stringify(this.currentUser));
                     window.currentUser = this.currentUser;
-                    console.log("AuthLogic: Datos de sesión actualizados desde el servidor.");
+                    console.log("AuthLogic: Datos actualizados. archivosDescargados:", this.currentUser.archivosDescargados);
                     AuthUI.updateGlobalState();
                 }
             }
@@ -119,18 +150,10 @@ const AuthLogic = {
             btn.disabled = true;
 
             try {
-                // NUEVA LLAMADA: get_user
                 const response = await fetch(`${this.API_URL}?action=get_user&email=${encodeURIComponent(email)}&nocache=${Date.now()}`);
                 const text = await response.text();
-                console.log('Respuesta cruda:', text);
-
                 let data;
-                try {
-                    data = JSON.parse(text);
-                } catch (e) {
-                    console.error('La respuesta no es JSON válido:', text);
-                    throw new Error('Respuesta del servidor no válida');
-                }
+                try { data = JSON.parse(text); } catch (e) { throw new Error('Respuesta del servidor no válida'); }
 
                 if(data.status === 'success') {
                     let globalUser = data.user || null;
@@ -146,11 +169,43 @@ const AuthLogic = {
                         return;
                     }
 
-                    // Consolidar fechas de culminación
                     const serverCompletionDates = (data.userCourseCompletionDates && typeof data.userCourseCompletionDates === 'object') ? data.userCourseCompletionDates : {};
                     const mergedCompletionDates = {...(globalUser.completionDates || {}), ...serverCompletionDates};
 
-                    // Construimos el objeto maestro
+                    // ✅ archivosDescargados (Columna K)
+                    let archivosDescargados = {};
+                    if (globalUser.archivosDescargados) {
+                        if (typeof globalUser.archivosDescargados === 'string') {
+                            try { archivosDescargados = JSON.parse(globalUser.archivosDescargados); } catch(e) { archivosDescargados = {}; }
+                        } else if (typeof globalUser.archivosDescargados === 'object' && !Array.isArray(globalUser.archivosDescargados)) {
+                            archivosDescargados = globalUser.archivosDescargados;
+                        }
+                    }
+                    if (Array.isArray(archivosDescargados)) archivosDescargados = {};
+
+                    // ✅ downloadedFiles (Columna N)
+                    let downloadedFiles = {};
+                    if (globalUser.downloadedFiles) {
+                        if (typeof globalUser.downloadedFiles === 'string') {
+                            try { downloadedFiles = JSON.parse(globalUser.downloadedFiles); } catch(e) { downloadedFiles = {}; }
+                        } else if (typeof globalUser.downloadedFiles === 'object' && !Array.isArray(globalUser.downloadedFiles)) {
+                            downloadedFiles = globalUser.downloadedFiles;
+                        }
+                    }
+                    if (Array.isArray(downloadedFiles)) downloadedFiles = {};
+
+                    // Si hay historial_descargas, combinarlo con archivosDescargados
+                    if (globalUser.historial_descargas) {
+                        if (typeof globalUser.historial_descargas === 'string') {
+                            try {
+                                const parsed = JSON.parse(globalUser.historial_descargas);
+                                if (typeof parsed === 'object' && !Array.isArray(parsed)) {
+                                    archivosDescargados = { ...parsed, ...archivosDescargados };
+                                }
+                            } catch(e) {}
+                        }
+                    }
+
                     this.currentUser = {
                         name: (details.name && details.name !== "No provisto" && details.name !== "N/A") ? details.name : (globalUser.name || email.split('@')[0]),
                         email: email,
@@ -158,8 +213,8 @@ const AuthLogic = {
                         profession: globalUser.profession || "",
                         likedCourses: Array.isArray(globalUser.likedCourses) ? globalUser.likedCourses : [],
                         accessedCursos: Array.isArray(globalUser.accessedCursos) ? globalUser.accessedCursos : [],
-                        downloadedFiles: Array.isArray(globalUser.downloadedFiles) ? globalUser.downloadedFiles : [],
-                        downloadCounts: (globalUser.downloadCounts && typeof globalUser.downloadCounts === 'object') ? globalUser.downloadCounts : {},
+                        archivosDescargados: archivosDescargados,
+                        downloadedFiles: downloadedFiles,
                         ratings: globalUser.ratings || {},
                         completionDates: mergedCompletionDates,
                         cedula: details.cedula || globalUser.cedula || "N/A",
@@ -168,7 +223,6 @@ const AuthLogic = {
                         estado: details.estado || globalUser.estado || "N/A"
                     };
 
-                    // Sincronizar cursos adquiridos si COURSES_DATA existe
                     if (data.userCourses && typeof window.COURSES_DATA !== 'undefined') {
                         let myCourseNames = data.userCourses || [];
                         myCourseNames.forEach(cName => {
@@ -209,9 +263,6 @@ const AuthLogic = {
         }
     },
 
-    // ==============================
-    // REGISTRO EXTENDIDO - ACTUALIZADO
-    // ==============================
     handleRegister: async function(e) {
         e.preventDefault();
 
@@ -258,11 +309,7 @@ const AuthLogic = {
             formData.append('profession', profession);
             formData.append('password', pass);
 
-            const response = await fetch(this.API_URL, {
-                method: 'POST',
-                body: formData
-            });
-
+            const response = await fetch(this.API_URL, { method: 'POST', body: formData });
             const data = await response.json();
 
             if(data.status === 'success') {
@@ -277,7 +324,8 @@ const AuthLogic = {
                     profession: profession,
                     likedCourses: [],
                     accessedCursos: [],
-                    downloadedFiles: [],
+                    archivosDescargados: {},
+                    downloadedFiles: {},
                     ratings: {},
                     completionDates: {},
                     enrollmentDates: {}
@@ -313,11 +361,13 @@ const AuthLogic = {
         localStorage.removeItem('user');
         localStorage.removeItem('aa_user_session');
         this.pendingAction = null;
-
         this.showNotification('Has cerrado sesión exitosamente', 'info');
         setTimeout(() => window.location.reload(), 700);
     },
 
+    // ============================================================
+    // ✅ SYNC USER DATA - Guarda archivosDescargados (K) y downloadedFiles (N) por separado
+    // ============================================================
     syncUserData: async function(silent = false) {
         if (!this.currentUser || !this.currentUser.email) return;
 
@@ -325,20 +375,43 @@ const AuthLogic = {
             window.showSyncIndicator('Sincronizando...', 'loading');
         }
 
+        // ✅ Asegurar que ambos sean objetos JSON válidos
+        if (!this.currentUser.archivosDescargados || Array.isArray(this.currentUser.archivosDescargados)) {
+            this.currentUser.archivosDescargados = {};
+        }
+        if (!this.currentUser.downloadedFiles || Array.isArray(this.currentUser.downloadedFiles)) {
+            this.currentUser.downloadedFiles = {};
+        }
+
+        // ✅ ELIMINAR campos duplicados/legado
+        const userToSync = { ...this.currentUser };
+        delete userToSync.downloadCounts;
+        delete userToSync.downloadedPrograms;
+
         const email = this.currentUser.email.toLowerCase();
-        const userData = JSON.stringify(this.currentUser);
+        const userData = JSON.stringify(userToSync);
+
+        // ✅ Enviar cada campo de descarga por separado para que el backend sepa dónde ponerlo
+        const params = new URLSearchParams({
+            action: 'update_user', 
+            email: email, 
+            userData: userData,
+            archivosDescargados: JSON.stringify(this.currentUser.archivosDescargados),
+            downloadedFiles: JSON.stringify(this.currentUser.downloadedFiles)
+        });
 
         try {
             const response = await fetch(this.API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({action: 'update_user', email: email, userData: userData})
+                body: params
             });
 
             if (response.ok || response.type === 'opaque' || response.redirected) {
-                 if (!silent && typeof window.showSyncIndicator === 'function') {
+                if (!silent && typeof window.showSyncIndicator === 'function') {
                     window.showSyncIndicator('Progreso guardado en la nube', 'success');
                 }
+                console.log('✅ Datos sincronizados: archivosDescargados (K)=', this.currentUser.archivosDescargados, '| downloadedFiles (N)=', this.currentUser.downloadedFiles);
             } else {
                 throw new Error(`Server responded with status: ${response.status}`);
             }
@@ -364,9 +437,9 @@ const AuthLogic = {
     }
 };
 
-/**
- * INTERFAZ DE USUARIO DE AUTENTICACIÓN (AuthUI)
- */
+// ============================================================
+// INTERFAZ DE USUARIO DE AUTENTICACIÓN (AuthUI)
+// ============================================================
 const AuthUI = {
     injectModal: function() {
         if (document.getElementById('auth-modal')) return;
@@ -374,16 +447,13 @@ const AuthUI = {
         const modalHTML = `
         <div id="auth-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[100000] hidden flex items-center justify-center transition-opacity opacity-0" style="transition: opacity 0.3s ease;">
             <div class="bg-slate-800 border border-white/10 rounded-3xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all relative" style="max-height: 90vh; overflow-y: auto;">
-
                 <button onclick="AuthUI.closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white transition bg-slate-700/50 hover:bg-slate-700 w-8 h-8 rounded-full flex items-center justify-center z-10">
                     <i class="fas fa-times"></i>
                 </button>
-
                 <div class="flex border-b border-white/5 bg-slate-900/50 sticky top-0 z-10">
                     <button id="tab-login" onclick="AuthUI.switchTab('login')" class="flex-1 py-4 text-center font-bold text-cyan-400 border-b-2 border-cyan-400 transition uppercase tracking-wider text-xs">Ingresar</button>
                     <button id="tab-register" onclick="AuthUI.switchTab('register')" class="flex-1 py-4 text-center font-bold text-slate-500 hover:text-slate-300 transition uppercase tracking-wider text-xs border-b-2 border-transparent">Crear Cuenta</button>
                 </div>
-
                 <div class="p-8">
                     <form id="form-login" onsubmit="AuthLogic.handleLogin(event)" class="space-y-4">
                         <div>
@@ -404,7 +474,6 @@ const AuthUI = {
                             <i class="fas fa-sign-in-alt"></i> Acceder
                         </button>
                     </form>
-
                     <form id="form-register" onsubmit="AuthLogic.handleRegister(event)" class="space-y-4 hidden">
                         <div>
                             <label class="block text-xs font-bold text-slate-400 mb-1 uppercase tracking-widest">Nombre Completo <span class="text-red-400">*</span></label>
@@ -507,10 +576,7 @@ const AuthUI = {
                             <label class="block text-xs font-bold text-slate-400 mb-1 uppercase tracking-widest">Contraseña <span class="text-red-400">*</span></label>
                             <div class="relative">
                                 <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"></i>
-                                <input type="password" id="reg-pass" required 
-                                    oninput="AuthUI.validatePasswordRealtime(this.value)"
-                                    class="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-white/10 text-white rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition" 
-                                    placeholder="Mín. 6 caracteres, 1 letra, 1 número, 1 especial">
+                                <input type="password" id="reg-pass" required oninput="AuthUI.validatePasswordRealtime(this.value)" class="w-full pl-10 pr-4 py-3 bg-slate-900/50 border border-white/10 text-white rounded-xl focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none transition" placeholder="Mín. 6 caracteres, 1 letra, 1 número, 1 especial">
                             </div>
                             <div id="password-requirements" class="mt-2 space-y-1 text-[10px] text-slate-500">
                                 <div id="req-length" class="flex items-center gap-2"><i class="fas fa-circle text-[6px]"></i> Mínimo 6 caracteres</div>
@@ -533,7 +599,6 @@ const AuthUI = {
     handleCountryChange: function(country) {
         const estadoContainer = document.getElementById('reg-estado-container');
         const estadoSelect = document.getElementById('reg-estado');
-
         if (country === 'Venezuela') {
             estadoContainer.classList.remove('hidden');
             estadoSelect.setAttribute('required', 'required');
@@ -627,7 +692,6 @@ const AuthUI = {
 
     updateGlobalState: function() {
         const isLogged = AuthLogic.currentUser !== null;
-
         const authMainBtn = document.getElementById('authMainBtn');
         const authBtnText = document.getElementById('authBtnText');
 
