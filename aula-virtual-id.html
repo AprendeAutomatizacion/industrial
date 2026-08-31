@@ -13,7 +13,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== TODOS LOS ESTILOS EXISTENTES ===== */
         body { font-family: 'Inter', sans-serif; background-color: var(--aula-bg); color: var(--aula-text-primary); }
         :root {
             --aula-bg: #0d1d31;
@@ -63,99 +62,6 @@
             --card-shadow-color: rgba(0, 0, 0, 0.1);
             --card-text-accent: #2db8ce;
         }
-
-        /* ============================================
-           ESTILOS PARA REPRODUCTOR DE VIDEO (MEJORADO)
-           ============================================ */
-        #lesson-video-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-        }
-        #lesson-video-container iframe,
-        #lesson-video-container video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100% !important;
-            height: 100% !important;
-            border: none;
-            border-radius: 12px;
-        }
-        #lesson-video-container iframe[src*="player.mediadelivery.net"] {
-            background: #000;
-            border-radius: 12px;
-        }
-        #lesson-video-container video {
-            object-fit: contain;
-            background: #0a0a0a;
-        }
-        #lesson-video-container .bunny-player-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        #lesson-video-container .bunny-player-wrapper video {
-            position: relative;
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: contain;
-        }
-        #lesson-video-container .bunny-loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            font-size: 14px;
-            z-index: 10;
-            text-align: center;
-            pointer-events: none;
-        }
-        #lesson-video-container .bunny-loading i {
-            display: block;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        @media (max-width: 640px) {
-            #lesson-video-container {
-                padding-top: 56.25%;
-                border-radius: 8px;
-            }
-            #lesson-video-container iframe,
-            #lesson-video-container video {
-                border-radius: 8px;
-            }
-        }
-        #lesson-video-container .no-video-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            height: 100%;
-            color: #94a3b8;
-            background: #0f172a;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-        }
-        body.light-mode #lesson-video-container .no-video-placeholder {
-            background: #e2e8f0;
-            color: #475569;
-        }
-
-        /* ============================================
-           FIN ESTILOS DE VIDEO
-           ============================================ */
 
         body.light-mode header {
             background-color: rgba(226, 232, 240, 0.9) !important;
@@ -687,6 +593,111 @@
         /* ============================================
            FIN ESTILOS LUPA CON PAN
            ============================================ */
+        
+        /* ESTILOS PARA VIDEO DE BUNNY */
+        #lesson-video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+        #lesson-video-container iframe,
+        #lesson-video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+            border: none;
+            border-radius: 12px;
+        }
+        #lesson-video-container iframe[src*="player.mediadelivery.net"] {
+            background: #000;
+            border-radius: 12px;
+        }
+        #lesson-video-container video {
+            object-fit: contain;
+            background: #0a0a0a;
+        }
+        #lesson-video-container .bunny-player-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        #lesson-video-container .bunny-player-wrapper video {
+            position: relative;
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain;
+        }
+        #lesson-video-container .bunny-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 14px;
+            z-index: 10;
+            text-align: center;
+            pointer-events: none;
+        }
+        #lesson-video-container .bunny-loading i {
+            display: block;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        @media (max-width: 640px) {
+            #lesson-video-container {
+                padding-top: 56.25%;
+                border-radius: 8px;
+            }
+            #lesson-video-container iframe,
+            #lesson-video-container video {
+                border-radius: 8px;
+            }
+        }
+        #lesson-video-container .no-video-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+            color: #94a3b8;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+        }
+        body.light-mode #lesson-video-container .no-video-placeholder {
+            background: #e2e8f0;
+            color: #475569;
+        }
+        
+        /* Estilos para botones de siguiente lección en quiz */
+        .quiz-next-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 1rem auto 0;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .quiz-next-btn:hover {
+            transform: scale(1.05);
+        }
     </style>
     <style id="force-lesson-tabs-white-final">
         body.light-mode #lesson-title, body:not(.light-mode) #lesson-title,
@@ -694,6 +705,7 @@
             color: #ffffff !important; -webkit-text-fill-color: #ffffff !important;
         }
     </style>
+<base target="_blank">
 <base target="_blank">
 </head>
 <body class="text-slate-200 h-screen flex flex-col overflow-hidden relative">
@@ -712,6 +724,7 @@
     </div>
 
     <script>
+        // ============ FUNCIONES DEL TOAST DE CARGA ============
         let toastSafetyTimeout = null;
         function showLoadingToast() {
             const toast = document.getElementById('loadingToast');
@@ -882,10 +895,8 @@
         // ============================================================
         // CONFIGURACIÓN DE URLs
         // ============================================================
-        // SCRIPT_URL = Obtiene el contenido del curso (get_course_content)
-        // ACCESS_SCRIPT_URL = Maneja verificación, progreso, certificados (verify, get_course_progress, save_course_progress, complete_course)
         const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzglbdIwF7oFlWn2ABZlG_ReWsuy2ESQ3Y83BcdtDspoI6-IHHAYyL6lxw28vkXrD_C/exec';
-        const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
+        const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvSa9yxQYuWtC-YSn4x1K6hzhdeujQfNEb1GoWkvJmFShA4kdhSWe_oOoBFqkKaagx/exec';
 
         const SHARED_PRACTICE_VIDEO_URL = '';
         const query = new URLSearchParams(window.location.search);
@@ -946,9 +957,59 @@
             return CURRENT_COURSE ? CURRENT_COURSE.introImage || 'img/AA (7).gif' : 'img/AA (7).gif';
         }
 
+        // ============================================================
+        // ✅ FUNCIONES PARA MANEJAR DESCARGAS CON downloadedFiles (OBJETO JSON - Columna N)
+        // ============================================================
+
+        function loadUserDownloads() {
+            const currentUser = AuthLogic.currentUser || JSON.parse(localStorage.getItem('user') || 'null');
+            if (!currentUser) return {};
+            
+            let downloads = currentUser.downloadedFiles || {};
+            if (Array.isArray(downloads)) {
+                const newDownloads = {};
+                downloads.forEach(function(item) {
+                    if (typeof item === 'string') {
+                        newDownloads[item] = 1;
+                    } else if (typeof item === 'object') {
+                        Object.assign(newDownloads, item);
+                    }
+                });
+                downloads = newDownloads;
+                currentUser.downloadedFiles = downloads;
+                localStorage.setItem('user', JSON.stringify(currentUser));
+            }
+            return downloads;
+        }
+
+        function saveUserDownload(fileName) {
+            const currentUser = AuthLogic.currentUser || JSON.parse(localStorage.getItem('user') || 'null');
+            if (!currentUser || !currentUser.email) return;
+            
+            if (!currentUser.downloadedFiles || Array.isArray(currentUser.downloadedFiles)) {
+                currentUser.downloadedFiles = {};
+            }
+            
+            currentUser.downloadedFiles[fileName] = (currentUser.downloadedFiles[fileName] || 0) + 1;
+            localStorage.setItem('user', JSON.stringify(currentUser));
+            
+            if (typeof AuthLogic.syncUserData === 'function') {
+                AuthLogic.syncUserData(true);
+            }
+            
+            console.log('✅ Descarga guardada en downloadedFiles (Columna N):', fileName, '→', currentUser.downloadedFiles);
+        }
+
+        // ============================================================
+        // ✅ FUNCIONES PARA RENDERIZAR RECURSOS CON downloadedFiles
+        // ============================================================
+
         function renderResourceCards(resources, moduleTitle) {
             if (!resources || resources.length === 0) return '<p class="text-slate-300">No hay materiales descargables para este módulo.</p>';
+            
+            const downloads = loadUserDownloads();
             const defaultImageUrl = getResourceImage(moduleTitle);
+            
             const cardsHtml = resources.map(resource => {
                 const imageUrl = resource.image || defaultImageUrl;
                 const lowerType = (resource.type || '').toLowerCase();
@@ -963,45 +1024,73 @@
                 const iconCircleClass = 'icon-circle-manual';
                 const fileName = resource.name;
                 const directUrl = getDirectDownloadUrl(resource.url);
-                return `<a href="${directUrl}" target="_blank" class="material-card" data-file-name="${fileName}" download="${fileName}"><div class="card-image-wrapper"><img src="${imageUrl}" alt="${fileName}" loading="lazy"><div class="card-image-overlay"></div><span class="card-badge ${badgeClass}">${badgeText}</span><div class="card-icon-circle ${iconCircleClass}"><i data-lucide="${icon}" class="w-5 h-5"></i></div></div><div class="card-body"><h4 class="card-title">${resource.name}</h4><p class="card-subtitle">${subtitle}</p></div><div class="card-footer"><span class="download-count-badge"><i class="fas fa-download text-[10px]"></i><span class="file-download-count" data-file-name="${fileName}">0</span></span><span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span></div></a>`;
+                
+                const isDownloaded = downloads[fileName] !== undefined && downloads[fileName] > 0;
+                const glowClass = isDownloaded ? 'glow-manual' : '';
+                const downloadCount = downloads[fileName] || 0;
+                
+                return `<a href="${directUrl}" target="_blank" class="material-card ${glowClass}" data-file-name="${fileName}" download="${fileName}">
+                    <div class="card-image-wrapper">
+                        <img src="${imageUrl}" alt="${fileName}" loading="lazy">
+                        <div class="card-image-overlay"></div>
+                        <span class="card-badge ${badgeClass}">${badgeText}</span>
+                        <div class="card-icon-circle ${iconCircleClass}"><i data-lucide="${icon}" class="w-5 h-5"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">${resource.name}</h4>
+                        <p class="card-subtitle">${subtitle}</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="download-count-badge"><i class="fas fa-download text-[10px]"></i><span class="file-download-count" data-file-name="${fileName}">${downloadCount}</span></span>
+                        <span class="download-btn-text">Descargar <i data-lucide="arrow-down-circle" class="w-4 h-4"></i></span>
+                    </div>
+                </a>`;
             }).join('');
             return `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 not-prose">${cardsHtml}</div>`;
         }
 
         function initializeResourceCards() {
             function applyGlow(card) { if (card) card.classList.add('glow-manual'); }
+            
             function updateCardData() {
-                const currentUser = AuthLogic.currentUser; if (!currentUser) return;
-                const downloadedFiles = currentUser.downloadedFiles || [];
-                const downloadCounts = currentUser.downloadCounts || {};
+                const downloads = loadUserDownloads();
                 document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
                     const fileName = card.dataset.fileName;
-                    if (fileName) { if (downloadedFiles.includes(fileName)) applyGlow(card); const countSpan = card.querySelector('.file-download-count'); if (countSpan) countSpan.innerText = downloadCounts[fileName] || 0; }
+                    if (fileName) {
+                        const isDownloaded = downloads[fileName] !== undefined && downloads[fileName] > 0;
+                        if (isDownloaded) applyGlow(card);
+                        const countSpan = card.querySelector('.file-download-count');
+                        if (countSpan) countSpan.innerText = downloads[fileName] || 0;
+                    }
                 });
             }
+            
             function setupClickListeners() {
                 document.querySelectorAll('a.material-card[data-file-name]').forEach(card => {
-                    if (card.dataset.listenerAttached) return; card.dataset.listenerAttached = 'true';
-                    card.addEventListener('click', function() {
-                        const fileName = this.dataset.fileName; if (!fileName) return;
-                        const currentUser = AuthLogic.currentUser;
-                        if (currentUser) {
-                            if (!Array.isArray(currentUser.downloadedFiles)) currentUser.downloadedFiles = [];
-                            if (!currentUser.downloadedFiles.includes(fileName)) currentUser.downloadedFiles.push(fileName);
-                            if (typeof currentUser.downloadCounts !== 'object') currentUser.downloadCounts = {};
-                            currentUser.downloadCounts[fileName] = (currentUser.downloadCounts[fileName] || 0) + 1;
-                            localStorage.setItem('user', JSON.stringify(currentUser));
-                            const countSpan = this.querySelector('.file-download-count');
-                            if (countSpan) countSpan.innerText = currentUser.downloadCounts[fileName];
-                            if (typeof AuthLogic.syncUserData === 'function') AuthLogic.syncUserData(true);
-                        }
+                    if (card.dataset.listenerAttached) return;
+                    card.dataset.listenerAttached = 'true';
+                    
+                    card.addEventListener('click', function(e) {
+                        const fileName = this.dataset.fileName;
+                        if (!fileName) return;
+                        
+                        saveUserDownload(fileName);
+                        
+                        const downloads = loadUserDownloads();
+                        const countSpan = this.querySelector('.file-download-count');
+                        if (countSpan) countSpan.innerText = downloads[fileName] || 0;
                         applyGlow(this);
                     });
                 });
             }
+            
             updateCardData();
             setupClickListeners();
         }
+
+        // ============================================================
+        // FUNCIONES DE CONSTRUCCIÓN DE DATOS
+        // ============================================================
 
         function buildIntroContent(config) {
             return `<div class="space-y-6"><h2 class="text-2xl font-bold text-secondary">Bienvenido al Aula</h2><p class="text-slate-300">${config.intro.summary}</p><div class="bg-black/30 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-secondary">Objetivo General</h3><p class="text-slate-300">${config.intro.objective}</p></div><div class="bg-white/5 p-6 rounded-xl"><h3 class="text-xl font-bold mb-3 text-white">Lo que aprenderás</h3><ul class="list-disc pl-5 space-y-2 text-slate-300">${config.intro.goals.map(goal => `<li>${goal}</li>`).join('')}</ul></div></div>`;
@@ -1041,6 +1130,7 @@
 
         function parseMaybeJson(value) { if (value && typeof value === 'object') return value; if (typeof value !== 'string') return null; try { return JSON.parse(value); } catch (_e) { return null; } }
         function toArray(value) { if (Array.isArray(value)) return value; if (typeof value === 'string') { const trimmed = value.trim(); if (!trimmed) return []; const parsed = parseMaybeJson(trimmed); if (Array.isArray(parsed)) return parsed; return trimmed.split('|').map(item => item.trim()).filter(Boolean); } return []; }
+        
         function normalizeQuizItem(item) { 
             if (!item || typeof item !== 'object') return null; 
             const opts = toArray(item.opts || item.options || item.opciones || []); 
@@ -1054,6 +1144,7 @@
             }
             return { q: String(item.q || item.question || item.pregunta || 'Pregunta').trim(), opts, ans: Number.isFinite(ans) ? ans : 0, image: image }; 
         }
+        
         function normalizeModule(item, index) { 
             const rawQuiz = item.quiz || item.quizzes || item.evaluacion || item.evaluaciones || []; 
             const quizList = toArray(rawQuiz).map(normalizeQuizItem).filter(Boolean); 
@@ -1101,73 +1192,48 @@
         }
 
         // ============================================================
-        // 🆕 FUNCIÓN CORREGIDA PARA CARGAR PROGRESO DESDE EL SERVIDOR
+        // FUNCIONES DE PROGRESO
         // ============================================================
+
         async function loadProgressFromServer(email, courseName) {
             try {
                 const url = `${ACCESS_SCRIPT_URL}?action=get_course_progress&correo=${encodeURIComponent(email)}&curso=${encodeURIComponent(courseName)}&t=${Date.now()}`;
                 console.log('📥 Cargando progreso desde:', url);
-                
                 const resp = await fetch(url);
                 const data = await resp.json();
-                
                 console.log('📥 Respuesta del servidor:', data);
-                
                 if (data.success && data.progressData) {
                     try {
                         let parsed = data.progressData;
-                        if (typeof parsed === 'string') {
-                            parsed = JSON.parse(parsed);
-                        }
-                        
-                        const result = {
-                            progress: Array.isArray(parsed.progress) ? parsed.progress : [],
-                            scores: parsed.scores || {}
-                        };
-                        
-                        console.log('✅ Progreso cargado correctamente:', result);
-                        return result;
-                    } catch(e) {
-                        console.error('❌ Error parseando progressData:', e);
-                        return { progress: [], scores: {} };
-                    }
+                        if (typeof parsed === 'string') parsed = JSON.parse(parsed);
+                        return { progress: Array.isArray(parsed.progress) ? parsed.progress : [], scores: parsed.scores || {} };
+                    } catch(e) { return { progress: [], scores: {} }; }
                 }
-                
-                console.log('ℹ️ No hay progreso guardado para este usuario/curso');
                 return { progress: [], scores: {} };
             } catch (error) {
-                console.error('❌ Error cargando progreso desde servidor:', error);
+                console.error('❌ Error cargando progreso:', error);
                 return { progress: [], scores: {} };
             }
         }
 
         // ============================================================
-        // 🆕 FUNCIONES DEL EFECTO LUPA CON PAN (ARRASTRE)
+        // FUNCIONES DE LUPA (para imágenes en quizzes)
         // ============================================================
 
         let lupaCurrentZoom = 1;
         let lupaCurrentSrc = '';
         let lupaIsDragging = false;
-        let lupaStartX = 0;
-        let lupaStartY = 0;
-        let lupaTranslateX = 0;
-        let lupaTranslateY = 0;
+        let lupaStartX = 0, lupaStartY = 0, lupaTranslateX = 0, lupaTranslateY = 0;
 
         function openLupa(imageSrc, event) {
-            if (event) {
-                event.stopPropagation();
-                event.preventDefault();
-            }
+            if (event) { event.stopPropagation(); event.preventDefault(); }
             const overlay = document.getElementById('lupaOverlay');
             const img = document.getElementById('lupaImage');
             if (!overlay || !img) return;
-            
             lupaCurrentSrc = imageSrc;
             lupaCurrentZoom = 1;
-            lupaTranslateX = 0;
-            lupaTranslateY = 0;
+            lupaTranslateX = 0; lupaTranslateY = 0;
             lupaIsDragging = false;
-            
             img.src = imageSrc;
             img.style.transform = 'scale(1) translate(0px, 0px)';
             img.style.transformOrigin = 'center center';
@@ -1176,15 +1242,11 @@
             document.body.style.userSelect = 'none';
             updateZoomLevelDisplay();
             updatePositionIndicator();
-            
             document.addEventListener('keydown', lupaKeyHandler);
         }
 
         function closeLupa(event) {
-            if (event) {
-                event.stopPropagation();
-                event.preventDefault();
-            }
+            if (event) { event.stopPropagation(); event.preventDefault(); }
             const overlay = document.getElementById('lupaOverlay');
             if (!overlay) return;
             overlay.classList.remove('active');
@@ -1195,30 +1257,13 @@
             if (content) content.style.cursor = 'grab';
         }
 
-        function lupaZoomIn(event) {
-            if (event) event.stopPropagation();
-            const newZoom = Math.min(lupaCurrentZoom + 0.25, 5);
-            applyLupaZoom(newZoom);
-        }
-
-        function lupaZoomOut(event) {
-            if (event) event.stopPropagation();
-            const newZoom = Math.max(lupaCurrentZoom - 0.25, 0.5);
-            applyLupaZoom(newZoom);
-        }
-
-        function lupaResetZoom(event) {
-            if (event) event.stopPropagation();
-            lupaCurrentZoom = 1;
-            lupaTranslateX = 0;
-            lupaTranslateY = 0;
-            applyLupaZoom(1);
-        }
+        function lupaZoomIn(event) { if (event) event.stopPropagation(); const newZoom = Math.min(lupaCurrentZoom + 0.25, 5); applyLupaZoom(newZoom); }
+        function lupaZoomOut(event) { if (event) event.stopPropagation(); const newZoom = Math.max(lupaCurrentZoom - 0.25, 0.5); applyLupaZoom(newZoom); }
+        function lupaResetZoom(event) { if (event) event.stopPropagation(); lupaCurrentZoom = 1; lupaTranslateX = 0; lupaTranslateY = 0; applyLupaZoom(1); }
 
         function applyLupaZoom(newZoom) {
             const img = document.getElementById('lupaImage');
             if (!img) return;
-            
             lupaCurrentZoom = newZoom;
             clampPan();
             img.style.transform = `scale(${lupaCurrentZoom}) translate(${lupaTranslateX}px, ${lupaTranslateY}px)`;
@@ -1229,25 +1274,16 @@
         function clampPan() {
             const img = document.getElementById('lupaImage');
             if (!img) return;
-            
             const imgWidth = img.naturalWidth || 800;
             const imgHeight = img.naturalHeight || 600;
             const zoomedWidth = imgWidth * lupaCurrentZoom;
             const zoomedHeight = imgHeight * lupaCurrentZoom;
-            
             const container = document.getElementById('lupaContent');
             const containerWidth = container ? container.clientWidth : window.innerWidth * 0.85;
             const containerHeight = container ? container.clientHeight : window.innerHeight * 0.85;
-            
             const maxX = Math.max(0, (zoomedWidth - containerWidth) / 2);
             const maxY = Math.max(0, (zoomedHeight - containerHeight) / 2);
-            
-            if (lupaCurrentZoom <= 1) {
-                lupaTranslateX = 0;
-                lupaTranslateY = 0;
-                return;
-            }
-            
+            if (lupaCurrentZoom <= 1) { lupaTranslateX = 0; lupaTranslateY = 0; return; }
             lupaTranslateX = Math.max(-maxX, Math.min(maxX, lupaTranslateX));
             lupaTranslateY = Math.max(-maxY, Math.min(maxY, lupaTranslateY));
         }
@@ -1255,7 +1291,6 @@
         function updatePositionIndicator() {
             const indicator = document.getElementById('lupaPositionIndicator');
             if (!indicator) return;
-            
             if (lupaCurrentZoom > 1) {
                 indicator.classList.add('visible');
                 const container = document.getElementById('lupaContent');
@@ -1264,30 +1299,20 @@
                 const pctX = lupaTranslateX / (containerWidth / 2) * 50;
                 const pctY = lupaTranslateY / (containerHeight / 2) * 50;
                 indicator.textContent = `🔍 ${Math.round(lupaCurrentZoom * 100)}% · ${Math.round(pctX)}%, ${Math.round(pctY)}%`;
-            } else {
-                indicator.classList.remove('visible');
-            }
+            } else { indicator.classList.remove('visible'); }
         }
 
         function updateZoomLevelDisplay() {
             const display = document.getElementById('lupaZoomLevel');
-            if (display) {
-                display.textContent = Math.round(lupaCurrentZoom * 100) + '%';
-            }
+            if (display) display.textContent = Math.round(lupaCurrentZoom * 100) + '%';
         }
-
-        // ============================================================
-        // MANEJADORES DE ARRASTRE (PAN)
-        // ============================================================
 
         function lupaStartDrag(e) {
             if (lupaCurrentZoom <= 1) return;
-            
             const event = e.touches ? e.touches[0] : e;
             lupaIsDragging = true;
             lupaStartX = event.clientX - lupaTranslateX;
             lupaStartY = event.clientY - lupaTranslateY;
-            
             const content = document.getElementById('lupaContent');
             if (content) content.style.cursor = 'grabbing';
             document.body.style.userSelect = 'none';
@@ -1296,11 +1321,9 @@
         function lupaMoveDrag(e) {
             if (!lupaIsDragging) return;
             e.preventDefault();
-            
             const event = e.touches ? e.touches[0] : e;
             lupaTranslateX = event.clientX - lupaStartX;
             lupaTranslateY = event.clientY - lupaStartY;
-            
             clampPan();
             applyLupaZoom(lupaCurrentZoom);
         }
@@ -1314,71 +1337,41 @@
             }
         }
 
-        // ============================================================
-        // MANEJADORES DE EVENTOS
-        // ============================================================
-
         function lupaKeyHandler(event) {
-            if (event.key === 'Escape') {
-                closeLupa(event);
-            } else if (event.key === '+' || event.key === '=') {
-                event.preventDefault();
-                lupaZoomIn();
-            } else if (event.key === '-') {
-                event.preventDefault();
-                lupaZoomOut();
-            } else if (event.key === '0') {
-                event.preventDefault();
-                lupaResetZoom();
-            } else if (event.key === 'r' || event.key === 'R') {
-                event.preventDefault();
-                lupaResetZoom();
-            }
+            if (event.key === 'Escape') { closeLupa(event); }
+            else if (event.key === '+' || event.key === '=') { event.preventDefault(); lupaZoomIn(); }
+            else if (event.key === '-') { event.preventDefault(); lupaZoomOut(); }
+            else if (event.key === '0') { event.preventDefault(); lupaResetZoom(); }
+            else if (event.key === 'r' || event.key === 'R') { event.preventDefault(); lupaResetZoom(); }
         }
-
-        // ============================================================
-        // INICIALIZACIÓN DE EVENTOS
-        // ============================================================
 
         document.addEventListener('DOMContentLoaded', function() {
             const overlay = document.getElementById('lupaOverlay');
             const content = document.getElementById('lupaContent');
             const img = document.getElementById('lupaImage');
-            
             if (overlay) {
                 overlay.addEventListener('click', function(e) {
-                    if (e.target === this || e.target.classList.contains('lupa-overlay')) {
-                        closeLupa(e);
-                    }
+                    if (e.target === this || e.target.classList.contains('lupa-overlay')) { closeLupa(e); }
                 });
-                
                 overlay.addEventListener('wheel', function(e) {
                     if (!this.classList.contains('active')) return;
-                    e.preventDefault();
-                    e.stopPropagation();
-                    if (e.deltaY < 0) {
-                        lupaZoomIn();
-                    } else {
-                        lupaZoomOut();
-                    }
+                    e.preventDefault(); e.stopPropagation();
+                    if (e.deltaY < 0) { lupaZoomIn(); } else { lupaZoomOut(); }
                 }, { passive: false });
             }
-            
             if (content && img) {
                 content.addEventListener('mousedown', lupaStartDrag);
                 document.addEventListener('mousemove', lupaMoveDrag);
                 document.addEventListener('mouseup', lupaEndDrag);
-                
                 content.addEventListener('touchstart', lupaStartDrag, { passive: true });
                 document.addEventListener('touchmove', lupaMoveDrag, { passive: false });
                 document.addEventListener('touchend', lupaEndDrag, { passive: true });
-                
                 img.addEventListener('dragstart', function(e) { e.preventDefault(); });
             }
         });
 
         // ============================================================
-        // FIN FUNCIONES LUPA CON PAN
+        // APP PRINCIPAL
         // ============================================================
 
         const app = {
@@ -1402,51 +1395,35 @@
                         this.showAccessBlocked("Contenido no disponible", this.lastLoadErrorMessage); 
                         return; 
                     }
-                    
                     CURRENT_COURSE = courseContent;
                     COURSE_DATA = buildCourseData(CURRENT_COURSE);
                     document.title = `Aula Virtual - ${CURRENT_COURSE.name}`;
                     document.getElementById('login-course-subtitle').innerText = CURRENT_COURSE.name;
                     document.getElementById('header-course-title').innerText = CURRENT_COURSE.name;
-                    
                     localStorage.setItem('current_course_name', CURRENT_COURSE.name);
                     localStorage.setItem('current_course_id', resolvedCourseId);
                     
                     const globalUser = JSON.parse(localStorage.getItem('user') || 'null');
-                    
-                    // ============================================================
-                    // 🔥 VERIFICAR SI HAY SESIÓN ACTIVA Y CARGAR PROGRESO
-                    // ============================================================
                     if (localStorage.getItem(STORAGE_KEYS.auth)) {
                         const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth));
-                        
-                        // 🔥 CARGAR PROGRESO DESDE EL SERVIDOR (HOJA "MIS CURSOS")
                         console.log('🔍 Buscando progreso para:', auth.correo, CURRENT_COURSE.name);
                         const serverProgress = await loadProgressFromServer(auth.correo, CURRENT_COURSE.name);
-                        
                         if (serverProgress && (serverProgress.progress.length > 0 || Object.keys(serverProgress.scores).length > 0)) {
                             this.progress = serverProgress.progress;
                             this.quizScores = serverProgress.scores;
                             localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
                             localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
                             console.log('✅ Progreso cargado desde servidor:', this.progress);
-                            console.log('✅ Scores cargados:', this.quizScores);
-                        } else {
-                            console.log('ℹ️ No hay progreso guardado en el servidor, usando localStorage');
-                            // Si no hay en el servidor, mantener lo que tiene localStorage
                         }
-                        
                         showSuccessToast();
                         this.proceedToAula();
                         return;
                     }
-                    
                     if (globalUser && globalUser.email) {
                         hideLoadingToast();
                         this.autoVerify(globalUser);
                         return;
                     }
-                    
                     showSuccessToast();
                     this.showLoginScreen();
                 } catch (error) {
@@ -1511,7 +1488,6 @@
                     else if (this.progress.includes(lesson.id)) pillClass = 'bg-teal-500 text-white';
                     const isIntro = lesson.id === 0;
                     const simpleTitle = isIntro ? 'Intro' : `Lec ${lesson.id}`;
-                    // 🔥 CAMBIO: Lógica mejorada para medallas
                     let finalIcon = '';
                     if (score !== undefined && score >= 70) {
                         if (score === 100) finalIcon = '🏆';
@@ -1577,31 +1553,33 @@
 
             renderQuiz: function(quiz) { 
                 const cont = document.getElementById('quiz-questions'); 
-                if (!quiz || quiz.length === 0) { cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; return; } 
+                if (!quiz || quiz.length === 0) { 
+                    cont.innerHTML = '<p class="text-slate-300">No hay evaluación.</p>'; 
+                    return; 
+                } 
                 cont.innerHTML = quiz.map((q, i) => {
                     let imageHtml = '';
-                    if (q.image) {
-                        imageHtml = `
-                            <div class="quiz-image-container" onclick="openLupa('${q.image}', event)">
-                                <img src="${q.image}" alt="Ampliar imagen" loading="lazy">
-                                <button class="zoom-btn" onclick="event.stopPropagation(); openLupa('${q.image}', event)" title="Ampliar imagen">
-                                    <i class="fas fa-search-plus"></i>
-                                </button>
-                            </div>
-                        `;
+                    if (q.image && q.image.trim() !== '') {
+                        const imgSrc = q.image.trim().replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                        imageHtml = `<div class="quiz-image-container" onclick="openLupa('${imgSrc}', event)">
+                            <img src="${imgSrc}" alt="Imagen de la pregunta" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.display='none';">
+                            <button class="zoom-btn" onclick="event.stopPropagation(); openLupa('${imgSrc}', event)" title="Ampliar imagen">
+                                <i class="fas fa-search-plus"></i>
+                            </button>
+                        </div>`;
                     }
                     return `<div class="bg-black/20 p-5 rounded-xl border border-white/10" data-qidx="${i}">
-                                <p class="font-bold text-white mb-3">${q.q}</p>
-                                ${imageHtml}
-                                <div class="space-y-2">
-                                    ${q.opts.map((opt, oi) => `
-                                        <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option" data-opt-index="${oi}">
-                                            <input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}
-                                        </label>
-                                    `).join('')}
-                                </div>
-                                <div class="correct-feedback hidden text-green-400 text-sm mt-2"></div>
-                            </div>`;
+                        <p class="font-bold text-white mb-3">${q.q}</p>
+                        ${imageHtml}
+                        <div class="space-y-2">
+                            ${q.opts.map((opt, oi) => `
+                                <label class="flex items-center gap-3 cursor-pointer p-2 hover:bg-white/10 rounded quiz-option transition" data-opt-index="${oi}">
+                                    <input type="radio" name="q_${i}" value="${oi}" class="accent-secondary"> ${opt}
+                                </label>
+                            `).join('')}
+                        </div>
+                        <div class="correct-feedback hidden text-green-400 text-sm mt-2"></div>
+                    </div>`;
                 }).join(''); 
             },
 
@@ -1684,7 +1662,6 @@
                 }, 100);
             },
 
-            // ✅ CORREGIDO: Cálculo de puntaje sin errores de redondeo
             gradeQuiz: function() {
                 const lesson = COURSE_DATA.find(l => l.id === this.currentId);
                 if (!lesson.quiz || lesson.quiz.length === 0) return;
@@ -1711,10 +1688,7 @@
                     return;
                 }
 
-                // Cálculo directo del porcentaje
                 const score = Math.round((correctCount / totalQuestions) * 100);
-
-                // Guardar la mejor nota
                 const best = this.quizScores[this.currentId] || 0;
                 if (score > best) {
                     this.quizScores[this.currentId] = score;
@@ -1725,23 +1699,34 @@
                 resDiv.classList.remove('hidden');
 
                 if (score >= 70) {
-                    // Muestra las respuestas correctas
+                    // ✅ 1. Mostrar respuestas correctas e incorrectas
                     lesson.quiz.forEach((q, i) => {
                         const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
                         if (!qDiv) return;
                         const opts = qDiv.querySelectorAll('.quiz-option');
                         const fb = qDiv.querySelector('.correct-feedback');
+                        
                         opts.forEach(opt => {
                             const idx = parseInt(opt.dataset.optIndex, 10);
-                            if (idx === q.ans) opt.classList.add('correct');
-                            else if (answers[i] === idx) opt.classList.add('incorrect');
+                            if (idx === q.ans) {
+                                opt.classList.add('correct');
+                            } else if (answers[i] === idx) {
+                                opt.classList.add('incorrect');
+                            }
+                            const input = opt.querySelector('input');
+                            if (input) input.disabled = true;
                         });
+                        
                         if (fb) {
-                            fb.innerHTML = `✅ ${q.opts[q.ans]}`;
+                            fb.innerHTML = `✅ Respuesta correcta: ${q.opts[q.ans]}`;
                             fb.classList.remove('hidden');
                         }
                     });
-                    resDiv.innerHTML = `<span class="text-green-400 text-xl">Aprobado con ${score}%.</span>`;
+
+                    resDiv.innerHTML = `
+                        <span class="text-green-400 text-xl">✅ ¡Aprobado con ${score}%!</span>
+                        <p class="text-slate-300 mt-2 text-sm">Revisa tus respuestas arriba. Cuando estés listo, usa el botón <strong>"Marcar como completado y continuar"</strong> para avanzar.</p>
+                    `;
 
                     if (!this.progress.includes(this.currentId)) {
                         this.progress.push(this.currentId);
@@ -1750,18 +1735,59 @@
                         this.syncProgressToServer();
                         this.renderSidebar();
                         this.updateCompleteButton();
-
-                        const moduleIds = COURSE_DATA.filter(l => l.id > 0).map(l => l.id);
-                        const completedModules = moduleIds.filter(id => this.progress.includes(id));
-                        if (completedModules.length >= moduleIds.length && moduleIds.length > 0) {
-                            this.saveCourseCompletionDate();
-                            this.showCourseCompletionCelebration(score);
-                        } else {
-                            this.showAchievementOverlay(this.currentId, score);
-                        }
                     }
+
+                    // 🎉 2. MOSTRAR CELEBRACIÓN DE LOGRO (TROFEO/MEDALLA)
+                    this.showAchievementOverlay(this.currentId, score);
+
+                    // 🎆 3. LANZAR CONFETI Y FUEGOS ARTIFICIALES
+                    this.launchConfetti();
+                    this.launchFireworks();
+                    
+                    // 👏 4. REPRODUCIR APLAUSOS
+                    this.playApplauseSound();
+
+                    // 🏆 6. Verificar si completó todos los módulos
+                    const moduleIds = COURSE_DATA.filter(l => l.id > 0).map(l => l.id);
+                    const completedModules = moduleIds.filter(id => this.progress.includes(id));
+                    if (completedModules.length >= moduleIds.length && moduleIds.length > 0) {
+                        this.saveCourseCompletionDate();
+                        setTimeout(() => {
+                            this.showCourseCompletionCelebration(score);
+                        }, 2000);
+                    }
+
+                    // Scroll al resultado
+                    setTimeout(() => {
+                        resDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 300);
+
                 } else {
                     this.playElectricitySound();
+                    
+                    lesson.quiz.forEach((q, i) => {
+                        const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
+                        if (!qDiv) return;
+                        const opts = qDiv.querySelectorAll('.quiz-option');
+                        const fb = qDiv.querySelector('.correct-feedback');
+                        
+                        opts.forEach(opt => {
+                            const idx = parseInt(opt.dataset.optIndex, 10);
+                            if (idx === q.ans) {
+                                opt.classList.add('correct');
+                            } else if (answers[i] === idx) {
+                                opt.classList.add('incorrect');
+                            }
+                        });
+                        
+                        if (fb) {
+                            fb.innerHTML = `❌ Tu respuesta fue incorrecta. La correcta es: ${q.opts[q.ans]}`;
+                            fb.classList.remove('hidden');
+                            fb.className = 'correct-feedback hidden text-red-400 text-sm mt-2';
+                            fb.classList.remove('hidden');
+                        }
+                    });
+
                     const motivaciones = [
                         '¡No te rindas! Cada intento te acerca más al éxito. 💪',
                         'Casi lo logras. Repasa el material y vuelve a intentarlo. 📚',
@@ -1770,63 +1796,66 @@
                         '¡Sigue adelante! La práctica hace al maestro. ⚡'
                     ];
                     const msg = motivaciones[Math.floor(Math.random() * motivaciones.length)];
-                    // 🔥 CAMBIO: No se muestran las respuestas, solo el mensaje de reprobado
-                    resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span><p class="text-slate-300 mt-2 text-sm">${msg}</p>`;
+                    
+                    resDiv.innerHTML = `
+                        <span class="text-red-400 text-xl">❌ Obtuviste ${score}%. Necesitas 70% para aprobar.</span>
+                        <p class="text-slate-300 mt-2 text-sm">${msg}</p>
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center mt-4">
+                            <button onclick="app.scrollToQuizAnswers()" 
+                                    class="quiz-next-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-blue-500/30">
+                                <i class="fas fa-eye"></i> Ver Respuestas
+                            </button>
+                            <button onclick="app.resetQuiz()" 
+                                    class="quiz-next-btn bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-lg hover:shadow-amber-500/30">
+                                <i class="fas fa-redo"></i> Reintentar Evaluación
+                            </button>
+                        </div>
+                    `;
+                }
+            },
+
+            scrollToQuizAnswers: function() {
+                const quizQuestions = document.getElementById('quiz-questions');
+                if (quizQuestions) {
+                    quizQuestions.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             },
 
             resetQuiz: function() { 
-                document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(input => input.checked = false); 
+                document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(input => {
+                    input.checked = false; 
+                    input.disabled = false;
+                }); 
                 document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect')); 
-                document.querySelectorAll('.correct-feedback').forEach(fb => fb.classList.add('hidden')); 
+                document.querySelectorAll('.correct-feedback').forEach(fb => {
+                    fb.classList.add('hidden');
+                    fb.className = 'correct-feedback hidden text-green-400 text-sm mt-2';
+                }); 
                 document.getElementById('quiz-result').classList.add('hidden'); 
             },
 
-            // ============================================================
-            // 🆕 FUNCIÓN MEJORADA PARA SINCRONIZAR PROGRESO CON SERVIDOR
-            // ============================================================
             syncProgressToServer: async function() {
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                 if (!auth || !CURRENT_COURSE) {
                     console.warn('⚠️ No hay sesión o curso para sincronizar');
                     return;
                 }
-                
                 try {
-                    const data = JSON.stringify({ 
-                        progress: this.progress, 
-                        scores: this.quizScores 
-                    });
-                    
-                    console.log('📤 Guardando progreso:', { email: auth.correo, curso: CURRENT_COURSE.name, data: data });
-                    
+                    const data = JSON.stringify({ progress: this.progress, scores: this.quizScores });
                     const params = new URLSearchParams();
                     params.append('action', 'save_course_progress');
                     params.append('correo', auth.correo);
                     params.append('curso', CURRENT_COURSE.name);
                     params.append('data', data);
-                    
-                    const resp = await fetch(this.accessScriptUrl, {
-                        method: 'POST',
-                        body: params,
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-                    });
-                    
+                    const resp = await fetch(this.accessScriptUrl, { method: 'POST', body: params, headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
                     const result = await resp.json();
-                    console.log('📤 Respuesta del servidor:', result);
-                    
                     if (result.status === 'success' || result.success) {
                         console.log('✅ Progreso sincronizado con servidor');
                         showSyncIndicator('✅ Progreso guardado', 'success');
-                    } else {
-                        console.warn('⚠️ Sincronización:', result.message || 'sin respuesta');
                     }
-                } catch (error) {
-                    console.error('❌ Error sincronizando:', error);
-                }
+                } catch (error) { console.error('❌ Error sincronizando:', error); }
             },
 
-            // Función legacy para compatibilidad
             syncProgress: function() {
                 localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
                 localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
@@ -1927,7 +1956,6 @@
                 .catch(e => console.error(e));
             },
 
-            // 🔥 CAMBIO: Ahora recibe el score para mostrar la medalla correcta
             showCourseCompletionCelebration: function(score) {
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                 let medalEmoji = '🎓';
@@ -1946,68 +1974,235 @@
                 this.launchFireworks();
             },
 
-            // 🔥 CAMBIO: Ahora recibe el score para mostrar la medalla correcta
             showAchievementOverlay: function(moduleId, score) { 
-                const old = document.getElementById('subject-achievement-overlay'); if (old) old.remove(); 
-                const overlay = document.createElement('div'); overlay.id = 'subject-achievement-overlay'; 
-                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(4px);z-index:1300;display:flex;align-items:center;justify-content:center;'; 
+                const old = document.getElementById('subject-achievement-overlay'); 
+                if (old) old.remove(); 
+
+                const overlay = document.createElement('div'); 
+                overlay.id = 'subject-achievement-overlay'; 
+                overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.75);backdrop-filter:blur(6px);z-index:1300;display:flex;align-items:center;justify-content:center;animation:lupaFadeIn 0.3s ease;'; 
+
                 let medalIcon = '🎓';
-                if (score === 100) medalIcon = '🏆';
-                else if (score >= 90) medalIcon = '🥇';
-                else if (score >= 80) medalIcon = '🥈';
-                else if (score >= 70) medalIcon = '🥉';
-                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:1px solid rgba(34,211,238,.4);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45);animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"><div style="font-size:60px;line-height:1;animation:bounce 1s ease infinite;">${medalIcon}</div><h4 style="margin:10px 0 6px;font-size:20px;font-weight:900">Felicitaciones</h4><p style="margin:0 0 6px;color:#bae6fd;font-weight:700">Logro desbloqueado: Quiz ${moduleId} aprobado</p><p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Obtuviste ${score}%. Sigue así.</p><button id="subject-achievement-close" style="padding:10px 16px;border:0;border-radius:10px;background:#06b6d4;color:#082f49;font-weight:900;cursor:pointer">Siguiente lección</button></div>`; 
-                document.body.appendChild(overlay); 
+                let medalColor = '#06b6d4';
+                let medalTitle = '¡Bien hecho!';
+                if (score === 100) { 
+                    medalIcon = '🏆'; 
+                    medalColor = '#fbbf24';
+                    medalTitle = '¡Perfecto!';
+                } else if (score >= 90) { 
+                    medalIcon = '🥇'; 
+                    medalColor = '#fbbf24';
+                    medalTitle = '¡Excelente!';
+                } else if (score >= 80) { 
+                    medalIcon = '🥈'; 
+                    medalColor = '#94a3b8';
+                    medalTitle = '¡Muy bien!';
+                } else if (score >= 70) { 
+                    medalIcon = '🥉'; 
+                    medalColor = '#d97706';
+                    medalTitle = '¡Aprobado!';
+                }
+
                 const nextId = moduleId + 1;
-                const closeAndNext = () => { 
+                const hasNext = nextId < COURSE_DATA.length;
+                const nextLessonTitle = hasNext ? COURSE_DATA[nextId].title.split(':').pop().trim() : '';
+
+                overlay.innerHTML = `
+                    <div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:2px solid ${medalColor};border-radius:20px;padding:30px 24px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.5), 0 0 30px rgba(6,182,212,.2);animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);">
+                        <div style="font-size:70px;line-height:1;animation:bounce 1.2s ease infinite;filter:drop-shadow(0 10px 20px rgba(0,0,0,0.3));">${medalIcon}</div>
+                        <h4 style="margin:15px 0 8px;font-size:24px;font-weight:900;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">${medalTitle}</h4>
+                        <p style="margin:0 0 6px;color:#bae6fd;font-weight:700;font-size:16px;">Logro desbloqueado: Quiz ${moduleId} aprobado</p>
+                        <p style="margin:0 0 20px;color:#e2e8f0;font-size:15px;">Obtuviste <strong style="color:${medalColor};">${score}%</strong>. ¡Sigue así! 💪</p>
+                        <div style="display:flex;flex-direction:column;gap:10px;">
+                            <button id="subject-achievement-answers" 
+                                    style="padding:12px 24px;border:0;border-radius:12px;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#ffffff;font-weight:900;cursor:pointer;font-size:15px;box-shadow:0 8px 20px rgba(59,130,246,0.4);transition:all 0.3s ease;" 
+                                    onmouseover="this.style.transform='scale(1.05)'" 
+                                    onmouseout="this.style.transform='scale(1)'">
+                                👁️ Ver Respuestas
+                            </button>
+                            <button id="subject-achievement-close" 
+                                    style="padding:12px 24px;border:0;border-radius:12px;background:linear-gradient(135deg,#06b6d4,#3b82f6);color:#ffffff;font-weight:900;cursor:pointer;font-size:15px;box-shadow:0 8px 20px rgba(6,182,212,0.4);transition:all 0.3s ease;" 
+                                    onmouseover="this.style.transform='scale(1.05)'" 
+                                    onmouseout="this.style.transform='scale(1)'">
+                                ✅ Continuar
+                            </button>
+                        </div>
+                    </div>
+                `; 
+
+                document.body.appendChild(overlay); 
+
+                // Botón "Ver Respuestas" → cierra overlay y hace scroll a respuestas
+                document.getElementById('subject-achievement-answers').addEventListener('click', () => { 
                     overlay.remove(); 
-                    if (nextId < COURSE_DATA.length) app.loadLesson(nextId); 
-                    else app.showDashboard(); 
-                };
-                document.getElementById('subject-achievement-close').addEventListener('click', closeAndNext); 
-                overlay.addEventListener('click', (ev) => { if (ev.target === overlay) closeAndNext(); }); 
+                    app.scrollToQuizAnswers(); 
+                }); 
+
+                // Botón "Continuar" → solo cierra el overlay
+                // El estudiante avanza con el botón "Marcar como completado y continuar"
+                document.getElementById('subject-achievement-close').addEventListener('click', () => { 
+                    overlay.remove(); 
+                }); 
+
+                overlay.addEventListener('click', (ev) => { 
+                    if (ev.target === overlay) overlay.remove(); 
+                }); 
+
                 this.playApplauseSound(); 
                 this.launchConfetti(); 
                 this.launchFireworks(); 
-                setTimeout(() => { if (document.getElementById('subject-achievement-overlay')) closeAndNext(); }, 3500);
             },
 
-            playApplauseSound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 12; i++) { const bufferSize = ctx.sampleRate * 0.05; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 900 + (Math.random() * 800); const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.09); gain.gain.exponentialRampToValueAtTime(0.35, now + i * 0.09 + 0.01); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.05); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.09); source.stop(now + i * 0.09 + 0.06); } } catch (e) {} },
+            playApplauseSound: function() { 
+                try { 
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext; 
+                    if (!AudioCtx) return; 
+                    const ctx = new AudioCtx(); 
+                    const now = ctx.currentTime; 
+                    
+                    for (let i = 0; i < 20; i++) { 
+                        const bufferSize = ctx.sampleRate * 0.04; 
+                        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); 
+                        const output = buffer.getChannelData(0); 
+                        for (let j = 0; j < bufferSize; j++) {
+                            output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize) * Math.exp(-j / (bufferSize * 0.3));
+                        }
+                        const source = ctx.createBufferSource(); 
+                        source.buffer = buffer; 
+                        
+                        const filter = ctx.createBiquadFilter(); 
+                        filter.type = 'bandpass'; 
+                        filter.frequency.value = 1000 + (Math.random() * 1000); 
+                        filter.Q.value = 0.8;
+                        
+                        const gain = ctx.createGain(); 
+                        const startTime = now + i * 0.08;
+                        gain.gain.setValueAtTime(0.0001, startTime); 
+                        gain.gain.exponentialRampToValueAtTime(0.4, startTime + 0.005); 
+                        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.04); 
+                        
+                        source.connect(filter); 
+                        filter.connect(gain); 
+                        gain.connect(ctx.destination); 
+                        source.start(startTime); 
+                        source.stop(startTime + 0.05); 
+                    } 
+                } catch (e) {
+                    console.log('Audio no disponible:', e);
+                } 
+            },
             
-            playElectricitySound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 8; i++) { const bufferSize = ctx.sampleRate * 0.08; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'highpass'; filter.frequency.value = 3000 + Math.random() * 4000; const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.12); gain.gain.exponentialRampToValueAtTime(0.25, now + i * 0.12 + 0.005); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.12 + 0.08); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.12); source.stop(now + i * 0.12 + 0.08); } } catch (e) {} },
+            playElectricitySound: function() { 
+                try { 
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext; 
+                    if (!AudioCtx) return; 
+                    const ctx = new AudioCtx(); 
+                    const now = ctx.currentTime; 
+                    for (let i = 0; i < 8; i++) { 
+                        const bufferSize = ctx.sampleRate * 0.08; 
+                        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); 
+                        const output = buffer.getChannelData(0); 
+                        for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1); 
+                        const source = ctx.createBufferSource(); 
+                        source.buffer = buffer; 
+                        const filter = ctx.createBiquadFilter(); 
+                        filter.type = 'highpass'; 
+                        filter.frequency.value = 3000 + Math.random() * 4000; 
+                        const gain = ctx.createGain(); 
+                        gain.gain.setValueAtTime(0.0001, now + i * 0.12); 
+                        gain.gain.exponentialRampToValueAtTime(0.25, now + i * 0.12 + 0.005); 
+                        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.12 + 0.08); 
+                        source.connect(filter); 
+                        filter.connect(gain); 
+                        gain.connect(ctx.destination); 
+                        source.start(now + i * 0.12); 
+                        source.stop(now + i * 0.12 + 0.08); 
+                    } 
+                } catch (e) {} 
+            },
 
             launchConfetti: function() {
-                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff1493', '#22d3ee', '#818cf8'];
-                for (let i = 0; i < 80; i++) {
+                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#ff1493', '#22d3ee', '#818cf8', '#fbbf24', '#34d399'];
+                const confettiCount = 100;
+                
+                for (let i = 0; i < confettiCount; i++) {
                     setTimeout(() => {
                         const confetti = document.createElement('div');
-                        confetti.style.cssText = `position: fixed; left: ${Math.random() * 100}vw; top: -10px; width: ${Math.random() * 10 + 5}px; height: ${Math.random() * 10 + 5}px; background-color: ${colors[Math.floor(Math.random() * colors.length)]}; border-radius: ${Math.random() > 0.5 ? '50%' : '0'}; z-index: 1500; pointer-events: none; animation: confettiFall ${Math.random() * 2 + 2}s ease-in forwards;`;
+                        const size = Math.random() * 12 + 6;
+                        const isCircle = Math.random() > 0.5;
+                        confetti.style.cssText = `
+                            position: fixed; 
+                            left: ${Math.random() * 100}vw; 
+                            top: -20px; 
+                            width: ${size}px; 
+                            height: ${isCircle ? size : size * 1.5}px; 
+                            background-color: ${colors[Math.floor(Math.random() * colors.length)]}; 
+                            border-radius: ${isCircle ? '50%' : '2px'}; 
+                            z-index: 1500; 
+                            pointer-events: none; 
+                            animation: confettiFall ${Math.random() * 2.5 + 2}s ease-in forwards;
+                            animation-delay: ${Math.random() * 0.5}s;
+                        `;
                         document.body.appendChild(confetti);
-                        setTimeout(() => confetti.remove(), 4000);
-                    }, i * 50);
+                        setTimeout(() => confetti.remove(), 5000);
+                    }, i * 30);
                 }
+                
                 if (!document.getElementById('confetti-keyframe')) {
                     const style = document.createElement('style');
                     style.id = 'confetti-keyframe';
-                    style.textContent = `@keyframes confettiFall { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } } @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }`;
+                    style.textContent = `
+                        @keyframes confettiFall { 
+                            0% { transform: translateY(0) rotate(0deg); opacity: 1; } 
+                            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; } 
+                        } 
+                        @keyframes bounce { 
+                            0%, 100% { transform: translateY(0); } 
+                            50% { transform: translateY(-20px); } 
+                        }
+                    `;
                     document.head.appendChild(style);
                 }
             },
 
             launchFireworks: function() {
-                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#22d3ee'];
-                for (let i = 0; i < 40; i++) {
+                const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffa500', '#22d3ee', '#fbbf24', '#34d399', '#818cf8'];
+                const fireworkCount = 50;
+                
+                for (let i = 0; i < fireworkCount; i++) {
                     setTimeout(() => {
                         const firework = document.createElement('div');
-                        firework.style.cssText = `position: fixed; left: ${Math.random() * 100}vw; top: ${Math.random() * 50}vh; width: 6px; height: 6px; border-radius: 50%; background-color: ${colors[Math.floor(Math.random() * colors.length)]}; box-shadow: 0 0 10px currentColor; z-index: 1499; pointer-events: none; animation: fireworkExplode 1s ease-out forwards;`;
+                        const startX = Math.random() * 100;
+                        const startY = Math.random() * 40 + 10;
+                        const size = Math.random() * 8 + 4;
+                        firework.style.cssText = `
+                            position: fixed; 
+                            left: ${startX}vw; 
+                            top: ${startY}vh; 
+                            width: ${size}px; 
+                            height: ${size}px; 
+                            border-radius: 50%; 
+                            background-color: ${colors[Math.floor(Math.random() * colors.length)]}; 
+                            box-shadow: 0 0 15px currentColor, 0 0 30px currentColor; 
+                            z-index: 1499; 
+                            pointer-events: none; 
+                            animation: fireworkExplode ${Math.random() * 1 + 0.8}s ease-out forwards;
+                            animation-delay: ${Math.random() * 0.3}s;
+                        `;
                         document.body.appendChild(firework);
-                        setTimeout(() => firework.remove(), 1000);
-                    }, i * 30);
+                        setTimeout(() => firework.remove(), 2500);
+                    }, i * 40);
                 }
+                
                 if (!document.getElementById('firework-keyframe')) {
                     const style = document.createElement('style');
                     style.id = 'firework-keyframe';
-                    style.textContent = `@keyframes fireworkExplode { 0% { transform: scale(0); opacity: 1; } 100% { transform: scale(20); opacity: 0; } }`;
+                    style.textContent = `
+                        @keyframes fireworkExplode { 
+                            0% { transform: scale(0); opacity: 1; } 
+                            100% { transform: scale(${Math.random() * 25 + 10}); opacity: 0; } 
+                        }
+                    `;
                     document.head.appendChild(style);
                 }
             },
@@ -2077,14 +2272,10 @@
                     const data = await resp.json();
                     
                     if (data.success) {
-                        // Guardar credenciales
                         localStorage.setItem(STORAGE_KEYS.auth, JSON.stringify({ nombre: n, cedula: c, correo: em }));
-                        
-                        // Guardar referencia del curso
                         localStorage.setItem('current_course_name', CURRENT_COURSE.name);
                         localStorage.setItem('current_course_id', resolvedCourseId);
                         
-                        // 🔥 Cargar progreso desde servidor (sobrescribe el local)
                         console.log('🔍 Buscando progreso para:', em, CURRENT_COURSE.name);
                         const serverProgress = await loadProgressFromServer(em, CURRENT_COURSE.name);
                         
@@ -2095,18 +2286,14 @@
                             localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
                             console.log('✅ Progreso cargado desde servidor al iniciar sesión:', this.progress);
                         } else if (data.progressData) {
-                            // Fallback: usar el que vino en la respuesta de verify
                             try {
                                 const p = JSON.parse(data.progressData);
                                 this.progress = Array.isArray(p.progress) ? p.progress : [];
                                 this.quizScores = p.scores || {};
                                 localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
                                 localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
-                            } catch(e) {
-                                console.warn('No se pudo parsear progressData:', e);
-                            }
+                            } catch(e) { console.warn('No se pudo parsear progressData:', e); }
                         }
-                        
                         this.proceedToAula();
                     } else { 
                         err.innerText = data.message || 'No estás inscrito.'; 
