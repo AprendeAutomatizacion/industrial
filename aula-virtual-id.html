@@ -879,6 +879,11 @@
     <div id="toast" class="toast hidden"></div>
 
     <script>
+        // ============================================================
+        // CONFIGURACIÓN DE URLs
+        // ============================================================
+        // SCRIPT_URL = Obtiene el contenido del curso (get_course_content)
+        // ACCESS_SCRIPT_URL = Maneja verificación, progreso, certificados (verify, get_course_progress, save_course_progress, complete_course)
         const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzglbdIwF7oFlWn2ABZlG_ReWsuy2ESQ3Y83BcdtDspoI6-IHHAYyL6lxw28vkXrD_C/exec';
         const DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
 
@@ -893,6 +898,7 @@
         const SCRIPT_URL = window.SCRIPT_URL || scriptFromQuery || scriptFromStorage || DEFAULT_SCRIPT_URL;
         const ACCESS_SCRIPT_URL = accessScriptFromQuery || accessScriptFromStorage || DEFAULT_ACCESS_SCRIPT_URL;
         window.SCRIPT_URL = SCRIPT_URL;
+        
         const path = window.location.pathname;
         const filename = path.substring(path.lastIndexOf('/') + 1);
         const match = filename.match(/(\d+)/);
@@ -918,7 +924,7 @@
             if (type === 'success') icon.className = 'fas fa-check-circle text-green-300';
             else if (type === 'error') icon.className = 'fas fa-exclamation-circle text-red-300';
             else icon.className = 'fas fa-sync-alt fa-spin text-[#2db8ce]';
-            setTimeout(() => { el.classList.remove('visible'); }, 1000);
+            setTimeout(() => { el.classList.remove('visible'); }, 1500);
         }
 
         function getDirectDownloadUrl(url) {
@@ -1092,6 +1098,47 @@
             if (parsed.success === false || parsed.status === 'error') return { ok: false, message: parsed.message || 'El script respondió con error.' }; 
             if (parsed.modules || parsed.modulos || parsed.lessons || parsed.lecciones) return { ok: true, content: parsed }; 
             return { ok: false, message: parsed.message || 'Formato no compatible en la respuesta del script.' }; 
+        }
+
+        // ============================================================
+        // 🆕 FUNCIÓN CORREGIDA PARA CARGAR PROGRESO DESDE EL SERVIDOR
+        // ============================================================
+        async function loadProgressFromServer(email, courseName) {
+            try {
+                const url = `${ACCESS_SCRIPT_URL}?action=get_course_progress&correo=${encodeURIComponent(email)}&curso=${encodeURIComponent(courseName)}&t=${Date.now()}`;
+                console.log('📥 Cargando progreso desde:', url);
+                
+                const resp = await fetch(url);
+                const data = await resp.json();
+                
+                console.log('📥 Respuesta del servidor:', data);
+                
+                if (data.success && data.progressData) {
+                    try {
+                        let parsed = data.progressData;
+                        if (typeof parsed === 'string') {
+                            parsed = JSON.parse(parsed);
+                        }
+                        
+                        const result = {
+                            progress: Array.isArray(parsed.progress) ? parsed.progress : [],
+                            scores: parsed.scores || {}
+                        };
+                        
+                        console.log('✅ Progreso cargado correctamente:', result);
+                        return result;
+                    } catch(e) {
+                        console.error('❌ Error parseando progressData:', e);
+                        return { progress: [], scores: {} };
+                    }
+                }
+                
+                console.log('ℹ️ No hay progreso guardado para este usuario/curso');
+                return { progress: [], scores: {} };
+            } catch (error) {
+                console.error('❌ Error cargando progreso desde servidor:', error);
+                return { progress: [], scores: {} };
+            }
         }
 
         // ============================================================
@@ -1350,20 +1397,69 @@
                 showLoadingToast();
                 try {
                     const courseContent = await this.fetchCourseContent(resolvedCourseId);
-                    if (!courseContent) { hideLoadingToast(); this.showAccessBlocked("Contenido no disponible", this.lastLoadErrorMessage); return; }
+                    if (!courseContent) { 
+                        hideLoadingToast(); 
+                        this.showAccessBlocked("Contenido no disponible", this.lastLoadErrorMessage); 
+                        return; 
+                    }
+                    
                     CURRENT_COURSE = courseContent;
                     COURSE_DATA = buildCourseData(CURRENT_COURSE);
                     document.title = `Aula Virtual - ${CURRENT_COURSE.name}`;
                     document.getElementById('login-course-subtitle').innerText = CURRENT_COURSE.name;
                     document.getElementById('header-course-title').innerText = CURRENT_COURSE.name;
+                    
+                    localStorage.setItem('current_course_name', CURRENT_COURSE.name);
+                    localStorage.setItem('current_course_id', resolvedCourseId);
+                    
                     const globalUser = JSON.parse(localStorage.getItem('user') || 'null');
-                    if (localStorage.getItem(STORAGE_KEYS.auth)) { showSuccessToast(); this.proceedToAula(); return; }
-                    if (globalUser && globalUser.email) { hideLoadingToast(); this.autoVerify(globalUser); return; }
-                    showSuccessToast(); this.showLoginScreen();
-                } catch (error) { console.error("Error:", error); hideLoadingToast(); }
+                    
+                    // ============================================================
+                    // 🔥 VERIFICAR SI HAY SESIÓN ACTIVA Y CARGAR PROGRESO
+                    // ============================================================
+                    if (localStorage.getItem(STORAGE_KEYS.auth)) {
+                        const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth));
+                        
+                        // 🔥 CARGAR PROGRESO DESDE EL SERVIDOR (HOJA "MIS CURSOS")
+                        console.log('🔍 Buscando progreso para:', auth.correo, CURRENT_COURSE.name);
+                        const serverProgress = await loadProgressFromServer(auth.correo, CURRENT_COURSE.name);
+                        
+                        if (serverProgress && (serverProgress.progress.length > 0 || Object.keys(serverProgress.scores).length > 0)) {
+                            this.progress = serverProgress.progress;
+                            this.quizScores = serverProgress.scores;
+                            localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
+                            localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
+                            console.log('✅ Progreso cargado desde servidor:', this.progress);
+                            console.log('✅ Scores cargados:', this.quizScores);
+                        } else {
+                            console.log('ℹ️ No hay progreso guardado en el servidor, usando localStorage');
+                            // Si no hay en el servidor, mantener lo que tiene localStorage
+                        }
+                        
+                        showSuccessToast();
+                        this.proceedToAula();
+                        return;
+                    }
+                    
+                    if (globalUser && globalUser.email) {
+                        hideLoadingToast();
+                        this.autoVerify(globalUser);
+                        return;
+                    }
+                    
+                    showSuccessToast();
+                    this.showLoginScreen();
+                } catch (error) {
+                    console.error("Error:", error);
+                    hideLoadingToast();
+                }
             },
 
-            showLoginScreen: function() { document.getElementById('initial-loader').classList.add('hidden'); document.getElementById('login-form-container').classList.remove('hidden'); },
+            showLoginScreen: function() { 
+                document.getElementById('initial-loader').classList.add('hidden'); 
+                document.getElementById('login-form-container').classList.remove('hidden'); 
+            },
+            
             autoVerify: function(user) { 
                 if (!user || !user.cedula || user.cedula === 'N/A' || user.cedula === '') {
                     this.showLoginScreen();
@@ -1374,7 +1470,14 @@
                 document.getElementById('login-correo').value = user.email || ''; 
                 this.executeVerification(user.name || '', user.cedula, user.email || '', true); 
             },
-            clearLocalData: function() { localStorage.removeItem(STORAGE_KEYS.auth); localStorage.removeItem(STORAGE_KEYS.progress); localStorage.removeItem(STORAGE_KEYS.scores); this.progress = []; this.quizScores = {}; },
+            
+            clearLocalData: function() { 
+                localStorage.removeItem(STORAGE_KEYS.auth); 
+                localStorage.removeItem(STORAGE_KEYS.progress); 
+                localStorage.removeItem(STORAGE_KEYS.scores); 
+                this.progress = []; 
+                this.quizScores = {}; 
+            },
 
             fetchCourseContent: async function(courseId) {
                 this.lastLoadErrorMessage = '';
@@ -1386,7 +1489,10 @@
                     const unwrapped = unwrapApiResponse(parsed || raw);
                     if (!unwrapped.ok) throw new Error(unwrapped.message);
                     return normalizeCoursePayload(unwrapped.content, courseId);
-                } catch (error) { this.lastLoadErrorMessage = error.message; return null; }
+                } catch (error) { 
+                    this.lastLoadErrorMessage = error.message; 
+                    return null; 
+                }
             },
 
             showDashboard: function() {
@@ -1405,7 +1511,16 @@
                     else if (this.progress.includes(lesson.id)) pillClass = 'bg-teal-500 text-white';
                     const isIntro = lesson.id === 0;
                     const simpleTitle = isIntro ? 'Intro' : `Lec ${lesson.id}`;
-                    const finalIcon = isIntro ? '<i class="fas fa-book text-slate-400"></i>' : this.getMedalIcon(score);
+                    // 🔥 CAMBIO: Lógica mejorada para medallas
+                    let finalIcon = '';
+                    if (score !== undefined && score >= 70) {
+                        if (score === 100) finalIcon = '🏆';
+                        else if (score >= 90) finalIcon = '🥇';
+                        else if (score >= 80) finalIcon = '🥈';
+                        else finalIcon = '🥉';
+                    } else {
+                        finalIcon = isIntro ? '<i class="fas fa-book text-slate-400"></i>' : '';
+                    }
                     return `<div class="flex flex-col items-center gap-1" title="${lesson.title}"><div class="progress-pill-label w-full px-2 py-1.5 text-center rounded-lg ${pillClass} transition-all duration-300 text-[10px] font-black uppercase tracking-wider">${simpleTitle}</div><span class="text-lg medal-icon">${finalIcon}</span></div>`;
                 }).join('');
                 const modulesHtml = COURSE_DATA.map((lesson) => {
@@ -1422,9 +1537,31 @@
                 if (window.lucide) lucide.createIcons();
             },
 
-            continueCourse: function() { const next = COURSE_DATA.find(l => !this.progress.includes(l.id)); if (next) this.loadLesson(next.id); },
-            toggleSidebar: function() { const sidebar = document.getElementById('sidebar'); const overlay = document.getElementById('sidebar-overlay'); if (window.innerWidth < 768) { sidebar.classList.toggle('-translate-x-full'); overlay.classList.toggle('hidden'); } else { sidebar.classList.toggle('collapsed'); } },
-            closeSidebarOnMobile: function() { if (window.innerWidth < 768) { const s = document.getElementById('sidebar'); if (!s.classList.contains('-translate-x-full')) { s.classList.add('-translate-x-full'); document.getElementById('sidebar-overlay').classList.add('hidden'); } } },
+            continueCourse: function() { 
+                const next = COURSE_DATA.find(l => !this.progress.includes(l.id)); 
+                if (next) this.loadLesson(next.id); 
+            },
+            
+            toggleSidebar: function() { 
+                const sidebar = document.getElementById('sidebar'); 
+                const overlay = document.getElementById('sidebar-overlay'); 
+                if (window.innerWidth < 768) { 
+                    sidebar.classList.toggle('-translate-x-full'); 
+                    overlay.classList.toggle('hidden'); 
+                } else { 
+                    sidebar.classList.toggle('collapsed'); 
+                } 
+            },
+            
+            closeSidebarOnMobile: function() { 
+                if (window.innerWidth < 768) { 
+                    const s = document.getElementById('sidebar'); 
+                    if (!s.classList.contains('-translate-x-full')) { 
+                        s.classList.add('-translate-x-full'); 
+                        document.getElementById('sidebar-overlay').classList.add('hidden'); 
+                    } 
+                } 
+            },
 
             renderSidebar: function() {
                 const cont = document.getElementById('sidebar-content');
@@ -1547,43 +1684,83 @@
                 }, 100);
             },
 
+            // ✅ CORREGIDO: Cálculo de puntaje sin errores de redondeo
             gradeQuiz: function() {
                 const lesson = COURSE_DATA.find(l => l.id === this.currentId);
                 if (!lesson.quiz || lesson.quiz.length === 0) return;
-                let score = 0, all = true, answers = [];
-                lesson.quiz.forEach((q, i) => { const sel = document.querySelector(`input[name="q_${i}"]:checked`); if (sel) { answers[i] = parseInt(sel.value, 10); if (answers[i] === q.ans) score += Math.round(100 / lesson.quiz.length); } else { all = false; answers[i] = -1; } });
-                if (!all) { this.showModal('Atención', 'Debes responder todas las preguntas antes de enviar.', 'error'); return; }
-                score = Math.min(score, 100);
+
+                const totalQuestions = lesson.quiz.length;
+                let correctCount = 0;
+                let answers = [];
+                let allAnswered = true;
+
+                lesson.quiz.forEach((q, i) => {
+                    const sel = document.querySelector(`input[name="q_${i}"]:checked`);
+                    if (sel) {
+                        const value = parseInt(sel.value, 10);
+                        answers[i] = value;
+                        if (value === q.ans) correctCount++;
+                    } else {
+                        allAnswered = false;
+                        answers[i] = -1;
+                    }
+                });
+
+                if (!allAnswered) {
+                    this.showModal('Atención', 'Debes responder todas las preguntas antes de enviar.', 'error');
+                    return;
+                }
+
+                // Cálculo directo del porcentaje
+                const score = Math.round((correctCount / totalQuestions) * 100);
+
+                // Guardar la mejor nota
                 const best = this.quizScores[this.currentId] || 0;
-                if (score > best) { this.quizScores[this.currentId] = score; localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores)); }
+                if (score > best) {
+                    this.quizScores[this.currentId] = score;
+                    localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
+                }
+
                 const resDiv = document.getElementById('quiz-result');
                 resDiv.classList.remove('hidden');
-                if (score >= 70) { 
+
+                if (score >= 70) {
+                    // Muestra las respuestas correctas
                     lesson.quiz.forEach((q, i) => {
                         const qDiv = document.querySelector(`div[data-qidx="${i}"]`);
+                        if (!qDiv) return;
                         const opts = qDiv.querySelectorAll('.quiz-option');
                         const fb = qDiv.querySelector('.correct-feedback');
-                        opts.forEach(opt => { const idx = parseInt(opt.dataset.optIndex, 10); if (idx === q.ans) opt.classList.add('correct'); else if (answers[i] === idx) opt.classList.add('incorrect'); });
-                        fb.innerHTML = `✅ ${q.opts[q.ans]}`; fb.classList.remove('hidden');
+                        opts.forEach(opt => {
+                            const idx = parseInt(opt.dataset.optIndex, 10);
+                            if (idx === q.ans) opt.classList.add('correct');
+                            else if (answers[i] === idx) opt.classList.add('incorrect');
+                        });
+                        if (fb) {
+                            fb.innerHTML = `✅ ${q.opts[q.ans]}`;
+                            fb.classList.remove('hidden');
+                        }
                     });
-                    resDiv.innerHTML = `<span class="text-green-400 text-xl">Aprobado con ${score}%.</span>`; 
-                    if (!this.progress.includes(this.currentId)) { 
-                        this.progress.push(this.currentId); 
-                        this.progress.sort((a, b) => a - b); 
-                        localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress)); 
-                        this.syncProgress(); 
-                        this.renderSidebar(); 
+                    resDiv.innerHTML = `<span class="text-green-400 text-xl">Aprobado con ${score}%.</span>`;
+
+                    if (!this.progress.includes(this.currentId)) {
+                        this.progress.push(this.currentId);
+                        this.progress.sort((a, b) => a - b);
+                        localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
+                        this.syncProgressToServer();
+                        this.renderSidebar();
                         this.updateCompleteButton();
+
                         const moduleIds = COURSE_DATA.filter(l => l.id > 0).map(l => l.id);
                         const completedModules = moduleIds.filter(id => this.progress.includes(id));
                         if (completedModules.length >= moduleIds.length && moduleIds.length > 0) {
                             this.saveCourseCompletionDate();
-                            this.showCourseCompletionCelebration();
+                            this.showCourseCompletionCelebration(score);
                         } else {
                             this.showAchievementOverlay(this.currentId, score);
                         }
                     }
-                } else { 
+                } else {
                     this.playElectricitySound();
                     const motivaciones = [
                         '¡No te rindas! Cada intento te acerca más al éxito. 💪',
@@ -1593,13 +1770,76 @@
                         '¡Sigue adelante! La práctica hace al maestro. ⚡'
                     ];
                     const msg = motivaciones[Math.floor(Math.random() * motivaciones.length)];
-                    resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span><p class="text-slate-300 mt-2 text-sm">${msg}</p>`; 
+                    // 🔥 CAMBIO: No se muestran las respuestas, solo el mensaje de reprobado
+                    resDiv.innerHTML = `<span class="text-red-400 text-xl">Obtuviste ${score}%. Necesitas 70% para aprobar.</span><p class="text-slate-300 mt-2 text-sm">${msg}</p>`;
                 }
             },
 
-            resetQuiz: function() { document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(input => input.checked = false); document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect')); document.querySelectorAll('.correct-feedback').forEach(fb => fb.classList.add('hidden')); document.getElementById('quiz-result').classList.add('hidden'); },
-            syncProgress: function() { const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); if (!auth) return; const data = JSON.stringify({ progress: this.progress, scores: this.quizScores }); const courseName = CURRENT_COURSE ? CURRENT_COURSE.name : 'Aula Virtual'; fetch(`${this.accessScriptUrl}?action=save_course_progress&correo=${encodeURIComponent(auth.correo)}&curso=${encodeURIComponent(courseName)}&data=${encodeURIComponent(data)}`, { method: 'GET', mode: 'no-cors' }).catch(e => console.error('Sync Error:', e)); },
-            getMedalIcon: function(score) { if (score === undefined || score < 70) return ''; if (score === 100) return '🏆'; if (score >= 90) return '🥇'; if (score >= 80) return '🥈'; return '🥉'; },
+            resetQuiz: function() { 
+                document.querySelectorAll('#quiz-questions input[type="radio"]').forEach(input => input.checked = false); 
+                document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('correct', 'incorrect')); 
+                document.querySelectorAll('.correct-feedback').forEach(fb => fb.classList.add('hidden')); 
+                document.getElementById('quiz-result').classList.add('hidden'); 
+            },
+
+            // ============================================================
+            // 🆕 FUNCIÓN MEJORADA PARA SINCRONIZAR PROGRESO CON SERVIDOR
+            // ============================================================
+            syncProgressToServer: async function() {
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                if (!auth || !CURRENT_COURSE) {
+                    console.warn('⚠️ No hay sesión o curso para sincronizar');
+                    return;
+                }
+                
+                try {
+                    const data = JSON.stringify({ 
+                        progress: this.progress, 
+                        scores: this.quizScores 
+                    });
+                    
+                    console.log('📤 Guardando progreso:', { email: auth.correo, curso: CURRENT_COURSE.name, data: data });
+                    
+                    const params = new URLSearchParams();
+                    params.append('action', 'save_course_progress');
+                    params.append('correo', auth.correo);
+                    params.append('curso', CURRENT_COURSE.name);
+                    params.append('data', data);
+                    
+                    const resp = await fetch(this.accessScriptUrl, {
+                        method: 'POST',
+                        body: params,
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+                    });
+                    
+                    const result = await resp.json();
+                    console.log('📤 Respuesta del servidor:', result);
+                    
+                    if (result.status === 'success' || result.success) {
+                        console.log('✅ Progreso sincronizado con servidor');
+                        showSyncIndicator('✅ Progreso guardado', 'success');
+                    } else {
+                        console.warn('⚠️ Sincronización:', result.message || 'sin respuesta');
+                    }
+                } catch (error) {
+                    console.error('❌ Error sincronizando:', error);
+                }
+            },
+
+            // Función legacy para compatibilidad
+            syncProgress: function() {
+                localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
+                localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
+                this.syncProgressToServer();
+            },
+
+            getMedalIcon: function(score) { 
+                if (score === undefined || score < 70) return ''; 
+                if (score === 100) return '🏆'; 
+                if (score >= 90) return '🥇'; 
+                if (score >= 80) return '🥈'; 
+                return '🥉'; 
+            },
 
             generateCertificate: function() {
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
@@ -1687,23 +1927,35 @@
                 .catch(e => console.error(e));
             },
 
-            showCourseCompletionCelebration: function() {
+            // 🔥 CAMBIO: Ahora recibe el score para mostrar la medalla correcta
+            showCourseCompletionCelebration: function(score) {
                 const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
+                let medalEmoji = '🎓';
+                if (score === 100) medalEmoji = '🏆';
+                else if (score >= 90) medalEmoji = '🥇';
+                else if (score >= 80) medalEmoji = '🥈';
+                else if (score >= 70) medalEmoji = '🥉';
+                
                 const overlay = document.createElement('div');
                 overlay.id = 'course-completion-overlay';
                 overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.85);backdrop-filter:blur(8px);z-index:1400;display:flex;align-items:center;justify-content:center;';
-                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:2px solid rgba(34,211,238,.5);border-radius:24px;padding:40px 30px;max-width:480px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 60px rgba(15,23,42,.6), 0 0 40px rgba(34,211,238,.2);animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"><div style="font-size:80px;line-height:1;margin-bottom:20px;animation:bounce 1s ease infinite;">🏆</div><h2 style="font-size:32px;font-weight:900;margin-bottom:10px;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">¡FELICITACIONES!</h2><p style="font-size:18px;color:#e2e8f0;margin-bottom:15px;font-weight:600;">${auth.nombre || 'Estudiante'}</p><p style="font-size:15px;color:#94a3b8;margin-bottom:20px;line-height:1.6;">Has completado exitosamente el curso<br><strong style="color:#22d3ee;">${CURRENT_COURSE.name}</strong></p><div style="display:flex;flex-direction:column;gap:12px;"><button onclick="document.getElementById('course-completion-overlay').remove(); app.generateCertificate();" style="background:linear-gradient(135deg,#06b6d4,#3b82f6);color:white;border:none;border-radius:12px;padding:14px 28px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(6,182,212,0.3);">🎓 Generar mi Certificado</button><button onclick="document.getElementById('course-completion-overlay').remove(); app.showDashboard();" style="background:rgba(255,255,255,0.1);color:#e2e8f0;border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;">📊 Volver a panel de métricas</button></div></div>`;
+                overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:2px solid rgba(34,211,238,.5);border-radius:24px;padding:40px 30px;max-width:480px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 60px rgba(15,23,42,.6), 0 0 40px rgba(34,211,238,.2);animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"><div style="font-size:80px;line-height:1;margin-bottom:20px;animation:bounce 1s ease infinite;">${medalEmoji}</div><h2 style="font-size:32px;font-weight:900;margin-bottom:10px;background:linear-gradient(135deg,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">¡FELICITACIONES!</h2><p style="font-size:18px;color:#e2e8f0;margin-bottom:15px;font-weight:600;">${auth.nombre || 'Estudiante'}</p><p style="font-size:15px;color:#94a3b8;margin-bottom:20px;line-height:1.6;">Has completado exitosamente el curso<br><strong style="color:#22d3ee;">${CURRENT_COURSE.name}</strong></p><div style="display:flex;flex-direction:column;gap:12px;"><button onclick="document.getElementById('course-completion-overlay').remove(); app.generateCertificate();" style="background:linear-gradient(135deg,#06b6d4,#3b82f6);color:white;border:none;border-radius:12px;padding:14px 28px;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(6,182,212,0.3);">🎓 Generar mi Certificado</button><button onclick="document.getElementById('course-completion-overlay').remove(); app.showDashboard();" style="background:rgba(255,255,255,0.1);color:#e2e8f0;border:1px solid rgba(255,255,255,0.2);border-radius:12px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;">📊 Volver a panel de métricas</button></div></div>`;
                 document.body.appendChild(overlay);
                 this.playApplauseSound();
                 this.launchConfetti();
                 this.launchFireworks();
             },
 
+            // 🔥 CAMBIO: Ahora recibe el score para mostrar la medalla correcta
             showAchievementOverlay: function(moduleId, score) { 
                 const old = document.getElementById('subject-achievement-overlay'); if (old) old.remove(); 
                 const overlay = document.createElement('div'); overlay.id = 'subject-achievement-overlay'; 
                 overlay.style.cssText = 'position:fixed;inset:0;background:rgba(2,6,23,0.7);backdrop-filter:blur(4px);z-index:1300;display:flex;align-items:center;justify-content:center;'; 
-                const medalIcon = score >= 100 ? '🏆' : score >= 90 ? '🥇' : score >= 80 ? '🥈' : '🥉';
+                let medalIcon = '🎓';
+                if (score === 100) medalIcon = '🏆';
+                else if (score >= 90) medalIcon = '🥇';
+                else if (score >= 80) medalIcon = '🥈';
+                else if (score >= 70) medalIcon = '🥉';
                 overlay.innerHTML = `<div style="background:linear-gradient(160deg,#0f172a,#1e293b);border:1px solid rgba(34,211,238,.4);border-radius:18px;padding:24px 20px;max-width:420px;width:90%;color:#fff;text-align:center;box-shadow:0 25px 45px rgba(15,23,42,.45);animation:popIn 0.5s cubic-bezier(0.175,0.885,0.32,1.275);"><div style="font-size:60px;line-height:1;animation:bounce 1s ease infinite;">${medalIcon}</div><h4 style="margin:10px 0 6px;font-size:20px;font-weight:900">Felicitaciones</h4><p style="margin:0 0 6px;color:#bae6fd;font-weight:700">Logro desbloqueado: Quiz ${moduleId} aprobado</p><p style="margin:0 0 14px;color:#e2e8f0;font-size:14px">Obtuviste ${score}%. Sigue así.</p><button id="subject-achievement-close" style="padding:10px 16px;border:0;border-radius:10px;background:#06b6d4;color:#082f49;font-weight:900;cursor:pointer">Siguiente lección</button></div>`; 
                 document.body.appendChild(overlay); 
                 const nextId = moduleId + 1;
@@ -1721,6 +1973,7 @@
             },
 
             playApplauseSound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 12; i++) { const bufferSize = ctx.sampleRate * 0.05; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1) * (1 - j / bufferSize); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 900 + (Math.random() * 800); const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.09); gain.gain.exponentialRampToValueAtTime(0.35, now + i * 0.09 + 0.01); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.09 + 0.05); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.09); source.stop(now + i * 0.09 + 0.06); } } catch (e) {} },
+            
             playElectricitySound: function() { try { const AudioCtx = window.AudioContext || window.webkitAudioContext; if (!AudioCtx) return; const ctx = new AudioCtx(); const now = ctx.currentTime; for (let i = 0; i < 8; i++) { const bufferSize = ctx.sampleRate * 0.08; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const output = buffer.getChannelData(0); for (let j = 0; j < bufferSize; j++) output[j] = (Math.random() * 2 - 1); const source = ctx.createBufferSource(); source.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'highpass'; filter.frequency.value = 3000 + Math.random() * 4000; const gain = ctx.createGain(); gain.gain.setValueAtTime(0.0001, now + i * 0.12); gain.gain.exponentialRampToValueAtTime(0.25, now + i * 0.12 + 0.005); gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.12 + 0.08); source.connect(filter); filter.connect(gain); gain.connect(ctx.destination); source.start(now + i * 0.12); source.stop(now + i * 0.12 + 0.08); } } catch (e) {} },
 
             launchConfetti: function() {
@@ -1759,37 +2012,167 @@
                 }
             },
 
-            updateCompleteButton: function() { const lesson = COURSE_DATA.find(l => l.id === this.currentId); const hasQuiz = lesson?.quiz && lesson.quiz.length > 0; document.getElementById('btn-complete').disabled = hasQuiz && !this.progress.includes(this.currentId); },
-            completeLesson: function() { if (this.currentId === 0) { if (!this.progress.includes(0)) { this.progress.push(0); localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress)); this.syncProgress(); } this.loadLesson(1); } else { const nextId = this.currentId + 1; if (nextId < COURSE_DATA.length) this.loadLesson(nextId); else this.showDashboard(); } },
-            switchTab: function(tabId) { ['content', 'resources', 'quiz'].forEach(tab => { document.getElementById(`panel-${tab}`).classList.toggle('hidden', tab !== tabId); document.getElementById(`tab-${tab}`).className = tab === tabId ? 'pb-2 font-bold border-b-2 border-secondary text-secondary px-2' : 'pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2'; }); const header = document.getElementById('lesson-header'); if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' }); },
-            showModal: function(title, msg, type) { document.getElementById('modal-title').innerText = title; document.getElementById('modal-msg').innerHTML = msg; document.getElementById('modal-icon').innerHTML = type === 'error' ? '❌' : type === 'info' ? 'ℹ️' : '✅'; document.getElementById('modal-feedback').classList.remove('hidden'); },
-            showAccessBlocked: function(title, message) { const loginScreen = document.getElementById('login-screen'); loginScreen.classList.remove('hidden'); const container = loginScreen.querySelector('div'); container.innerHTML = `<div class="text-center"><div class="text-6xl text-red-500 mb-6"><i class="fas fa-lock"></i></div><h2 class="text-2xl font-bold text-white mb-4">${title}</h2><p class="text-slate-300 text-sm mb-8">${message || 'No estás inscrito.'}</p><button onclick="window.location.href='catalogo.html'" class="w-full bg-primary text-white py-3 rounded-lg font-bold">Ver Catálogo</button></div>`; },
-            verifyLogin: function(event) { event.preventDefault(); const n = document.getElementById('login-nombre').value; const c = document.getElementById('login-cedula').value; const em = document.getElementById('login-correo').value; this.executeVerification(n, c, em, false); },
+            updateCompleteButton: function() { 
+                const lesson = COURSE_DATA.find(l => l.id === this.currentId); 
+                const hasQuiz = lesson?.quiz && lesson.quiz.length > 0; 
+                document.getElementById('btn-complete').disabled = hasQuiz && !this.progress.includes(this.currentId); 
+            },
+            
+            completeLesson: function() { 
+                if (this.currentId === 0) { 
+                    if (!this.progress.includes(0)) { 
+                        this.progress.push(0); 
+                        localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress)); 
+                        this.syncProgressToServer();
+                    } 
+                    this.loadLesson(1); 
+                } else { 
+                    const nextId = this.currentId + 1; 
+                    if (nextId < COURSE_DATA.length) this.loadLesson(nextId); 
+                    else this.showDashboard(); 
+                } 
+            },
+            
+            switchTab: function(tabId) { 
+                ['content', 'resources', 'quiz'].forEach(tab => { 
+                    document.getElementById(`panel-${tab}`).classList.toggle('hidden', tab !== tabId); 
+                    document.getElementById(`tab-${tab}`).className = tab === tabId ? 'pb-2 font-bold border-b-2 border-secondary text-secondary px-2' : 'pb-2 font-bold border-b-2 border-transparent text-slate-400 hover:text-white px-2'; 
+                }); 
+                const header = document.getElementById('lesson-header'); 
+                if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' }); 
+            },
+            
+            showModal: function(title, msg, type) { 
+                document.getElementById('modal-title').innerText = title; 
+                document.getElementById('modal-msg').innerHTML = msg; 
+                document.getElementById('modal-icon').innerHTML = type === 'error' ? '❌' : type === 'info' ? 'ℹ️' : '✅'; 
+                document.getElementById('modal-feedback').classList.remove('hidden'); 
+            },
+            
+            showAccessBlocked: function(title, message) { 
+                const loginScreen = document.getElementById('login-screen'); 
+                loginScreen.classList.remove('hidden'); 
+                const container = loginScreen.querySelector('div'); 
+                container.innerHTML = `<div class="text-center"><div class="text-6xl text-red-500 mb-6"><i class="fas fa-lock"></i></div><h2 class="text-2xl font-bold text-white mb-4">${title}</h2><p class="text-slate-300 text-sm mb-8">${message || 'No estás inscrito.'}</p><button onclick="window.location.href='catalogo.html'" class="w-full bg-primary text-white py-3 rounded-lg font-bold">Ver Catálogo</button></div>`; 
+            },
+            
+            verifyLogin: function(event) { 
+                event.preventDefault(); 
+                const n = document.getElementById('login-nombre').value; 
+                const c = document.getElementById('login-cedula').value; 
+                const em = document.getElementById('login-correo').value; 
+                this.executeVerification(n, c, em, false); 
+            },
+            
             executeVerification: async function(n, c, em, isAuto) {
                 const btn = document.getElementById('login-btn');
                 const err = document.getElementById('login-error');
-                btn.disabled = true; btn.querySelector('.fa-spinner').classList.remove('hidden'); btn.querySelector('span').innerText = ' Verificando...'; err.classList.add('hidden');
+                btn.disabled = true; 
+                btn.querySelector('.fa-spinner').classList.remove('hidden'); 
+                btn.querySelector('span').innerText = ' Verificando...'; 
+                err.classList.add('hidden');
                 try {
-                    const url = `${this.accessScriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent(CURRENT_COURSE.name)}`;
-                    const resp = await fetch(url); const data = await resp.json();
+                    const url = `${this.accessScriptUrl}?action=verify&nombre=${encodeURIComponent(n)}&cedula=${encodeURIComponent(c)}&correo=${encodeURIComponent(em)}&curso=${encodeURIComponent(CURRENT_COURSE.name)}&t=${Date.now()}`;
+                    const resp = await fetch(url); 
+                    const data = await resp.json();
+                    
                     if (data.success) {
+                        // Guardar credenciales
                         localStorage.setItem(STORAGE_KEYS.auth, JSON.stringify({ nombre: n, cedula: c, correo: em }));
-                        if (data.progressData) { try { const p = JSON.parse(data.progressData); this.progress = Array.isArray(p.progress) ? p.progress : []; this.quizScores = p.scores || {}; } catch(e) {} }
+                        
+                        // Guardar referencia del curso
+                        localStorage.setItem('current_course_name', CURRENT_COURSE.name);
+                        localStorage.setItem('current_course_id', resolvedCourseId);
+                        
+                        // 🔥 Cargar progreso desde servidor (sobrescribe el local)
+                        console.log('🔍 Buscando progreso para:', em, CURRENT_COURSE.name);
+                        const serverProgress = await loadProgressFromServer(em, CURRENT_COURSE.name);
+                        
+                        if (serverProgress && (serverProgress.progress.length > 0 || Object.keys(serverProgress.scores).length > 0)) {
+                            this.progress = serverProgress.progress;
+                            this.quizScores = serverProgress.scores;
+                            localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
+                            localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
+                            console.log('✅ Progreso cargado desde servidor al iniciar sesión:', this.progress);
+                        } else if (data.progressData) {
+                            // Fallback: usar el que vino en la respuesta de verify
+                            try {
+                                const p = JSON.parse(data.progressData);
+                                this.progress = Array.isArray(p.progress) ? p.progress : [];
+                                this.quizScores = p.scores || {};
+                                localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
+                                localStorage.setItem(STORAGE_KEYS.scores, JSON.stringify(this.quizScores));
+                            } catch(e) {
+                                console.warn('No se pudo parsear progressData:', e);
+                            }
+                        }
+                        
                         this.proceedToAula();
-                    } else { err.innerText = data.message || 'No estás inscrito.'; err.classList.remove('hidden'); }
-                } catch (error) { err.innerText = 'Error de conexión.'; err.classList.remove('hidden'); }
-                finally { btn.disabled = false; btn.querySelector('.fa-spinner').classList.add('hidden'); btn.querySelector('span').innerText = ' Verificar Inscripción'; }
+                    } else { 
+                        err.innerText = data.message || 'No estás inscrito.'; 
+                        err.classList.remove('hidden'); 
+                    }
+                } catch (error) { 
+                    err.innerText = 'Error de conexión.'; 
+                    err.classList.remove('hidden'); 
+                }
+                finally { 
+                    btn.disabled = false; 
+                    btn.querySelector('.fa-spinner').classList.add('hidden'); 
+                    btn.querySelector('span').innerText = ' Verificar Inscripción'; 
+                }
             },
-            proceedToAula: function() { document.getElementById('login-screen').classList.add('hidden'); this.updateHeaderName(); this.renderSidebar(); this.showDashboard(); },
-            updateHeaderName: function() { const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); const nameEl = document.getElementById('header-student-name'); if (nameEl && auth?.nombre) { nameEl.innerText = auth.nombre; nameEl.classList.remove('hidden'); } },
-            initTheme: function() { const savedTheme = localStorage.getItem('theme') || 'dark'; document.body.classList.toggle('light-mode', savedTheme === 'light'); document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun'; },
-            toggleTheme: function() { const isLight = document.body.classList.toggle('light-mode'); localStorage.setItem('theme', isLight ? 'light' : 'dark'); document.getElementById('theme-icon').className = isLight ? 'fas fa-moon' : 'fas fa-sun'; },
-            toggleFullScreen: function() { if (!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); },
-            updateFullScreenIcon: function() { document.getElementById('fullscreen-icon').className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand'; },
-            logout: function() { if (confirm('¿Cerrar sesión?')) { this.clearLocalData(); window.location.href = 'mis-cursos.html'; } }
+            
+            proceedToAula: function() { 
+                document.getElementById('login-screen').classList.add('hidden'); 
+                this.updateHeaderName(); 
+                this.renderSidebar(); 
+                this.showDashboard(); 
+                this.syncProgressToServer();
+            },
+            
+            updateHeaderName: function() { 
+                const auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null'); 
+                const nameEl = document.getElementById('header-student-name'); 
+                if (nameEl && auth?.nombre) { 
+                    nameEl.innerText = auth.nombre; 
+                    nameEl.classList.remove('hidden'); 
+                } 
+            },
+            
+            initTheme: function() { 
+                const savedTheme = localStorage.getItem('theme') || 'dark'; 
+                document.body.classList.toggle('light-mode', savedTheme === 'light'); 
+                document.getElementById('theme-icon').className = savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun'; 
+            },
+            
+            toggleTheme: function() { 
+                const isLight = document.body.classList.toggle('light-mode'); 
+                localStorage.setItem('theme', isLight ? 'light' : 'dark'); 
+                document.getElementById('theme-icon').className = isLight ? 'fas fa-moon' : 'fas fa-sun'; 
+            },
+            
+            toggleFullScreen: function() { 
+                if (!document.fullscreenElement) document.documentElement.requestFullscreen?.(); 
+                else document.exitFullscreen?.(); 
+            },
+            
+            updateFullScreenIcon: function() { 
+                document.getElementById('fullscreen-icon').className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand'; 
+            },
+            
+            logout: function() { 
+                if (confirm('¿Cerrar sesión?')) { 
+                    this.clearLocalData(); 
+                    window.location.href = 'mis-cursos.html'; 
+                } 
+            }
         };
 
-        window.onload = () => { app.init(); if (window.lucide) lucide.createIcons(); };
+        window.onload = () => { 
+            app.init(); 
+            if (window.lucide) lucide.createIcons(); 
+        };
     </script>
 </body>
 </html>
