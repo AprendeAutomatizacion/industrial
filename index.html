@@ -2558,7 +2558,237 @@
             color: #ffffff !important;
             -webkit-text-fill-color: #ffffff !important;
         }
-</style>
+
+        /* ==========================================
+           ESTILOS PARA LOGROS Y MOTIVACIÓN
+           ========================================== */
+        @keyframes achievementPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .course-card[data-logro] {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .course-card[data-logro]:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .course-card[data-logro].ring-2 {
+            animation: achievementPulse 2s ease-in-out infinite;
+        }
+
+        #user-achievement-icon {
+            transition: all 0.5s ease;
+            filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.3));
+        }
+
+        #user-achievement-icon:hover {
+            transform: scale(1.15) rotate(-5deg);
+            filter: drop-shadow(0 0 25px rgba(6, 182, 212, 0.6));
+        }
+
+        .logro-count {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #94a3b8;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.15rem 0.6rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .achievement-glow {
+            transition: all 0.5s ease;
+        }
+
+        .achievement-glow:hover {
+            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+        }
+
+        /* Lista de logros obtenidos */
+        #achievements-list-container .achievement-item {
+            transition: all 0.3s ease;
+        }
+
+        #achievements-list-container .achievement-item:hover {
+            transform: translateX(4px);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+
+        .empty-achievements {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+        }
+
+        body.light-mode .empty-achievements {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Animación para el icono de logro */
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5) rotate(-12deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        /* ==========================================
+           ESTILOS PARA CERTIFICACIONES
+           ========================================== */
+        .certificate-badge {
+            transition: all 0.3s ease;
+        }
+        .certificate-badge:hover {
+            transform: scale(1.05);
+        }
+
+        .certificate-card .course-card-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certificate-card .course-card-image-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.4) 100%);
+            pointer-events: none;
+        }
+
+        .certificate-overlay-logo {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 2;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .certificate-overlay-logo img {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            object-fit: cover;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .certificate-overlay-logo .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .certificate-overlay-logo .logo-text .title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.65rem;
+            line-height: 1.2;
+        }
+
+        .certificate-overlay-logo .logo-text .subtitle {
+            font-size: 0.55rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .certificate-seal {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .certificate-seal .seal-icon {
+            font-size: 1.5rem;
+        }
+
+        .certificate-seal .seal-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .certificate-seal .seal-text .seal-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.7rem;
+            line-height: 1.2;
+        }
+
+        .certificate-seal .seal-text .seal-desc {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+        }
+
+        body.light-mode .certificate-overlay-logo {
+            background: rgba(255, 255, 255, 0.85);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        body.light-mode .certificate-overlay-logo .logo-text .title {
+            color: #1e293b;
+        }
+
+        body.light-mode .certificate-seal {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.06);
+        }
+
+        body.light-mode .certificate-seal .seal-text .seal-title {
+            color: #1e293b;
+        }
+
+        body.light-mode .certificate-seal .seal-text .seal-desc {
+            color: #64748b;
+        }
+
+        .comparison-grid .comparison-item {
+            transition: all 0.3s ease;
+        }
+
+        .comparison-grid .comparison-item:hover {
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .certificate-overlay-logo {
+                padding: 0.4rem 0.6rem;
+                gap: 0.5rem;
+            }
+            .certificate-overlay-logo img {
+                width: 2rem;
+                height: 2rem;
+            }
+            .certificate-overlay-logo .logo-text .title {
+                font-size: 0.55rem;
+            }
+            .certificate-overlay-logo .logo-text .subtitle {
+                font-size: 0.45rem;
+            }
+            .certificate-seal {
+                padding: 0.5rem 0.75rem;
+            }
+            .certificate-seal .seal-icon {
+                font-size: 1.2rem;
+            }
+            .certificate-seal .seal-text .seal-title {
+                font-size: 0.6rem;
+            }
+            .certificate-seal .seal-text .seal-desc {
+                font-size: 0.5rem;
+            }
+        }
+    </style>
 
     <!-- GOOGLE CHARTS -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -2578,10 +2808,6 @@
             }
         }
     </script>
-
-
-
-
 
 </head>
 <body class="custom-scrollbar">
@@ -2638,7 +2864,6 @@
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Guía Experto</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Prof. Pablo <span>Cedeño</span></h2>
                     
-
 <p class="text-slate-300 mt-6 mb-8 max-w-xl mx-auto md:mx-0 text-left leading-relaxed">
     <span class="font-bold text-cyan-400">Ingeniero Electricista</span> y 
     <span class="font-bold text-cyan-400">Magister en Automatización, Control y Robótica</span>, 
@@ -2652,9 +2877,6 @@
     <span class="text-cyan-300 font-semibold">Mi pasión es enseñar lo que sé y convertir ideas complejas en soluciones prácticas.</span> 
     Porque <span class="text-white font-bold">no solo sé, sino que sé enseñar</span>.
 </p>
-
-
-
                 </div>
             </div>
         </section>
@@ -2678,98 +2900,93 @@
             </svg>
         </div>
 
-
-
-<!-- MISIÓN ACADÉMICA - 4 PILARES FUNDAMENTALES -->
-<section id="mision" class="page-section pt-10 pb-20 relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
-        <div class="text-center">
-            <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">LIDERADOS POR EL PROF. PABLO CEDEÑO</span>
-            <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">Nuestros <span>Pilares Fundamentales</span></h2>
-            <p class="text-slate-400 text-sm max-w-2xl mx-auto mb-6">
-                <i class="fas fa-quote-left text-cyan-400 mr-2 opacity-50"></i>
-                No importa la edad, en nuestra academia <strong class="text-white">siempre estás a tiempo de aprender</strong> automatización.
-                <i class="fas fa-quote-right text-cyan-400 ml-2 opacity-50"></i>
-            </p>
-        </div>
-
-        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-            <!-- Pilar 1 -->
-            <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-cyan-500/40 transition-all duration-300 flex flex-col">
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="text-3xl">🧠</span>
-                    <h3 class="text-lg md:text-xl font-bold text-white">Formación Sin Límite de Edad</h3>
+        <!-- MISIÓN ACADÉMICA - 4 PILARES FUNDAMENTALES -->
+        <section id="mision" class="page-section pt-10 pb-20 relative overflow-hidden">
+            <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
+                <div class="text-center">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">LIDERADOS POR EL PROF. PABLO CEDEÑO</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">Nuestros <span>Pilares Fundamentales</span></h2>
+                    <p class="text-slate-400 text-sm max-w-2xl mx-auto mb-6">
+                        <i class="fas fa-quote-left text-cyan-400 mr-2 opacity-50"></i>
+                        No importa la edad, en nuestra academia <strong class="text-white">siempre estás a tiempo de aprender</strong> automatización.
+                        <i class="fas fa-quote-right text-cyan-400 ml-2 opacity-50"></i>
+                    </p>
                 </div>
-                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
-                    <strong class="text-cyan-400">Nunca es tarde para empezar</strong>. 
-                    La academia está diseñada para que <strong class="text-white">cualquier persona, a cualquier edad</strong>, 
-                    pueda aprender automatización desde cero o perfeccionar sus conocimientos.
-                </p>
-            </div>
 
-            <!-- Pilar 2 -->
-            <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-purple-500/40 transition-all duration-300 flex flex-col">
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="text-3xl">🎓</span>
-                    <h3 class="text-lg md:text-xl font-bold text-white">Pedagogía para Adultos</h3>
+                <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+                    <!-- Pilar 1 -->
+                    <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-cyan-500/40 transition-all duration-300 flex flex-col">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">🧠</span>
+                            <h3 class="text-lg md:text-xl font-bold text-white">Formación Sin Límite de Edad</h3>
+                        </div>
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                            <strong class="text-cyan-400">Nunca es tarde para empezar</strong>. 
+                            La academia está diseñada para que <strong class="text-white">cualquier persona, a cualquier edad</strong>, 
+                            pueda aprender automatización desde cero o perfeccionar sus conocimientos.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 2 -->
+                    <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-purple-500/40 transition-all duration-300 flex flex-col">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">🎓</span>
+                            <h3 class="text-lg md:text-xl font-bold text-white">Pedagogía para Adultos</h3>
+                        </div>
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                            <strong class="text-purple-400">Enseñar a quien tiene experiencia es un arte</strong>. 
+                            Con <strong class="text-white">22 años como profesor universitario</strong>, aplicamos 
+                            <strong class="text-white">andragogía</strong> y 
+                            <strong class="text-white">diseño instruccional</strong> que respetan los tiempos, estilos, en modalidades presenciales, híbridas y online.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 3 -->
+                    <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-amber-500/40 transition-all duration-300 flex flex-col">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">🛠️</span>
+                            <h3 class="text-lg md:text-xl font-bold text-white">Aprender Haciendo</h3>
+                        </div>
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                            <strong class="text-amber-400">No se aprende a programar un PLC leyendo, se aprende programándolo</strong>. 
+                            Todos los cursos son <strong class="text-white">100% prácticos</strong>, con 
+                            <strong class="text-white">montajes reales, simulaciones avanzadas</strong> y casos concretos de la industria.
+                        </p>
+                    </div>
+
+                    <!-- Pilar 4 -->
+                    <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-green-500/40 transition-all duration-300 flex flex-col">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="text-3xl">🌍</span>
+                            <h3 class="text-lg md:text-xl font-bold text-white">Comunidad Colaborativa</h3>
+                        </div>
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                            <strong class="text-green-400">Aprender juntos es aprender mejor</strong>. 
+                            Más de <strong class="text-white">450 estudiantes atendidos</strong> desde 2019, con 
+                            <strong class="text-white">materiales en PDF, videos, simulaciones</strong>, en una comunidad global que comparte 
+                            experiencias, dudas y logros.
+                        </p>
+                    </div>
                 </div>
-                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
-                    <strong class="text-purple-400">Enseñar a quien tiene experiencia es un arte</strong>. 
-                    Con <strong class="text-white">22 años como profesor universitario</strong>, aplicamos 
-                    <strong class="text-white">andragogía</strong> y 
-                    <strong class="text-white">diseño instruccional</strong> que respetan los tiempos, estilos, en modalidades presenciales, híbridas y online.
-                </p>
-            </div>
 
-            <!-- Pilar 3 -->
-            <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-amber-500/40 transition-all duration-300 flex flex-col">
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="text-3xl">🛠️</span>
-                    <h3 class="text-lg md:text-xl font-bold text-white">Aprender Haciendo</h3>
+                <!-- Frase de cierre -->
+                <div class="text-center mt-12">
+                    <div class="max-w-3xl mx-auto p-6 md:p-8 rounded-3xl transition-all duration-500 cursor-default border border-cyan-500/10 hover:border-cyan-400/60 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)] hover:scale-[1.02] hover:bg-cyan-500/5 group" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(4px);">
+                        <p class="text-slate-300 text-base md:text-xl font-medium leading-relaxed">
+                            <i class="fas fa-quote-left text-cyan-400 mr-2 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                            Formamos a la próxima generación de innovadores, combinando 
+                            <span class="text-cyan-400 font-bold transition-all duration-300 group-hover:text-cyan-300 group-hover:drop-shadow-[0_0_12px_rgba(6,182,212,0.5)]">experiencia técnica</span>,
+                            <span class="text-purple-400 font-bold transition-all duration-300 group-hover:text-purple-300 group-hover:drop-shadow-[0_0_12px_rgba(139,92,246,0.5)]">vocación docente</span>,
+                            <span class="text-amber-400 font-bold transition-all duration-300 group-hover:text-amber-300 group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">práctica constante</span>
+                            y 
+                            <span class="text-emerald-400 font-bold transition-all duration-300 group-hover:text-emerald-300 group-hover:drop-shadow-[0_0_12px_rgba(16,185,129,0.5)]">herramientas digitales</span>.
+                            <i class="fas fa-quote-right text-cyan-400 ml-2 opacity-50 group-hover:opacity-100 transition-opacity"></i>
+                        </p>
+                        <div class="mt-4 h-0.5 w-0 group-hover:w-3/4 mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 via-amber-500 to-emerald-500 transition-all duration-700 rounded-full"></div>
+                    </div>
                 </div>
-                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
-                    <strong class="text-amber-400">No se aprende a programar un PLC leyendo, se aprende programándolo</strong>. 
-                    Todos los cursos son <strong class="text-white">100% prácticos</strong>, con 
-                    <strong class="text-white">montajes reales, simulaciones avanzadas</strong> y casos concretos de la industria.
-                </p>
             </div>
-
-            <!-- Pilar 4 -->
-            <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-green-500/40 transition-all duration-300 flex flex-col">
-                <div class="flex items-center gap-3 mb-3">
-                    <span class="text-3xl">🌍</span>
-                    <h3 class="text-lg md:text-xl font-bold text-white">Comunidad Colaborativa</h3>
-                </div>
-                <p class="text-slate-300 text-sm md:text-base leading-relaxed">
-                    <strong class="text-green-400">Aprender juntos es aprender mejor</strong>. 
-                    Más de <strong class="text-white">450 estudiantes atendidos</strong> desde 2019, con 
-                    <strong class="text-white">materiales en PDF, videos, simulaciones</strong>, en una comunidad global que comparte 
-                    experiencias, dudas y logros.
-                </p>
-            </div>
-        </div>
-
-        <!-- Frase de cierre con efecto mejorado -->
-        <div class="text-center mt-12">
-            <div class="max-w-3xl mx-auto p-6 md:p-8 rounded-3xl transition-all duration-500 cursor-default border border-cyan-500/10 hover:border-cyan-400/60 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)] hover:scale-[1.02] hover:bg-cyan-500/5 group" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(4px);">
-                <p class="text-slate-300 text-base md:text-xl font-medium leading-relaxed">
-                    <i class="fas fa-quote-left text-cyan-400 mr-2 opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                    Formamos a la próxima generación de innovadores, combinando 
-                    <span class="text-cyan-400 font-bold transition-all duration-300 group-hover:text-cyan-300 group-hover:drop-shadow-[0_0_12px_rgba(6,182,212,0.5)]">experiencia técnica</span>,
-                    <span class="text-purple-400 font-bold transition-all duration-300 group-hover:text-purple-300 group-hover:drop-shadow-[0_0_12px_rgba(139,92,246,0.5)]">vocación docente</span>,
-                    <span class="text-amber-400 font-bold transition-all duration-300 group-hover:text-amber-300 group-hover:drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">práctica constante</span>
-                    y 
-                    <span class="text-emerald-400 font-bold transition-all duration-300 group-hover:text-emerald-300 group-hover:drop-shadow-[0_0_12px_rgba(16,185,129,0.5)]">herramientas digitales</span>.
-                    <i class="fas fa-quote-right text-cyan-400 ml-2 opacity-50 group-hover:opacity-100 transition-opacity"></i>
-                </p>
-                <!-- Línea decorativa animada -->
-                <div class="mt-4 h-0.5 w-0 group-hover:w-3/4 mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 via-amber-500 to-emerald-500 transition-all duration-700 rounded-full"></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
+        </section>
 
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
@@ -2793,56 +3010,40 @@
         <!-- CURSOS DESTACADOS -->
         <section id="cursos-destacados" class="page-section relative py-24 px-6 overflow-hidden">
             <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo más <span>Destacado</span></h2>
 
-
-
-<div class="text-center mb-10">
-    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Excelencia Académica</span>
-    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo más <span>Destacado</span></h2>
-
-    <!-- Descripción con más impacto - ANCHO COMPLETO -->
-    <div class="w-full mt-6">
-        <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
-            
-            <!-- Línea decorativa superior -->
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
-            
-            <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
-                <span class="text-cyan-400 font-bold text-base md:text-xl">🚀 Descubre</span> nuestra oferta académica con 
-                <span class="text-white font-bold">cursos online</span>, 
-                <span class="text-white font-bold">presenciales</span> y 
-                <span class="text-white font-bold">manuales prácticos</span>, 
-                diseñados para que aprendas automatización 
-                <span class="text-cyan-300 font-semibold">desde cualquier lugar</span> y a 
-                <span class="text-cyan-300 font-semibold">tu propio ritmo</span>.
-            </p>
-            
-            <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
-                <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
-                Todos nuestros recursos combinan 
-                <span class="text-amber-400 font-semibold">teoría</span>, 
-                <span class="text-emerald-400 font-semibold">práctica</span> y 
-                <span class="text-purple-400 font-semibold">simulaciones</span> 
-                para garantizar un aprendizaje 
-                <span class="text-white font-bold">real y aplicable</span>.
-                <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
-            </p>
-
-            <!-- Línea decorativa inferior animada -->
-            <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
-        </div>
-    </div>
-</div>
-
-
-
-
+                    <div class="w-full mt-6">
+                        <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
+                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
+                                <span class="text-cyan-400 font-bold text-base md:text-xl">🚀 Descubre</span> nuestra oferta académica con 
+                                <span class="text-white font-bold">cursos online</span>, 
+                                <span class="text-white font-bold">presenciales</span> y 
+                                <span class="text-white font-bold">manuales prácticos</span>, 
+                                diseñados para que aprendas automatización 
+                                <span class="text-cyan-300 font-semibold">desde cualquier lugar</span> y a 
+                                <span class="text-cyan-300 font-semibold">tu propio ritmo</span>.
+                            </p>
+                            <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
+                                <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
+                                Todos nuestros recursos combinan 
+                                <span class="text-amber-400 font-semibold">teoría</span>, 
+                                <span class="text-emerald-400 font-semibold">práctica</span> y 
+                                <span class="text-purple-400 font-semibold">simulaciones</span> 
+                                para garantizar un aprendizaje 
+                                <span class="text-white font-bold">real y aplicable</span>.
+                                <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
+                            </p>
+                            <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left" id="cursos-destacados-container"></div>
             </div>
         </section>
-
-
 
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
@@ -2863,172 +3064,116 @@
             </svg>
         </div>
 
+        <!-- MODALIDADES -->
+        <section id="modalidades" class="page-section relative py-24 px-6">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-8">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Flexibilidad Total</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Modalidades de <span>Aprendizaje</span></h2>
 
+                    <div class="w-full mt-6">
+                        <div class="relative p-5 md:p-8 rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-purple-400/50 hover:shadow-[0_0_40px_rgba(139,92,246,0.08)] group">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-60"></div>
+                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
+                                <span class="text-purple-400 font-bold text-base md:text-xl">🎯 Elige tu formato</span> 
+                                y aprende automatización de la forma que mejor se adapte a ti. 
+                                Disponemos de <span class="text-white font-bold">dos modalidades</span> diseñadas para 
+                                <span class="text-purple-300 font-semibold">todos los perfiles</span> y 
+                                <span class="text-purple-300 font-semibold">estilos de vida</span>.
+                            </p>
+                            <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
+                                <i class="fas fa-quote-left text-purple-400/50 mr-1 text-xs"></i>
+                                Formación presencial con <span class="text-white font-semibold">aval universitario</span> 
+                                o aprendizaje online con <span class="text-white font-semibold">flexibilidad total</span> 
+                                desde nuestra plataforma digital.
+                                <i class="fas fa-quote-right text-purple-400/50 ml-1 text-xs"></i>
+                            </p>
+                            <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-purple-500 via-cyan-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- MODALIDADES -->
-<section id="modalidades" class="page-section relative py-24 px-6">
-    <div class="max-w-7xl mx-auto relative z-10">
-        <!-- Encabezado -->
-        <div class="text-center mb-8">
-            <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Flexibilidad Total</span>
-            <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Modalidades de <span>Aprendizaje</span></h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mt-10">
+                    <!-- MODALIDAD 1: PRESENCIAL -->
+                    <div class="course-card course-card-level-intermedio hover:shadow-xl transition-all duration-300 border border-purple-500/30 bg-slate-900/50 rounded-2xl overflow-hidden flex flex-col">
+                        <div class="course-card-image-container relative h-72">
+                            <img src="img/AA (39).webp" alt="Formación Presencial" class="course-card-image w-full h-full object-cover" loading="lazy">
+                            <div class="absolute top-3 left-3 z-10">
+                                <img src="img/AA (40).webp" alt="Logo UPT Aragua" class="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-lg border-2 border-purple-500/30 bg-slate-900/80 p-1">
+                            </div>
+                            <div class="badge-container" style="left: 4.5rem;">
+                                <span class="course-card-badge badge-intermediate text-[8px] uppercase tracking-wider">🏫 Presencial</span>
+                            </div>
+                            <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full text-[9px] text-white font-bold flex items-center gap-1.5">
+                                <i class="fas fa-university text-purple-400"></i> Certificación Universitaria
+                            </div>
+                        </div>
+                        <div class="course-card-content p-6 flex flex-col flex-grow">
+                            <h3 class="course-card-title text-xl font-bold text-white">Formación Presencial</h3>
+                            <p class="text-slate-400 text-sm mb-4">
+                                <span class="text-purple-400 font-semibold">Avalada por la UPT Aragua Federico Brito Figueroa</span>
+                            </p>
+                            <div class="flex-grow space-y-3">
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm">Clases en laboratorios con <strong class="text-white">montajes reales</strong></span></div>
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm"><strong class="text-white">Certificación</strong> con validez universitaria</span></div>
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm">Interacción directa con <strong class="text-white">equipos industriales</strong></span></div>
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm"><strong class="text-white">Acompañamiento</strong> personalizado del profesor</span></div>
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm">Proyectos colaborativos con <strong class="text-white">casos reales</strong></span></div>
+                            </div>
+                            <div class="course-card-footer mt-4 pt-4 border-t border-slate-700/50">
+                                <button onclick="window.location.href='#curso-especial'" class="btn-comprar w-full text-center justify-center py-2.5 text-sm">
+                                    <i class="fas fa-calendar-alt"></i> Ver próximas fechas
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-            <!-- Descripción -->
-            <div class="w-full mt-6">
-                <div class="relative p-5 md:p-8 rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-purple-400/50 hover:shadow-[0_0_40px_rgba(139,92,246,0.08)] group">
-                    
-                    <!-- Línea decorativa superior -->
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-60"></div>
-                    
-                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
-                        <span class="text-purple-400 font-bold text-base md:text-xl">🎯 Elige tu formato</span> 
-                        y aprende automatización de la forma que mejor se adapte a ti. 
-                        Disponemos de <span class="text-white font-bold">dos modalidades</span> diseñadas para 
-                        <span class="text-purple-300 font-semibold">todos los perfiles</span> y 
-                        <span class="text-purple-300 font-semibold">estilos de vida</span>.
+                    <!-- MODALIDAD 2: ONLINE -->
+                    <div class="course-card course-card-level-basico hover:shadow-xl transition-all duration-300 border border-cyan-500/30 bg-slate-900/50 rounded-2xl overflow-hidden flex flex-col">
+                        <div class="course-card-image-container relative h-72">
+                            <img src="img/AA (33).webp" alt="Formación Online" class="course-card-image w-full h-full object-cover" loading="lazy">
+                            <div class="absolute top-3 left-3 z-10">
+                                <img src="img/AA (38).webp" alt="Logo Aprende Automatización" class="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-lg border-2 border-cyan-500/30 bg-slate-900/80 p-1">
+                            </div>
+                            <div class="badge-container" style="left: 4.5rem;">
+                                <span class="course-card-badge badge-basic text-[8px] uppercase tracking-wider">📹 Online</span>
+                            </div>
+                            <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full text-[9px] text-white font-bold flex items-center gap-1.5">
+                                <i class="fas fa-certificate text-emerald-400"></i> Certificado Digital Verificable
+                            </div>
+                        </div>
+                        <div class="course-card-content p-6 flex flex-col flex-grow">
+                            <h3 class="course-card-title text-xl font-bold text-white">Formación Online</h3>
+                            <p class="text-slate-400 text-sm mb-4">
+                                <span class="text-cyan-400 font-semibold">A través de nuestra plataforma educativa</span>
+                            </p>
+                            <div class="flex-grow space-y-3">
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm"><strong class="text-white">Acceso 24/7</strong> a todos los contenidos</span></div>
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm"><strong class="text-white">Videotutoriales</strong> grabados y editados profesionalmente</span></div>
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm"><strong class="text-white">Simulaciones</strong> interactivas para practicar sin equipo</span></div>
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm"><strong class="text-white">Material descargable</strong> en PDF y recursos complementarios</span></div>
+                                <div class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm">Aprende a <strong class="text-white">tu propio ritmo</strong>, desde cualquier lugar</span></div>
+                            </div>
+                            <div class="course-card-footer mt-4 pt-4 border-t border-slate-700/50">
+                                <button onclick="window.location.href='catalogo.html'" class="btn-comprar w-full text-center justify-center py-2.5 text-sm" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                                    <i class="fas fa-th-list"></i> Ver Catálogo de Cursos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-10">
+                    <p class="text-slate-400 text-sm max-w-2xl mx-auto">
+                        <i class="fas fa-question-circle text-purple-400 mr-1"></i>
+                        ¿No sabes qué modalidad elegir? 
+                        <a href="https://wa.me/584121414196" target="_blank" class="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors">
+                            Contáctame y te ayudo a decidir
+                        </a>
                     </p>
-                    
-                    <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
-                        <i class="fas fa-quote-left text-purple-400/50 mr-1 text-xs"></i>
-                        Formación presencial con <span class="text-white font-semibold">aval universitario</span> 
-                        o aprendizaje online con <span class="text-white font-semibold">flexibilidad total</span> 
-                        desde nuestra plataforma digital.
-                        <i class="fas fa-quote-right text-purple-400/50 ml-1 text-xs"></i>
-                    </p>
-
-                    <!-- Línea decorativa inferior animada -->
-                    <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-purple-500 via-cyan-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
                 </div>
             </div>
-        </div>
-
-        <!-- Grid de 2 modalidades -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch mt-10">
-            
-            <!-- MODALIDAD 1: PRESENCIAL -->
-            <div class="course-card course-card-level-intermedio hover:shadow-xl transition-all duration-300 border border-purple-500/30 bg-slate-900/50 rounded-2xl overflow-hidden flex flex-col">
-                <div class="course-card-image-container relative h-72">
-                    <img src="img/AA (39).webp" alt="Formación Presencial" class="course-card-image w-full h-full object-cover" loading="lazy">
-                    
-                    <!-- Logo en la parte superior izquierda -->
-                    <div class="absolute top-3 left-3 z-10">
-                        <img src="img/AA (40).webp" alt="Logo UPT Aragua" class="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-lg border-2 border-purple-500/30 bg-slate-900/80 p-1">
-                    </div>
-                    
-                    <!-- Badges -->
-                    <div class="badge-container" style="left: 4.5rem;">
-                        <span class="course-card-badge badge-intermediate text-[8px] uppercase tracking-wider">🏫 Presencial</span>
-                    </div>
-                    
-                    <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full text-[9px] text-white font-bold flex items-center gap-1.5">
-                        <i class="fas fa-university text-purple-400"></i> Certificación Universitaria
-                    </div>
-                </div>
-                <div class="course-card-content p-6 flex flex-col flex-grow">
-                    <h3 class="course-card-title text-xl font-bold text-white">Formación Presencial</h3>
-                    <p class="text-slate-400 text-sm mb-4">
-                        <span class="text-purple-400 font-semibold">Avalada por la UPT Aragua Federico Brito Figueroa</span>
-                    </p>
-                    <div class="flex-grow space-y-3">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm">Clases en laboratorios con <strong class="text-white">montajes reales</strong></span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm"><strong class="text-white">Certificación</strong> con validez universitaria</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm">Interacción directa con <strong class="text-white">equipos industriales</strong></span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm"><strong class="text-white">Acompañamiento</strong> personalizado del profesor</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm">Proyectos colaborativos con <strong class="text-white">casos reales</strong></span>
-                        </div>
-                    </div>
-                    <div class="course-card-footer mt-4 pt-4 border-t border-slate-700/50">
-                        <button onclick="window.location.href='#curso-especial'" class="btn-comprar w-full text-center justify-center py-2.5 text-sm">
-                            <i class="fas fa-calendar-alt"></i> Ver próximas fechas
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- MODALIDAD 2: ONLINE -->
-            <div class="course-card course-card-level-basico hover:shadow-xl transition-all duration-300 border border-cyan-500/30 bg-slate-900/50 rounded-2xl overflow-hidden flex flex-col">
-                <div class="course-card-image-container relative h-72">
-                    <img src="img/AA (33).webp" alt="Formación Online" class="course-card-image w-full h-full object-cover" loading="lazy">
-                    
-                    <!-- Logo en la parte superior izquierda -->
-                    <div class="absolute top-3 left-3 z-10">
-                        <img src="img/AA (38).webp" alt="Logo Aprende Automatización" class="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-lg border-2 border-cyan-500/30 bg-slate-900/80 p-1">
-                    </div>
-                    
-                    <!-- Badges -->
-                    <div class="badge-container" style="left: 4.5rem;">
-                        <span class="course-card-badge badge-basic text-[8px] uppercase tracking-wider">📹 Online</span>
-                    </div>
-                    
-                    <div class="absolute bottom-2 right-2 bg-black/60 backdrop-blur-sm px-3 py-1.5 rounded-full text-[9px] text-white font-bold flex items-center gap-1.5">
-                        <i class="fas fa-certificate text-emerald-400"></i> Certificado Digital Verificable
-                    </div>
-                </div>
-                <div class="course-card-content p-6 flex flex-col flex-grow">
-                    <h3 class="course-card-title text-xl font-bold text-white">Formación Online</h3>
-                    <p class="text-slate-400 text-sm mb-4">
-                        <span class="text-cyan-400 font-semibold">A través de nuestra plataforma educativa</span>
-                    </p>
-                    <div class="flex-grow space-y-3">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm"><strong class="text-white">Acceso 24/7</strong> a todos los contenidos</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm"><strong class="text-white">Videotutoriales</strong> grabados y editados profesionalmente</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm"><strong class="text-white">Simulaciones</strong> interactivas para practicar sin equipo</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm"><strong class="text-white">Material descargable</strong> en PDF y recursos complementarios</span>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
-                            <span class="text-slate-300 text-sm">Aprende a <strong class="text-white">tu propio ritmo</strong>, desde cualquier lugar</span>
-                        </div>
-                    </div>
-                    <div class="course-card-footer mt-4 pt-4 border-t border-slate-700/50">
-                        <button onclick="window.location.href='catalogo.html'" class="btn-comprar w-full text-center justify-center py-2.5 text-sm" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
-                            <i class="fas fa-th-list"></i> Ver Catálogo de Cursos
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Cierre con llamado a la acción -->
-        <div class="text-center mt-10">
-            <p class="text-slate-400 text-sm max-w-2xl mx-auto">
-                <i class="fas fa-question-circle text-purple-400 mr-1"></i>
-                ¿No sabes qué modalidad elegir? 
-                <a href="https://wa.me/584121414196" target="_blank" class="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors">
-                    Contáctame y te ayudo a decidir
-                </a>
-            </p>
-        </div>
-    </div>
-</section>
-
-
+        </section>
 
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
@@ -3056,20 +3201,15 @@
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-6 block">ampliación y extensión profesional</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Próximo <span>Curso Presencial</span></h2>
                     
-                    <!-- DESCRIPCIÓN AGREGADA -->
                     <div class="w-full mt-6">
                         <div class="relative p-5 md:p-8 rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-emerald-400/50 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)] group">
-                            
-                            <!-- Línea decorativa superior -->
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-60"></div>
-                            
                             <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                                 <span class="text-emerald-400 font-bold text-base md:text-xl">📅 Formación Presencial</span> 
                                 con <span class="text-white font-bold">aval de la UPT Aragua</span>. 
                                 Aprende con <span class="text-white font-bold">montajes reales</span> y 
                                 <span class="text-emerald-300 font-semibold">acompañamiento directo</span> del profesor.
                             </p>
-                            
                             <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
                                 <i class="fas fa-quote-left text-emerald-400/50 mr-1 text-xs"></i>
                                 Cada curso incluye <span class="text-white font-semibold">laboratorio práctico</span>, 
@@ -3077,8 +3217,6 @@
                                 <span class="text-white font-semibold">certificación universitaria</span>.
                                 <i class="fas fa-quote-right text-emerald-400/50 ml-1 text-xs"></i>
                             </p>
-
-                            <!-- Línea decorativa inferior animada -->
                             <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-emerald-500 via-cyan-500 to-purple-500 transition-all duration-700 rounded-full opacity-60"></div>
                         </div>
                     </div>
@@ -3106,103 +3244,87 @@
             </svg>
         </div>
 
+        <!-- METODOLOGÍA -->
+        <section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Nuestra <span>Metodología</span></h2>
 
-<!-- METODOLOGÍA -->
-<section id="metodologia" class="page-section relative py-24 px-6 text-center overflow-hidden">
-    <div class="max-w-7xl mx-auto relative z-10">
-        <div class="mb-10">
-            <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Metodología de Éxito</span>
-            <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Nuestra <span>Metodología</span></h2>
-
-            <!-- Descripción -->
-            <div class="w-full mt-6">
-                <div class="relative p-5 md:p-8 rounded-2xl border border-amber-500/20 bg-gradient-to-r from-amber-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-amber-400/50 hover:shadow-[0_0_40px_rgba(245,158,11,0.08)] group">
-                    
-                    <!-- Línea decorativa superior -->
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-60"></div>
-                    
-                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
-                        <span class="text-amber-400 font-bold text-base md:text-xl">📚 Aprende haciendo</span> 
-                        con una metodología diseñada para que <span class="text-white font-bold">domines la automatización</span> 
-                        desde la práctica y la experiencia real.
-                    </p>
-                    
-                    <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
-                        <i class="fas fa-quote-left text-amber-400/50 mr-1 text-xs"></i>
-                        Combinamos <span class="text-white font-semibold">teoría, diseño, simulaciones y proyectos industriales</span> 
-                        para que cada concepto se convierta en una habilidad aplicable.
-                        <i class="fas fa-quote-right text-amber-400/50 ml-1 text-xs"></i>
-                    </p>
-
-                    <!-- Línea decorativa inferior animada -->
-                    <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-amber-500 via-cyan-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+                    <div class="w-full mt-6">
+                        <div class="relative p-5 md:p-8 rounded-2xl border border-amber-500/20 bg-gradient-to-r from-amber-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-amber-400/50 hover:shadow-[0_0_40px_rgba(245,158,11,0.08)] group">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-60"></div>
+                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
+                                <span class="text-amber-400 font-bold text-base md:text-xl">📚 Aprende haciendo</span> 
+                                con una metodología diseñada para que <span class="text-white font-bold">domines la automatización</span> 
+                                desde la práctica y la experiencia real.
+                            </p>
+                            <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
+                                <i class="fas fa-quote-left text-amber-400/50 mr-1 text-xs"></i>
+                                Combinamos <span class="text-white font-semibold">teoría, diseño, simulaciones y proyectos industriales</span> 
+                                para que cada concepto se convierta en una habilidad aplicable.
+                                <i class="fas fa-quote-right text-amber-400/50 ml-1 text-xs"></i>
+                            </p>
+                            <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-amber-500 via-cyan-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Grid de 4 metodologías -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="metodologia-container">
-            
-            <!-- Metodología 1: Fundamentos -->
-            <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="0">
-                <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
-                    <img src="img/AA (13).webp" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Fundamentos'">
-                </div>
-                <div class="methodology-card-text-content">
-                    <h3 class="text-white text-xl font-black uppercase mb-3">Fundamentos</h3>
-                    <p class="text-slate-400 text-sm methodology-short-desc">Domina los principios esenciales de la electrotecnia y el control automático.</p>
-                    <div class="methodology-expanded-content">
-                        <p class="text-slate-300 text-sm">Construye una base sólida en <strong class="text-cyan-400">electrotecnia, circuitos eléctricos y sistemas de control</strong>. Aprende los conceptos fundamentales que te permitirán comprender y diseñar cualquier sistema de automatización industrial, respaldado por más de 25 años de experiencia del Prof. Pablo Cedeño.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="metodologia-container">
+                    <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="0">
+                        <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
+                            <img src="img/AA (13).webp" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Fundamentos'">
+                        </div>
+                        <div class="methodology-card-text-content">
+                            <h3 class="text-white text-xl font-black uppercase mb-3">Fundamentos</h3>
+                            <p class="text-slate-400 text-sm methodology-short-desc">Domina los principios esenciales de la electrotecnia y el control automático.</p>
+                            <div class="methodology-expanded-content">
+                                <p class="text-slate-300 text-sm">Construye una base sólida en <strong class="text-cyan-400">electrotecnia, circuitos eléctricos y sistemas de control</strong>. Aprende los conceptos fundamentales que te permitirán comprender y diseñar cualquier sistema de automatización industrial, respaldado por más de 25 años de experiencia del Prof. Pablo Cedeño.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="1">
+                        <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
+                            <img src="img/AA (14).webp" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Diseño'">
+                        </div>
+                        <div class="methodology-card-text-content">
+                            <h3 class="text-white text-xl font-black uppercase mb-3">Diseño</h3>
+                            <p class="text-slate-400 text-sm methodology-short-desc">Aprende a diseñar sistemas eléctricos y de control desde cero.</p>
+                            <div class="methodology-expanded-content">
+                                <p class="text-slate-300 text-sm">Desarrolla habilidades para <strong class="text-purple-400">diseñar sistemas eléctricos industriales, esquemas de control y planos de automatización</strong>. Aplica metodologías de ingeniería para crear soluciones eficientes, escalables y seguras, tal como se hizo en el rescate de los 8 tornos industriales.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="2">
+                        <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
+                            <img src="img/AA (12).webp" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Simulaciones'">
+                        </div>
+                        <div class="methodology-card-text-content">
+                            <h3 class="text-white text-xl font-black uppercase mb-3">Simulaciones</h3>
+                            <p class="text-slate-400 text-sm methodology-short-desc">Practica sin equipo con simulaciones avanzadas de circuitos y PLCs.</p>
+                            <div class="methodology-expanded-content">
+                                <p class="text-slate-300 text-sm">Utiliza <strong class="text-amber-400">herramientas digitales de simulación</strong> para probar y validar tus programas y circuitos antes de la implementación física. Aprende de tus errores en un entorno seguro, como se hizo con el prototipo entrenador de automatismos con microcontroladores.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="3">
+                        <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
+                            <img src="img/AA (8).webp" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Proyectos'">
+                        </div>
+                        <div class="methodology-card-text-content">
+                            <h3 class="text-white text-xl font-black uppercase mb-3">Proyectos Industriales</h3>
+                            <p class="text-slate-400 text-sm methodology-short-desc">Resuelve casos reales de la industria con acompañamiento experto.</p>
+                            <div class="methodology-expanded-content">
+                                <p class="text-slate-300 text-sm">Desarrolla <strong class="text-emerald-400">soluciones completas para problemas reales</strong>, integrando eléctrica, neumática, hidráulica y control. Aplica lo aprendido en proyectos como el rescate de tornos industriales y el prototipo entrenador, preparándote para los desafíos del mundo laboral.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Metodología 2: Diseño -->
-            <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="1">
-                <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
-                    <img src="img/AA (14).webp" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Diseño'">
-                </div>
-                <div class="methodology-card-text-content">
-                    <h3 class="text-white text-xl font-black uppercase mb-3">Diseño</h3>
-                    <p class="text-slate-400 text-sm methodology-short-desc">Aprende a diseñar sistemas eléctricos y de control desde cero.</p>
-                    <div class="methodology-expanded-content">
-                        <p class="text-slate-300 text-sm">Desarrolla habilidades para <strong class="text-purple-400">diseñar sistemas eléctricos industriales, esquemas de control y planos de automatización</strong>. Aplica metodologías de ingeniería para crear soluciones eficientes, escalables y seguras, tal como se hizo en el rescate de los 8 tornos industriales.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Metodología 3: Simulaciones -->
-            <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="2">
-                <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
-                    <img src="img/AA (12).webp" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Simulaciones'">
-                </div>
-                <div class="methodology-card-text-content">
-                    <h3 class="text-white text-xl font-black uppercase mb-3">Simulaciones</h3>
-                    <p class="text-slate-400 text-sm methodology-short-desc">Practica sin equipo con simulaciones avanzadas de circuitos y PLCs.</p>
-                    <div class="methodology-expanded-content">
-                        <p class="text-slate-300 text-sm">Utiliza <strong class="text-amber-400">herramientas digitales de simulación</strong> para probar y validar tus programas y circuitos antes de la implementación física. Aprende de tus errores en un entorno seguro, como se hizo con el prototipo entrenador de automatismos con microcontroladores.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Metodología 4: Proyectos Industriales -->
-            <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="3">
-                <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
-                    <img src="img/AA (8).webp" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/1e293b/2db8ce?text=Proyectos'">
-                </div>
-                <div class="methodology-card-text-content">
-                    <h3 class="text-white text-xl font-black uppercase mb-3">Proyectos Industriales</h3>
-                    <p class="text-slate-400 text-sm methodology-short-desc">Resuelve casos reales de la industria con acompañamiento experto.</p>
-                    <div class="methodology-expanded-content">
-                        <p class="text-slate-300 text-sm">Desarrolla <strong class="text-emerald-400">soluciones completas para problemas reales</strong>, integrando eléctrica, neumática, hidráulica y control. Aplica lo aprendido en proyectos como el rescate de tornos industriales y el prototipo entrenador, preparándote para los desafíos del mundo laboral.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
+        </section>
 
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
@@ -3223,71 +3345,56 @@
             </svg>
         </div>
 
-
-
-<!-- COMUNIDAD -->
-<section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
-        <div class="text-center lg:text-left">
-            <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span>nuestros cursos?</span></h2>
-            <p class="text-slate-400 text-sm md:text-base max-w-sm mx-auto lg:mx-0 leading-relaxed">
-                <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
-                Dinos cuál es tu perfil para registrarte en nuestras estadísticas.
-                <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
-            </p>
-        </div>
-        <div class="space-y-4 w-full max-w-md mx-auto" id="profiles-container">
-            
-            <!-- Perfil: Ingeniero -->
-            <button onclick="regCom('ingeniero')" id="btn-ingeniero" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
-                <i class="fas fa-user-tie text-blue-700 text-3xl"></i>
-                <span class="text-base font-black uppercase text-white">Ingeniero</span>
-                <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
-                    <span id="cnt-ingeniero" class="font-black text-white">0</span>
+        <!-- COMUNIDAD -->
+        <section id="comunidad" class="page-section relative py-24 px-6 md:px-12 text-center">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10">
+                <div class="text-center lg:text-left">
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold mb-8 leading-tight uppercase tracking-tighter">¿Quiénes realizan <br><span>nuestros cursos?</span></h2>
+                    <p class="text-slate-400 text-sm md:text-base max-w-sm mx-auto lg:mx-0 leading-relaxed">
+                        <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
+                        Dinos cuál es tu perfil para registrarte en nuestras estadísticas.
+                        <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
+                    </p>
                 </div>
-            </button>
-
-            <!-- Perfil: TSU -->
-            <button onclick="regCom('tsu')" id="btn-tsu" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
-                <i class="fas fa-cogs text-cyan-700 text-3xl"></i>
-                <span class="text-base font-black uppercase text-white">TSU</span>
-                <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
-                    <span id="cnt-tsu" class="font-black text-white">0</span>
+                <div class="space-y-4 w-full max-w-md mx-auto" id="profiles-container">
+                    <button onclick="regCom('ingeniero')" id="btn-ingeniero" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
+                        <i class="fas fa-user-tie text-blue-700 text-3xl"></i>
+                        <span class="text-base font-black uppercase text-white">Ingeniero</span>
+                        <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
+                            <span id="cnt-ingeniero" class="font-black text-white">0</span>
+                        </div>
+                    </button>
+                    <button onclick="regCom('tsu')" id="btn-tsu" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
+                        <i class="fas fa-cogs text-cyan-700 text-3xl"></i>
+                        <span class="text-base font-black uppercase text-white">TSU</span>
+                        <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
+                            <span id="cnt-tsu" class="font-black text-white">0</span>
+                        </div>
+                    </button>
+                    <button onclick="regCom('estudiante_universitario')" id="btn-estudiante_universitario" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
+                        <i class="fas fa-user-graduate text-teal-700 text-3xl"></i>
+                        <span class="text-base font-black uppercase text-white">Estudiante Universitario</span>
+                        <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
+                            <span id="cnt-estudiante_universitario" class="font-black text-white">0</span>
+                        </div>
+                    </button>
+                    <button onclick="regCom('bachiller_tecnico')" id="btn-bachiller_tecnico" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
+                        <i class="fas fa-user-graduate text-purple-700 text-3xl"></i>
+                        <span class="text-base font-black uppercase text-white">Bachiller o Técnico Medio</span>
+                        <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
+                            <span id="cnt-bachiller_tecnico" class="font-black text-white">0</span>
+                        </div>
+                    </button>
+                    <button onclick="regCom('inces')" id="btn-inces" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
+                        <i class="fas fa-hard-hat text-orange-700 text-3xl"></i>
+                        <span class="text-base font-black uppercase text-white">INCES</span>
+                        <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
+                            <span id="cnt-inces" class="font-black text-white">0</span>
+                        </div>
+                    </button>
                 </div>
-            </button>
-
-            <!-- Perfil: Estudiante Universitario -->
-            <button onclick="regCom('estudiante_universitario')" id="btn-estudiante_universitario" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
-                <i class="fas fa-user-graduate text-teal-700 text-3xl"></i>
-                <span class="text-base font-black uppercase text-white">Estudiante Universitario</span>
-                <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
-                    <span id="cnt-estudiante_universitario" class="font-black text-white">0</span>
-                </div>
-            </button>
-
-            <!-- Perfil: Bachiller o Técnico Medio -->
-            <button onclick="regCom('bachiller_tecnico')" id="btn-bachiller_tecnico" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
-                <i class="fas fa-user-graduate text-purple-700 text-3xl"></i>
-                <span class="text-base font-black uppercase text-white">Bachiller o Técnico Medio</span>
-                <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
-                    <span id="cnt-bachiller_tecnico" class="font-black text-white">0</span>
-                </div>
-            </button>
-
-            <!-- Perfil: INCES -->
-            <button onclick="regCom('inces')" id="btn-inces" class="prof-btn w-full p-5 rounded-3xl flex items-center gap-6">
-                <i class="fas fa-hard-hat text-orange-700 text-3xl"></i>
-                <span class="text-base font-black uppercase text-white">INCES</span>
-                <div class="prof-count-bg ml-auto px-3 py-1 rounded-full">
-                    <span id="cnt-inces" class="font-black text-white">0</span>
-                </div>
-            </button>
-
-        </div>
-    </div>
-</section>
-
-
+            </div>
+        </section>
 
         <div class="circuit-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="width: 100%; height: 100%;">
@@ -3312,148 +3419,482 @@
             </svg>
         </div>
 
-
-
-
-
-<!-- TESTIMONIOS -->
-<section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden">
-    <div class="max-w-7xl mx-auto relative z-10">
-        <div class="text-center mb-10">
-            <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Experiencias Reales</span>
-            <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span>Nuestros Alumnos</span></h2>
-            
-            <!-- DESCRIPCIÓN AGREGADA -->
-            <div class="w-full mt-6">
-                <div class="relative p-5 md:p-8 rounded-2xl border border-pink-500/20 bg-gradient-to-r from-pink-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-pink-400/50 hover:shadow-[0_0_40px_rgba(236,72,153,0.08)] group">
+        <!-- TESTIMONIOS -->
+        <section id="testimonios" class="page-section relative py-24 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Experiencias Reales</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span>Nuestros Alumnos</span></h2>
                     
-                    <!-- Línea decorativa superior -->
-                    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent opacity-60"></div>
-                    
-                    <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
-                        <span class="text-pink-400 font-bold text-base md:text-xl">💬 Opiniones Reales</span> 
-                        de profesionales que han transformado su carrera con nuestra formación.
-                        <span class="text-white font-bold">Resultados tangibles</span> desde 2019.
-                    </p>
-                    
-                    <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
-                        <i class="fas fa-quote-left text-pink-400/50 mr-1 text-xs"></i>
-                        Cada testimonio refleja el <span class="text-white font-semibold">compromiso con la excelencia</span> 
-                        y la <span class="text-white font-semibold">aplicación práctica</span> de los conocimientos adquiridos.
-                        <i class="fas fa-quote-right text-pink-400/50 ml-1 text-xs"></i>
-                    </p>
+                    <div class="w-full mt-6">
+                        <div class="relative p-5 md:p-8 rounded-2xl border border-pink-500/20 bg-gradient-to-r from-pink-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-pink-400/50 hover:shadow-[0_0_40px_rgba(236,72,153,0.08)] group">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent opacity-60"></div>
+                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
+                                <span class="text-pink-400 font-bold text-base md:text-xl">💬 Opiniones Reales</span> 
+                                de profesionales que han transformado su carrera con nuestra formación.
+                                <span class="text-white font-bold">Resultados tangibles</span> desde 2019.
+                            </p>
+                            <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
+                                <i class="fas fa-quote-left text-pink-400/50 mr-1 text-xs"></i>
+                                Cada testimonio refleja el <span class="text-white font-semibold">compromiso con la excelencia</span> 
+                                y la <span class="text-white font-semibold">aplicación práctica</span> de los conocimientos adquiridos.
+                                <i class="fas fa-quote-right text-pink-400/50 ml-1 text-xs"></i>
+                            </p>
+                            <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 transition-all duration-700 rounded-full opacity-60"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left" id="testimonios-container">
+                    <!-- Testimonio 1 -->
+                    <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
+                        <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
+                            <img src="img/foto-1.webp" alt="José R." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=JR'">
+                        </div>
+                        <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
+                            <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                            <div class="relative z-10">
+                                <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"El curso de PLCs me dio las herramientas que necesitaba para conseguir mi primer trabajo en la industria. El enfoque práctico fue clave."</p>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-cyan-500/50 flex-shrink-0">
+                                        <img src="img/foto-1.webp" alt="José R." class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-gray-800 dark:text-white">José R.</h4>
+                                        <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">Ingeniero Electricista</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <!-- Línea decorativa inferior animada -->
-                    <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 transition-all duration-700 rounded-full opacity-60"></div>
+                    <!-- Testimonio 2 -->
+                    <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
+                        <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
+                            <img src="img/AA (39).webp" alt="María G." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=MG'">
+                        </div>
+                        <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
+                            <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                            <div class="relative z-10">
+                                <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"Las simulaciones y montajes reales me permitieron entender conceptos que antes solo había visto en teoría. ¡100% recomendado!"</p>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-purple-500/50 flex-shrink-0">
+                                        <img src="img/AA (39).webp" alt="María G." class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-gray-800 dark:text-white">María G.</h4>
+                                        <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">TSU en Electrónica</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 3 -->
+                    <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
+                        <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
+                            <img src="img/Fotos-2.webp" alt="Luis C." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=LC'">
+                        </div>
+                        <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
+                            <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                            <div class="relative z-10">
+                                <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"El profesor Pablo explica con claridad y paciencia. Aprendí más en este curso que en años de experiencia laboral."</p>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-500/50 flex-shrink-0">
+                                        <img src="img/Fotos-2.webp" alt="Luis C." class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-gray-800 dark:text-white">Luis C.</h4>
+                                        <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">Técnico en Mantenimiento</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 4 -->
+                    <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
+                        <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
+                            <img src="img/Fotos3.webp" alt="Ana R." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=AR'">
+                        </div>
+                        <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
+                            <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
+                            <div class="relative z-10">
+                                <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"La flexibilidad del curso online me permitió compaginarlo con mi trabajo. Los materiales son excelentes y muy completos."</p>
+                                <div class="flex items-center gap-4">
+                                    <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-500/50 flex-shrink-0">
+                                        <img src="img/Fotos3.webp" alt="Ana R." class="w-full h-full object-cover" onerror="this.style.display='none'">
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-sm text-gray-800 dark:text-white">Ana R.</h4>
+                                        <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">Estudiante de Ingeniería</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left" id="testimonios-container">
-            
-            <!-- Testimonio 1: José R. -->
-            <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
-                <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
-                    <img src="img/foto-1.webp" alt="José R." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=JR'">
-                </div>
-                <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
-                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
-                    <div class="relative z-10">
-                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"El curso de PLCs me dio las herramientas que necesitaba para conseguir mi primer trabajo en la industria. El enfoque práctico fue clave."</p>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-cyan-500/50 flex-shrink-0">
-                                <img src="img/foto-1.webp" alt="José R." class="w-full h-full object-cover" onerror="this.style.display='none'">
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm text-gray-800 dark:text-white">José R.</h4>
-                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">Ingeniero Electricista</span>
-                            </div>
+
+        <!-- SECCIÓN: CERTIFICACIONES Y AVALES -->
+        <section id="certificaciones" class="page-section relative py-24 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <!-- Encabezado -->
+                <div class="text-center mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Avales y Certificaciones</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">
+                        Certifica tu <span>Conocimiento</span>
+                    </h2>
+                    
+                    <div class="w-full mt-6">
+                        <div class="relative p-5 md:p-8 rounded-2xl border border-blue-500/20 bg-gradient-to-r from-blue-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-blue-400/50 hover:shadow-[0_0_40px_rgba(59,130,246,0.08)] group">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-60"></div>
+                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
+                                <span class="text-blue-400 font-bold text-base md:text-xl">🎓 Formación con Validez</span>
+                                Todos nuestros cursos cuentan con 
+                                <span class="text-white font-bold">certificación oficial</span> que respalda tu aprendizaje 
+                                y <span class="text-white font-bold">potencia tu perfil profesional</span>.
+                            </p>
+                            <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
+                                <i class="fas fa-quote-left text-blue-400/50 mr-1 text-xs"></i>
+                                Desde <span class="text-white font-semibold">certificados universitarios</span> con aval de la UPT Aragua 
+                                hasta <span class="text-white font-semibold">certificados digitales verificables</span> 
+                                emitidos por nuestra plataforma.
+                                <i class="fas fa-quote-right text-blue-400/50 ml-1 text-xs"></i>
+                            </p>
+                            <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-blue-500 via-cyan-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Testimonio 2: María G. -->
-            <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
-                <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
-                    <img src="img/AA (39).webp" alt="María G." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=MG'">
-                </div>
-                <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
-                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
-                    <div class="relative z-10">
-                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"Las simulaciones y montajes reales me permitieron entender conceptos que antes solo había visto en teoría. ¡100% recomendado!"</p>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-purple-500/50 flex-shrink-0">
-                                <img src="img/AA (39).webp" alt="María G." class="w-full h-full object-cover" onerror="this.style.display='none'">
+                <!-- Grid de Certificados -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
+                    
+                    <!-- CERTIFICADO 1: UPT ARAGUA -->
+                    <div class="course-card course-card-level-intermedio hover:shadow-xl transition-all duration-300 border border-purple-500/30 bg-slate-900/50 rounded-2xl overflow-hidden flex flex-col certificate-card">
+                        <div class="course-card-image-container relative h-64 md:h-72">
+                            <img src="img/AA (39).webp" alt="Certificado UPT Aragua" class="course-card-image w-full h-full object-cover" loading="lazy">
+                            
+                            <div class="badge-container">
+                                <span class="course-card-badge badge-intermediate text-[8px] uppercase tracking-wider">🏛️ Aval Universitario</span>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-sm text-gray-800 dark:text-white">María G.</h4>
-                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">TSU en Electrónica</span>
+                            
+                            <div class="certificate-overlay-logo">
+                                <div class="modalidad-logo-bg" style="background-image: url('img/AA (40).webp'); background-size: 32px 32px; background-position: center; background-repeat: no-repeat; background-color: #475569; width: 40px; height: 40px; min-width: 40px; min-height: 40px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>
+                                <div class="logo-text">
+                                    <span class="title">UPT Aragua</span>
+                                    <span class="subtitle text-purple-400">Federico Brito Figueroa</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card-content p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-3xl">🎓</span>
+                                <h3 class="course-card-title text-xl font-bold text-white">Certificación Universitaria</h3>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-3">
+                                <span class="text-purple-400 font-semibold">Avalada por la UPT Aragua Federico Brito Figueroa</span>
+                            </p>
+                            <div class="flex-grow space-y-2.5">
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
+                                    <span class="text-slate-300 text-sm">Título con <strong class="text-white">validez universitaria</strong></span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
+                                    <span class="text-slate-300 text-sm">Avalado por el <strong class="text-white">Ministerio de Educación</strong></span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
+                                    <span class="text-slate-300 text-sm">Incluye <strong class="text-white">notas y calificaciones</strong> oficiales</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-purple-400 mt-1 text-sm"></i>
+                                    <span class="text-slate-300 text-sm">Reconocido en <strong class="text-white">todo el territorio nacional</strong></span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 certificate-seal">
+                                <span class="seal-icon">✅</span>
+                                <div class="seal-text">
+                                    <span class="seal-title">Certificado Físico y Digital</span>
+                                    <span class="seal-desc">Entregado al culminar el curso presencial</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card-footer mt-4 pt-4 border-t border-slate-700/50">
+                                <a href="catalogo.html?tipo=presencial" class="btn-comprar w-full text-center justify-center py-2.5 text-sm flex items-center gap-2" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                                    <i class="fas fa-calendar-alt"></i> Ver cursos presenciales
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Testimonio 3: Luis C. -->
-            <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
-                <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
-                    <img src="img/Fotos-2.webp" alt="Luis C." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=LC'">
-                </div>
-                <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
-                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
-                    <div class="relative z-10">
-                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"El profesor Pablo explica con claridad y paciencia. Aprendí más en este curso que en años de experiencia laboral."</p>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-500/50 flex-shrink-0">
-                                <img src="img/Fotos-2.webp" alt="Luis C." class="w-full h-full object-cover" onerror="this.style.display='none'">
+                    <!-- CERTIFICADO 2: APRENDE AUTOMATIZACIÓN -->
+                    <div class="course-card course-card-level-basico hover:shadow-xl transition-all duration-300 border border-cyan-500/30 bg-slate-900/50 rounded-2xl overflow-hidden flex flex-col certificate-card">
+                        <div class="course-card-image-container relative h-64 md:h-72">
+                            <img src="img/AA (33).webp" alt="Certificado Digital" class="course-card-image w-full h-full object-cover" loading="lazy">
+                            
+                            <div class="badge-container">
+                                <span class="course-card-badge badge-basic text-[8px] uppercase tracking-wider">💻 Certificado Digital</span>
                             </div>
-                            <div>
-                                <h4 class="font-bold text-sm text-gray-800 dark:text-white">Luis C.</h4>
-                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">Técnico en Mantenimiento</span>
+                            
+                            <div class="certificate-overlay-logo">
+                                <div class="modalidad-logo-bg" style="background-image: url('img/AA (38).webp'); background-size: 32px 32px; background-position: center; background-repeat: no-repeat; background-color: #475569; width: 40px; height: 40px; min-width: 40px; min-height: 40px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>
+                                <div class="logo-text">
+                                    <span class="title">Aprende</span>
+                                    <span class="subtitle text-cyan-400">Automatización</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-card-content p-6 flex flex-col flex-grow">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-3xl">🖥️</span>
+                                <h3 class="course-card-title text-xl font-bold text-white">Certificado Digital Verificable</h3>
+                            </div>
+                            <p class="text-slate-400 text-sm mb-3">
+                                <span class="text-cyan-400 font-semibold">Emitido por nuestra plataforma educativa</span>
+                            </p>
+                            <div class="flex-grow space-y-2.5">
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
+                                    <span class="text-slate-300 text-sm">Certificado <strong class="text-white">digital con código QR</strong> verificable</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
+                                    <span class="text-slate-300 text-sm">Verificación en línea mediante <strong class="text-white">código único</strong></span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
+                                    <span class="text-slate-300 text-sm">Incluye <strong class="text-white">calificación y nivel</strong> alcanzado</span>
+                                </div>
+                                <div class="flex items-start gap-3">
+                                    <i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i>
+                                    <span class="text-slate-300 text-sm">Disponible para <strong class="text-white">descarga inmediata</strong></span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 certificate-seal">
+                                <span class="seal-icon">🔒</span>
+                                <div class="seal-text">
+                                    <span class="seal-title">Verificable en Línea</span>
+                                    <span class="seal-desc">Escanea el código QR y valida tu certificado</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-card-footer mt-4 pt-4 border-t border-slate-700/50">
+                                <a href="catalogo.html?tipo=online" class="btn-comprar w-full text-center justify-center py-2.5 text-sm flex items-center gap-2" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+                                    <i class="fas fa-th-list"></i> Ver cursos online
+                                </a>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
-            <!-- Testimonio 4: Ana R. -->
-            <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
-                <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
-                    <img src="img/Fotos3.webp" alt="Ana R." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=AR'">
                 </div>
-                <div class="course-card-content flex flex-col flex-grow p-6 md:p-8 relative">
-                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-[#2db8ce] opacity-20 z-0"></i>
-                    <div class="relative z-10">
-                        <div class="flex gap-1 text-yellow-400 mb-4 text-sm">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        </div>
-                        <p class="text-sm italic mb-8 text-gray-600 dark:text-slate-300">"La flexibilidad del curso online me permitió compaginarlo con mi trabajo. Los materiales son excelentes y muy completos."</p>
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-emerald-500/50 flex-shrink-0">
-                                <img src="img/Fotos3.webp" alt="Ana R." class="w-full h-full object-cover" onerror="this.style.display='none'">
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm text-gray-800 dark:text-white">Ana R.</h4>
-                                <span class="testimonial-role text-[10px] uppercase font-bold tracking-widest text-gray-500 dark:text-slate-400">Estudiante de Ingeniería</span>
-                            </div>
-                        </div>
+
+                <!-- Llamada a la acción final -->
+                <div class="mt-10 text-center">
+                    <div class="inline-block bg-gradient-to-r from-purple-500/10 via-cyan-500/10 to-emerald-500/10 rounded-3xl px-6 py-4 border border-white/5">
+                        <p class="text-slate-300 text-sm md:text-base font-medium">
+                            <span class="text-purple-400 font-bold">🏛️ Certificación Universitaria</span> 
+                            o <span class="text-cyan-400 font-bold">💻 Certificado Digital Verificable</span> — 
+                            <span class="text-white">Elige la opción que mejor se adapte a ti</span>
+                        </p>
                     </div>
                 </div>
             </div>
+        </section>
 
+        <div class="section-divider" aria-hidden="true">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                <defs>
+                    <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                        <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    </linearGradient>
+                    <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                        <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                        <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+                <path d="M0,30 C240,50 480,10 720,30 S1200,50 1440,30"></path>
+            </svg>
         </div>
-    </div>
-</section>
 
+        <!-- SECCIÓN: LOGROS Y MOTIVACIÓN -->
+        <section id="logros-motivacion" class="page-section relative py-24 px-6 overflow-hidden">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="text-center mb-10">
+                    <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Gamificación y Logros</span>
+                    <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">
+                        Demuestra tu <span>Nivel</span>
+                    </h2>
+                    
+                    <div class="w-full mt-6">
+                        <div class="relative p-5 md:p-8 rounded-2xl border border-yellow-500/20 bg-gradient-to-r from-yellow-500/5 via-transparent to-orange-500/5 backdrop-blur-sm transition-all duration-500 hover:border-yellow-400/50 hover:shadow-[0_0_40px_rgba(234,179,8,0.08)] group">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-60"></div>
+                            <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
+                                <span class="text-yellow-400 font-bold text-base md:text-xl">🎯 Supera tus límites</span>
+                                y demuestra tu conocimiento. Cada curso completado con éxito te acerca a 
+                                <span class="text-white font-bold">un nuevo logro</span> que refleja tu nivel de excelencia.
+                            </p>
+                            <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
+                                <i class="fas fa-quote-left text-yellow-400/50 mr-1 text-xs"></i>
+                                La práctica constante y la superación personal son la clave del éxito en automatización.
+                                <i class="fas fa-quote-right text-yellow-400/50 ml-1 text-xs"></i>
+                            </p>
+                            <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-yellow-500 via-orange-500 to-amber-500 transition-all duration-700 rounded-full opacity-60"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grid de Logros -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="logros-container">
+                    <div class="course-card course-card-level-basico reveal reveal-up flex flex-col text-center p-6" data-logro="bronce">
+                        <div class="text-5xl mb-4">🥉</div>
+                        <h3 class="course-card-title text-xl font-bold">Conocedor</h3>
+                        <p class="text-slate-400 text-sm mt-2">Calificación entre 70% - 79%</p>
+                        <div class="mt-4 flex items-center justify-center gap-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Nivel Básico</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-slate-500 text-xs">Has demostrado un conocimiento <span class="text-amber-400">sólido</span> de los fundamentos. ¡Sigue practicando!</p>
+                        </div>
+                    </div>
+
+                    <div class="course-card course-card-level-intermedio reveal reveal-up flex flex-col text-center p-6 border-purple-500/40" data-logro="plata">
+                        <div class="text-5xl mb-4">🥈</div>
+                        <h3 class="course-card-title text-xl font-bold">Especialista</h3>
+                        <p class="text-slate-400 text-sm mt-2">Calificación entre 80% - 89%</p>
+                        <div class="mt-4 flex items-center justify-center gap-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">Nivel Intermedio</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-slate-500 text-xs">Tu <span class="text-purple-400">dominio técnico</span> te permite abordar proyectos con confianza y criterio.</p>
+                        </div>
+                    </div>
+
+                    <div class="course-card course-card-level-avanzado reveal reveal-up flex flex-col text-center p-6 border-amber-500/40 relative overflow-visible" data-logro="oro">
+                        <div class="absolute -top-1 -right-1 w-16 h-16 animate-pulse opacity-20">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5"/>
+                            </svg>
+                        </div>
+                        <div class="text-5xl mb-4">🥇</div>
+                        <h3 class="course-card-title text-xl font-bold">Maestro</h3>
+                        <p class="text-slate-400 text-sm mt-2">Calificación entre 90% - 99%</p>
+                        <div class="mt-4 flex items-center justify-center gap-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Nivel Avanzado</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-slate-500 text-xs">Tu <span class="text-amber-400">excelencia técnica</span> te posiciona como un referente en automatización industrial.</p>
+                        </div>
+                    </div>
+
+                    <div class="course-card reveal reveal-up flex flex-col text-center p-6 border-cyan-500/40 relative overflow-visible" data-logro="leyenda">
+                        <div class="absolute -top-1 -right-1 w-16 h-16 animate-pulse opacity-20">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#06B6D4" stroke="#0E7490" stroke-width="0.5"/>
+                            </svg>
+                        </div>
+                        <div class="text-5xl mb-4">🏆</div>
+                        <h3 class="course-card-title text-xl font-bold">Leyenda</h3>
+                        <p class="text-slate-400 text-sm mt-2">Calificación del 100%</p>
+                        <div class="mt-4 flex items-center justify-center gap-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">Perfección</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700/50">
+                            <p class="text-slate-500 text-xs">Has alcanzado la <span class="text-cyan-400">máxima excelencia</span>. Eres un modelo a seguir para la comunidad.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estado del Usuario -->
+                <div class="mt-12 max-w-3xl mx-auto">
+                    <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/10">
+                        <div class="flex flex-col md:flex-row items-center gap-6">
+                            <div class="flex-shrink-0">
+                                <div id="user-achievement-icon" class="text-6xl">🎯</div>
+                            </div>
+                            <div class="flex-1 text-center md:text-left">
+                                <h3 class="text-white font-bold text-lg" id="user-status-title">Tu progreso</h3>
+                                <p class="text-slate-400 text-sm mt-1" id="user-status-message">Completa un curso para comenzar a obtener logros.</p>
+                                <div class="mt-3 flex flex-wrap justify-center md:justify-start gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-700/50 text-slate-300 border border-slate-600/30">
+                                        <i class="fas fa-star text-yellow-400 mr-1"></i> <span id="user-courses-completed">0</span> cursos completados
+                                    </span>
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-slate-700/50 text-slate-300 border border-slate-600/30">
+                                        <i class="fas fa-trophy text-cyan-400 mr-1"></i> <span id="user-best-score">--</span> mejor calificación
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <button onclick="window.location.href='catalogo.html'" class="btn-metal-solid btn-metal-cyan btn-auto px-4 py-2 text-xs">
+                                    <i class="fas fa-graduation-cap"></i> Ver cursos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lista de Logros Obtenidos -->
+                <div class="mt-8 max-w-3xl mx-auto">
+                    <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/10">
+                        <h4 class="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2 mb-4">
+                            <i class="fas fa-award text-cyan-400"></i> Tus Logros Obtenidos
+                        </h4>
+                        <div id="achievements-list-container" class="space-y-2">
+                            <!-- Los logros se renderizan aquí dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Llamada a la acción - Motivación -->
+                <div class="mt-10 text-center">
+                    <div class="inline-block bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-amber-500/10 rounded-3xl px-6 py-4 border border-white/5">
+                        <p class="text-slate-300 text-sm md:text-base font-medium">
+                            <span class="text-cyan-400 font-bold">🚀 Cada curso completado</span> es un paso más hacia tu 
+                            <span class="text-yellow-400 font-bold">transformación profesional</span>. 
+                            <span class="text-white">¡Atrévete a superarte!</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
@@ -3656,25 +4097,389 @@
 </div>
 
 <script>
+    // ============================================
+    // SISTEMA DE LOGROS - VERSIÓN MEJORADA CON CARGA DESDE SERVIDOR
+    // ============================================
+
+    const SCRIPT_URL_PROGRESO = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
+
+    const achievementSystem = {
+        userData: {
+            coursesCompleted: 0,
+            bestScore: null,
+            achievements: [],
+            completedCourses: [],
+            isLoading: false
+        },
+
+        getAchievementIcon(score) {
+            if (score === undefined || score === null || score < 70) return '📚';
+            if (score === 100) return '🏆';
+            if (score >= 90) return '🥇';
+            if (score >= 80) return '🥈';
+            return '🥉';
+        },
+
+        getAchievementLevel(score) {
+            if (score === undefined || score === null || score < 70) return 'Aprendiz';
+            if (score === 100) return '🏆 Leyenda';
+            if (score >= 90) return '🥇 Maestro';
+            if (score >= 80) return '🥈 Especialista';
+            return '🥉 Conocedor';
+        },
+
+        getAchievementDescription(score) {
+            if (score === undefined || score === null || score < 70) {
+                return 'Sigue practicando, cada error es una oportunidad de aprendizaje.';
+            }
+            if (score === 100) {
+                return '¡Excelencia absoluta! Has demostrado un dominio total de la automatización.';
+            }
+            if (score >= 90) {
+                return '¡Impresionante! Tu nivel técnico es excepcional. Sigue así.';
+            }
+            if (score >= 80) {
+                return 'Muy bien! Demuestras un sólido dominio de los conceptos.';
+            }
+            return 'Buen trabajo! Has superado el nivel básico, sigue avanzando.';
+        },
+
+        async loadUserProgress() {
+            if (this.userData.isLoading) return;
+            
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                console.log('👤 No hay usuario logueado');
+                this.updateUserAchievements();
+                return;
+            }
+
+            this.userData.isLoading = true;
+            showLoadingToast();
+
+            try {
+                const email = user.email?.toLowerCase();
+                if (!email) {
+                    this.userData.isLoading = false;
+                    this.updateUserAchievements();
+                    hideLoadingToast();
+                    return;
+                }
+
+                const coursesResponse = await fetch(`${SCRIPT_URL_PROGRESO}?action=get_courses&nocache=${Date.now()}`);
+                const coursesResult = await coursesResponse.json();
+                
+                let coursesArray = [];
+                if (Array.isArray(coursesResult.data)) {
+                    coursesArray = coursesResult.data;
+                } else if (Array.isArray(coursesResult.cursos)) {
+                    coursesArray = coursesResult.cursos;
+                } else if (Array.isArray(coursesResult)) {
+                    coursesArray = coursesResult;
+                }
+                
+                const COURSES_DATA = coursesArray.map(course => ({
+                    ID: course.ID || course.id || course.Id || '',
+                    Nombre: course.Nombre || course.nombre || course.titulo || 'Sin nombre',
+                    Tipo: course.Tipo || course.tipo || 'Curso',
+                    Categoria: course.Categoria || course.categoria || '',
+                    Nivel: course.Nivel || course.nivel || 'Básico',
+                    TotalLecciones: course.TotalLecciones || course.totalLecciones || 5
+                }));
+
+                const userDataResponse = await fetch(`${SCRIPT_URL_PROGRESO}?action=get_data&t=${Date.now()}`);
+                const userData = await userDataResponse.json();
+
+                if (userData.status === 'success') {
+                    const dbUserCourses = userData.userCourses || {};
+                    const dbUserProgress = userData.userProgress || {};
+                    const dbUserAccessStatus = userData.userAccessStatus || {};
+
+                    let myCourseNames = dbUserCourses[email] || [];
+                    if (typeof myCourseNames === 'string') {
+                        myCourseNames = myCourseNames.split(/[,;\n]+/).map(s => s.trim()).filter(s => s !== "");
+                    }
+
+                    const accessedCourseIds = [];
+                    myCourseNames.forEach(cName => {
+                        const key = email + '|' + cName;
+                        const acceso = dbUserAccessStatus[key] || 'NO';
+                        if (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true) {
+                            const found = COURSES_DATA.find(c => 
+                                c.Nombre && c.Nombre.toLowerCase().trim() === cName.toLowerCase().trim()
+                            );
+                            if (found) {
+                                accessedCourseIds.push(String(found.ID));
+                            }
+                        }
+                    });
+
+                    const userProgress = dbUserProgress[email] || {};
+                    const completedCourses = [];
+                    let bestScore = 0;
+                    let totalCompleted = 0;
+
+                    accessedCourseIds.forEach(courseId => {
+                        const course = COURSES_DATA.find(c => String(c.ID) === String(courseId));
+                        if (!course) return;
+
+                        let progStr = "";
+                        const normalizedCourseName = course.Nombre.toLowerCase().trim();
+                        for (let key in userProgress) {
+                            if (key.toLowerCase().trim() === normalizedCourseName) {
+                                progStr = userProgress[key];
+                                break;
+                            }
+                        }
+
+                        const totalLecciones = parseInt(course.TotalLecciones) || 5;
+                        const progData = this.parseProgressString(progStr, totalLecciones);
+
+                        if (progData.percent === 100) {
+                            const avgScore = progData.avgScore || 0;
+                            completedCourses.push({
+                                courseId: courseId,
+                                courseName: course.Nombre || 'Curso',
+                                score: avgScore,
+                                icon: this.getAchievementIcon(avgScore),
+                                level: this.getAchievementLevel(avgScore),
+                                percent: progData.percent
+                            });
+                            totalCompleted++;
+                            if (avgScore > bestScore) {
+                                bestScore = avgScore;
+                            }
+                        }
+                    });
+
+                    this.userData.coursesCompleted = totalCompleted;
+                    this.userData.bestScore = bestScore > 0 ? bestScore : null;
+                    this.userData.completedCourses = completedCourses;
+                    this.userData.achievements = completedCourses.map(c => ({
+                        courseName: c.courseName,
+                        score: c.score,
+                        icon: c.icon,
+                        level: c.level
+                    }));
+
+                    console.log(`🏆 Logros cargados: ${totalCompleted} cursos completados, mejor puntuación: ${bestScore}%`);
+                    console.log('📋 Cursos completados:', completedCourses.map(c => `${c.courseName} (${c.score}%)`));
+
+                    window.COURSES_DATA = COURSES_DATA;
+                    window.userProgress = { [email]: userProgress };
+                    window.currentUser = user;
+
+                    this.updateUserAchievements();
+                    showSuccessToast();
+                } else {
+                    console.error('Error al obtener datos del usuario:', userData.message);
+                    this.updateUserAchievements();
+                }
+
+            } catch (error) {
+                console.error('❌ Error al cargar logros:', error);
+                this.updateUserAchievements();
+            } finally {
+                this.userData.isLoading = false;
+                hideLoadingToast();
+            }
+        },
+
+        parseProgressString(raw, totalLessons) {
+            if (!raw || raw.trim() === "") {
+                return { completed: 0, total: totalLessons, percent: 0, scores: [], avgScore: 0, progress: [] };
+            }
+            
+            let safe = String(raw).trim().replace(/'/g, '"');
+            let scores = new Array(totalLessons).fill(null);
+            let completed = 0;
+            let progressIndices = [];
+            
+            try {
+                const p = JSON.parse(safe);
+                if (p && typeof p === 'object') {
+                    if (p.progress && Array.isArray(p.progress)) {
+                        progressIndices = p.progress.map(v => parseInt(v)).filter(v => !isNaN(v));
+                        completed = progressIndices.length;
+                    } else if (typeof p.completed === 'number') {
+                        completed = p.completed;
+                        for (let i = 0; i < completed; i++) progressIndices.push(i);
+                    }
+                    const src = p.scores || p;
+                    if (Array.isArray(src)) {
+                        for (let i = 0; i < src.length && i < totalLessons; i++) {
+                            scores[i] = Number(src[i]);
+                        }
+                    } else if (typeof src === 'object') {
+                        for (let k in src) {
+                            let idx = parseInt(k);
+                            if (!isNaN(idx) && idx >= 0 && idx < totalLessons) {
+                                scores[idx] = Number(src[k]);
+                            }
+                        }
+                    }
+                }
+            } catch (e) {
+                if (safe.includes(',')) {
+                    let parts = safe.split(',');
+                    parts.forEach((p, i) => {
+                        if (i < totalLessons) scores[i] = Number(p.trim());
+                    });
+                } else {
+                    let n = parseFloat(safe);
+                    if (!isNaN(n)) {
+                        if (safe.includes('%') || n <= 100) {
+                            completed = Math.round((n / 100) * totalLessons);
+                        } else {
+                            completed = n;
+                        }
+                        scores[0] = n;
+                    }
+                }
+            }
+            
+            let valid = scores.filter(n => n !== null && !isNaN(n));
+            if (completed === 0 && valid.length > 0) completed = valid.length;
+            completed = Math.min(Math.max(0, completed), totalLessons);
+            const avg = valid.length > 0 ? Math.round(valid.reduce((a, b) => a + b, 0) / valid.length) : 0;
+            let percent = totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
+            
+            return { completed, total: totalLessons, percent, scores, avgScore: avg, progress: progressIndices };
+        },
+
+        updateUserAchievements() {
+            const icon = document.getElementById('user-achievement-icon');
+            const title = document.getElementById('user-status-title');
+            const message = document.getElementById('user-status-message');
+            const coursesCompleted = document.getElementById('user-courses-completed');
+            const bestScore = document.getElementById('user-best-score');
+
+            if (coursesCompleted) {
+                coursesCompleted.textContent = this.userData.coursesCompleted;
+            }
+
+            if (this.userData.bestScore !== null && this.userData.bestScore >= 70) {
+                if (bestScore) {
+                    bestScore.textContent = `${this.userData.bestScore}%`;
+                }
+                const iconEmoji = this.getAchievementIcon(this.userData.bestScore);
+                if (icon) {
+                    icon.textContent = iconEmoji;
+                    icon.style.animation = 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                }
+                if (title) title.textContent = this.getAchievementLevel(this.userData.bestScore);
+                if (message) message.textContent = this.getAchievementDescription(this.userData.bestScore);
+                
+                this.highlightAchievement(this.userData.bestScore);
+            } else {
+                if (icon) icon.textContent = '🎯';
+                if (title) title.textContent = '¡Comienza tu camino!';
+                if (message) message.textContent = 'Completa un curso para obtener tu primer logro.';
+                if (bestScore) bestScore.textContent = '--';
+            }
+
+            this.renderAchievementsList();
+        },
+
+        renderAchievementsList() {
+            const container = document.getElementById('achievements-list-container');
+            if (!container) return;
+
+            if (this.userData.achievements.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-achievements text-center py-6 rounded-xl" style="background: rgba(255,255,255,0.03); border: 1px dashed rgba(255,255,255,0.08);">
+                        <i class="fas fa-trophy text-3xl mb-3 block opacity-30" style="color: var(--text-muted);"></i>
+                        <p class="text-slate-400 text-sm">Completa cursos para desbloquear logros</p>
+                        <p class="text-slate-500 text-xs mt-1">Cada curso completado te acerca a un nuevo nivel</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = this.userData.achievements.map((ach, index) => `
+                <div class="achievement-item flex items-center gap-4 p-3 rounded-xl transition-all" 
+                     style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); animation: slideInRight 0.3s ease ${index * 0.1}s both;">
+                    <div class="text-3xl">${ach.icon}</div>
+                    <div class="flex-1">
+                        <p class="font-bold text-sm" style="color: var(--text-primary);">${ach.courseName}</p>
+                        <p class="text-xs" style="color: var(--text-muted);">${ach.level}</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-cyan-400 font-bold">${ach.score}%</span>
+                    </div>
+                </div>
+            `).join('');
+        },
+
+        highlightAchievement(score) {
+            const containers = {
+                'bronce': document.querySelector('[data-logro="bronce"]'),
+                'plata': document.querySelector('[data-logro="plata"]'),
+                'oro': document.querySelector('[data-logro="oro"]'),
+                'leyenda': document.querySelector('[data-logro="leyenda"]')
+            };
+
+            Object.values(containers).forEach(el => {
+                if (el) {
+                    el.classList.remove('ring-2', 'ring-cyan-400', 'ring-amber-400', 'ring-purple-400', 'ring-amber-500', 'scale-105');
+                    el.style.borderColor = '';
+                }
+            });
+
+            let target = null;
+            if (score === 100) {
+                target = containers.leyenda;
+                if (target) target.classList.add('ring-2', 'ring-cyan-400', 'scale-105');
+            } else if (score >= 90) {
+                target = containers.oro;
+                if (target) target.classList.add('ring-2', 'ring-amber-400', 'scale-105');
+            } else if (score >= 80) {
+                target = containers.plata;
+                if (target) target.classList.add('ring-2', 'ring-purple-400', 'scale-105');
+            } else if (score >= 70) {
+                target = containers.bronce;
+                if (target) target.classList.add('ring-2', 'ring-amber-500', 'scale-105');
+            }
+        },
+
+        showAchievementNotification(score) {
+            const level = this.getAchievementLevel(score);
+            const icon = this.getAchievementIcon(score);
+            const notif = document.getElementById('notification');
+            const notifIcon = document.getElementById('notifIcon');
+            const notifTitle = document.getElementById('notifTitle');
+            const notifMsg = document.getElementById('notifMsg');
+
+            if (notif) {
+                notifIcon.className = `fas fa-${score >= 90 ? 'crown' : 'medal'} text-2xl text-yellow-400`;
+                notifTitle.textContent = `¡Nuevo logro desbloqueado! ${icon}`;
+                notifMsg.textContent = `Has obtenido el nivel "${level}" con una calificación del ${score}%`;
+                notif.style.transform = 'translateX(0)';
+                setTimeout(() => {
+                    notif.style.transform = 'translateX(120%)';
+                }, 5000);
+            }
+        }
+    };
+
+    // ============================================
+    // FUNCIONES EXISTENTES
+    // ============================================
     function showLoadingToast() {
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
         const spinner = document.getElementById('loadingToastSpinner');
         if (toast) {
             toast.classList.remove('hidden', 'hiding', 'success-toast');
-            title.innerText = 'Estamos cargando la información';
+            title.innerText = 'Cargando tus logros...';
             if (spinner) spinner.style.display = 'block';
             const existingCheck = toast.querySelector('.toast-check');
             if (existingCheck) existingCheck.remove();
             toast.style.opacity = '1';
             toast.style.transform = 'translateX(0)';
-            if (window.innerWidth <= 640) {
-                toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            } else {
-                toast.style.animation = 'slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            }
         }
     }
+
     function showSuccessToast() {
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
@@ -3682,7 +4487,7 @@
         if (toast) {
             toast.classList.remove('hidden', 'hiding');
             toast.classList.add('success-toast');
-            title.innerText = '¡Listo!';
+            title.innerText = '¡Logros actualizados!';
             if (spinner) spinner.style.display = 'none';
             const existingCheck = toast.querySelector('.toast-check');
             if (existingCheck) existingCheck.remove();
@@ -3692,23 +4497,14 @@
             toast.appendChild(checkDiv);
             toast.style.opacity = '1';
             toast.style.transform = 'translateX(0)';
-            if (window.innerWidth <= 640) {
-                toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            } else {
-                toast.style.animation = 'slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            }
             setTimeout(() => { hideLoadingToast(); }, 3000);
         }
     }
+
     function hideLoadingToast() {
         const toast = document.getElementById('loadingToast');
         if (toast) {
             toast.classList.add('hiding');
-            if (window.innerWidth <= 640) {
-                toast.style.transform = 'translateY(150%)';
-            } else {
-                toast.style.transform = 'translateX(120px)';
-            }
             setTimeout(() => {
                 toast.classList.add('hidden');
                 toast.classList.remove('hiding', 'success-toast');
@@ -3716,6 +4512,80 @@
             }, 350);
         }
     }
+
+    function regCom(perfil) {
+        const btn = document.getElementById(`btn-${perfil}`);
+        const count = document.getElementById(`cnt-${perfil}`);
+        if (btn) btn.classList.toggle('prof-selected');
+        if (count) {
+            const current = parseInt(count.textContent) || 0;
+            count.textContent = current + 1;
+        }
+        showSuccessToast();
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+    }
+
+    function cerrarModalCompraHome() {
+        document.getElementById('modalCompra').classList.remove('active');
+    }
+
+    function verTasaBCVHome() {
+        const container = document.getElementById('tasaBCVContainerHome');
+        container.classList.toggle('hidden');
+    }
+
+    function obtenerTasaBCVHome() {
+        const tasaSpan = document.getElementById('tasaBCVNumeroHome');
+        const actualizado = document.getElementById('tasaBCVActualizadoHome');
+        tasaSpan.textContent = '60.23';
+        actualizado.textContent = new Date().toLocaleString();
+        const totalBs = document.getElementById('totalBsHome');
+        const montoBs = document.getElementById('montoEnBsHome');
+        if (totalBs && montoBs) {
+            totalBs.textContent = `Bs. ${(60.23 * 50).toFixed(2)}`;
+            montoBs.textContent = `Bs. ${(60.23 * 50).toFixed(2)}`;
+        }
+    }
+
+    function enviarWhatsAppHome() {
+        window.open('https://wa.me/584121414196?text=Hola,%20confirmo%20mi%20pago%20para%20el%20curso.', '_blank');
+    }
+
+    function confirmarCompraHome() {
+        const msg = document.getElementById('mensajeCompraHome');
+        msg.classList.remove('hidden');
+        msg.innerHTML = '<span class="text-green-400 font-bold">✅ ¡Compra confirmada! Te contactaremos pronto.</span>';
+        msg.style.color = '#34d399';
+        setTimeout(() => {
+            msg.classList.add('hidden');
+            cerrarModalCompraHome();
+        }, 4000);
+    }
+
+    // ============================================
+    // INICIALIZACIÓN
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            window.currentUser = user;
+            console.log('👤 Usuario encontrado:', user.email);
+            achievementSystem.loadUserProgress();
+        } else {
+            console.log('👤 No hay usuario logueado');
+            achievementSystem.updateUserAchievements();
+        }
+
+        const notif = document.getElementById('notification');
+        if (notif) {
+            setTimeout(() => {
+                notif.style.transform = 'translateX(120%)';
+            }, 8000);
+        }
+    });
 </script>
 
 <script src="js/auth.js"></script>
