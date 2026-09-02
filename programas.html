@@ -506,44 +506,194 @@
             opacity: 0.15 !important;
             filter: saturate(0.5);
         }
+
         /* ==========================================
-           FIXES MODO CLARO - PROGRAMAS
+           FIXES MODO CLARO - PROGRAMAS (CORRECCIÓN DE COLORES)
            ========================================== */
-        body.light-mode #page-programas .bg-\[\#0f172a\]\/60 {
-            background: rgba(255, 255, 255, 0.85) !important;
-            backdrop-filter: blur(16px) saturate(180%);
-            border-color: rgba(255, 255, 255, 0.6) !important;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+        
+        /* TEXTOS BLANCOS Y GRISES → NEGROS */
+        body.light-mode .text-white {
+            color: #0f172a !important;
         }
-        body.light-mode #page-programas .bg-\[\#0f172a\]\/60:hover {
-            box-shadow: 0 12px 40px rgba(0,0,0,0.10), 0 0 20px rgba(6, 182, 212, 0.12);
-            border-color: rgba(6, 182, 212, 0.30) !important;
+        
+        body.light-mode .text-slate-100 {
+            color: #0f172a !important;
         }
-        body.light-mode #page-programas h2,
-        body.light-mode #page-programas .text-white {
+        
+        body.light-mode .text-slate-200 {
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .text-slate-300 {
             color: #1e293b !important;
         }
-        body.light-mode #page-programas .text-slate-300 {
-            color: #64748b !important;
+        
+        body.light-mode .text-slate-400 {
+            color: #1e293b !important;
         }
-        body.light-mode #page-programas .border-white\/10,
-        body.light-mode #page-programas .border-white\/20 {
+        
+        body.light-mode .text-slate-500 {
+            color: #1e293b !important;
+        }
+        
+        body.light-mode .text-slate-600 {
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .text-slate-700 {
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .text-slate-800 {
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .text-slate-900 {
+            color: #0f172a !important;
+        }
+        
+        /* COLORES DE ACENTO - MÁS OSCUROS */
+        body.light-mode .text-cyan-400 {
+            color: #0e7490 !important;
+        }
+        
+        body.light-mode .text-cyan-300 {
+            color: #0e7490 !important;
+        }
+        
+        body.light-mode .text-amber-400 {
+            color: #b45309 !important;
+        }
+        
+        body.light-mode .text-emerald-400 {
+            color: #047857 !important;
+        }
+        
+        body.light-mode .text-purple-400 {
+            color: #6d28d9 !important;
+        }
+        
+        /* TÍTULOS Y ENCABEZADOS */
+        body.light-mode h1,
+        body.light-mode h2,
+        body.light-mode h3,
+        body.light-mode h4,
+        body.light-mode h5,
+        body.light-mode h6 {
+            color: #0f172a !important;
+        }
+        
+        /* TARJETAS DE PROGRAMAS EN MODO CLARO */
+        body.light-mode .bg-\[\#0f172a\]\/60 {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
             border-color: rgba(226, 232, 240, 0.6) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
         }
-        body.light-mode #page-programas .bg-white\/5 {
+        
+        body.light-mode .bg-\[\#0f172a\]\/60:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10), 0 0 20px rgba(6, 182, 212, 0.12) !important;
+            border-color: rgba(6, 182, 212, 0.30) !important;
+        }
+        
+        body.light-mode .bg-white\/5 {
             background: rgba(241, 245, 249, 0.9) !important;
             border-color: rgba(226, 232, 240, 0.5) !important;
         }
-        body.light-mode #page-programas .bg-slate-900\/50 {
-            background: rgba(241, 245, 249, 0.6) !important;
-            border-color: rgba(226, 232, 240, 0.5) !important;
+        
+        body.light-mode .border-white\/10,
+        body.light-mode .border-white\/20 {
+            border-color: rgba(226, 232, 240, 0.6) !important;
         }
-        body.light-mode #noResultsProgramas h3,
-        body.light-mode #noResultsProgramas i {
-            color: #64748b !important;
+        
+        /* TEXTO DE LA DESCRIPCIÓN EN MODO CLARO */
+        body.light-mode .border-cyan-500\/20 {
+            border-color: rgba(14, 116, 144, 0.15) !important;
         }
-        body.light-mode #page-programas .group-hover\:text-\[\#2db8ce\]:hover {
-            color: #0891b2 !important;
+        
+        body.light-mode .bg-gradient-to-r.from-cyan-500\/5 {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        
+        body.light-mode .group:hover .border-cyan-400\/50 {
+            border-color: rgba(14, 116, 144, 0.3) !important;
+        }
+        
+        body.light-mode .group:hover .shadow-\[0_0_40px_rgba(6,182,212,0.08)\] {
+            box-shadow: 0 0 40px rgba(14, 116, 144, 0.08) !important;
+        }
+        
+        /* LÍNEAS DECORATIVAS EN MODO CLARO */
+        body.light-mode .bg-gradient-to-r.from-transparent.via-cyan-400 {
+            background: linear-gradient(to right, transparent, #0e7490, transparent) !important;
+        }
+        
+        body.light-mode .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500 {
+            background: linear-gradient(to right, #0e7490, #6d28d9, #047857) !important;
+        }
+        
+        /* BADGES Y ETIQUETAS EN MODO CLARO */
+        body.light-mode .bg-white\/10 {
+            background: rgba(226, 232, 240, 0.8) !important;
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .bg-blue-500\/20 {
+            background: rgba(29, 78, 216, 0.10) !important;
+            color: #1d4ed8 !important;
+            border-color: rgba(29, 78, 216, 0.20) !important;
+        }
+        
+        body.light-mode .bg-emerald-500\/20 {
+            background: rgba(4, 120, 87, 0.10) !important;
+            color: #047857 !important;
+            border-color: rgba(4, 120, 87, 0.20) !important;
+        }
+        
+        body.light-mode .bg-sky-500\/20 {
+            background: rgba(2, 132, 199, 0.10) !important;
+            color: #0369a1 !important;
+            border-color: rgba(2, 132, 199, 0.20) !important;
+        }
+        
+        /* BOTÓN DE DESCARGA EN MODO CLARO - SE MANTIENE AZUL */
+        body.light-mode .btn-metal-cyan {
+            background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        }
+        
+        body.light-mode .btn-metal-cyan:hover {
+            filter: brightness(1.05) !important;
+        }
+        
+        /* BOTÓN BLOQUEADO EN MODO CLARO */
+        body.light-mode .btn-metal-teal {
+            background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        }
+        
+        /* HOVER DE TARJETAS EN MODO CLARO */
+        body.light-mode .group-hover\:text-\[\#2db8ce\]:hover {
+            color: #0e7490 !important;
+        }
+        
+        body.light-mode .text-\[\#2db8ce\] {
+            color: #0e7490 !important;
+        }
+        
+        /* TÍTULO DE LA TARJETA EN MODO CLARO */
+        body.light-mode .text-lg.font-bold.text-white {
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .text-lg.font-bold.text-white.mb-3.leading-tight.group-hover\:text-\[\#2db8ce\]:hover {
+            color: #0e7490 !important;
         }
 
         /* ==========================================
@@ -743,7 +893,38 @@
         </div>
     </header>
 
-    <div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="max-w-7xl mx-auto px-6 py-6">
+
+        <!-- ====== DESCRIPCIÓN PROGRAMAS - CON MÁRGENES ====== -->
+        <div class="w-full mb-10 mt-6">
+            <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
+                
+                <!-- Línea decorativa superior -->
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
+                
+                <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium text-center">
+                    <span class="text-cyan-400 font-bold text-base md:text-xl">📥 Explora</span> nuestra colección de 
+                    <span class="text-white font-bold">programas</span> y 
+                    <span class="text-white font-bold">herramientas</span> 
+                    de automatización, para potenciar tu aprendizaje.
+                </p>
+                
+                <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3 text-center">
+                    <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
+                    Cada programa incluye 
+                    <span class="text-amber-400 font-semibold">versión estable</span>, 
+                    <span class="text-emerald-400 font-semibold">manual de uso</span> y 
+                    <span class="text-purple-400 font-semibold">ejercicios prácticos</span> 
+                    para un aprendizaje 
+                    <span class="text-white font-bold">real y aplicable</span>.
+                    <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
+                </p>
+
+                <!-- Línea decorativa inferior animada -->
+                <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+            </div>
+        </div>
+
         <main class="relative z-10 flex-grow w-full">
             <div id="programsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-20 text-left"></div>
             <div id="noResultsProgramas" class="hidden text-center py-12">

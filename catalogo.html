@@ -366,12 +366,73 @@
         body.light-mode .course-card img { filter: none !important; -webkit-filter: none !important; }
         body.light-mode .course-card .professor-block { background-color: rgba(241, 245, 249, 0.9) !important; border-radius: 0.75rem !important; }
         body.light-mode .course-card .professor-block * { color: #0f172a !important; }
+
+        /* ==========================================
+           MODO CLARO - FONDO BLANCO PARA DESCRIPCIÓN
+           ========================================== */
+        
+        /* FONDO BLANCO PARA LA DESCRIPCIÓN EN MODO CLARO */
+        body.light-mode .border-cyan-500\/20 {
+            border-color: rgba(14, 116, 144, 0.15) !important;
+        }
+        
+        body.light-mode .bg-gradient-to-r.from-cyan-500\/5 {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+        }
+        
+        body.light-mode .group:hover .border-cyan-400\/50 {
+            border-color: rgba(14, 116, 144, 0.3) !important;
+        }
+        
+        body.light-mode .group:hover .shadow-\[0_0_40px_rgba(6,182,212,0.08)\] {
+            box-shadow: 0 0 40px rgba(14, 116, 144, 0.08) !important;
+        }
+        
+        /* LÍNEAS DECORATIVAS EN MODO CLARO */
+        body.light-mode .bg-gradient-to-r.from-transparent.via-cyan-400 {
+            background: linear-gradient(to right, transparent, #0e7490, transparent) !important;
+        }
+        
+        body.light-mode .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500 {
+            background: linear-gradient(to right, #0e7490, #6d28d9, #047857) !important;
+        }
+        
+        /* TEXTOS DE LA DESCRIPCIÓN EN MODO CLARO */
+        body.light-mode .text-slate-300 {
+            color: #1e293b !important;
+        }
+        
+        body.light-mode .text-slate-400 {
+            color: #475569 !important;
+        }
+        
+        body.light-mode .text-white {
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .text-cyan-400 {
+            color: #0e7490 !important;
+        }
+        
+        body.light-mode .text-cyan-300 {
+            color: #0e7490 !important;
+        }
+        
+        body.light-mode .text-amber-400 {
+            color: #b45309 !important;
+        }
+        
+        body.light-mode .text-emerald-400 {
+            color: #047857 !important;
+        }
+        
+        body.light-mode .text-purple-400 {
+            color: #6d28d9 !important;
+        }
     </style>
-
-
-
-
-
 
 </head>
 <body class="custom-scrollbar">
@@ -566,62 +627,16 @@
     </header>
 
     <div class="max-w-7xl mx-auto px-6 py-12">
+        <!-- ====== SECCIÓN LEARNING PATH MODIFICADA ====== -->
         <section id="learning-path" class="mb-16 text-center">
             <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Camino</span>
             <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase mb-4">Elige tu <span>Ruta de Aprendizaje</span></h2>
-            <p class="text-slate-400 max-w-2xl mx-auto mb-12">Selecciona tu nivel de experiencia para ver los cursos recomendados y comenzar tu camino en la automatización.</p>
-            <div class="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 max-w-6xl mx-auto">
-                <div onclick="filterByLevel('Básico', this)" class="learning-step p-4 md:p-6 text-center">
-                    <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-seedling text-2xl text-cyan-400"></i></div>
-                    <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
-                    <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
-                </div>
-                <div onclick="filterByLevel('Manual', this)" class="learning-step p-4 md:p-6 text-center">
-                    <div class="w-16 h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-book-open text-2xl text-blue-400"></i></div>
-                    <h3 class="text-lg font-black text-white uppercase mb-1">Manuales</h3>
-                    <p class="text-xs text-slate-400">Guías prácticas y recursos para consulta rápida.</p>
-                </div>
-                <div onclick="filterByLevel('Intermedio', this)" class="learning-step p-4 md:p-6 text-center">
-                    <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-cogs text-2xl text-purple-400"></i></div>
-                    <h3 class="text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
-                    <p class="text-xs text-slate-400">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
-                </div>
-                <div onclick="filterByLevel('Avanzado', this)" class="learning-step p-4 md:p-6 text-center">
-                    <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-rocket text-2xl text-amber-400"></i></div>
-                    <h3 class="text-lg font-black text-white uppercase mb-1">Especialización</h3>
-                    <p class="text-xs text-slate-400">Para profesionales que buscan dominar temas complejos y diplomados.</p>
-                </div>
-            </div>
-        </section>
-    </div>
 
-    <div class="section-divider" aria-hidden="true">
-        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
-            <defs>
-                <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                    <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
-                    <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
-                </linearGradient>
-                <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                    <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
-                    <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
-                </linearGradient>
-            </defs>
-            <path d="M0,40 C240,60 480,20 720,40 S1200,60 1440,40"></path>
-            <path d="M0,40 C240,60 480,20 720,40 S1200,60 1440,40"></path>
-        </svg>
-    </div>
+            <!-- ====== CONTENEDOR ÚNICO PARA DESCRIPCIÓN Y TARJETAS ====== -->
+            <div class="w-full">
 
-    <div class="max-w-7xl mx-auto px-6 py-12">
-        <section id="catalog-section" class="py-12">
-            <div class="text-center mb-10">
-                <span id="catalog-subtitle" class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Nuestra Oferta</span>
-                <h2 id="catalog-title" class="section-title text-2xl md:text-5xl font-extrabold uppercase">Catálogo <span>Completo</span></h2>
-                
-                <!-- DESCRIPCIÓN AGREGADA - ESTILO INDEX -->
-                <div class="w-full mt-6">
+                <!-- DESCRIPCIÓN -->
+                <div class="w-full mb-10 mt-6">
                     <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
                         
                         <!-- Línea decorativa superior -->
@@ -652,6 +667,58 @@
                         <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
                     </div>
                 </div>
+
+                <!-- Tarjetas de niveles - MISMO ANCHO QUE LA DESCRIPCIÓN -->
+                <div class="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full">
+                    <div onclick="filterByLevel('Básico', this)" class="learning-step p-4 md:p-6 text-center">
+                        <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-seedling text-2xl text-cyan-400"></i></div>
+                        <h3 class="text-lg font-black text-white uppercase mb-1">Fundamentos</h3>
+                        <p class="text-xs text-slate-400">Para principiantes que inician en el mundo de la automatización.</p>
+                    </div>
+                    <div onclick="filterByLevel('Manual', this)" class="learning-step p-4 md:p-6 text-center">
+                        <div class="w-16 h-16 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-book-open text-2xl text-blue-400"></i></div>
+                        <h3 class="text-lg font-black text-white uppercase mb-1">Manuales</h3>
+                        <p class="text-xs text-slate-400">Guías prácticas y recursos para consulta rápida.</p>
+                    </div>
+                    <div onclick="filterByLevel('Intermedio', this)" class="learning-step p-4 md:p-6 text-center">
+                        <div class="w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-cogs text-2xl text-purple-400"></i></div>
+                        <h3 class="text-lg font-black text-white uppercase mb-1">Aplicaciones</h3>
+                        <p class="text-xs text-slate-400">Para quienes ya tienen bases y buscan aplicar sus conocimientos.</p>
+                    </div>
+                    <div onclick="filterByLevel('Avanzado', this)" class="learning-step p-4 md:p-6 text-center">
+                        <div class="w-16 h-16 rounded-full bg-amber-500/10 border-2 border-amber-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-rocket text-2xl text-amber-400"></i></div>
+                        <h3 class="text-lg font-black text-white uppercase mb-1">Especialización</h3>
+                        <p class="text-xs text-slate-400">Para profesionales que buscan dominar temas complejos y diplomados.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="section-divider" aria-hidden="true">
+        <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+            <defs>
+                <linearGradient id="gradient-divider" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                    <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:0.6" />
+                    <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:0.8" />
+                </linearGradient>
+                <linearGradient id="gradient-divider-2" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                    <stop offset="50%" style="stop-color:#06b6d4;stop-opacity:0.7" />
+                    <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0.9" />
+                </linearGradient>
+            </defs>
+            <path d="M0,40 C240,60 480,20 720,40 S1200,60 1440,40"></path>
+            <path d="M0,40 C240,60 480,20 720,40 S1200,60 1440,40"></path>
+        </svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 py-12">
+        <section id="catalog-section" class="py-12">
+            <div class="text-center mb-10">
+                <span id="catalog-subtitle" class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Nuestra Oferta</span>
+                <h2 id="catalog-title" class="section-title text-2xl md:text-5xl font-extrabold uppercase">Catálogo <span>Completo</span></h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="catalog-grid"></div>
             <div id="catalog-loading" class="col-span-full text-center py-10 hidden"><i class="fas fa-spinner fa-spin text-3xl text-[#2db8ce]"></i></div>
