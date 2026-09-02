@@ -3095,10 +3095,8 @@
   <div class="beneficio-precio">
   <div class="precio-item">
     <span class="precio-icono">💰</span>
-    <div>
-      <span class="precio-titulo">Precio</span>
-      <span class="precio-texto">Los cursos tienen un costo entre $50 - $100</span>
-    </div>
+    <span class="precio-titulo">Precio</span>
+    <span class="precio-texto">Los cursos tienen un costo entre $50 - $100</span>
   </div>
 </div>
 
@@ -3108,7 +3106,7 @@
     padding: 8px 14px;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    border-left: 3px solid #7B2FBE; /* <--- PESTAÑA MORADA */
+    border-left: 3px solid #7B2FBE; /* <--- PESTAÑA CYAN */
     width: 100%;
     box-sizing: border-box;
   }
@@ -3116,27 +3114,27 @@
   .precio-item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+    flex-wrap: wrap; /* Para que en móvil no se desborde */
   }
 
   .precio-icono {
     font-size: 16px;
     line-height: 1;
     flex-shrink: 0;
-    color: #000000; /* <--- Negro */
+    color: #000000;
   }
 
   .precio-titulo {
     font-size: 12px;
     font-weight: 600;
-    margin-right: 4px;
-    color: #000000; /* <--- Negro */
+    color: #000000;
   }
 
   .precio-texto {
     font-size: 12px;
     font-weight: 400;
-    color: #000000; /* <--- Negro */
+    color: #000000;
   }
 </style>
                               
@@ -3178,7 +3176,7 @@
                                 <div class="flex items-start gap-3"><i class="fas fa-check-circle text-cyan-400 mt-1 text-sm"></i><span class="text-slate-300 text-sm"><strong class="text-white">Material descargable</strong> en PDF y recursos complementarios</span></div>
                             </div>
                             <div class="mt-3 flex items-center gap-2">
-<div class="beneficio-precio">
+<div class="beneficio-precio2">
   <div class="precio-item">
     <span class="precio-icono">💰</span>
     <span class="precio-titulo">Precio</span>
@@ -3190,12 +3188,12 @@
 </div>
 
 <style>
-  .beneficio-precio {
+  .beneficio-precio2 {
     background: white;
     padding: 8px 14px;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    border-left: 3px solid #00BCD4; /* <--- PESTAÑA CYAN */
+    border-left: 3px solid #00838F; /* <--- PESTAÑA CYAN */
     width: 100%;
     box-sizing: border-box;
   }
@@ -3228,9 +3226,9 @@
 </style>
                             </div>
                             <div class="course-card-footer mt-4 pt-4 border-t border-slate-700/50">
-                                <button onclick="abrirModalCompra('Curso Online Aprende Automatización', 'Formación online con certificado digital verificable', 15)" class="btn-comprar w-full text-center justify-center py-2.5 text-sm" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
-                                    <i class="fas fa-shopping-cart"></i> Compra tu primer curso
-                                </button>
+                                <button onclick="window.location.href='#cursos-destacados'" class="btn-comprar w-full text-center justify-center py-2.5 text-sm" style="background: linear-gradient(135deg, #06b6d4, #0891b2);">
+    <i class="fas fa-shopping-cart"></i> Compra tu primer curso
+</button>
                             </div>
                         </div>
                     </div>
