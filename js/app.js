@@ -1309,100 +1309,11 @@ function renderHomePage() {
         }
     }
     
-    // Misión académica
-    if (homePageData.mision && homePageData.mision.length > 0) {
-        const mision = homePageData.mision[0];
-        const section = document.querySelector('#mision');
-        if (section) {
-            const subtituloEl = section.querySelector('.section-subtitle');
-            if (subtituloEl && mision.subtitulo) subtituloEl.textContent = mision.subtitulo;
-            
-            const tituloEl = section.querySelector('h2');
-            if (tituloEl && mision.titulo) {
-                const parts = mision.titulo.split(' ');
-                if (parts.length >= 2) {
-                    tituloEl.innerHTML = `${parts[0]} <span>${parts.slice(1).join(' ')}</span>`;
-                } else {
-                    tituloEl.textContent = mision.titulo;
-                }
-            }
-            
-            const imgEl = section.querySelector('.mission-card img');
-            if (imgEl && mision.imagen_url) imgEl.src = mision.imagen_url;
-            
-            const h3El = section.querySelector('.mission-card h3');
-            if (h3El && mision.descripcion) h3El.textContent = mision.descripcion;
-            
-            const ulEl = section.querySelector('.mission-card ul');
-            if (ulEl) {
-                let items = [];
-                if (mision.badge && mision.badge.trim() !== '') {
-                    items = mision.badge.split('|').map(s => s.trim()).filter(s => s);
-                }
-                if (items.length === 0) {
-                    items = [
-                        'Educación Práctica: Contenido actualizado para la industria.',
-                        'Acceso para Todos: Democratizar el conocimiento.',
-                        'Comunidad y Soporte: Aprendizaje colaborativo.'
-                    ];
-                }
-                ulEl.innerHTML = items.map(item => {
-                    const colonIndex = item.indexOf(':');
-                    if (colonIndex > 0) {
-                        const boldPart = item.substring(0, colonIndex).trim();
-                        const normalPart = item.substring(colonIndex + 1).trim();
-                        return `
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-cyan-400 mt-1.5"></i>
-                                <span><strong>${boldPart}:</strong> ${normalPart}</span>
-                            </li>`;
-                    } else {
-                        return `
-                            <li class="flex items-start gap-3">
-                                <i class="fas fa-check-circle text-cyan-400 mt-1.5"></i>
-                                <span>${item}</span>
-                            </li>`;
-                    }
-                }).join('');
-            }
-        }
-    }
+    
     
 
     
-    // Manuales y Recursos
-    if (homePageData.manuales.length > 0) {
-        const container = document.querySelector('#manuales .grid');
-        if (container) {
-            container.innerHTML = homePageData.manuales.map((manual, index) => {
-                const manualNum = manual.id ? (manual.id.match(/\d+/) || [index + 20])[0] : (index + 20);
-                const tags = getBadgeTags(manual.badge);
-                const levelInfo = getLevelInfoFromTags(tags);
-                const badgesHTML = renderBadgeTags(tags);
-                return `
-                <div class="course-card ${levelInfo.levelClass} reveal reveal-up">
-                    <div class="course-card-image-container">
-                        <img src="${manual.imagen_url || 'img/AA (1).gif'}" class="course-card-image" onerror="this.src='img/AA (1).gif'">
-                        ${badgesHTML}
-                        <div class="absolute bottom-3 left-3 flex items-center justify-center ${levelInfo.iconBg} border-2 rounded-full w-10 h-10">
-                            <i class="fas ${levelInfo.iconClass} text-lg"></i>
-                        </div>
-                    </div>
-                    <div class="course-card-content">
-                        <h3 class="course-card-title">${manual.titulo}</h3>
-                        <p class="course-card-description">${manual.descripcion || ''}</p>
-                        <div class="course-card-footer">
-                            <div class="course-card-meta"><div class="course-card-price">${manual.precio || ''}</div></div>
-                            <div class="course-card-buttons">
-                                ${manual.enlace_info ? `<button onclick="registerViewAndGo('${manual.enlace_info}', ${manualNum}, '_self')" class="btn-metal-solid btn-metal-cyan w-full !py-3 !text-[10px] !rounded-xl">Info</button>` : ''}
-                                ${manual.enlace_compra ? `<button onclick="window.open('${manual.enlace_compra}', '_blank')" class="btn-metal-solid btn-metal-teal w-full !py-3 !text-[10px] !rounded-xl">Comprar</button>` : ''}
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-    }
+
     
     // ==========================================
     // MODALIDADES - COMENTADO PORQUE YA ESTÁ EN EL HTML
@@ -1468,9 +1379,9 @@ function renderHomePage() {
                             </div>
                         </div>
                         <div class="pt-6 border-t flex items-start gap-3 border-white/10">
-                            <i class="fas fa-users text-[#2db8ce] text-sm mt-1"></i>
+                            <i class="fas fa-box text-[#2db8ce] text-sm mt-1"></i>
                             <div>
-                                <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest block">CANTIDAD DE PARTICIPANTES:</span>
+                                <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest block">IMPORTANTE:</span>
                                 <p class="text-white text-xs font-bold">${participantes}</p>
                             </div>
                         </div>
