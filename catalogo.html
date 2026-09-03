@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -314,7 +315,7 @@
         }
 
         /* ==========================================
-           CORRECCIÓN MODO CLARO - TODOS LOS TEXTOS
+           CORRECCIÓN MODO CLARO - TODOS LOS TEXTOS Y BADGES
            ========================================== */
         body.light-mode {
             color: #0f172a !important;
@@ -345,10 +346,11 @@
         body.light-mode .course-card .border-slate-100 { border-color: #e2e8f0 !important; }
         body.light-mode .course-card .text-slate-500 { color: #1e293b !important; }
         body.light-mode .course-card .badge-estado { color: #0f172a !important; }
-        body.light-mode .badge-pendiente { background: rgba(180, 83, 9, 0.2) !important; color: #b45309 !important; border-color: rgba(180, 83, 9, 0.3) !important; }
-        body.light-mode .badge-inscrito { background: rgba(4, 120, 87, 0.2) !important; color: #047857 !important; border-color: rgba(4, 120, 87, 0.3) !important; }
-        body.light-mode .badge-revision { background: rgba(29, 78, 216, 0.2) !important; color: #1d4ed8 !important; border-color: rgba(29, 78, 216, 0.3) !important; }
-        body.light-mode .badge-rechazado { background: rgba(185, 28, 28, 0.2) !important; color: #b91c1c !important; border-color: rgba(185, 28, 28, 0.3) !important; }
+        body.light-mode .badge-pendiente { background: rgba(180, 83, 9, 0.85) !important; color: #ffffff !important; border-color: rgba(180, 83, 9, 0.5) !important; }
+        body.light-mode .badge-inscrito { background: rgba(4, 120, 87, 0.85) !important; color: #ffffff !important; border-color: rgba(4, 120, 87, 0.5) !important; }
+        body.light-mode .badge-revision { background: rgba(29, 78, 216, 0.85) !important; color: #ffffff !important; border-color: rgba(29, 78, 216, 0.5) !important; }
+        body.light-mode .badge-rechazado { background: rgba(185, 28, 28, 0.85) !important; color: #ffffff !important; border-color: rgba(185, 28, 28, 0.5) !important; }
+        body.light-mode .badge-estado { background: #64748b !important; color: #ffffff !important; border-color: #475569 !important; }
         body.light-mode .btn-comprar { color: #ffffff !important; }
         body.light-mode .btn-pendiente { background: #b45309 !important; color: #ffffff !important; }
         body.light-mode .btn-rechazado { background: #b91c1c !important; color: #ffffff !important; }
@@ -366,6 +368,111 @@
         body.light-mode .course-card img { filter: none !important; -webkit-filter: none !important; }
         body.light-mode .course-card .professor-block { background-color: rgba(241, 245, 249, 0.9) !important; border-radius: 0.75rem !important; }
         body.light-mode .course-card .professor-block * { color: #0f172a !important; }
+
+        /* ==========================================
+           MODO CLARO - BADGES CON FONDO SÓLIDO Y LETRAS BLANCAS
+           ========================================== */
+        
+        /* Badges de tipo (Online, Presencial, Manual, etc.) */
+        body.light-mode .course-card .absolute.top-3.left-3 span {
+            background: #0f172a !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        /* Badge de categoría (CONTACTORES, etc.) */
+        body.light-mode .course-card .absolute.top-3.left-3 .bg-slate-900\/70 {
+            background: #1e293b !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        /* Badge de calificación (⭐ 5.0) */
+        body.light-mode .course-card .absolute.top-3.right-3.bg-slate-900\/70 {
+            background: #1e293b !important;
+            color: #ffffff !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        body.light-mode .course-card .absolute.top-3.right-3.bg-slate-900\/70 .text-\[\#2db8ce\] {
+            color: #ffffff !important;
+        }
+        
+        /* Badge de estado (Disponible, Inscrito, Pendiente, etc.) */
+        body.light-mode .course-card .badge-estado {
+            background: #0f172a !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        /* Badge de nivel (Básico, Intermedio, Avanzado) */
+        body.light-mode .course-card .px-2.py-1.rounded-md.flex.items-center.gap-1 {
+            background: #1e293b !important;
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        }
+        
+        body.light-mode .course-card .px-2.py-1.rounded-md.flex.items-center.gap-1 .fas {
+            color: #ffffff !important;
+        }
+        
+        /* Contador de estudiantes */
+        body.light-mode .course-card .bg-green-50 {
+            background: #065f46 !important;
+            color: #ffffff !important;
+            border-color: #047857 !important;
+        }
+        
+        body.light-mode .course-card .bg-green-50 .text-green-600 {
+            color: #ffffff !important;
+        }
+        
+        /* Badges de "Manual" en la esquina inferior izquierda */
+        body.light-mode .course-card .bg-blue-500\/10 {
+            background: #1e3a5f !important;
+            border-color: rgba(59, 130, 246, 0.5) !important;
+        }
+        
+        body.light-mode .course-card .bg-blue-500\/10 .text-blue-400 {
+            color: #93c5fd !important;
+        }
+        
+        /* Badges de "PRÓXIMAMENTE" */
+        body.light-mode .course-card .bg-slate-300 {
+            background: #475569 !important;
+            color: #ffffff !important;
+        }
+
+        /* ==========================================
+           MODO CLARO - OVERLAY ACCESO RESTRINGIDO
+           ========================================== */
+        
+        /* Fondo del overlay - más oscuro para contraste */
+        body.light-mode .course-card .absolute.inset-0.bg-black\/40 {
+            background: rgba(0, 0, 0, 0.6) !important;
+            backdrop-filter: blur(2px) !important;
+            -webkit-backdrop-filter: blur(2px) !important;
+        }
+        
+        /* Texto "Acceso Restringido" en BLANCO */
+        body.light-mode .course-card .absolute.inset-0 .text-white {
+            color: #ffffff !important;
+        }
+        
+        /* Texto secundario en BLANCO */
+        body.light-mode .course-card .absolute.inset-0 .text-white\/60 {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+        
+        /* Icono de candado en BLANCO */
+        body.light-mode .course-card .absolute.inset-0 .text-amber-400\/80 {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
 
         /* ==========================================
            MODO CLARO - FONDO BLANCO PARA DESCRIPCIÓN
@@ -432,7 +539,284 @@
         body.light-mode .text-purple-400 {
             color: #6d28d9 !important;
         }
+
+        /* ==========================================
+           MODAL DE COMPRA - ESCALA DE GRISES CON BOTÓN CYAN
+           ========================================== */
+        
+        /* Estilos base del modal - FONDO GRIS CLARO */
+        #modalCompra .modal-content {
+            background: #e8ecf0 !important;
+            background-color: #e8ecf0 !important;
+            border: 1px solid #c8d0d8 !important;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+            max-width: 820px !important;
+            width: 95% !important;
+            border-radius: 2rem !important;
+            overflow: hidden !important;
+        }
+
+        /* Panel izquierdo - GRIS MEDIO */
+        #modalCompra .flex-1.p-4.md\:p-8:first-child {
+            background: #d5dce4 !important;
+            background-color: #d5dce4 !important;
+        }
+
+        /* Panel derecho - GRIS CLARO */
+        #modalCompra .flex-1.p-4.md\:p-8:last-child {
+            background: #e8ecf0 !important;
+            background-color: #e8ecf0 !important;
+            border-top: 1px solid #c8d0d8 !important;
+        }
+
+        /* Contenedor interno de instrucciones - GRIS MÁS CLARO */
+        #modalCompra .bg-slate-800\/50 {
+            background: #d5dce4 !important;
+            background-color: #d5dce4 !important;
+            border: 1px solid #c0c8d0 !important;
+            border-radius: 0.75rem !important;
+        }
+
+        /* TODOS LOS TEXTOS EN NEGRO */
+        #modalCompra .modal-content * {
+            color: #0f172a !important;
+        }
+
+        /* Títulos en NEGRO */
+        #modalCompra .text-white,
+        #modalCompra .text-slate-400,
+        #modalCompra .text-slate-500,
+        #modalCompra .text-slate-600,
+        #modalCompra .text-slate-300 {
+            color: #0f172a !important;
+        }
+
+        /* Color de acento - se mantiene en tono gris azulado */
+        #modalCompra .text-cyan-400 {
+            color: #1a5a7a !important;
+        }
+
+        #modalCompra .text-amber-400 {
+            color: #8a6d1a !important;
+        }
+
+        #modalCompra .text-green-400 {
+            color: #1a7a5a !important;
+        }
+
+        #modalCompra .text-red-400 {
+            color: #8a2a2a !important;
+        }
+
+        /* Botón Confirmar - CYAN con texto blanco */
+        #modalCompra .btn-comprar {
+            background: linear-gradient(135deg, #2db8ce, #06b6d4) !important;
+            background-color: #06b6d4 !important;
+            color: #ffffff !important;
+            border: 1px solid #0891b2 !important;
+        }
+
+        #modalCompra .btn-comprar:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4) !important;
+            filter: brightness(1.05) !important;
+        }
+
+        /* Botón Cancelar - GRIS CLARO */
+        #modalCompra .bg-slate-700 {
+            background: #b0b8c0 !important;
+            background-color: #b0b8c0 !important;
+            color: #0f172a !important;
+        }
+
+        #modalCompra .bg-slate-700:hover {
+            background: #a0a8b0 !important;
+            background-color: #a0a8b0 !important;
+        }
+
+        /* Botón WhatsApp - se mantiene verde */
+        #modalCompra [style*="background: #25D366"] {
+            background: #25D366 !important;
+            color: #ffffff !important;
+        }
+
+        #modalCompra [style*="background: #25D366"]:hover {
+            background: #1da05a !important;
+        }
+
+        /* Borde del contenedor de tasa */
+        #modalCompra .border-slate-700\/50 {
+            border-color: #c0c8d0 !important;
+        }
+
+        #modalCompra .border-t.border-slate-700\/50 {
+            border-color: #c0c8d0 !important;
+        }
+
+        /* Iconos en negro */
+        #modalCompra .fas,
+        #modalCompra .fab,
+        #modalCompra .fa-solid,
+        #modalCompra .fa-regular {
+            color: #0f172a !important;
+        }
+
+        /* El icono de WhatsApp en el botón se mantiene blanco */
+        #modalCompra [style*="background: #25D366"] .fab,
+        #modalCompra [style*="background: #25D366"] .fas {
+            color: #ffffff !important;
+        }
+
+        /* Tasa BCV */
+        #modalCompra .bg-slate-800\/50 .text-white {
+            color: #0f172a !important;
+        }
+
+        #modalCompra .bg-slate-800\/50 .text-slate-400 {
+            color: #3a4a5a !important;
+        }
+
+        #modalCompra .bg-slate-800\/50 .text-green-400 {
+            color: #1a7a5a !important;
+        }
+
+        /* Botón cerrar (X) */
+        #modalCompra .absolute.top-4.right-4.z-20 {
+            color: #0f172a !important;
+            background: rgba(200, 200, 200, 0.5) !important;
+        }
+
+        #modalCompra .absolute.top-4.right-4.z-20:hover {
+            background: rgba(180, 180, 180, 0.7) !important;
+        }
+
+        /* Separadores */
+        #modalCompra .border-t.border-slate-700\/50 {
+            border-color: #c0c8d0 !important;
+        }
+
+        #modalCompra .border-slate-600\/50 {
+            border-color: #c0c8d0 !important;
+        }
+
+        /* Texto de instrucciones */
+        #modalCompra .text-slate-300 {
+            color: #1a2a3a !important;
+        }
+
+        /* ==========================================
+           MODAL DE CONFIRMACIÓN - ESTILO GRIS
+           ========================================== */
+        #modalConfirmacionCompra .modal-content {
+            background: #e8ecf0 !important;
+            background-color: #e8ecf0 !important;
+            border: 1px solid #c8d0d8 !important;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+            max-width: 500px !important;
+            width: 95% !important;
+            border-radius: 2rem !important;
+            overflow: hidden !important;
+        }
+
+        /* Todos los textos en negro */
+        #modalConfirmacionCompra .modal-content * {
+            color: #0f172a !important;
+        }
+
+        #modalConfirmacionCompra .modal-content .text-slate-300 {
+            color: #1a2a3a !important;
+        }
+
+        #modalConfirmacionCompra .modal-content .text-slate-400 {
+            color: #3a4a5a !important;
+        }
+
+        #modalConfirmacionCompra .modal-content .text-amber-400 {
+            color: #8a6d1a !important;
+        }
+
+        #modalConfirmacionCompra .modal-content .text-cyan-400 {
+            color: #1a5a7a !important;
+        }
+
+        #modalConfirmacionCompra .modal-content .text-green-400 {
+            color: #1a7a5a !important;
+        }
+
+        #modalConfirmacionCompra .modal-content .border-slate-700\/50 {
+            border-color: #c0c8d0 !important;
+        }
+
+        #modalConfirmacionCompra .modal-content .fa-check-circle {
+            color: #1a7a5a !important;
+        }
+
+        /* Botón Aceptar - CYAN */
+        #modalConfirmacionCompra .btn-aceptar {
+            background: linear-gradient(135deg, #2db8ce, #06b6d4) !important;
+            background-color: #06b6d4 !important;
+            color: #ffffff !important;
+            border: 1px solid #0891b2 !important;
+            padding: 0.75rem 2rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #modalConfirmacionCompra .btn-aceptar:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.4) !important;
+            filter: brightness(1.05) !important;
+        }
+
+        /* Modo oscuro para el modal de confirmación */
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content {
+            background: #1e293b !important;
+            background-color: #1e293b !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content * {
+            color: #f1f5f9 !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content .text-slate-300 {
+            color: #94a3b8 !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content .text-slate-400 {
+            color: #94a3b8 !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content .text-amber-400 {
+            color: #fbbf24 !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content .text-cyan-400 {
+            color: #22d3ee !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content .text-green-400 {
+            color: #34d399 !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content .border-slate-700\/50 {
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .modal-content .fa-check-circle {
+            color: #34d399 !important;
+        }
+
+        body:not(.light-mode) #modalConfirmacionCompra .btn-aceptar {
+            background: linear-gradient(135deg, #2db8ce, #06b6d4) !important;
+            background-color: #06b6d4 !important;
+            color: #ffffff !important;
+            border: 1px solid #0891b2 !important;
+        }
     </style>
+
 
 </head>
 <body class="custom-scrollbar">
@@ -533,73 +917,107 @@
     </div>
 </div>
 
-<!-- MODAL COMPRA -->
+<!-- MODAL COMPRA - CON BOTÓN CYAN -->
 <div id="modalCompra" class="modal-overlay">
-    <div class="modal-content !p-0 relative" style="background: #1e293b !important; max-width: 820px !important; width: 95% !important; overflow: hidden; border-radius: 2rem; max-height: 95vh; overflow-y: auto;">
-        <button onclick="cerrarModalCompra()" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white transition text-xl" style="background: rgba(0,0,0,0.3); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none;"><i class="fas fa-times"></i></button>
+    <div class="modal-content !p-0 relative" style="background: #e8ecf0 !important; max-width: 820px !important; width: 95% !important; overflow: hidden; border-radius: 2rem; max-height: 95vh; overflow-y: auto; border: 1px solid #c8d0d8 !important; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;">
+        <button onclick="cerrarModalCompra()" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-white transition text-xl" style="background: rgba(200,200,200,0.5); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; color: #0f172a !important;">
+            <i class="fas fa-times" style="color: #0f172a !important;"></i>
+        </button>
         <div class="flex flex-col md:flex-row">
-            <div class="flex-1 p-4 md:p-8" style="background: #0f172a;">
+            <div class="flex-1 p-4 md:p-8" style="background: #d5dce4 !important;">
                 <div class="mb-3 md:mb-4">
-                    <h3 class="text-lg md:text-xl font-black uppercase text-white" id="modalCursoTitulo">Curso</h3>
-                    <p class="text-slate-400 text-xs md:text-sm mt-1" id="modalCursoDescripcion">Descripción del curso</p>
+                    <h3 class="text-lg md:text-xl font-black uppercase" id="modalCursoTitulo" style="color: #0f172a !important;">Curso</h3>
+                    <p class="text-slate-500 text-xs md:text-sm mt-1" id="modalCursoDescripcion" style="color: #0f172a !important;">Descripción del curso</p>
                 </div>
                 <div class="mb-3 md:mb-4">
-                    <span class="text-2xl md:text-3xl font-bold text-cyan-400" id="modalCursoPrecio">$0.00</span>
-                    <p class="text-[10px] md:text-xs text-slate-500 mt-1 flex items-center gap-1 md:gap-2 flex-wrap">
-                        <i class="fas fa-info-circle text-slate-600"></i> 
-                        Precio en <strong class="text-white">Dólares</strong> · Se calcula a la <strong class="text-cyan-400">tasa BCV del día</strong>
-                        <button onclick="verTasaBCV()" class="text-[10px] md:text-xs bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 px-2 py-1 rounded transition border border-cyan-500/30 flex items-center gap-1">
+                    <span class="text-2xl md:text-3xl font-bold" id="modalCursoPrecio" style="color: #1a5a7a !important;">$0.00</span>
+                    <p class="text-[10px] md:text-xs mt-1 flex items-center gap-1 md:gap-2 flex-wrap" style="color: #0f172a !important;">
+                        <i class="fas fa-info-circle" style="color: #0f172a !important;"></i> 
+                        Precio en <strong style="color: #0f172a !important;">Dólares</strong> · Se calcula a la <strong style="color: #1a5a7a !important;">tasa BCV del día</strong>
+                        <button onclick="verTasaBCV()" class="text-[10px] md:text-xs bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 px-2 py-1 rounded transition border border-cyan-500/30 flex items-center gap-1" style="color: #1a5a7a !important; border-color: #1a5a7a !important;">
                             <i class="fas fa-eye"></i> Ver tasa
                         </button>
                     </p>
                 </div>
-                <div id="tasaBCVContainer" class="hidden p-3 md:p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 transition-all">
+                <div id="tasaBCVContainer" class="hidden p-3 md:p-4 rounded-xl border transition-all" style="background: #c8d0d8 !important; border-color: #b0b8c0 !important;">
                     <div class="grid grid-cols-2 gap-2 md:gap-4">
                         <div>
-                            <p class="text-slate-400 text-[8px] md:text-[10px] uppercase font-bold tracking-wider">Tasa BCV</p>
-                            <p class="text-white text-sm md:text-xl font-bold" id="tasaBCVValor">$ 1 = Bs. <span id="tasaBCVNumero">--</span></p>
+                            <p class="text-[8px] md:text-[10px] uppercase font-bold tracking-wider" style="color: #3a4a5a !important;">Tasa BCV</p>
+                            <p class="text-sm md:text-xl font-bold" id="tasaBCVValor" style="color: #0f172a !important;">$ 1 = Bs. <span id="tasaBCVNumero">--</span></p>
                         </div>
                         <div class="text-right">
-                            <p class="text-slate-400 text-[8px] md:text-[10px] uppercase font-bold tracking-wider">Total Bs.</p>
-                            <p class="text-green-400 text-sm md:text-xl font-bold" id="totalBs">Bs. --</p>
+                            <p class="text-[8px] md:text-[10px] uppercase font-bold tracking-wider" style="color: #3a4a5a !important;">Total Bs.</p>
+                            <p class="text-sm md:text-xl font-bold" id="totalBs" style="color: #1a7a5a !important;">Bs. --</p>
                         </div>
                     </div>
-                    <div class="mt-2 pt-2 border-t border-slate-700/50 flex justify-between text-[8px] md:text-xs">
-                        <span class="text-slate-500">Actualizado: <span id="tasaBCVActualizado">--</span></span>
-                        <button onclick="obtenerTasaBCV()" class="text-cyan-400 hover:text-cyan-300 transition flex items-center gap-1">
+                    <div class="mt-2 pt-2 border-t flex justify-between text-[8px] md:text-xs" style="border-color: #b0b8c0 !important;">
+                        <span style="color: #3a4a5a !important;">Actualizado: <span id="tasaBCVActualizado">--</span></span>
+                        <button onclick="obtenerTasaBCV()" class="hover:text-cyan-300 transition flex items-center gap-1" style="color: #1a5a7a !important;">
                             <i class="fas fa-sync-alt"></i> Actualizar
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="flex-1 p-4 md:p-8" style="background: #1e293b; border-top: 1px solid #334155;">
-                <div class="p-3 md:p-4 bg-slate-800/50 rounded-xl border border-slate-700/50 h-full flex flex-col">
-                    <p class="text-slate-400 text-[10px] md:text-xs font-medium uppercase tracking-wider">📋 Instrucciones de pago</p>
+            <div class="flex-1 p-4 md:p-8" style="background: #e8ecf0 !important; border-top: 1px solid #c8d0d8 !important;">
+                <div class="p-3 md:p-4 rounded-xl border h-full flex flex-col" style="background: #d5dce4 !important; border-color: #c0c8d0 !important;">
+                    <p class="text-[10px] md:text-xs font-medium uppercase tracking-wider" style="color: #0f172a !important;">📋 Instrucciones de pago</p>
                     <div class="mt-2 md:mt-3 space-y-1 md:space-y-2 flex-1">
-                        <p class="text-white text-xs md:text-sm">Realiza el pago por <strong>Pago Móvil</strong> al número:</p>
-                        <p class="text-cyan-400 text-base md:text-lg font-bold">0416-1486794</p>
-                        <p class="text-white text-xs md:text-sm">Banco: <strong class="text-cyan-400">Mercantil - 0105</strong></p>
-                        <p class="text-white text-xs md:text-sm">Cédula: <strong class="text-cyan-400">13018822</strong></p>
-                        <p class="text-amber-400 text-xs md:text-sm mt-1 md:mt-2 font-bold">💰 Monto en Bolívares: <span class="text-white" id="montoEnBs">Bs. --</span></p>
-                        <p class="text-white text-xs md:text-sm mt-2 md:mt-3">📤 Luego de pagar, confirma tu pago:</p>
+                        <p style="color: #0f172a !important;" class="text-xs md:text-sm">Realiza el pago por <strong style="color: #0f172a !important;">Pago Móvil</strong> al número:</p>
+                        <p class="text-base md:text-lg font-bold" style="color: #1a5a7a !important;">0416-1486794</p>
+                        <p style="color: #0f172a !important;" class="text-xs md:text-sm">Banco: <strong style="color: #1a5a7a !important;">Mercantil - 0105</strong></p>
+                        <p style="color: #0f172a !important;" class="text-xs md:text-sm">Cédula: <strong style="color: #1a5a7a !important;">13018822</strong></p>
+                        <p class="text-xs md:text-sm mt-1 md:mt-2 font-bold" style="color: #8a6d1a !important;">💰 Monto en Bolívares: <span class="text-white" id="montoEnBs" style="color: #0f172a !important;">Bs. --</span></p>
+                        <p style="color: #0f172a !important;" class="text-xs md:text-sm mt-2 md:mt-3">📤 Luego de pagar, confirma tu pago:</p>
                     </div>
-                    <div class="mt-2 p-2 bg-slate-700/30 rounded-lg border border-slate-600/50">
-                        <p class="text-[10px] md:text-xs text-slate-300 flex items-start gap-1 md:gap-2">
-                            <i class="fas fa-info-circle text-cyan-400 mt-0.5 text-xs"></i>
-                            <span>Haz clic en <strong class="text-green-400">"Enviar comprobante"</strong> para abrir WhatsApp con el mensaje pre-llenado. Adjunta la captura del pago y envíalo.</span>
+                    <div class="mt-2 p-2 rounded-lg border" style="background: #c8d0d8 !important; border-color: #b0b8c0 !important;">
+                        <p class="text-[10px] md:text-xs flex items-start gap-1 md:gap-2" style="color: #1a2a3a !important;">
+                            <i class="fas fa-info-circle text-cyan-400 mt-0.5 text-xs" style="color: #1a5a7a !important;"></i>
+                            <span>Haz clic en <strong style="color: #0f172a !important;">"Enviar comprobante"</strong> para abrir WhatsApp con el mensaje pre-llenado. Adjunta la captura del pago y envíalo.</span>
                         </p>
                     </div>
                     <button onclick="enviarWhatsApp()" class="w-full text-center flex items-center justify-center gap-2 text-xs md:text-sm py-2.5 md:py-3 rounded-xl font-bold transition mt-2" style="background: #25D366; color: white; border: none;">
                         <i class="fab fa-whatsapp"></i> Enviar comprobante por WhatsApp
                     </button>
-                    <div class="flex flex-col sm:flex-row gap-2 mt-3 pt-3 border-t border-slate-700/50">
+                    <div class="flex flex-col sm:flex-row gap-2 mt-3 pt-3 border-t" style="border-color: #c0c8d0 !important;">
                         <button class="btn-comprar flex-1 text-center flex items-center justify-center gap-2 text-xs md:text-sm py-2.5 md:py-3" id="btnConfirmarCompra" onclick="confirmarCompra()">
                             <i class="fas fa-shopping-cart"></i> Confirmar
                         </button>
-                        <button class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2.5 md:py-3 rounded-xl font-semibold transition text-xs md:text-sm flex-1" onclick="cerrarModalCompra()">Cancelar</button>
+                        <button class="px-4 py-2.5 md:py-3 rounded-xl font-semibold transition text-xs md:text-sm flex-1" onclick="cerrarModalCompra()" style="background: #b0b8c0 !important; color: #0f172a !important;">
+                            Cancelar
+                        </button>
                     </div>
-                    <div id="mensajeCompra" class="mt-2 md:mt-3 text-center text-xs md:text-sm hidden"></div>
+                    <div id="mensajeCompra" class="mt-2 md:mt-3 text-center text-xs md:text-sm hidden" style="color: #0f172a !important;"></div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ====== MODAL DE CONFIRMACIÓN DE COMPRA CON BOTÓN ACEPTAR ====== -->
+<div id="modalConfirmacionCompra" class="modal-overlay">
+    <div class="modal-content !p-0 relative">
+        <button onclick="cerrarModalConfirmacion()" class="absolute top-4 right-4 z-20 text-slate-400 hover:text-slate-600 transition text-xl" style="background: rgba(200,200,200,0.4); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none;">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="p-6 md:p-8 text-center">
+            <div class="mb-4">
+                <i class="fas fa-check-circle text-5xl text-green-400" style="filter: drop-shadow(0 0 20px rgba(52, 211, 153, 0.4));"></i>
+            </div>
+            <h3 class="text-2xl md:text-3xl font-black mb-2" id="modalConfirmacionTitulo">¡Inscripción registrada! 🎉</h3>
+            <p class="text-slate-300 text-sm md:text-base mb-3" id="modalConfirmacionMensaje">
+                ⏳ El curso está <strong class="text-amber-400">pendiente de verificación de pago</strong>.
+            </p>
+            <p class="text-slate-400 text-xs md:text-sm mb-4" id="modalConfirmacionSubmensaje">
+                Aparecerá en <strong class="text-cyan-400">"Mis Cursos"</strong> cuando sea verificado.
+            </p>
+            <div class="flex items-center justify-center gap-2 text-cyan-400 text-sm" id="modalConfirmacionFelicidades">
+                <i class="fas fa-gift"></i>
+                <span>🎊 ¡Felicidades por tu compra!</span>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-700/50">
+                <button onclick="cerrarModalConfirmacion()" class="btn-aceptar">
+                    <i class="fas fa-check mr-2"></i> Aceptar
+                </button>
             </div>
         </div>
     </div>
@@ -742,6 +1160,7 @@ let cursoSeleccionado = null;
 let tasaBCV = 0;
 let cursoPrecioUSD = 0;
 let tasaBCVGlobal = null;
+let isFreeCourse = false; // Variable para saber si el curso es gratuito
 
 const ADMIN_EMAILS = ['pablocdno@gmail.com', 'pablocedeno@gmail.com'];
 const VENEZUELA_FLAG_URL = 'https://kimi-web-img.kimi.ai/img/uxwing.com/f24e2335a62518177fba5ade4992594201597458.png';
@@ -1041,6 +1460,87 @@ async function manualEnrollStudent(event) {
 }
 
 // ==========================================
+// FUNCIONES DE CELEBRACIÓN (CONFETI + APLAUSOS)
+// ==========================================
+function celebrarCompra() {
+    // Reproducir aplausos
+    const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-small-crowd-applause-443.mp3');
+    audio.volume = 0.6;
+    audio.play().catch(e => console.log('No se pudo reproducir el audio.'));
+
+    // Lanzar confeti desde la parte inferior
+    confetti({
+        particleCount: 150,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#2db8ce', '#06b6d4', '#8b5cf6', '#fbbf24', '#34d399', '#f87171', '#ffffff']
+    });
+    
+    setTimeout(() => {
+        confetti({
+            particleCount: 100,
+            spread: 60,
+            origin: { y: 0.4 },
+            colors: ['#2db8ce', '#06b6d4', '#8b5cf6', '#fbbf24', '#34d399']
+        });
+    }, 300);
+    
+    setTimeout(() => {
+        confetti({
+            particleCount: 80,
+            spread: 100,
+            origin: { y: 0.3 },
+            colors: ['#fbbf24', '#34d399', '#f87171', '#60a5fa']
+        });
+    }, 700);
+}
+
+// ==========================================
+// MODAL DE CONFIRMACIÓN DE COMPRA CON BOTÓN ACEPTAR
+// ==========================================
+function mostrarModalConfirmacionCompra(esGratis = false) {
+    isFreeCourse = esGratis;
+    
+    // Actualizar el contenido del modal según el tipo de curso
+    const titulo = document.getElementById('modalConfirmacionTitulo');
+    const mensaje = document.getElementById('modalConfirmacionMensaje');
+    const submensaje = document.getElementById('modalConfirmacionSubmensaje');
+    const felicidades = document.getElementById('modalConfirmacionFelicidades');
+    
+    if (esGratis) {
+        titulo.textContent = '🎉 ¡Inscripción exitosa!';
+        mensaje.innerHTML = '👏 Encuéntralo en <strong class="text-cyan-400">"Mis Cursos"</strong> para comenzar a aprender.';
+        submensaje.textContent = '🚀 Tu viaje de aprendizaje comienza ahora.';
+        felicidades.innerHTML = '<i class="fas fa-rocket"></i><span>🎊 ¡Felicidades por tu adquisición!</span>';
+    } else {
+        titulo.textContent = '¡Inscripción registrada! 🎉';
+        mensaje.innerHTML = '⏳ El curso está <strong class="text-amber-400">pendiente de verificación de pago</strong>.';
+        submensaje.textContent = 'Aparecerá en "Mis Cursos" cuando sea verificado.';
+        felicidades.innerHTML = '<i class="fas fa-gift"></i><span>🎊 ¡Felicidades por tu compra!</span>';
+    }
+    
+    // Mostrar el modal SIN confeti ni aplausos aún
+    openModal('modalConfirmacionCompra');
+}
+
+function cerrarModalConfirmacion() {
+    closeModal('modalConfirmacionCompra');
+    
+    // AHORA SÍ: lanzar confeti y aplausos al hacer clic en Aceptar
+    celebrarCompra();
+    
+    // Recargar datos y aplicar filtros
+    loadData();
+    applyFilters();
+    
+    if (isFreeCourse) {
+        showNotif('✅ Inscripción exitosa', '¡Ya puedes acceder a tu curso desde "Mis Cursos"! 🚀', 'success');
+    } else {
+        showNotif('✅ Compra registrada', 'El curso está pendiente de verificación de pago. 🎉', 'success');
+    }
+}
+
+// ==========================================
 // MODAL COMPRA
 // ==========================================
 function abrirModalCompra(courseId) {
@@ -1116,24 +1616,16 @@ async function confirmarCompra() {
         const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const result = await response.json();
         if (result.status === 'success') {
-            mensaje.classList.remove('hidden');
-            mensaje.className = 'mt-3 text-center text-sm text-green-400';
-            mensaje.innerHTML = `
-                <i class="fas fa-check-circle"></i> 
-                ¡Inscripción registrada!<br>
-                <span class="text-amber-400">⏳ El curso está pendiente de verificación de pago.</span><br>
-                <span class="text-slate-400 text-xs">Aparecerá en "Mis Cursos" cuando sea verificado.</span>
-            `;
-            btn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
-            btn.className = 'bg-green-500 text-white px-6 py-3 rounded-xl font-semibold flex-1 text-center';
+            // Cerrar el modal de compra
+            cerrarModalCompra();
+            
+            // Guardar estado local
             const key = currentUser.email.toLowerCase() + '|' + cursoNombre;
             dbUserPaymentStatus[key] = 'Pendiente';
-            setTimeout(() => {
-                cerrarModalCompra();
-                loadData();
-                applyFilters();
-                showNotif('✅ Compra registrada', 'El curso está pendiente de verificación de pago.', 'success');
-            }, 2000);
+            
+            // Mostrar modal de confirmación (sin confeti todavía) - curso de pago
+            mostrarModalConfirmacionCompra(false);
+            
         } else {
             mensaje.classList.remove('hidden');
             mensaje.className = 'mt-3 text-center text-sm text-red-400';
@@ -1152,14 +1644,17 @@ async function confirmarCompra() {
 }
 
 // ==========================================
-// CURSOS GRATIS
+// CURSOS GRATIS - Ahora con modal de confirmación
 // ==========================================
 async function enrollFreeCourse(courseId, courseName) {
     if (!currentUser || !currentUser.email) { openModal('authModal'); return; }
     const email = currentUser.email.toLowerCase();
     const key = email + '|' + courseName;
     const acceso = dbUserAccessStatus[key] || 'NO';
-    if (acceso === 'SÍ' || acceso === 'SI') { showNotif('Ya inscrito', 'Ya te encuentras inscrito en este curso.', 'info'); return; }
+    if (acceso === 'SÍ' || acceso === 'SI') { 
+        showNotif('Ya inscrito', 'Ya te encuentras inscrito en este curso.', 'info'); 
+        return; 
+    }
     showLoadingToast();
     try {
         const formData = new URLSearchParams();
@@ -1175,6 +1670,9 @@ async function enrollFreeCourse(courseId, courseName) {
         const response = await fetch(SCRIPT_URL, { method: 'POST', body: formData });
         const result = await response.json();
         if (result.status === 'success') {
+            hideLoadingToast();
+            
+            // Actualizar datos locales
             if (!currentUser.accessedCursos) currentUser.accessedCursos = [];
             if (!currentUser.accessedCursos.includes(parseInt(courseId))) {
                 currentUser.accessedCursos.push(parseInt(courseId));
@@ -1182,10 +1680,10 @@ async function enrollFreeCourse(courseId, courseName) {
             localStorage.setItem('user', JSON.stringify(currentUser));
             dbUserPaymentStatus[key] = 'Verificado';
             dbUserAccessStatus[key] = 'SÍ';
-            await loadData();
-            applyFilters();
-            showSuccessToast();
-            showNotif('✅ Inscripción exitosa', `Te has inscrito en "${courseName}"`, 'success');
+            
+            // Mostrar modal de confirmación (sin confeti todavía) - curso gratuito
+            mostrarModalConfirmacionCompra(true);
+            
         } else {
             hideLoadingToast();
             showNotif('Error', result.message || 'No se pudo completar la inscripción.', 'error');
