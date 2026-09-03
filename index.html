@@ -2755,6 +2755,16 @@
            BARRA STICKY - CURSO ESPECIAL (ELIMINADA)
            ========================================== */
         /* La barra sticky ha sido eliminada completamente */
+
+        /* ==========================================
+           ESTILOS PARA OCULTAR/MOSTRAR SECCIONES DE LOGROS
+           ========================================== */
+        #user-progress-section.hidden {
+            display: none !important;
+        }
+        #achievements-list-section.hidden {
+            display: none !important;
+        }
     </style>
 
     <!-- GOOGLE CHARTS -->
@@ -3631,7 +3641,7 @@
                     </div>
                 </div>
 
-                <!-- Grid de Logros -->
+                <!-- Grid de Logros (SIEMPRE VISIBLE) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="logros-container">
                     <div class="course-card course-card-level-basico reveal reveal-up flex flex-col text-center p-6" data-logro="bronce">
                         <div class="text-5xl mb-4">🥉</div>
@@ -3692,8 +3702,8 @@
                     </div>
                 </div>
 
-                <!-- Estado del Usuario -->
-                <div class="mt-12 max-w-3xl mx-auto">
+                <!-- Estado del Usuario (OCULTO si no tiene cursos completados) -->
+                <div id="user-progress-section" class="mt-12 max-w-3xl mx-auto hidden">
                     <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/10">
                         <div class="flex flex-col md:flex-row items-center gap-6">
                             <div class="flex-shrink-0">
@@ -3720,8 +3730,8 @@
                     </div>
                 </div>
 
-                <!-- Lista de Logros Obtenidos -->
-                <div class="mt-8 max-w-3xl mx-auto">
+                <!-- Lista de Logros Obtenidos (OCULTO si no tiene logros) -->
+                <div id="achievements-list-section" class="mt-8 max-w-3xl mx-auto hidden">
                     <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/10">
                         <h4 class="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2 mb-4">
                             <i class="fas fa-award text-cyan-400"></i> Tus Logros Obtenidos
@@ -3732,7 +3742,7 @@
                     </div>
                 </div>
 
-                <!-- Llamada a la acción - Motivación -->
+                <!-- Llamada a la acción - Motivación (SIEMPRE VISIBLE) -->
                 <div class="mt-10 text-center">
                     <div class="inline-block bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-amber-500/10 rounded-3xl px-6 py-4 border border-white/5">
                         <p class="text-slate-300 text-sm md:text-base font-medium">
@@ -3943,7 +3953,8 @@
             bestScore: null,
             achievements: [],
             completedCourses: [],
-            isLoading: false
+            isLoading: false,
+            hasAchievements: false
         },
 
         getAchievementIcon(score) {
@@ -4095,6 +4106,7 @@
                         icon: c.icon,
                         level: c.level
                     }));
+                    this.userData.hasAchievements = this.userData.achievements.length > 0;
 
                     console.log(`🏆 Logros cargados: ${totalCompleted} cursos completados, mejor puntuación: ${bestScore}%`);
                     console.log('📋 Cursos completados:', completedCourses.map(c => `${c.courseName} (${c.score}%)`));
@@ -4187,6 +4199,31 @@
             const message = document.getElementById('user-status-message');
             const coursesCompleted = document.getElementById('user-courses-completed');
             const bestScore = document.getElementById('user-best-score');
+            
+            // Mostrar/ocultar sección de progreso del usuario
+            const progressSection = document.getElementById('user-progress-section');
+            const achievementsSection = document.getElementById('achievements-list-section');
+            
+            const hasAchievements = this.userData.hasAchievements && this.userData.achievements.length > 0;
+            const hasCompletedCourses = this.userData.coursesCompleted > 0;
+
+            // Mostrar sección de progreso solo si tiene cursos completados
+            if (progressSection) {
+                if (hasCompletedCourses) {
+                    progressSection.classList.remove('hidden');
+                } else {
+                    progressSection.classList.add('hidden');
+                }
+            }
+
+            // Mostrar sección de logros solo si tiene logros
+            if (achievementsSection) {
+                if (hasAchievements) {
+                    achievementsSection.classList.remove('hidden');
+                } else {
+                    achievementsSection.classList.add('hidden');
+                }
+            }
 
             if (coursesCompleted) {
                 coursesCompleted.textContent = this.userData.coursesCompleted;
