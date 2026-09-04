@@ -44,7 +44,7 @@
                               radial-gradient(circle at 75% 75%, rgba(24, 119, 242, 0.15) 0%, transparent 50%);
         }
 
-        /* ============ ESTILOS PARA EL TOAST DE CARGA (TAMAÑO REDUCIDO) ============ */
+        /* ============ ESTILOS PARA EL TOAST DE CARGA ============ */
         .loading-toast {
             position: fixed;
             bottom: 15px;
@@ -453,6 +453,42 @@
             font-weight: 900;
         }
 
+        /* ============ SECCIÓN QR ============ */
+        .cert-qr-section {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .cert-qr-img {
+            width: 130px;
+            height: 130px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 4px;
+            background: white;
+            object-fit: contain;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .cert-qr-label {
+            font-size: 10px;
+            font-weight: 800;
+            color: #111827;
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .cert-qr-link {
+            font-size: 8px;
+            color: #111827;
+            margin-top: 2px;
+            max-width: 140px;
+            word-break: break-all;
+            line-height: 1.3;
+            font-family: monospace;
+        }
+
         /* Loading overlay con LOGO */
         .loading-overlay {
             position: fixed;
@@ -471,7 +507,6 @@
             pointer-events: none;
         }
         
-        /* Logo animado en el overlay */
         .loading-logo {
             width: 100px;
             height: 100px;
@@ -495,7 +530,6 @@
             }
         }
         
-        /* Texto de carga debajo del logo */
         .loading-text {
             color: #2db8ce;
             font-size: 14px;
@@ -558,7 +592,9 @@
             }
         }
 
-        /* Print styles */
+        /* ============================================
+           ESTILOS DE IMPRESIÓN - CON MARGEN DINÁMICO
+           ============================================ */
         @media print {
             html, body {
                 margin: 0 !important;
@@ -582,7 +618,7 @@
             
             .certificate-wrapper {
                 margin: 0 !important;
-                padding: 40px !important;
+                padding: 30px !important;
                 box-shadow: none !important;
                 max-width: 100% !important;
                 width: 100% !important;
@@ -591,8 +627,8 @@
             }
             
             #certificate-container {
-                border: 6px solid var(--border-color) !important;
-                padding: 30px 45px 35px 45px !important;
+                border: 5px solid var(--border-color) !important;
+                padding: 20px 35px 25px 35px !important;
                 min-height: auto !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
@@ -642,54 +678,59 @@
                 grid-auto-flow: column !important;
             }
             
+            /* EL margin-top se aplica dinámicamente desde JavaScript */
+            .cert-footer {
+                padding: 0 10px !important;
+            }
+            
+            /* REDUCIR TAMAÑO DEL QR EN IMPRESIÓN */
+            .cert-qr-img {
+                width: 100px !important;
+                height: 100px !important;
+            }
+            
+            /* REDUCIR TAMAÑO DE FIRMA */
+            .cert-signature-line {
+                width: 130px !important;
+            }
+            
+            .cert-signature-name {
+                font-size: 12px !important;
+            }
+            
+            .cert-signature-title {
+                font-size: 10px !important;
+            }
+            
+            .cert-id-badge {
+                font-size: 8px !important;
+            }
+            
+            /* REDUCIR PADDING DEL TEMARIO */
+            .cert-temario-box {
+                padding: 8px 12px !important;
+            }
+            
+            .cert-temario {
+                font-size: 10px !important;
+                gap: 1px 15px !important;
+            }
+            
+            .cert-temario-icon {
+                font-size: 13px !important;
+            }
+            
             @page {
                 size: letter landscape;
                 margin: 0 !important;
             }
         }
-    
-        /* ============ SECCIÓN QR ============ */
-        .cert-qr-section {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-        }
-        .cert-qr-img {
-            width: 130px;
-            height: 130px;
-            border: 1px solid #cbd5e1;
-            border-radius: 8px;
-            padding: 4px;
-            background: white;
-            object-fit: contain;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        .cert-qr-label {
-            font-size: 10px;
-            font-weight: 800;
-            color: #111827;
-            margin-top: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-        .cert-qr-link {
-            font-size: 8px;
-            color: #111827;
-            margin-top: 2px;
-            max-width: 140px;
-            word-break: break-all;
-            line-height: 1.3;
-            font-family: monospace;
-        }
-        /* ============ FIN SECCIÓN QR ============ */
 </style>
 <base target="_blank">
 </head>
 <body>
 
-    <!-- Toast de carga (TAMAÑO REDUCIDO) -->
+    <!-- Toast de carga -->
     <div id="loadingToast" class="loading-toast" style="display: none;">
         <div class="toast-logo">
             <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
@@ -780,7 +821,7 @@
         const currentUser = JSON.parse(localStorage.getItem('user')) || null;
         
         // ==========================================
-        // FUNCIONES DEL TOAST - CORREGIDAS
+        // FUNCIONES DEL TOAST
         // ==========================================
         let toastSafetyTimeout = null;
         
@@ -1037,7 +1078,7 @@
                 
                 document.getElementById('certStudentName').textContent = currentUser.name || 'Estudiante';
                 
-                // 🔧 FIX: Recuperar cédula de múltiples fuentes
+                // Recuperar cédula de múltiples fuentes
                 let cedulaRaw = currentUser.cedula || '';
                 if (!cedulaRaw || cedulaRaw === 'N/A') {
                     for (let i = 0; i < localStorage.length; i++) {
@@ -1091,6 +1132,14 @@
                 
                 const footerElement = document.querySelector('.cert-footer');
                 
+                // ==========================================
+                // AJUSTE DINÁMICO PARA IMPRESIÓN
+                // ==========================================
+                // Guardamos el número de módulos en una variable global para usarlo en el estilo de impresión
+                window.totalModulos = totalModules;
+                
+                // Aplicamos el margin-top según la cantidad de módulos
+                // Para la vista en pantalla (no impresión) usamos valores fijos
                 if (numFilas === 2) {
                     footerElement.style.marginTop = '110px';
                 } else if (numFilas === 3) {
@@ -1102,6 +1151,38 @@
                 }
                 
                 console.log('📋 Total módulos:', totalModules, '→ Filas:', numFilas, '→ Footer margin-top:', footerElement.style.marginTop);
+                console.log('📋 Para impresión: margin-top será de', getPrintMarginTop(totalModules), 'px');
+                
+                // ==========================================
+                // INYECTAR ESTILO DINÁMICO PARA IMPRESIÓN
+                // ==========================================
+                function getPrintMarginTop(modulos) {
+                    if (modulos <= 3) return 90;
+                    if (modulos <= 6) return 70;
+                    if (modulos <= 9) return 50;
+                    return 30; // para 10 o más módulos
+                }
+                
+                // Crear un estilo dinámico para la impresión
+                const styleId = 'dynamic-print-style';
+                let existingStyle = document.getElementById(styleId);
+                if (existingStyle) {
+                    existingStyle.remove();
+                }
+                
+                const marginTopValue = getPrintMarginTop(totalModules);
+                const style = document.createElement('style');
+                style.id = styleId;
+                style.textContent = `
+                    @media print {
+                        .cert-footer {
+                            margin-top: ${marginTopValue}px !important;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                console.log('✅ Estilo de impresión inyectado con margin-top:', marginTopValue, 'px');
                 
                 const itemsHTML = moduleNames.map((moduleName, index) => {
                     const normalizedModuleName = normalizeName(moduleName);
