@@ -241,29 +241,6 @@
         .student-card .stat-item { transition: all 0.25s ease; }
         .student-card .stat-item:hover { transform: translateY(-1px); }
 
-        .achievement-card {
-            border-radius: 0.9rem;
-            border: 1px solid rgba(96, 165, 250, 0.35);
-            padding: 0.75rem 0.65rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            min-height: 145px;
-            background: linear-gradient(135deg, rgba(59, 130, 246, 0.18) 0%, rgba(30, 64, 175, 0.12) 100%);
-            cursor: pointer;
-        }
-        .achievement-card:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 24px rgba(59, 130, 246, 0.20); border-color: rgba(96, 165, 250, 0.55); }
-        .achievement-card .achievement-icon {
-            width: 2.5rem; height: 2.5rem; border-radius: 50%;
-            background: rgba(250, 204, 21, 0.15);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.25rem; transition: transform 0.3s ease;
-        }
-        .achievement-card:hover .achievement-icon { transform: scale(1.15) rotate(-5deg); }
-
-        body.light-mode .achievement-card { background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(30, 64, 175, 0.05) 100%); border-color: rgba(96, 165, 250, 0.25); }
-        body.light-mode .achievement-card:hover { box-shadow: 0 8px 24px rgba(59, 130, 246, 0.12); }
-        body.light-mode .achievement-card p { color: var(--aula-text-primary) !important; }
-        body.light-mode .achievement-card .achievement-score { color: #0891b2 !important; }
-
         .course-progress-card {
             background: var(--glass-bg);
             backdrop-filter: blur(var(--glass-blur)) saturate(140%);
@@ -536,6 +513,207 @@
         body.light-mode h4, body.light-mode h5, body.light-mode h6 {
             color: #0f172a !important;
         }
+
+        /* ==========================================
+           ESTILOS DE LOGROS - CURSO CARD REUTILIZADOS
+           ========================================== */
+        .course-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            border-radius: 1.5rem;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            cursor: default;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            position: relative;
+        }
+        .course-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 1.5rem;
+            padding: 1.5px;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(139, 92, 246, 0.1), transparent 60%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--cyan-glow), 0 12px 32px rgba(0, 0, 0, 0.15);
+            border-color: rgba(6, 182, 212, 0.25);
+            z-index: 10;
+        }
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-card-level-basico {
+            border: 1.5px solid rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 12px rgba(6, 182, 212, 0.12), 
+                        inset 0 0 30px rgba(6, 182, 212, 0.04);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
+        }
+        .course-card-level-basico:hover {
+            border: 2px solid rgba(6, 182, 212, 0.8);
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.25), 
+                        0 8px 24px rgba(6, 182, 212, 0.15), 
+                        inset 0 0 40px rgba(6, 182, 212, 0.08);
+            background: linear-gradient(180deg, rgba(6, 182, 212, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
+        }
+        .course-card-level-intermedio {
+            border: 1.5px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 0 12px rgba(139, 92, 246, 0.12), 
+                        inset 0 0 30px rgba(139, 92, 246, 0.04);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
+        }
+        .course-card-level-intermedio:hover {
+            border: 2px solid rgba(139, 92, 246, 0.8);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.25), 
+                        0 8px 24px rgba(139, 92, 246, 0.15), 
+                        inset 0 0 40px rgba(139, 92, 246, 0.08);
+            background: linear-gradient(180deg, rgba(139, 92, 246, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
+        }
+        .course-card-level-avanzado {
+            border: 1.5px solid rgba(245, 158, 11, 0.5);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.12), 
+                        inset 0 0 30px rgba(245, 158, 11, 0.04);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, rgba(8, 12, 33, 0.4) 100%);
+        }
+        .course-card-level-avanzado:hover {
+            border: 2px solid rgba(245, 158, 11, 0.8);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.25), 
+                        0 8px 24px rgba(245, 158, 11, 0.15), 
+                        inset 0 0 40px rgba(245, 158, 11, 0.08);
+            background: linear-gradient(180deg, rgba(245, 158, 11, 0.1) 0%, rgba(8, 12, 33, 0.5) 100%);
+        }
+
+        .course-card .course-card-title {
+            color: var(--text-primary);
+            font-size: 1.125rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 0.5rem;
+        }
+
+        body.light-mode .course-card {
+            background-color: rgba(226, 232, 240, 0.85) !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.1);
+        }
+        body.light-mode .course-card:hover {
+            box-shadow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15), 0 20px 60px rgba(0, 0, 0, 0.2);
+            border-color: rgba(6, 182, 212, 0.3) !important;
+            transform: translateY(-8px) scale(1.01);
+            z-index: 10;
+        }
+        body.light-mode .course-card .course-card-title {
+            color: #334155 !important;
+        }
+        body.light-mode .course-card .text-slate-500 {
+            color: #1e293b !important;
+        }
+
+        /* ==========================================
+           ESTILOS DE LOGROS - ACHIEVEMENT PULSE
+           ========================================== */
+        @keyframes achievementPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .course-card[data-logro] {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .course-card[data-logro]:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .course-card[data-logro].ring-2 {
+            animation: achievementPulse 2s ease-in-out infinite;
+        }
+
+        .achievement-glow {
+            transition: all 0.5s ease;
+        }
+
+        .achievement-glow:hover {
+            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+        }
+
+        /* ==========================================
+           ESTILOS PARA LOGROS OBTENIDOS - LISTA
+           ========================================== */
+        .achievement-item {
+            transition: all 0.3s ease;
+        }
+        .achievement-item:hover {
+            transform: translateX(4px);
+            border-color: rgba(6, 182, 212, 0.3);
+        }
+        .empty-achievements {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+        }
+        body.light-mode .empty-achievements {
+            background: rgba(0, 0, 0, 0.02);
+            border-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* ==========================================
+           ESTILOS PARA LA SECCIÓN DE LOGROS DEBAJO DE LA TARJETA
+           ========================================== */
+        .logros-obtenidos-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px) saturate(140%);
+            -webkit-backdrop-filter: blur(10px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.25rem;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .logros-obtenidos-card:hover {
+            transform: var(--card-hover-transform);
+            box-shadow: 0 12px 40px var(--shadow-color), var(--cyan-glow);
+            border-color: rgba(6, 182, 212, 0.25);
+        }
+        body.light-mode .logros-obtenidos-card {
+            background: rgba(226, 232, 240, 0.65);
+            border-color: rgba(255, 255, 255, 0.55);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+        }
+        body.light-mode .logros-obtenidos-card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 0 20px rgba(6, 182, 212, 0.12);
+            border-color: rgba(6, 182, 212, 0.30);
+        }
+
+        .logro-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .logro-item:hover {
+            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        body.light-mode .logro-item {
+            background: rgba(255, 255, 255, 0.50);
+        }
+        body.light-mode .logro-item:hover {
+            background: rgba(255, 255, 255, 0.65);
+        }
     </style>
 </head>
 <body id="progreso-page-body" class="custom-scrollbar">
@@ -590,6 +768,107 @@
     <div class="max-w-7xl mx-auto px-6 py-12">
         <main class="relative z-10 w-full">
             <div class="grid grid-cols-1 gap-6 mb-8">
+                <!-- ============================================== -->
+                <!-- SECCIÓN: DESCRIPCIÓN INTRODUCTORIA -->
+                <!-- ============================================== -->
+                <div class="w-full">
+                    <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
+                        <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
+                            <span class="text-cyan-400 font-bold text-base md:text-xl">📊 Tu Avance</span> 
+                            en todos los cursos que has adquirido. Visualiza tu 
+                            <span class="text-white font-bold">progreso</span>, 
+                            <span class="text-white font-bold">rendimiento</span> y 
+                            <span class="text-white font-bold">logros alcanzados</span> 
+                            en cada <span class="text-cyan-300 font-semibold">módulo y lección</span>.
+                        </p>
+                        <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
+                            <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
+                            Cada curso muestra el 
+                            <span class="text-amber-400 font-semibold">porcentaje completado</span>, 
+                            <span class="text-emerald-400 font-semibold">calificaciones por módulo</span> y 
+                            <span class="text-purple-400 font-semibold">certificados obtenidos</span> 
+                            al <span class="text-white font-bold">culminar al 100%</span>.
+                            <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
+                        </p>
+                        <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+                    </div>
+                </div>
+
+                <!-- ============================================== -->
+                <!-- SECCIÓN: GAMIFICACIÓN Y LOGROS -->
+                <!-- ============================================== -->
+                <section id="logros-motivacion" class="relative overflow-hidden" style="margin-bottom: 0;">
+                    <div class="max-w-full mx-auto relative z-10">
+                        <!-- GRID DE LOGROS (SIEMPRE VISIBLE) -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" id="logros-container">
+                            <!-- Bronce -->
+                            <div class="course-card course-card-level-basico flex flex-col text-center p-5" data-logro="bronce">
+                                <div class="text-5xl mb-3">🥉</div>
+                                <h3 class="course-card-title text-xl font-bold">Conocedor</h3>
+                                <p class="text-slate-400 text-sm mt-1">Calificación entre 70% - 79%</p>
+                                <div class="mt-3 flex items-center justify-center gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Nivel Básico</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-slate-700/50">
+                                    <p class="text-slate-500 text-xs">Has demostrado un conocimiento <span class="text-amber-400">sólido</span> de los fundamentos. ¡Sigue practicando!</p>
+                                </div>
+                            </div>
+
+                            <!-- Plata -->
+                            <div class="course-card course-card-level-intermedio flex flex-col text-center p-5 border-purple-500/40" data-logro="plata">
+                                <div class="text-5xl mb-3">🥈</div>
+                                <h3 class="course-card-title text-xl font-bold">Especialista</h3>
+                                <p class="text-slate-400 text-sm mt-1">Calificación entre 80% - 89%</p>
+                                <div class="mt-3 flex items-center justify-center gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">Nivel Intermedio</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-slate-700/50">
+                                    <p class="text-slate-500 text-xs">Tu <span class="text-purple-400">dominio técnico</span> te permite abordar proyectos con confianza y criterio.</p>
+                                </div>
+                            </div>
+
+                            <!-- Oro -->
+                            <div class="course-card course-card-level-avanzado flex flex-col text-center p-5 border-amber-500/40 relative overflow-visible" data-logro="oro">
+                                <div class="absolute -top-1 -right-1 w-14 h-14 animate-pulse opacity-20">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#FBBF24" stroke="#F59E0B" stroke-width="0.5"/>
+                                    </svg>
+                                </div>
+                                <div class="text-5xl mb-3">🥇</div>
+                                <h3 class="course-card-title text-xl font-bold">Maestro</h3>
+                                <p class="text-slate-400 text-sm mt-1">Calificación entre 90% - 99%</p>
+                                <div class="mt-3 flex items-center justify-center gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Nivel Avanzado</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-slate-700/50">
+                                    <p class="text-slate-500 text-xs">Tu <span class="text-amber-400">excelencia técnica</span> te posiciona como un referente en automatización industrial.</p>
+                                </div>
+                            </div>
+
+                            <!-- Leyenda -->
+                            <div class="course-card flex flex-col text-center p-5 border-cyan-500/40 relative overflow-visible" data-logro="leyenda">
+                                <div class="absolute -top-1 -right-1 w-14 h-14 animate-pulse opacity-20">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#06B6D4" stroke="#0E7490" stroke-width="0.5"/>
+                                    </svg>
+                                </div>
+                                <div class="text-5xl mb-3">🏆</div>
+                                <h3 class="course-card-title text-xl font-bold">Leyenda</h3>
+                                <p class="text-slate-400 text-sm mt-1">Calificación del 100%</p>
+                                <div class="mt-3 flex items-center justify-center gap-2">
+                                    <span class="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">Perfección</span>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-slate-700/50">
+                                    <p class="text-slate-500 text-xs">Has alcanzado la <span class="text-cyan-400">máxima excelencia</span>. Eres un modelo a seguir para la comunidad.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- FIN SECCIÓN GAMIFICACIÓN Y LOGROS -->
+                <!-- ============================================== -->
+
                 <!-- TARJETA DEL ESTUDIANTE -->
                 <div class="glass-card student-card p-6 relative flex flex-col">
                     <div class="absolute right-4 top-4 text-white/5 text-7xl pointer-events-none" aria-hidden="true">
@@ -661,53 +940,57 @@
                     </div>
                 </div>
 
-                <!-- DESCRIPCIÓN INTRODUCTORIA (DEBAJO DE LA TARJETA) -->
-                <div class="w-full">
-                    <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
-                        
-                        <!-- Línea decorativa superior -->
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
-                        
-                        <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
-                            <span class="text-cyan-400 font-bold text-base md:text-xl">📊 Tu Avance</span> 
-                            en todos los cursos que has adquirido. Visualiza tu 
-                            <span class="text-white font-bold">progreso</span>, 
-                            <span class="text-white font-bold">rendimiento</span> y 
-                            <span class="text-white font-bold">logros alcanzados</span> 
-                            en cada <span class="text-cyan-300 font-semibold">módulo y lección</span>.
-                        </p>
-                        
-                        <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
-                            <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
-                            Cada curso muestra el 
-                            <span class="text-amber-400 font-semibold">porcentaje completado</span>, 
-                            <span class="text-emerald-400 font-semibold">calificaciones por módulo</span> y 
-                            <span class="text-purple-400 font-semibold">certificados obtenidos</span> 
-                            al <span class="text-white font-bold">culminar al 100%</span>.
-                            <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
-                        </p>
+                <!-- ============================================== -->
+                <!-- SECCIÓN: TUS LOGROS OBTENIDOS (DEBAJO DE LA TARJETA) -->
+                <!-- ============================================== -->
+                <div class="logros-obtenidos-card p-5 md:p-6">
+                    <h4 class="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2 mb-4">
+                        <i class="fas fa-award text-cyan-400"></i> Tus Logros Obtenidos
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="logros-obtenidos-lista">
+                        <!-- Logro 1: Arranque de motores -->
+                        <div class="logro-item flex items-center gap-4">
+                            <div class="text-4xl flex-shrink-0">🥇</div>
+                            <div class="flex-1">
+                                <p class="font-bold text-sm text-white">Arranque de motores con contactores Online</p>
+                                <p class="text-xs text-slate-400">🥇 Maestro</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-cyan-400 font-bold text-lg">97%</span>
+                            </div>
+                        </div>
 
-                        <!-- Línea decorativa inferior animada -->
-                        <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+                        <!-- Logro 2: Funciones Lógicas -->
+                        <div class="logro-item flex items-center gap-4">
+                            <div class="text-4xl flex-shrink-0">🏆</div>
+                            <div class="flex-1">
+                                <p class="font-bold text-sm text-white">Funciones Lógicas en PLCs con Factory IO Online</p>
+                                <p class="text-xs text-slate-400">🏆 Leyenda</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-cyan-400 font-bold text-lg">100%</span>
+                            </div>
+                        </div>
+
+                        <!-- Logro 3: Leyenda (mensaje de excelencia) -->
+                        <div class="logro-item md:col-span-2 flex items-center gap-4" style="border-color: rgba(6, 182, 212, 0.3); background: rgba(6, 182, 212, 0.05);">
+                            <div class="text-4xl flex-shrink-0">🏆</div>
+                            <div class="flex-1">
+                                <p class="font-bold text-sm text-white">🏆 Leyenda</p>
+                                <p class="text-xs text-slate-300">¡Excelencia absoluta! Has demostrado un dominio total de la automatización.</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-amber-400 font-bold text-lg">100%</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!-- FIN SECCIÓN TUS LOGROS OBTENIDOS -->
+                <!-- ============================================== -->
 
-                <!-- LOGROS -->
-                <div class="glass-card p-6 relative flex flex-col">
-                    <div class="absolute right-4 top-4 text-white/5 text-7xl pointer-events-none" aria-hidden="true">
-                        <i class="fas fa-trophy"></i>
-                    </div>
-                    <div class="relative z-10 flex flex-col h-full">
-                        <h2 class="card-label text-[10px] uppercase font-black tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fas fa-trophy text-yellow-400"></i> Logros
-                        </h2>
-                        <div id="achievements-container" class="flex-grow grid grid-cols-2 sm:grid-cols-6 md:grid-cols-10 gap-2.5 md:overflow-y-auto custom-scrollbar md:max-h-[260px] md:pr-1"></div>
-                        <div id="no-achievements" class="card-label text-xs italic mt-3 hidden">Aun no has culminado ningun curso.</div>
-                    </div>
-                </div>
             </div>
 
-            <div class="flex items-center justify-between mb-6 pb-4 mt-20" style="border-bottom: 1px solid var(--border-default);">
+            <div class="flex items-center justify-between mb-6 pb-4 mt-8" style="border-bottom: 1px solid var(--border-default);">
                 <h3 class="card-value font-black uppercase tracking-widest text-xs flex items-center gap-2.5">
                     <i class="fas fa-laptop-code text-secondary"></i> Progreso en Cursos (Online/Presencial)
                 </h3>
@@ -719,15 +1002,34 @@
 
             <div class="flex items-center justify-between mb-6 pb-4 mt-8" style="border-bottom: 1px solid var(--border-default);">
                 <h3 class="card-value font-black uppercase tracking-widest text-xs flex items-center gap-2.5">
-                    <i class="fas fa-book text-secondary"></i> Progreso en Materias (Ingeniería/Diplomados/Maestrias)
+                    <i class="fas fa-book text-secondary"></i> Progreso en Materias (Ingeniería/Diplomados/Maestrías)
                 </h3>
             </div>
             <div id="individualSubjectProgressCards" class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16"></div>
+
+            <!-- ============================================== -->
+            <!-- MENSAJE DE MOTIVACIÓN AL FINAL DE LA PÁGINA -->
+            <!-- ============================================== -->
+            <div class="mt-8 text-center">
+                <div class="inline-block bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-amber-500/10 rounded-3xl px-6 py-4 border border-white/5">
+                    <p class="text-slate-300 text-sm md:text-base font-medium">
+                        <span class="text-cyan-400 font-bold">🚀 Cada curso completado</span> es un paso más hacia tu 
+                        <span class="text-yellow-400 font-bold">transformación profesional</span>. 
+                        <span class="text-white">¡Atrévete a superarte!</span>
+                    </p>
+                </div>
+            </div>
+            <!-- FIN MENSAJE DE MOTIVACIÓN -->
+            <!-- ============================================== -->
+
         </main>
     </div>
 </div>
 
 <script>
+    // ==========================================
+    // CONFIGURACIÓN PRINCIPAL
+    // ==========================================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvSa9yxQYuWtC-YSn4x1K6hzhdeujQfNEb1GoWkvJmFShA4kdhSWe_oOoBFqkKaagx/exec';
 
     let COURSES_DATA = [];
@@ -976,7 +1278,6 @@
             const result = await response.json();
             if (result.status !== 'success') throw new Error(result.message || 'Error del script');
             
-            // 🆕 NORMALIZAR CAMPOS
             let coursesArray = [];
             if (Array.isArray(result.data)) {
                 coursesArray = result.data;
@@ -1037,7 +1338,6 @@
             userProgress[email][String(courseId)] = parseProgressString(progStr, total);
         });
         renderUserProgress();
-        renderAchievements();
     }
 
     function getTotalLecciones(course) {
@@ -1047,46 +1347,6 @@
             return parseInt(totalLecciones) || 5;
         }
         return 5;
-    }
-
-    function renderAchievements() {
-        const container = document.getElementById('achievements-container');
-        const noAchievements = document.getElementById('no-achievements');
-        if (!container) return;
-        const user = currentUser;
-        const accessedIds = user?.accessedCursos || [];
-        const email = user?.email?.toLowerCase();
-        const completedCourses = [];
-        accessedIds.forEach(courseId => {
-            const course = COURSES_DATA.find(c => String(c.ID) === String(courseId));
-            if (!course) return;
-            const progData = userProgress[email]?.[String(courseId)];
-            if (progData && progData.percent === 100) { completedCourses.push({ course: course, avgScore: progData.avgScore || 0 }); }
-        });
-        if (completedCourses.length === 0) { 
-            container.innerHTML = ''; 
-            noAchievements.classList.remove('hidden'); 
-            return; 
-        }
-        const getAchievementIcon = (score) => {
-            if (score === undefined || score < 70) return '';
-            if (score === 100) return '🏆';
-            if (score >= 90) return '🥇';
-            if (score >= 80) return '🥈';
-            return '🥉';
-        };
-        noAchievements.classList.add('hidden');
-        container.innerHTML = completedCourses.map(item => {
-            const icon = getAchievementIcon(item.avgScore);
-            const achievementCourseName = (item.course.Nombre || '').replace(/\bpresencial\b/gi, '').replace(/\(\s*\)/g, '').replace(/\s{2,}/g, ' ').trim();
-            return `<button type="button" class="achievement-card w-full text-inherit text-left" onclick="focusProgressCard('${item.course.ID}')" aria-label="Ver progreso de ${achievementCourseName}">
-                <div class="h-full flex flex-col items-center justify-between text-center gap-2">
-                    <div class="achievement-icon">${icon}</div>
-                    <p class="text-white text-[11px] font-bold leading-tight">${achievementCourseName}</p>
-                    <span class="achievement-score text-teal-400 text-sm font-black whitespace-nowrap">${item.avgScore}%</span>
-                </div>
-            </button>`;
-        }).join('');
     }
 
     function focusProgressCard(courseId) {
@@ -1272,7 +1532,6 @@
         document.getElementById('dash-student-downloads').innerText = totalDownloads;
         document.getElementById('dash-student-likes').innerText = (currentUser.likedCourses || []).length;
         renderUserProgress();
-        renderAchievements();
     }
 
     async function manualRefreshProgress() {
@@ -1299,6 +1558,7 @@
         window.open('certificado-page-id.html?courseId=' + courseId, '_blank');
     }
 
+    // Inicializar el sistema de logros cuando se cargue la página
     document.addEventListener("DOMContentLoaded", async () => {
         console.log('Inicializando Progreso...');
         if (!currentUser) {
