@@ -1,6 +1,7 @@
 // ==========================================
 // SCRIPT DE APRENDE AUTOMATIZACIÓN - PÁGINA DE INICIO
 // (ACTUALIZADO - CURSOS DESTACADOS CON VALORACIONES Y COMPRA DIRECTA)
+// + BOTÓN DE INSTALACIÓN PWA
 // ==========================================
 
 const API_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
@@ -1309,26 +1310,6 @@ function renderHomePage() {
         }
     }
     
-    
-    
-
-    
-
-    
-    // ==========================================
-    // MODALIDADES - COMENTADO PORQUE YA ESTÁ EN EL HTML
-    // ==========================================
-    /*
-    if (homePageData.modalidades.length > 0) {
-        const container = document.querySelector('#modalidades .grid');
-        if (container) {
-            container.innerHTML = homePageData.modalidades.map((modalidad, index) => {
-                // ... código ...
-            }).join('');
-        }
-    }
-    */
-    
     // Curso Especial
     if (homePageData.curso_especial.length > 0) {
         const especial = homePageData.curso_especial[0];
@@ -1390,34 +1371,6 @@ function renderHomePage() {
             </div>`;
         }
     }
-    
-    // ==========================================
-    // METODOLOGÍA - COMENTADO PORQUE YA ESTÁ EN EL HTML
-    // ==========================================
-    /*
-    if (homePageData.metodologia.length > 0) {
-        const container = document.querySelector('#metodologia .grid');
-        if (container) {
-            container.innerHTML = homePageData.metodologia.map((met, index) => {
-                const expandedText = met.badge || met.descripcion || '';
-                return `
-                <div class="bg-white/5 rounded-[40px] p-6 text-left reveal reveal-up methodology-card" data-index="${index}">
-                    <div class="image-zoom-container h-48 mb-6 overflow-hidden rounded-3xl">
-                        <img src="${met.imagen_url || 'img/AA (1).gif'}" class="w-full h-full object-cover" onerror="this.src='img/AA (1).gif'">
-                    </div>
-                    <div class="methodology-card-text-content">
-                        <h3 class="text-white text-xl font-black uppercase mb-3">${met.titulo}</h3>
-                        <p class="text-slate-400 text-sm methodology-short-desc">${met.descripcion || ''}</p>
-                        <div class="methodology-expanded-content">
-                            <p>${expandedText}</p>
-                        </div>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-    }
-    */
-    
     
     // FAQ
     if (homePageData.faq.length > 0) {
@@ -1501,6 +1454,41 @@ function showNotif(title, msg, type = 'success') {
 }
 
 // ==========================================
+// BOTÓN DE INSTALACIÓN PWA
+// ==========================================
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    console.log('📲 PWA lista para instalar');
+    const btn = document.getElementById('btnInstalar');
+    if (btn) {
+        btn.style.display = 'inline-flex';
+        // Animación de entrada
+        btn.style.animation = 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+    }
+});
+
+window.addEventListener('appinstalled', () => {
+    console.log('✅ App instalada correctamente');
+    deferredPrompt = null;
+    const btn = document.getElementById('btnInstalar');
+    if (btn) btn.style.display = 'none';
+    showNotif('¡App instalada!', 'Ya puedes abrirla desde tu pantalla de inicio.', 'success');
+});
+
+// ==========================================
+// DETECTAR MODO APP (instalada)
+// ==========================================
+const esModoApp = window.matchMedia('(display-mode: standalone)').matches 
+                  || window.navigator.standalone === true;
+if (esModoApp) {
+    document.body.classList.add('modo-app');
+    console.log('📱 Ejecutándose como app instalada');
+}
+
+// ==========================================
 // INICIALIZACIÓN
 // ==========================================
 document.addEventListener("DOMContentLoaded", async () => {
@@ -1548,6 +1536,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.querySelectorAll('.prof-btn').forEach(b => { b.disabled = false; b.style.opacity = '1'; });
 
     setTimeout(() => loadGoogleCharts(), 1500);
+
+    // ==========================================
+    // MANEJAR CLICK DEL BOTÓN INSTALAR
+    // ==========================================
+    const btnInstalar = document.getElementById('btnInstalar');
+    if (btnInstalar) {
+        btnInstalar.addEventListener('click', async () => {
+            if (!deferredPrompt) {
+                showNotif('Info', 'Si ya instalaste la app, ábrela desde tu pantalla de inicio.', 'info');
+                return;
+            }
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('📲 Resultado de instalación:', outcome);
+            if (outcome === 'accepted') {
+                showNotif('¡Gracias!', 'Instalando la aplicación...', 'success');
+            }
+            deferredPrompt = null;
+            btnInstalar.style.display = 'none';
+        });
+    }
 
     console.log('✅ Inicialización completada');
 });
