@@ -4,15 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aprende Automatización - Formación Profesional</title>
-    <link rel="iququiero con" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
-    
+
+    <!-- ==========================================
+         FAVICON Y APP ICONS (CORREGIDO)
+         ========================================== -->
+    <link rel="icon" type="image/webp" href="img/favicon.webp">
+    <link rel="icon" type="image/webp" sizes="192x192" href="img/favicon.webp">
+    <link rel="icon" type="image/webp" sizes="512x512" href="img/favicon.webp">
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon.webp">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Aprende Automatización">
+    <meta name="theme-color" content="#0a0f1e">
+
     <!-- LIBRERÍAS Y FUENTES -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
-    
+
     <style>
         /* ==========================================
            VARIABLES Y ESTILOS BASE - MODERNO
@@ -2402,7 +2413,6 @@
         body.light-mode .bg-slate-800 {
             background-color: #e2e8f0 !important;
         }
-    
 
         /* ==========================================
            FIX: IMÁGENES NÍTIDAS EN MODO CLARO
@@ -2489,22 +2499,17 @@
             -webkit-text-fill-color: #ffffff !important;
         }
 
-
         /* ==========================================
            FIX: TEXTO BLANCO EN BADGES
            Cursos Destacados y Modalidades - Modo Claro
            ========================================== */
 
         /* --- CURSOS DESTACADOS --- */
-        /* Badges superiores: tipo, categoría, tags (Online, Electricidad, PLC, etc.) */
         body.light-mode #page-home #main-flow-content #cursos-destacados #cursos-destacados-container .course-card .absolute.top-3.left-3 > span,
         body.light-mode #page-home #main-flow-content #cursos-destacados #cursos-destacados-container .course-card .absolute.top-3.left-3 > div > span,
-        /* Rating badge texto */
         body.light-mode #page-home #main-flow-content #cursos-destacados #cursos-destacados-container .course-card .absolute.top-3.right-3 > span,
-        /* Estado badge (Pendiente, Inscrito, Revisión, Rechazado) */
         body.light-mode #page-home #main-flow-content #cursos-destacados #cursos-destacados-container .course-card .absolute.top-3.right-3.mt-6 .badge-estado,
         body.light-mode #page-home #main-flow-content #cursos-destacados #cursos-destacados-container .course-card .absolute.top-3.right-3.mt-6 .badge-estado *,
-        /* Nivel badge texto e icono */
         body.light-mode #page-home #main-flow-content #cursos-destacados #cursos-destacados-container .course-card .absolute.bottom-3.left-3 > div,
         body.light-mode #page-home #main-flow-content #cursos-destacados #cursos-destacados-container .course-card .absolute.bottom-3.left-3 > div i {
             color: #ffffff !important;
@@ -2512,10 +2517,8 @@
         }
 
         /* --- MODALIDADES --- */
-        /* Badge de Presencial / Online */
         body.light-mode #page-home #main-flow-content #modalidades .course-card .badge-container .course-card-badge,
         body.light-mode #page-home #main-flow-content #modalidades .course-card .badge-container > span,
-        /* Etiquetas inferiores: Certificación Universitaria, Certificado Digital Verificable */
         body.light-mode #page-home #main-flow-content #modalidades .course-card .absolute.bottom-2,
         body.light-mode #page-home #main-flow-content #modalidades .course-card .absolute.bottom-2 > span,
         body.light-mode #page-home #main-flow-content #modalidades .course-card .absolute.bottom-2 > div,
@@ -2524,8 +2527,7 @@
             -webkit-text-fill-color: #ffffff !important;
         }
 
-        /* --- CURSO ESPECIAL (Próximo Curso Presencial) --- */
-        /* Badges y etiquetas del curso especial */
+        /* --- CURSO ESPECIAL --- */
         body.light-mode #page-home #main-flow-content #curso-especial .course-card .absolute span,
         body.light-mode #page-home #main-flow-content #curso-especial .course-card .absolute div,
         body.light-mode #page-home #main-flow-content #curso-especial .special-course-card .absolute span,
@@ -2582,7 +2584,6 @@
             filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
         }
 
-        /* Lista de logros obtenidos */
         #achievements-list-container .achievement-item {
             transition: all 0.3s ease;
         }
@@ -2602,7 +2603,6 @@
             border-color: rgba(0, 0, 0, 0.08);
         }
 
-        /* Animación para el icono de logro */
         @keyframes popIn {
             0% { opacity: 0; transform: scale(0.5) rotate(-12deg); }
             100% { opacity: 1; transform: scale(1) rotate(0deg); }
@@ -2753,11 +2753,6 @@
         }
 
         /* ==========================================
-           BARRA STICKY - CURSO ESPECIAL (ELIMINADA)
-           ========================================== */
-        /* La barra sticky ha sido eliminada completamente */
-
-        /* ==========================================
            ESTILOS PARA OCULTAR/MOSTRAR SECCIONES DE LOGROS
            ========================================== */
         #user-progress-section.hidden {
@@ -2792,7 +2787,7 @@
 <!-- TOAST DE CARGA -->
 <div id="loadingToast" class="loading-toast hidden">
     <div class="toast-logo">
-        <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+        <img src="img/favicon.webp" alt="Aprende Automatización" onerror="this.style.display='none'">
     </div>
     <div class="toast-content flex-1">
         <div class="toast-title" id="loadingToastTitle">Estamos cargando la información</div>
@@ -2887,7 +2882,6 @@
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">LIDERADOS POR EL PROF. PABLO CEDEÑO</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">Nuestros <span>Pilares Fundamentales</span></h2>
 
-                    <!-- DESCRIPCIÓN INTRODUCTORIA (ancho completo) -->
                     <div class="w-full mt-4">
                         <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
@@ -2905,9 +2899,7 @@
                     </div>
                 </div>
 
-                <!-- Tarjetas de pilares: mismo ancho que la descripción (sin max-w-4xl) -->
                 <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Pilar 1: Formación Sin Límite de Edad -->
                     <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-cyan-500/40 transition-all duration-300 flex flex-col">
                         <div class="flex items-center gap-3 mb-3">
                             <span class="text-3xl">🧠</span>
@@ -2920,7 +2912,6 @@
                         </p>
                     </div>
 
-                    <!-- Pilar 2: Aprender Haciendo -->
                     <div class="mission-card p-6 md:p-8 rounded-2xl text-left hover:border-amber-500/40 transition-all duration-300 flex flex-col">
                         <div class="flex items-center gap-3 mb-3">
                             <span class="text-3xl">🛠️</span>
@@ -2934,7 +2925,6 @@
                     </div>
                 </div>
 
-                <!-- Frase de cierre (ancho completo) -->
                 <div class="text-center mt-12">
                     <div class="p-6 md:p-8 rounded-3xl transition-all duration-500 cursor-default border border-cyan-500/10 hover:border-cyan-400/60 hover:shadow-[0_0_40px_rgba(6,182,212,0.15)] hover:scale-[1.02] hover:bg-cyan-500/5 group" style="background: rgba(255,255,255,0.02); backdrop-filter: blur(4px);">
                         <p class="text-slate-300 text-base md:text-xl font-medium leading-relaxed">
@@ -3142,7 +3132,7 @@
                         <div class="course-card-image-container relative h-72">
                             <img src="img/AA (33).webp" alt="Formación Online" class="course-card-image w-full h-full object-cover" loading="lazy">
                             <div class="absolute top-3 left-3 z-10">
-                                <img src="img/AA (38).webp" alt="Logo Aprende Automatización" class="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-lg border-2 border-cyan-500/30 bg-slate-900/80 p-1">
+                                <img src="img/favicon.webp" alt="Logo Aprende Automatización" class="w-12 h-12 md:w-14 md:h-14 rounded-lg object-cover shadow-lg border-2 border-cyan-500/30 bg-slate-900/80 p-1">
                             </div>
                             <div class="badge-container" style="left: 4.5rem;">
                                 <span class="course-card-badge badge-basic text-[8px] uppercase tracking-wider">📹 Online</span>
@@ -3380,7 +3370,6 @@
         <!-- SECCIÓN: CERTIFICACIONES Y AVALES -->
         <section id="certificaciones" class="page-section relative py-24 px-6 overflow-hidden">
             <div class="max-w-7xl mx-auto relative z-10">
-                <!-- Encabezado -->
                 <div class="text-center mb-10">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Avales y Certificaciones</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">
@@ -3408,7 +3397,6 @@
                     </div>
                 </div>
 
-                <!-- Grid de Certificados -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
                     
                     <!-- CERTIFICADO 1: UPT ARAGUA -->
@@ -3481,7 +3469,7 @@
                             </div>
                             
                             <div class="certificate-overlay-logo">
-                                <div class="modalidad-logo-bg" style="background-image: url('img/AA (38).webp'); background-size: 32px 32px; background-position: center; background-repeat: no-repeat; background-color: #475569; width: 40px; height: 40px; min-width: 40px; min-height: 40px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>
+                                <div class="modalidad-logo-bg" style="background-image: url('img/favicon.webp'); background-size: 32px 32px; background-position: center; background-repeat: no-repeat; background-color: #475569; width: 40px; height: 40px; min-width: 40px; min-height: 40px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);"></div>
                                 <div class="logo-text">
                                     <span class="title">Aprende</span>
                                     <span class="subtitle text-cyan-400">Automatización</span>
@@ -3533,7 +3521,6 @@
 
                 </div>
 
-                <!-- Llamada a la acción final -->
                 <div class="mt-10 text-center">
                     <div class="inline-block bg-gradient-to-r from-purple-500/10 via-cyan-500/10 to-emerald-500/10 rounded-3xl px-6 py-4 border border-white/5">
                         <p class="text-slate-300 text-sm md:text-base font-medium">
@@ -3592,7 +3579,6 @@
                     </div>
                 </div>
 
-                <!-- Grid de Logros (SIEMPRE VISIBLE) -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="logros-container">
                     <div class="course-card course-card-level-basico reveal reveal-up flex flex-col text-center p-6" data-logro="bronce">
                         <div class="text-5xl mb-4">🥉</div>
@@ -3653,7 +3639,6 @@
                     </div>
                 </div>
 
-                <!-- Estado del Usuario (OCULTO si no tiene cursos completados) -->
                 <div id="user-progress-section" class="mt-12 max-w-3xl mx-auto hidden">
                     <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/10">
                         <div class="flex flex-col md:flex-row items-center gap-6">
@@ -3681,19 +3666,16 @@
                     </div>
                 </div>
 
-                <!-- Lista de Logros Obtenidos (OCULTO si no tiene logros) -->
                 <div id="achievements-list-section" class="mt-8 max-w-3xl mx-auto hidden">
                     <div class="bg-white/5 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/10">
                         <h4 class="text-white font-bold text-sm uppercase tracking-wider flex items-center gap-2 mb-4">
                             <i class="fas fa-award text-cyan-400"></i> Tus Logros Obtenidos
                         </h4>
                         <div id="achievements-list-container" class="space-y-2">
-                            <!-- Los logros se renderizan aquí dinámicamente -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Llamada a la acción - Motivación (SIEMPRE VISIBLE) -->
                 <div class="mt-10 text-center">
                     <div class="inline-block bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-amber-500/10 rounded-3xl px-6 py-4 border border-white/5">
                         <p class="text-slate-300 text-sm md:text-base font-medium">
@@ -3725,14 +3707,13 @@
             </svg>
         </div>
 
-        <!-- FAQ con descripción -->
+        <!-- FAQ -->
         <section id="faq" class="page-section relative py-24 px-6">
             <div class="max-w-7xl mx-auto relative z-10">
                 <div class="text-center mb-8">
                     <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Resolvemos tus Dudas</span>
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Preguntas <span>Frecuentes</span></h2>
 
-                    <!-- DESCRIPCIÓN INTRODUCTORIA (ancho completo) -->
                     <div class="w-full mt-6">
                         <div class="relative p-5 md:p-8 rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-emerald-400/50 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-60"></div>
@@ -4168,14 +4149,12 @@
             const coursesCompleted = document.getElementById('user-courses-completed');
             const bestScore = document.getElementById('user-best-score');
             
-            // Mostrar/ocultar sección de progreso del usuario
             const progressSection = document.getElementById('user-progress-section');
             const achievementsSection = document.getElementById('achievements-list-section');
             
             const hasAchievements = this.userData.hasAchievements && this.userData.achievements.length > 0;
             const hasCompletedCourses = this.userData.coursesCompleted > 0;
 
-            // Mostrar sección de progreso solo si tiene cursos completados
             if (progressSection) {
                 if (hasCompletedCourses) {
                     progressSection.classList.remove('hidden');
@@ -4184,7 +4163,6 @@
                 }
             }
 
-            // Mostrar sección de logros solo si tiene logros
             if (achievementsSection) {
                 if (hasAchievements) {
                     achievementsSection.classList.remove('hidden');
