@@ -373,7 +373,6 @@
            MODO CLARO - BADGES CON FONDO SÓLIDO Y LETRAS BLANCAS
            ========================================== */
         
-        /* Badges de tipo (Online, Presencial, Manual, etc.) */
         body.light-mode .course-card .absolute.top-3.left-3 span {
             background: #0f172a !important;
             color: #ffffff !important;
@@ -381,7 +380,6 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
         }
         
-        /* Badge de categoría (CONTACTORES, etc.) */
         body.light-mode .course-card .absolute.top-3.left-3 .bg-slate-900\/70 {
             background: #1e293b !important;
             color: #ffffff !important;
@@ -389,7 +387,6 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
         }
         
-        /* Badge de calificación (⭐ 5.0) */
         body.light-mode .course-card .absolute.top-3.right-3.bg-slate-900\/70 {
             background: #1e293b !important;
             color: #ffffff !important;
@@ -401,7 +398,6 @@
             color: #ffffff !important;
         }
         
-        /* Badge de estado (Disponible, Inscrito, Pendiente, etc.) */
         body.light-mode .course-card .badge-estado {
             background: #0f172a !important;
             color: #ffffff !important;
@@ -409,7 +405,6 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
         }
         
-        /* Badge de nivel (Básico, Intermedio, Avanzado) */
         body.light-mode .course-card .px-2.py-1.rounded-md.flex.items-center.gap-1 {
             background: #1e293b !important;
             color: #ffffff !important;
@@ -421,7 +416,6 @@
             color: #ffffff !important;
         }
         
-        /* Contador de estudiantes */
         body.light-mode .course-card .bg-green-50 {
             background: #065f46 !important;
             color: #ffffff !important;
@@ -432,7 +426,6 @@
             color: #ffffff !important;
         }
         
-        /* Badges de "Manual" en la esquina inferior izquierda */
         body.light-mode .course-card .bg-blue-500\/10 {
             background: #1e3a5f !important;
             border-color: rgba(59, 130, 246, 0.5) !important;
@@ -442,7 +435,6 @@
             color: #93c5fd !important;
         }
         
-        /* Badges de "PRÓXIMAMENTE" */
         body.light-mode .course-card .bg-slate-300 {
             background: #475569 !important;
             color: #ffffff !important;
@@ -452,24 +444,20 @@
            MODO CLARO - OVERLAY ACCESO RESTRINGIDO
            ========================================== */
         
-        /* Fondo del overlay - más oscuro para contraste */
         body.light-mode .course-card .absolute.inset-0.bg-black\/40 {
             background: rgba(0, 0, 0, 0.6) !important;
             backdrop-filter: blur(2px) !important;
             -webkit-backdrop-filter: blur(2px) !important;
         }
         
-        /* Texto "Acceso Restringido" en BLANCO */
         body.light-mode .course-card .absolute.inset-0 .text-white {
             color: #ffffff !important;
         }
         
-        /* Texto secundario en BLANCO */
         body.light-mode .course-card .absolute.inset-0 .text-white\/60 {
             color: rgba(255, 255, 255, 0.6) !important;
         }
         
-        /* Icono de candado en BLANCO */
         body.light-mode .course-card .absolute.inset-0 .text-amber-400\/80 {
             color: rgba(255, 255, 255, 0.8) !important;
         }
@@ -478,7 +466,6 @@
            MODO CLARO - FONDO BLANCO PARA DESCRIPCIÓN
            ========================================== */
         
-        /* FONDO BLANCO PARA LA DESCRIPCIÓN EN MODO CLARO */
         body.light-mode .border-cyan-500\/20 {
             border-color: rgba(14, 116, 144, 0.15) !important;
         }
@@ -498,7 +485,6 @@
             box-shadow: 0 0 40px rgba(14, 116, 144, 0.08) !important;
         }
         
-        /* LÍNEAS DECORATIVAS EN MODO CLARO */
         body.light-mode .bg-gradient-to-r.from-transparent.via-cyan-400 {
             background: linear-gradient(to right, transparent, #0e7490, transparent) !important;
         }
@@ -507,7 +493,6 @@
             background: linear-gradient(to right, #0e7490, #6d28d9, #047857) !important;
         }
         
-        /* TEXTOS DE LA DESCRIPCIÓN EN MODO CLARO */
         body.light-mode .text-slate-300 {
             color: #1e293b !important;
         }
@@ -541,10 +526,112 @@
         }
 
         /* ==========================================
+           ⭐ DESCRIPCIÓN CATÁLOGO - FONDO GRIS-AZULADO (#cbd5e1) EN MODO CLARO
+           ========================================== */
+        .descripcion-catalogo {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 1rem;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .descripcion-catalogo:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.08);
+        }
+        .descripcion-catalogo .desc-top-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 33%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+            opacity: 0.6;
+        }
+        .descripcion-catalogo .desc-bottom-line {
+            margin-top: 1rem;
+            height: 2px;
+            width: 0;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #10b981);
+            border-radius: 9999px;
+            opacity: 0.6;
+            transition: width 0.7s ease;
+        }
+        .descripcion-catalogo:hover .desc-bottom-line {
+            width: 100%;
+        }
+
+        body.light-mode .descripcion-catalogo,
+        html.light-mode .descripcion-catalogo {
+            background: #cbd5e1 !important;
+            background-color: #cbd5e1 !important;
+            background-image: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid #94a3b8 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+        body.light-mode .descripcion-catalogo:hover,
+        html.light-mode .descripcion-catalogo:hover {
+            border-color: rgba(6, 182, 212, 0.5) !important;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15) !important;
+        }
+        body.light-mode .descripcion-catalogo p,
+        html.light-mode .descripcion-catalogo p {
+            color: #1e293b !important;
+        }
+        body.light-mode .descripcion-catalogo .text-white,
+        html.light-mode .descripcion-catalogo .text-white {
+            color: #0f172a !important;
+        }
+        body.light-mode .descripcion-catalogo .text-cyan-400,
+        body.light-mode .descripcion-catalogo .text-cyan-300,
+        html.light-mode .descripcion-catalogo .text-cyan-400,
+        html.light-mode .descripcion-catalogo .text-cyan-300 {
+            color: #0e7490 !important;
+        }
+        body.light-mode .descripcion-catalogo .text-amber-400,
+        html.light-mode .descripcion-catalogo .text-amber-400 {
+            color: #b45309 !important;
+        }
+        body.light-mode .descripcion-catalogo .text-emerald-400,
+        html.light-mode .descripcion-catalogo .text-emerald-400 {
+            color: #047857 !important;
+        }
+        body.light-mode .descripcion-catalogo .text-purple-400,
+        html.light-mode .descripcion-catalogo .text-purple-400 {
+            color: #6d28d9 !important;
+        }
+        body.light-mode .descripcion-catalogo .text-slate-300,
+        body.light-mode .descripcion-catalogo .text-slate-400,
+        html.light-mode .descripcion-catalogo .text-slate-300,
+        html.light-mode .descripcion-catalogo .text-slate-400 {
+            color: #334155 !important;
+        }
+        body.light-mode .descripcion-catalogo .bg-gradient-to-r.from-transparent.via-cyan-400,
+        html.light-mode .descripcion-catalogo .bg-gradient-to-r.from-transparent.via-cyan-400 {
+            background: linear-gradient(to right, transparent, #0e7490, transparent) !important;
+        }
+        body.light-mode .descripcion-catalogo .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500,
+        html.light-mode .descripcion-catalogo .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500 {
+            background: linear-gradient(to right, #0e7490, #6d28d9, #047857) !important;
+        }
+        body.light-mode .descripcion-catalogo .fas,
+        html.light-mode .descripcion-catalogo .fas {
+            color: #0e7490 !important;
+            opacity: 0.6;
+        }
+
+        /* ==========================================
            MODAL DE COMPRA - ESCALA DE GRISES CON BOTÓN CYAN
            ========================================== */
         
-        /* Estilos base del modal - FONDO GRIS CLARO */
         #modalCompra .modal-content {
             background: #e8ecf0 !important;
             background-color: #e8ecf0 !important;
@@ -556,20 +643,17 @@
             overflow: hidden !important;
         }
 
-        /* Panel izquierdo - GRIS MEDIO */
         #modalCompra .flex-1.p-4.md\:p-8:first-child {
             background: #d5dce4 !important;
             background-color: #d5dce4 !important;
         }
 
-        /* Panel derecho - GRIS CLARO */
         #modalCompra .flex-1.p-4.md\:p-8:last-child {
             background: #e8ecf0 !important;
             background-color: #e8ecf0 !important;
             border-top: 1px solid #c8d0d8 !important;
         }
 
-        /* Contenedor interno de instrucciones - GRIS MÁS CLARO */
         #modalCompra .bg-slate-800\/50 {
             background: #d5dce4 !important;
             background-color: #d5dce4 !important;
@@ -577,12 +661,10 @@
             border-radius: 0.75rem !important;
         }
 
-        /* TODOS LOS TEXTOS EN NEGRO */
         #modalCompra .modal-content * {
             color: #0f172a !important;
         }
 
-        /* Títulos en NEGRO */
         #modalCompra .text-white,
         #modalCompra .text-slate-400,
         #modalCompra .text-slate-500,
@@ -591,7 +673,6 @@
             color: #0f172a !important;
         }
 
-        /* Color de acento - se mantiene en tono gris azulado */
         #modalCompra .text-cyan-400 {
             color: #1a5a7a !important;
         }
@@ -608,7 +689,6 @@
             color: #8a2a2a !important;
         }
 
-        /* Botón Confirmar - CYAN con texto blanco */
         #modalCompra .btn-comprar {
             background: linear-gradient(135deg, #2db8ce, #06b6d4) !important;
             background-color: #06b6d4 !important;
@@ -622,7 +702,6 @@
             filter: brightness(1.05) !important;
         }
 
-        /* Botón Cancelar - GRIS CLARO */
         #modalCompra .bg-slate-700 {
             background: #b0b8c0 !important;
             background-color: #b0b8c0 !important;
@@ -634,7 +713,6 @@
             background-color: #a0a8b0 !important;
         }
 
-        /* Botón WhatsApp - se mantiene verde */
         #modalCompra [style*="background: #25D366"] {
             background: #25D366 !important;
             color: #ffffff !important;
@@ -644,7 +722,6 @@
             background: #1da05a !important;
         }
 
-        /* Borde del contenedor de tasa */
         #modalCompra .border-slate-700\/50 {
             border-color: #c0c8d0 !important;
         }
@@ -653,7 +730,6 @@
             border-color: #c0c8d0 !important;
         }
 
-        /* Iconos en negro */
         #modalCompra .fas,
         #modalCompra .fab,
         #modalCompra .fa-solid,
@@ -661,13 +737,11 @@
             color: #0f172a !important;
         }
 
-        /* El icono de WhatsApp en el botón se mantiene blanco */
         #modalCompra [style*="background: #25D366"] .fab,
         #modalCompra [style*="background: #25D366"] .fas {
             color: #ffffff !important;
         }
 
-        /* Tasa BCV */
         #modalCompra .bg-slate-800\/50 .text-white {
             color: #0f172a !important;
         }
@@ -680,7 +754,6 @@
             color: #1a7a5a !important;
         }
 
-        /* Botón cerrar (X) */
         #modalCompra .absolute.top-4.right-4.z-20 {
             color: #0f172a !important;
             background: rgba(200, 200, 200, 0.5) !important;
@@ -690,7 +763,6 @@
             background: rgba(180, 180, 180, 0.7) !important;
         }
 
-        /* Separadores */
         #modalCompra .border-t.border-slate-700\/50 {
             border-color: #c0c8d0 !important;
         }
@@ -699,7 +771,6 @@
             border-color: #c0c8d0 !important;
         }
 
-        /* Texto de instrucciones */
         #modalCompra .text-slate-300 {
             color: #1a2a3a !important;
         }
@@ -718,7 +789,6 @@
             overflow: hidden !important;
         }
 
-        /* Todos los textos en negro */
         #modalConfirmacionCompra .modal-content * {
             color: #0f172a !important;
         }
@@ -751,7 +821,6 @@
             color: #1a7a5a !important;
         }
 
-        /* Botón Aceptar - CYAN */
         #modalConfirmacionCompra .btn-aceptar {
             background: linear-gradient(135deg, #2db8ce, #06b6d4) !important;
             background-color: #06b6d4 !important;
@@ -770,7 +839,6 @@
             filter: brightness(1.05) !important;
         }
 
-        /* Modo oscuro para el modal de confirmación */
         body:not(.light-mode) #modalConfirmacionCompra .modal-content {
             background: #1e293b !important;
             background-color: #1e293b !important;
@@ -851,7 +919,6 @@
             margin-right: 0.2rem;
         }
 
-        /* Versión modo claro */
         body.light-mode .badge-oferta {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: #ffffff;
@@ -859,7 +926,6 @@
             box-shadow: 0 0 25px rgba(238, 90, 36, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
-        /* Contenedor de badges superiores */
         .course-card .badge-container {
             display: flex;
             flex-wrap: wrap;
@@ -867,7 +933,6 @@
             align-items: center;
         }
 
-        /* Badge de descuento 50% en el precio */
         .badge-descuento {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: #ffffff;
@@ -1106,7 +1171,7 @@
                 <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30">Arranques</span>
             </div>
             <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 uppercase">CURSOS Y MANUALES <span class="text-secondary">OFERTADOS</span></h1>
-            <p class="text-lg text-blue-50 max-w-3xl">Explora nuestra oferta académica y descubre el contenido técnico diseñado para impulsar tu futuro profesional.</p>
+
         </div>
     </header>
 
@@ -1116,10 +1181,10 @@
 
  <!-- DESCRIPCIÓN -->
                 <div class="w-full mb-10 mt-6">
-                    <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
+                    <div class="descripcion-catalogo relative p-5 md:p-8">
                         
                         <!-- Línea decorativa superior -->
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
+                        <div class="desc-top-line"></div>
                         
                         <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                             <span class="text-cyan-400 font-bold text-base md:text-xl">🎓 Explora</span> nuestra oferta académica con 
@@ -1143,7 +1208,7 @@
                         </p>
 
                         <!-- Línea decorativa inferior animada -->
-                        <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+                        <div class="desc-bottom-line"></div>
                     </div>
                 </div>
 
@@ -1156,13 +1221,6 @@
 
             <!-- ====== CONTENEDOR ÚNICO PARA DESCRIPCIÓN Y TARJETAS ====== -->
             <div class="w-full">
-
-               
-
-
-
-
-
 
                 <!-- Tarjetas de niveles - MISMO ANCHO QUE LA DESCRIPCIÓN -->
                 <div class="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full">
@@ -1849,14 +1907,9 @@ function generateCourseCard(course) {
     const acceso = dbUserAccessStatus[key] || 'NO';
     const isAccessGranted = (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true);
     
-    // ==========================================
-    // DETECTAR OFERTA ESPECIAL (50% DESCUENTO)
-    // Curso online con precio menor a $7
-    // El precio original es el doble del actual
-    // ==========================================
     const isOnline = courseType.toLowerCase() === 'online';
     const isOffer = isOnline && coursePrice > 0 && coursePrice < 7;
-    const priceOriginal = isOffer ? coursePrice * 2 : coursePrice; // 50% descuento = original es el doble
+    const priceOriginal = isOffer ? coursePrice * 2 : coursePrice;
     
     let estadoClase = '';
     let badgeEstadoHTML = '';
@@ -1911,7 +1964,6 @@ function generateCourseCard(course) {
         }).join('');
     }
 
-    // Badge de OFERTA ESPECIAL - se muestra en la esquina superior izquierda
     let ofertaBadgeHTML = '';
     if (isOffer) {
         ofertaBadgeHTML = `<span class="badge-oferta"><i class="fas fa-bolt"></i> 50% OFF</span>`;
@@ -1923,12 +1975,10 @@ function generateCourseCard(course) {
     const precioOriginalBs = priceOriginal * tasaActual;
     const precioOriginalBsFormateado = `Bs. ${precioOriginalBs.toFixed(2)}`;
 
-    // Precio con efecto de tachado si está en oferta (50% descuento)
     let priceTag = '';
     if (coursePrice === 0) {
         priceTag = '<span class="text-[#2db8ce] font-extrabold italic text-lg">GRATIS</span>';
     } else if (isOffer) {
-        // Precio original tachado + precio con descuento destacado
         priceTag = `
             <div class="flex flex-col items-end">
                 <div class="flex items-center gap-2">
