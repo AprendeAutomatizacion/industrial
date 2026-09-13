@@ -179,6 +179,13 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
+    .nota-detalle {
+      font-size: 11px;
+      color: #6b7280;
+      margin-top: 4px;
+      text-align: right;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
@@ -198,22 +205,25 @@
     <div class="dato"><label>Estudiante</label><span id="certNombre">-</span></div>
     <div class="dato"><label>Cédula</label><span id="certCedula">-</span></div>
     <div class="dato"><label>Curso</label><span id="certCurso">-</span></div>
-    <div class="dato"><label>Calificación</label><span id="certCalificacion">-</span></div>
-    <!-- ✅ CAMBIO 1: "Fecha de emisión" → "Fecha de inicio" -->
+    <div class="dato">
+      <label>Calificación</label>
+      <span id="certCalificacion">-</span>
+    </div>
+    <div class="nota-detalle" id="notaCalificacionDetalle" style="margin-top: -8px; margin-bottom: 10px; text-align: right; font-size: 10px; color: #9ca3af;">
+      * Incluye calificación de la introducción
+    </div>
     <div class="dato"><label>Fecha de inicio</label><span id="certFechaEmision">-</span></div>
     <div class="dato"><label>Fecha de culminación</label><span id="certFechaCulminacion">-</span></div>
     <div class="dato"><label>ID del certificado</label><span class="id-mono" id="certId">-</span></div>
     
     <div class="sello">Validado</div>
-    <!-- ✅ CAMBIO 2: "Ing. Pablo Cedeño" → "Msc. Ing. Pablo Cedeño" -->
     
-
-<div class="footer">
-    Este certificado fue emitido y verificado electrónicamente por<br>
-    <strong>Aprende Automatización</strong><br>
-    Msc. Ing. Pablo Cedeño - Coordinador Académico
-</div>
-
+    <div class="footer">
+      Este certificado fue emitido y verificado electrónicamente por<br>
+      <strong>Aprende Automatización</strong><br>
+      Msc. Ing. Pablo Cedeño - Coordinador Académico
+    </div>
+  </div>
   
   <div id="certificadoInvalido" class="card invalido hidden">
     <div class="logo"><img src="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" alt="AA"></div>
@@ -234,7 +244,82 @@
 
   <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvSa9yxQYuWtC-YSn4x1K6hzhdeujQfNEb1GoWkvJmFShA4kdhSWe_oOoBFqkKaagx/exec';
-    
+
+    // ============================================================
+    // 🚀 CACHÉ DE CLIENTE - Verify Page
+    // ============================================================
+    const CACHE_PREFIX = 'verify_cache_';
+
+    async function fetchWithCache(url, options) {
+        options = options || {};
+        const method = (options.method || 'GET').toUpperCase();
+        const body = options.body || null;
+        const headers = options.headers || {};
+        const cacheTTL = options.cacheTTL || 0;
+        const forceRefresh = options.forceRefresh || false;
+        const responseType = options.responseType || 'json';
+
+        const cacheKey = CACHE_PREFIX + method + '_' + url;
+
+        // Leer caché (solo GET con TTL > 0)
+        if (method === 'GET' && cacheTTL > 0 && !forceRefresh) {
+            try {
+                const cached = sessionStorage.getItem(cacheKey);
+                if (cached) {
+                    const entry = JSON.parse(cached);
+                    if (Date.now() < entry.expiresAt) {
+                        console.log('✅ [CACHE HIT]', url);
+                        return entry.data;
+                    }
+                    sessionStorage.removeItem(cacheKey);
+                }
+            } catch (e) {
+                console.warn('Error leyendo caché:', e);
+            }
+        }
+
+        // Fetch real - NO añadir Content-Type en GET (rompe CORS con Apps Script)
+        const fetchOptions = {
+            method: method,
+            headers: Object.assign({}, headers)
+        };
+        if (body) {
+            if (!fetchOptions.headers['Content-Type']) {
+                fetchOptions.headers['Content-Type'] = 'application/json';
+            }
+            fetchOptions.body = (typeof body === 'string') ? body : JSON.stringify(body);
+        }
+
+        console.log('🌐 [FETCH]', method, url);
+        const response = await fetch(url, fetchOptions);
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+
+        const data = (responseType === 'text') ? await response.text() : await response.json();
+
+        // Guardar en caché (solo GET con TTL)
+        if (method === 'GET' && cacheTTL > 0) {
+            try {
+                sessionStorage.setItem(cacheKey, JSON.stringify({
+                    data: data,
+                    expiresAt: Date.now() + (cacheTTL * 1000)
+                }));
+            } catch (e) {
+                console.warn('Error guardando caché:', e);
+            }
+        }
+
+        return data;
+    }
+
+    function clearVerifyCache() {
+        const keys = Object.keys(sessionStorage).filter(k => k.indexOf(CACHE_PREFIX) === 0);
+        keys.forEach(k => sessionStorage.removeItem(k));
+        console.log('🧹 Caché de verify limpiada (' + keys.length + ' entradas)');
+    }
+    // ============================================================
+    // FIN CACHÉ DE CLIENTE
+    // ============================================================
+
     function getCertIdFromURL() {
       const params = new URLSearchParams(window.location.search);
       return params.get('id') || params.get('cert') || params.get('certificado') || '';
@@ -335,8 +420,12 @@
       certificadoInvalido.classList.add('hidden');
       
       try {
-        const response = await fetch(`${SCRIPT_URL}?action=verify_certificate&certId=${encodeURIComponent(certId)}`);
-        const data = await response.json();
+        // 🚀 CACHÉ: verify_certificate con TTL 30 min (un certificado emitido nunca cambia)
+        const url = `${SCRIPT_URL}?action=verify_certificate&certId=${encodeURIComponent(certId)}`;
+        const data = await fetchWithCache(url, {
+          method: 'GET',
+          cacheTTL: 30 * 60
+        });
         
         loadingState.classList.add('hidden');
         
@@ -346,6 +435,7 @@
           document.getElementById('certNombre').textContent = cert.nombre || 'N/A';
           document.getElementById('certCedula').textContent = cert.cedula || 'N/A';
           document.getElementById('certCurso').textContent = cert.curso || 'N/A';
+          
           document.getElementById('certCalificacion').innerHTML = getCalificacionBadge(cert.calificacion);
           
           document.getElementById('certFechaEmision').textContent = formatearFechaHoraSimple(cert.fechaEmision || '');

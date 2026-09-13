@@ -389,10 +389,98 @@
 
     <script>
         // ============================================================
+        // 🚀 CACHÉ DE CLIENTE - Aula Virtual
+        // Complementa la caché del servidor (Apps Script)
+        // ============================================================
+        var CACHE_PREFIX = 'aula_cache_';
+
+        async function fetchWithCache(url, options) {
+            options = options || {};
+            var method = (options.method || 'GET').toUpperCase();
+            var body = options.body || null;
+            var headers = options.headers || {};
+            var cacheTTL = options.cacheTTL || 0;
+            var forceRefresh = options.forceRefresh || false;
+            var responseType = options.responseType || 'json';
+
+            var cacheKey = CACHE_PREFIX + method + '_' + url;
+
+            if (method === 'GET' && cacheTTL > 0 && !forceRefresh) {
+                try {
+                    var cached = sessionStorage.getItem(cacheKey);
+                    if (cached) {
+                        var entry = JSON.parse(cached);
+                        if (Date.now() < entry.expiresAt) {
+                            console.log('✅ [CACHE HIT]', url);
+                            return entry.data;
+                        }
+                        sessionStorage.removeItem(cacheKey);
+                    }
+                } catch (e) {
+                    console.warn('Error leyendo caché:', e);
+                }
+            }
+
+            var fetchOptions = {
+                method: method,
+                headers: Object.assign({}, headers)
+            };
+            if (body) {
+                if (!fetchOptions.headers['Content-Type']) {
+                    fetchOptions.headers['Content-Type'] = 'application/json';
+                }
+                fetchOptions.body = (typeof body === 'string') ? body : JSON.stringify(body);
+            }
+
+            console.log('🌐 [FETCH]', method, url);
+            var response = await fetch(url, fetchOptions);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+
+            var data = (responseType === 'text') ? await response.text() : await response.json();
+
+            if (method === 'GET' && cacheTTL > 0) {
+                try {
+                    sessionStorage.setItem(cacheKey, JSON.stringify({
+                        data: data,
+                        expiresAt: Date.now() + (cacheTTL * 1000)
+                    }));
+                } catch (e) {
+                    console.warn('Error guardando caché:', e);
+                }
+            }
+
+            return data;
+        }
+
+        function invalidateCache(url, method) {
+            method = (method || 'GET').toUpperCase();
+            sessionStorage.removeItem(CACHE_PREFIX + method + '_' + url);
+        }
+
+        function clearAulaCache() {
+            var keys = Object.keys(sessionStorage).filter(function(k) {
+                return k.indexOf(CACHE_PREFIX) === 0;
+            });
+            keys.forEach(function(k) { sessionStorage.removeItem(k); });
+            console.log('🧹 Caché del aula limpiada (' + keys.length + ' entradas)');
+        }
+
+        function invalidateByEndpoint(endpointFragment) {
+            var keys = Object.keys(sessionStorage).filter(function(k) {
+                return k.indexOf(CACHE_PREFIX) === 0 && k.indexOf(endpointFragment) !== -1;
+            });
+            keys.forEach(function(k) { sessionStorage.removeItem(k); });
+            console.log('🧹 Invalidadas ' + keys.length + ' entradas de ' + endpointFragment);
+        }
+        // ============================================================
+        // FIN CACHÉ DE CLIENTE
+        // ============================================================
+
+        // ============================================================
         // CONFIGURACIÓN DE URLs
         // ============================================================
         var DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxoF5nzIBzc4wYPezo6TRjhwN89NoNvKPiZC_BDTaV29Ni9u8s08wE7hXtECdin0lM_/exec';
-        var DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvSa9yxQYuWtC-YSn4x1K6hzhdeujQfNEb1GoWkvJmFShA4kdhSWe_oOoBFqkKaagx/exec';
+        var DEFAULT_ACCESS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5UzjuZtBN-4Q9qeYGKa73Qp8B8x8lsrNAp1-P35MY0vy5oQqn_-ojmCny3vu9e0fv/exec';
         var SHARED_PRACTICE_VIDEO_URL = '';
         var query = new URLSearchParams(window.location.search);
         var scriptFromQuery = query.get('script') || '';
@@ -711,12 +799,21 @@
             return { ok: false, message: parsed.message || 'Formato no compatible en la respuesta del script.' }; 
         }
 
-        async function loadProgressFromServer(email, courseName) {
+        var progressLoadedOnce = {};
+
+        async function loadProgressFromServer(email, courseName, forceRefresh) {
             try {
-                var url = ACCESS_SCRIPT_URL + '?action=get_course_progress&correo=' + encodeURIComponent(email) + '&curso=' + encodeURIComponent(courseName) + '&t=' + Date.now();
-                console.log('📥 Cargando progreso desde:', url);
-                var resp = await fetch(url);
-                var data = await resp.json();
+                var url = ACCESS_SCRIPT_URL + '?action=get_course_progress&correo=' + encodeURIComponent(email) + '&curso=' + encodeURIComponent(courseName);
+                var key = email + '::' + courseName;
+                var isFirstLoad = !progressLoadedOnce[key];
+                var ttl = isFirstLoad ? 0 : 30;
+                console.log('📥 Cargando progreso', isFirstLoad ? '(fresco)' : '(caché 30s)');
+                var data = await fetchWithCache(url, {
+                    method: 'GET',
+                    cacheTTL: ttl,
+                    forceRefresh: !!forceRefresh
+                });
+                progressLoadedOnce[key] = true;
                 console.log('📥 Respuesta del servidor:', data);
                 if (data.success && data.progressData) {
                     try {
@@ -732,7 +829,6 @@
             }
         }
 
-        // LUPA FUNCTIONS
         var lupaCurrentZoom = 1;
         var lupaCurrentSrc = '';
         var lupaIsDragging = false;
@@ -883,9 +979,6 @@
             }
         });
 
-        // ============================================================
-        // APP PRINCIPAL
-        // ============================================================
         var app = {
             scriptUrl: SCRIPT_URL,
             accessScriptUrl: ACCESS_SCRIPT_URL,
@@ -1047,12 +1140,16 @@
                 this.submoduleScores = {};
             },
 
-            fetchCourseContent: async function(courseId) {
+            fetchCourseContent: async function(courseId, forceRefresh) {
                 this.lastLoadErrorMessage = '';
                 try {
-                    var response = await fetch(this.scriptUrl + '?action=get_course_content&courseId=' + courseId + '&t=' + Date.now());
-                    if (!response.ok) throw new Error('HTTP ' + response.status);
-                    var raw = await response.text();
+                    var url = this.scriptUrl + '?action=get_course_content&courseId=' + courseId;
+                    var raw = await fetchWithCache(url, {
+                        method: 'GET',
+                        cacheTTL: 15 * 60,
+                        forceRefresh: !!forceRefresh,
+                        responseType: 'text'
+                    });
                     var parsed = parseMaybeJson(raw);
                     var unwrapped = unwrapApiResponse(parsed || raw);
                     if (!unwrapped.ok) throw new Error(unwrapped.message);
@@ -1476,8 +1573,6 @@
                 }, 100);
             },
 
-            // === FUNCIONES DE CELEBRACIÓN ===
-            
             showQuizApprovedOverlay: function(moduleId, score) {
                 var old = document.getElementById('quiz-approved-overlay');
                 if (old) old.remove();
@@ -1611,8 +1706,6 @@
                 this.launchFireworks();
             },
 
-            // === FUNCIONES DE SONIDO Y EFECTOS ===
-            
             playApplauseSound: function() { 
                 try { 
                     var AudioCtx = window.AudioContext || window.webkitAudioContext; 
@@ -1720,8 +1813,6 @@
                 }
             },
 
-            // === FUNCIÓN PRINCIPAL gradeQuiz ===
-            
             gradeQuiz: function() {
                 var lesson = COURSE_DATA.find(function(l) { return l.id === this.currentId; }, this);
                 if (!lesson || !lesson.quiz || lesson.quiz.length === 0) {
@@ -1790,7 +1881,6 @@
                         }
                     });
 
-                    // CASO 1: ES UN SUB-MÓDULO
                     if (lesson.isSubmodule) {
                         if (!this.progress.includes(this.currentId)) {
                             this.progress.push(this.currentId);
@@ -1863,7 +1953,6 @@
                             }
                         }
                     } else {
-                        // CASO 2: ES UN MÓDULO PRINCIPAL
                         if (!this.progress.includes(this.currentId)) {
                             this.progress.push(this.currentId);
                             localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(this.progress));
@@ -1917,7 +2006,6 @@
                                 this.playApplauseSound();
                             }
                         } else {
-                            // CASO 3: MÓDULO SIMPLE (SIN SUB-MÓDULOS)
                             resDiv.innerHTML = '<span class="text-green-400 text-xl">✅ ¡Aprobado con ' + score + '%!</span><p class="text-slate-300 mt-2 text-sm">¡Excelente trabajo!</p>';
                             
                             this.showModuleAchievementOverlay(this.currentId, score);
@@ -1939,7 +2027,6 @@
                     }, 300);
 
                 } else {
-                    // REPROBADO
                     this.playElectricitySound();
                     
                     lesson.quiz.forEach(function(q, i) {
@@ -1976,8 +2063,6 @@
                 }
             },
 
-            // === FUNCIONES AUXILIARES ===
-            
             continueToSubmodules: function(containerId) {
                 var container = COURSE_DATA.find(function(l) { return l.id === containerId; });
                 if (!container || !container.submodules || container.submodules.length === 0) {
@@ -2025,8 +2110,6 @@
                 document.getElementById('quiz-result').classList.add('hidden'); 
             },
 
-            // === ACTUALIZACIÓN DEL BOTÓN COMPLETAR ===
-            
             updateCompleteButton: function() { 
                 var lesson = COURSE_DATA.find(function(l) { return l.id === this.currentId; }, this); 
                 if (!lesson) return;
@@ -2034,7 +2117,6 @@
                 var mainModules = COURSE_DATA.filter(function(l) { return !l.isSubmodule && l.id > 0; });
                 var lastMainModule = mainModules[mainModules.length - 1];
                 
-                // Verificar si es un módulo con sub-módulos
                 if (lesson.submodules && lesson.submodules.length > 0) {
                     var hasContainerQuiz = lesson.quiz && lesson.quiz.length > 0;
                     var containerScore = this.quizScores[lesson.id];
@@ -2072,7 +2154,6 @@
                     return;
                 }
                 
-                // Verificar si es sub-módulo
                 if (lesson.isSubmodule) {
                     var parentLesson = COURSE_DATA.find(function(l) { return l.id === lesson.parentId; });
                     if (parentLesson) {
@@ -2116,7 +2197,6 @@
                     return;
                 }
                 
-                // Módulo simple (sin sub-módulos)
                 var hasQuiz = lesson.quiz && lesson.quiz.length > 0;
                 var isCompleted = this.progress.includes(this.currentId);
                 var isLastModule = (lesson.id === lastMainModule.id);
@@ -2267,9 +2347,12 @@
                 btn.querySelector('span').innerText = ' Verificando...'; 
                 err.classList.add('hidden');
                 try {
-                    var url = this.accessScriptUrl + '?action=verify&nombre=' + encodeURIComponent(n) + '&cedula=' + encodeURIComponent(c) + '&correo=' + encodeURIComponent(em) + '&curso=' + encodeURIComponent(CURRENT_COURSE.name) + '&t=' + Date.now();
-                    var resp = await fetch(url); 
-                    var data = await resp.json();
+                    var url = this.accessScriptUrl + '?action=verify&nombre=' + encodeURIComponent(n) + '&cedula=' + encodeURIComponent(c) + '&correo=' + encodeURIComponent(em) + '&curso=' + encodeURIComponent(CURRENT_COURSE.name);
+                    var data = await fetchWithCache(url, {
+                        method: 'GET',
+                        cacheTTL: 5 * 60,
+                        forceRefresh: false
+                    });
                     if (data.success) {
                         localStorage.setItem(STORAGE_KEYS.auth, JSON.stringify({ nombre: n, cedula: c, correo: em }));
                         localStorage.setItem('current_course_name', CURRENT_COURSE.name);
@@ -2344,12 +2427,16 @@
             updateFullScreenIcon: function() { 
                 document.getElementById('fullscreen-icon').className = document.fullscreenElement ? 'fas fa-compress' : 'fas fa-expand'; 
             },
-            
+
+            // ============================================================
+            // 🚀 LOGOUT — Sin confirm, va directo a mis-cursos.html
+            // ============================================================
             logout: function() { 
-                if (confirm('¿Cerrar sesión?')) { 
-                    this.clearLocalData(); 
-                    window.location.href = 'mis-cursos.html'; 
-                } 
+                this.clearLocalData(); 
+                // Limpiar caché del aula al salir
+                if (typeof clearAulaCache === 'function') clearAulaCache();
+                // Redirigir a Mis Cursos
+                window.location.href = 'mis-cursos.html'; 
             },
 
             syncProgressToServer: async function() {
@@ -2370,6 +2457,7 @@
                     if (result.status === 'success' || result.success) {
                         console.log('✅ Progreso sincronizado con servidor');
                         showSyncIndicator('✅ Progreso guardado', 'success');
+                        invalidateByEndpoint('get_course_progress');
                     }
                 } catch (error) { console.error('❌ Error sincronizando:', error); }
             },
@@ -2388,9 +2476,6 @@
                 return '🥉'; 
             },
 
-            // ============================================================
-            // generateCertificate - CORREGIDO: INCLUYE LA INTRODUCCIÓN
-            // ============================================================
             generateCertificate: function() {
                 var auth = JSON.parse(localStorage.getItem(STORAGE_KEYS.auth) || 'null');
                 if (!auth || !CURRENT_COURSE) { this.showModal('Error', 'No hay sesión activa.', 'error'); return; }
@@ -2401,12 +2486,8 @@
 
                 if (percent < 100) { this.showModal('Curso Incompleto', 'Tu progreso es ' + percent + '%. Completa el 100% para generar el certificado.', 'error'); return; }
 
-                // ============================================================
-                // CORRECCIÓN: Incluir la introducción (id === 0) en el promedio
-                // ============================================================
                 var allScores = [];
                 
-                // 1. Incluir la introducción si tiene quiz
                 var introLesson = COURSE_DATA.find(function(l) { return l.id === 0; });
                 if (introLesson && introLesson.quiz && introLesson.quiz.length > 0) {
                     var introScore = this.quizScores[0];
@@ -2415,14 +2496,12 @@
                     }
                 }
                 
-                // 2. Incluir todos los módulos principales (id > 0)
                 COURSE_DATA.forEach(function(l) {
                     if (!l.isSubmodule && l.id > 0 && this.quizScores[l.id] !== undefined) {
                         allScores.push(this.quizScores[l.id]);
                     }
                 }, this);
                 
-                // 3. Incluir sub-módulos
                 COURSE_DATA.forEach(function(l) {
                     if (l.isSubmodule && this.quizScores[l.id] !== undefined) {
                         allScores.push(this.quizScores[l.id]);
@@ -2430,10 +2509,6 @@
                 }, this);
 
                 var promedio = allScores.length > 0 ? Math.round(allScores.reduce(function(a, b) { return a + b; }, 0) / allScores.length) : 100;
-
-                // ============================================================
-                // FIN DE LA CORRECCIÓN
-                // ============================================================
 
                 var cedulaRaw = auth.cedula || '';
                 if (!cedulaRaw || cedulaRaw === 'N/A') {
@@ -2486,6 +2561,7 @@
                 .then(function(result) {
                     console.log('📋 Resultado:', result);
                     if (result.status === 'success') {
+                        clearAulaCache();
                         showSyncIndicator('✅ Certificado: ' + result.certId, 'success');
                         this.showModal('¡Certificado Generado!', 'ID: <strong>' + result.certId + '</strong><br><br>Link de verificación:<br><code style="font-size:11px;word-break:break-all;">' + result.verificationLink + '</code>', 'success');
                     } else if (result.status === 'exists') {

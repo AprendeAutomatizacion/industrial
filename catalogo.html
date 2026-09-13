@@ -285,7 +285,6 @@
             .modal-content .p-3 { padding: 0.75rem !important; }
         }
 
-        /* ====== CORRECCIÓN COLORES PROFESOR ====== */
         .course-card .professor-label,
         .course-card .professor-specialty,
         .course-card .professor-arrow {
@@ -314,9 +313,6 @@
             color: #0f172a !important;
         }
 
-        /* ==========================================
-           CORRECCIÓN MODO CLARO - TODOS LOS TEXTOS Y BADGES
-           ========================================== */
         body.light-mode {
             color: #0f172a !important;
         }
@@ -369,10 +365,6 @@
         body.light-mode .course-card .professor-block { background-color: rgba(241, 245, 249, 0.9) !important; border-radius: 0.75rem !important; }
         body.light-mode .course-card .professor-block * { color: #0f172a !important; }
 
-        /* ==========================================
-           MODO CLARO - BADGES CON FONDO SÓLIDO Y LETRAS BLANCAS
-           ========================================== */
-        
         body.light-mode .course-card .absolute.top-3.left-3 span {
             background: #0f172a !important;
             color: #ffffff !important;
@@ -440,10 +432,6 @@
             color: #ffffff !important;
         }
 
-        /* ==========================================
-           MODO CLARO - OVERLAY ACCESO RESTRINGIDO
-           ========================================== */
-        
         body.light-mode .course-card .absolute.inset-0.bg-black\/40 {
             background: rgba(0, 0, 0, 0.6) !important;
             backdrop-filter: blur(2px) !important;
@@ -462,10 +450,6 @@
             color: rgba(255, 255, 255, 0.8) !important;
         }
 
-        /* ==========================================
-           MODO CLARO - FONDO BLANCO PARA DESCRIPCIÓN
-           ========================================== */
-        
         body.light-mode .border-cyan-500\/20 {
             border-color: rgba(14, 116, 144, 0.15) !important;
         }
@@ -481,7 +465,7 @@
             border-color: rgba(14, 116, 144, 0.3) !important;
         }
         
-        body.light-mode .group:hover .shadow-\[0_0_40px_rgba(6,182,212,0.08)\] {
+        body.light-mode .group:hover .shadow-\[0_0_40px_rgba\(6\,182\,212\,0\.08\)\] {
             box-shadow: 0 0 40px rgba(14, 116, 144, 0.08) !important;
         }
         
@@ -525,9 +509,6 @@
             color: #6d28d9 !important;
         }
 
-        /* ==========================================
-           ⭐ DESCRIPCIÓN CATÁLOGO - FONDO GRIS-AZULADO (#cbd5e1) EN MODO CLARO
-           ========================================== */
         .descripcion-catalogo {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(6, 182, 212, 0.2);
@@ -628,10 +609,6 @@
             opacity: 0.6;
         }
 
-        /* ==========================================
-           MODAL DE COMPRA - ESCALA DE GRISES CON BOTÓN CYAN
-           ========================================== */
-        
         #modalCompra .modal-content {
             background: #e8ecf0 !important;
             background-color: #e8ecf0 !important;
@@ -775,9 +752,6 @@
             color: #1a2a3a !important;
         }
 
-        /* ==========================================
-           MODAL DE CONFIRMACIÓN - ESTILO GRIS
-           ========================================== */
         #modalConfirmacionCompra .modal-content {
             background: #e8ecf0 !important;
             background-color: #e8ecf0 !important;
@@ -884,9 +858,6 @@
             border: 1px solid #0891b2 !important;
         }
 
-        /* ==========================================
-           BADGE OFERTA ESPECIAL - ESTILO LLAMATIVO
-           ========================================== */
         .badge-oferta {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
             color: #ffffff;
@@ -947,8 +918,6 @@
             margin-left: 0.3rem;
         }
     </style>
-
-
 </head>
 <body class="custom-scrollbar">
 <div class="particles-bg" aria-hidden="true">
@@ -1171,58 +1140,42 @@
                 <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30">Arranques</span>
             </div>
             <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 uppercase">CURSOS Y MANUALES <span class="text-secondary">OFERTADOS</span></h1>
-
         </div>
     </header>
 
     <div class="max-w-7xl mx-auto px-6 py-12">
-
-
-
- <!-- DESCRIPCIÓN -->
-                <div class="w-full mb-10 mt-6">
-                    <div class="descripcion-catalogo relative p-5 md:p-8">
-                        
-                        <!-- Línea decorativa superior -->
-                        <div class="desc-top-line"></div>
-                        
-                        <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
-                            <span class="text-cyan-400 font-bold text-base md:text-xl">🎓 Explora</span> nuestra oferta académica con 
-                            <span class="text-white font-bold">cursos online</span>, 
-                            <span class="text-white font-bold">presenciales</span> y 
-                            <span class="text-white font-bold">manuales prácticos</span>, 
-                            diseñados para que aprendas automatización 
-                            <span class="text-cyan-300 font-semibold">desde cualquier lugar</span> y a 
-                            <span class="text-cyan-300 font-semibold">tu propio ritmo</span>.
-                        </p>
-                        
-                        <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
-                            <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
-                            Cada curso combina 
-                            <span class="text-amber-400 font-semibold">teoría</span>, 
-                            <span class="text-emerald-400 font-semibold">práctica</span> y 
-                            <span class="text-purple-400 font-semibold">simulaciones</span> 
-                            para garantizar un aprendizaje 
-                            <span class="text-white font-bold">real y aplicable</span>.
-                            <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
-                        </p>
-
-                        <!-- Línea decorativa inferior animada -->
-                        <div class="desc-bottom-line"></div>
-                    </div>
-                </div>
-
-
+        <!-- DESCRIPCIÓN -->
+        <div class="w-full mb-10 mt-6">
+            <div class="descripcion-catalogo relative p-5 md:p-8">
+                <div class="desc-top-line"></div>
+                <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
+                    <span class="text-cyan-400 font-bold text-base md:text-xl">🎓 Explora</span> nuestra oferta académica con 
+                    <span class="text-white font-bold">cursos online</span>, 
+                    <span class="text-white font-bold">presenciales</span> y 
+                    <span class="text-white font-bold">manuales prácticos</span>, 
+                    diseñados para que aprendas automatización 
+                    <span class="text-cyan-300 font-semibold">desde cualquier lugar</span> y a 
+                    <span class="text-cyan-300 font-semibold">tu propio ritmo</span>.
+                </p>
+                <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3">
+                    <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
+                    Cada curso combina 
+                    <span class="text-amber-400 font-semibold">teoría</span>, 
+                    <span class="text-emerald-400 font-semibold">práctica</span> y 
+                    <span class="text-purple-400 font-semibold">simulaciones</span> 
+                    para garantizar un aprendizaje 
+                    <span class="text-white font-bold">real y aplicable</span>.
+                    <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
+                </p>
+                <div class="desc-bottom-line"></div>
+            </div>
+        </div>
 
         <!-- ====== SECCIÓN LEARNING PATH MODIFICADA ====== -->
         <section id="learning-path" class="mb-16 text-center">
             <span class="section-subtitle text-xs font-bold uppercase tracking-[0.4em] mb-3 block">Tu Camino</span>
             <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase mb-4">Elige tu <span>Ruta de Aprendizaje</span></h2>
-
-            <!-- ====== CONTENEDOR ÚNICO PARA DESCRIPCIÓN Y TARJETAS ====== -->
             <div class="w-full">
-
-                <!-- Tarjetas de niveles - MISMO ANCHO QUE LA DESCRIPCIÓN -->
                 <div class="relative grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full">
                     <div onclick="filterByLevel('Básico', this)" class="learning-step p-4 md:p-6 text-center">
                         <div class="w-16 h-16 rounded-full bg-cyan-500/10 border-2 border-cyan-500/30 flex items-center justify-center mx-auto mb-4"><i class="fas fa-seedling text-2xl text-cyan-400"></i></div>
@@ -1282,7 +1235,138 @@
 </div>
 
 <script>
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvSa9yxQYuWtC-YSn4x1K6hzhdeujQfNEb1GoWkvJmFShA4kdhSWe_oOoBFqkKaagx/exec';
+// ==========================================
+// ⚡ CACHÉ EN CLIENTE (localStorage)
+// ==========================================
+const CLIENT_CACHE_TTL = 5 * 60 * 1000; // 5 minutos
+const CLIENT_CACHE_PREFIX = 'cache_';
+
+async function fetchWithCache(url, cacheKey, ttl = CLIENT_CACHE_TTL) {
+    const fullKey = CLIENT_CACHE_PREFIX + cacheKey;
+    const cached = localStorage.getItem(fullKey);
+    const ts = parseInt(localStorage.getItem(fullKey + '_ts') || '0');
+    
+    if (cached && (Date.now() - ts) < ttl) {
+        try {
+            const data = JSON.parse(cached);
+            console.log(`⚡ [CACHE HIT] ${cacheKey}`);
+            return { json: async () => data };
+        } catch(e) {
+            localStorage.removeItem(fullKey);
+            localStorage.removeItem(fullKey + '_ts');
+        }
+    }
+    
+    console.log(`🌐 [CACHE MISS] ${cacheKey} → fetching`);
+    const res = await fetch(url);
+    const data = await res.json();
+    
+    try {
+        localStorage.setItem(fullKey, JSON.stringify(data));
+        localStorage.setItem(fullKey + '_ts', Date.now().toString());
+    } catch(e) {
+        console.warn('localStorage lleno, limpiando caché viejo');
+        Object.keys(localStorage).forEach(k => {
+            if (k.startsWith(CLIENT_CACHE_PREFIX)) localStorage.removeItem(k);
+        });
+    }
+    
+    return { json: async () => data };
+}
+
+function clearClientCache() {
+    Object.keys(localStorage).forEach(k => {
+        if (k.startsWith(CLIENT_CACHE_PREFIX)) {
+            localStorage.removeItem(k);
+        }
+    });
+    console.log('🧹 Caché de cliente limpiado');
+}
+window.clearClientCache = clearClientCache;
+
+// ==========================================
+// ⭐ SISTEMA DE PERSISTENCIA DE ESTADO (sessionStorage)
+// ==========================================
+const CATALOG_STATE_KEY = 'catalogo_estado';
+const CATALOG_TIMESTAMP_KEY = 'catalogo_timestamp';
+const CATALOG_MAX_AGE = 5 * 60 * 1000; // 5 minutos
+
+// Restaurar estado cuando la página carga o vuelve desde el historial
+window.addEventListener('pageshow', (event) => {
+    const stateStr = sessionStorage.getItem(CATALOG_STATE_KEY);
+    const timestampStr = sessionStorage.getItem(CATALOG_TIMESTAMP_KEY);
+    
+    if (!stateStr || !timestampStr) return;
+    
+    const age = Date.now() - parseInt(timestampStr);
+    if (age > CATALOG_MAX_AGE) {
+        sessionStorage.removeItem(CATALOG_STATE_KEY);
+        sessionStorage.removeItem(CATALOG_TIMESTAMP_KEY);
+        return;
+    }
+    
+    try {
+        const state = JSON.parse(stateStr);
+        
+        if (!event.persisted && state.currentLevel) {
+            currentLevel = state.currentLevel;
+            const checkCoursesLoaded = setInterval(() => {
+                if (COURSES_DATA.length > 0) {
+                    applyFilters();
+                    clearInterval(checkCoursesLoaded);
+                }
+            }, 100);
+            setTimeout(() => clearInterval(checkCoursesLoaded), 5000);
+        }
+        
+        if (!event.persisted && typeof state.scrollY === 'number' && state.scrollY > 0) {
+            setTimeout(() => {
+                window.scrollTo({ top: state.scrollY, behavior: 'instant' });
+            }, 200);
+        }
+    } catch (e) {
+        console.warn('Error al restaurar estado del catálogo:', e);
+    }
+});
+
+window.addEventListener('beforeunload', () => {
+    try {
+        const state = {
+            scrollY: window.scrollY,
+            currentLevel: currentLevel,
+            timestamp: Date.now()
+        };
+        sessionStorage.setItem(CATALOG_STATE_KEY, JSON.stringify(state));
+        sessionStorage.setItem(CATALOG_TIMESTAMP_KEY, Date.now().toString());
+    } catch (e) {}
+});
+
+window.addEventListener('pagehide', (event) => {
+    try {
+        if (!event.persisted) {
+            const state = {
+                scrollY: window.scrollY,
+                currentLevel: currentLevel,
+                timestamp: Date.now()
+            };
+            sessionStorage.setItem(CATALOG_STATE_KEY, JSON.stringify(state));
+            sessionStorage.setItem(CATALOG_TIMESTAMP_KEY, Date.now().toString());
+        }
+    } catch (e) {}
+});
+
+window.addEventListener('storage', (event) => {
+    if (event.key === 'user' && !event.newValue) {
+        sessionStorage.removeItem(CATALOG_STATE_KEY);
+        sessionStorage.removeItem(CATALOG_TIMESTAMP_KEY);
+        clearClientCache();
+    }
+});
+
+// ==========================================
+// RESTO DEL CÓDIGO
+// ==========================================
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5UzjuZtBN-4Q9qeYGKa73Qp8B8x8lsrNAp1-P35MY0vy5oQqn_-ojmCny3vu9e0fv/exec';
 
 let currentUser = JSON.parse(localStorage.getItem('user')) || null;
 let dbUsers = {}, globalStats = {};
@@ -1580,6 +1664,7 @@ async function manualEnrollStudent(event) {
             showNotif('Éxito', `Estudiante inscrito correctamente en "${courseName}"`, 'success');
             document.getElementById('adminForm').reset();
             document.getElementById('userInfoPreview').classList.add('hidden');
+            clearClientCache(); // ⚡ Limpiar caché tras inscripción
             await loadData();
             applyFilters();
             populateStudentSelect();
@@ -1630,7 +1715,7 @@ function celebrarCompra() {
 }
 
 // ==========================================
-// MODAL DE CONFIRMACIÓN DE COMPRA CON BOTÓN ACEPTAR
+// MODAL DE CONFIRMACIÓN DE COMPRA
 // ==========================================
 function mostrarModalConfirmacionCompra(esGratis = false) {
     isFreeCourse = esGratis;
@@ -1658,6 +1743,7 @@ function mostrarModalConfirmacionCompra(esGratis = false) {
 function cerrarModalConfirmacion() {
     closeModal('modalConfirmacionCompra');
     celebrarCompra();
+    clearClientCache(); // ⚡ Limpiar caché tras compra
     loadData();
     applyFilters();
     
@@ -1817,7 +1903,12 @@ async function enrollFreeCourse(courseId, courseName) {
 // ==========================================
 async function loadData() {
     try {
-        const res = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
+        const email = currentUser?.email?.toLowerCase() || '';
+        // ⚡ get_data SOLO del usuario actual + caché corto (1 min)
+        const url = email 
+            ? `${SCRIPT_URL}?action=get_data&email=${encodeURIComponent(email)}`
+            : `${SCRIPT_URL}?action=get_data`;
+        const res = await fetchWithCache(url, `data_${email || 'all'}`, 60 * 1000);
         const data = await res.json();
         if (data.status === 'success') {
             dbUsers = data.users || {};
@@ -1827,8 +1918,6 @@ async function loadData() {
             dbUserProgress = data.userProgress || {};
             dbUserPaymentStatus = data.userPaymentStatus || {};
             dbUserAccessStatus = data.userAccessStatus || {};
-            console.log('📊 Estados de pago:', Object.keys(dbUserPaymentStatus).length);
-            console.log('📊 Accesos:', Object.keys(dbUserAccessStatus).length);
             if (currentUser && currentUser.email) syncCurrentUserFromCloud();
             calculateCourseRatings();
             updateStudentCounts();
@@ -2149,60 +2238,52 @@ function applyFilters() {
 async function loadCoursesFromSheet() {
     showLoadingToast();
     try {
-        const response = await fetch(`${SCRIPT_URL}?action=get_courses&nocache=${Date.now()}`);
+        // ⚡ get_courses con caché de 5 min
+        const response = await fetchWithCache(
+            `${SCRIPT_URL}?action=get_courses`,
+            'courses_catalogo',
+            5 * 60 * 1000
+        );
         const result = await response.json();
-        
-        console.log('📦 Respuesta del catálogo:', result);
         
         if (result.status === 'success') {
             let coursesArray = [];
-            
-            if (Array.isArray(result.data)) {
-                coursesArray = result.data;
-            } else if (Array.isArray(result.cursos)) {
-                coursesArray = result.cursos;
-            } else if (Array.isArray(result)) {
-                coursesArray = result;
-            }
+            if (Array.isArray(result.data)) coursesArray = result.data;
+            else if (Array.isArray(result.cursos)) coursesArray = result.cursos;
+            else if (Array.isArray(result)) coursesArray = result;
             
             if (coursesArray.length > 0) {
-                COURSES_DATA = coursesArray.map(course => {
-                    return {
-                        ID: course.ID || course.id || course.Id || '',
-                        Nombre: course.Nombre || course.nombre || course.titulo || 'Sin nombre',
-                        Tipo: course.Tipo || course.tipo || 'Curso',
-                        Categoria: course.Categoria || course.categoria || '',
-                        Nivel: course.Nivel || course.nivel || 'Básico',
-                        Descripcion: course.Descripcion || course.descripcion || course.descripción || '',
-                        ImagenURL: course.ImagenURL || course.imagenURL || course.imagen_url || course.imagen || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso',
-                        Precio: course.Precio || course.precio || '0',
-                        Moneda: course.Moneda || course.moneda || '$',
-                        EnlaceInfo: course.EnlaceInfo || course.enlaceInfo || course.enlace_info || course.enlace || '#',
-                        EnlaceAula: course.EnlaceAula || course.enlaceAula || course.enlace_aula || '',
-                        EnlaceCompra: course.EnlaceCompra || course.enlaceCompra || course.enlace_compra || '',
-                        EnlaceMaterial: course.EnlaceMaterial || course.enlaceMaterial || course.enlace_material || '',
-                        TotalLecciones: course.TotalLecciones || course.totalLecciones || course.total_lecciones || 0,
-                        NombresModulos: course.NombresModulos || course.nombresModulos || course.nombres_modulos || '',
-                        Badges: course.Badges || course.badges || '',
-                        Activo: course.Activo || course.activo || 'SI',
-                        ProfesorNombre: course.ProfesorNombre || course.profesorNombre || (course.profesor && course.profesor.nombre) || '',
-                        ProfesorFoto: course.ProfesorFoto || course.profesorFoto || (course.profesor && course.profesor.foto) || '',
-                        ProfesorResena: course.ProfesorResena || course.profesorResena || (course.profesor && course.profesor.resena) || '',
-                        ProfesorEspecialidad: course.ProfesorEspecialidad || course.profesorEspecialidad || (course.profesor && course.profesor.especialidad) || '',
-                        Destacado: course.Destacado || course.destacado || false
-                    };
-                });
-                
-                console.log('✅ Cursos cargados:', COURSES_DATA.length);
+                COURSES_DATA = coursesArray.map(course => ({
+                    ID: course.ID || course.id || course.Id || '',
+                    Nombre: course.Nombre || course.nombre || course.titulo || 'Sin nombre',
+                    Tipo: course.Tipo || course.tipo || 'Curso',
+                    Categoria: course.Categoria || course.categoria || '',
+                    Nivel: course.Nivel || course.nivel || 'Básico',
+                    Descripcion: course.Descripcion || course.descripcion || course.descripción || '',
+                    ImagenURL: course.ImagenURL || course.imagenURL || course.imagen_url || course.imagen || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso',
+                    Precio: course.Precio || course.precio || '0',
+                    Moneda: course.Moneda || course.moneda || '$',
+                    EnlaceInfo: course.EnlaceInfo || course.enlaceInfo || course.enlace_info || course.enlace || '#',
+                    EnlaceAula: course.EnlaceAula || course.enlaceAula || course.enlace_aula || '',
+                    EnlaceCompra: course.EnlaceCompra || course.enlaceCompra || course.enlace_compra || '',
+                    EnlaceMaterial: course.EnlaceMaterial || course.enlaceMaterial || course.enlace_material || '',
+                    TotalLecciones: course.TotalLecciones || course.totalLecciones || course.total_lecciones || 0,
+                    NombresModulos: course.NombresModulos || course.nombresModulos || course.nombres_modulos || '',
+                    Badges: course.Badges || course.badges || '',
+                    Activo: course.Activo || course.activo || 'SI',
+                    ProfesorNombre: course.ProfesorNombre || course.profesorNombre || (course.profesor && course.profesor.nombre) || '',
+                    ProfesorFoto: course.ProfesorFoto || course.profesorFoto || (course.profesor && course.profesor.foto) || '',
+                    ProfesorResena: course.ProfesorResena || course.profesorResena || (course.profesor && course.profesor.resena) || '',
+                    ProfesorEspecialidad: course.ProfesorEspecialidad || course.profesorEspecialidad || (course.profesor && course.profesor.especialidad) || '',
+                    Destacado: course.Destacado || course.destacado || false
+                }));
                 await loadData();
                 showSuccessToast();
             } else {
-                console.warn('⚠️ No se encontraron cursos en la respuesta');
                 hideLoadingToast();
                 showNotif('Sin cursos', 'No hay cursos disponibles en este momento.', 'info');
             }
         } else {
-            console.error('❌ Error en respuesta:', result);
             hideLoadingToast();
             showNotif('Error', result.message || 'No se pudo cargar el catálogo.', 'error');
         }
@@ -2460,6 +2541,7 @@ async function saveEnrollmentStatus(email, courseName, idx) {
                     dbUserCourses[email] = dbUserCourses[email].filter(c => normalizeName(c) !== normalizeName(courseName));
                 }
             }
+            clearClientCache(); // ⚡ Limpiar caché tras cambio
             applyFilters();
             renderEnrollmentsList(null, courseName);
         } else {

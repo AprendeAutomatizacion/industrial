@@ -502,7 +502,6 @@
         body.light-mode .course-card .text-slate-400 { color: #1e293b !important; }
         body.light-mode .course-card .text-slate-500 { color: #1e293b !important; }
 
-        /* DECO - IDÉNTICO AL INDEX */
         .course-card .card-deco {
             position: absolute;
             top: -1px;
@@ -1050,9 +1049,142 @@
 
 <script>
     // ==========================================
+    // ⚡ CACHÉ EN CLIENTE (localStorage)
+    // ==========================================
+    const CLIENT_CACHE_TTL = 5 * 60 * 1000; // 5 minutos
+    const CLIENT_CACHE_PREFIX = 'cache_';
+
+    async function fetchWithCache(url, cacheKey, ttl = CLIENT_CACHE_TTL) {
+        const fullKey = CLIENT_CACHE_PREFIX + cacheKey;
+        const cached = localStorage.getItem(fullKey);
+        const ts = parseInt(localStorage.getItem(fullKey + '_ts') || '0');
+        
+        if (cached && (Date.now() - ts) < ttl) {
+            try {
+                const data = JSON.parse(cached);
+                console.log(`⚡ [CACHE HIT] ${cacheKey}`);
+                return { json: async () => data };
+            } catch(e) {
+                localStorage.removeItem(fullKey);
+                localStorage.removeItem(fullKey + '_ts');
+            }
+        }
+        
+        console.log(`🌐 [CACHE MISS] ${cacheKey} → fetching`);
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        try {
+            localStorage.setItem(fullKey, JSON.stringify(data));
+            localStorage.setItem(fullKey + '_ts', Date.now().toString());
+        } catch(e) {
+            console.warn('localStorage lleno, limpiando caché viejo');
+            Object.keys(localStorage).forEach(k => {
+                if (k.startsWith(CLIENT_CACHE_PREFIX)) localStorage.removeItem(k);
+            });
+        }
+        
+        return { json: async () => data };
+    }
+
+    function clearClientCache() {
+        Object.keys(localStorage).forEach(k => {
+            if (k.startsWith(CLIENT_CACHE_PREFIX)) {
+                localStorage.removeItem(k);
+            }
+        });
+        console.log('🧹 Caché de cliente limpiado');
+    }
+    window.clearClientCache = clearClientCache;
+
+    // ==========================================
+    // ⭐ SISTEMA DE PERSISTENCIA DE ESTADO (sessionStorage)
+    // ==========================================
+    const PROGRESO_STATE_KEY = 'progreso_estado';
+    const PROGRESO_TIMESTAMP_KEY = 'progreso_timestamp';
+    const PROGRESO_MAX_AGE = 5 * 60 * 1000; // 5 minutos
+
+    window.addEventListener('pageshow', (event) => {
+        const stateStr = sessionStorage.getItem(PROGRESO_STATE_KEY);
+        const timestampStr = sessionStorage.getItem(PROGRESO_TIMESTAMP_KEY);
+        
+        if (!stateStr || !timestampStr) return;
+        
+        const age = Date.now() - parseInt(timestampStr);
+        if (age > PROGRESO_MAX_AGE) {
+            sessionStorage.removeItem(PROGRESO_STATE_KEY);
+            sessionStorage.removeItem(PROGRESO_TIMESTAMP_KEY);
+            return;
+        }
+        
+        try {
+            const state = JSON.parse(stateStr);
+            
+            if (!event.persisted && typeof state.scrollY === 'number' && state.scrollY > 0) {
+                let intentos = 0;
+                const maxIntentos = 60;
+                const checkRender = setInterval(() => {
+                    intentos++;
+                    const coursesContainer = document.getElementById('individualCourseProgressCards');
+                    const subjectsContainer = document.getElementById('individualSubjectProgressCards');
+                    const achievementsContainer = document.getElementById('logros-obtenidos-lista');
+                    
+                    const tieneContenido = 
+                        (coursesContainer && coursesContainer.children.length > 0 && !coursesContainer.innerHTML.includes('empty-state')) ||
+                        (subjectsContainer && subjectsContainer.children.length > 0 && !subjectsContainer.innerHTML.includes('empty-state')) ||
+                        (achievementsContainer && !achievementsContainer.innerHTML.includes('Cargando tus logros'));
+                    
+                    if (tieneContenido || intentos >= maxIntentos) {
+                        clearInterval(checkRender);
+                        if (tieneContenido) {
+                            setTimeout(() => {
+                                window.scrollTo({ top: state.scrollY, behavior: 'instant' });
+                            }, 200);
+                        }
+                    }
+                }, 100);
+            }
+        } catch (e) {
+            console.warn('Error al restaurar estado de Progreso:', e);
+        }
+    });
+
+    window.addEventListener('beforeunload', () => {
+        try {
+            const state = {
+                scrollY: window.scrollY,
+                timestamp: Date.now()
+            };
+            sessionStorage.setItem(PROGRESO_STATE_KEY, JSON.stringify(state));
+            sessionStorage.setItem(PROGRESO_TIMESTAMP_KEY, Date.now().toString());
+        } catch (e) {}
+    });
+
+    window.addEventListener('pagehide', (event) => {
+        try {
+            if (!event.persisted) {
+                const state = {
+                    scrollY: window.scrollY,
+                    timestamp: Date.now()
+                };
+                sessionStorage.setItem(PROGRESO_STATE_KEY, JSON.stringify(state));
+                sessionStorage.setItem(PROGRESO_TIMESTAMP_KEY, Date.now().toString());
+            }
+        } catch (e) {}
+    });
+
+    window.addEventListener('storage', (event) => {
+        if (event.key === 'user' && !event.newValue) {
+            sessionStorage.removeItem(PROGRESO_STATE_KEY);
+            sessionStorage.removeItem(PROGRESO_TIMESTAMP_KEY);
+            clearClientCache();
+        }
+    });
+
+    // ==========================================
     // CONFIGURACIÓN PRINCIPAL
     // ==========================================
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvSa9yxQYuWtC-YSn4x1K6hzhdeujQfNEb1GoWkvJmFShA4kdhSWe_oOoBFqkKaagx/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5UzjuZtBN-4Q9qeYGKa73Qp8B8x8lsrNAp1-P35MY0vy5oQqn_-ojmCny3vu9e0fv/exec';
 
     let COURSES_DATA = [];
     const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "espana": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
@@ -1451,7 +1583,13 @@
     async function loadData() {
         if(!currentUser) return;
         try {
-            const res = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
+            const email = currentUser.email.toLowerCase();
+            // ⚡ get_data SOLO del usuario actual + caché corto (1 min)
+            const res = await fetchWithCache(
+                `${SCRIPT_URL}?action=get_data&email=${encodeURIComponent(email)}`,
+                `data_progreso_${email}`,
+                60 * 1000
+            );
             const data = await res.json();
             if(data.status === 'success') {
                 dbUsers = data.users || {};
@@ -1461,7 +1599,6 @@
                 dbUserAccessStatus = data.userAccessStatus || {};
                 const enrollmentDatesBackend = data.userCourseEnrollmentDates || {};
                 const completionDatesBackend = data.userCourseCompletionDates || {};
-                const email = currentUser.email.toLowerCase();
                 
                 let myCourseNamesRaw = dbUserCourses[email] || [];
                 let myCourseNames = splitCourseNames(myCourseNamesRaw);
@@ -1521,8 +1658,12 @@
     async function loadCoursesFromSheet() {
         try {
             showLoadingToast();
-            const response = await fetch(`${SCRIPT_URL}?action=get_courses&nocache=${new Date().getTime()}`);
-            if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+            // ⚡ get_courses con caché de 5 min
+            const response = await fetchWithCache(
+                `${SCRIPT_URL}?action=get_courses`,
+                'courses_progreso',
+                5 * 60 * 1000
+            );
             const result = await response.json();
             if (result.status !== 'success') throw new Error(result.message || 'Error del script');
             
@@ -1821,6 +1962,8 @@
         const icon = document.getElementById('refresh-progress-icon');
         if (icon) icon.classList.add('fa-spin');
         showLoadingToast();
+        // ⚡ Limpiar caché antes de recargar (para traer datos frescos)
+        clearClientCache();
         await loadData();
         showSuccessToast();
         if (icon) icon.classList.remove('fa-spin');
@@ -1833,7 +1976,6 @@
         generateCertificate(courseId);
     }
 
-    // ⭐ ÚNICO CAMBIO: navega en la misma app en lugar de abrir nueva pestaña
     function generateCertificate(courseId) {
         if (!currentUser) { 
             alert("Debes iniciar sesión para generar el certificado."); 

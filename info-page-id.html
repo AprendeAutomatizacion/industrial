@@ -563,7 +563,7 @@
                         <p class="price-bcv-total"><span class="bs-label">Bs.</span> <span id="total-bs-valor">--</span></p>
                         <p class="price-bcv-updated">
                             <span id="tasa-bcv-fecha">Actualizado: --</span>
-                            <button onclick="obtenerTasaBCV()" title="Actualizar tasa"><i class="fas fa-sync-alt"></i></button>
+                            <button onclick="obtenerTasaBCV(true)" title="Actualizar tasa"><i class="fas fa-sync-alt"></i></button>
                         </p>
                     </div>
                     
@@ -607,7 +607,7 @@
                     </div>
                     <div class="mt-2 pt-2 border-t border-slate-700/50 flex justify-between text-[8px] md:text-xs">
                         <span class="text-slate-500">Actualizado: <span id="tasaBCVActualizado">--</span></span>
-                        <button onclick="obtenerTasaBCV()" class="text-cyan-400 hover:text-cyan-300 transition flex items-center gap-1"><i class="fas fa-sync-alt"></i> Actualizar</button>
+                        <button onclick="obtenerTasaBCV(true)" class="text-cyan-400 hover:text-cyan-300 transition flex items-center gap-1"><i class="fas fa-sync-alt"></i> Actualizar</button>
                     </div>
                 </div>
             </div>
@@ -647,13 +647,96 @@
 <script src="js/auth.js"></script>
 <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyXgO9nCxF-_llCpiye-er9T7uqe3hnuOkajD_hSV8i1Di1zavgYxXcwFVLvCh-A3pP/exec';
-    const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
+    const AUTH_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5UzjuZtBN-4Q9qeYGKa73Qp8B8x8lsrNAp1-P35MY0vy5oQqn_-ojmCny3vu9e0fv/exec';
     
     let COURSE_ID_NUMERIC = null;
     let tasaBCV = 0;
     let cursoSeleccionado = null;
     let dbUserPaymentStatus = {};
     let dbUserAccessStatus = {};
+
+    // ============================================================
+    // 🚀 CACHÉ DE CLIENTE - Página Info
+    // ============================================================
+    const CACHE_PREFIX = 'info_cache_';
+
+    async function fetchWithCache(url, options) {
+        options = options || {};
+        const method = (options.method || 'GET').toUpperCase();
+        const body = options.body || null;
+        const headers = options.headers || {};
+        const cacheTTL = options.cacheTTL || 0;
+        const forceRefresh = options.forceRefresh || false;
+        const responseType = options.responseType || 'json';
+
+        const cacheKey = CACHE_PREFIX + method + '_' + url;
+
+        // Leer caché (solo GET con TTL > 0)
+        if (method === 'GET' && cacheTTL > 0 && !forceRefresh) {
+            try {
+                const cached = sessionStorage.getItem(cacheKey);
+                if (cached) {
+                    const entry = JSON.parse(cached);
+                    if (Date.now() < entry.expiresAt) {
+                        console.log('✅ [CACHE HIT]', url);
+                        return entry.data;
+                    }
+                    sessionStorage.removeItem(cacheKey);
+                }
+            } catch (e) {
+                console.warn('Error leyendo caché:', e);
+            }
+        }
+
+        // Fetch real - NO añadir Content-Type en GET (rompe CORS con Apps Script)
+        const fetchOptions = {
+            method: method,
+            headers: Object.assign({}, headers)
+        };
+        if (body) {
+            if (!fetchOptions.headers['Content-Type']) {
+                fetchOptions.headers['Content-Type'] = 'application/json';
+            }
+            fetchOptions.body = (typeof body === 'string') ? body : JSON.stringify(body);
+        }
+
+        console.log('🌐 [FETCH]', method, url);
+        const response = await fetch(url, fetchOptions);
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+
+        const data = (responseType === 'text') ? await response.text() : await response.json();
+
+        // Guardar en caché (solo GET con TTL)
+        if (method === 'GET' && cacheTTL > 0) {
+            try {
+                sessionStorage.setItem(cacheKey, JSON.stringify({
+                    data: data,
+                    expiresAt: Date.now() + (cacheTTL * 1000)
+                }));
+            } catch (e) {
+                console.warn('Error guardando caché:', e);
+            }
+        }
+
+        return data;
+    }
+
+    function clearInfoCache() {
+        const keys = Object.keys(sessionStorage).filter(k => k.indexOf(CACHE_PREFIX) === 0);
+        keys.forEach(k => sessionStorage.removeItem(k));
+        console.log('🧹 Caché de info limpiada (' + keys.length + ' entradas)');
+    }
+
+    function invalidateByEndpoint(endpointFragment) {
+        const keys = Object.keys(sessionStorage).filter(k =>
+            k.indexOf(CACHE_PREFIX) === 0 && k.indexOf(endpointFragment) !== -1
+        );
+        keys.forEach(k => sessionStorage.removeItem(k));
+        console.log('🧹 Invalidadas ' + keys.length + ' entradas de ' + endpointFragment);
+    }
+    // ============================================================
+    // FIN CACHÉ DE CLIENTE
+    // ============================================================
 
     function getCourseIdFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -718,10 +801,15 @@
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 
-    async function obtenerTasaBCV() {
+    // 🚀 CACHÉ: obtenerTasaBCV con caché de 30 min (la tasa BCV se actualiza 1 vez al día)
+    async function obtenerTasaBCV(forceRefresh) {
         try {
-            const response = await fetch('https://ve.dolarapi.com/v1/dolares/oficial');
-            const data = await response.json();
+            const url = 'https://ve.dolarapi.com/v1/dolares/oficial';
+            const data = await fetchWithCache(url, {
+                method: 'GET',
+                cacheTTL: 30 * 60,   // 30 minutos
+                forceRefresh: !!forceRefresh
+            });
             if (data && data.promedio) {
                 tasaBCV = data.promedio;
                 const fecha = data.fechaActualizacion ? new Date(data.fechaActualizacion) : new Date();
@@ -854,10 +942,12 @@
                 `;
                 btn.innerHTML = '<i class="fas fa-check"></i> ¡Listo!';
                 btn.className = 'bg-green-500 text-white px-6 py-3 rounded-xl font-semibold flex-1 text-center';
+                // 🚀 Invalidar caché de get_data porque el estado cambió
+                invalidateByEndpoint('action=get_data');
                 setTimeout(() => {
                     cerrarModalCompra();
                     showSuccessToast('Compra registrada');
-                    loadUserEnrollmentStatus();
+                    loadUserEnrollmentStatus(true);
                 }, 2000);
             } else {
                 mensaje.classList.remove('hidden');
@@ -875,12 +965,17 @@
         }
     }
 
-    async function loadUserEnrollmentStatus() {
+    // 🚀 CACHÉ: loadUserEnrollmentStatus con caché de 2 min
+    async function loadUserEnrollmentStatus(forceRefresh) {
         if (!AuthLogic.currentUser || !AuthLogic.currentUser.email) return;
         const email = AuthLogic.currentUser.email.toLowerCase();
         try {
-            const response = await fetch(`${AUTH_SCRIPT_URL}?action=get_data&t=${Date.now()}`);
-            const result = await response.json();
+            const url = `${AUTH_SCRIPT_URL}?action=get_data`;
+            const result = await fetchWithCache(url, {
+                method: 'GET',
+                cacheTTL: 2 * 60,   // 2 minutos
+                forceRefresh: !!forceRefresh
+            });
             if (result.status === 'success') {
                 dbUserPaymentStatus = result.userPaymentStatus || {};
                 dbUserAccessStatus = result.userAccessStatus || {};
@@ -1106,12 +1201,17 @@
         updateBuyButtons();
     }
 
-    async function fetchCourseData(courseId) {
+    // 🚀 CACHÉ: fetchCourseData con caché de 15 min
+    async function fetchCourseData(courseId, forceRefresh) {
         if (!courseId) return null;
         showLoadingToast('Cargando información del curso...');
         try {
-            const response = await fetch(`${SCRIPT_URL}?action=get_course_info&courseId=${courseId}&t=${Date.now()}`);
-            const result = await response.json();
+            const url = `${SCRIPT_URL}?action=get_course_info&courseId=${courseId}`;
+            const result = await fetchWithCache(url, {
+                method: 'GET',
+                cacheTTL: 15 * 60,   // 15 minutos
+                forceRefresh: !!forceRefresh
+            });
             if (result.status === 'success' && result.data) {
                 showSuccessToast('Curso cargado');
                 return result.data;

@@ -814,17 +814,89 @@
         const urlParams = new URLSearchParams(window.location.search);
         const courseId = urlParams.get('courseId');
         const currentUser = JSON.parse(localStorage.getItem('user')) || null;
+
+        // ============================================================
+        // 🚀 CACHÉ DE CLIENTE - Certificado
+        // ============================================================
+        const CACHE_PREFIX = 'cert_cache_';
+
+        async function fetchWithCache(url, options) {
+            options = options || {};
+            const method = (options.method || 'GET').toUpperCase();
+            const body = options.body || null;
+            const headers = options.headers || {};
+            const cacheTTL = options.cacheTTL || 0;
+            const forceRefresh = options.forceRefresh || false;
+            const responseType = options.responseType || 'json';
+
+            const cacheKey = CACHE_PREFIX + method + '_' + url;
+
+            // Leer caché (solo GET con TTL > 0)
+            if (method === 'GET' && cacheTTL > 0 && !forceRefresh) {
+                try {
+                    const cached = sessionStorage.getItem(cacheKey);
+                    if (cached) {
+                        const entry = JSON.parse(cached);
+                        if (Date.now() < entry.expiresAt) {
+                            console.log('✅ [CACHE HIT]', url);
+                            return entry.data;
+                        }
+                        sessionStorage.removeItem(cacheKey);
+                    }
+                } catch (e) {
+                    console.warn('Error leyendo caché:', e);
+                }
+            }
+
+            // Fetch real - NO añadir Content-Type en GET (rompe CORS con Apps Script)
+            const fetchOptions = {
+                method: method,
+                headers: Object.assign({}, headers)
+            };
+            if (body) {
+                if (!fetchOptions.headers['Content-Type']) {
+                    fetchOptions.headers['Content-Type'] = 'application/json';
+                }
+                fetchOptions.body = (typeof body === 'string') ? body : JSON.stringify(body);
+            }
+
+            console.log('🌐 [FETCH]', method, url);
+            const response = await fetch(url, fetchOptions);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+
+            const data = (responseType === 'text') ? await response.text() : await response.json();
+
+            // Guardar en caché (solo GET con TTL)
+            if (method === 'GET' && cacheTTL > 0) {
+                try {
+                    sessionStorage.setItem(cacheKey, JSON.stringify({
+                        data: data,
+                        expiresAt: Date.now() + (cacheTTL * 1000)
+                    }));
+                } catch (e) {
+                    console.warn('Error guardando caché:', e);
+                }
+            }
+
+            return data;
+        }
+
+        function clearCertCache() {
+            const keys = Object.keys(sessionStorage).filter(k => k.indexOf(CACHE_PREFIX) === 0);
+            keys.forEach(k => sessionStorage.removeItem(k));
+            console.log('🧹 Caché de certificado limpiada (' + keys.length + ' entradas)');
+        }
+        // ============================================================
+        // FIN CACHÉ DE CLIENTE
+        // ==========================================
         
         // ==========================================
         // FUNCIÓN VOLVER A PROGRESO
         // ==========================================
         function volverAProgreso() {
-            // Si hay historial, vuelve atrás (mantiene el estado de progreso)
             if (window.history.length > 1) {
                 window.history.back();
             } else {
-                // Si no hay historial (por ejemplo, abrió el certificado directamente),
-                // navega a la página de progreso
                 window.location.href = 'progreso.html';
             }
         }
@@ -1039,8 +1111,12 @@
                 
                 console.log('📜 Cargando certificado para curso ID:', courseId);
                 
-                const coursesResponse = await fetch(`${SCRIPT_URL}?action=get_courses&nocache=${Date.now()}`);
-                const coursesData = await coursesResponse.json();
+                // 🚀 CACHÉ: get_courses con TTL 15 min (catálogo casi nunca cambia)
+                const coursesUrl = `${SCRIPT_URL}?action=get_courses`;
+                const coursesData = await fetchWithCache(coursesUrl, {
+                    method: 'GET',
+                    cacheTTL: 15 * 60
+                });
                 
                 if (coursesData.status !== 'success' || !coursesData.data) {
                     hideLoadingToast();
@@ -1058,8 +1134,12 @@
                 
                 console.log('📚 Curso encontrado:', course.Nombre);
                 
-                const userDataResponse = await fetch(`${SCRIPT_URL}?action=get_data&t=${Date.now()}`);
-                const userData = await userDataResponse.json();
+                // 🚀 CACHÉ: get_data con TTL 2 min (datos de usuario, cambian seguido)
+                const userDataUrl = `${SCRIPT_URL}?action=get_data`;
+                const userData = await fetchWithCache(userDataUrl, {
+                    method: 'GET',
+                    cacheTTL: 2 * 60
+                });
                 
                 let completionDate = null;
                 let userScores = null;
@@ -1087,7 +1167,6 @@
                 
                 document.getElementById('certStudentName').textContent = currentUser.name || 'Estudiante';
                 
-                // Recuperar cédula de múltiples fuentes
                 let cedulaRaw = currentUser.cedula || '';
                 if (!cedulaRaw || cedulaRaw === 'N/A') {
                     for (let i = 0; i < localStorage.length; i++) {
@@ -1141,9 +1220,6 @@
                 
                 const footerElement = document.querySelector('.cert-footer');
                 
-                // ==========================================
-                // AJUSTE DINÁMICO PARA IMPRESIÓN
-                // ==========================================
                 window.totalModulos = totalModules;
                 
                 function getPrintMarginTop(modulos) {
@@ -1153,7 +1229,6 @@
                     return 30;
                 }
                 
-                // Aplicar margin-top para vista en pantalla
                 if (numFilas === 2) {
                     footerElement.style.marginTop = '110px';
                 } else if (numFilas === 3) {
@@ -1166,7 +1241,6 @@
                 
                 console.log('📋 Total módulos:', totalModules, '→ Filas:', numFilas);
                 
-                // Inyectar estilo dinámico para impresión
                 const styleId = 'dynamic-print-style';
                 let existingStyle = document.getElementById(styleId);
                 if (existingStyle) {
