@@ -1,5 +1,5 @@
-// navbar.js - Sidebar lateral fija con tooltips (Variante C)
-// Carga la navegación lateral en todas las páginas (excepto aulas virtuales)
+// navbar.js - Sidebar lateral (desktop) + Bottom Nav (móvil)
+// Variante C con responsive móvil tipo app
 
 // ============================================================
 // FUNCIONES GLOBALES DE COMPRA
@@ -9,12 +9,10 @@ window.buyManual = function(courseId, buyLink) {
         if (!AuthLogic.currentUser.accessedCursos) {
             AuthLogic.currentUser.accessedCursos = [];
         }
-
         if (!AuthLogic.currentUser.accessedCursos.includes(courseId)) {
             AuthLogic.currentUser.accessedCursos.push(courseId);
             localStorage.setItem('user', JSON.stringify(AuthLogic.currentUser));
             AuthLogic.syncUserData();
-
             if (typeof showNotif === 'function') {
                 showNotif('¡Manual Adquirido!', 'El manual ahora aparecerá en tu sección de "Mis Cursos".', 'success');
             }
@@ -76,10 +74,16 @@ window.toggleTheme = function() {
     const isLight = document.body.classList.toggle('light-mode');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     
-    // Actualizar TODOS los íconos de tema (por si hay varios)
-    const icons = document.querySelectorAll('#theme-icon, #theme-icon-sidebar, .theme-icon-class');
+    // Actualizar TODOS los íconos de tema (sidebar + bottom nav)
+    const icons = document.querySelectorAll('#theme-icon, #theme-icon-mobile, #theme-icon-sidebar');
     icons.forEach(icon => {
         icon.className = isLight ? 'fas fa-moon' : 'fas fa-sun';
+    });
+    
+    // Actualizar labels de tema
+    const labels = document.querySelectorAll('.theme-label');
+    labels.forEach(label => {
+        label.textContent = isLight ? 'Oscuro' : 'Claro';
     });
 };
 
@@ -120,7 +124,7 @@ window.createSkeletonHTML = function(type, count = 3) {
 };
 
 // ============================================================
-// ESTILOS GLOBALES (los tuyos originales + los nuevos de la sidebar)
+// ESTILOS GLOBALES
 // ============================================================
 const style = document.createElement('style');
 style.textContent = `
@@ -129,13 +133,11 @@ style.textContent = `
     @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.15); } }
 
     /* =====================================================
-       SIDEBAR LATERAL FIJA CON TOOLTIPS (Variante C)
+       SIDEBAR LATERAL FIJA (Desktop)
        ===================================================== */
-    
-    /* Empujar el contenido a la derecha para dejar espacio a la sidebar */
     body {
-        padding-left: 68px !important;
-        transition: padding-left 0.3s ease;
+        padding-left: 68px;
+        transition: padding-left 0.3s ease, padding-bottom 0.3s ease;
     }
 
     .app-sidebar {
@@ -156,7 +158,6 @@ style.textContent = `
         gap: 6px;
     }
 
-    /* Logo arriba */
     .app-sidebar .sb-logo {
         width: 44px;
         height: 44px;
@@ -181,7 +182,6 @@ style.textContent = `
         object-fit: contain;
     }
 
-    /* Separador */
     .sb-divider {
         width: 32px;
         height: 1px;
@@ -189,7 +189,6 @@ style.textContent = `
         margin: 8px 0;
     }
 
-    /* Contenedor de items */
     .sb-nav {
         display: flex;
         flex-direction: column;
@@ -198,7 +197,6 @@ style.textContent = `
         flex: 1;
     }
 
-    /* Item individual */
     .sb-item {
         position: relative;
         width: 48px;
@@ -231,7 +229,6 @@ style.textContent = `
         filter: drop-shadow(0 0 8px rgba(45, 184, 206, 0.6));
     }
 
-    /* Item activo */
     .sb-item.active {
         background: linear-gradient(135deg, rgba(45, 184, 206, 0.25), rgba(45, 184, 206, 0.08));
         border-color: rgba(45, 184, 206, 0.45);
@@ -258,9 +255,6 @@ style.textContent = `
         filter: drop-shadow(0 0 6px rgba(45, 184, 206, 0.5));
     }
 
-    /* ============================================
-       TOOLTIP
-       ============================================ */
     .sb-tooltip {
         position: absolute;
         left: calc(100% + 14px);
@@ -307,7 +301,6 @@ style.textContent = `
         transform: translateY(-50%) translateX(0);
     }
 
-    /* Acciones abajo */
     .sb-actions {
         display: flex;
         flex-direction: column;
@@ -353,7 +346,7 @@ style.textContent = `
         transform: translateY(-2px);
     }
 
-    /* Modo claro */
+    /* Modo claro sidebar */
     body.light-mode .app-sidebar {
         background: rgba(255, 255, 255, 0.88);
         border-right-color: rgba(8, 145, 178, 0.2);
@@ -403,18 +396,139 @@ style.textContent = `
         border-top-color: rgba(0, 0, 0, 0.06);
     }
 
-    /* Responsive: ocultar sidebar en móvil */
+    /* =====================================================
+       BOTTOM NAV (Móvil) — oculto por defecto en desktop
+       ===================================================== */
+    .app-bottom-nav {
+        display: none;
+    }
+
     @media (max-width: 768px) {
         body {
-            padding-left: 0 !important;
+            padding-left: 0;
+            padding-bottom: 72px; /* espacio para la bottom nav */
         }
         .app-sidebar {
             display: none !important;
         }
+
+        .app-bottom-nav {
+            display: flex;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 68px;
+            background: rgba(10, 15, 30, 0.95);
+            backdrop-filter: blur(20px) saturate(150%);
+            -webkit-backdrop-filter: blur(20px) saturate(150%);
+            border-top: 1px solid rgba(45, 184, 206, 0.2);
+            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            padding: 6px 4px;
+            padding-bottom: max(6px, env(safe-area-inset-bottom));
+            align-items: center;
+            justify-content: space-around;
+            gap: 2px;
+        }
+
+        .bn-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            padding: 6px 2px;
+            border-radius: 12px;
+            transition: all 0.25s ease;
+            position: relative;
+            cursor: pointer;
+            border: none;
+            background: none;
+            min-width: 0;
+        }
+
+        .bn-item i {
+            font-size: 17px;
+            transition: all 0.25s ease;
+        }
+
+        .bn-item span {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            transition: all 0.25s ease;
+        }
+
+        /* Ítem activo */
+        .bn-item.active {
+            color: #2db8ce;
+        }
+
+        .bn-item.active i {
+            filter: drop-shadow(0 0 10px rgba(45, 184, 206, 0.8));
+            transform: scale(1.15);
+        }
+
+        .bn-item.active span {
+            color: #2db8ce;
+        }
+
+        /* Indicador superior del activo */
+        .bn-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 3px;
+            background: #2db8ce;
+            border-radius: 0 0 3px 3px;
+            box-shadow: 0 0 12px #2db8ce, 0 2px 6px rgba(45, 184, 206, 0.5);
+        }
+
+        /* Feedback al tocar */
+        .bn-item:active {
+            background: rgba(45, 184, 206, 0.1);
+        }
+
+        /* Modo claro bottom nav */
+        body.light-mode .app-bottom-nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-top-color: rgba(8, 145, 178, 0.2);
+        }
+        body.light-mode .bn-item {
+            color: rgba(15, 23, 42, 0.55);
+        }
+        body.light-mode .bn-item.active {
+            color: #0891b2;
+        }
+        body.light-mode .bn-item.active span {
+            color: #0891b2;
+        }
+        body.light-mode .bn-item.active i {
+            filter: drop-shadow(0 0 10px rgba(8, 145, 178, 0.6));
+        }
+        body.light-mode .bn-item.active::before {
+            background: #0891b2;
+            box-shadow: 0 0 12px #0891b2, 0 2px 6px rgba(8, 145, 178, 0.4);
+        }
+        body.light-mode .bn-item:active {
+            background: rgba(8, 145, 178, 0.1);
+        }
     }
 
     /* =====================================================
-       ESTILOS ORIGINALES (TEMA, TARJETAS, BOTONES, ETC.)
+       RESTO DE ESTILOS ORIGINALES
        ===================================================== */
     .font-display {
         font-family: 'Orbitron', sans-serif !important;
@@ -869,9 +983,7 @@ style.textContent = `
         }
     }
 
-    /* ================================================= */
-    /* === BOTONES UNIFICADOS (PLATEADO/LED)         === */
-    /* ================================================= */
+    /* Botones unificados */
     .btn-metal {
         transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, filter 0.18s ease-out !important;
         text-transform: uppercase !important;
@@ -924,7 +1036,6 @@ style.textContent = `
 
     .btn-metal-icon { padding: 0 !important; width: 40px; height: 40px; border-radius: 9999px !important; }
 
-    /* Indicador de sync */
     .sync-indicator {
         position: fixed;
         bottom: 20px;
@@ -1018,7 +1129,7 @@ window.hideSyncIndicator = function() {
 };
 
 // ============================================================
-// SIDEBAR HTML
+// SIDEBAR HTML (Desktop)
 // ============================================================
 const sidebarHTML = `
 <aside class="app-sidebar">
@@ -1070,13 +1181,42 @@ const sidebarHTML = `
 `;
 
 // ============================================================
-// INSERTAR SIDEBAR
+// BOTTOM NAV HTML (Móvil)
 // ============================================================
-// Lista de páginas que son AULAS VIRTUALES (no llevan sidebar)
+const bottomNavHTML = `
+<nav class="app-bottom-nav">
+    <a href="index.html" class="bn-item ${currentPage === 'index.html' ? 'active' : ''}">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="catalogo.html" class="bn-item ${currentPage === 'catalogo.html' ? 'active' : ''}">
+        <i class="fas fa-th-large"></i>
+        <span>Catálogo</span>
+    </a>
+    <a href="mis-cursos.html" class="bn-item ${currentPage === 'mis-cursos.html' ? 'active' : ''}">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Mis Cursos</span>
+    </a>
+    <a href="progreso.html" class="bn-item ${currentPage === 'progreso.html' ? 'active' : ''}">
+        <i class="fas fa-chart-line"></i>
+        <span>Progreso</span>
+    </a>
+    <a href="programas.html" class="bn-item ${currentPage === 'programas.html' ? 'active' : ''}">
+        <i class="fas fa-laptop-code"></i>
+        <span>Programas</span>
+    </a>
+</nav>
+`;
+
+// ============================================================
+// INSERTAR SIDEBAR + BOTTOM NAV
+// ============================================================
+// Lista de páginas que son AULAS VIRTUALES (no llevan navegación)
 const aulasVirtuales = ['arranque-contactores.html', 'arranque-plc-logo.html'];
 
 if (!aulasVirtuales.includes(currentPage)) {
     document.body.insertAdjacentHTML('afterbegin', sidebarHTML);
+    document.body.insertAdjacentHTML('beforeend', bottomNavHTML);
 }
 
 // ============================================================
@@ -1094,5 +1234,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100 * index);
     });
 
-    console.log("🚀 Sidebar lateral (Variante C) cargada.");
+    console.log("🚀 Navegación responsive: Sidebar (desktop) + Bottom Nav (móvil).");
 });
