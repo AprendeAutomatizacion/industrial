@@ -2315,6 +2315,86 @@
 
         #user-progress-section.hidden { display: none !important; }
         #achievements-list-section.hidden { display: none !important; }
+
+        /* ==========================================
+           ⭐ DESCRIPCIONES CON FONDO GRIS-AZULADO (#cbd5e1) EN MODO CLARO
+           Aplica a todas las secciones del index
+           ========================================== */
+
+        body.light-mode .descripcion-intro,
+        html.light-mode .descripcion-intro {
+            background: #cbd5e1 !important;
+            background-color: #cbd5e1 !important;
+            background-image: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid #94a3b8 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+        body.light-mode .descripcion-intro:hover,
+        html.light-mode .descripcion-intro:hover {
+            border-color: rgba(6, 182, 212, 0.5) !important;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15) !important;
+        }
+
+        body.light-mode .descripcion-intro p,
+        html.light-mode .descripcion-intro p {
+            color: #1e293b !important;
+        }
+
+        body.light-mode .descripcion-intro .text-white,
+        html.light-mode .descripcion-intro .text-white {
+            color: #0f172a !important;
+        }
+
+        body.light-mode .descripcion-intro .text-cyan-400,
+        body.light-mode .descripcion-intro .text-cyan-300,
+        html.light-mode .descripcion-intro .text-cyan-400,
+        html.light-mode .descripcion-intro .text-cyan-300 {
+            color: #0e7490 !important;
+        }
+
+        body.light-mode .descripcion-intro .text-amber-400,
+        html.light-mode .descripcion-intro .text-amber-400 {
+            color: #b45309 !important;
+        }
+
+        body.light-mode .descripcion-intro .text-emerald-400,
+        html.light-mode .descripcion-intro .text-emerald-400 {
+            color: #047857 !important;
+        }
+
+        body.light-mode .descripcion-intro .text-purple-400,
+        html.light-mode .descripcion-intro .text-purple-400 {
+            color: #6d28d9 !important;
+        }
+
+        body.light-mode .descripcion-intro .text-blue-400,
+        html.light-mode .descripcion-intro .text-blue-400 {
+            color: #1d4ed8 !important;
+        }
+
+        body.light-mode .descripcion-intro .text-yellow-400,
+        html.light-mode .descripcion-intro .text-yellow-400 {
+            color: #b45309 !important;
+        }
+
+        body.light-mode .descripcion-intro .text-pink-400,
+        html.light-mode .descripcion-intro .text-pink-400 {
+            color: #be185d !important;
+        }
+
+        body.light-mode .descripcion-intro .text-slate-300,
+        body.light-mode .descripcion-intro .text-slate-400,
+        html.light-mode .descripcion-intro .text-slate-300,
+        html.light-mode .descripcion-intro .text-slate-400 {
+            color: #334155 !important;
+        }
+
+        body.light-mode .descripcion-intro .fas,
+        html.light-mode .descripcion-intro .fas {
+            opacity: 0.7;
+        }
     </style>
 
     <!-- GOOGLE CHARTS -->
@@ -2437,7 +2517,7 @@
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter mb-4">Nuestros <span>Pilares Fundamentales</span></h2>
 
                     <div class="w-full mt-4">
-                        <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
+                        <div class="descripcion-intro relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
                             <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                                 <span class="text-cyan-400 font-bold text-base md:text-xl">🧠 Filosofía Educativa</span> 
@@ -2524,7 +2604,7 @@
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo más <span>Destacado</span></h2>
 
                     <div class="w-full mt-6">
-                        <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
+                        <div class="descripcion-intro relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
                             <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                                 <span class="text-cyan-400 font-bold text-base md:text-xl">🚀 Descubre</span> nuestra oferta académica con 
@@ -2581,7 +2661,7 @@
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Modalidades de <span>Aprendizaje</span></h2>
 
                     <div class="w-full mt-6">
-                        <div class="relative p-5 md:p-8 rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-purple-400/50 hover:shadow-[0_0_40px_rgba(139,92,246,0.08)] group">
+                        <div class="descripcion-intro relative p-5 md:p-8 rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-purple-400/50 hover:shadow-[0_0_40px_rgba(139,92,246,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent opacity-60"></div>
                             <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                                 <span class="text-purple-400 font-bold text-base md:text-xl">🎯 Elige tu formato</span> 
@@ -2781,7 +2861,7 @@
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Lo que dicen <span>Nuestros Alumnos</span></h2>
                     
                     <div class="w-full mt-6">
-                        <div class="relative p-5 md:p-8 rounded-2xl border border-pink-500/20 bg-gradient-to-r from-pink-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-pink-400/50 hover:shadow-[0_0_40px_rgba(236,72,153,0.08)] group">
+                        <div class="descripcion-intro relative p-5 md:p-8 rounded-2xl border border-pink-500/20 bg-gradient-to-r from-pink-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-pink-400/50 hover:shadow-[0_0_40px_rgba(236,72,153,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-pink-400 to-transparent opacity-60"></div>
                             <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                                 <span class="text-pink-400 font-bold text-base md:text-xl">💬 Opiniones Reales</span> 
@@ -2931,7 +3011,7 @@
                     </h2>
                     
                     <div class="w-full mt-6">
-                        <div class="relative p-5 md:p-8 rounded-2xl border border-blue-500/20 bg-gradient-to-r from-blue-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-blue-400/50 hover:shadow-[0_0_40px_rgba(59,130,246,0.08)] group">
+                        <div class="descripcion-intro relative p-5 md:p-8 rounded-2xl border border-blue-500/20 bg-gradient-to-r from-blue-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-blue-400/50 hover:shadow-[0_0_40px_rgba(59,130,246,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-60"></div>
                             <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                                 <span class="text-blue-400 font-bold text-base md:text-xl">🎓 Formación con Validez</span>
@@ -3076,7 +3156,7 @@
                 </div>
 
                 <div class="mt-10 text-center">
-                    <div class="inline-block bg-gradient-to-r from-purple-500/10 via-cyan-500/10 to-emerald-500/10 rounded-3xl px-6 py-4 border border-white/5">
+                    <div class="descripcion-intro inline-block bg-gradient-to-r from-purple-500/10 via-cyan-500/10 to-emerald-500/10 rounded-3xl px-6 py-4 border border-white/5">
                         <p class="text-slate-300 text-sm md:text-base font-medium">
                             <span class="text-purple-400 font-bold">🏛️ Certificación Universitaria</span> 
                             o <span class="text-cyan-400 font-bold">💻 Certificado Digital Verificable</span> — 
@@ -3116,7 +3196,7 @@
                     </h2>
                     
                     <div class="w-full mt-6">
-                        <div class="relative p-5 md:p-8 rounded-2xl border border-yellow-500/20 bg-gradient-to-r from-yellow-500/5 via-transparent to-orange-500/5 backdrop-blur-sm transition-all duration-500 hover:border-yellow-400/50 hover:shadow-[0_0_40px_rgba(234,179,8,0.08)] group">
+                        <div class="descripcion-intro relative p-5 md:p-8 rounded-2xl border border-yellow-500/20 bg-gradient-to-r from-yellow-500/5 via-transparent to-orange-500/5 backdrop-blur-sm transition-all duration-500 hover:border-yellow-400/50 hover:shadow-[0_0_40px_rgba(234,179,8,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-60"></div>
                             <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                                 <span class="text-yellow-400 font-bold text-base md:text-xl">🎯 Supera tus límites</span>
@@ -3231,7 +3311,7 @@
                 </div>
 
                 <div class="mt-10 text-center">
-                    <div class="inline-block bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-amber-500/10 rounded-3xl px-6 py-4 border border-white/5">
+                    <div class="descripcion-intro inline-block bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-amber-500/10 rounded-3xl px-6 py-4 border border-white/5">
                         <p class="text-slate-300 text-sm md:text-base font-medium">
                             <span class="text-cyan-400 font-bold">🚀 Cada curso completado</span> es un paso más hacia tu 
                             <span class="text-yellow-400 font-bold">transformación profesional</span>. 
@@ -3269,7 +3349,7 @@
                     <h2 class="section-title text-2xl md:text-5xl font-extrabold uppercase tracking-tighter">Preguntas <span>Frecuentes</span></h2>
 
                     <div class="w-full mt-6">
-                        <div class="relative p-5 md:p-8 rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-emerald-400/50 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)] group">
+                        <div class="descripcion-intro relative p-5 md:p-8 rounded-2xl border border-emerald-500/20 bg-gradient-to-r from-emerald-500/5 via-transparent to-cyan-500/5 backdrop-blur-sm transition-all duration-500 hover:border-emerald-400/50 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)] group">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-emerald-400 to-transparent opacity-60"></div>
                             <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                                 <span class="text-emerald-400 font-bold text-base md:text-xl">❓ Todo lo que necesitas saber</span>
