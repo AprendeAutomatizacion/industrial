@@ -1771,7 +1771,7 @@
         });
         
         coursesContainer.innerHTML = coursesHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes cursos (Online/Presencial) habilitados.</div>';
-        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full empty-state italic text-center py-6 rounded-xl">No tienes materias habilitadas.</div>';
+        subjectsContainer.innerHTML = subjectsHtml || '<div class="col-span-full empty-state italic text-center rounded-xl">No tienes materias habilitadas.</div>';
     }
 
     function updateDashboard() {
@@ -1833,12 +1833,13 @@
         generateCertificate(courseId);
     }
 
+    // ⭐ ÚNICO CAMBIO: navega en la misma app en lugar de abrir nueva pestaña
     function generateCertificate(courseId) {
         if (!currentUser) { 
             alert("Debes iniciar sesión para generar el certificado."); 
             return; 
         }
-        window.open('certificado-page-id.html?courseId=' + courseId, '_blank');
+        window.location.href = 'certificado-page-id.html?courseId=' + courseId;
     }
 
     document.addEventListener("DOMContentLoaded", async () => {

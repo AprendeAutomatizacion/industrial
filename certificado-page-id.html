@@ -195,32 +195,6 @@
             box-shadow: 0 5px 15px rgba(45, 184, 206, 0.4);
         }
 
-        .btn-pdf {
-            background: #dc2626;
-            color: white;
-        }
-        .btn-pdf:hover {
-            background: #ef4444;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(220, 38, 38, 0.4);
-        }
-        .btn-pdf:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-            box-shadow: none !important;
-        }
-
-        .btn-close {
-            background: transparent;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3) !important;
-        }
-        .btn-close:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
-
         .toolbar-text {
             color: rgba(255,255,255,0.7);
             font-size: 12px;
@@ -606,10 +580,6 @@
                 width: 70px;
                 height: 70px;
             }
-            .btn-pdf {
-                padding: 8px 16px;
-                font-size: 11px;
-            }
         }
 
         /* ============================================
@@ -742,7 +712,6 @@
             }
         }
 </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -767,14 +736,8 @@
 
     <!-- Barra de herramientas -->
     <div class="certificate-toolbar">
-        <button class="btn-cert btn-pdf" onclick="generarPDF()" id="btnPdf">
-            📄 Descargar PDF
-        </button>
         <button class="btn-cert btn-print" onclick="window.print()">
             🖨️ Imprimir
-        </button>
-        <button class="btn-cert btn-close" onclick="window.close()">
-            ✕ Cerrar
         </button>
         <span class="toolbar-text">Optimizado para Hoja Carta - Horizontal</span>
     </div>
@@ -951,37 +914,6 @@
                     }
                 }, 1000);
             }
-        }
-        
-        // ==========================================
-        // FUNCIÓN PARA GENERAR PDF - MÉTODO CONFIABLE
-        // ==========================================
-        function generarPDF() {
-            const btn = document.getElementById('btnPdf');
-            const textoOriginal = btn.innerHTML;
-            
-            // Mostrar estado de carga
-            btn.innerHTML = '⏳ Preparando...';
-            btn.disabled = true;
-            
-            // Mostrar instrucciones al usuario
-            alert(
-                '📄 Para generar el PDF:\n\n' +
-                '1. Haz clic en "Aceptar" para abrir el diálogo de impresión\n' +
-                '2. En "Destino", selecciona "Guardar como PDF"\n' +
-                '3. Ajusta la orientación a "Horizontal" (si es necesario)\n' +
-                '4. Haz clic en "Guardar"\n\n' +
-                '✅ Así obtendrás tu certificado en PDF con la mejor calidad.'
-            );
-            
-            // Abrir el diálogo de impresión
-            window.print();
-            
-            // Restaurar el botón después de un tiempo
-            setTimeout(() => {
-                btn.innerHTML = textoOriginal;
-                btn.disabled = false;
-            }, 3000);
         }
         
         // ==========================================
@@ -1299,9 +1231,6 @@
                     <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
                     <h2 style="font-size: 24px; color: #dc2626; margin-bottom: 10px;">Error</h2>
                     <p style="font-size: 16px; color: #6b7280;">${message}</p>
-                    <button onclick="window.close()" style="margin-top: 20px; padding: 12px 24px; background: #2db8ce; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 700;">
-                        Cerrar
-                    </button>
                 </div>
             `;
         }
