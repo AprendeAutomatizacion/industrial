@@ -434,40 +434,28 @@ style.textContent = `
         .tn-logo {
             display: flex;
             align-items: center;
-            gap: 8px;
             cursor: pointer;
-            flex-shrink: 1;
-            min-width: 0;
-            overflow: hidden;
-        }
-
-        .tn-logo img {
-            height: 30px;
-            width: 30px;
-            object-fit: contain;
             flex-shrink: 0;
         }
 
-        .tn-logo-text {
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #fff;
+        .tn-logo img {
+            height: 34px;
+            width: 34px;
+            object-fit: contain;
+            transition: transform 0.25s ease;
         }
 
-        .tn-logo-text span {
-            color: #02d6fe;
+        .tn-logo:hover img {
+            transform: scale(1.05);
         }
 
         .tn-actions {
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-shrink: 0;
+            flex: 1;
+            justify-content: flex-end;
+            min-width: 0;
         }
 
         .tn-action-btn {
@@ -484,6 +472,7 @@ style.textContent = `
             transition: all 0.25s ease;
             font-size: 15px;
             position: relative;
+            flex-shrink: 0;
         }
 
         .tn-action-btn:hover,
@@ -505,13 +494,16 @@ style.textContent = `
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.04em;
+            min-width: 0;
+            max-width: 100%;
         }
 
         .tn-action-btn.user span {
             white-space: nowrap;
-            max-width: 90px;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 140px;
+            min-width: 0;
         }
 
         /* ========= FILA 2: NAVEGACIÓN ========= */
@@ -597,12 +589,6 @@ style.textContent = `
         }
         body.light-mode .tn-row-1 {
             border-bottom-color: rgba(0, 0, 0, 0.06);
-        }
-        body.light-mode .tn-logo-text {
-            color: #0f172a;
-        }
-        body.light-mode .tn-logo-text span {
-            color: #0891b2;
         }
         body.light-mode .tn-action-btn {
             color: #0891b2;
@@ -1295,11 +1281,10 @@ const sidebarHTML = `
 const topNavHTML = `
 <nav class="app-top-nav">
 
-    <!-- FILA 1: LOGO + ACCIONES -->
+    <!-- FILA 1: LOGO (solo ícono) + ACCIONES -->
     <div class="tn-row-1">
         <div class="tn-logo" onclick="window.location.href='index.html'">
             <img src="img/AA (38).webp" alt="Logo" onerror="this.src='https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png'">
-            <span class="tn-logo-text">APRENDE <span>AUTOMATIZACIÓN</span></span>
         </div>
         <div class="tn-actions">
             <button class="tn-action-btn" onclick="toggleTheme()" title="Cambiar tema">
