@@ -1,4 +1,4 @@
-// navbar.js - Sidebar lateral (desktop) + Top Nav (móvil)
+// navbar.js - Sidebar lateral (desktop) + Top Nav de 2 filas (móvil)
 // Variante C con responsive móvil
 
 // ============================================================
@@ -390,7 +390,7 @@ style.textContent = `
     }
 
     /* =====================================================
-       TOP NAV (Móvil) — oculto por defecto en desktop
+       TOP NAV DE 2 FILAS (Móvil) — oculto por defecto en desktop
        ===================================================== */
     .app-top-nav {
         display: none;
@@ -399,7 +399,7 @@ style.textContent = `
     @media (max-width: 768px) {
         body {
             padding-left: 0;
-            padding-top: 64px; /* espacio para la top nav */
+            padding-top: 112px; /* espacio para las 2 filas */
         }
         .app-sidebar {
             display: none !important;
@@ -407,20 +407,120 @@ style.textContent = `
 
         .app-top-nav {
             display: flex;
+            flex-direction: column;
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            height: 60px;
             background: rgba(10, 15, 30, 0.96);
             backdrop-filter: blur(20px) saturate(150%);
             -webkit-backdrop-filter: blur(20px) saturate(150%);
             border-bottom: 1px solid rgba(45, 184, 206, 0.2);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             z-index: 1000;
-            padding: 6px 4px;
+        }
+
+        /* ========= FILA 1: LOGO + ACCIONES ========= */
+        .tn-row-1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            height: 56px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            gap: 12px;
+        }
+
+        .tn-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            flex-shrink: 1;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .tn-logo img {
+            height: 30px;
+            width: 30px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .tn-logo-text {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #fff;
+        }
+
+        .tn-logo-text span {
+            color: #02d6fe;
+        }
+
+        .tn-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        .tn-action-btn {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            color: #2db8ce;
+            background: rgba(45, 184, 206, 0.08);
+            border: 1px solid rgba(45, 184, 206, 0.2);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-size: 15px;
+            position: relative;
+        }
+
+        .tn-action-btn:hover,
+        .tn-action-btn:active {
+            background: rgba(45, 184, 206, 0.2);
+            border-color: rgba(45, 184, 206, 0.4);
+            transform: scale(1.05);
+        }
+
+        .tn-action-btn.user {
+            background: linear-gradient(135deg, rgba(45, 184, 206, 0.9), rgba(6, 182, 212, 0.9));
+            color: #fff;
+            border-color: rgba(45, 184, 206, 0.5);
+            box-shadow: 0 4px 14px rgba(45, 184, 206, 0.35);
+            width: auto;
+            padding: 0 12px;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .tn-action-btn.user span {
+            white-space: nowrap;
+            max-width: 90px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ========= FILA 2: NAVEGACIÓN ========= */
+        .tn-row-2 {
+            display: flex;
             align-items: center;
             justify-content: space-around;
+            padding: 4px 2px 6px;
+            height: 56px;
             gap: 2px;
         }
 
@@ -460,7 +560,6 @@ style.textContent = `
             transition: all 0.25s ease;
         }
 
-        /* Ítem activo */
         .tn-item.active {
             color: #2db8ce;
         }
@@ -474,7 +573,6 @@ style.textContent = `
             color: #2db8ce;
         }
 
-        /* Indicador inferior del activo */
         .tn-item.active::after {
             content: '';
             position: absolute;
@@ -488,15 +586,37 @@ style.textContent = `
             box-shadow: 0 0 12px #2db8ce, 0 -2px 6px rgba(45, 184, 206, 0.5);
         }
 
-        /* Feedback al tocar */
         .tn-item:active {
             background: rgba(45, 184, 206, 0.1);
         }
 
-        /* Modo claro top nav */
+        /* ========= MODO CLARO ========= */
         body.light-mode .app-top-nav {
             background: rgba(255, 255, 255, 0.96);
             border-bottom-color: rgba(8, 145, 178, 0.2);
+        }
+        body.light-mode .tn-row-1 {
+            border-bottom-color: rgba(0, 0, 0, 0.06);
+        }
+        body.light-mode .tn-logo-text {
+            color: #0f172a;
+        }
+        body.light-mode .tn-logo-text span {
+            color: #0891b2;
+        }
+        body.light-mode .tn-action-btn {
+            color: #0891b2;
+            background: rgba(8, 145, 178, 0.08);
+            border-color: rgba(8, 145, 178, 0.2);
+        }
+        body.light-mode .tn-action-btn:hover,
+        body.light-mode .tn-action-btn:active {
+            background: rgba(8, 145, 178, 0.2);
+            border-color: rgba(8, 145, 178, 0.4);
+        }
+        body.light-mode .tn-action-btn.user {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.9), rgba(6, 182, 212, 0.9));
+            color: #fff;
         }
         body.light-mode .tn-item {
             color: rgba(15, 23, 42, 0.55);
@@ -1170,30 +1290,52 @@ const sidebarHTML = `
 `;
 
 // ============================================================
-// TOP NAV HTML (Móvil)
+// TOP NAV HTML (Móvil - 2 filas)
 // ============================================================
 const topNavHTML = `
 <nav class="app-top-nav">
-    <a href="index.html" class="tn-item ${currentPage === 'index.html' ? 'active' : ''}">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-    </a>
-    <a href="catalogo.html" class="tn-item ${currentPage === 'catalogo.html' ? 'active' : ''}">
-        <i class="fas fa-th-large"></i>
-        <span>Catálogo</span>
-    </a>
-    <a href="mis-cursos.html" class="tn-item ${currentPage === 'mis-cursos.html' ? 'active' : ''}">
-        <i class="fas fa-graduation-cap"></i>
-        <span>Mis Cursos</span>
-    </a>
-    <a href="progreso.html" class="tn-item ${currentPage === 'progreso.html' ? 'active' : ''}">
-        <i class="fas fa-chart-line"></i>
-        <span>Progreso</span>
-    </a>
-    <a href="programas.html" class="tn-item ${currentPage === 'programas.html' ? 'active' : ''}">
-        <i class="fas fa-laptop-code"></i>
-        <span>Programas</span>
-    </a>
+
+    <!-- FILA 1: LOGO + ACCIONES -->
+    <div class="tn-row-1">
+        <div class="tn-logo" onclick="window.location.href='index.html'">
+            <img src="img/AA (38).webp" alt="Logo" onerror="this.src='https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png'">
+            <span class="tn-logo-text">APRENDE <span>AUTOMATIZACIÓN</span></span>
+        </div>
+        <div class="tn-actions">
+            <button class="tn-action-btn" onclick="toggleTheme()" title="Cambiar tema">
+                <i id="theme-icon-mobile" class="${savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun'}"></i>
+            </button>
+            <button class="tn-action-btn user" onclick="if(typeof handleNavbarAuthClick === 'function') { handleNavbarAuthClick(event); }">
+                <i class="fas fa-user"></i>
+                <span>${isLogged ? (user.name || 'Usuario') : 'Ingresar'}</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- FILA 2: NAVEGACIÓN -->
+    <div class="tn-row-2">
+        <a href="index.html" class="tn-item ${currentPage === 'index.html' ? 'active' : ''}">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="catalogo.html" class="tn-item ${currentPage === 'catalogo.html' ? 'active' : ''}">
+            <i class="fas fa-th-large"></i>
+            <span>Catálogo</span>
+        </a>
+        <a href="mis-cursos.html" class="tn-item ${currentPage === 'mis-cursos.html' ? 'active' : ''}">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Mis Cursos</span>
+        </a>
+        <a href="progreso.html" class="tn-item ${currentPage === 'progreso.html' ? 'active' : ''}">
+            <i class="fas fa-chart-line"></i>
+            <span>Progreso</span>
+        </a>
+        <a href="programas.html" class="tn-item ${currentPage === 'programas.html' ? 'active' : ''}">
+            <i class="fas fa-laptop-code"></i>
+            <span>Programas</span>
+        </a>
+    </div>
+
 </nav>
 `;
 
@@ -1222,5 +1364,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100 * index);
     });
 
-    console.log("🚀 Navegación responsive: Sidebar (desktop) + Top Nav (móvil).");
+    console.log("🚀 Navegación responsive: Sidebar (desktop) + Top Nav 2 filas (móvil).");
 });
