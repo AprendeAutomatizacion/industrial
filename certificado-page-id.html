@@ -195,6 +195,16 @@
             box-shadow: 0 5px 15px rgba(45, 184, 206, 0.4);
         }
 
+        .btn-back {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3) !important;
+        }
+        .btn-back:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
         .toolbar-text {
             color: rgba(255,255,255,0.7);
             font-size: 12px;
@@ -736,6 +746,9 @@
 
     <!-- Barra de herramientas -->
     <div class="certificate-toolbar">
+        <button class="btn-cert btn-back" onclick="volverAProgreso()">
+            ← Volver a Progreso
+        </button>
         <button class="btn-cert btn-print" onclick="window.print()">
             🖨️ Imprimir
         </button>
@@ -801,6 +814,20 @@
         const urlParams = new URLSearchParams(window.location.search);
         const courseId = urlParams.get('courseId');
         const currentUser = JSON.parse(localStorage.getItem('user')) || null;
+        
+        // ==========================================
+        // FUNCIÓN VOLVER A PROGRESO
+        // ==========================================
+        function volverAProgreso() {
+            // Si hay historial, vuelve atrás (mantiene el estado de progreso)
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                // Si no hay historial (por ejemplo, abrió el certificado directamente),
+                // navega a la página de progreso
+                window.location.href = 'progreso.html';
+            }
+        }
         
         // ==========================================
         // FUNCIONES DEL TOAST
