@@ -1,10 +1,12 @@
 /* ============================================
    SERVICE WORKER - APRENDE AUTOMATIZACIÓN
-   Versión: v1.0.0
+   Versión: v1.1.0
+   ✅ Auto-actualización habilitada
+   ✅ Network First para HTML (cambios visibles al instante)
    ============================================ */
 
-const CACHE_NAME = 'aprende-automatizacion-v1';
-const RUNTIME_CACHE = 'aprende-automatizacion-runtime-v1';
+const CACHE_NAME = 'aprende-automatizacion-v1.1.0';
+const RUNTIME_CACHE = 'aprende-automatizacion-runtime-v1.1.0';
 
 // Recursos que se cachean al instalar (los esenciales)
 const URLS_TO_CACHE = [
@@ -18,15 +20,14 @@ const URLS_TO_CACHE = [
 ];
 
 // ============================================
-// INSTALL - Precachea los recursos esenciales
+// INSTALL - Precachea y activa INMEDIATAMENTE
 // ============================================
 self.addEventListener('install', (event) => {
-  console.log('🔧 [SW] Instalando...');
+  console.log('🔧 [SW] Instalando nueva versión...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('📦 [SW] Precargando recursos esenciales');
-        // addAll falla si UNO solo falla, por eso hacemos individual
         return Promise.allSettled(
           URLS_TO_CACHE.map((url) =>
             cache.add(url).catch((err) => {
@@ -36,17 +37,19 @@ self.addEventListener('install', (event) => {
         );
       })
       .then(() => {
-        console.log('✅ [SW] Instalación completa');
+        console.log('✅ [SW] Instalación completa. Forzando activación inmediata...');
+        // 🔥 CLAVE #1: skipWaiting() activa el SW nuevo SIN esperar a que
+        //              se cierren todas las pestañas del usuario
         return self.skipWaiting();
       })
   );
 });
 
 // ============================================
-// ACTIVATE - Limpia cachés antiguos
+// ACTIVATE - Limpia cachés antiguos y toma control
 // ============================================
 self.addEventListener('activate', (event) => {
-  console.log('🚀 [SW] Activando...');
+  console.log('🚀 [SW] Activando nueva versión...');
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
@@ -60,14 +63,16 @@ self.addEventListener('activate', (event) => {
         );
       })
       .then(() => {
-        console.log('✅ [SW] Activación completa');
+        console.log('✅ [SW] Activación completa. Tomando control de todas las pestañas...');
+        // 🔥 CLAVE #2: clients.claim() toma el control SIN recargar
+        //              todas las pestañas abiertas
         return self.clients.claim();
       })
   );
 });
 
 // ============================================
-// FETCH - Estrategia de caché
+// FETCH - Estrategia de caché inteligente
 // ============================================
 self.addEventListener('fetch', (event) => {
   const { request } = event;
@@ -76,7 +81,7 @@ self.addEventListener('fetch', (event) => {
   // 1. Ignorar peticiones que no sean GET
   if (request.method !== 'GET') return;
 
-  // 2. Ignorar peticiones a otros dominios (APIs externas, Google Scripts, etc.)
+  // 2. Ignorar peticiones a otros dominios (APIs externas)
   if (url.origin !== self.location.origin) {
     return;
   }
@@ -84,20 +89,53 @@ self.addEventListener('fetch', (event) => {
   // 3. Ignorar peticiones de extensiones de Chrome
   if (url.protocol === 'chrome-extension:') return;
 
-  // 4. Estrategia especial para APIs de Google Apps Script
-  //    (nunca cachear, siempre red)
+  // 4. Estrategia especial para APIs de Google Apps Script (nunca cachear)
   if (url.hostname.includes('script.google.com')) {
     return;
   }
 
-  // 5. Estrategia: Cache First con Network Fallback
-  //    Para HTML, JS, CSS, imágenes, fuentes
+  // ==========================================
+  // 🔥 CLAVE #3: NETWORK FIRST para HTML
+  // ==========================================
+  // El HTML siempre se pide primero a la red. Esto significa que
+  // CUALQUIER cambio en index.html, catalogo.html, etc. se verá
+  // INMEDIATAMENTE sin que el usuario tenga que hacer nada.
+  const isHTML = request.mode === 'navigate' || 
+                 (request.method === 'GET' && 
+                  request.headers.get('accept')?.includes('text/html'));
+
+  if (isHTML) {
+    event.respondWith(
+      fetch(request)
+        .then((networkResponse) => {
+          // Guardar copia actualizada en caché (para uso offline)
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(RUNTIME_CACHE).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return networkResponse;
+        })
+        .catch((error) => {
+          // Si no hay red → servir desde caché
+          console.warn(`⚠️ [SW] Sin red, sirviendo HTML desde caché: ${request.url}`);
+          return caches.match(request).then((cached) => {
+            return cached || caches.match('/index.html');
+          });
+        })
+    );
+    return;
+  }
+
+  // ==========================================
+  // Para CSS, JS, imágenes, etc: Cache First con actualización
+  // ==========================================
   event.respondWith(
     caches.match(request)
       .then((cachedResponse) => {
         if (cachedResponse) {
           // ✅ Encontrado en caché → devolver y actualizar en background
-          //    (Stale-While-Revalidate)
           event.waitUntil(
             fetch(request)
               .then((networkResponse) => {
@@ -115,7 +153,6 @@ self.addEventListener('fetch', (event) => {
         // ❌ No está en caché → ir a la red
         return fetch(request)
           .then((networkResponse) => {
-            // Guardar en caché runtime para próxima vez
             if (
               networkResponse &&
               networkResponse.status === 200 &&
@@ -131,18 +168,11 @@ self.addEventListener('fetch', (event) => {
           .catch((error) => {
             console.warn(`⚠️ [SW] Fetch fallido: ${request.url}`, error);
 
-            // Fallback para páginas HTML → devolver index.html cacheado
-            if (request.mode === 'navigate' || 
-                (request.method === 'GET' && request.headers.get('accept')?.includes('text/html'))) {
-              return caches.match('/index.html');
-            }
-
-            // Fallback para imágenes → devolver favicon
+            // Fallback para imágenes
             if (request.destination === 'image') {
               return caches.match('/img/favicon.webp');
             }
 
-            // Sin fallback, dejar que falle
             return new Response('Sin conexión', {
               status: 503,
               statusText: 'Service Unavailable',
