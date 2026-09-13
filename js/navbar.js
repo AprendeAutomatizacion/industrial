@@ -1,5 +1,5 @@
-// navbar.js - Sidebar lateral (desktop) + Bottom Nav (móvil)
-// Variante C con responsive móvil tipo app
+// navbar.js - Sidebar lateral (desktop) + Top Nav (móvil)
+// Variante C con responsive móvil
 
 // ============================================================
 // FUNCIONES GLOBALES DE COMPRA
@@ -74,16 +74,9 @@ window.toggleTheme = function() {
     const isLight = document.body.classList.toggle('light-mode');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     
-    // Actualizar TODOS los íconos de tema (sidebar + bottom nav)
     const icons = document.querySelectorAll('#theme-icon, #theme-icon-mobile, #theme-icon-sidebar');
     icons.forEach(icon => {
         icon.className = isLight ? 'fas fa-moon' : 'fas fa-sun';
-    });
-    
-    // Actualizar labels de tema
-    const labels = document.querySelectorAll('.theme-label');
-    labels.forEach(label => {
-        label.textContent = isLight ? 'Oscuro' : 'Claro';
     });
 };
 
@@ -137,7 +130,7 @@ style.textContent = `
        ===================================================== */
     body {
         padding-left: 68px;
-        transition: padding-left 0.3s ease, padding-bottom 0.3s ease;
+        transition: padding-left 0.3s ease, padding-top 0.3s ease;
     }
 
     .app-sidebar {
@@ -397,42 +390,41 @@ style.textContent = `
     }
 
     /* =====================================================
-       BOTTOM NAV (Móvil) — oculto por defecto en desktop
+       TOP NAV (Móvil) — oculto por defecto en desktop
        ===================================================== */
-    .app-bottom-nav {
+    .app-top-nav {
         display: none;
     }
 
     @media (max-width: 768px) {
         body {
             padding-left: 0;
-            padding-bottom: 72px; /* espacio para la bottom nav */
+            padding-top: 64px; /* espacio para la top nav */
         }
         .app-sidebar {
             display: none !important;
         }
 
-        .app-bottom-nav {
+        .app-top-nav {
             display: flex;
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
             right: 0;
-            height: 68px;
-            background: rgba(10, 15, 30, 0.95);
+            height: 60px;
+            background: rgba(10, 15, 30, 0.96);
             backdrop-filter: blur(20px) saturate(150%);
             -webkit-backdrop-filter: blur(20px) saturate(150%);
-            border-top: 1px solid rgba(45, 184, 206, 0.2);
-            box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(45, 184, 206, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
             z-index: 1000;
             padding: 6px 4px;
-            padding-bottom: max(6px, env(safe-area-inset-bottom));
             align-items: center;
             justify-content: space-around;
             gap: 2px;
         }
 
-        .bn-item {
+        .tn-item {
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -451,12 +443,12 @@ style.textContent = `
             min-width: 0;
         }
 
-        .bn-item i {
-            font-size: 17px;
+        .tn-item i {
+            font-size: 16px;
             transition: all 0.25s ease;
         }
 
-        .bn-item span {
+        .tn-item span {
             font-size: 9px;
             font-weight: 700;
             text-transform: uppercase;
@@ -469,60 +461,60 @@ style.textContent = `
         }
 
         /* Ítem activo */
-        .bn-item.active {
+        .tn-item.active {
             color: #2db8ce;
         }
 
-        .bn-item.active i {
+        .tn-item.active i {
             filter: drop-shadow(0 0 10px rgba(45, 184, 206, 0.8));
             transform: scale(1.15);
         }
 
-        .bn-item.active span {
+        .tn-item.active span {
             color: #2db8ce;
         }
 
-        /* Indicador superior del activo */
-        .bn-item.active::before {
+        /* Indicador inferior del activo */
+        .tn-item.active::after {
             content: '';
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 50%;
             transform: translateX(-50%);
             width: 22px;
             height: 3px;
             background: #2db8ce;
-            border-radius: 0 0 3px 3px;
-            box-shadow: 0 0 12px #2db8ce, 0 2px 6px rgba(45, 184, 206, 0.5);
+            border-radius: 3px 3px 0 0;
+            box-shadow: 0 0 12px #2db8ce, 0 -2px 6px rgba(45, 184, 206, 0.5);
         }
 
         /* Feedback al tocar */
-        .bn-item:active {
+        .tn-item:active {
             background: rgba(45, 184, 206, 0.1);
         }
 
-        /* Modo claro bottom nav */
-        body.light-mode .app-bottom-nav {
-            background: rgba(255, 255, 255, 0.95);
-            border-top-color: rgba(8, 145, 178, 0.2);
+        /* Modo claro top nav */
+        body.light-mode .app-top-nav {
+            background: rgba(255, 255, 255, 0.96);
+            border-bottom-color: rgba(8, 145, 178, 0.2);
         }
-        body.light-mode .bn-item {
+        body.light-mode .tn-item {
             color: rgba(15, 23, 42, 0.55);
         }
-        body.light-mode .bn-item.active {
+        body.light-mode .tn-item.active {
             color: #0891b2;
         }
-        body.light-mode .bn-item.active span {
+        body.light-mode .tn-item.active span {
             color: #0891b2;
         }
-        body.light-mode .bn-item.active i {
+        body.light-mode .tn-item.active i {
             filter: drop-shadow(0 0 10px rgba(8, 145, 178, 0.6));
         }
-        body.light-mode .bn-item.active::before {
+        body.light-mode .tn-item.active::after {
             background: #0891b2;
-            box-shadow: 0 0 12px #0891b2, 0 2px 6px rgba(8, 145, 178, 0.4);
+            box-shadow: 0 0 12px #0891b2, 0 -2px 6px rgba(8, 145, 178, 0.4);
         }
-        body.light-mode .bn-item:active {
+        body.light-mode .tn-item:active {
             background: rgba(8, 145, 178, 0.1);
         }
     }
@@ -1134,14 +1126,12 @@ window.hideSyncIndicator = function() {
 const sidebarHTML = `
 <aside class="app-sidebar">
     
-    <!-- Logo -->
     <div class="sb-logo" onclick="window.location.href='index.html'" title="Ir al inicio">
         <img src="img/AA (38).webp" alt="Logo" onerror="this.src='https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png'">
     </div>
 
     <div class="sb-divider"></div>
 
-    <!-- Navegación principal -->
     <nav class="sb-nav">
         <a href="index.html" class="sb-item ${currentPage === 'index.html' ? 'active' : ''}">
             <i class="fas fa-home"></i>
@@ -1165,7 +1155,6 @@ const sidebarHTML = `
         </a>
     </nav>
 
-    <!-- Acciones abajo -->
     <div class="sb-actions">
         <button onclick="toggleTheme()" class="sb-action" title="">
             <i id="theme-icon" class="${savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun'}"></i>
@@ -1181,27 +1170,27 @@ const sidebarHTML = `
 `;
 
 // ============================================================
-// BOTTOM NAV HTML (Móvil)
+// TOP NAV HTML (Móvil)
 // ============================================================
-const bottomNavHTML = `
-<nav class="app-bottom-nav">
-    <a href="index.html" class="bn-item ${currentPage === 'index.html' ? 'active' : ''}">
+const topNavHTML = `
+<nav class="app-top-nav">
+    <a href="index.html" class="tn-item ${currentPage === 'index.html' ? 'active' : ''}">
         <i class="fas fa-home"></i>
         <span>Home</span>
     </a>
-    <a href="catalogo.html" class="bn-item ${currentPage === 'catalogo.html' ? 'active' : ''}">
+    <a href="catalogo.html" class="tn-item ${currentPage === 'catalogo.html' ? 'active' : ''}">
         <i class="fas fa-th-large"></i>
         <span>Catálogo</span>
     </a>
-    <a href="mis-cursos.html" class="bn-item ${currentPage === 'mis-cursos.html' ? 'active' : ''}">
+    <a href="mis-cursos.html" class="tn-item ${currentPage === 'mis-cursos.html' ? 'active' : ''}">
         <i class="fas fa-graduation-cap"></i>
         <span>Mis Cursos</span>
     </a>
-    <a href="progreso.html" class="bn-item ${currentPage === 'progreso.html' ? 'active' : ''}">
+    <a href="progreso.html" class="tn-item ${currentPage === 'progreso.html' ? 'active' : ''}">
         <i class="fas fa-chart-line"></i>
         <span>Progreso</span>
     </a>
-    <a href="programas.html" class="bn-item ${currentPage === 'programas.html' ? 'active' : ''}">
+    <a href="programas.html" class="tn-item ${currentPage === 'programas.html' ? 'active' : ''}">
         <i class="fas fa-laptop-code"></i>
         <span>Programas</span>
     </a>
@@ -1209,14 +1198,13 @@ const bottomNavHTML = `
 `;
 
 // ============================================================
-// INSERTAR SIDEBAR + BOTTOM NAV
+// INSERTAR SIDEBAR + TOP NAV
 // ============================================================
-// Lista de páginas que son AULAS VIRTUALES (no llevan navegación)
 const aulasVirtuales = ['arranque-contactores.html', 'arranque-plc-logo.html'];
 
 if (!aulasVirtuales.includes(currentPage)) {
     document.body.insertAdjacentHTML('afterbegin', sidebarHTML);
-    document.body.insertAdjacentHTML('beforeend', bottomNavHTML);
+    document.body.insertAdjacentHTML('afterbegin', topNavHTML);
 }
 
 // ============================================================
@@ -1234,5 +1222,5 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 100 * index);
     });
 
-    console.log("🚀 Navegación responsive: Sidebar (desktop) + Bottom Nav (móvil).");
+    console.log("🚀 Navegación responsive: Sidebar (desktop) + Top Nav (móvil).");
 });
