@@ -11,7 +11,7 @@ const AuthLogic = {
     currentUser: null,
     pendingAction: null,
 
-    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbzvSa9yxQYuWtC-YSn4x1K6hzhdeujQfNEb1GoWkvJmFShA4kdhSWe_oOoBFqkKaagx/exec',
+    API_URL: window.SCRIPT_URL || 'https://script.google.com/macros/s/AKfycbw5UzjuZtBN-4Q9qeYGKa73Qp8B8x8lsrNAp1-P35MY0vy5oQqn_-ojmCny3vu9e0fv/exec',
 
     init: async function() {
         const savedSession = localStorage.getItem('user') || localStorage.getItem('aa_user_session');

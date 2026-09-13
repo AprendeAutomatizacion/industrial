@@ -2,7 +2,7 @@
 // MATERIAL LOADER - CORREGIDO CON FEATURES
 // ==========================================
 document.addEventListener('DOMContentLoaded', () => {
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzJmsHsZvfWimAbW41TS5phTAO6UcJJJjq-Wd1IrMx9Tf-ANqxiuKfocD3cHt87tZH4KQ/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwRMN65vFPd9O-mWdC163upp6l8TglefFGSyj7-fSzDzZ_Ix8Zf0rChs9FglUpf4IrktQ/exec';
 
     console.log('🚀 Iniciando material-loader.js');
     
