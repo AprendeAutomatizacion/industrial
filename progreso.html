@@ -527,7 +527,6 @@
             50% { transform: scale(1.08); opacity: 0.4; }
         }
 
-        /* Resaltado de nivel - ESTILOS DE BORDE POR COLOR */
         .course-card.ring-2.ring-cyan-400 { box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.6), 0 0 30px rgba(6, 182, 212, 0.3); }
         .course-card.ring-2.ring-amber-400 { box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.6), 0 0 30px rgba(251, 191, 36, 0.3); }
         .course-card.ring-2.ring-purple-400 { box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.6), 0 0 30px rgba(139, 92, 246, 0.3); }
@@ -535,9 +534,6 @@
 
         .course-card.scale-105 { transform: scale(1.02); }
 
-        /* ==========================================
-           ESTILOS PARA LOGROS OBTENIDOS
-           ========================================== */
         .logros-obtenidos-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -598,9 +594,6 @@
             border-color: rgba(0, 0, 0, 0.08);
         }
 
-        /* ==========================================
-           MODO CLARO - COLORES OSCUROS
-           ========================================== */
         body.light-mode {
             color: #0f172a !important;
         }
@@ -623,6 +616,142 @@
         body.light-mode .logro-item { background: rgba(255, 255, 255, 0.50); }
         body.light-mode .logro-item:hover { background: rgba(255, 255, 255, 0.65); }
         body.light-mode .logros-obtenidos-card { background: rgba(226, 232, 240, 0.65); border-color: rgba(255, 255, 255, 0.55); }
+
+        /* ==========================================
+           ⭐ DESCRIPCIÓN - FONDO GRIS-AZULADO (#cbd5e1) EN MODO CLARO
+           ========================================== */
+        .descripcion-progreso {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 1rem;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .descripcion-progreso:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.08);
+        }
+        .descripcion-progreso .desc-top-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 33%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+            opacity: 0.6;
+        }
+        .descripcion-progreso .desc-bottom-line {
+            margin-top: 1rem;
+            height: 2px;
+            width: 0;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #10b981);
+            border-radius: 9999px;
+            opacity: 0.6;
+            transition: width 0.7s ease;
+        }
+        .descripcion-progreso:hover .desc-bottom-line {
+            width: 100%;
+        }
+
+        body.light-mode .descripcion-progreso,
+        html.light-mode .descripcion-progreso {
+            background: #cbd5e1 !important;
+            background-color: #cbd5e1 !important;
+            background-image: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid #94a3b8 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+        body.light-mode .descripcion-progreso:hover,
+        html.light-mode .descripcion-progreso:hover {
+            border-color: rgba(6, 182, 212, 0.5) !important;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15) !important;
+        }
+        body.light-mode .descripcion-progreso p,
+        html.light-mode .descripcion-progreso p {
+            color: #1e293b !important;
+        }
+        body.light-mode .descripcion-progreso .text-white,
+        html.light-mode .descripcion-progreso .text-white {
+            color: #0f172a !important;
+        }
+        body.light-mode .descripcion-progreso .text-cyan-400,
+        body.light-mode .descripcion-progreso .text-cyan-300,
+        html.light-mode .descripcion-progreso .text-cyan-400,
+        html.light-mode .descripcion-progreso .text-cyan-300 {
+            color: #0e7490 !important;
+        }
+        body.light-mode .descripcion-progreso .text-amber-400,
+        html.light-mode .descripcion-progreso .text-amber-400 {
+            color: #b45309 !important;
+        }
+        body.light-mode .descripcion-progreso .text-emerald-400,
+        html.light-mode .descripcion-progreso .text-emerald-400 {
+            color: #047857 !important;
+        }
+        body.light-mode .descripcion-progreso .text-purple-400,
+        html.light-mode .descripcion-progreso .text-purple-400 {
+            color: #6d28d9 !important;
+        }
+        body.light-mode .descripcion-progreso .text-slate-300,
+        body.light-mode .descripcion-progreso .text-slate-400,
+        html.light-mode .descripcion-progreso .text-slate-300,
+        html.light-mode .descripcion-progreso .text-slate-400 {
+            color: #334155 !important;
+        }
+        body.light-mode .descripcion-progreso .bg-gradient-to-r.from-transparent.via-cyan-400,
+        html.light-mode .descripcion-progreso .bg-gradient-to-r.from-transparent.via-cyan-400 {
+            background: linear-gradient(to right, transparent, #0e7490, transparent) !important;
+        }
+        body.light-mode .descripcion-progreso .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500,
+        html.light-mode .descripcion-progreso .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500 {
+            background: linear-gradient(to right, #0e7490, #6d28d9, #047857) !important;
+        }
+        body.light-mode .descripcion-progreso .fas,
+        html.light-mode .descripcion-progreso .fas {
+            color: #0e7490 !important;
+            opacity: 0.6;
+        }
+
+        /* ==========================================
+           ⭐ MENSAJE DE MOTIVACIÓN - FONDO GRIS-AZULADO (#cbd5e1) EN MODO CLARO
+           ========================================== */
+        .motivacion-progreso {
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+        body.light-mode .motivacion-progreso,
+        html.light-mode .motivacion-progreso {
+            background: #cbd5e1 !important;
+            background-color: #cbd5e1 !important;
+            background-image: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid #94a3b8 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+        body.light-mode .motivacion-progreso p,
+        html.light-mode .motivacion-progreso p {
+            color: #1e293b !important;
+        }
+        body.light-mode .motivacion-progreso .text-cyan-400,
+        html.light-mode .motivacion-progreso .text-cyan-400 {
+            color: #0e7490 !important;
+        }
+        body.light-mode .motivacion-progreso .text-yellow-400,
+        html.light-mode .motivacion-progreso .text-yellow-400 {
+            color: #b45309 !important;
+        }
+        body.light-mode .motivacion-progreso .text-white,
+        html.light-mode .motivacion-progreso .text-white {
+            color: #0f172a !important;
+        }
     </style>
 </head>
 <body id="progreso-page-body" class="custom-scrollbar">
@@ -668,9 +797,7 @@
             <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-6 uppercase tracking-tighter">
                 MI PROGRESO <span class="text-secondary">ACADEMICO</span>
             </h1>
-            <p class="text-lg md:text-xl max-w-3xl font-medium leading-relaxed">
-                Visualiza el avance detallado de todos tus cursos, tus logros y certificados.
-            </p>
+
         </div>
     </header>
 
@@ -681,8 +808,11 @@
                 <!-- SECCIÓN: DESCRIPCIÓN INTRODUCTORIA -->
                 <!-- ============================================== -->
                 <div class="w-full">
-                    <div class="relative p-5 md:p-8 rounded-2xl border border-cyan-500/20 bg-gradient-to-r from-cyan-500/5 via-transparent to-purple-500/5 backdrop-blur-sm transition-all duration-500 hover:border-cyan-400/50 hover:shadow-[0_0_40px_rgba(6,182,212,0.08)] group">
-                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-60"></div>
+                    <div class="descripcion-progreso relative p-5 md:p-8">
+                        
+                        <!-- Línea decorativa superior -->
+                        <div class="desc-top-line"></div>
+                        
                         <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium">
                             <span class="text-cyan-400 font-bold text-base md:text-xl">📊 Tu Avance</span> 
                             en todos los cursos que has adquirido. Visualiza tu 
@@ -700,7 +830,9 @@
                             al <span class="text-white font-bold">culminar al 100%</span>.
                             <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
                         </p>
-                        <div class="mt-4 h-0.5 w-0 group-hover:w-full mx-auto bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-500 transition-all duration-700 rounded-full opacity-60"></div>
+
+                        <!-- Línea decorativa inferior animada -->
+                        <div class="desc-bottom-line"></div>
                     </div>
                 </div>
 
@@ -901,7 +1033,7 @@
             <!-- MENSAJE DE MOTIVACIÓN AL FINAL DE LA PÁGINA -->
             <!-- ============================================== -->
             <div class="mt-8 text-center">
-                <div class="inline-block bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-amber-500/10 rounded-3xl px-6 py-4 border border-white/5">
+                <div class="motivacion-progreso inline-block bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-amber-500/10 rounded-3xl px-6 py-4 border border-white/5">
                     <p class="text-slate-300 text-sm md:text-base font-medium">
                         <span class="text-cyan-400 font-bold">🚀 Cada curso completado</span> es un paso más hacia tu 
                         <span class="text-yellow-400 font-bold">transformación profesional</span>. 
@@ -1083,7 +1215,7 @@
 
     function getAchievementIcon(score) {
         if (score === undefined || score === null || score < 70) return '📚';
-        if (score === 100) return '🏆';  // 🏆 para 100%
+        if (score === 100) return '🏆';
         if (score >= 90) return '🥇';
         if (score >= 80) return '🥈';
         return '🥉';
@@ -1113,9 +1245,6 @@
         return 'Buen trabajo! Has superado el nivel básico, sigue avanzando.';
     }
 
-    // ==========================================
-    // FUNCIÓN PARA RENDERIZAR LOGROS OBTENIDOS
-    // ==========================================
     function renderAchievements() {
         const container = document.getElementById('logros-obtenidos-lista');
         if (!container) return;
@@ -1142,7 +1271,6 @@
             const avgScore = progData.avgScore || 0;
             const percent = progData.percent || 0;
             
-            // SOLO mostrar logros si el curso está COMPLETADO al 100%
             if (percent === 100) {
                 completedCount++;
                 totalScore += avgScore;
@@ -1186,13 +1314,10 @@
             }
         });
 
-        // Calcular promedio general
         const avgGeneral = completedCount > 0 ? Math.round(totalScore / completedCount) : 0;
 
-        // === RESALTAR NIVEL EN TARJETAS CON BORDE DEL COLOR DE LA ESTRELLA ===
         highlightAchievementLevel(avgGeneral);
 
-        // === RANKING - Mostrar en la sección de gamificación ===
         let rankingContainer = document.getElementById('ranking-container');
         if (!rankingContainer) {
             rankingContainer = document.createElement('div');
@@ -1218,7 +1343,6 @@
             </div>
         `;
 
-        // === LOGROS OBTENIDOS ===
         if (achievements.length === 0) {
             container.innerHTML = `<div class="empty-achievements text-slate-400">
                 <i class="fas fa-trophy text-3xl mb-2"></i>
@@ -1227,7 +1351,6 @@
             return;
         }
 
-        // Ordenar por puntuación (mayor a menor)
         achievements.sort((a, b) => b.score - a.score);
 
         let html = '<div class="grid grid-cols-1 md:grid-cols-2 gap-4">';
@@ -1269,9 +1392,6 @@
         container.innerHTML = html;
     }
 
-    // ==========================================
-    // FUNCIÓN PARA RESALTAR EL NIVEL CON BORDE DEL COLOR DE LA ESTRELLA
-    // ==========================================
     function highlightAchievementLevel(score) {
         const containers = {
             'bronce': document.querySelector('[data-logro="bronce"]'),
@@ -1280,7 +1400,6 @@
             'leyenda': document.querySelector('[data-logro="leyenda"]')
         };
 
-        // Resetear todos los estilos
         Object.values(containers).forEach(el => {
             if (el) {
                 el.classList.remove('ring-2', 'ring-cyan-400', 'ring-amber-400', 'ring-purple-400', 'ring-amber-500', 'scale-105');
@@ -1329,9 +1448,6 @@
         }
     }
 
-    // ==========================================
-    // FUNCIONES DE CARGA DE DATOS
-    // ==========================================
     async function loadData() {
         if(!currentUser) return;
         try {
@@ -1481,9 +1597,6 @@
         return 5;
     }
 
-    // ==========================================
-    // FUNCIÓN PRINCIPAL DE RENDERIZADO
-    // ==========================================
     function renderUserProgress() {
         const coursesContainer = document.getElementById('individualCourseProgressCards');
         const subjectsContainer = document.getElementById('individualSubjectProgressCards');
@@ -1528,7 +1641,6 @@
             let enrollmentDisplay = enrollmentDate ? formatCertDate(normalizeDateString(enrollmentDate)) : '---';
             let completionDisplay = completionDate ? formatCertDate(normalizeDateString(completionDate)) : '---';
             
-            // Obtener nombres de módulos
             let moduleNames = [];
             if (course.NombresModulos && typeof course.NombresModulos === 'string') {
                 moduleNames = course.NombresModulos.split('|');
@@ -1536,16 +1648,14 @@
                 moduleNames = Array.from({length: progData.total || totalLecciones}, (_, i) => `Módulo ${i + 1}`);
             }
             
-            // CORRECCIÓN: Función para obtener el icono según la calificación
             function getMedalIcon(score) {
                 if (score === undefined || score === null || score < 70) return '';
-                if (score === 100) return '🏆';  // 🏆 para 100%
+                if (score === 100) return '🏆';
                 if (score >= 90) return '🥇';
                 if (score >= 80) return '🥈';
                 return '🥉';
             }
             
-            // Generar píldoras de progreso
             const lessonPillsHtml = moduleNames.map((moduleName, index) => {
                 const score = scores[index];
                 let pillClass = 'lesson-pill';
@@ -1561,7 +1671,6 @@
                 const isIntro = index === 0 && (moduleName.toLowerCase().includes('contenido') || moduleName.toLowerCase().includes('introduccion'));
                 const simpleTitle = isIntro ? "Intro" : `Lección ${index}`;
                 const abbreviatedTitle = isIntro ? "Intro" : `Lec${index}`;
-                // CORRECCIÓN: Usar la nueva función para incluir 🏆
                 const medalIcon = (score !== undefined && score !== null && score >= 70) ? 
                     getMedalIcon(score) : '';
                 const finalIcon = isIntro ? '<i class="fas fa-book" style="color: var(--text-muted);"></i>' : medalIcon;
@@ -1574,7 +1683,6 @@
                 </div>`;
             }).join('');
             
-            // Generar desglose de módulos
             let modulesHtml = '';
             moduleNames.forEach((moduleName, i) => {
                 let stateClass = "", stateText = "", score = scores[i], stateModifier = '';
@@ -1603,7 +1711,6 @@
                 modulesHtml += `<div class="module-row ${stateModifier} flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 p-3 sm:p-4 rounded-xl border ${stateClass}"><span class="tracking-wide text-xs sm:text-sm">${displayModuleName}</span><span class="module-status text-center sm:text-right w-fit sm:w-auto">${stateText}</span></div>`;
             });
             
-            // CORRECCIÓN: Icono principal con 🏆 para 100%
             let mainIcon = '📚';
             if (coursePercentage === 100) {
                 if (avgScore === 100) mainIcon = '🏆';
@@ -1734,7 +1841,6 @@
         window.open('certificado-page-id.html?courseId=' + courseId, '_blank');
     }
 
-    // Inicializar
     document.addEventListener("DOMContentLoaded", async () => {
         console.log('Inicializando Progreso...');
         if (!currentUser) {
