@@ -460,6 +460,7 @@
            Tarjeta del estudiante + descripción
            ========================================== */
 
+        /* Tarjeta del estudiante - SOLO modo claro */
         body.light-mode #misCursosUserInfo .glass-card,
         body.light-mode #misCursosUserInfo .student-card,
         html.light-mode #misCursosUserInfo .glass-card,
@@ -481,6 +482,7 @@
             transform: translateY(-2px) !important;
         }
 
+        /* Textos dentro de la tarjeta del estudiante - SOLO modo claro */
         body.light-mode #misCursosUserInfo .card-value,
         body.light-mode #misCursosUserInfo .text-white,
         html.light-mode #misCursosUserInfo .card-value,
@@ -500,6 +502,7 @@
             color: rgba(15, 23, 42, 0.06) !important;
         }
 
+        /* ⭐ STATS INTERNAS TRANSPARENTES en modo claro (Online, Presencial, Materias, Manuales) */
         body.light-mode #misCursosUserInfo .stat-item,
         html.light-mode #misCursosUserInfo .stat-item,
         body.light-mode #misCursosUserInfo [style*="rgba(255,255,255,0.03)"],
@@ -510,11 +513,13 @@
             box-shadow: none !important;
         }
 
+        /* Divisor entre datos del estudiante y stats */
         body.light-mode #misCursosUserInfo [style*="border-top"],
         html.light-mode #misCursosUserInfo [style*="border-top"] {
             border-top-color: rgba(15, 23, 42, 0.15) !important;
         }
 
+        /* Descripción introductoria - SOLO modo claro */
         body.light-mode .intro-card,
         html.light-mode .intro-card {
             background: #cbd5e1 !important;
@@ -563,6 +568,9 @@
             color: #334155 !important;
         }
 
+        /* ==========================================
+           ⭐ FIX: Transición limpia al cambiar de tema
+           ========================================== */
         #misCursosUserInfo .glass-card,
         #misCursosUserInfo .student-card,
         #misCursosUserInfo .stat-item,
@@ -625,7 +633,6 @@
         <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-6 uppercase tracking-tighter">
             MIS CURSOS <span class="text-secondary">ADQUIRIDOS</span>
         </h1>
-
     </div>
 </header>
 
@@ -807,6 +814,7 @@
     const MISCURSOS_TIMESTAMP_KEY = 'miscursos_timestamp';
     const MISCURSOS_MAX_AGE = 5 * 60 * 1000; // 5 minutos
 
+    // Restaurar estado cuando la página carga o vuelve desde el historial
     window.addEventListener('pageshow', (event) => {
         const stateStr = sessionStorage.getItem(MISCURSOS_STATE_KEY);
         const timestampStr = sessionStorage.getItem(MISCURSOS_TIMESTAMP_KEY);
@@ -823,9 +831,10 @@
         try {
             const state = JSON.parse(stateStr);
             
+            // Restaurar scroll (esperando a que la grid se renderice)
             if (!event.persisted && typeof state.scrollY === 'number' && state.scrollY > 0) {
                 let intentos = 0;
-                const maxIntentos = 50;
+                const maxIntentos = 50; // 5 segundos máx
                 const checkGrid = setInterval(() => {
                     intentos++;
                     const grid = document.getElementById('coursesGrid');
@@ -846,6 +855,7 @@
         }
     });
 
+    // Guardar estado antes de salir de la página
     window.addEventListener('beforeunload', () => {
         try {
             const state = {
@@ -854,9 +864,12 @@
             };
             sessionStorage.setItem(MISCURSOS_STATE_KEY, JSON.stringify(state));
             sessionStorage.setItem(MISCURSOS_TIMESTAMP_KEY, Date.now().toString());
-        } catch (e) {}
+        } catch (e) {
+            // Silencioso
+        }
     });
 
+    // Respaldo para WebView (pagehide es más confiable en móvil)
     window.addEventListener('pagehide', (event) => {
         try {
             if (!event.persisted) {
@@ -870,6 +883,7 @@
         } catch (e) {}
     });
 
+    // Limpiar al cerrar sesión
     window.addEventListener('storage', (event) => {
         if (event.key === 'user' && !event.newValue) {
             sessionStorage.removeItem(MISCURSOS_STATE_KEY);
@@ -879,7 +893,7 @@
     });
 
     // ==========================================
-    // RESTO DEL CÓDIGO
+    // CONFIGURACIÓN Y ESTADO GLOBAL
     // ==========================================
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5UzjuZtBN-4Q9qeYGKa73Qp8B8x8lsrNAp1-P35MY0vy5oQqn_-ojmCny3vu9e0fv/exec';
 
@@ -895,17 +909,76 @@
     let userProgress = {};
     let COURSES_DATA = [];
 
+    // ==========================================
+    // UTILIDADES
+    // ==========================================
+    const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
+    const normalizeName = s => (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^\w\s]/g,'').replace(/\s+/g,' ');
+    const splitCourseNames = raw => {
+        if(!raw) return [];
+        if(!Array.isArray(raw)) raw = [raw];
+        let r = [];
+        raw.forEach(v => {
+            if(typeof v==='string') r.push(...v.split(/[,;\n]+/).map(s=>s.trim()).filter(s=>s!==""));
+            else if(v) r.push(v);
+        });
+        return r;
+    };
+    const capitalize = s => s ? s.charAt(0).toUpperCase()+s.slice(1) : '';
+
     function getTotalLecciones(course) {
         if (!course) return 5;
-        let total = 5;
         const totalLecciones = course.TotalLecciones || course.totalLecciones || course.total_lecciones;
         if (totalLecciones !== undefined && totalLecciones !== null && totalLecciones !== '') {
-            total = parseInt(totalLecciones) || 5;
-            return total;
+            return parseInt(totalLecciones) || 5;
         }
-        return total;
+        return 5;
     }
 
+    function showNotif(title, msg, type='success'){
+        const c = document.getElementById('toastContainer');
+        if (!c) { console.log(title + ': ' + msg); return; }
+        const t = document.createElement('div');
+        let bgColor, iconColor, icon;
+        switch(type) {
+            case 'error': bgColor = 'bg-red-800/80 border-red-700'; iconColor = 'bg-red-500'; icon = 'alert-triangle'; break;
+            case 'info': bgColor = 'bg-blue-800/80 border-blue-700'; iconColor = 'bg-blue-500'; icon = 'info'; break;
+            default: bgColor = 'bg-green-800/80 border-green-700'; iconColor = 'bg-green-500'; icon = 'check-circle'; break;
+        }
+        t.className = `text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 min-w-[300px] border backdrop-blur-md pointer-events-auto z-[9999] ${bgColor}`;
+        t.innerHTML = `<div class="w-8 h-8 rounded-full ${iconColor} flex items-center justify-center flex-shrink-0"><i data-lucide="${icon}" class="w-4 h-4 text-white"></i></div><div class="text-left"><h4 class="text-sm font-bold">${title}</h4><p class="text-xs text-slate-300">${msg}</p></div>`;
+        t.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        t.style.opacity = '0';
+        t.style.transform = 'translateY(20px)';
+        c.appendChild(t);
+        if(window.lucide) lucide.createIcons();
+        setTimeout(() => { t.style.opacity = '1'; t.style.transform = 'translateY(0)'; }, 10);
+        setTimeout(() => {
+            t.style.opacity = '0';
+            t.style.transform = 'translateY(20px)';
+            setTimeout(() => t.remove(), 300);
+        }, 4000);
+    }
+
+    function ping(action, key) {
+        try {
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key}));
+            } else {
+                fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}`
+                }).catch(err => console.error('Ping fallback failed:', err));
+            }
+        } catch (e) {
+            console.error('Error al intentar enviar ping:', e);
+        }
+    }
+
+    // ==========================================
+    // TOASTS DE CARGA
+    // ==========================================
     function showLoadingToast() {
         const toast = document.getElementById('loadingToast');
         const title = document.getElementById('loadingToastTitle');
@@ -964,35 +1037,14 @@
         }
     }
 
-    const countryToISO = { "venezuela": "ve", "colombia": "co", "mexico": "mx", "españa": "es", "argentina": "ar", "peru": "pe", "chile": "cl", "ecuador": "ec" };
-    const normalizeName = s => (s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().trim().replace(/[^\w\s]/g,'').replace(/\s+/g,' ');
-    const splitCourseNames = raw => { if(!raw) return []; if(!Array.isArray(raw)) raw = [raw]; let r = []; raw.forEach(v => { if(typeof v==='string') r.push(...v.split(/[,;\n]+/).map(s=>s.trim()).filter(s=>s!=="")); else if(v) r.push(v); }); return r; };
-
-    function showNotif(title, msg, type='success'){
-        const c = document.getElementById('toastContainer');
-        if (!c) { console.log(title + ': ' + msg); return; }
-        const t = document.createElement('div');
-        let bgColor, iconColor, icon;
-        switch(type) {
-            case 'error': bgColor = 'bg-red-800/80 border-red-700'; iconColor = 'bg-red-500'; icon = 'alert-triangle'; break;
-            case 'info': bgColor = 'bg-blue-800/80 border-blue-700'; iconColor = 'bg-blue-500'; icon = 'info'; break;
-            default: bgColor = 'bg-green-800/80 border-green-700'; iconColor = 'bg-green-500'; icon = 'check-circle'; break;
-        }
-        t.className = `text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 min-w-[300px] border backdrop-blur-md pointer-events-auto z-[9999] ${bgColor}`;
-        t.innerHTML = `<div class="w-8 h-8 rounded-full ${iconColor} flex items-center justify-center flex-shrink-0"><i data-lucide="${icon}" class="w-4 h-4 text-white"></i></div><div class="text-left"><h4 class="text-sm font-bold">${title}</h4><p class="text-xs text-slate-300">${msg}</p></div>`;
-        t.style.transition = 'opacity 0.3s ease, transform 0.3s ease'; t.style.opacity = '0'; t.style.transform = 'translateY(20px)';
-        c.appendChild(t);
-        if(window.lucide) lucide.createIcons();
-        setTimeout(() => { t.style.opacity = '1'; t.style.transform = 'translateY(0)'; }, 10);
-        setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(20px)'; setTimeout(() => t.remove(), 300); }, 4000);
-    }
-
-    function ping(action, key) { try { if (navigator.sendBeacon) { navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key})); } else { fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` }).catch(err => console.error('Ping fallback failed:', err)); } } catch (e) { console.error('Error al intentar enviar ping:', e); } }
-
+    // ==========================================
+    // CARGA DE CURSOS (con caché)
+    // ==========================================
     async function loadCoursesFromSheet() {
         try {
             console.log('🔄 Cargando catálogo de cursos...');
             showLoadingToast();
+
             // ⚡ get_courses con caché de 5 min
             const response = await fetchWithCache(
                 `${SCRIPT_URL}?action=get_courses`,
@@ -1005,13 +1057,9 @@
             }
             
             let coursesArray = [];
-            if (Array.isArray(result.data)) {
-                coursesArray = result.data;
-            } else if (Array.isArray(result.cursos)) {
-                coursesArray = result.cursos;
-            } else if (Array.isArray(result)) {
-                coursesArray = result;
-            }
+            if (Array.isArray(result.data)) coursesArray = result.data;
+            else if (Array.isArray(result.cursos)) coursesArray = result.cursos;
+            else if (Array.isArray(result)) coursesArray = result;
             
             COURSES_DATA = coursesArray.map(course => ({
                 ID: course.ID || course.id || course.Id || '',
@@ -1053,42 +1101,46 @@
         }
     }
 
+    // ==========================================
+    // CARGA DE DATOS (con caché + email)
+    // ==========================================
     async function loadData(){
         try{
             const email = window.currentUser?.email?.toLowerCase() || '';
             // ⚡ get_data SOLO del usuario actual + caché corto (1 min)
-            const url = email 
+            const url = email
                 ? `${SCRIPT_URL}?action=get_data&email=${encodeURIComponent(email)}`
                 : `${SCRIPT_URL}?action=get_data`;
-            const res = await fetchWithCache(url, `data_miscursos_${email || 'all'}`, 60 * 1000);
+            const res = await fetchWithCache(url, `data_${email || 'all'}`, 60 * 1000);
             const data = await res.json();
+
             if(data.status==='success'){
-                dbUsers=data.users||{}; 
-                globalStats=data.stats||{}; 
-                dbUserCourses=data.userCourses||{}; 
-                dbUserDetails=data.userDetails||{}; 
-                dbUserProgress=data.userProgress||{};
+                dbUsers = data.users || {};
+                globalStats = data.stats || {};
+                dbUserCourses = data.userCourses || {};
+                dbUserDetails = data.userDetails || {};
+                dbUserProgress = data.userProgress || {};
                 dbUserPaymentStatus = data.userPaymentStatus || {};
                 dbUserAccessStatus = data.userAccessStatus || {};
                 
-                calculateCourseRatings(); 
+                calculateCourseRatings();
                 updateStudentCounts();
                 
                 if(window.currentUser && window.currentUser.email){
-                    const email = window.currentUser.email.toLowerCase();
-                    let myCourseNamesRaw = dbUserCourses[email] || [];
+                    const emailLower = window.currentUser.email.toLowerCase();
+                    let myCourseNamesRaw = dbUserCourses[emailLower] || [];
                     let myCourseNames = splitCourseNames(myCourseNamesRaw);
                     
                     let myCourseIds = [];
                     myCourseNames.forEach(cName => {
-                        const key = email + '|' + cName;
+                        const key = emailLower + '|' + cName;
                         const acceso = dbUserAccessStatus[key] || 'NO';
                         if (acceso === 'SÍ' || acceso === 'SI' || acceso === 'TRUE' || acceso === 'true' || acceso === true) {
                             let nn = normalizeName(cName);
                             let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
                             if(!found) {
-                                found = COURSES_DATA.find(x => 
-                                    normalizeName(x.Nombre).includes(nn) || 
+                                found = COURSES_DATA.find(x =>
+                                    normalizeName(x.Nombre).includes(nn) ||
                                     nn.includes(normalizeName(x.Nombre))
                                 );
                             }
@@ -1099,12 +1151,12 @@
                     });
                     
                     window.currentUser.accessedCursos = [...myCourseIds];
-                    let globalUser = dbUsers[email] || {};
-                    if(typeof globalUser === 'string'){ 
-                        try{ globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; } 
+                    let globalUser = dbUsers[emailLower] || {};
+                    if(typeof globalUser === 'string'){
+                        try{ globalUser = JSON.parse(globalUser); } catch(e) { globalUser = {}; }
                     }
-                    let details = dbUserDetails[email] || {};
-                    if(details.name && details.name !== "No provisto" && details.name !== "N/A") 
+                    let details = dbUserDetails[emailLower] || {};
+                    if(details.name && details.name !== "No provisto" && details.name !== "N/A")
                         window.currentUser.name = details.name;
                     window.currentUser.cedula = details.cedula || window.currentUser.cedula || "N/A";
                     window.currentUser.telefono = details.telefono || window.currentUser.telefono || "N/A";
@@ -1119,8 +1171,8 @@
                     currentUser = window.currentUser;
                     localStorage.setItem('user', JSON.stringify(window.currentUser));
                     
-                    updateAllUI(); 
-                    fetchProgressForAllCourses(); 
+                    updateAllUI();
+                    fetchProgressForAllCourses();
                     renderMisCourses();
                 } else {
                     renderMisCourses();
@@ -1128,64 +1180,77 @@
             } else {
                 console.error('❌ Error en loadData:', data);
             }
-        } catch(e){ 
-            console.error("Error al cargar la data global:", e); 
+        } catch(e){
+            console.error("Error al cargar la data global:", e);
             if(window.currentUser) {
                 renderMisCourses();
             }
         }
     }
 
+    // ==========================================
+    // CÁLCULOS Y SINC
+    // ==========================================
     function calculateCourseRatings(){
-        courseRatings={};
-        COURSES_DATA.forEach(c=>courseRatings[c.ID]={sum:0,count:0,avg:"5.0"});
+        courseRatings = {};
+        COURSES_DATA.forEach(c => courseRatings[c.ID] = { sum: 0, count: 0, avg: "5.0" });
         for(const email in dbUsers){
-            let u=dbUsers[email]; if(typeof u==='string'){ try{ u=JSON.parse(u); }catch(e){ u={}; } }
-            if(u&&u.ratings){ for(const cid in u.ratings){ if(courseRatings[cid]){ courseRatings[cid].sum+=Number(u.ratings[cid]); courseRatings[cid].count+=1; } } }
+            let u = dbUsers[email];
+            if(typeof u === 'string'){ try{ u = JSON.parse(u); } catch(e){ u = {}; } }
+            if(u && u.ratings){
+                for(const cid in u.ratings){
+                    if(courseRatings[cid]){
+                        courseRatings[cid].sum += Number(u.ratings[cid]);
+                        courseRatings[cid].count += 1;
+                    }
+                }
+            }
         }
-        for(const cid in courseRatings){ if(courseRatings[cid].count>0) courseRatings[cid].avg=(courseRatings[cid].sum/courseRatings[cid].count).toFixed(1); }
+        for(const cid in courseRatings){
+            if(courseRatings[cid].count > 0) courseRatings[cid].avg = (courseRatings[cid].sum / courseRatings[cid].count).toFixed(1);
+        }
     }
 
     function updateStudentCounts(){
-        COURSES_DATA.forEach(c=>studentCountsPerCourse[c.ID]=0);
+        COURSES_DATA.forEach(c => studentCountsPerCourse[c.ID] = 0);
         for(const email in dbUserCourses){
-            let names=splitCourseNames(dbUserCourses[email]);
-            names.forEach(courseName=>{
-                let nn=normalizeName(courseName);
-                let found=COURSES_DATA.find(x=>normalizeName(x.Nombre)===nn);
-                if(!found) found=COURSES_DATA.find(x=>normalizeName(x.Nombre).includes(nn)||nn.includes(normalizeName(x.Nombre)));
-                if(found) studentCountsPerCourse[found.ID]+=1;
+            let names = splitCourseNames(dbUserCourses[email]);
+            names.forEach(courseName => {
+                let nn = normalizeName(courseName);
+                let found = COURSES_DATA.find(x => normalizeName(x.Nombre) === nn);
+                if(!found) found = COURSES_DATA.find(x => normalizeName(x.Nombre).includes(nn) || nn.includes(normalizeName(x.Nombre)));
+                if(found) studentCountsPerCourse[found.ID] += 1;
             });
         }
     }
 
-    async function syncUserProgressToExcel(){ 
+    async function syncUserProgressToExcel(){
         const activeUser = window.currentUser || (typeof currentUser !== 'undefined' ? currentUser : null) || JSON.parse(localStorage.getItem('user') || 'null');
         if(!activeUser || !activeUser.email) return;
         window.currentUser = activeUser;
-        const email=activeUser.email.toLowerCase();
-        const userData=JSON.stringify(activeUser);
+        const email = activeUser.email.toLowerCase();
+        const userData = JSON.stringify(activeUser);
         try {
             const response = await fetch(SCRIPT_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `action=update_user&email=${encodeURIComponent(email)}&userData=${encodeURIComponent(userData)}`
             });
-            const result = await response.json();
-            // ⚡ Limpiar caché del usuario para que la próxima vez traiga datos frescos
-            clearClientCache();
-            return result;
-        } catch (e) { 
-            console.error('Fallo en la red al sincronizar progreso de usuario:', e); 
+            return await response.json();
+        } catch (e) {
+            console.error('Fallo en la red al sincronizar progreso de usuario:', e);
             throw e;
         }
     }
 
+    // ==========================================
+    // PROGRESO
+    // ==========================================
     function parseProgressString(raw, totalLessons) {
-        if(!raw || raw.trim()==="") return {completed:0, total:totalLessons, percent:0};
+        if(!raw || raw.trim() === "") return { completed: 0, total: totalLessons, percent: 0 };
         let completed = 0;
         try {
-            const p = JSON.parse(String(raw).trim().replace(/'/g,'"'));
+            const p = JSON.parse(String(raw).trim().replace(/'/g, '"'));
             if(p && p.progress && Array.isArray(p.progress)) {
                 completed = p.progress.length;
             } else if(p && typeof p.completed === 'number') {
@@ -1194,25 +1259,25 @@
         } catch(e) {
             const n = parseFloat(String(raw).trim());
             if(!isNaN(n)) {
-                if(n <= 100) completed = Math.round((n/100) * totalLessons);
+                if(n <= 100) completed = Math.round((n / 100) * totalLessons);
                 else completed = n;
             }
         }
         completed = Math.min(Math.max(0, completed), totalLessons);
-        const percent = totalLessons > 0 ? Math.round((completed/totalLessons) * 100) : 0;
+        const percent = totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
         return { completed, total: totalLessons, percent };
     }
 
     function fetchProgressForAllCourses(){
-        if(!window.currentUser||!window.currentUser.accessedCursos) return;
-        const email=window.currentUser.email.toLowerCase();
-        if(!userProgress[email]) userProgress[email]={};
-        const progresos=dbUserProgress[email]||{};
-        const accessed=window.currentUser.accessedCursos;
-        accessed.forEach(courseId=>{
-            const course=COURSES_DATA.find(c=>c.ID===courseId);
+        if(!window.currentUser || !window.currentUser.accessedCursos) return;
+        const email = window.currentUser.email.toLowerCase();
+        if(!userProgress[email]) userProgress[email] = {};
+        const progresos = dbUserProgress[email] || {};
+        const accessed = window.currentUser.accessedCursos;
+        accessed.forEach(courseId => {
+            const course = COURSES_DATA.find(c => c.ID === courseId);
             if(!course) return;
-            let progStr="";
+            let progStr = "";
             const nc = normalizeName(course.Nombre);
             for(let key in progresos) {
                 if (normalizeName(key) === nc) { progStr = progresos[key]; break; }
@@ -1223,18 +1288,21 @@
         renderMisCourses();
     }
 
+    // ==========================================
+    // UI
+    // ==========================================
     function updateAllUI(){
         if(!window.currentUser){ document.getElementById('misCursosUserInfo').classList.add('hidden'); return; }
         document.getElementById('misCursosUserInfo').classList.remove('hidden');
-        const setTxt=(id,txt)=>{ const el=document.getElementById(id); if(el) el.innerText=txt; };
-        setTxt('mcProfileName',window.currentUser.name||"Estudiante");
-        setTxt('mcProfileEmail',window.currentUser.email);
-        setTxt('mcProfileCedula',window.currentUser.cedula&&window.currentUser.cedula!=="N/A"?window.currentUser.cedula:"Sin Cédula");
-        setTxt('mcProfilePhone',window.currentUser.telefono&&window.currentUser.telefono!=="N/A"?window.currentUser.telefono:"Sin Teléfono");
-        setTxt('mcProfileProfession',window.currentUser.profession?capitalize(window.currentUser.profession):"Sin Perfil");
-        let locText=window.currentUser.pais&&window.currentUser.pais!=="N/A"?window.currentUser.pais:"País Desconocido";
-        if(window.currentUser.pais==="Venezuela"&&window.currentUser.estado&&window.currentUser.estado!=="N/A") locText+=` (${window.currentUser.estado})`;
-        setTxt('mcProfileLocation',locText);
+        const setTxt = (id, txt) => { const el = document.getElementById(id); if(el) el.innerText = txt; };
+        setTxt('mcProfileName', window.currentUser.name || "Estudiante");
+        setTxt('mcProfileEmail', window.currentUser.email);
+        setTxt('mcProfileCedula', window.currentUser.cedula && window.currentUser.cedula !== "N/A" ? window.currentUser.cedula : "Sin Cédula");
+        setTxt('mcProfilePhone', window.currentUser.telefono && window.currentUser.telefono !== "N/A" ? window.currentUser.telefono : "Sin Teléfono");
+        setTxt('mcProfileProfession', window.currentUser.profession ? capitalize(window.currentUser.profession) : "Sin Perfil");
+        let locText = window.currentUser.pais && window.currentUser.pais !== "N/A" ? window.currentUser.pais : "País Desconocido";
+        if(window.currentUser.pais === "Venezuela" && window.currentUser.estado && window.currentUser.estado !== "N/A") locText += ` (${window.currentUser.estado})`;
+        setTxt('mcProfileLocation', locText);
         
         const flagImg = document.getElementById('mcProfileFlag');
         const pais = window.currentUser.pais || '';
@@ -1243,10 +1311,10 @@
         if (isoCode && flagImg) { flagImg.src = `https://flagcdn.com/w20/${isoCode}.png`; flagImg.classList.remove('hidden'); }
         else if (flagImg) { flagImg.classList.add('hidden'); }
         
-        const accessed=Array.isArray(window.currentUser.accessedCursos)?window.currentUser.accessedCursos:[];
-        let countOnline=0, countPresencial=0, countMaterias=0, countManuales=0;
-        accessed.forEach(cId=>{
-            const course=COURSES_DATA.find(c=>String(c.ID)===String(cId));
+        const accessed = Array.isArray(window.currentUser.accessedCursos) ? window.currentUser.accessedCursos : [];
+        let countOnline = 0, countPresencial = 0, countMaterias = 0, countManuales = 0;
+        accessed.forEach(cId => {
+            const course = COURSES_DATA.find(c => String(c.ID) === String(cId));
             if(course){
                 const tipo = (course.Tipo || '').toLowerCase();
                 if(tipo === 'online') countOnline++;
@@ -1261,29 +1329,28 @@
         setTxt('mcStatManuales', countManuales);
     }
 
-    function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
-
     function renderMisCourses(){
-        const grid=document.getElementById('coursesGrid'), noResults=document.getElementById('noResultsMisCursos');
-        grid.innerHTML='';
+        const grid = document.getElementById('coursesGrid');
+        const noResults = document.getElementById('noResultsMisCursos');
+        grid.innerHTML = '';
         if(!window.currentUser){
             grid.classList.add('hidden'); noResults.classList.remove('hidden');
-            noResults.innerHTML=`<div class="p-8 rounded-2xl bg-[var(--glass-bg)] border border-[var(--glass-border)]"><h3 class="text-xl font-bold">Acceso Restringido</h3><p class="text-sm mt-2">Debes iniciar sesión para ver tus cursos.</p></div>`;
+            noResults.innerHTML = `<div class="p-8 rounded-2xl bg-[var(--glass-bg)] border border-[var(--glass-border)]"><h3 class="text-xl font-bold">Acceso Restringido</h3><p class="text-sm mt-2">Debes iniciar sesión para ver tus cursos.</p></div>`;
             return;
         }
-        const accessedCourses = COURSES_DATA.filter(c => 
-            window.currentUser.accessedCursos && 
+        const accessedCourses = COURSES_DATA.filter(c =>
+            window.currentUser.accessedCursos &&
             window.currentUser.accessedCursos.some(id => String(id) === String(c.ID))
         );
-        if(accessedCourses.length===0){
+        if(accessedCourses.length === 0){
             grid.classList.add('hidden'); noResults.classList.remove('hidden');
-            noResults.innerHTML=`<div class="p-8 rounded-2xl bg-[var(--glass-bg)] border border-[var(--glass-border)]"><h3 class="text-xl font-bold">Aún no tienes cursos habilitados</h3><p class="text-sm mt-2">Si ya compraste un curso, espera la verificación de pago.</p></div>`;
+            noResults.innerHTML = `<div class="p-8 rounded-2xl bg-[var(--glass-bg)] border border-[var(--glass-border)]"><h3 class="text-xl font-bold">Aún no tienes cursos habilitados</h3><p class="text-sm mt-2">Si ya compraste un curso, espera la verificación de pago.</p></div>`;
             return;
         }
         grid.classList.remove('hidden'); noResults.classList.add('hidden');
-        const emailKey=window.currentUser.email.toLowerCase(); 
-        const myProgress=userProgress[emailKey]||{};
-        grid.innerHTML=accessedCourses.map((course)=>{
+        const emailKey = window.currentUser.email.toLowerCase();
+        const myProgress = userProgress[emailKey] || {};
+        grid.innerHTML = accessedCourses.map((course) => {
             const courseId = String(course.ID);
             const courseNombre = course.Nombre || 'Sin nombre';
             const courseTipo = course.Tipo || 'Curso';
@@ -1291,20 +1358,24 @@
             const courseNivel = course.Nivel || 'Básico';
             const courseImagen = course.ImagenURL || 'https://placehold.co/600x400/1e293b/2db8ce?text=Curso';
             const courseEnlaceAula = course.EnlaceAula || '';
-            const likes=globalStats[`curso-${courseId}_likes`]||0;
-            const vistas=globalStats[`curso-${courseId}_vistas`]||0;
-            const avgRating=courseRatings[courseId]?courseRatings[courseId].avg:"5.0";
-            const isLikedClass=(window.currentUser&&window.currentUser.likedCourses&&window.currentUser.likedCourses.includes(`curso-${courseId}`))?'liked text-red-500':'text-slate-400';
+            const likes = globalStats[`curso-${courseId}_likes`] || 0;
+            const vistas = globalStats[`curso-${courseId}_vistas`] || 0;
+            const avgRating = courseRatings[courseId] ? courseRatings[courseId].avg : "5.0";
+            const isLikedClass = (window.currentUser && window.currentUser.likedCourses && window.currentUser.likedCourses.includes(`curso-${courseId}`)) ? 'liked text-red-500' : 'text-slate-400';
             const viewsClass = vistas > 0 ? 'text-green-500' : 'text-slate-400';
-            const displayCount=studentCountsPerCourse[courseId]||0;
+            const displayCount = studentCountsPerCourse[courseId] || 0;
             const totalLecciones = getTotalLecciones(course);
-            const progressData=myProgress[String(courseId)]||{completed:0,total:totalLecciones,percent:0};
+            const progressData = myProgress[String(courseId)] || { completed: 0, total: totalLecciones, percent: 0 };
             const percent = progressData.percent || 0;
             const completed = progressData.completed || 0;
             const total = progressData.total || totalLecciones;
-            const userRating=(window.currentUser&&window.currentUser.ratings&&window.currentUser.ratings[courseId])||0;
-            let starsHTML='';
-            for(let i=1;i<=5;i++){ const filled=i<=userRating?'fas text-yellow-400':'far text-slate-300'; starsHTML+=`<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse('${courseId}',${i})"></i>`; }
+            const userRating = (window.currentUser && window.currentUser.ratings && window.currentUser.ratings[courseId]) || 0;
+
+            let starsHTML = '';
+            for(let i = 1; i <= 5; i++){
+                const filled = i <= userRating ? 'fas text-yellow-400' : 'far text-slate-300';
+                starsHTML += `<i class="${filled} fa-star cursor-pointer text-xs hover:text-yellow-400 transition-colors" onclick="event.stopPropagation(); rateCourse('${courseId}',${i})"></i>`;
+            }
             
             let buttonHTML = '';
             if (courseEnlaceAula && courseEnlaceAula.trim() !== '' && courseEnlaceAula !== '#') {
@@ -1356,6 +1427,9 @@
         if(window.lucide) lucide.createIcons();
     }
 
+    // ==========================================
+    // INTERACCIONES
+    // ==========================================
     function toggleLike(btn){
         const activeUser = window.currentUser || JSON.parse(localStorage.getItem('user') || 'null');
         if(!activeUser){ return; }
@@ -1381,19 +1455,22 @@
         syncUserProgressToExcel();
     }
 
-    function rateCourse(courseId,rating){
+    function rateCourse(courseId, rating){
         const activeUser = window.currentUser || JSON.parse(localStorage.getItem('user') || 'null');
         if(!activeUser){ return; }
-        if(!activeUser.ratings) activeUser.ratings={};
-        activeUser.ratings[courseId]=rating;
+        if(!activeUser.ratings) activeUser.ratings = {};
+        activeUser.ratings[courseId] = rating;
         window.currentUser = activeUser;
-        localStorage.setItem('user',JSON.stringify(activeUser));
+        localStorage.setItem('user', JSON.stringify(activeUser));
         syncUserProgressToExcel();
         calculateCourseRatings();
         renderMisCourses();
-        showNotif('¡Valoración guardada!',`Has calificado este curso con ${rating} estrellas.`);
+        showNotif('¡Valoración guardada!', `Has calificado este curso con ${rating} estrellas.`);
     }
 
+    // ==========================================
+    // INICIALIZACIÓN
+    // ==========================================
     document.addEventListener("DOMContentLoaded", () => {
         setTimeout(async () => {
             await loadCoursesFromSheet();
