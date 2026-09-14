@@ -1744,8 +1744,12 @@ function cerrarModalConfirmacion() {
     closeModal('modalConfirmacionCompra');
     celebrarCompra();
     clearClientCache(); // ⚡ Limpiar caché tras compra
-    loadData();
-    applyFilters();
+    // Refrescar de forma asíncrona (no bloquea el cierre del modal)
+    loadData().then(() => {
+        applyFilters();
+    }).catch(() => {
+        applyFilters();
+    });
     
     if (isFreeCourse) {
         showNotif('✅ Inscripción exitosa', '¡Ya puedes acceder a tu curso desde "Mis Cursos"! 🚀', 'success');
@@ -1833,6 +1837,12 @@ async function confirmarCompra() {
             cerrarModalCompra();
             const key = currentUser.email.toLowerCase() + '|' + cursoNombre;
             dbUserPaymentStatus[key] = 'Pendiente';
+            // ⚡ Invalidar caché de get_data para forzar datos frescos
+            const email = currentUser.email.toLowerCase();
+            localStorage.removeItem(`cache_data_${email}`);
+            localStorage.removeItem(`cache_data_${email}_ts`);
+            // ⚡ REFRESCAR CARDS INMEDIATAMENTE
+            applyFilters();
             mostrarModalConfirmacionCompra(false);
         } else {
             mensaje.classList.remove('hidden');
@@ -1886,6 +1896,12 @@ async function enrollFreeCourse(courseId, courseName) {
             localStorage.setItem('user', JSON.stringify(currentUser));
             dbUserPaymentStatus[key] = 'Verificado';
             dbUserAccessStatus[key] = 'SÍ';
+            // ⚡ Invalidar caché de get_data
+            const emailUser = currentUser.email.toLowerCase();
+            localStorage.removeItem(`cache_data_${emailUser}`);
+            localStorage.removeItem(`cache_data_${emailUser}_ts`);
+            // ⚡ REFRESCAR CARDS INMEDIATAMENTE
+            applyFilters();
             mostrarModalConfirmacionCompra(true);
         } else {
             hideLoadingToast();
