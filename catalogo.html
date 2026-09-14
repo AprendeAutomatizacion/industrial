@@ -917,6 +917,31 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             margin-left: 0.3rem;
         }
+
+        /* ==========================================
+           ✅ CORRECCIÓN MODO OSCURO - 3 ELEMENTOS EN BLANCO
+           ========================================== */
+
+        /* 1. DESCRIPCIÓN DEL CURSO */
+        body:not(.light-mode) .course-card p.text-slate-500 {
+            color: #ffffff !important;
+        }
+
+        /* 2. PRECIO USD ($10.00) */
+        body:not(.light-mode) .course-card .text-lg.font-black.text-slate-800 {
+            color: #ffffff !important;
+        }
+        body:not(.light-mode) .course-card .flex.flex-col.items-end .text-lg.font-black {
+            color: #ffffff !important;
+        }
+
+        /* 3. "Tu valoración:" */
+        body:not(.light-mode) .course-card .text-\[10px\].font-bold.text-slate-500.uppercase {
+            color: #ffffff !important;
+        }
+        body:not(.light-mode) .course-card .flex.items-center.gap-2.mt-4 > span.text-\[10px\] {
+            color: #ffffff !important;
+        }
     </style>
 </head>
 <body class="custom-scrollbar">
@@ -1366,7 +1391,7 @@ window.addEventListener('storage', (event) => {
 // ==========================================
 // RESTO DEL CÓDIGO
 // ==========================================
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw5UzjuZtBN-4Q9qeYGKa73Qp8B8x8lsrNAp1-P35MY0vy5oQqn_-ojmCny3vu9e0fv/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwiQw2xwqDBVK8BwwoACnGd6reOc2arj8-myMsMJI5Epsv9Ax0kRstsRAv9juLAtIAD/exec';
 
 let currentUser = JSON.parse(localStorage.getItem('user')) || null;
 let dbUsers = {}, globalStats = {};
