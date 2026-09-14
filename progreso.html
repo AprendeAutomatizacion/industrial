@@ -1318,31 +1318,93 @@
         return null;
     }
 
+    // ============================================================
+    // ✅ PARSE PROGRESS - AGRUPA SUBMÓDULOS CON SU MÓDULO PADRE
+    // ------------------------------------------------------------
+    // Los submódulos usan el ID del módulo padre + 2 dígitos:
+    //   701, 702, 703, 704  →  módulo 7
+    //   1201, 1202          →  módulo 12
+    // Los módulos principales tienen 1 o 2 dígitos (1..99) y el 0 = intro.
+    // Cada módulo principal aporta UN solo score al array final:
+    //   promedio( score_módulo , score_subs... )
+    // ============================================================
     function parseProgressString(raw, totalLessons) {
         if(!raw || raw.trim()==="") return {completed:0, total:totalLessons, percent:0, scores:[], avgScore:0, progress:[]};
         let safe = String(raw).trim().replace(/'/g,'"');
-        let scores = new Array(totalLessons).fill(null);
+        let rawScores = {};           // { id: score }  ← crudo, sin agrupar
         let completed = 0;
         let progressIndices = [];
         try {
             const p = JSON.parse(safe);
             if(p && typeof p === 'object') {
-                if(p.progress && Array.isArray(p.progress)) { progressIndices = p.progress.map(v=>parseInt(v)).filter(v=>!isNaN(v)); completed = progressIndices.length; }
-                else if(typeof p.completed === 'number') { completed = p.completed; for(let i=0; i<completed; i++) progressIndices.push(i); }
+                if(p.progress && Array.isArray(p.progress)) {
+                    progressIndices = p.progress.map(v=>parseInt(v)).filter(v=>!isNaN(v));
+                    completed = progressIndices.length;
+                }
+                else if(typeof p.completed === 'number') {
+                    completed = p.completed;
+                    for(let i=0; i<completed; i++) progressIndices.push(i);
+                }
                 const src = p.scores || p;
-                if(Array.isArray(src)) { for(let i=0; i<src.length && i<totalLessons; i++) scores[i]=Number(src[i]); }
-                else if(typeof src === 'object') { for(let k in src) { let idx=parseInt(k); if(!isNaN(idx)&&idx>=0&&idx<totalLessons) scores[idx]=Number(src[k]); } }
+                if(Array.isArray(src)) {
+                    for(let i=0; i<src.length && i<totalLessons; i++) rawScores[i]=Number(src[i]);
+                }
+                else if(typeof src === 'object') {
+                    for(let k in src) {
+                        let idx = parseInt(k);
+                        if(!isNaN(idx)) rawScores[idx] = Number(src[k]);
+                    }
+                }
             }
         } catch(e) {
-            if(safe.includes(',')) { let parts=safe.split(','); parts.forEach((p,i)=>{ if(i<totalLessons) scores[i]=Number(p.trim()); }); }
-            else { let n=parseFloat(safe); if(!isNaN(n)){ if(safe.includes('%')||n<=100) completed=Math.round((n/100)*totalLessons); else completed=n; scores[0]=n; } }
+            if(safe.includes(',')) {
+                let parts=safe.split(',');
+                parts.forEach((p,i)=>{ rawScores[i]=Number(p.trim()); });
+            }
+            else {
+                let n=parseFloat(safe);
+                if(!isNaN(n)){ rawScores[0]=n; }
+            }
         }
-        let valid = scores.filter(n=>n!==null&&!isNaN(n));
-        if(completed===0 && valid.length>0) completed = valid.length;
+
+        // Agrupar por módulo principal (el prefijo del ID)
+        let moduleGroups = {};   // { padreId: [scores...] }
+
+        Object.keys(rawScores).forEach(function(key) {
+            let idNum = parseInt(key);
+            if (isNaN(idNum)) return;
+            let val = rawScores[key];
+            if (val === null || val === undefined || isNaN(val)) return;
+
+            if (idNum >= 100) {
+                // Submódulo → padre = floor(id / 100)
+                let padreId = Math.floor(idNum / 100);
+                if (!moduleGroups[padreId]) moduleGroups[padreId] = [];
+                moduleGroups[padreId].push(val);
+            } else {
+                // Módulo principal o intro
+                if (!moduleGroups[idNum]) moduleGroups[idNum] = [];
+                moduleGroups[idNum].push(val);
+            }
+        });
+
+        // Promediamos cada grupo y lo colocamos en la posición del módulo
+        let scores = new Array(totalLessons).fill(null);
+        Object.keys(moduleGroups).forEach(function(padreIdStr) {
+            let padreId = parseInt(padreIdStr);
+            let vals = moduleGroups[padreIdStr];
+            if (!vals || vals.length === 0) return;
+            if (padreId >= 0 && padreId < totalLessons) {
+                scores[padreId] = Math.round(vals.reduce((a,b)=>a+b,0) / vals.length);
+            }
+        });
+
+        let valid = scores.filter(n => n !== null && !isNaN(n));
+        if (completed === 0 && valid.length > 0) completed = valid.length;
         completed = Math.min(Math.max(0, completed), totalLessons);
-        const avg = valid.length>0 ? Math.round(valid.reduce((a,b)=>a+b,0)/valid.length) : 0;
-        let percent = totalLessons>0 ? Math.round((completed/totalLessons)*100) : 0;
-        return {completed, total: totalLessons, percent, scores, avgScore: avg, progress: progressIndices};
+        const avg = valid.length > 0 ? Math.round(valid.reduce((a,b)=>a+b,0) / valid.length) : 0;
+        let percent = totalLessons > 0 ? Math.round((completed / totalLessons) * 100) : 0;
+        return { completed, total: totalLessons, percent, scores, avgScore: avg, progress: progressIndices };
     }
 
     function getAchievementIcon(score) {
