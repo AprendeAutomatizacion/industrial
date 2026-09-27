@@ -133,23 +133,18 @@
       font-size: 12px;
       line-height: 1.6;
     }
-    .sello {
-      width: 90px;
-      height: 90px;
-      border: 3px solid #2db8ce;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* ===== NUEVO SELLO ===== */
+    .sello-img {
+      width: 130px;
+      height: 130px;
+      object-fit: contain;
       margin: 20px auto 0;
-      color: #2db8ce;
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transform: rotate(-12deg);
-      opacity: 0.6;
+      display: block;
+      transform: rotate(-8deg);
+      opacity: 0.9;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
     }
+    /* ======================= */
     .error-msg { color: #6b7280; margin: 15px 0 25px; line-height: 1.6; font-size: 14px; }
     .loading-spinner {
       width: 50px;
@@ -216,7 +211,8 @@
     <div class="dato"><label>Fecha de culminación</label><span id="certFechaCulminacion">-</span></div>
     <div class="dato"><label>ID del certificado</label><span class="id-mono" id="certId">-</span></div>
     
-    <div class="sello">Validado</div>
+    <!-- NUEVO SELLO -->
+    <img src="img/SELLO.png" alt="Sello de Verificación" class="sello-img" onerror="this.style.display='none'">
     
     <div class="footer">
       Este certificado fue emitido y verificado electrónicamente por<br>
