@@ -146,7 +146,6 @@
             50% { transform: scale(1.2); } 
             100% { transform: scale(1); } 
         }
-        /* ============ FIN ESTILOS TOAST ============ */
 
         /* Barra de herramientas */
         .certificate-toolbar {
@@ -418,14 +417,42 @@
             flex-wrap: wrap;
         }
 
-        .cert-signature {
+        .cert-signature-container {
+            position: relative;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            min-width: 180px;
+        }
+
+        .cert-seal {
+            position: absolute;
+            bottom: 18px; /* Movido un poco más abajo (antes 35px) */
+            left: 50%;
+            transform: translateX(10%); /* Movido más a la derecha (antes -20%) */
+            width: 175px; 
+            height: 175px; 
+            opacity: 0.15; 
+            z-index: 0;
+            pointer-events: none;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+            mix-blend-mode: multiply; 
+        }
+
+        .cert-signature-content {
+            position: relative;
+            z-index: 1; /* Asegura que el texto y línea estén sobre el sello */
+            width: 100%;
         }
 
         .cert-signature-line {
             width: 160px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 4px;
+            margin: 0 auto 4px auto;
         }
 
         .cert-signature-name {
@@ -446,6 +473,7 @@
             text-align: center;
             color: #111827;
             font-size: 10px;
+            z-index: 2;
         }
 
         .cert-id-badge strong {
@@ -460,6 +488,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-end;
+            z-index: 2;
         }
         .cert-qr-img {
             width: 130px;
@@ -581,6 +610,10 @@
                 align-items: center;
                 gap: 15px;
             }
+            .cert-seal {
+                width: 120px;
+                height: 120px;
+            }
             .cert-temario {
                 grid-template-columns: 1fr;
                 grid-auto-flow: row;
@@ -660,6 +693,15 @@
                 background-color: rgba(248, 250, 252, 0.9) !important;
             }
 
+            .cert-seal {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+                display: block !important;
+                visibility: visible !important;
+                opacity: 0.15 !important;
+            }
+
             .cert-qr-img {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -721,7 +763,7 @@
                 margin: 0 !important;
             }
         }
-</style>
+    </style>
 </head>
 <body>
 
@@ -787,14 +829,20 @@
                 
                 <!-- Pie -->
                 <div class="cert-footer">
-                    <div class="cert-signature">
-                        <div class="cert-signature-line"></div>
-                        <p class="cert-signature-name">MSc. Ing. Pablo Cedeño</p>
-                        <p class="cert-signature-title">Instructor</p>
+                    <!-- CONTENEDOR FIRMA CON SELLO -->
+                    <div class="cert-signature-container">
+                        <img src="img/SELLO.png" alt="Sello de Verificación" class="cert-seal">
+                        <div class="cert-signature-content">
+                            <div class="cert-signature-line"></div>
+                            <p class="cert-signature-name">MSc. Ing. Pablo Cedeño</p>
+                            <p class="cert-signature-title">Instructor</p>
+                        </div>
                     </div>
+                    
                     <div id="certIdBadge" class="cert-id-badge">
                         ID de Certificado: <strong>-</strong>
                     </div>
+                    
                     <div class="cert-qr-section">
                         <img id="certQrCode" class="cert-qr-img" src="" alt="Verificación" style="display:none;">
                         <p class="cert-qr-label">Verificar autenticidad</p>
@@ -889,7 +937,7 @@
         // ============================================================
         // FIN CACHÉ DE CLIENTE
         // ==========================================
-        
+
         // ==========================================
         // FUNCIÓN VOLVER A PROGRESO
         // ==========================================
@@ -1014,7 +1062,7 @@
                 }, 1000);
             }
         }
-        
+
         // ==========================================
         // FUNCIONES DE UTILIDAD
         // ==========================================
@@ -1092,7 +1140,7 @@
             
             return { scores };
         }
-        
+
         async function loadCertificate() {
             try {
                 showLoadingToast();
