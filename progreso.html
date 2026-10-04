@@ -843,7 +843,7 @@
                         <div class="w-full h-4"></div>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8" id="logros-container">
-                            <!-- Bronce -->
+                            <!-- Principiante -->
                             <div class="course-card border-amber-500/30" data-logro="bronce">
                                 <div class="card-deco">
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -851,7 +851,7 @@
                                     </svg>
                                 </div>
                                 <div class="text-5xl mb-3">🥉</div>
-                                <h3 class="course-card-title text-xl font-bold">Conocedor</h3>
+                                <h3 class="course-card-title text-xl font-bold">Principiante</h3>
                                 <p class="text-slate-400 text-sm mt-1">Calificación entre 70% - 79%</p>
                                 <div class="mt-3 flex items-center justify-center gap-2">
                                     <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Nivel Básico</span>
@@ -861,7 +861,7 @@
                                 </div>
                             </div>
 
-                            <!-- Plata -->
+                            <!-- Intermedio -->
                             <div class="course-card border-purple-500/30" data-logro="plata">
                                 <div class="card-deco">
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -869,7 +869,7 @@
                                     </svg>
                                 </div>
                                 <div class="text-5xl mb-3">🥈</div>
-                                <h3 class="course-card-title text-xl font-bold">Especialista</h3>
+                                <h3 class="course-card-title text-xl font-bold">Intermedio</h3>
                                 <p class="text-slate-400 text-sm mt-1">Calificación entre 80% - 89%</p>
                                 <div class="mt-3 flex items-center justify-center gap-2">
                                     <span class="px-3 py-1 rounded-full text-xs font-bold bg-purple-500/20 text-purple-400 border border-purple-500/30">Nivel Intermedio</span>
@@ -879,7 +879,7 @@
                                 </div>
                             </div>
 
-                            <!-- Oro -->
+                            <!-- Avanzado -->
                             <div class="course-card border-amber-400/30 relative overflow-visible" data-logro="oro">
                                 <div class="card-deco" style="animation-delay: 0.5s;">
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -887,7 +887,7 @@
                                     </svg>
                                 </div>
                                 <div class="text-5xl mb-3">🥇</div>
-                                <h3 class="course-card-title text-xl font-bold">Maestro</h3>
+                                <h3 class="course-card-title text-xl font-bold">Avanzado</h3>
                                 <p class="text-slate-400 text-sm mt-1">Calificación entre 90% - 99%</p>
                                 <div class="mt-3 flex items-center justify-center gap-2">
                                     <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30">Nivel Avanzado</span>
@@ -897,7 +897,7 @@
                                 </div>
                             </div>
 
-                            <!-- Leyenda -->
+                            <!-- Experto -->
                             <div class="course-card border-cyan-400/30 relative overflow-visible" data-logro="leyenda">
                                 <div class="card-deco" style="animation-delay: 1s;">
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -905,7 +905,7 @@
                                     </svg>
                                 </div>
                                 <div class="text-5xl mb-3">🏆</div>
-                                <h3 class="course-card-title text-xl font-bold">Leyenda</h3>
+                                <h3 class="course-card-title text-xl font-bold">Experto</h3>
                                 <p class="text-slate-400 text-sm mt-1">Calificación del 100%</p>
                                 <div class="mt-3 flex items-center justify-center gap-2">
                                     <span class="px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">Perfección</span>
@@ -1417,10 +1417,10 @@
 
     function getAchievementLevel(score) {
         if (score === undefined || score === null || score < 70) return 'Aprendiz';
-        if (score === 100) return '🏆 Leyenda';
-        if (score >= 90) return '🥇 Maestro';
-        if (score >= 80) return '🥈 Especialista';
-        return '🥉 Conocedor';
+        if (score === 100) return '🏆 Experto';
+        if (score >= 90) return '🥇 Avanzado';
+        if (score >= 80) return '🥈 Intermedio';
+        return '🥉 Principiante';
     }
 
     function getAchievementDescription(score) {
@@ -1476,22 +1476,22 @@
                 
                 if (avgScore === 100) {
                     medal = '🏆';
-                    nivel = 'Leyenda';
+                    nivel = 'Experto';
                     nivelClass = 'leyenda';
                     descripcion = '¡Excelencia absoluta! Has demostrado un dominio total de la automatización.';
                 } else if (avgScore >= 90) {
                     medal = '🥇';
-                    nivel = 'Maestro';
+                    nivel = 'Avanzado';
                     nivelClass = 'oro';
                     descripcion = 'Tu excelencia técnica te posiciona como un referente en automatización industrial.';
                 } else if (avgScore >= 80) {
                     medal = '🥈';
-                    nivel = 'Especialista';
+                    nivel = 'Intermedio';
                     nivelClass = 'plata';
                     descripcion = 'Tu dominio técnico te permite abordar proyectos con confianza y criterio.';
                 } else if (avgScore >= 70) {
                     medal = '🥉';
-                    nivel = 'Conocedor';
+                    nivel = 'Principiante';
                     nivelClass = 'bronce';
                     descripcion = 'Has demostrado un conocimiento sólido de los fundamentos. ¡Sigue practicando!';
                 }
@@ -1552,7 +1552,7 @@
         
         for (let i = 0; i < displayCount; i++) {
             const logro = achievements[i];
-            const isHighlight = logro.nivel === 'Leyenda' || logro.nivel === 'Maestro';
+            const isHighlight = logro.nivel === 'Experto' || logro.nivel === 'Avanzado';
             const borderStyle = isHighlight ? 'border-cyan-500/30 bg-cyan-500/5' : '';
             
             html += `

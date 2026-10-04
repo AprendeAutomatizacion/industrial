@@ -1,0 +1,1491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargas - Aprende Automatización</title>
+    <link rel="icon" href="https://i.postimg.cc/c4zrcgBD/Logo-2025-2.png" type="image/png">
+    
+    <!-- LIBRERÍAS Y FUENTES -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* PREVENIR FLASH BLANCO EN CARGA */
+        html { background-color: #0a0f1e; }
+        html.light-mode { background-color: #d0e1ef; }
+
+        /* ==========================================
+           VARIABLES Y ESTILOS BASE - MODERNO
+           ========================================== */
+        :root {
+            --bg-default: #f7f9fb;
+            --bg-secondary: rgba(255, 255, 255, 0.85);
+            --bg-dark: #0a0f1e;
+            --bg-dark-accent: rgba(30, 41, 59, 0.6);
+            --text-default: #0f172a;
+            --text-secondary: #64748b;
+            --text-light: #f8fafc;
+            --text-accent: #06b6d4;
+            --border-default: rgba(255, 255, 255, 0.18);
+            --border-light: rgba(255, 255, 255, 0.12);
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --badge-bg-basic: #06b6d4;
+            --badge-bg-intermediate: #8b5cf6;
+            --badge-bg-advanced: #f59e0b;
+            --badge-text: #ffffff;
+            --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.35), 0 0 60px rgba(6, 182, 212, 0.15);
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --glass-blur: 20px;
+        }
+
+        body:not(.light-mode) {
+            --bg-default: #0a0f1e;
+            --bg-secondary: rgba(30, 41, 59, 0.5);
+            --text-default: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-light: #f8fafc;
+            --border-default: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(6, 182, 212, 0.15);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+            --cyan-glow: 0 8px 32px rgba(6, 182, 212, 0.45), 0 0 60px rgba(6, 182, 212, 0.2);
+            --glass-bg: rgba(15, 23, 42, 0.55);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0a0f1e;
+            background-image: url('img/fondo2.webp');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            color: var(--text-default);
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* AURORA BACKGROUND EFFECT */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(6, 182, 212, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 60%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 50% 100%, rgba(6, 182, 212, 0.06) 0%, transparent 50%),
+                linear-gradient(180deg, rgba(10, 15, 30, 0.96) 0%, rgba(15, 23, 42, 0.94) 50%, rgba(10, 15, 30, 0.96) 100%);
+            z-index: 0;
+            pointer-events: none;
+            animation: auroraShift 20s ease-in-out infinite;
+        }
+
+        @keyframes auroraShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.85; }
+        }
+
+        body.light-mode {
+            background-color: #d0e1ef;
+            background-image: url('img/fondo2.webp');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        body.light-mode::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(208, 225, 239, 0.78) 0%,
+                rgba(208, 225, 239, 0.72) 40%,
+                rgba(208, 225, 239, 0.68) 100%
+            );
+            backdrop-filter: blur(2px) saturate(110%);
+            -webkit-backdrop-filter: blur(2px) saturate(110%);
+            z-index: 0;
+            pointer-events: none;
+            animation: none;
+        }
+
+        /* GRADIENT TEXT UTILITY */
+        .gradient-text {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientFlow 6s ease infinite;
+        }
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .section-title { 
+            color: var(--text-default); 
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        .section-title span {
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .section-subtitle {
+            color: var(--text-accent);
+            letter-spacing: 0.15em;
+            font-weight: 800;
+        }
+
+        body.light-mode .hero-main-title { color: #000000 !important; }
+        body.light-mode .hero-main-title .text-secondary {
+            background: linear-gradient(135deg, #0891b2 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Corrección header en modo claro */
+        body.light-mode header .hero-main-title {
+            color: #ffffff !important;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15) !important;
+        }
+        body.light-mode header .hero-main-title .text-secondary {
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #8b5cf6 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 6s ease infinite;
+            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+        }
+
+        /* SCROLLBAR PREMIUM */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { 
+            background: rgba(255, 255, 255, 0.03); 
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb { 
+            background: linear-gradient(180deg, #06b6d4, #8b5cf6); 
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #22d3ee, #a78bfa);
+        }
+
+        /* FLOATING PARTICLES BACKGROUND */
+        .particles-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(6, 182, 212, 0.3);
+            border-radius: 50%;
+            animation: float-particle 20s infinite ease-in-out;
+        }
+        @keyframes float-particle {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        #page-descargas, main, header, section, footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ==========================================
+           HEADER - GLASSMORPHISM PREMIUM
+           ========================================== */
+        header {
+            background: var(--glass-bg) !important;
+            backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%) !important;
+            border-bottom: 1px solid var(--glass-border) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        header .absolute.inset-0 {
+            opacity: 0.3 !important;
+            filter: saturate(1.2) contrast(1.1);
+        }
+
+        header .hero-main-title {
+            color: #ffffff !important;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 40px rgba(6, 182, 212, 0.15) !important;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        header .hero-main-title .text-secondary {
+            background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none !important;
+            filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.4));
+        }
+
+        header p {
+            color: rgba(255, 255, 255, 0.85) !important;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+
+        header .bg-red-500\/20,
+        header .bg-blue-500\/20,
+        header .bg-orange-500\/20 {
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        header .bg-red-500\/20:hover,
+        header .bg-blue-500\/20:hover,
+        header .bg-orange-500\/20:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-metal-solid {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+            padding: 0.85rem 1.8rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            color: #ffffff !important;
+            border: none !important;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            background: linear-gradient(180deg, #b0c4de 0%, #7a8fa6 8%, #4a6078 20%, #2d4a5e 40%, #1e3a4f 60%, #1a3142 100%);
+        }
+        .btn-metal-cyan {
+            background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .btn-metal-teal {
+            background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%);
+            box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #2db8ce; border-radius: 10px; }
+
+        /* ==========================================
+           TOAST DE CARGA - RESPONSIVE MEJORADO
+           ========================================== */
+        .loading-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100002;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 184, 206, 0.35);
+            border-radius: 12px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(45, 184, 206, 0.15);
+            pointer-events: none;
+            min-width: 200px;
+            max-width: 240px;
+            animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .loading-toast.hiding {
+            opacity: 0;
+            transform: translateX(120px);
+        }
+        .loading-toast .toast-logo {
+            width: 25px;
+            height: 25px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulseLogo 2.5s infinite ease-in-out;
+        }
+        .loading-toast .toast-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4));
+        }
+        .loading-toast .toast-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .loading-toast .toast-title {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 10px;
+            line-height: 1.3;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+        }
+        .loading-toast .toast-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(45, 184, 206, 0.2);
+            border-top: 2px solid #2db8ce;
+            border-radius: 50%;
+            animation: spin 0.9s linear infinite;
+            flex-shrink: 0;
+        }
+        .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.96) 0%, rgba(5, 150, 105, 0.96) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.7);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 14px rgba(16, 185, 129, 0.35);
+        }
+        .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+        .loading-toast.success-toast .toast-check {
+            width: 20px;
+            height: 20px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .loading-toast.success-toast .toast-check i {
+            color: #10b981;
+            font-size: 10px;
+            font-weight: 900;
+        }
+
+        /* MODO CLARO - TOAST */
+        body.light-mode .loading-toast {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.98) 100%);
+            border: 1px solid rgba(45, 184, 206, 0.5);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12), 0 0 10px rgba(45, 184, 206, 0.2);
+        }
+        body.light-mode .loading-toast .toast-title {
+            color: #1e293b;
+        }
+        body.light-mode .loading-toast.success-toast {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%);
+            border: 1px solid rgba(16, 185, 129, 0.7);
+        }
+        body.light-mode .loading-toast.success-toast .toast-title {
+            color: #ffffff;
+        }
+
+        /* RESPONSIVE - MÓVIL */
+        @media (max-width: 640px) {
+            .loading-toast {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                min-width: auto;
+                max-width: none;
+                padding: 10px 14px;
+                border-radius: 14px;
+            }
+            .loading-toast .toast-logo {
+                width: 28px;
+                height: 28px;
+            }
+            .loading-toast .toast-title {
+                font-size: 11px;
+                max-width: none;
+                flex: 1;
+            }
+            .loading-toast .toast-spinner {
+                width: 16px;
+                height: 16px;
+            }
+            .loading-toast.success-toast .toast-check {
+                width: 24px;
+                height: 24px;
+            }
+        }
+
+        @media (min-width: 641px) and (max-width: 768px) {
+            .loading-toast {
+                bottom: 20px;
+                right: 20px;
+                left: auto;
+                min-width: 220px;
+                max-width: 280px;
+            }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(150%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideInUp {
+            from { transform: translateY(150%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulseLogo {
+            0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        body.light-mode header {
+            background: rgba(227, 241, 248, 0.72) !important;
+            backdrop-filter: blur(16px) saturate(160%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+            border-bottom: 1px solid #d3e1e8 !important;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important;
+        }
+        body.light-mode header .hero-main-title {
+            color: #334155 !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header p {
+            color: #64748b !important;
+            text-shadow: none !important;
+        }
+        body.light-mode header .bg-red-500\/20,
+        body.light-mode header .bg-blue-500\/20,
+        body.light-mode header .bg-orange-500\/20 {
+            background: rgba(8, 145, 178, 0.10) !important;
+            border: 1px solid rgba(8, 145, 178, 0.20) !important;
+            color: #0891b2 !important;
+        }
+        body.light-mode header .bg-red-500\/20 {
+            background: rgba(239, 68, 68, 0.10) !important;
+            border: 1px solid rgba(239, 68, 68, 0.20) !important;
+            color: #ef4444 !important;
+        }
+        body.light-mode header .bg-orange-500\/20 {
+            background: rgba(245, 158, 11, 0.10) !important;
+            border: 1px solid rgba(245, 158, 11, 0.20) !important;
+            color: #f59e0b !important;
+        }
+        body.light-mode header .absolute.inset-0 img {
+            opacity: 0.15 !important;
+            filter: saturate(0.5);
+        }
+
+        /* ==========================================
+           FIXES MODO CLARO - DESCARGAS
+           ========================================== */
+        
+        body.light-mode .text-white { color: #0f172a !important; }
+        body.light-mode .text-slate-100 { color: #0f172a !important; }
+        body.light-mode .text-slate-200 { color: #0f172a !important; }
+        body.light-mode .text-slate-300 { color: #1e293b !important; }
+        body.light-mode .text-slate-400 { color: #1e293b !important; }
+        body.light-mode .text-slate-500 { color: #1e293b !important; }
+        body.light-mode .text-slate-600 { color: #0f172a !important; }
+        body.light-mode .text-slate-700 { color: #0f172a !important; }
+        body.light-mode .text-slate-800 { color: #0f172a !important; }
+        body.light-mode .text-slate-900 { color: #0f172a !important; }
+        
+        body.light-mode .text-cyan-400 { color: #0e7490 !important; }
+        body.light-mode .text-cyan-300 { color: #0e7490 !important; }
+        body.light-mode .text-amber-400 { color: #b45309 !important; }
+        body.light-mode .text-emerald-400 { color: #047857 !important; }
+        body.light-mode .text-purple-400 { color: #6d28d9 !important; }
+        
+        body.light-mode h1,
+        body.light-mode h2,
+        body.light-mode h3,
+        body.light-mode h4,
+        body.light-mode h5,
+        body.light-mode h6 {
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .bg-\[\#0f172a\]\/60 {
+            background: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(16px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+            border-color: rgba(226, 232, 240, 0.6) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08) !important;
+        }
+        
+        body.light-mode .bg-\[\#0f172a\]\/60:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10), 0 0 20px rgba(6, 182, 212, 0.12) !important;
+            border-color: rgba(6, 182, 212, 0.30) !important;
+        }
+        
+        body.light-mode .bg-white\/5 {
+            background: rgba(241, 245, 249, 0.9) !important;
+            border-color: rgba(226, 232, 240, 0.5) !important;
+        }
+        
+        body.light-mode .border-white\/10,
+        body.light-mode .border-white\/20 {
+            border-color: rgba(226, 232, 240, 0.6) !important;
+        }
+
+        body.light-mode .border-cyan-500\/20 {
+            border-color: rgba(14, 116, 144, 0.15) !important;
+        }
+        
+        body.light-mode .group:hover .border-cyan-400\/50 {
+            border-color: rgba(14, 116, 144, 0.3) !important;
+        }
+        
+        body.light-mode .group:hover .shadow-\[0_0_40px_rgba(6,182,212,0.08)\] {
+            box-shadow: 0 0 40px rgba(14, 116, 144, 0.08) !important;
+        }
+        
+        body.light-mode .bg-gradient-to-r.from-transparent.via-cyan-400 {
+            background: linear-gradient(to right, transparent, #0e7490, transparent) !important;
+        }
+        
+        body.light-mode .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500 {
+            background: linear-gradient(to right, #0e7490, #6d28d9, #047857) !important;
+        }
+        
+        body.light-mode .bg-white\/10 {
+            background: rgba(226, 232, 240, 0.8) !important;
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .bg-blue-500\/20 {
+            background: rgba(29, 78, 216, 0.10) !important;
+            color: #1d4ed8 !important;
+            border-color: rgba(29, 78, 216, 0.20) !important;
+        }
+        
+        body.light-mode .bg-emerald-500\/20 {
+            background: rgba(4, 120, 87, 0.10) !important;
+            color: #047857 !important;
+            border-color: rgba(4, 120, 87, 0.20) !important;
+        }
+        
+        body.light-mode .bg-sky-500\/20 {
+            background: rgba(2, 132, 199, 0.10) !important;
+            color: #0369a1 !important;
+            border-color: rgba(2, 132, 199, 0.20) !important;
+        }
+        
+        body.light-mode .btn-metal-cyan {
+            background: linear-gradient(180deg, #a0d8e8 0%, #5bb8c8 8%, #2d9aae 20%, #1a7d91 40%, #0f6478 60%, #0b4f60 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 6px 18px rgba(15, 100, 120, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        }
+        
+        body.light-mode .btn-metal-cyan:hover {
+            filter: brightness(1.05) !important;
+        }
+        
+        body.light-mode .btn-metal-teal {
+            background: linear-gradient(180deg, #a0e0d0 0%, #5bc0b0 8%, #2daa9a 20%, #1a9180 40%, #0f7868 60%, #0b6050 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 6px 18px rgba(15, 100, 90, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        }
+        
+        body.light-mode .group-hover\:text-\[\#2db8ce\]:hover {
+            color: #0e7490 !important;
+        }
+        
+        body.light-mode .text-\[\#2db8ce\] {
+            color: #0e7490 !important;
+        }
+        
+        body.light-mode .text-lg.font-bold.text-white {
+            color: #0f172a !important;
+        }
+        
+        body.light-mode .text-lg.font-bold.text-white.mb-3.leading-tight.group-hover\:text-\[\#2db8ce\]:hover {
+            color: #0e7490 !important;
+        }
+
+        /* ==========================================
+           ⭐ DESCRIPCIÓN - FONDO GRIS-AZULADO (#cbd5e1) EN MODO CLARO
+           ========================================== */
+        .descripcion-descargas {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: 1rem;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+        .descripcion-descargas:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.08);
+        }
+        .descripcion-descargas .desc-top-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 33%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+            opacity: 0.6;
+        }
+        .descripcion-descargas .desc-bottom-line {
+            margin-top: 1rem;
+            height: 2px;
+            width: 0;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(90deg, #06b6d4, #8b5cf6, #10b981);
+            border-radius: 9999px;
+            opacity: 0.6;
+            transition: width 0.7s ease;
+        }
+        .descripcion-descargas:hover .desc-bottom-line {
+            width: 100%;
+        }
+
+        /* Modo claro: fondo gris-azulado #cbd5e1 */
+        body.light-mode .descripcion-descargas,
+        html.light-mode .descripcion-descargas {
+            background: #cbd5e1 !important;
+            background-color: #cbd5e1 !important;
+            background-image: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            border: 1px solid #94a3b8 !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+        }
+        body.light-mode .descripcion-descargas:hover,
+        html.light-mode .descripcion-descargas:hover {
+            border-color: rgba(6, 182, 212, 0.5) !important;
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15) !important;
+        }
+        body.light-mode .descripcion-descargas p,
+        html.light-mode .descripcion-descargas p {
+            color: #1e293b !important;
+        }
+        body.light-mode .descripcion-descargas .text-white,
+        html.light-mode .descripcion-descargas .text-white {
+            color: #0f172a !important;
+        }
+        body.light-mode .descripcion-descargas .text-cyan-400,
+        body.light-mode .descripcion-descargas .text-cyan-300,
+        html.light-mode .descripcion-descargas .text-cyan-400,
+        html.light-mode .descripcion-descargas .text-cyan-300 {
+            color: #0e7490 !important;
+        }
+        body.light-mode .descripcion-descargas .text-amber-400,
+        html.light-mode .descripcion-descargas .text-amber-400 {
+            color: #b45309 !important;
+        }
+        body.light-mode .descripcion-descargas .text-emerald-400,
+        html.light-mode .descripcion-descargas .text-emerald-400 {
+            color: #047857 !important;
+        }
+        body.light-mode .descripcion-descargas .text-purple-400,
+        html.light-mode .descripcion-descargas .text-purple-400 {
+            color: #6d28d9 !important;
+        }
+        body.light-mode .descripcion-descargas .text-slate-300,
+        body.light-mode .descripcion-descargas .text-slate-400,
+        html.light-mode .descripcion-descargas .text-slate-300,
+        html.light-mode .descripcion-descargas .text-slate-400 {
+            color: #334155 !important;
+        }
+        body.light-mode .descripcion-descargas .bg-gradient-to-r.from-transparent.via-cyan-400,
+        html.light-mode .descripcion-descargas .bg-gradient-to-r.from-transparent.via-cyan-400 {
+            background: linear-gradient(to right, transparent, #0e7490, transparent) !important;
+        }
+        body.light-mode .descripcion-descargas .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500,
+        html.light-mode .descripcion-descargas .bg-gradient-to-r.from-cyan-500.via-purple-500.to-emerald-500 {
+            background: linear-gradient(to right, #0e7490, #6d28d9, #047857) !important;
+        }
+        body.light-mode .descripcion-descargas .fas,
+        html.light-mode .descripcion-descargas .fas {
+            color: #0e7490 !important;
+            opacity: 0.6;
+        }
+
+        /* ==========================================
+           BOTÓN WHATSAPP FLOTANTE
+           ========================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 26px;
+            box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35), 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: 99998;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.12) translateY(-3px);
+            box-shadow: 0 8px 28px rgba(37, 211, 102, 0.5);
+        }
+        .whatsapp-float::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            border: 2px solid rgba(37, 211, 102, 0.35);
+            animation: whatsappPulse 2.5s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes whatsappPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 0; }
+        }
+        .whatsapp-float::after {
+            content: '¿Dudas? Escríbenos';
+            position: absolute;
+            right: calc(100% + 12px);
+            top: 50%;
+            transform: translateY(-50%) scale(0.9);
+            background: rgba(15, 23, 42, 0.9);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+        .whatsapp-float:hover::after {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+        body.light-mode .whatsapp-float::after {
+            background: rgba(255, 255, 255, 0.95);
+            color: #0f172a;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        @media (max-width: 768px) {
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 24px;
+                bottom: 16px;
+                right: 16px;
+            }
+            .whatsapp-float::after { display: none; }
+        }
+
+    </style>
+
+</head>
+<body class="custom-scrollbar">
+
+<!-- PARTÍCULAS FLOTANTES -->
+<div class="particles-bg" aria-hidden="true">
+    <div class="particle" style="left:10%;top:90%;animation-delay:0s;animation-duration:25s;"></div>
+    <div class="particle" style="left:20%;top:80%;animation-delay:5s;animation-duration:30s;width:6px;height:6px;"></div>
+    <div class="particle" style="left:35%;top:95%;animation-delay:10s;animation-duration:22s;"></div>
+    <div class="particle" style="left:50%;top:85%;animation-delay:3s;animation-duration:28s;width:5px;height:5px;"></div>
+    <div class="particle" style="left:65%;top:90%;animation-delay:8s;animation-duration:26s;"></div>
+    <div class="particle" style="left:80%;top:88%;animation-delay:12s;animation-duration:32s;width:6px;height:6px;"></div>
+    <div class="particle" style="left:90%;top:92%;animation-delay:6s;animation-duration:24s;"></div>
+    <div class="particle" style="left:15%;top:70%;animation-delay:15s;animation-duration:35s;width:3px;height:3px;background:rgba(139,92,246,0.3);"></div>
+    <div class="particle" style="left:45%;top:75%;animation-delay:18s;animation-duration:29s;width:4px;height:4px;background:rgba(139,92,246,0.3);"></div>
+    <div class="particle" style="left:75%;top:72%;animation-delay:7s;animation-duration:31s;width:3px;height:3px;background:rgba(139,92,246,0.3);"></div>
+</div>
+
+<!-- Toast de carga -->
+<div id="loadingToast" class="loading-toast hidden">
+    <div class="toast-logo">
+        <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+    </div>
+    <div class="toast-content">
+        <div class="toast-title" id="loadingToastTitle">Cargando descargas...</div>
+    </div>
+    <div class="toast-spinner" id="loadingToastSpinner"></div>
+</div>
+
+<script>
+    // ==========================================
+    // ⚡ CACHÉ EN CLIENTE (localStorage)
+    // ==========================================
+    const CLIENT_CACHE_TTL = 5 * 60 * 1000; // 5 minutos
+    const CLIENT_CACHE_PREFIX = 'cache_';
+
+    async function fetchWithCache(url, cacheKey, ttl = CLIENT_CACHE_TTL) {
+        const fullKey = CLIENT_CACHE_PREFIX + cacheKey;
+        const cached = localStorage.getItem(fullKey);
+        const ts = parseInt(localStorage.getItem(fullKey + '_ts') || '0');
+        
+        if (cached && (Date.now() - ts) < ttl) {
+            try {
+                const data = JSON.parse(cached);
+                console.log(`⚡ [CACHE HIT] ${cacheKey}`);
+                return { json: async () => data };
+            } catch(e) {
+                localStorage.removeItem(fullKey);
+                localStorage.removeItem(fullKey + '_ts');
+            }
+        }
+        
+        console.log(`🌐 [CACHE MISS] ${cacheKey} → fetching`);
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        try {
+            localStorage.setItem(fullKey, JSON.stringify(data));
+            localStorage.setItem(fullKey + '_ts', Date.now().toString());
+        } catch(e) {
+            console.warn('localStorage lleno, limpiando caché viejo');
+            Object.keys(localStorage).forEach(k => {
+                if (k.startsWith(CLIENT_CACHE_PREFIX)) localStorage.removeItem(k);
+            });
+        }
+        
+        return { json: async () => data };
+    }
+
+    function clearClientCache() {
+        Object.keys(localStorage).forEach(k => {
+            if (k.startsWith(CLIENT_CACHE_PREFIX)) {
+                localStorage.removeItem(k);
+            }
+        });
+        console.log('🧹 Caché de cliente limpiado');
+    }
+    window.clearClientCache = clearClientCache;
+
+    // ==========================================
+    // ⭐ SISTEMA DE PERSISTENCIA DE ESTADO (sessionStorage)
+    // ==========================================
+    const DESCARGAS_STATE_KEY = 'descargas_estado';
+    const DESCARGAS_TIMESTAMP_KEY = 'descargas_timestamp';
+    const DESCARGAS_MAX_AGE = 5 * 60 * 1000; // 5 minutos
+
+    window.addEventListener('pageshow', (event) => {
+        const stateStr = sessionStorage.getItem(DESCARGAS_STATE_KEY);
+        const timestampStr = sessionStorage.getItem(DESCARGAS_TIMESTAMP_KEY);
+        
+        if (!stateStr || !timestampStr) return;
+        
+        const age = Date.now() - parseInt(timestampStr);
+        if (age > DESCARGAS_MAX_AGE) {
+            sessionStorage.removeItem(DESCARGAS_STATE_KEY);
+            sessionStorage.removeItem(DESCARGAS_TIMESTAMP_KEY);
+            return;
+        }
+        
+        try {
+            const state = JSON.parse(stateStr);
+            
+            if (!event.persisted && typeof state.scrollY === 'number' && state.scrollY > 0) {
+                let intentos = 0;
+                const maxIntentos = 60;
+                const checkRender = setInterval(() => {
+                    intentos++;
+                    const grid = document.getElementById('downloadsGrid');
+                    const tieneContenido = grid && grid.children.length > 0 && !grid.classList.contains('hidden');
+                    
+                    if (tieneContenido || intentos >= maxIntentos) {
+                        clearInterval(checkRender);
+                        if (tieneContenido) {
+                            setTimeout(() => {
+                                window.scrollTo({ top: state.scrollY, behavior: 'instant' });
+                            }, 200);
+                        }
+                    }
+                }, 100);
+            }
+        } catch (e) {
+            console.warn('Error al restaurar estado de Descargas:', e);
+        }
+    });
+
+    window.addEventListener('beforeunload', () => {
+        try {
+            const state = {
+                scrollY: window.scrollY,
+                timestamp: Date.now()
+            };
+            sessionStorage.setItem(DESCARGAS_STATE_KEY, JSON.stringify(state));
+            sessionStorage.setItem(DESCARGAS_TIMESTAMP_KEY, Date.now().toString());
+        } catch (e) {}
+    });
+
+    window.addEventListener('pagehide', (event) => {
+        try {
+            if (!event.persisted) {
+                const state = {
+                    scrollY: window.scrollY,
+                    timestamp: Date.now()
+                };
+                sessionStorage.setItem(DESCARGAS_STATE_KEY, JSON.stringify(state));
+                sessionStorage.setItem(DESCARGAS_TIMESTAMP_KEY, Date.now().toString());
+            }
+        } catch (e) {}
+    });
+
+    window.addEventListener('storage', (event) => {
+        if (event.key === 'user' && !event.newValue) {
+            sessionStorage.removeItem(DESCARGAS_STATE_KEY);
+            sessionStorage.removeItem(DESCARGAS_TIMESTAMP_KEY);
+            clearClientCache();
+        }
+    });
+
+    // ============ FUNCIONES DEL TOAST DE CARGA ============
+    function showLoadingToast() {
+        const toast = document.getElementById('loadingToast');
+        const title = document.getElementById('loadingToastTitle');
+        const spinner = document.getElementById('loadingToastSpinner');
+        
+        if (toast) {
+            toast.classList.remove('hidden', 'hiding', 'success-toast');
+            title.innerText = 'Cargando descargas...';
+            if (spinner) spinner.style.display = 'block';
+            const existingCheck = toast.querySelector('.toast-check');
+            if (existingCheck) existingCheck.remove();
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(0)';
+            if (window.innerWidth <= 640) {
+                toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            } else {
+                toast.style.animation = 'slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            }
+        }
+    }
+
+    function showSuccessToast() {
+        const toast = document.getElementById('loadingToast');
+        const title = document.getElementById('loadingToastTitle');
+        const spinner = document.getElementById('loadingToastSpinner');
+        
+        if (toast) {
+            toast.classList.remove('hidden', 'hiding');
+            toast.classList.add('success-toast');
+            title.innerText = '¡Listo!';
+            if (spinner) spinner.style.display = 'none';
+            const existingCheck = toast.querySelector('.toast-check');
+            if (existingCheck) existingCheck.remove();
+            const checkDiv = document.createElement('div');
+            checkDiv.className = 'toast-check';
+            checkDiv.innerHTML = '<i class="fas fa-check"></i>';
+            toast.appendChild(checkDiv);
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateX(0)';
+            if (window.innerWidth <= 640) {
+                toast.style.animation = 'slideInUp 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            } else {
+                toast.style.animation = 'slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            }
+            setTimeout(() => { hideLoadingToast(); }, 3000);
+        }
+    }
+
+    function hideLoadingToast() {
+        const toast = document.getElementById('loadingToast');
+        if (toast) {
+            toast.classList.add('hiding');
+            if (window.innerWidth <= 640) {
+                toast.style.transform = 'translateY(150%)';
+            } else {
+                toast.style.transform = 'translateX(120px)';
+            }
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('hiding', 'success-toast');
+                toast.style.transform = '';
+            }, 350);
+        }
+    }
+    // ============ FIN FUNCIONES DEL TOAST ============
+</script>
+
+<!-- SECCIÓN: DESCARGAS -->
+<div id="page-descargas" class="page-content active flex flex-col">
+    <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
+        <div class="absolute inset-0 z-0 opacity-40">
+            <img src="img/AA (6).gif" class="w-full h-full object-cover mix-blend-soft-light" alt="Fondo Descargas">
+        </div>
+        <div class="absolute right-8 top-1/2 -translate-y-1/2 text-white/10 text-[180px] pointer-events-none z-0 hidden md:block">
+            <i class="fas fa-download"></i>
+        </div>
+        <div class="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 py-24 pt-40">
+            <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
+                <span class="bg-red-500/20 px-3 py-1 rounded-full text-red-400 border border-red-500/30 backdrop-blur-md">Software</span>
+                <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Descargas</span>
+                <span class="bg-orange-500/20 px-3 py-1 rounded-full text-orange-400 border border-orange-500/30 backdrop-blur-md">Herramientas</span>
+            </div>
+            <h1 class="hero-main-title text-3xl md:text-5xl font-black mb-8 drop-shadow-lg uppercase tracking-tighter font-display">DESCARGAS</h1>
+
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-6 py-6">
+
+        <!-- ====== DESCRIPCIÓN DESCARGAS ====== -->
+        <div class="w-full mb-10 mt-6">
+            <div class="descripcion-descargas relative p-5 md:p-8">
+                
+                <!-- Línea decorativa superior -->
+                <div class="desc-top-line"></div>
+                
+                <p class="text-slate-300 text-sm md:text-lg leading-relaxed font-medium text-center">
+                    <span class="text-cyan-400 font-bold text-base md:text-xl">📥 Explora</span> nuestra colección de 
+                    <span class="text-white font-bold">programas</span>, 
+                    <span class="text-white font-bold">herramientas</span> y 
+                    <span class="text-white font-bold">material de automatización</span>, 
+                    para potenciar tu aprendizaje.
+                </p>
+                
+                <p class="text-slate-400 text-sm md:text-base leading-relaxed mt-3 text-center">
+                    <i class="fas fa-quote-left text-cyan-400/50 mr-1 text-xs"></i>
+                    Incluye 
+                    <span class="text-amber-400 font-semibold">programas</span>, 
+                    <span class="text-emerald-400 font-semibold">manuales</span>, 
+                    <span class="text-purple-400 font-semibold">libros</span> y 
+                    <span class="text-cyan-300 font-semibold">ejercicios prácticos</span> 
+                    para un aprendizaje 
+                    <span class="text-white font-bold">real y aplicable</span>.
+                    <i class="fas fa-quote-right text-cyan-400/50 ml-1 text-xs"></i>
+                </p>
+
+                <!-- Línea decorativa inferior animada -->
+                <div class="desc-bottom-line"></div>
+            </div>
+        </div>
+
+        <main class="relative z-10 flex-grow w-full">
+            <div id="downloadsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-20 text-left"></div>
+            <div id="noResultsDescargas" class="hidden text-center py-12">
+                <i data-lucide="package-open" class="mx-auto w-16 h-16 text-white/20 mb-4"></i>
+                <h3 class="text-lg font-medium text-white/50 uppercase tracking-widest font-black">No se encontraron descargas</h3>
+            </div>
+        </main>
+    </div>
+</div>
+
+<div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+<script>
+    // ==========================================
+    // CONFIGURACIÓN Y CONEXIÓN A GOOGLE SHEETS
+    // ==========================================
+
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwiQw2xwqDBVK8BwwoACnGd6reOc2arj8-myMsMJI5Epsv9Ax0kRstsRAv9juLAtIAD/exec';
+
+    let currentUser = JSON.parse(localStorage.getItem('user')) || null;
+    let dbUsers = {}, globalStats = {}, dbUserCourses = {}, dbUserDetails = {};
+    let downloadCounts = {}; 
+    let userCountry = "Desconocido";
+    let DOWNLOADS_DATA = [];
+
+    const countryToSpanish = { 
+        "venezuela": "Venezuela", "colombia": "Colombia", "mexico": "México", "méxico": "México",
+        "spain": "España", "españa": "España", "argentina": "Argentina", "peru": "Perú", "perú": "Perú",
+        "chile": "Chile", "ecuador": "Ecuador", "bolivia": "Bolivia", "paraguay": "Paraguay",
+        "uruguay": "Uruguay", "costa rica": "Costa Rica", "panama": "Panamá", "panamá": "Panamá",
+        "dominican republic": "República Dominicana", "república dominicana": "República Dominicana",
+        "guatemala": "Guatemala", "honduras": "Honduras", "el salvador": "El Salvador",
+        "nicaragua": "Nicaragua", "cuba": "Cuba", "puerto rico": "Puerto Rico",
+        "united states": "Estados Unidos", "usa": "Estados Unidos", "estados unidos": "Estados Unidos",
+        "france": "Francia", "francia": "Francia", "brazil": "Brasil", "brasil": "Brasil",
+        "italy": "Italia", "italia": "Italia", "germany": "Alemania", "alemania": "Alemania",
+        "canada": "Canadá", "canadá": "Canadá", "united kingdom": "Reino Unido",
+        "portugal": "Portugal", "haiti": "Haití", "japan": "Japón", "china": "China"
+    };
+
+    function showNotif(title, msg, type = 'success') {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        const bgColor = type === 'error' ? 'bg-red-600' : type === 'info' ? 'bg-blue-600' : 'bg-emerald-600';
+        const icon = type === 'error' ? 'fa-exclamation-circle' : type === 'info' ? 'fa-info-circle' : 'fa-check-circle';
+        
+        toast.className = `${bgColor} text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 min-w-[300px] border border-white/20 pointer-events-auto z-[9999]`;
+        toast.innerHTML = `<div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0"><i class="fas ${icon} text-white"></i></div><div class="text-left"><h4 class="text-sm font-bold">${title}</h4><p class="text-xs text-white/80">${msg}</p></div>`;
+        container.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 4000);
+    }
+
+    function ping(action, key) {
+        try {
+            if (navigator.sendBeacon) {
+                navigator.sendBeacon(SCRIPT_URL, new URLSearchParams({action, key}));
+            } else {
+                fetch(SCRIPT_URL, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: `action=${encodeURIComponent(action)}&key=${encodeURIComponent(key)}` });
+            }
+        } catch (e) { console.error('Ping error:', e); }
+    }
+
+    function showToastDownload(itemName) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'bg-dark text-white px-4 py-3 rounded-lg shadow-2xl flex items-center gap-3 min-w-[300px] border border-slate-700 pointer-events-auto z-[9999]';
+        toast.innerHTML = `<div class="w-8 h-8 rounded-full bg-secondary flex items-center justify-center animate-pulse"><i data-lucide="arrow-down" class="w-4 h-4 text-white"></i></div><div class="text-left"><h4 class="text-sm font-bold">Descargando</h4><p class="text-xs text-slate-300">${itemName}</p></div>`;
+        container.appendChild(toast);
+        if(window.lucide) lucide.createIcons();
+        setTimeout(() => { toast.style.opacity='0'; setTimeout(()=>toast.remove(), 300); }, 4000);
+    }
+
+    // ==========================================
+    // ✅ FUNCIÓN: CARGAR DESCARGAS DESDE LA HOJA
+    // ⚡ AHORA CON CACHÉ EN CLIENTE
+    // ==========================================
+    async function loadDownloadsFromSheet() {
+        showLoadingToast();
+        
+        try {
+            // ⚡ get_programs con caché de 5 min (mantenemos el action original para no romper el backend)
+            const response = await fetchWithCache(
+                `${SCRIPT_URL}?action=get_programs`,
+                'downloads_list',
+                5 * 60 * 1000
+            );
+            const result = await response.json();
+            
+            if (result.status === 'success' && result.data && Array.isArray(result.data)) {
+                DOWNLOADS_DATA = result.data;
+                console.log(`✅ ${DOWNLOADS_DATA.length} descargas cargadas desde la hoja`);
+                
+                if (currentUser && currentUser.email) {
+                    await loadUserDataFromExcel();
+                }
+                
+                renderDownloads(DOWNLOADS_DATA);
+                await loadDownloadCounts();
+                showSuccessToast();
+            } else {
+                throw new Error(result.message || 'No se pudieron cargar las descargas');
+            }
+        } catch (error) {
+            console.error('❌ Error al cargar descargas:', error);
+            hideLoadingToast();
+            
+            const grid = document.getElementById('downloadsGrid');
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center p-8 bg-red-900/20 border border-red-500/30 rounded-2xl">
+                        <i class="fas fa-exclamation-triangle text-4xl text-red-400 mb-4"></i>
+                        <h3 class="font-bold text-red-400 text-lg mb-2">Error al Cargar Descargas</h3>
+                        <p class="text-slate-300 mb-4">No se pudo conectar con la base de datos.</p>
+                        <button onclick="loadDownloadsFromSheet()" class="px-6 py-3 bg-[#2db8ce] text-white font-bold rounded-xl hover:bg-[#1877f2] transition-all">
+                            <i class="fas fa-sync-alt mr-2"></i> Reintentar
+                        </button>
+                    </div>`;
+            }
+        }
+    }
+
+    // ⚡ loadDownloadCounts con caché de 2 min (cambia más seguido)
+    async function loadDownloadCounts() {
+        try {
+            const response = await fetchWithCache(
+                `${SCRIPT_URL}?action=get_downloads`,
+                'downloads_counts',
+                2 * 60 * 1000
+            );
+            const data = await response.json();
+            if (data && data.counts) {
+                downloadCounts = data.counts;
+                DOWNLOADS_DATA.forEach(prog => {
+                    const countEl = document.getElementById(`progCount-${prog.id}`);
+                    if (countEl) {
+                        const key = `${prog.name} ${prog.version}`;
+                        countEl.innerText = downloadCounts[key] || 0;
+                    }
+                });
+            }
+        } catch (e) {
+            console.error('Error cargando conteos de descargas:', e);
+        }
+    }
+
+    // ⚡ loadUserDataFromExcel con caché de 1 min
+    async function loadUserDataFromExcel() {
+        if (!currentUser || !currentUser.email) return;
+        
+        try {
+            const email = currentUser.email;
+            const response = await fetchWithCache(
+                `${SCRIPT_URL}?action=get_user&email=${encodeURIComponent(email)}`,
+                `user_descargas_${email.toLowerCase()}`,
+                60 * 1000
+            );
+            const result = await response.json();
+            
+            if (result.status === 'success' && result.user) {
+                const userData = result.user;
+                
+                if (userData.downloadedFiles) {
+                    if (typeof userData.downloadedFiles === 'string') {
+                        try {
+                            currentUser.downloadedFiles = JSON.parse(userData.downloadedFiles);
+                        } catch(e) {
+                            currentUser.downloadedFiles = {};
+                        }
+                    } else if (typeof userData.downloadedFiles === 'object' && !Array.isArray(userData.downloadedFiles)) {
+                        currentUser.downloadedFiles = userData.downloadedFiles;
+                    }
+                }
+                
+                if (!currentUser.downloadedFiles || Array.isArray(currentUser.downloadedFiles)) {
+                    currentUser.downloadedFiles = {};
+                }
+                
+                if (userData.historial_descargas) {
+                    if (typeof userData.historial_descargas === 'string') {
+                        try {
+                            const parsed = JSON.parse(userData.historial_descargas);
+                            if (typeof parsed === 'object' && !Array.isArray(parsed)) {
+                                currentUser.downloadedFiles = { ...parsed, ...currentUser.downloadedFiles };
+                            }
+                        } catch(e) {}
+                    }
+                }
+                
+                delete currentUser.downloadedPrograms;
+                localStorage.setItem('user', JSON.stringify(currentUser));
+                
+                console.log('✅ Datos de usuario cargados desde Excel (SOLO downloadedFiles):', currentUser.downloadedFiles);
+            }
+        } catch (e) {
+            console.error('Error cargando datos del usuario:', e);
+        }
+    }
+
+    function renderDownloads(data) {
+        const downloadsGrid = document.getElementById('downloadsGrid');
+        const noResults = document.getElementById('noResultsDescargas');
+        downloadsGrid.innerHTML = '';
+        
+        if (!data || data.length === 0) { 
+            downloadsGrid.classList.add('hidden'); 
+            noResults.classList.remove('hidden'); 
+            return; 
+        }
+        downloadsGrid.classList.remove('hidden'); 
+        noResults.classList.add('hidden');
+        
+        data.forEach((prog, index) => {
+            const card = document.createElement('div');
+            card.className = `group bg-[#0f172a]/60 backdrop-blur-xl rounded-[24px] border border-white/20 shadow-2xl hover:shadow-cyan-500/20 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col text-left`;
+            
+            const imagePath = prog.image ? `img/${prog.image}` : 'img/AA (38).webp';
+            
+            let btnContent, btnClass;
+            if (currentUser) {
+                btnContent = `<i data-lucide="download" class="w-4 h-4"></i> Descargar Ahora`;
+                btnClass = 'btn-metal-solid btn-metal-cyan py-2 rounded-xl text-[8px] font-black uppercase tracking-widest shadow-md shadow-blue-500/30 border border-blue-500 flex items-center justify-center gap-2';
+            } else {
+                btnContent = `<i data-lucide="lock" class="w-4 h-4"></i> Ingresar para descargar`;
+                btnClass = 'btn-metal-solid btn-metal-teal py-3 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-md shadow-teal-500/30 border border-teal-500 flex items-center justify-center gap-2';
+            }
+
+            const softwareKey = `${prog.name} ${prog.version}`;
+            const displayCount = downloadCounts[softwareKey] !== undefined ? downloadCounts[softwareKey] : 0;
+
+            const progIdNum = parseInt(prog.id);
+            const userDownloadCount = currentUser && currentUser.downloadedFiles && currentUser.downloadedFiles[progIdNum] ? currentUser.downloadedFiles[progIdNum] : 0;
+            const isDownloaded = userDownloadCount > 0;
+            const userStatusTag = isDownloaded ? `<span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Ya has descargado este recurso"><i data-lucide="check-circle" class="w-3 h-3"></i> Descargado</span>` : '';
+            
+            const userCountTag = userDownloadCount > 0 ? `<span class="bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Tus descargas"><i data-lucide="download" class="w-3 h-3"></i> ${userDownloadCount}</span>` : '';
+
+            card.innerHTML = `
+                <div class="aspect-video w-full overflow-hidden bg-slate-900/50 border-b border-white/10">
+                    <img src="${imagePath}" class="w-full h-full object-cover opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-500" onerror="this.src='img/AA (38).webp'">
+                </div>
+                <div class="p-6 flex-grow">
+                    <h2 class="text-lg font-bold text-white mb-3 leading-tight group-hover:text-[#2db8ce] transition-colors">${prog.name}</h2>
+                    <div class="flex flex-wrap gap-2 mb-3 text-xs font-bold">
+                        <span class="bg-white/10 text-slate-300 px-2 py-0.5 rounded-full border border-white/10">${prog.version || 'N/A'}</span>
+                        <span class="bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded-full border border-blue-500/30">${prog.size || 'N/A'}</span>
+                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full flex items-center gap-1" title="Descargas totales"><i data-lucide="bar-chart-2" class="w-3 h-3"></i><span id="progCount-${prog.id}">${displayCount}</span></span>
+                        ${userStatusTag} ${userCountTag}
+                    </div>
+                    <p class="text-slate-300 text-sm line-clamp-3 leading-relaxed">${prog.desc || 'Sin descripción'}</p>
+                </div>
+                <div class="px-6 py-4 bg-white/5 border-t border-white/10 text-left mt-auto">
+                    <button onclick="startDownload('${softwareKey}', '${prog.link}', ${prog.id})" class="w-full ${btnClass}">${btnContent}</button>
+                </div>`;
+            downloadsGrid.appendChild(card);
+        });
+        if(window.lucide) lucide.createIcons();
+    }
+
+    function startDownload(softwareName, url, progId) {
+        if (!currentUser) { 
+            showNotif('Acceso Restringido', 'Debes iniciar sesión para descargar.', 'error'); 
+            if (typeof AuthUI !== 'undefined' && AuthUI.openModal) {
+                AuthUI.openModal('login'); 
+            }
+            return; 
+        }
+        
+        const progIdNum = parseInt(progId);
+        
+        if (!currentUser.downloadedFiles || Array.isArray(currentUser.downloadedFiles)) {
+            currentUser.downloadedFiles = {};
+        }
+        currentUser.downloadedFiles[progIdNum] = (parseInt(currentUser.downloadedFiles[progIdNum]) || 0) + 1;
+
+        delete currentUser.downloadedPrograms;
+        localStorage.setItem('user', JSON.stringify(currentUser)); 
+        
+        if (!url || url.trim() === "") {
+            showNotif('No Disponible', 'Enlace no configurado.', 'info');
+            return;
+        }
+
+        window.open(url, '_blank');
+        showToastDownload(softwareName);
+        
+        downloadCounts[softwareName] = (parseInt(downloadCounts[softwareName]) || 0) + 1;
+        
+        const countEl = document.getElementById(`progCount-${progId}`);
+        if (countEl) countEl.innerText = downloadCounts[softwareName];
+        
+        fetch(`${SCRIPT_URL}?action=record_download&programa=${encodeURIComponent(softwareName)}&pais=${encodeURIComponent(userCountry)}&email=${encodeURIComponent(currentUser.email)}&fecha=${encodeURIComponent(new Date().toISOString())}`, { 
+            method: 'GET', 
+            mode: 'no-cors' 
+        }).catch(err => console.error('Error registrando descarga:', err));
+        
+        // ⚡ Limpiar caché de descargas y del usuario tras registrar
+        try {
+            Object.keys(localStorage).forEach(k => {
+                if (k.startsWith(CLIENT_CACHE_PREFIX + 'downloads_counts') || 
+                    k.startsWith(CLIENT_CACHE_PREFIX + 'user_descargas_')) {
+                    localStorage.removeItem(k);
+                }
+            });
+        } catch(e) {}
+        
+        syncUserProgressToExcel();
+        renderDownloads(DOWNLOADS_DATA);
+    }
+
+    async function syncUserProgressToExcel() {
+        if(!currentUser) return;
+        
+        if (!currentUser.downloadedFiles || Array.isArray(currentUser.downloadedFiles)) {
+            currentUser.downloadedFiles = {};
+        }
+        
+        const downloadedFilesJSON = JSON.stringify(currentUser.downloadedFiles);
+        
+        const userPayload = { 
+            ...currentUser, 
+            downloadedFiles: currentUser.downloadedFiles,
+            historial_descargas: downloadedFilesJSON,
+            archivos_descargados: downloadedFilesJSON,
+            ultima_descarga: new Date().toISOString()
+        };
+        delete userPayload.downloadedPrograms;
+        
+        const email = encodeURIComponent(currentUser.email.toLowerCase());
+        const userData = encodeURIComponent(JSON.stringify(userPayload));
+        const historialParam = encodeURIComponent(downloadedFilesJSON);
+        
+        try {
+            await fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                mode: 'no-cors', 
+                body: `action=update_user&email=${email}&userData=${userData}&historial=${historialParam}`, 
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' } 
+            });
+            console.log('✅ Progreso sincronizado con Excel (SOLO downloadedFiles):', downloadedFilesJSON);
+        } catch(e) {
+            console.error('Error sincronizando con Excel:', e);
+        }
+    }
+
+    async function initVisitorInfo() {
+        const services = [ 'https://get.geojs.io/v1/ip/geo.json', 'https://api.country.is', 'https://ipapi.co/json/' ];
+        for (const service of services) {
+            try {
+                const controller = new AbortController(); 
+                const timeoutId = setTimeout(() => controller.abort(), 4000);
+                const res = await fetch(service, { signal: controller.signal }); 
+                clearTimeout(timeoutId);
+                if (!res.ok) continue; 
+                const data = await res.json();
+                
+                let rawCountryName = data.country || data.countryName || data.country_name || "";
+                
+                if (rawCountryName && rawCountryName !== "Desconocido") {
+                    userCountry = countryToSpanish[rawCountryName.toLowerCase()] || rawCountryName;
+                    ping('update_stat', 'visitas_totales');
+                    ping('update_stat', 'visita_pais_' + userCountry);
+                    return;
+                }
+            } catch (e) { console.warn(`Fallo geoip ${service}:`, e.message); }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+        currentUser = JSON.parse(localStorage.getItem('user')) || null;
+        
+        if (currentUser && currentUser.downloadedPrograms) {
+            delete currentUser.downloadedPrograms;
+            localStorage.setItem('user', JSON.stringify(currentUser));
+        }
+        
+        showLoadingToast();
+        initVisitorInfo();
+        await loadDownloadsFromSheet();
+        
+        if(window.lucide) lucide.createIcons();
+    });
+</script>
+
+<script src="js/auth.js"></script>
+<script src="js/navbar.js"></script>
+<script src="js/footer.js"></script>
+<!-- BOTÓN WHATSAPP FLOTANTE -->
+<a href="https://wa.me/584121414196?text=Hola,%20tengo%20una%20consulta%20sobre%20los%20cursos." target="_blank" class="whatsapp-float" aria-label="Contactar por WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+</body>
+</html>
