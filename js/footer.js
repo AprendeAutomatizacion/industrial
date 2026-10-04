@@ -1,6 +1,6 @@
 /* ==========================================
    FOOTER.JS - Pie de página unificado
-   Navegación: Home, Catálogo, Mis Cursos, Progreso, Programas
+   Navegación: Home, Catálogo, Mis Cursos, Progreso, Descargas
    ========================================== */
 
 (function () {
@@ -44,7 +44,7 @@
                         <li><a class="footer-link" href="catalogo.html">Catálogo</a></li>
                         <li><a class="footer-link" href="mis-cursos.html">Mis Cursos</a></li>
                         <li><a class="footer-link" href="progreso.html">Progreso</a></li>
-                        <li><a class="footer-link" href="programas.html">Programas</a></li>
+                        <li><a class="footer-link" href="descargas.html">Descargas</a></li>
                     </ul>
                 </div>
 
@@ -80,11 +80,11 @@
        ========================================== */
     const mojibakeFixMap = new Map([
         ['Ã¡', 'á'], ['Ã©', 'é'], ['Ã­', 'í'], ['Ã³', 'ó'], ['Ãº', 'ú'],
-        ['Ã', 'Á'], ['Ã‰', 'É'], ['Ã', 'Í'], ['Ã“', 'Ó'], ['Ãš', 'Ú'],
+        ['Ã', 'Á'], ['Ã‰', 'É'], ['Ã', 'Í'], ['Ã"', 'Ó'], ['Ãš', 'Ú'],
         ['Ã±', 'ñ'], ['Ã‘', 'Ñ'], ['Ã¼', 'ü'], ['Ãœ', 'Ü'],
         ['Â¿', '¿'], ['Â¡', '¡'], ['Â·', '·'], ['Âº', 'º'], ['Âª', 'ª'],
-        ['â€“', '–'], ['â€”', '—'], ['â€˜', '‘'], ['â€™', '’'], ['â€œ', '“'], ['â€', '”'],
-        ['â€¢', '•'], ['â€¦', '…'], ['âœ…', '✅'], ['âŒ', '❌'], ['â³', '⏳']
+        ['â€“', '–'], ['â€”', '—'], ['â€˜', '‘'], ['â€™', '’'], ['â€œ', '“'], ['â€', '”'],
+        ['â€¢', '•'], ['â€¦', '…'], ['âœ…', '✅'], ['âŒ', '❌'], ['â³', '⏳']
     ]);
 
     function repairMojibakeText(text) {

@@ -26,7 +26,7 @@ window.buyManual = function(courseId, buyLink) {
 
 // Inyectar librería de Confeti
 const confettiScript = document.createElement('script');
-confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+confettiScript.src = 'https://cdn.jsdelivr.net/npm/ canvas-confetti@1.6.0/dist/confetti.browser.min.js'.replace(' ', '');
 document.head.appendChild(confettiScript);
 
 // Inyectar fuente Orbitron
@@ -63,6 +63,22 @@ const currentPage = window.location.pathname.split('/').pop() || 'index.html';
 let user = null;
 try { user = JSON.parse(localStorage.getItem('user')); } catch(e) { user = null; }
 const isLogged = !!user;
+
+// ============================================================
+// ⭐ INICIALES DEL USUARIO
+// ============================================================
+function getInitials(name) {
+    if (!name || typeof name !== 'string') return '?';
+    const clean = name.trim();
+    if (!clean) return '?';
+    const parts = clean.split(/\s+/).filter(Boolean);
+    if (parts.length === 1) {
+        return parts[0].charAt(0).toUpperCase();
+    }
+    return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+}
+
+const userInitials = isLogged ? getInitials(user.name || user.email || '') : '';
 
 // ============================================================
 // TEMA CLARO/OSCURO
@@ -339,6 +355,18 @@ style.textContent = `
         transform: translateY(-2px);
     }
 
+    /* ⭐ INICIALES DEL USUARIO - SIDEBAR DESKTOP */
+    .sb-initials {
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        font-weight: 900;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        color: #ffffff;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+        line-height: 1;
+        user-select: none;
+    }
+
     /* Modo claro sidebar */
     body.light-mode .app-sidebar {
         background: rgba(255, 255, 255, 0.88);
@@ -387,6 +415,13 @@ style.textContent = `
     }
     body.light-mode .sb-actions {
         border-top-color: rgba(0, 0, 0, 0.06);
+    }
+    body.light-mode .sb-action.user {
+        background: linear-gradient(135deg, rgba(8, 145, 178, 0.9), rgba(6, 182, 212, 0.9));
+        color: #ffffff !important;
+    }
+    body.light-mode .sb-initials {
+        color: #ffffff;
     }
 
     /* =====================================================
@@ -506,6 +541,32 @@ style.textContent = `
             min-width: 0;
         }
 
+        /* ⭐ INICIALES DEL USUARIO - TOP NAV MÓVIL */
+        .tn-initials-circle {
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.22);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+            flex-shrink: 0;
+        }
+
+        .tn-initials-circle span {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 900;
+            font-size: 11px;
+            letter-spacing: 0.02em;
+            color: #ffffff !important;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+            line-height: 1;
+            user-select: none;
+        }
+
         /* ========= FILA 2: NAVEGACIÓN ========= */
         .tn-row-2 {
             display: flex;
@@ -604,6 +665,13 @@ style.textContent = `
             background: linear-gradient(135deg, rgba(8, 145, 178, 0.9), rgba(6, 182, 212, 0.9));
             color: #fff;
         }
+        body.light-mode .tn-initials-circle {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        body.light-mode .tn-initials-circle span {
+            color: #ffffff !important;
+        }
         body.light-mode .tn-item {
             color: rgba(15, 23, 42, 0.55);
         }
@@ -662,6 +730,7 @@ style.textContent = `
     body:not(.light-mode) .glass-dark-blue,
     body:not(.light-mode) .glass-gray-blue,
     body:not(.light-mode) #programsGrid > div,
+    body:not(.light-mode) #downloadsGrid > div,
     body:not(.light-mode) main .bg-white,
     body:not(.light-mode) .bg-slate-50 {
         background-color: #2e3a50 !important; 
@@ -746,7 +815,8 @@ style.textContent = `
         opacity: 1 !important;
         mix-blend-mode: normal !important;
     }
-    body.light-mode #programsGrid img {
+    body.light-mode #programsGrid img,
+    body.light-mode #downloadsGrid img {
         opacity: 1 !important;
         mix-blend-mode: normal !important;
     }
@@ -997,17 +1067,22 @@ style.textContent = `
     }
 
     body.light-mode .course-card,
-    body.light-mode #programsGrid > div {
+    body.light-mode #programsGrid > div,
+    body.light-mode #downloadsGrid > div {
         background-color: #ffffff !important;
         border-color: #e2e8f0 !important;
     }
     body.light-mode .course-card h2, body.light-mode .course-card h3,
     body.light-mode #programsGrid h2,
-    body.light-mode #programsGrid .text-white {
+    body.light-mode #downloadsGrid h2,
+    body.light-mode #programsGrid .text-white,
+    body.light-mode #downloadsGrid .text-white {
         color: #1e293b !important;
     }
     body.light-mode .course-card p, body.light-mode #programsGrid p,
-    body.light-mode #programsGrid .text-slate-300 {
+    body.light-mode #downloadsGrid p,
+    body.light-mode #programsGrid .text-slate-300,
+    body.light-mode #downloadsGrid .text-slate-300 {
         color: #475569 !important;
     }
 
@@ -1020,16 +1095,26 @@ style.textContent = `
         mix-blend-mode: normal !important;
     }
 
-    body.light-mode #programsGrid .bg-white\\/10 { background-color: #40a0db66 !important; border-color: rgba(255,255,255,0.5) !important; }
-    body.light-mode #programsGrid .bg-blue-500\\/20 { background-color: #bfdbfe !important; }
-    body.light-mode #programsGrid .text-blue-300 { color: #2563eb !important; }
-    body.light-mode #programsGrid .border-blue-500\\/30 { border-color: #93c5fd !important; }
-    body.light-mode #programsGrid .bg-emerald-500\\/20 { background-color: #a7f3d0 !important; }
-    body.light-mode #programsGrid .text-emerald-300 { color: #059669 !important; }
-    body.light-mode #programsGrid .border-emerald-500\\/30 { border-color: #6ee7b7 !important; }
-    body.light-mode #programsGrid .bg-sky-500\\/20 { background-color: #e0f2fe !important; }
-    body.light-mode #programsGrid .text-sky-300 { color: #0284c7 !important; }
-    body.light-mode #programsGrid .border-sky-500\\/30 { border-color: #7dd3fc !important; }
+    body.light-mode #programsGrid .bg-white\\/10,
+    body.light-mode #downloadsGrid .bg-white\\/10 { background-color: #40a0db66 !important; border-color: rgba(255,255,255,0.5) !important; }
+    body.light-mode #programsGrid .bg-blue-500\\/20,
+    body.light-mode #downloadsGrid .bg-blue-500\\/20 { background-color: #bfdbfe !important; }
+    body.light-mode #programsGrid .text-blue-300,
+    body.light-mode #downloadsGrid .text-blue-300 { color: #2563eb !important; }
+    body.light-mode #programsGrid .border-blue-500\\/30,
+    body.light-mode #downloadsGrid .border-blue-500\\/30 { border-color: #93c5fd !important; }
+    body.light-mode #programsGrid .bg-emerald-500\\/20,
+    body.light-mode #downloadsGrid .bg-emerald-500\\/20 { background-color: #a7f3d0 !important; }
+    body.light-mode #programsGrid .text-emerald-300,
+    body.light-mode #downloadsGrid .text-emerald-300 { color: #059669 !important; }
+    body.light-mode #programsGrid .border-emerald-500\\/30,
+    body.light-mode #downloadsGrid .border-emerald-500\\/30 { border-color: #6ee7b7 !important; }
+    body.light-mode #programsGrid .bg-sky-500\\/20,
+    body.light-mode #downloadsGrid .bg-sky-500\\/20 { background-color: #e0f2fe !important; }
+    body.light-mode #programsGrid .text-sky-300,
+    body.light-mode #downloadsGrid .text-sky-300 { color: #0284c7 !important; }
+    body.light-mode #programsGrid .border-sky-500\\/30,
+    body.light-mode #downloadsGrid .border-sky-500\\/30 { border-color: #7dd3fc !important; }
 
     .logo-text { color: #ffffff !important; } 
     body.light-mode .logo-text { color: #0f172a !important; }
@@ -1255,9 +1340,9 @@ const sidebarHTML = `
             <i class="fas fa-chart-line"></i>
             <span class="sb-tooltip">Progreso</span>
         </a>
-        <a href="programas.html" class="sb-item ${currentPage === 'programas.html' ? 'active' : ''}">
-            <i class="fas fa-laptop-code"></i>
-            <span class="sb-tooltip">Programas</span>
+        <a href="descargas.html" class="sb-item ${currentPage === 'descargas.html' || currentPage === 'programas.html' ? 'active' : ''}">
+            <i class="fas fa-download"></i>
+            <span class="sb-tooltip">Descargas</span>
         </a>
     </nav>
 
@@ -1267,7 +1352,9 @@ const sidebarHTML = `
             <span class="sb-tooltip">${savedTheme === 'light' ? 'Modo Oscuro' : 'Modo Claro'}</span>
         </button>
         <button id="navbarAuthBtn" class="sb-action user" title="" onclick="if(typeof handleNavbarAuthClick === 'function') { handleNavbarAuthClick(event); }">
-            <i class="fas fa-user"></i>
+            ${isLogged 
+                ? `<span class="sb-initials">${userInitials}</span>` 
+                : `<i class="fas fa-user"></i>`}
             <span class="sb-tooltip" id="authBtnText">${isLogged ? (user.name || 'Usuario') : 'Ingresar'}</span>
         </button>
     </div>
@@ -1291,7 +1378,9 @@ const topNavHTML = `
                 <i id="theme-icon-mobile" class="${savedTheme === 'light' ? 'fas fa-moon' : 'fas fa-sun'}"></i>
             </button>
             <button class="tn-action-btn user" onclick="if(typeof handleNavbarAuthClick === 'function') { handleNavbarAuthClick(event); }">
-                <i class="fas fa-user"></i>
+                ${isLogged 
+                    ? `<span class="tn-initials-circle"><span>${userInitials}</span></span>` 
+                    : `<i class="fas fa-user"></i>`}
                 <span>${isLogged ? (user.name || 'Usuario') : 'Ingresar'}</span>
             </button>
         </div>
@@ -1315,9 +1404,9 @@ const topNavHTML = `
             <i class="fas fa-chart-line"></i>
             <span>Progreso</span>
         </a>
-        <a href="programas.html" class="tn-item ${currentPage === 'programas.html' ? 'active' : ''}">
-            <i class="fas fa-laptop-code"></i>
-            <span>Programas</span>
+        <a href="descargas.html" class="tn-item ${currentPage === 'descargas.html' || currentPage === 'programas.html' ? 'active' : ''}">
+            <i class="fas fa-download"></i>
+            <span>Descargas</span>
         </a>
     </div>
 
