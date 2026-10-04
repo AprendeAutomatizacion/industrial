@@ -429,9 +429,9 @@
 
         .cert-seal {
             position: absolute;
-            bottom: 18px; /* Movido un poco más abajo (antes 35px) */
+            bottom: 18px;
             left: 50%;
-            transform: translateX(10%); /* Movido más a la derecha (antes -20%) */
+            transform: translateX(10%);
             width: 175px; 
             height: 175px; 
             opacity: 0.15; 
@@ -445,7 +445,7 @@
 
         .cert-signature-content {
             position: relative;
-            z-index: 1; /* Asegura que el texto y línea estén sobre el sello */
+            z-index: 1;
             width: 100%;
         }
 
@@ -1125,8 +1125,9 @@
                     if (typeof src === 'object' && src !== null) {
                         for (let k in src) {
                             let scoreKey = parseInt(k);
-                            if (!isNaN(scoreKey) && scoreKey >= 1) {
-                                let arrayIndex = scoreKey - 1;
+                            // ✅ CAMBIO 1: Aceptar clave "0" (introducción) y usar índice directo
+                            if (!isNaN(scoreKey) && scoreKey >= 0) {
+                                let arrayIndex = scoreKey;
                                 if (arrayIndex < totalLessons) {
                                     scores[arrayIndex] = Number(src[k]);
                                 }
@@ -1309,24 +1310,10 @@
                 
                 console.log('✅ Estilo de impresión inyectado con margin-top:', marginTopValue, 'px');
                 
+                // ✅ CAMBIO 2: Índice directo (userScores[0] = intro, userScores[1] = lección 2, etc.)
                 const itemsHTML = moduleNames.map((moduleName, index) => {
-                    const normalizedModuleName = normalizeName(moduleName);
-                    
-                    const isIntro = index === 0 && (
-                        normalizedModuleName.includes('contenido') ||
-                        normalizedModuleName.includes('introduccion') ||
-                        normalizedModuleName.includes('bienvenida') ||
-                        normalizedModuleName.includes('bienvenido')
-                    );
-                    
-                    let icon = '';
-                    
-                    if (isIntro) {
-                        icon = '📘';
-                    } else {
-                        const score = userScores ? userScores[index - 1] : null;
-                        icon = getAchievementIcon(score);
-                    }
+                    const score = userScores ? userScores[index] : null;
+                    const icon = getAchievementIcon(score);
                     
                     return `<div class="cert-temario-item">
                         <span class="cert-temario-icon">${icon}</span>
