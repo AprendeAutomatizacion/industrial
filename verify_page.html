@@ -391,15 +391,15 @@
         return '<span class="calificacion-badge calificacion-bronce">' + calificacion + '</span>';
       }
       if (nota === 100) {
-        return '<span class="calificacion-badge calificacion-trofeo">🏆 ' + calificacion + '/100 - Leyenda</span>';
+        return '<span class="calificacion-badge calificacion-trofeo">🏆 ' + calificacion + '/100 - Sobresaliente</span>';
       } else if (nota >= 90 && nota <= 99) {
-        return '<span class="calificacion-badge calificacion-oro">🥇 ' + calificacion + '/100 - Maestro</span>';
+        return '<span class="calificacion-badge calificacion-oro">🥇 ' + calificacion + '/100 - Excelente</span>';
       } else if (nota >= 80 && nota <= 89) {
-        return '<span class="calificacion-badge calificacion-plata">🥈 ' + calificacion + '/100 - Especialista</span>';
+        return '<span class="calificacion-badge calificacion-plata">🥈 ' + calificacion + '/100 - Distinguido / Bueno</span>';
       } else if (nota >= 70 && nota <= 79) {
-        return '<span class="calificacion-badge calificacion-bronce">🥉 ' + calificacion + '/100 - Conocedor</span>';
+        return '<span class="calificacion-badge calificacion-bronce">🥉 ' + calificacion + '/100 - Aprobado / Suficiente</span>';
       } else {
-        return '<span class="calificacion-badge calificacion-bronce">' + calificacion + '/100</span>';
+        return '<span class="calificacion-badge calificacion-bronce">' + calificacion + '/100 - No Certificado</span>';
       }
     }
     
