@@ -10,10 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- FONT AWESOME PARA EL CHECK -->
+    <!-- FONT AWESOME -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- CONFETTI PARA CELEBRACIÓN -->
+    <!-- CONFETTI -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <style>
@@ -44,7 +44,7 @@
                               radial-gradient(circle at 75% 75%, rgba(24, 119, 242, 0.15) 0%, transparent 50%);
         }
 
-        /* ============ ESTILOS PARA EL TOAST DE CARGA ============ */
+        /* ============ TOAST DE CARGA ============ */
         .loading-toast {
             position: fixed;
             bottom: 15px;
@@ -147,7 +147,7 @@
             100% { transform: scale(1); } 
         }
 
-        /* Barra de herramientas */
+        /* ============ TOOLBAR ============ */
         .certificate-toolbar {
             position: fixed;
             top: 0;
@@ -210,7 +210,7 @@
             font-weight: 500;
         }
 
-        /* Contenedor del certificado */
+        /* ============ CONTENEDOR CERTIFICADO ============ */
         .certificate-wrapper {
             margin-top: 80px;
             width: 100%;
@@ -234,13 +234,11 @@
             flex-direction: column;
             justify-content: space-between;
             overflow: hidden;
-            background-image: url('');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-        /* Overlay para legibilidad */
         .cert-overlay {
             position: absolute;
             top: 0;
@@ -255,7 +253,6 @@
             color-adjust: exact !important;
         }
 
-        /* Contenido del certificado */
         .cert-content {
             position: relative;
             z-index: 10;
@@ -481,7 +478,6 @@
             font-weight: 900;
         }
 
-        /* ============ SECCIÓN QR ============ */
         .cert-qr-section {
             text-align: center;
             display: flex;
@@ -518,7 +514,7 @@
             font-family: monospace;
         }
 
-        /* Loading overlay con LOGO */
+        /* ============ LOADING OVERLAY ============ */
         .loading-overlay {
             position: fixed;
             inset: 0;
@@ -573,7 +569,7 @@
             50% { opacity: 1; }
         }
 
-        /* Responsive */
+        /* ============ RESPONSIVE ============ */
         @media (max-width: 768px) {
             .certificate-wrapper {
                 padding: 20px;
@@ -625,9 +621,7 @@
             }
         }
 
-        /* ============================================
-           ESTILOS DE IMPRESIÓN - CON MARGEN DINÁMICO
-           ============================================ */
+        /* ============ IMPRESIÓN ============ */
         @media print {
             html, body {
                 margin: 0 !important;
@@ -778,7 +772,7 @@
         <div class="toast-spinner" id="loadingToastSpinner"></div>
     </div>
 
-    <!-- Overlay de carga con LOGO -->
+    <!-- Overlay de carga -->
     <div id="loadingOverlay" class="loading-overlay">
         <div class="loading-logo">
             <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
@@ -800,18 +794,14 @@
     <!-- Contenedor del certificado -->
     <div class="certificate-wrapper">
         <div id="certificate-container">
-            <!-- Overlay para legibilidad -->
             <div class="cert-overlay"></div>
             
-            <!-- Contenido -->
             <div class="cert-content">
-                <!-- Encabezado -->
                 <div class="cert-header">
                     <img id="certLogo" class="cert-logo" src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
                     <h1 class="cert-title">Aprende Automatización</h1>
                 </div>
                 
-                <!-- Cuerpo -->
                 <div class="cert-body">
                     <p class="cert-subtitle">Otorga el presente:</p>
                     <h2 class="cert-award-title">Certificado a:</h2>
@@ -827,9 +817,7 @@
                     </div>
                 </div>
                 
-                <!-- Pie -->
                 <div class="cert-footer">
-                    <!-- CONTENEDOR FIRMA CON SELLO -->
                     <div class="cert-signature-container">
                         <img src="img/SELLO.png" alt="Sello de Verificación" class="cert-seal">
                         <div class="cert-signature-content">
@@ -864,7 +852,7 @@
         const currentUser = JSON.parse(localStorage.getItem('user')) || null;
 
         // ============================================================
-        // 🚀 CACHÉ DE CLIENTE - Certificado
+        // CACHÉ DE CLIENTE
         // ============================================================
         const CACHE_PREFIX = 'cert_cache_';
 
@@ -879,7 +867,6 @@
 
             const cacheKey = CACHE_PREFIX + method + '_' + url;
 
-            // Leer caché (solo GET con TTL > 0)
             if (method === 'GET' && cacheTTL > 0 && !forceRefresh) {
                 try {
                     const cached = sessionStorage.getItem(cacheKey);
@@ -896,7 +883,6 @@
                 }
             }
 
-            // Fetch real - NO añadir Content-Type en GET (rompe CORS con Apps Script)
             const fetchOptions = {
                 method: method,
                 headers: Object.assign({}, headers)
@@ -914,7 +900,6 @@
 
             const data = (responseType === 'text') ? await response.text() : await response.json();
 
-            // Guardar en caché (solo GET con TTL)
             if (method === 'GET' && cacheTTL > 0) {
                 try {
                     sessionStorage.setItem(cacheKey, JSON.stringify({
@@ -929,17 +914,8 @@
             return data;
         }
 
-        function clearCertCache() {
-            const keys = Object.keys(sessionStorage).filter(k => k.indexOf(CACHE_PREFIX) === 0);
-            keys.forEach(k => sessionStorage.removeItem(k));
-            console.log('🧹 Caché de certificado limpiada (' + keys.length + ' entradas)');
-        }
-        // ============================================================
-        // FIN CACHÉ DE CLIENTE
         // ==========================================
-
-        // ==========================================
-        // FUNCIÓN VOLVER A PROGRESO
+        // VOLVER A PROGRESO
         // ==========================================
         function volverAProgreso() {
             if (window.history.length > 1) {
@@ -950,7 +926,7 @@
         }
         
         // ==========================================
-        // FUNCIONES DEL TOAST
+        // TOASTS
         // ==========================================
         let toastSafetyTimeout = null;
         
@@ -1125,7 +1101,6 @@
                     if (typeof src === 'object' && src !== null) {
                         for (let k in src) {
                             let scoreKey = parseInt(k);
-                            // ✅ CAMBIO 1: Aceptar clave "0" (introducción) y usar índice directo
                             if (!isNaN(scoreKey) && scoreKey >= 0) {
                                 let arrayIndex = scoreKey;
                                 if (arrayIndex < totalLessons) {
@@ -1142,6 +1117,52 @@
             return { scores };
         }
 
+        // ==========================================
+        // ⭐ FUNCIÓN CLAVE: BUSCAR IMAGEN DEL CURSO
+        // ==========================================
+        function findCourseImage(courseObj) {
+            if (!courseObj || typeof courseObj !== 'object') return null;
+            
+            // 1) Buscar por nombres exactos conocidos (prioridad)
+            const exactKeys = [
+                'ImagenURL', 'ImagenUrl', 'imagenurl', 'IMAGENURL',
+                'Imagen', 'imagen', 'IMAGEN',
+                'Image', 'image', 'IMAGE',
+                'ImagenCurso', 'imagenCurso', 'Imagen curso',
+                'Foto', 'foto', 'FOTO',
+                'Portada', 'portada', 'PORTADA',
+                'Img', 'img', 'IMG'
+            ];
+            
+            for (const key of exactKeys) {
+                if (courseObj[key] !== undefined && courseObj[key] !== null) {
+                    const val = String(courseObj[key]).replace(/\u00A0/g, ' ').trim();
+                    if (val !== '' && val !== 'undefined' && val !== 'null' && val !== '-') {
+                        console.log('✔️ Imagen encontrada en clave exacta:', key, '→', val);
+                        return val;
+                    }
+                }
+            }
+            
+            // 2) Buscar por coincidencia parcial
+            for (const key in courseObj) {
+                const keyLower = key.toLowerCase().replace(/\s+/g, '');
+                if (keyLower.includes('imagen') || keyLower.includes('image') || 
+                    keyLower.includes('foto') || keyLower.includes('portada')) {
+                    const val = String(courseObj[key]).replace(/\u00A0/g, ' ').trim();
+                    if (val !== '' && val !== 'undefined' && val !== 'null' && val !== '-') {
+                        console.log('✔️ Imagen encontrada en clave parcial:', key, '→', val);
+                        return val;
+                    }
+                }
+            }
+            
+            return null;
+        }
+
+        // ==========================================
+        // CARGAR CERTIFICADO
+        // ==========================================
         async function loadCertificate() {
             try {
                 showLoadingToast();
@@ -1160,7 +1181,6 @@
                 
                 console.log('📜 Cargando certificado para curso ID:', courseId);
                 
-                // 🚀 CACHÉ: get_courses con TTL 15 min (catálogo casi nunca cambia)
                 const coursesUrl = `${SCRIPT_URL}?action=get_courses`;
                 const coursesData = await fetchWithCache(coursesUrl, {
                     method: 'GET',
@@ -1182,8 +1202,9 @@
                 }
                 
                 console.log('📚 Curso encontrado:', course.Nombre);
+                console.log('🔍 OBJETO CURSO COMPLETO:', course);
+                console.log('🔑 CLAVES DEL CURSO:', Object.keys(course));
                 
-                // 🚀 CACHÉ: get_data con TTL 2 min (datos de usuario, cambian seguido)
                 const userDataUrl = `${SCRIPT_URL}?action=get_data`;
                 const userData = await fetchWithCache(userDataUrl, {
                     method: 'GET',
@@ -1204,13 +1225,11 @@
                 if (userData.status === 'success' && userData.userProgress) {
                     const email = currentUser.email.toLowerCase();
                     const userProgressData = userData.userProgress[email] || {};
-                    
                     const courseProgress = userProgressData[course.Nombre] || userProgressData[normalizeName(course.Nombre)];
                     
                     if (courseProgress && typeof courseProgress === 'string') {
                         const parsed = parseProgressData(courseProgress, totalLessons);
                         userScores = parsed.scores;
-                        console.log('📊 Scores parseados:', userScores);
                     }
                 }
                 
@@ -1233,7 +1252,6 @@
                 }
                 const cedula = cedulaRaw || '00000000';
                 document.getElementById('certStudentId').textContent = `Cédula de Identidad: ${cedula}`;
-
                 document.getElementById('certCourseName').textContent = `"${course.Nombre}"`;
 
                 const fechaFormateada = formatCertDate(completionDate);
@@ -1269,8 +1287,6 @@
                 
                 const footerElement = document.querySelector('.cert-footer');
                 
-                window.totalModulos = totalModules;
-                
                 function getPrintMarginTop(modulos) {
                     if (modulos <= 3) return 90;
                     if (modulos <= 6) return 70;
@@ -1287,8 +1303,6 @@
                 } else {
                     footerElement.style.marginTop = '110px';
                 }
-                
-                console.log('📋 Total módulos:', totalModules, '→ Filas:', numFilas);
                 
                 const styleId = 'dynamic-print-style';
                 let existingStyle = document.getElementById(styleId);
@@ -1308,9 +1322,6 @@
                 `;
                 document.head.appendChild(style);
                 
-                console.log('✅ Estilo de impresión inyectado con margin-top:', marginTopValue, 'px');
-                
-                // ✅ CAMBIO 2: Índice directo (userScores[0] = intro, userScores[1] = lección 2, etc.)
                 const itemsHTML = moduleNames.map((moduleName, index) => {
                     const score = userScores ? userScores[index] : null;
                     const icon = getAchievementIcon(score);
@@ -1323,16 +1334,66 @@
                 
                 temarioElement.innerHTML = itemsHTML;
                 
+                // ==========================================
+                // ASIGNAR FONDO DEL CURSO (búsqueda robusta)
+                // ==========================================
                 const certificateContainer = document.getElementById('certificate-container');
                 
-                if (course.ImagenURL) {
-                    let imagePath = course.ImagenURL;
-                    if (!imagePath.startsWith('http') && !imagePath.startsWith('img/') && !imagePath.startsWith('/')) {
+                const courseImage = findCourseImage(course);
+                console.log('🔍 Resultado búsqueda imagen:', JSON.stringify(courseImage));
+                
+                if (courseImage) {
+                    let imagePath = courseImage;
+                    
+                    // Convertir URL de Google Drive a formato directo
+                    if (imagePath.includes('drive.google.com/file/d/')) {
+                        const match = imagePath.match(/\/d\/([^\/]+)/);
+                        if (match && match[1]) {
+                            imagePath = 'https://lh3.googleusercontent.com/d/' + match[1];
+                            console.log('🔄 URL Drive convertida a:', imagePath);
+                        }
+                    } else if (imagePath.includes('drive.google.com') && imagePath.includes('id=')) {
+                        const match = imagePath.match(/id=([^&]+)/);
+                        if (match && match[1]) {
+                            imagePath = 'https://lh3.googleusercontent.com/d/' + match[1];
+                            console.log('🔄 URL Drive convertida a:', imagePath);
+                        }
+                    } else if (!imagePath.startsWith('http') && !imagePath.startsWith('img/') && !imagePath.startsWith('/') && !imagePath.startsWith('data:')) {
                         imagePath = 'img/' + imagePath;
                     }
-                    certificateContainer.style.backgroundImage = `url('${imagePath}')`;
+                    
+                    // Codificar espacios y paréntesis para CSS
+                    const encodedPath = imagePath
+                        .replace(/ /g, '%20')
+                        .replace(/\(/g, '%28')
+                        .replace(/\)/g, '%29');
+                    
+                    console.log('🖼️ Ruta original:', imagePath);
+                    console.log('🖼️ Ruta codificada:', encodedPath);
+                    
+                    // Precargar y aplicar
+                    const testImg = new Image();
+                    testImg.onload = function() {
+                        certificateContainer.style.backgroundImage = `url("${encodedPath}")`;
+                        console.log('✅ Fondo del curso aplicado correctamente');
+                    };
+                    testImg.onerror = function() {
+                        console.warn('⚠️ Falló con codificación, reintentando sin codificar...');
+                        const retryImg = new Image();
+                        retryImg.onload = function() {
+                            certificateContainer.style.backgroundImage = `url("${imagePath}")`;
+                            console.log('✅ Fondo aplicado sin codificar');
+                        };
+                        retryImg.onerror = function() {
+                            console.warn('⚠️ Falló también sin codificar. Usando imagen por defecto.');
+                            certificateContainer.style.backgroundImage = `url("img/AA%20(15).webp")`;
+                        };
+                        retryImg.src = imagePath;
+                    };
+                    testImg.src = encodedPath;
                 } else {
-                    certificateContainer.style.backgroundImage = `url('img/AA (15).webp')`;
+                    console.warn('⚠️ El curso no tiene ImagenURL definida. Usando imagen por defecto.');
+                    certificateContainer.style.backgroundImage = `url("img/AA%20(15).webp")`;
                 }
                 
                 document.getElementById('certLogo').src = 'img/AA (38).webp';
