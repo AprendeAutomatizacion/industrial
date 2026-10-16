@@ -1945,10 +1945,11 @@ async function enrollFreeCourse(courseId, courseName) {
 async function loadData() {
     try {
         const email = currentUser?.email?.toLowerCase() || '';
-        // ⚡ get_data SOLO del usuario actual + caché corto (1 min)
-        const url = email 
-            ? `${SCRIPT_URL}?action=get_data&email=${encodeURIComponent(email)}`
-            : `${SCRIPT_URL}?action=get_data`;
+        
+
+// ⚡ get_data SOLO del usuario actual + caché corto (1 min)
+const url = `${SCRIPT_URL}?action=get_data`;
+
         const res = await fetchWithCache(url, `data_${email || 'all'}`, 60 * 1000);
         const data = await res.json();
         if (data.status === 'success') {
