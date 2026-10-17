@@ -410,6 +410,66 @@
         @keyframes pulseLogo { 0%, 100% { filter: drop-shadow(0 0 5px rgba(45, 184, 206, 0.25)); transform: scale(1); } 50% { filter: drop-shadow(0 0 12px rgba(45, 184, 206, 0.55)); transform: scale(1.06); } }
         @keyframes bounceIn { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 
+        /* ⭐ RATING TOAST - Mismo estilo que loading toast */
+        #ratingToast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100003;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 184, 206, 0.35);
+            border-radius: 12px;
+            padding: 8px 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(45, 184, 206, 0.15);
+            pointer-events: auto;
+            min-width: 220px;
+            max-width: 300px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        #ratingToast.visible {
+            display: flex;
+            animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #ratingToast .toast-logo { width: 25px; height: 25px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        #ratingToast .toast-logo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4)); }
+        #ratingToast .toast-content { flex: 1; min-width: 0; }
+        #ratingToast .toast-title {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 10px !important;
+            line-height: 1.3 !important;
+            letter-spacing: 0.2px !important;
+            text-transform: uppercase !important;
+        }
+        #ratingToast .toast-subtitle {
+            color: #94a3b8 !important;
+            font-weight: 500 !important;
+            font-size: 9px !important;
+            line-height: 1.3 !important;
+            margin-top: 2px !important;
+        }
+        /* Forzar mismo estilo en modo claro y oscuro */
+        body.light-mode #ratingToast {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%) !important;
+            border-color: rgba(45, 184, 206, 0.35) !important;
+        }
+        body.light-mode #ratingToast .toast-title {
+            color: #ffffff !important;
+        }
+        body.light-mode #ratingToast .toast-subtitle {
+            color: #94a3b8 !important;
+        }
+        @media (max-width: 640px) {
+            #ratingToast { bottom: 16px; right: 16px; left: 16px; min-width: auto; max-width: none; padding: 10px 14px; border-radius: 14px; }
+            #ratingToast .toast-title { font-size: 11px; max-width: none; flex: 1; }
+            #ratingToast .toast-subtitle { font-size: 10px; }
+        }
+
         .whatsapp-float {
             position: fixed;
             bottom: 24px;
@@ -745,6 +805,7 @@
     </main>
 </div>
 
+<!-- LOADING TOAST -->
 <div id="loadingToast" class="loading-toast hidden">
     <div class="toast-logo">
         <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
@@ -753,6 +814,20 @@
         <div class="toast-title" id="loadingToastTitle">Estamos cargando tus cursos</div>
     </div>
     <div class="toast-spinner" id="loadingToastSpinner"></div>
+</div>
+
+<!-- ⭐ RATING TOAST - Mismo estilo que loading toast (solo aparece al valorar) -->
+<div id="ratingToast">
+    <div class="toast-logo">
+        <img src="img/AA (38).webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+    </div>
+    <div class="toast-content">
+        <div class="toast-title" id="ratingToastTitle">Valoración guardada</div>
+        <div class="toast-subtitle" id="ratingToastSubtitle">Has puntuado con 5 estrellas</div>
+    </div>
+    <div class="toast-check" id="ratingToastCheck">
+        <i class="fas fa-star" style="color:#fbbf24;font-size:14px;filter:drop-shadow(0 0 6px rgba(251,191,36,0.5));"></i>
+    </div>
 </div>
 
 <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
@@ -1035,6 +1110,38 @@
                 toast.style.transform = '';
             }, 350);
         }
+    }
+
+    // ==========================================
+    // ⭐ TOAST DE VALORACIÓN (solo se muestra al valorar)
+    // ==========================================
+    function mostrarRatingToast(rating) {
+        const toast = document.getElementById('ratingToast');
+        if (!toast) return;
+        
+        // Actualizar el texto de la valoración
+        const subtitle = document.getElementById('ratingToastSubtitle');
+        if (subtitle) {
+            const estrellas = rating === 1 ? 'estrella' : 'estrellas';
+            subtitle.textContent = `Has puntuado con ${rating} ${estrellas}`;
+        }
+        
+        // Actualizar el icono de estrella según la valoración
+        const check = document.getElementById('ratingToastCheck');
+        if (check) {
+            const starColor = rating >= 4 ? '#fbbf24' : rating >= 3 ? '#f59e0b' : '#94a3b8';
+            const glowColor = rating >= 4 ? 'rgba(251,191,36,0.5)' : rating >= 3 ? 'rgba(245,158,11,0.4)' : 'rgba(148,163,184,0.3)';
+            check.innerHTML = `<i class="fas fa-star" style="color:${starColor};font-size:14px;filter:drop-shadow(0 0 6px ${glowColor});"></i>`;
+        }
+        
+        // Mostrar el toast (agregando la clase 'visible')
+        toast.classList.add('visible');
+        
+        // Auto-ocultar después de 3 segundos
+        clearTimeout(window._ratingToastTimer);
+        window._ratingToastTimer = setTimeout(() => {
+            toast.classList.remove('visible');
+        }, 3000);
     }
 
     // ==========================================
@@ -1465,7 +1572,9 @@
         syncUserProgressToExcel();
         calculateCourseRatings();
         renderMisCourses();
-        showNotif('¡Valoración guardada!', `Has calificado este curso con ${rating} estrellas.`);
+        
+        // ⭐ MOSTRAR TOAST DE VALORACIÓN (solo al valorar)
+        mostrarRatingToast(rating);
     }
 
     // ==========================================

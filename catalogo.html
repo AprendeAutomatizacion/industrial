@@ -255,6 +255,49 @@
         body.light-mode .section-divider { opacity: 0.5; }
         
         .loading-toast { position: fixed; bottom: 20px; right: 20px; z-index: 100002; background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%); backdrop-filter: blur(16px); border: 1px solid rgba(45, 184, 206, 0.35); border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; gap: 8px; pointer-events: none; min-width: 200px; max-width: 240px; }
+        
+        /* ⭐ RATING TOAST - Mismo estilo que loading toast */
+        #ratingToast {
+            pointer-events: auto;
+            min-width: 220px;
+            max-width: 300px;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            opacity: 1;
+            transform: translateX(0);
+        }
+        #ratingToast.hidden {
+            opacity: 0;
+            transform: translateX(120%);
+            pointer-events: none;
+            display: flex !important;
+        }
+        #ratingToast .toast-title {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 10px !important;
+            line-height: 1.3 !important;
+            letter-spacing: 0.2px !important;
+            text-transform: uppercase !important;
+        }
+        #ratingToast .toast-subtitle {
+            color: #94a3b8 !important;
+            font-weight: 500 !important;
+            font-size: 9px !important;
+            line-height: 1.3 !important;
+            margin-top: 2px !important;
+        }
+        /* Forzar mismo estilo en modo claro y oscuro */
+        body.light-mode #ratingToast {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%) !important;
+            border-color: rgba(45, 184, 206, 0.35) !important;
+        }
+        body.light-mode #ratingToast .toast-title {
+            color: #ffffff !important;
+        }
+        body.light-mode #ratingToast .toast-subtitle {
+            color: #94a3b8 !important;
+        }
+
         .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(6px); z-index: 99999; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: all 0.3s; }
         .modal-overlay.active { opacity: 1; pointer-events: auto; }
         .modal-content { background: var(--bg-secondary); border-radius: 32px; width: 90%; max-width: 420px; transform: translateY(30px) scale(0.95); transition: all 0.4s; }
@@ -935,12 +978,95 @@
             color: #ffffff !important;
         }
 
-        /* 3. "Tu valoración:" */
-        body:not(.light-mode) .course-card .text-\[10px\].font-bold.text-slate-500.uppercase {
+        /* ==========================================
+           FIX: PASTILLA DE ESTUDIANTES EN MODO OSCURO
+           ========================================== */
+        body:not(.light-mode) .course-card .bg-green-50 {
+            background: rgba(16, 185, 129, 0.15) !important;
+            color: #34d399 !important;
+            border-color: rgba(52, 211, 153, 0.3) !important;
+        }
+        body:not(.light-mode) .course-card .bg-green-50 .text-green-600,
+        body:not(.light-mode) .course-card .bg-green-50 i {
+            color: #34d399 !important;
+        }
+
+        /* ==========================================
+           ⭐ TOAST DE VALORACIÓN - ESTILO CARGANDO
+           Igual en modo claro y oscuro
+           ========================================== */
+        .rating-toast {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%) !important;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 184, 206, 0.35) !important;
+            border-radius: 12px !important;
+            padding: 8px 12px !important;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(45, 184, 206, 0.15);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+            animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: fit-content;
+            max-width: 100%;
+        }
+
+        .rating-toast-label {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 10px !important;
+            line-height: 1.3 !important;
+            letter-spacing: 0.2px !important;
+            text-transform: uppercase !important;
+            white-space: nowrap !important;
+        }
+
+        .rating-toast-btn {
+            background: transparent !important;
+            border: none !important;
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 10px !important;
+            line-height: 1.3 !important;
+            letter-spacing: 0.2px !important;
+            text-transform: uppercase !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            padding: 0 !important;
+            transition: all 0.25s ease;
+        }
+
+        .rating-toast-btn:hover {
+            color: #2db8ce !important;
+        }
+
+        .rating-toast-btn i {
+            font-size: 12px !important;
+        }
+
+        .rating-toast i.fa-star {
+            font-size: 13px !important;
+        }
+
+        /* Forzar mismo estilo en modo claro (sobrescribe las reglas del modo claro) */
+        body.light-mode .rating-toast {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%) !important;
+            border-color: rgba(45, 184, 206, 0.35) !important;
+        }
+
+        body.light-mode .rating-toast-label {
             color: #ffffff !important;
         }
-        body:not(.light-mode) .course-card .flex.items-center.gap-2.mt-4 > span.text-\[10px\] {
+
+        body.light-mode .rating-toast-btn {
             color: #ffffff !important;
+        }
+
+        body.light-mode .rating-toast-btn:hover {
+            color: #2db8ce !important;
         }
     </style>
 </head>
@@ -953,12 +1079,25 @@
     <div class="particle" style="left:90%;top:94%;"></div>
 </div>
 
+<!-- LOADING TOAST -->
 <div id="loadingToast" class="loading-toast hidden">
     <div class="toast-logo"><img src="img/AA (38).webp" alt="Logo" style="width:25px;height:25px;object-fit:contain;"></div>
     <div class="toast-content"><div class="toast-title" id="loadingToastTitle" style="color:#fff;font-weight:700;font-size:10px;">Cargando...</div></div>
     <div class="toast-spinner" id="loadingToastSpinner" style="width:14px;height:14px;border:2px solid rgba(45,184,206,0.2);border-top:2px solid #2db8ce;border-radius:50%;animation:spin 0.9s linear infinite;"></div>
 </div>
 <style>@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}</style>
+
+<!-- ⭐ RATING TOAST - Mismo estilo que loading toast -->
+<div id="ratingToast" class="loading-toast hidden" style="pointer-events: auto; min-width: 220px; max-width: 300px;">
+    <div class="toast-logo"><img src="img/AA (38).webp" alt="Logo" style="width:25px;height:25px;object-fit:contain;"></div>
+    <div class="toast-content" style="flex: 1;">
+        <div class="toast-title" id="ratingToastTitle" style="color:#fff;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.2px;">Valoración guardada</div>
+        <div class="toast-subtitle" id="ratingToastSubtitle" style="color:#94a3b8;font-weight:500;font-size:9px;margin-top:2px;">Has puntuado con 5 estrellas</div>
+    </div>
+    <div class="toast-check" id="ratingToastCheck" style="width:16px;height:16px;display:flex;align-items:center;justify-content:center;">
+        <i class="fas fa-star" style="color:#fbbf24;font-size:14px;filter:drop-shadow(0 0 6px rgba(251,191,36,0.5));"></i>
+    </div>
+</div>
 
 <div id="notification" class="bg-teal-600 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4">
     <i id="notifIcon" class="fas fa-info-circle text-2xl"></i>
@@ -1436,6 +1575,38 @@ function showNotif(title, msg, type = 'success') {
 function openModal(id) { document.getElementById(id).classList.add('active'); }
 function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 function ping(action, key) { try { fetch(SCRIPT_URL, { method: 'POST', headers: {'Content-Type':'application/x-www-form-urlencoded'}, body: `action=${action}&key=${key}` }); } catch(e) {} }
+
+// ==========================================
+// ⭐ TOAST DE VALORACIÓN (mismo estilo que loading toast)
+// ==========================================
+function mostrarRatingToast(rating) {
+    const toast = document.getElementById('ratingToast');
+    if (!toast) return;
+    
+    // Actualizar el texto de la valoración
+    const subtitle = document.getElementById('ratingToastSubtitle');
+    if (subtitle) {
+        const estrellas = rating === 1 ? 'estrella' : 'estrellas';
+        subtitle.textContent = `Has puntuado con ${rating} ${estrellas}`;
+    }
+    
+    // Actualizar el icono de estrella según la valoración
+    const check = document.getElementById('ratingToastCheck');
+    if (check) {
+        const starColor = rating >= 4 ? '#fbbf24' : rating >= 3 ? '#f59e0b' : '#94a3b8';
+        const glowColor = rating >= 4 ? 'rgba(251,191,36,0.5)' : rating >= 3 ? 'rgba(245,158,11,0.4)' : 'rgba(148,163,184,0.3)';
+        check.innerHTML = `<i class="fas fa-star" style="color:${starColor};font-size:14px;filter:drop-shadow(0 0 6px ${glowColor});"></i>`;
+    }
+    
+    // Mostrar el toast
+    toast.classList.remove('hidden');
+    
+    // Auto-ocultar después de 3 segundos
+    clearTimeout(window._ratingToastTimer);
+    window._ratingToastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+    }, 3000);
+}
 
 // ==========================================
 // TASA BCV
@@ -1946,11 +2117,10 @@ async function loadData() {
     try {
         const email = currentUser?.email?.toLowerCase() || '';
         
-
-// ⚡ get_data SOLO del usuario actual + caché corto (1 min)
-const url = `${SCRIPT_URL}?action=get_data`;
-
-        const res = await fetchWithCache(url, `data_${email || 'all'}`, 60 * 1000);
+        // ⚡ get_data SIN email → trae TODOS los datos (para contar estudiantes correctamente)
+        const url = `${SCRIPT_URL}?action=get_data`;
+        
+        const res = await fetchWithCache(url, `data_all`, 60 * 1000);
         const data = await res.json();
         if (data.status === 'success') {
             dbUsers = data.users || {};
@@ -1960,6 +2130,13 @@ const url = `${SCRIPT_URL}?action=get_data`;
             dbUserProgress = data.userProgress || {};
             dbUserPaymentStatus = data.userPaymentStatus || {};
             dbUserAccessStatus = data.userAccessStatus || {};
+            
+            console.log('📥 [CATÁLOGO] Datos globales cargados:', {
+                usuarios: Object.keys(dbUsers).length,
+                userCoursesKeys: Object.keys(dbUserCourses).length,
+                emailActual: email || 'invitado'
+            });
+            
             if (currentUser && currentUser.email) syncCurrentUserFromCloud();
             calculateCourseRatings();
             updateStudentCounts();
@@ -2008,6 +2185,7 @@ function updateStudentCounts() {
             if (found) studentCountsPerCourse[found.ID || found.id]++;
         });
     }
+    console.log('📊 Contadores de estudiantes por curso:', studentCountsPerCourse);
 }
 
 let currentLevel = 'Todos';
@@ -2140,11 +2318,24 @@ function generateCourseCard(course) {
 
     let userRating = 0;
     if (currentUser && currentUser.ratings && currentUser.ratings[courseId]) userRating = currentUser.ratings[courseId];
+    
+    // ⭐ TOAST DE VALORACIÓN - Estilo "cargando", igual en modo claro y oscuro
     let ratingStarsHTML = '';
     if (isLogged) {
-        ratingStarsHTML = `<div class="flex items-center gap-2 mt-4"><span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Tu valoración:</span><div class="flex gap-0.5">${[1,2,3,4,5].map(star => `<i class="fas fa-star cursor-pointer text-sm ${userRating >= star ? 'text-yellow-400' : 'text-slate-300'}" onclick="event.stopPropagation(); rateCourse('${courseId}', ${star})" title="${star} estrella${star>1?'s':''}"></i>`).join('')}</div></div>`;
+        ratingStarsHTML = `
+        <div class="rating-toast mt-4">
+            <span class="rating-toast-label">Tu valoración:</span>
+            <div class="flex gap-0.5">
+                ${[1,2,3,4,5].map(star => `<i class="fas fa-star cursor-pointer text-sm ${userRating >= star ? 'text-yellow-400' : 'text-slate-500'}" onclick="event.stopPropagation(); rateCourse('${courseId}', ${star})" title="${star} estrella${star>1?'s':''}"></i>`).join('')}
+            </div>
+        </div>`;
     } else {
-        ratingStarsHTML = `<div class="mt-4"><button onclick="event.stopPropagation(); openModal('authModal')" class="text-[10px] font-bold text-slate-500 hover:text-[#2db8ce] transition-colors flex items-center gap-1"><i class="fas fa-star text-yellow-400"></i> Inicia sesión para valorar</button></div>`;
+        ratingStarsHTML = `
+        <div class="rating-toast mt-4">
+            <button onclick="event.stopPropagation(); openModal('authModal')" class="rating-toast-btn">
+                <i class="fas fa-star text-yellow-400"></i> Inicia sesión para valorar
+            </button>
+        </div>`;
     }
 
     const normalizedLevel = (courseLevel || '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -2387,7 +2578,9 @@ function rateCourse(courseId, rating) {
     calculateCourseRatings();
     applyFilters();
     syncUserProgressToExcel();
-    showNotif('Valoración guardada', `Has puntuado con ${rating} estrellas.`);
+    
+    // ⭐ MOSTRAR TOAST DE VALORACIÓN (mismo estilo que loading toast)
+    mostrarRatingToast(rating);
 }
 
 function toggleLike(btn) {
