@@ -2,6 +2,7 @@
 // SCRIPT DE APRENDE AUTOMATIZACIÓN - PÁGINA DE INICIO
 // (ACTUALIZADO - CURSOS DESTACADOS CON VALORACIONES Y COMPRA DIRECTA)
 // + BOTÓN DE INSTALACIÓN PWA
+// + ANIMACIONES DE ENTRADA DESACTIVADAS (PC y móvil, sin "corte")
 // ==========================================
 
 const API_URL = 'https://script.google.com/macros/s/AKfycbxnc_quYbnUZ6j1E1QGaMNRmyRCLqCQVWLTG5y4Z_gJ4ErXtFUrG2D3md0RW1bLW8na/exec';
@@ -213,7 +214,7 @@ function rateCourse(courseId, rating) {
 }
 
 // ==========================================
-// INICIAR SCROLL REVEAL
+// INICIAR SCROLL REVEAL (DESACTIVADO - PC Y MÓVIL)
 // ==========================================
 function initScrollReveal() {
     // ⭐ ANIMACIONES DE ENTRADA DESACTIVADAS (PC y móvil)
@@ -646,9 +647,14 @@ function rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b() {
     
     container.innerHTML = cursosDestacados.map(course => generateCourseCardHTML(course)).join('');
     
-    setTimeout(() => {
-        document.querySelectorAll('#cursos-destacados-container .reveal').forEach(el => el.classList.add('active'));
-    }, 100);
+    // ⭐ Sin animación de entrada: forzar visibles de inmediato (PC y móvil)
+    document.querySelectorAll('#cursos-destacados-container .reveal, #cursos-destacados-container .reveal-up').forEach(el => {
+        el.classList.add('active');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.transition = 'none';
+        el.style.visibility = 'visible';
+    });
     
     console.log('✅ Cursos destacados renderizados con valoraciones');
 }
@@ -1214,7 +1220,7 @@ function closeExpandedMethodologyCard() {
 }
 
 // ==========================================
-// MOSTRAR TODAS LAS SECCIONES
+// MOSTRAR TODAS LAS SECCIONES (SIN ANIMACIÓN - PC Y MÓVIL)
 // ==========================================
 function revealAllSections() {
     // ⭐ Sin animación: mostrar todo de inmediato (PC y móvil)
@@ -1235,11 +1241,11 @@ function revealAllSections() {
 }
 
 function revealMetrics() {
+    // ⭐ Sin animación: mostrar métricas de inmediato
     const metrics = document.getElementById('metrics');
     if (metrics) {
         metrics.classList.remove('section-loading');
         metrics.classList.add('metrics-loading');
-        void metrics.offsetWidth;
         metrics.classList.add('loaded');
     }
 }
@@ -1419,9 +1425,15 @@ function renderHomePage() {
         }
     }
     
+    // ⭐ Mostrar todo visible de inmediato
     setTimeout(() => {
-        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-    }, 100);
+        document.querySelectorAll('.reveal, .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-center').forEach(el => {
+            el.classList.add('active');
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.transition = 'none';
+        });
+    }, 50);
 }
 
 // ==========================================
@@ -1486,7 +1498,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
     const btn = document.getElementById('btnInstalar');
     if (btn) {
         btn.style.display = 'inline-flex';
-        // Animación de entrada
         btn.style.animation = 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
     }
 });
@@ -1516,7 +1527,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log('🚀 Inicializando página...');
     currentUser = loadCurrentUser();
     showLoadingToast();
-    initScrollReveal();
     initVisitorInfo();
 
     const [pageLoaded, statsLoaded, catalogoLoaded] = await Promise.all([
@@ -1529,19 +1539,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     renderHomePage();
     rJFExu5NouR7CUdQrUbMPjxysaRauzYP5b();
-    
-    // Inicializar metodología con un pequeño retraso para asegurar que las tarjetas estén en el DOM
-    setTimeout(() => {
-        initMethodologyCards();
-    }, 300);
 
+    // Inicializar metodología (sin delay)
+    initMethodologyCards();
+
+    // ⭐ Mostrar todo de inmediato, sin animaciones (PC y móvil)
+    initScrollReveal();
     revealAllSections();
+    updateIndexMetrics(globalStats);
+    revealMetrics();
     hideLoadingToast();
-
-    setTimeout(() => {
-        updateIndexMetrics(globalStats);
-        revealMetrics();
-    }, 800);
 
     const profession = currentUser?.profession || localStorage.getItem('user_profile_selected');
     if (profession) {
