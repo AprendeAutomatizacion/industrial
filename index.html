@@ -148,6 +148,97 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
+
+        /* ==========================================
+           ⭐ BOTÓN INSTALAR PWA - LLAMATIVO (AL LADO DE BADGES)
+           ========================================== */
+        #btnInstallApp {
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.45rem 1rem;
+            border-radius: 9999px;
+            font-weight: 900;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #ffffff !important;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 50%, #ec4899 100%);
+            box-shadow: 0 0 18px rgba(6, 182, 212, 0.7), 0 0 36px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+            animation: pwaGlow 2.2s ease-in-out infinite;
+            position: relative;
+            overflow: visible;
+            white-space: nowrap;
+        }
+        #btnInstallApp.visible { display: inline-flex; }
+        #btnInstallApp:hover {
+            animation: none;
+            transform: scale(1.08);
+            filter: brightness(1.15);
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.9), 0 0 50px rgba(236, 72, 153, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+        #btnInstallApp:active {
+            transform: scale(0.96);
+            filter: brightness(0.95);
+        }
+        #btnInstallApp .pwa-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            animation: pwaBounce 1.4s ease-in-out infinite;
+        }
+        #btnInstallApp .pwa-dot {
+            position: relative;
+            display: inline-flex;
+            width: 8px;
+            height: 8px;
+            margin-left: 2px;
+        }
+        #btnInstallApp .pwa-dot::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: #ffffff;
+            opacity: 0.9;
+            animation: pwaPing 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        #btnInstallApp .pwa-dot::after {
+            content: '';
+            position: relative;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ffffff;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+        }
+        @keyframes pwaGlow {
+            0%, 100% {
+                box-shadow: 0 0 18px rgba(6, 182, 212, 0.7), 0 0 36px rgba(139, 92, 246, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            }
+            50% {
+                box-shadow: 0 0 28px rgba(6, 182, 212, 1), 0 0 55px rgba(236, 72, 153, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+            }
+        }
+        @keyframes pwaBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        @keyframes pwaPing {
+            0% { transform: scale(1); opacity: 0.9; }
+            75%, 100% { transform: scale(2.5); opacity: 0; }
+        }
+        body.light-mode #btnInstallApp {
+            color: #ffffff !important;
+            border-color: rgba(255, 255, 255, 0.7);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+        }
+
         .course-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -499,6 +590,7 @@
             #ratingToast .toast-subtitle { font-size: 10px; }
         }
 
+        /* ... (el resto de tu CSS se mantiene igual) ... */
         .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
         .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-center { opacity: 1 !important; transform: none !important; filter: none !important; }
         .section-loading { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -870,9 +962,6 @@
         body.light-mode .descripcion-intro .fas, html.light-mode .descripcion-intro .fas { opacity: 0.7; }
         @keyframes updatePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
 
-        /* ==========================================
-           SECCIÓN INSTRUCTOR - ESTILO CATÁLOGO
-           ========================================== */
         .instructor-card {
             background: var(--glass-bg);
             backdrop-filter: blur(10px) saturate(140%);
@@ -956,9 +1045,6 @@
             .instructor-description { font-size: 0.875rem !important; }
         }
 
-        /* ==========================================
-           FIX: TEXTOS DEL PROFESOR EN TARJETAS DE CURSOS BLANCOS EN MODO OSCURO
-           ========================================== */
         body:not(.light-mode) .course-card .professor-block .professor-label,
         body:not(.light-mode) .course-card .professor-block .professor-label i {
             color: #ffffff !important;
@@ -990,9 +1076,6 @@
             -webkit-text-fill-color: #0f172a !important;
         }
 
-        /* ==========================================
-           FIX: PRECIO EN DÓLARES BLANCO EN MODO OSCURO
-           ========================================== */
         body:not(.light-mode) .course-card .text-lg.font-black.text-slate-800,
         body:not(.light-mode) .course-card .flex.flex-col.items-end .text-lg.font-black,
         body:not(.light-mode) .course-card .course-card-price,
@@ -1015,9 +1098,6 @@
             -webkit-text-fill-color: #22d3ee !important;
         }
 
-        /* ==========================================
-           MODAL COMPRA - ESTILO CATÁLOGO (MODO CLARO FORZADO)
-           ========================================== */
         #modalCompra .modal-content {
             background: #e8ecf0 !important;
             background-color: #e8ecf0 !important;
@@ -1047,18 +1127,10 @@
         #modalCompra .text-slate-300 {
             color: #0f172a !important;
         }
-        #modalCompra .text-cyan-400 {
-            color: #1a5a7a !important;
-        }
-        #modalCompra .text-amber-400 {
-            color: #8a6d1a !important;
-        }
-        #modalCompra .text-green-400 {
-            color: #1a7a5a !important;
-        }
-        #modalCompra .text-red-400 {
-            color: #8a2a2a !important;
-        }
+        #modalCompra .text-cyan-400 { color: #1a5a7a !important; }
+        #modalCompra .text-amber-400 { color: #8a6d1a !important; }
+        #modalCompra .text-green-400 { color: #1a7a5a !important; }
+        #modalCompra .text-red-400 { color: #8a2a2a !important; }
         #modalCompra .btn-comprar {
             background: linear-gradient(135deg, #2db8ce, #06b6d4) !important;
             background-color: #06b6d4 !important;
@@ -1089,29 +1161,6 @@
             background: rgba(180, 180, 180, 0.7) !important;
         }
         #modalCompra .absolute.top-4.right-4.z-20 .fas {
-            color: #0f172a !important;
-        }
-
-        /* ==========================================
-           ⭐ BOTÓN INSTALAR PWA
-           ========================================== */
-        #btnInstallApp {
-            animation: pwaPulse 2.5s ease-in-out infinite;
-        }
-        #btnInstallApp:hover {
-            animation: none;
-        }
-        @keyframes pwaPulse {
-            0%, 100% { box-shadow: 0 0 12px rgba(6, 182, 212, 0.25); }
-            50% { box-shadow: 0 0 22px rgba(6, 182, 212, 0.55); }
-        }
-        body.light-mode #btnInstallApp {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.15), rgba(124, 58, 237, 0.15)) !important;
-            color: #0e7490 !important;
-            border-color: rgba(8, 145, 178, 0.5) !important;
-        }
-        body.light-mode #btnInstallApp:hover {
-            background: linear-gradient(135deg, rgba(8, 145, 178, 0.3), rgba(124, 58, 237, 0.3)) !important;
             color: #0f172a !important;
         }
     </style>
@@ -1147,7 +1196,6 @@
     <div class="toast-spinner" id="loadingToastSpinner"></div>
 </div>
 
-<!-- ⭐ RATING TOAST - Mismo estilo que loading toast (solo aparece al valorar) -->
 <div id="ratingToast">
     <div class="toast-logo">
         <img src="img/favicon.webp" alt="Aprende Automatización" onerror="this.style.display='none'">
@@ -1171,13 +1219,11 @@
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Formación Profesional</span>
                 <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Cursos Online y Presenciales</span>
                 
-                <!-- ⭐ BOTÓN INSTALAR APP (PWA) -->
-                <button id="btnInstallApp" 
-                        class="hidden items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-300 border border-cyan-400/40 backdrop-blur-md hover:from-cyan-500/40 hover:to-purple-500/40 hover:border-cyan-400/70 hover:scale-105 transition-all duration-300"
-                        onclick="installPWA()"
-                        title="Instalar aplicación en tu dispositivo">
-                    <i class="fas fa-download text-[10px]"></i>
-                    <span>Instalar App</span>
+                <!-- ⭐ BOTÓN INSTALAR APP (PWA) - LLAMATIVO, AL LADO DE LOS BADGES -->
+                <button id="btnInstallApp" type="button" onclick="installPWA()" title="Instalar aplicación en tu dispositivo">
+                    <span class="pwa-icon"><i class="fas fa-download"></i></span>
+                    <span>📲 Instalar App</span>
+                    <span class="pwa-dot"></span>
                 </button>
 
                 <div id="visitor-info" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/40 border border-[#2db8ce]/30 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md opacity-0 transition-opacity duration-1000">
@@ -1621,7 +1667,6 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left" id="testimonios-container">
-                    <!-- Testimonio 1 -->
                     <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
                         <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
                             <img src="img/foto-1.webp" alt="José R." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=JR'">
@@ -1646,7 +1691,6 @@
                         </div>
                     </div>
 
-                    <!-- Testimonio 2 -->
                     <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
                         <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
                             <img src="img/AA (39).webp" alt="María G." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=MG'">
@@ -1671,7 +1715,6 @@
                         </div>
                     </div>
 
-                    <!-- Testimonio 3 -->
                     <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
                         <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
                             <img src="img/Fotos-2.webp" alt="Luis C." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=LC'">
@@ -1696,7 +1739,6 @@
                         </div>
                     </div>
 
-                    <!-- Testimonio 4 -->
                     <div class="course-card course-card-level-basico reveal reveal-up flex flex-col overflow-hidden">
                         <div class="course-card-image-container h-48 w-full bg-slate-900 relative">
                             <img src="img/Fotos3.webp" alt="Ana R." class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://placehold.co/400x400/1e293b/2db8ce?text=AR'">
@@ -1775,7 +1817,6 @@
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-10">
                     
-                    <!-- CERTIFICADO 1 -->
                     <div class="course-card course-card-level-intermedio hover:shadow-xl transition-all duration-300 border border-purple-500/30 bg-slate-900/50 rounded-2xl overflow-hidden flex flex-col certificate-card">
                         <div class="course-card-image-container relative h-64 md:h-72">
                             <img src="img/AA (44).webp" alt="Certificado UPT Aragua" class="course-card-image w-full h-full object-cover" loading="lazy">
@@ -1835,7 +1876,6 @@
                         </div>
                     </div>
 
-                    <!-- CERTIFICADO 2 -->
                     <div class="course-card course-card-level-basico hover:shadow-xl transition-all duration-300 border border-cyan-500/30 bg-slate-900/50 rounded-2xl overflow-hidden flex flex-col certificate-card">
                         <div class="course-card-image-container relative h-64 md:h-72">
                             <img src="img/AA (33).webp" alt="Certificado Digital" class="course-card-image w-full h-full object-cover" loading="lazy">
@@ -1956,7 +1996,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="logros-container">
-                    <!-- Principiante -->
                     <div class="course-card course-card-level-basico reveal reveal-up flex flex-col text-center p-6" data-logro="bronce">
                         <div class="text-5xl mb-4">🥉</div>
                         <h3 class="course-card-title text-xl font-bold">Principiante</h3>
@@ -1969,7 +2008,6 @@
                         </div>
                     </div>
 
-                    <!-- Intermedio -->
                     <div class="course-card course-card-level-intermedio reveal reveal-up flex flex-col text-center p-6 border-purple-500/40" data-logro="plata">
                         <div class="text-5xl mb-4">🥈</div>
                         <h3 class="course-card-title text-xl font-bold">Intermedio</h3>
@@ -1982,7 +2020,6 @@
                         </div>
                     </div>
 
-                    <!-- Avanzado -->
                     <div class="course-card course-card-level-avanzado reveal reveal-up flex flex-col text-center p-6 border-amber-500/40 relative overflow-visible" data-logro="oro">
                         <div class="absolute -top-1 -right-1 w-16 h-16 animate-pulse opacity-20">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2000,7 +2037,6 @@
                         </div>
                     </div>
 
-                    <!-- Experto -->
                     <div class="course-card reveal reveal-up flex flex-col text-center p-6 border-cyan-500/40 relative overflow-visible" data-logro="leyenda">
                         <div class="absolute -top-1 -right-1 w-16 h-16 animate-pulse opacity-20">
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2375,9 +2411,6 @@
 
     const SCRIPT_URL_PROGRESO = 'https://script.google.com/macros/s/AKfycbwiQw2xwqDBVK8BwwoACnGd6reOc2arj8-myMsMJI5Epsv9Ax0kRstsRAv9juLAtIAD/exec';
 
-    // ==========================================
-    // ⭐ TOAST DE VALORACIÓN (solo se muestra al valorar)
-    // ==========================================
     function mostrarRatingToast(rating) {
         const toast = document.getElementById('ratingToast');
         if (!toast) return;
@@ -2404,9 +2437,6 @@
     }
     window.mostrarRatingToast = mostrarRatingToast;
 
-    // ==========================================
-    // FUNCIÓN DE VALORACIÓN (para usar desde tarjetas del index)
-    // ==========================================
     function rateCourse(courseId, rating) {
         const user = JSON.parse(localStorage.getItem('user') || 'null');
         if (!user) {
@@ -3005,82 +3035,77 @@
      ⭐ PWA: INSTALACIÓN DESDE BOTÓN DEL HEADER
      ========================================== -->
 <script>
+(function() {
     let deferredPrompt = null;
     const btnInstallApp = document.getElementById('btnInstallApp');
 
+    function mostrarBoton() {
+        if (!btnInstallApp) return;
+        btnInstallApp.classList.add('visible');
+    }
+    function ocultarBoton() {
+        if (!btnInstallApp) return;
+        btnInstallApp.classList.remove('visible');
+    }
+
+    // Capturar el evento beforeinstallprompt (Chrome, Edge, Opera, Samsung, etc.)
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
         console.log('✅ PWA instalable detectada');
-
-        if (btnInstallApp && !window.matchMedia('(display-mode: standalone)').matches) {
-            btnInstallApp.classList.remove('hidden');
-            btnInstallApp.classList.add('inline-flex');
+        // Ocultar si ya está instalada en modo standalone
+        if (!window.matchMedia('(display-mode: standalone)').matches && window.navigator.standalone !== true) {
+            mostrarBoton();
         }
     });
 
-    async function installPWA() {
+    // Detectar si ya está instalada
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        ocultarBoton();
+    }
+
+    // Evento cuando se completa la instalación
+    window.addEventListener('appinstalled', () => {
+        console.log('🎉 PWA instalada correctamente');
+        deferredPrompt = null;
+        ocultarBoton();
+        showInstallToast('🎉 ¡Aplicación instalada con éxito!', 'success');
+    });
+
+    // Función global para el botón
+    window.installPWA = async function() {
         if (!deferredPrompt) {
-            showInstallInstructions();
+            // Fallback: instrucciones manuales
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            if (isIOS || isSafari) {
+                showInstallToast('En iPhone/iPad: toca Compartir → "Añadir a pantalla de inicio"', 'info', 6000);
+            } else {
+                showInstallToast('Tu navegador no permite instalación automática. Busca "Instalar app" en el menú.', 'info', 5000);
+            }
             return;
         }
 
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-
-        console.log(`Usuario eligió: ${outcome}`);
+        console.log('Usuario eligió:', outcome);
 
         if (outcome === 'accepted') {
-            console.log('✅ App instalada');
-            if (btnInstallApp) {
-                btnInstallApp.classList.add('hidden');
-                btnInstallApp.classList.remove('inline-flex');
-            }
+            ocultarBoton();
             showInstallToast('🎉 ¡Aplicación instalada con éxito!', 'success');
         } else {
-            console.log('❌ Instalación cancelada');
             showInstallToast('Instalación cancelada', 'info');
         }
-
         deferredPrompt = null;
-    }
-    window.installPWA = installPWA;
+    };
 
-    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
-        if (btnInstallApp) {
-            btnInstallApp.classList.add('hidden');
-        }
-    }
-
-    window.addEventListener('appinstalled', () => {
-        console.log('🎉 PWA instalada correctamente');
-        deferredPrompt = null;
-        if (btnInstallApp) {
-            btnInstallApp.classList.add('hidden');
-            btnInstallApp.classList.remove('inline-flex');
-        }
-        showInstallToast('🎉 ¡Aplicación instalada con éxito!', 'success');
-    });
-
-    function showInstallInstructions() {
-        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-        if (isIOS || isSafari) {
-            showInstallToast('En iPhone/iPad: toca Compartir → "Añadir a pantalla de inicio"', 'info', 6000);
-        } else {
-            showInstallToast('Tu navegador no permite instalación automática. Busca "Instalar app" en el menú.', 'info', 5000);
-        }
-    }
-
+    // Toast reutilizando #notification
     function showInstallToast(message, type = 'info', duration = 4000) {
         const notif = document.getElementById('notification');
         if (!notif) return;
-
         const icon = document.getElementById('notifIcon');
         const title = document.getElementById('notifTitle');
         const msg = document.getElementById('notifMsg');
-
         if (type === 'success') {
             icon.className = 'fas fa-check-circle text-2xl text-green-300';
             title.textContent = '¡Listo!';
@@ -3090,12 +3115,26 @@
         }
         msg.textContent = message;
         notif.style.transform = 'translateX(0)';
-
         clearTimeout(window._installToastTimer);
         window._installToastTimer = setTimeout(() => {
             notif.style.transform = 'translateX(120%)';
         }, duration);
     }
+
+    // Si el navegador ya disparó beforeinstallprompt antes de este script (raro pero posible),
+    // y el botón está oculto, lo mostramos igualmente si la app NO está instalada.
+    // También como fallback, después de 2s, si no está instalada, mostramos el botón
+    // (en navegadores que no soportan beforeinstallprompt mostrará instrucciones al hacer clic).
+    setTimeout(() => {
+        if (btnInstallApp && !btnInstallApp.classList.contains('visible')
+            && !window.matchMedia('(display-mode: standalone)').matches
+            && window.navigator.standalone !== true) {
+            // Mostrar el botón siempre que no esté instalada (aunque beforeinstallprompt no se haya disparado aún)
+            mostrarBoton();
+        }
+    }, 2000);
+
+})();
 </script>
 
 <script src="js/auth.js"></script>
