@@ -216,13 +216,11 @@ function rateCourse(courseId, rating) {
 // INICIAR SCROLL REVEAL
 // ==========================================
 function initScrollReveal() {
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) entry.target.classList.add('active');
-        });
-    }, { threshold: 0.15 });
-    reveals.forEach(el => observer.observe(el));
+    // ⭐ ANIMACIONES DE ENTRADA DESACTIVADAS
+    // Todos los .reveal se muestran visibles de inmediato, sin transición.
+    document.querySelectorAll('.reveal').forEach(el => {
+        el.classList.add('active');
+    });
 }
 
 // ==========================================
