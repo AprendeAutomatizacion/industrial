@@ -216,10 +216,24 @@ function rateCourse(courseId, rating) {
 // INICIAR SCROLL REVEAL
 // ==========================================
 function initScrollReveal() {
-    // ⭐ ANIMACIONES DE ENTRADA DESACTIVADAS
-    // Todos los .reveal se muestran visibles de inmediato, sin transición.
-    document.querySelectorAll('.reveal').forEach(el => {
+    // ⭐ ANIMACIONES DE ENTRADA DESACTIVADAS (PC y móvil)
+    // Forzar .active en TODOS los .reveal de inmediato, sin observer ni transición.
+    document.querySelectorAll('.reveal, .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-center').forEach(el => {
         el.classList.add('active');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.filter = 'none';
+        el.style.transition = 'none';
+        el.style.visibility = 'visible';
+    });
+
+    // También en un microtask por si el DOM cambia justo después
+    Promise.resolve().then(() => {
+        document.querySelectorAll('.reveal, .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-center').forEach(el => {
+            el.classList.add('active');
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+        });
     });
 }
 
@@ -1203,12 +1217,21 @@ function closeExpandedMethodologyCard() {
 // MOSTRAR TODAS LAS SECCIONES
 // ==========================================
 function revealAllSections() {
-    document.querySelectorAll('.section-loading').forEach(el => {
+    // ⭐ Sin animación: mostrar todo de inmediato (PC y móvil)
+    document.querySelectorAll('.section-loading, .section-loading *').forEach(el => {
         el.classList.add('loaded');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.transition = 'none';
     });
-    setTimeout(() => {
-        document.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-    }, 100);
+    document.querySelectorAll('.reveal, .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-center').forEach(el => {
+        el.classList.add('active');
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+        el.style.filter = 'none';
+        el.style.transition = 'none';
+        el.style.visibility = 'visible';
+    });
 }
 
 function revealMetrics() {
