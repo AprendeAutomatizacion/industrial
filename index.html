@@ -438,6 +438,67 @@
         body.light-mode .loading-toast .toast-title { color: #1e293b; }
         body.light-mode .loading-toast.success-toast { background: linear-gradient(135deg, rgba(16, 185, 129, 0.98) 0%, rgba(5, 150, 105, 0.98) 100%); border: 1px solid rgba(16, 185, 129, 0.8); }
         body.light-mode .loading-toast.success-toast .toast-title { color: #ffffff; }
+
+        /* ⭐ RATING TOAST - Mismo estilo que loading toast */
+        #ratingToast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100003;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(45, 184, 206, 0.35);
+            border-radius: 12px;
+            padding: 8px 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35), 0 0 12px rgba(45, 184, 206, 0.15);
+            pointer-events: auto;
+            min-width: 220px;
+            max-width: 300px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        #ratingToast.visible {
+            display: flex;
+            animation: slideInRight 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #ratingToast .toast-logo { width: 25px; height: 25px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+        #ratingToast .toast-logo img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 0 4px rgba(45, 184, 206, 0.4)); }
+        #ratingToast .toast-content { flex: 1; min-width: 0; }
+        #ratingToast .toast-title {
+            color: #ffffff !important;
+            font-weight: 700 !important;
+            font-size: 10px !important;
+            line-height: 1.3 !important;
+            letter-spacing: 0.2px !important;
+            text-transform: uppercase !important;
+        }
+        #ratingToast .toast-subtitle {
+            color: #94a3b8 !important;
+            font-weight: 500 !important;
+            font-size: 9px !important;
+            line-height: 1.3 !important;
+            margin-top: 2px !important;
+        }
+        /* Forzar mismo estilo en modo claro y oscuro */
+        body.light-mode #ratingToast {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 41, 59, 0.96) 100%) !important;
+            border-color: rgba(45, 184, 206, 0.35) !important;
+        }
+        body.light-mode #ratingToast .toast-title {
+            color: #ffffff !important;
+        }
+        body.light-mode #ratingToast .toast-subtitle {
+            color: #94a3b8 !important;
+        }
+        @media (max-width: 640px) {
+            #ratingToast { bottom: 16px; right: 16px; left: 16px; min-width: auto; max-width: none; padding: 10px 14px; border-radius: 14px; }
+            #ratingToast .toast-title { font-size: 11px; max-width: none; flex: 1; }
+            #ratingToast .toast-subtitle { font-size: 10px; }
+        }
+
         .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
         .reveal-up, .reveal-down, .reveal-left, .reveal-right, .reveal-center { opacity: 1 !important; transform: none !important; filter: none !important; }
         .section-loading { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -1030,6 +1091,29 @@
         #modalCompra .absolute.top-4.right-4.z-20 .fas {
             color: #0f172a !important;
         }
+
+        /* ==========================================
+           ⭐ BOTÓN INSTALAR PWA
+           ========================================== */
+        #btnInstallApp {
+            animation: pwaPulse 2.5s ease-in-out infinite;
+        }
+        #btnInstallApp:hover {
+            animation: none;
+        }
+        @keyframes pwaPulse {
+            0%, 100% { box-shadow: 0 0 12px rgba(6, 182, 212, 0.25); }
+            50% { box-shadow: 0 0 22px rgba(6, 182, 212, 0.55); }
+        }
+        body.light-mode #btnInstallApp {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.15), rgba(124, 58, 237, 0.15)) !important;
+            color: #0e7490 !important;
+            border-color: rgba(8, 145, 178, 0.5) !important;
+        }
+        body.light-mode #btnInstallApp:hover {
+            background: linear-gradient(135deg, rgba(8, 145, 178, 0.3), rgba(124, 58, 237, 0.3)) !important;
+            color: #0f172a !important;
+        }
     </style>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -1063,6 +1147,20 @@
     <div class="toast-spinner" id="loadingToastSpinner"></div>
 </div>
 
+<!-- ⭐ RATING TOAST - Mismo estilo que loading toast (solo aparece al valorar) -->
+<div id="ratingToast">
+    <div class="toast-logo">
+        <img src="img/favicon.webp" alt="Aprende Automatización" onerror="this.style.display='none'">
+    </div>
+    <div class="toast-content">
+        <div class="toast-title" id="ratingToastTitle">Valoración guardada</div>
+        <div class="toast-subtitle" id="ratingToastSubtitle">Has puntuado con 5 estrellas</div>
+    </div>
+    <div class="toast-check" id="ratingToastCheck">
+        <i class="fas fa-star" style="color:#fbbf24;font-size:14px;filter:drop-shadow(0 0 6px rgba(251,191,36,0.5));"></i>
+    </div>
+</div>
+
 <div id="page-home" class="page-content active">
     <header class="relative bg-white/10 backdrop-blur-md overflow-hidden border-y border-white/20 shadow-2xl">
         <div class="absolute inset-0 z-0 opacity-40">
@@ -1072,6 +1170,16 @@
             <div class="flex flex-wrap justify-start gap-2 mb-6 text-[10px] font-black uppercase tracking-widest">
                 <span class="bg-blue-500/20 px-3 py-1 rounded-full text-blue-400 border border-blue-500/30 backdrop-blur-md">Formación Profesional</span>
                 <span class="bg-emerald-500/20 px-3 py-1 rounded-full text-emerald-400 border border-emerald-500/30 backdrop-blur-md">Cursos Online y Presenciales</span>
+                
+                <!-- ⭐ BOTÓN INSTALAR APP (PWA) -->
+                <button id="btnInstallApp" 
+                        class="hidden items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-300 border border-cyan-400/40 backdrop-blur-md hover:from-cyan-500/40 hover:to-purple-500/40 hover:border-cyan-400/70 hover:scale-105 transition-all duration-300"
+                        onclick="installPWA()"
+                        title="Instalar aplicación en tu dispositivo">
+                    <i class="fas fa-download text-[10px]"></i>
+                    <span>Instalar App</span>
+                </button>
+
                 <div id="visitor-info" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/40 border border-[#2db8ce]/30 text-white text-[10px] font-bold uppercase tracking-widest backdrop-blur-md opacity-0 transition-opacity duration-1000">
                     <span class="flex items-center gap-1.5"><i class="fas fa-eye text-[#2db8ce]"></i><span id="visit-count">...</span></span>
                     <span class="text-white/30">|</span>
@@ -1097,8 +1205,7 @@
 
     <main id="main-flow-content">
 
-
-               <!-- INSTRUCTOR -->
+        <!-- INSTRUCTOR -->
         <section id="instructor" class="page-section relative py-24 px-6">
             <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 items-center">
                 <div>
@@ -1124,8 +1231,6 @@
                 </div>
             </div>
         </section>
-
-
 
         <div class="section-divider" aria-hidden="true">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="width: 100%; height: 100%;">
@@ -2270,6 +2375,60 @@
 
     const SCRIPT_URL_PROGRESO = 'https://script.google.com/macros/s/AKfycbwiQw2xwqDBVK8BwwoACnGd6reOc2arj8-myMsMJI5Epsv9Ax0kRstsRAv9juLAtIAD/exec';
 
+    // ==========================================
+    // ⭐ TOAST DE VALORACIÓN (solo se muestra al valorar)
+    // ==========================================
+    function mostrarRatingToast(rating) {
+        const toast = document.getElementById('ratingToast');
+        if (!toast) return;
+        
+        const subtitle = document.getElementById('ratingToastSubtitle');
+        if (subtitle) {
+            const estrellas = rating === 1 ? 'estrella' : 'estrellas';
+            subtitle.textContent = `Has puntuado con ${rating} ${estrellas}`;
+        }
+        
+        const check = document.getElementById('ratingToastCheck');
+        if (check) {
+            const starColor = rating >= 4 ? '#fbbf24' : rating >= 3 ? '#f59e0b' : '#94a3b8';
+            const glowColor = rating >= 4 ? 'rgba(251,191,36,0.5)' : rating >= 3 ? 'rgba(245,158,11,0.4)' : 'rgba(148,163,184,0.3)';
+            check.innerHTML = `<i class="fas fa-star" style="color:${starColor};font-size:14px;filter:drop-shadow(0 0 6px ${glowColor});"></i>`;
+        }
+        
+        toast.classList.add('visible');
+        
+        clearTimeout(window._ratingToastTimer);
+        window._ratingToastTimer = setTimeout(() => {
+            toast.classList.remove('visible');
+        }, 3000);
+    }
+    window.mostrarRatingToast = mostrarRatingToast;
+
+    // ==========================================
+    // FUNCIÓN DE VALORACIÓN (para usar desde tarjetas del index)
+    // ==========================================
+    function rateCourse(courseId, rating) {
+        const user = JSON.parse(localStorage.getItem('user') || 'null');
+        if (!user) {
+            const authModal = document.getElementById('authModal');
+            if (authModal) authModal.classList.add('active');
+            return;
+        }
+        
+        if (!user.ratings) user.ratings = {};
+        user.ratings[courseId] = rating;
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        fetch(SCRIPT_URL_PROGRESO, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: `action=update_user&email=${encodeURIComponent(user.email.toLowerCase())}&userData=${encodeURIComponent(JSON.stringify(user))}`
+        }).catch(err => console.error('Error al guardar valoración:', err));
+        
+        mostrarRatingToast(rating);
+    }
+    window.rateCourse = rateCourse;
+
     const achievementSystem = {
         userData: {
             coursesCompleted: 0,
@@ -2840,6 +2999,103 @@
             }, 8000);
         }
     });
+</script>
+
+<!-- ==========================================
+     ⭐ PWA: INSTALACIÓN DESDE BOTÓN DEL HEADER
+     ========================================== -->
+<script>
+    let deferredPrompt = null;
+    const btnInstallApp = document.getElementById('btnInstallApp');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        console.log('✅ PWA instalable detectada');
+
+        if (btnInstallApp && !window.matchMedia('(display-mode: standalone)').matches) {
+            btnInstallApp.classList.remove('hidden');
+            btnInstallApp.classList.add('inline-flex');
+        }
+    });
+
+    async function installPWA() {
+        if (!deferredPrompt) {
+            showInstallInstructions();
+            return;
+        }
+
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+
+        console.log(`Usuario eligió: ${outcome}`);
+
+        if (outcome === 'accepted') {
+            console.log('✅ App instalada');
+            if (btnInstallApp) {
+                btnInstallApp.classList.add('hidden');
+                btnInstallApp.classList.remove('inline-flex');
+            }
+            showInstallToast('🎉 ¡Aplicación instalada con éxito!', 'success');
+        } else {
+            console.log('❌ Instalación cancelada');
+            showInstallToast('Instalación cancelada', 'info');
+        }
+
+        deferredPrompt = null;
+    }
+    window.installPWA = installPWA;
+
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+        if (btnInstallApp) {
+            btnInstallApp.classList.add('hidden');
+        }
+    }
+
+    window.addEventListener('appinstalled', () => {
+        console.log('🎉 PWA instalada correctamente');
+        deferredPrompt = null;
+        if (btnInstallApp) {
+            btnInstallApp.classList.add('hidden');
+            btnInstallApp.classList.remove('inline-flex');
+        }
+        showInstallToast('🎉 ¡Aplicación instalada con éxito!', 'success');
+    });
+
+    function showInstallInstructions() {
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+        if (isIOS || isSafari) {
+            showInstallToast('En iPhone/iPad: toca Compartir → "Añadir a pantalla de inicio"', 'info', 6000);
+        } else {
+            showInstallToast('Tu navegador no permite instalación automática. Busca "Instalar app" en el menú.', 'info', 5000);
+        }
+    }
+
+    function showInstallToast(message, type = 'info', duration = 4000) {
+        const notif = document.getElementById('notification');
+        if (!notif) return;
+
+        const icon = document.getElementById('notifIcon');
+        const title = document.getElementById('notifTitle');
+        const msg = document.getElementById('notifMsg');
+
+        if (type === 'success') {
+            icon.className = 'fas fa-check-circle text-2xl text-green-300';
+            title.textContent = '¡Listo!';
+        } else {
+            icon.className = 'fas fa-info-circle text-2xl';
+            title.textContent = 'Información';
+        }
+        msg.textContent = message;
+        notif.style.transform = 'translateX(0)';
+
+        clearTimeout(window._installToastTimer);
+        window._installToastTimer = setTimeout(() => {
+            notif.style.transform = 'translateX(120%)';
+        }, duration);
+    }
 </script>
 
 <script src="js/auth.js"></script>
